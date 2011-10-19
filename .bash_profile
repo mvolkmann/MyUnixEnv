@@ -11,11 +11,12 @@ export FIGNORE='.o:.swp'
 export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 
 # Sets the bash shell prompt.
+# \h outputs the host name.
 # \w outputs the working directory.
 # \$ outputs # if superuser (like root), $ otherwise.
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /root/.bashrc too.
-export PS1='\W\$ ' # sets bash shell prompt
+export PS1='\h\W\$ ' # sets bash shell prompt
 
 #-------------------------------------------------------------------------
 
@@ -76,6 +77,9 @@ export PATH=$JAVA_HOME/bin:$PATH
 export JS_CMD=node
 export JS_DIR=$LANGUAGES_DIR/JavaScript
 
+# MacPorts settings.
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
 
@@ -113,7 +117,6 @@ export BASEDIR=$TOMCAT_HOME
 export CATALINA_HOME=$TOMCAT_HOME
 
 # Vim settings
-#export PATH=/opt/vim:$PATH
 set -o vi # for vi-mode command-line editing
 export EDITOR=vim
 export VISUAL=vim
@@ -132,12 +135,3 @@ source ~/.bash_gitprompt
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 . ~/.bashrc
-
-##
-# Your previous /Users/volkmannm/.bash_profile file was backed up as /Users/volkmannm/.bash_profile.macports-saved_2011-08-15_at_10:06:58
-##
-
-# MacPorts Installer addition on 2011-08-15_at_10:06:58: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
