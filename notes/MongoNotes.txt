@@ -15,6 +15,7 @@ Mongo Shell
 - to delete a collection, db.{coll}.drop()
 - to see the first 20 documents in a collection, db.{coll}.find()
 - to get the number of documents in a collection, db.{coll}.find().length()
+- to add an index to a collection, db.{coll}.ensureIndex({key: 1});
 - to exit the shell, enter "exit"
 
 Node modules
