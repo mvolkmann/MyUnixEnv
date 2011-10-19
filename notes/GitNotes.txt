@@ -641,10 +641,13 @@ Rebasing
 Submodules
 - allow one repo to store others but keep independent histories
 - to list submodules, git submodule
-- to add a submodule
-  * git submodule add {path} {name}
-  * git submodule init {name}
-  * git commit
+- to add a submodule, from top project directory
+  * git submodule add {git-url} {dir-path-below-current}
+- to get files in submodules, from top project directory
+  * git submodule init
+  * git submodule update
+- for more detail, see
+  http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
 
 Vim
 - if git complains about an error in Vim after entering a commit message,
