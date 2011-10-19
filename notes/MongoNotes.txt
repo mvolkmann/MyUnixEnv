@@ -3,8 +3,19 @@ Mongo Notes
 To start server
 ./bin/mongod
 
-To start REPL
-./bin/mongo
+Mongo Shell
+- to get help, enter "help"
+- to start a Mongo shell, ./bin/mongo
+- to create a database, do nothing since databases
+  are automatically created when referenced
+- to select a database, use {name}
+- to delete a database, db.dropDatabase()
+- to get the names of the collections in a database, db.getCollectionNames()
+- to create a collection, db.createCollection('{name}')
+- to delete a collection, db.{coll}.drop()
+- to see the first 20 documents in a collection, db.{coll}.find()
+- to get the number of documents in a collection, db.{coll}.find().length()
+- to exit the shell, enter "exit"
 
 Node modules
 - sudo npm install mongodb
