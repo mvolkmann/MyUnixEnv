@@ -1,0 +1,12 @@
+#!/bin/bash
+
+git submodule init
+git submodule update
+
+cd
+ln -s MyUnixEnv/.bash_profile .bash_profile
+ln -s MyUnixEnv/.bashrc .bashrc
+ln -s MyUnixEnv/bin bin
+ln -s MyUnixEnv/.jshintrc .jshintrc
+ln -s MyUnixEnv/.vim .vim
+ln -s MyUnixEnv/.vimrc .vimrc
