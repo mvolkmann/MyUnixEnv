@@ -1,0 +1,10 @@
+Mongo Notes
+
+To start server
+./bin/mongod
+
+To start REPL
+./bin/mongo
+
+Node modules
+- sudo npm install mongodb

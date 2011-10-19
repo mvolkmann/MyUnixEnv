@@ -1,0 +1,4 @@
+Amazon EC2 Notes
+
+To run commands as superuser
+- sudo {full-path}/command {args}
