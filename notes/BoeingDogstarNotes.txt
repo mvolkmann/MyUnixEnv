@@ -1,0 +1,18 @@
+Boeing Dogstar Notes
+
+Dogstar is a Linux box.
+It is in Huntington Beach.
+The administrator is Tim Bigham.
+714-625-5988
+tim.bigham@boeing.com
+
+IP address: 141.102.95.154
+DNS name: dogstar.sim.ssd.bna.boeing.com
+
+Deploy WAR files by copying them to /opt/apache-tomcat-6.0.18/webapps.
+They should be exploded automatically after a brief wait.
+
+Log files are in /opt/apache-tomcat-6.0.18/logs.
+Printlns from servlets go to catalina.out in that directory.
+
+Dogstar Tomcat URLs start with http://141.102.95.154:8080/{webapp-name}.

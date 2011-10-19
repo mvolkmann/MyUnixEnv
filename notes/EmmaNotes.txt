@@ -1,0 +1,37 @@
+Emma Notes
+
+Documentation
+- at http://emma.sourceforge.net/docs.html
+
+Setup
+- download from http://emma.sourceforge.net/
+- copy emma.jar to $JAVA_HOME/jre/lib/ext
+  * Is this needed when running from Ant?
+
+Ant
+- in build.properties, define the location of the EMMA libraries
+  emma.dir=${java.dir}/EMMA/emma-2
+- near top of build.xml
+  <path id="emma.lib" >
+    <pathelement location="${emma.dir}/emma.jar" />
+    <pathelement location="${emma.dir}/emma_ant.jar" />
+  </path>
+  <taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+- in run target or other target that uses the java task
+  replace the java task with the following
+  <emmajava enabled="${emma.enabled}" libclasspathref="emma.lib" 
+    classname="MusicDemo" classpathref="classpath"/>
+  * emmajava
+    - is an EMMA extension of the Ant java task
+    - instruments bytecode as it is read into the JVM
+    - doesn't modify .class files
+- ant emma run
+  * writes coverage.txt, the default text report, in the current directory
+  * only reports on classes that are loaded into the JVM,
+    not on all classes in the classpath
+    - can configure EMMA to report on all classes in the classpath
+      or a filtered subset of them
+
+JUnit
+- See http://wiki.metawerx.net/wiki/
+  UsingEMMAWithANTForJUnitTestCoverageReporting

@@ -1,0 +1,652 @@
+Git Notes
+
+See http://www.gitready.com/ and
+http://help.github.com/git-cheat-sheets/
+
+Differences from other version control systems
+- it's distributed - no central repository
+- tracks contents of files, not files
+- filenames are treated like metadata added to content
+
+Tidbits
+- local content is stored in a "working tree"
+- project directories contain a .git subdirectory
+  that holds the local repository (abbreviated as repo from here out)
+- "tags" are names that mark a point in time in the history of a repo
+- there are over 140 git commands
+  * but you won't use most of them
+  * many are only used internally by other git commands
+
+Installing
+- easy way
+  * download a precompiled package from http://git-scm.com
+  * double-click the installer
+- another way for Linux
+  * sudo apt-get build-dep git-core git-doc
+  * make prefix=/usr/local all doc
+  * sudo make install install-doc
+- another way for Mac OS X using MacPorts
+  * sudo port install git-core +svn +doc
+  * add /usr/local/git/bin to PATH in .bash_profile
+- under Windows, running in Cygwin is recommended
+  * see the Cygwin package Devel > git: Fast Version Control System
+    - four pieces: git, git-completion, git-gui and gitk
+  * also need
+    - Net > openssh
+    - Libs > tcltk (to use Git GUI)
+    - an editor such as Vim or emacs (under Editors)
+  * could also use the newer MSys fork of Git instead of Cygwin
+- to verify that it worked
+  * git --version
+
+Configuring
+- the --global flag configures options for every repo
+- git config --global user.name "R. Mark Volkmann"
+- git config --global user.email "mark@ociweb.com"
+- git config --global color.ui auto
+  * for color-coded output
+- git config --list
+  * to list configuration settings
+- to ignore files with certain extensions from status reports
+  * option 1: create a .gitignore file in the top repo directory
+    and add a line for each extension to be ignored (ex. .*.swp)
+    - can add and commit this file so others get the same excludes
+  * option 2: add lines to the file {repo-dir}/.git/info/exclude
+  * What are the main differences between these options?
+
+Help
+- for top-level help, "git help"
+- for command-specific help, enter "git help {command-name}"
+- on-line manual at http://kernel.org/pub/software/scm/git/docs
+
+GUIs
+- git gui
+- gitk [-all]
+  * from a repo directory
+  * -all shows all branches; omitting shows only current branch
+- GitX for Mac OS X
+  * download from http://gitx.frim.nl/
+- Git Extensions for Windows
+  * http://code.google.com/p/gitextensions/
+
+Diffs
+- to see diffs between working tree and local repo
+  * git diff {file-path}
+- to see diffs between local repo and origin repo
+  * git diff origin -- {file-path}
+- to see diffs between specific commits
+  * git diff {commit-1} {commit-2} -- {file-path}
+    - where the commits are the first seven characters
+    - use git log {file-path} to determine commits
+- added lines are preceded with a "+"
+- deleted lines are preceded with a "-"
+- options for "git log" can also be used with "git diff"
+- to see diffs between staging and repo
+  * git diff --cached
+- to see diffs between working tree and
+  last commit on the current branch (HEAD)
+  * git diff HEAD
+- to see diffs between a given revision and the previous one
+  * git diff {revision-number}
+  * for commands that take a revision number, it is usually
+    sufficient to specify only first seven hex characters
+  * when no revision is specified, HEAD is assumed
+- to see statistics about changes
+  * git diff --stat {tag-or-revision}
+  * shows the total number of insertions and deletions in each file
+    and graphically indicates the amount of each
+    - + for insertions and - for deletions
+- for a graphical diff, change "git diff" to "git difftool"
+
+Aliases
+- can create aliases for git commands with
+  git config --global alias.{alias} "{command}"
+
+Reporting (log, blame and status)
+- to list commits showing author, date and message
+  * git log
+  * sends output through less if more than one screen
+  * add -p to see diffs between revisions
+  * add -n{number} to see only the last {number} commits
+  * add --before="{date-time-desc}"
+    to see only commits before that date/time
+  * add --after="{date-time-desc}"
+    to see only commits after that date/time
+  * example date/time specifications:
+    1 minute, 5 hours, 2009-4-16, today, tomorrow
+  * add --pretty=oneline to list commits in brief form
+  * add a revision range to only list commits
+    from the beginning (exclusive) to end (inclusive)
+    * ex. git log 18f822e..0bb3dfb
+    * omit the end revision but include .. to go all the way to HEAD
+    * can use tag names in place of revision names
+  * for help on other git log options, enter "git log --help"
+- blame is similar to log
+  * but it prefixes output lines with
+    the commit name, committer and timestamp
+  * to limit to a certain set of line numbers, add -L{start},{end}
+    - end can be +n or -n for a number of lines from the start
+  * to limit to lines that match a given regular expression,
+    add -L"/{regex}/"
+  * to run on a specific file instead of all,
+    add -- {file-name} at the end
+- to list files that have been added or changed, but not yet committed
+  * git status
+    - doesn't list new tags!
+
+Branches
+- often used for
+  * experimental changes
+  * adding new features
+  * bug fixes
+- default branch is named "master"
+  which is the same as trunk in CVS and Subversion
+- to create a branch
+  * git branch {new-branch-name} [{from-branch-name}]
+    - from-branch-name defaults to the current branch
+    - by convention, release branches begin with RB,
+      followed by _ and a version number
+- to switch to a given branch
+  * git checkout {branch-name} or @{commit-number}
+  * typically you will want to commit any changes before doing this
+  * the commit number can be obtained from "git log" or "git reflog"
+  * HEAD always points the current branch
+- to combine creating a new branch and switching to it
+  * git checkout -b {new-branch-name} [{from-branch-name}]
+- to see list of all branches
+  * git branch [-a|-r]
+    - with no options, only local branches are listed
+    - with the -r option, only remote branches are listed
+    - with the -a option, both local and remote branches are listed
+    - the current branch is preceded by an asterisk
+- to merge a branch to another, see "Merging" section
+- to see list of all branches that have been merged to the current branch
+  * git branch --merged
+- to see list of all branches that have not been merged to the current branch
+  * git branch --no-merged
+- to rename a branch (-m for move)
+  git branch -m {old-name} {new-name}
+  * only works if no branch named {new-name} exists
+  * to force overwrite, use -M instead of -m
+- to delete a branch
+  * often done after a successful merge to another branch
+  * git branch -d {branch-name}
+    - only works if the branch has already been merged to the current one
+    - to force the delete, use -D instead of -d
+- to tag a branch
+  * git tag {tag-name} [{branch-name}]
+    - defaults to tagging the current branch
+  * git push --tags
+    - without --tags, push doesn't push tags!
+- to see latest commit on each branch
+  * git branch -v
+- short-lived vs. long-lived branches
+  * short-lived branches
+    - used for a specific set of changes, merged to parent branch,
+      and deleted
+  * long-lived branches
+    - repeatedly make changes on a branch, commit them,
+      and merge into parent branch
+    - the key is that commits are merged to parent branch more than once
+- two categories of branches
+  * private, local
+    - only used by you
+    - exist only in your local repo
+    - typically deleted after merged back to master
+  * shared, remote
+    - used by multiple developers
+    - exit in many local repos and the remote repo
+    - to create on remote repo
+      * git push origin {branch-name}
+- example
+  # Create repo and populate master branch.
+  git init demo
+  cd demo
+  echo "in a" > a.txt
+  echo "in b" > b.txt
+  git add *
+  git commit -m "first commit"
+
+  # It is best to create a new branch and make changes there
+  # rather than on the master branch.  However, suppose the
+  # changes are made while master is the current branch and
+  # then it is realized that a branch should have been created.
+  # This shows how the changes can be committed on a new branch
+  # and the master branch can be returned to its last committed state.
+  # Make changes, create a branch, and only commit changes on new branch.
+  echo "line 2" >> a.txt
+  rm -f b.txt
+  echo "in c" > c.txt
+  git checkout -b branch2
+  git add c.txt
+  git commit -a -m "second commit"
+
+  # Verify that changes are not present in master branch.
+  git checkout master
+  cat a.txt
+  cat b.txt
+  cat c.txt
+  # Note that unlink on branch2, on the master branch:
+  # - a.txt is back to its original content
+  # - b.txt is restored
+  # - c.txt is absent
+
+Merging
+- can merge two or more branches into one
+- three kinds of merges
+  * straight - merges all individual commits separately
+  * squashed - merges all individual commits as a single commit
+  * cherry-picking - merges only a single, selected commit
+- to merge one branch into another
+  * git checkout {to-branch} # if it isn't already the current branch
+  * git merge {from-branch}
+  * after a succesful merge, typically you'll want to delete from-branch
+    - git branch -d {from-branch}
+    - reduces distraction when viewing a list of existing branches
+  * can also merge master into the branch to verify that
+    changes by others don't break code in the branch
+    - after that is verified, merge the branch back to master
+  * also consider using the rebase command
+
+Conflicts
+- when a merge fails due to conflicts, files with conflicts are listed
+- these files will contain conflict markers
+- three approaches to resolving conflicts
+  * first approach
+    - resolve conflicts manually with any text editor
+    - stage and commit changes
+  * second approach
+    - run "git mergetool" which runs a diff tool and stages changes
+      * a popular diff tool on Mac OS X is opendiff (part of Xcode)
+      * can configure which tool is used by setting merge.tool
+    - commit changes
+  * third approach
+    - delete the local file and
+      run "git checkout {file-name}" to get remote version
+
+Tags
+- tags mark all the files in the repo at an instant in time
+- tag names must be unique across the entire repo
+  * they are not scoped to individual branches
+- to create a lightweight tag (not annotated)
+  * git tag {name}
+- to create an annotated tag
+  * git tag -a {name}
+- to view a list of all tags
+  * git tag
+- to delete a tag
+  * git tag -d {name}
+- to create a branch off a tag
+  * git branch {tag-name} {new-branch-name}
+
+Archives
+- specify what should be archived with an id
+  which can be a branch name, tag name or commit id
+- to create a gzipped tarball archive
+  * git archive --format=tar --prefix={prefix} {id} | \
+    gzip > {prefix}.tar.gz
+- to create a zip archive
+  * git archive --format=zip --prefix={prefix} {id} > {prefix}.zip
+- when unzipped, all the files will be a in a new directory named {prefix}
+
+Tab Completion for git commands
+- download Git source from http://www.kernel.org/pub/software/scm/git/
+  * for example, git-1.6.3.rc3.tar.gz
+- unzip the source
+- copy contrib/completion/git-completion.bash
+  to somewhere under your home directory
+  * for example ~/bin
+- add the following line to your .bash_profile:
+  . ~/bin/git-completion.bash
+- new Terminal windows will now support tab completion in git commands
+
+GitHub
+- to sign up
+  * browse http://github.com
+  * click the "Pricing and Signup" link
+  * click the "Sign Up!" button in the "Open Source/Free!" box
+  * enter username, email, password and SSH public key
+    - can generate a new SSH public key
+      by entering "ssh-keygen" in a Terminal window
+      * tell it to save the file in /Users/Mark/.ssh/github
+      * this will create two files
+        - github contains the private key
+        - github.pub contains the public key
+    - leave the passphrase empty
+    - edit ~/.ssh/config and add the following:
+      Host github.com
+      HostName github.com
+      IdentitiesOnly yes
+      IdentityFile ~/.ssh/github
+      User git
+  * press the "I agree, sign me up!" button
+- to create a new repository
+  * click the "Create a Repository" link
+  * enter project name, description and homepage URL
+  * press the "Create Repository" button
+  * follow the instructions on the web page that is displayed
+    under "Global setup" and "Next steps"
+- to add a reference to the remote repository
+  * git remote add origin git@github.com:mvolkmann/{repo-name}.git
+  * "origin" is the reference name
+- to push changes on the local "master" branch to the remote repository
+  * git push origin master
+- setup so git commands don't prompt for a password (from Steve Veit)
+  - ssh-keygen -trsa
+  - press enter repeatedly to accept all defaults
+  - cat ~/.ssh/id_rsa.pub
+  - copy the contents
+  - browse github.com
+  - select "Account Settings"
+  - select "SSH Public Keys"
+  - select "Add another public key"
+  - enter a value in the "Title" field
+  - paste the copied content in the the "Key" field
+  - press "Add key"
+  - ssh git@github.com
+  - enter "yes"
+  - you are now permanently authenticated
+
+To create a clone of another repo
+- git clone {repo-url} [{local-repo-name}]
+  * local-repo-name defaults to same as remote repo name
+- repo-urls typically begin with git://
+  * here's an ssh example
+    ssh://{your-username}@host/~{owner-username}/path
+- a directory to hold the repo will be created by git
+- for example:
+  git clone git://github.com/weavejester/compojure.git
+- can create a "bare" repo
+  * doesn't have a working copy
+  * stores the files in binary form
+  * consumes less space (ex. 9.6 MB versus 38.4 MB)
+  * add "--bare" after "git clone"
+- can clone a repo to a USB stick
+  * for example (in Cygwin):
+    cd /cygdrive/e (USB stick; /Volumes/BOEINGUSB on Mac)
+    git clone --bare /cygdrive/c/commontypes
+      (creates /cygdrive/e/commontypes.git)
+    cd /cygdrive/c
+    mv commontypes commontypeSAVE (just to be safe)
+    git clone /cygdrive/e/commontypes.git
+    - /Volumes/BOEINGUSB/commontypes.git on Mac
+    - creates /cygdrive/c/commontypes
+  * now after committing changes to repo on the C drive,
+    enter "git push" to push them to the repo on the E drive
+    - if you get an error that says "unpack failed"
+      it could be caused by the USB stick being locked (read-only)
+  * to pull changes from the repo on the E drive,
+    cd to the C drive repo and enter "git pull"
+  * can use to keep two machines in sync
+    - for example, to create a working repo on a Mac
+      git clone /Volumes/VOLKMANNUSB/commontypes.git
+
+To get updates
+- cd to the local repo directory
+- enter "git pull"
+- this performs a fetch and a merge
+- there is no "dry run" option for this
+
+To create a repo that will be used as a "master"
+- cd to where it will live
+- create a new directory for it
+- cd to the new directory
+- git init --bare --shared
+- cd to where a clone will live
+- git clone {master-dir-name}
+  * git clone ssh://{your-account}@{host}/{remote-repo-dir-path}
+    - ex. git clone ssh://{your-account}@141.102.95.154/~volkmarm/master/svcport
+  * You'll see the message "warning: You appear to have
+    cloned an empty repository.".  That's okay.
+- add files to the clone using "git add *" and "git commit"
+- git push origin master
+  * after this first push you can use "git push"
+    without specifying origin and master
+- now developers can create clones from this with
+  git clone {master-path}
+- for more, see
+  http://www.jedi.be/blog/2009/05/06/8-ways-to-share-your-git-repository/
+
+To create a new repo
+- mkdir {name}
+  * this step is optional
+  * it is safe to run "git init" in an existing directory
+- cd {name}
+- git init
+- alternatively, "git init {dir-name}" will
+  create the directory and create a repo inside it
+
+To stage new and modified files to be added to a local repo
+- git add {file-name}+
+- git add -i
+  * interactive mode
+- git add -p (patch mode)
+  * to stage changes to portions of modified files
+    instead of all the changes
+- if a modified file is staged, modified again, and then committed,
+  only the staged changes are committed
+
+To unstage files that haven't yet been committed
+- git reset HEAD {file-name}+
+- HEAD is a synonym for the current branch
+
+To commit changes including added/deleted/moved/modified files
+- git commit
+  * commits staged files to a local repo
+  * will prompt for message using an editor or
+    it can be specified on command with -m {message}
+  * the editor uses can be configured in several ways
+    and defaults to vi
+  * can have more than one -m; each creates a separate paragraph
+- git commit {file-path}
+  * commits a specific file without staging it first
+- git commit -a
+  * commits all changed files, even if they haven't been staged
+- add -v to see commented diffs in the editor
+  to assist with creating good commit messages
+- add --no-verify to suppress "suspicious commit" messages
+  related to "trailing whitespace" which may not appear to be present
+- git commit --amend
+  * must be run before the last commit is pushed
+  * replaces the previous commit with a new one
+  * useful when previous commit contained errors that shouldn't be retained
+    - ex. to add or delete files to the commit
+
+To move or rename a file
+- git mv {old-path} {new-path}
+  * new-path can be just a directory
+  * keeps history
+  * still need to commit after this
+
+To delete files
+- git rm {file-path}
+- git rm -r {directory-path}
+
+To undo commits
+- git revert
+  * creates a new commit that matches a given past revision
+- git revert -n HEAD
+  * reverts files on the current branch to match HEAD
+
+To reset the repo to an earlier state
+- git reset
+  * deletes unwanted revisions
+  * defaults to resetting the current branch to match HEAD
+  * add --hard to delete them from both the repository and the working tree
+    (How does omitting this differ?)
+- git clean -fd
+  * deletes finds that git isn't tracking
+
+To host a git server
+- the easiest way is to use Gitosis
+
+To fetch changes made in a remote repo, but not merge them
+- git fetch (after a git clone)
+- updates local information about remote branches,
+  but doesn't merge them with local changes
+- git fetch + git merge = git pull
+
+To view a specific revision of a file
+- git show {revision}:{file-path}
+  * ex. git show 1234567:src/com/ociweb/foo/Bar.java
+  * note how path is relative to top of repo
+
+To list local branches
+- git branch
+
+To list remote branches
+- git branch -r
+
+To merge remote, committed changes with the local repo
+- git pull [remote-repo [branch]]
+  * remote-repo can be a keyword (like origin)
+  * branch can be a tag or keyword (like HEAD)
+
+To merge local, committed changes with a remote repo
+- git push [remote-repo [branch]]
+  * with no arguments, the current branch is merged into
+    the same branch in the origin repo
+
+To create a remote repo from a local one that was created with git init
+- git remote add {name} {repo-url}
+  * makes name an alias for the remote repo
+  * name can be origin which is where changes are pushed by default
+- git push origin master
+  * for initial population
+
+To see a list of remote aliases
+- git remote
+
+To see information about a particular alias
+- git remote show {alias-name}
+
+To remove an alias
+- git remote rm {alias-name}
+
+To revert a file back to the HEAD version
+- git checkout HEAD {file-path}
+- file-path can be just the file name if in its directory
+
+To tag the repository at a milestone, such as a release
+- git tag {tag-name} [commit-or-branch-name]
+  * tags committed files
+
+To list existing tags
+- git tag
+
+To get a working tree of files in their state for a given tag
+- git checkout {tag-name}
+
+To make changes to files that were checked out from a tag
+- create a branch with git checkout -b {branch-name}
+- useful for making changes to a release
+
+To find a commit where a bug was introduced
+- git bisect run {test-script-path}
+- mark one commit older commit as bad and one newer commit as good
+- runs tests on each commit between those 
+  and automatically marks them as good or bad
+- the test script should exit with a zero status if the tests pass
+  and a non-zero status otherwise
+- seems overkil
+
+Recommended release procedure
+- when the code is feature complete, but not finished with testing,
+  create a "release branch"
+  * naming convention RB_#
+- release branches are intended to live only a short time
+  during final testing and debugging before an actual release
+- when ready to release, create a tag and delete the release branch
+
+To create a branch for fixing bugs in a past release
+- git branch RB_# {release-tag}
+- git checkout RB_#
+
+After committing fixes
+- git tag release_# (creates a release tag)
+- git branch -D RB_# (deletes the release branch)
+
+Tag and branch names
+- can contain /'s anywhere but the end
+  to organize them into directory-like structures
+- can contain .'s
+- branch names cannot contain spaces, ~, ^, :, ?, * or [
+
+Project to repo mapping
+- rule of thumb: store multiple projects in a single repo
+  only if they will be released at the same time
+
+To clone a repo and its submodules
+- yikes!  too complicated!
+- probably shouldn't use submodules
+
+To optimize history storage, occassionally run
+- git gc --aggressive
+
+To export a snapshot of the current repo in a tar or zip file
+- git archive --format=[tar|zip] --prefix={dir-name}/ HEAD > {file-path}
+  * HEAD can be replaced by a tag or branch name
+  * when format is tar, add "| gzip" after HEAD to create a .tar.gz file
+
+Changes to all branches are tracked in the "reflog".
+
+To see history
+- git log
+- git reflog
+  * same, but includes revisions that have been removed by a rebase
+  * however, git gc can remove those
+- both output history in reverse chronological order
+
+To discard changes that haven't yet been committed to your local repo
+- git checkout {file-path}
+- this replaces the file with the latest version in your local repo
+- it may take git a minute or so to realize
+  at the file is no longer modified
+  even though "git diff" will immediately report no differences
+
+Remote repos
+- git can communicate with remote repos using
+  * ssh
+    - secure
+    - username@server/path
+      * ex. git@github.com/mvolkmann/VendingMachine-Clojure
+  * git
+    - a custom protocol designed for speed
+    - typically set up to be read-only
+    - uses port 9418 which firewalls may block
+    - git://server/repo-path
+  * http or https
+    - least efficient
+    - not supported by github
+    - most accepted by firewalls
+    - http://server/path
+
+Rebasing
+- can combine multiple commits into one
+- can split one commit into multiple ones
+- can reorder commits
+- can incorporate changes made in one branch into the current one
+  so the changes appear to have been made on the current branch
+- when a conflict is detected during a "git rebase"
+  there are three options
+  * fix them
+    - resolve the conflicts
+    - git add {file}
+    - git rebase --continue
+  * git rebase --skip
+  * git rebase --abort
+- for interactive selection of which commits to squash
+  * git rebase -i
+
+Submodules
+- allow one repo to store others but keep independent histories
+- to list submodules, git submodule
+- to add a submodule
+  * git submodule add {path} {name}
+  * git submodule init {name}
+  * git commit
+
+Vim
+- if git complains about an error in Vim after entering a commit message,
+  do this
+  * git config --global core.editor /usr/bin/vim

@@ -1,0 +1,135 @@
+node-js Notes
+
+Stable versions
+- part before first dot is an even number
+
+To install node-js on a Mac
+- download XCode from https://developer.apple.com/mac/
+  - link was "Xcode 3.2.3 and iOS SDK 4.0.2"
+- run installer
+  - don't need to install development environment
+- download node-js from http://nodejs.org/#download
+- unzip it
+- cd to the directory
+- enter "./configure"
+- enter "make"
+- enter "sudo make install"
+
+To open a REPL
+- enter "node"
+- to exit the REPL, press ctrl-d or enter ".exit"
+- to get out of a "bad state", enter ".break"
+- to get help on REPL commands, enter ".help"
+
+To run a script
+- enter "node {file-path}"
+
+To use command-line debugger
+- add "debug: true" to list of JSLint options
+- add "debugger;" lines in code to set breakpoints
+- enter "node debug {file-path}"
+- enter "help" at "debug>" prompt to get a list commands
+- enter "run" to run to first breakpoint
+- enter "list" to list the code around the breakpoint
+- enter "print {expression}" to output values of variables and expressions
+- enter "next" to execute the next line of code
+- enter "continue" to continue running to the next breakpoint or end
+- enter "quit" to exit the debugger
+- for more documentation, see http://nodejs.org/docs/v0.4.0/api/debugger.html
+
+To determine if the current file is the file passed to the node command
+- in CoffeeScript: if require.main is module
+- in JavaScript: if (require.main === module)
+
+-------------------------------------------------------------------------------
+
+To install Node Package Manager (npm)
+- Node must be installed first
+- approach #1
+  * curl http://npmjs.org/install.sh | sh
+- approach #2
+  * download .tgz file from http://github.com/isaacs/npm/downloads/
+  * unzip it
+  * cd to the directory
+  * enter "sudo make dev"
+  * enter "sudo make link"
+
+NODE_PATH
+- this environment variable is used to locate Node modules
+- a good value for this is .:/usr/local/lib/node_modules
+
+To update npm itself
+- enter "npm update npm"
+
+To update all installed npm packages
+- enter "npm update [-g]"
+
+To get help on npm
+- enter "npm help"
+
+To install a module/package
+- if only for current project, enter "npm install {module-name}"
+  * installs in subdirectory of current directory named "node_modules"
+- if for all projects to share, enter "npm install -g {module-name}"
+  * installs in /usr/local/lib/node_modules
+  * to avoid having to use sudo, enter this once:
+    sudo chown -R $USER /usr/local
+    - sets you as the owner of that directory
+
+To get a list of installed modules
+- for the current project, enter "npm ls"
+- for shared, enter "npm ls -g"
+
+To create a new package
+- create a package.json file that describes it
+  * enter "npm help json" for details
+...
+- enter "npm publish ..."
+
+npm commands include:
+  activate adduser build cache coding-style config deactivate developers
+  folders help install json link list ln ls npm publish registry restart
+  rm scripts start stop tag test uninstall update unpublish
+
+To get help on an npm command
+- enter "npm help {command}"
+
+To install node-jslint
+- run "npm list | grep jslint" to find the latest version
+  - it was "jslint@0.0.3"
+- run "sudo npm install jslint@0.0.3"
+
+Express module
+- http://expressjs.com
+- built on top of the connect module
+  * http://senchalabs.github.com/connect/
+  * see list of "middleware" here
+    - passed to express server use method
+    - examples include
+      basicAuth, directory, errorHandler, favicon, logger, profiler,
+      query, session, static
+- npm install express
+
+Socket.IO Module
+- http://socket.io/
+- see configuration options at
+  https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
+
+goog Module
+- https://github.com/hsch/node-goog
+- allows the Google Closure library to be used with Node.js
+- provides encryption, geometry, date/time handling, data structures
+  and much more
+- see installation and usage steps at web page above
+- steps to use
+  * npm install goog
+  * download the Google Closure library separately
+    from http://code.google.com/closure/library/
+  * set the CLOSURE_BASE_PATH environment variable
+    to point to its "goog" directory (end with /!)
+- problem
+  * this line causes a TypeError ...
+    "Cannot call method 'runInNewContext' of undefined"
+    goog = require('goog').goog;
+- require modules to be used
+  * ex. goog.require('goog.structs.Set');

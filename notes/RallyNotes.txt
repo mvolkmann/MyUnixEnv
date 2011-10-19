@@ -1,0 +1,9 @@
+Rally Notes
+
+URL
+- https://rally1.rallydev.com/slm/rally.sp
+
+User Stories
+- select the "Backlog & Schedules" tab, then "User Stories"
+- to create a new story, select "Actions...New User Story..."
+- filter the stories displayed by changing the value of the "Views" drop-down

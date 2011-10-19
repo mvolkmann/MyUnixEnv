@@ -1,0 +1,22 @@
+Ruby Notes
+
+Installing RMagick
+- see http://rmagick.rubyforge.org/install-faq.html
+- download the rmagick-osx-installer (rm_install-{version}.zip)
+  from http://rubyforge.org/projects/rmagick/
+- unzip it
+- cd to the unzipped directory
+- enter "sudo ruby rm_install.rb"
+- it will run for around an hour
+
+Installing Tcl/Tk under Linux
+- cd to Ruby installation directory (~/Ruby/ruby-1.8.4)
+- cd ext
+- ruby extconf.rb --with-tcl-include=/usr/sfw/include
+- make && make install
+
+To run testrb under Windows using JRuby
+- gem install ZenTest
+- cd to lib directory of application to be tested
+- copy %JRUBY_HOME%\bin\testrb . (one time)
+- jruby testrb ../test

@@ -1,0 +1,11 @@
+Scheme Notes
+
+Created
+- in mid-70s by Guy Steele and Gerald Sussman
+
+Characteristics
+- slightly more verbose than Common Lisp
+
+Implementations
+- Guile Scheme
+- Script-Fu Scheme

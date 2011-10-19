@@ -1,0 +1,3 @@
+SWIG Notes
+
+- see laptop C:\C++\SWIG\SWIG.ppt

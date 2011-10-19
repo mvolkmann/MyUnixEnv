@@ -1,0 +1,805 @@
+ANTLR Notes
+
+About this document
+- these notes were mainly derived from the book
+  "The Definitive ANTLR Reference" by Terence Parr
+- ANTLR grammar syntax makes frequent use of the characters [ ] and { },
+  so when describing syntax in this document, to indicate
+  * a placeholder to be filled in I'll use <<item>> instead of {item}
+  * that something is optional I'll use item? instead of [item] 
+
+Overview
+- stands for ANother Tool For Language Recognition
+- can be used to implement domain-specific languages (DSLs)
+- main website is http://www.antlr.org
+  * contains downloads of ANTLR and ANTLRWorks,
+    documentation, articles, a wiki, a mailing list and example grammars
+- written in Java
+- main author is Terence Parr, a professor at the
+  University of San Francisco
+- reads a grammar and generates classes (a lexer and a parser)
+  that validate that input conforms to it
+- supports many target languages for generated code
+  * Java, C#, Python, Ruby, Objective-C, C and C++
+- can add target language code to the grammar to generate translator
+  classes that read input, validate it, and write output
+- supports arbitrary lookahead (LL(*)) to decide between
+  grammar alternatives (a major distinguishing characteristic
+  between this and other parser generators)
+- parsing strategy used is called "predicated-LL(*)"
+- graphical tool ANTLRWorks provides a grammar editor and debugger
+  * written by Jean Bovet during his master's degree work at
+    the Univeristy of San Francisco
+  * still maintaining and enhancing it
+
+Grammars
+- Backus-Naur Form (BNF) is a common dialect
+- ANTLR grammars are similar to those used with YACC,
+  and are an extended form of BNF referred to as EBNF
+- EBNF supports optional elements, repeated elements and
+  parenthesized groups of elements called subrules
+- EBNF supports context-free grammars, not context-sensitive
+  * context-sensitive grammars have rules with constraints that
+    control what they matched based on context information
+- ANTLR supports context checking with predicates 
+- grammars often contain both lexer and parser rules
+  * lexer rules define tokens to be parsed from the
+    input character stream and made available to parser rules
+    (for example, numbers, keywords and names)
+  * parser rules define what to do when specific sequences
+    of tokens are found in the input stream
+    (for example, produce output or build part of an AST)
+- syntax (in the order specified): p. 75
+  <<grammar-type>>? grammar <<grammar-name>>;
+  <<options>>? (see "Grammar Options" below)
+  <<tokens-spec>>?
+  <<attribute-scopes>>? (see "Global Scopes")
+  <<actions>>? (see "Actions"; header, members and rulecatch are examples)
+  <<rule>>+
+- grammar-type can be "lexer", "parser", "tree"
+  or nothing for a combined lexer/parser (the default)
+- the name of the file containing the grammar must match the grammar name
+  * ex. Foo.g contains "grammar Foo;"
+- comments are the same as in Java
+  * // single-line
+  * /* multi-line */
+  * /** javadoc */
+- identifiers
+  * such as rule and token names
+  * always start with a letter
+  * contain only letters, digits and underscores
+
+Grammar Options (p. 103-115)
+- syntax to specify
+  options {
+    <<name>> = <<value>>;
+    ...
+  }
+  * string values are surrounded by single quotes, but
+    don't need to be if it's a single word
+- can be overridden in specific rules
+- ASTLabelType option
+  * only needed in grammars that create or parse ASTs
+  * the type of Java object used to represent AST nodes
+  * default is CommonTree in parser grammars,
+    but it is Object in tree grammars so you need to set it!
+- backtrack=true option
+  * see "Resolving ambiguities" which discusses syntactic predicates
+  * only affects the parser, not the lexer
+  * often used during grammar prototyping
+    and replaced later by lookahead optimization
+- language option
+  * specifies the language of generated code and action code in grammar
+  * defaults to Java
+- memoize=true option
+  * often used with backtrack=true
+  * remembers failed token matching paths
+    so they aren't attempted again later
+  * improves performance, but uses more memory
+- output option
+  * AST - to generate an AST (typically used in 1st grammar)
+  * template - to use StringTemplate library
+    (typically used in 2nd grammar)
+  * these are the only options
+  * default is to output nothing
+  * doesn't apply to lexer-only grammars
+- superClass={class-name}
+  * changes the superclass of the generated class
+  * defaults to Lexer, Parser or TreeParser depending on the grammar type
+  * useful to customize error processing and messages
+- tokenVocab option
+  * used to load token definitions into a grammar
+   (typically a tree grammar)
+   from a .tokens file generated from another grammar
+   (typically a parser grammer)
+- rewrite=true option
+  * use when output is very similar to input
+  * copies all input to output
+    except when template rewrite rules are specified 
+  * use TokenRewriteStream instead of CommonTokenStream
+- there are other lesser used options
+  * k, filter, superclass, TokenLabelType
+
+Tokens
+- defines output tokens that do not have a corresponding input tokens
+  and will appear in an AST
+- often used to group collections of input tokens
+- syntax
+  tokens {
+    <<name>>;
+    <<name>> = '<<value>>';
+    ...
+  }
+- refer to token names in AST rewrite rules
+  * ex. ^(PARAMETERS parameter*)
+- can get line and column numbers of a token in token parsers,
+  but not in tree parsers
+  * see getLine and getCharPositionInLine methods of CommonToken
+
+Rules
+- syntax: (p. 79)
+  <<access-modifier>>? rule-name<<arguments>>?
+  (returns <<return-values>>)?
+  <<throws-spec>>?
+  <<options-spec>>?
+  <<rule-attribute-scopes>>?
+  <<rule-actions>>?
+    : alternative-sequence-1
+    | alternative-sequence-2
+    ...
+    | alternative-sequence-n
+    ;
+- access-modifier specifies the access level of the Java method
+  generated for the rule
+  * value can be "private", "protected" or "public" (the default)
+- can have just one sequence
+- sequences contain references to other rules and string literals
+  * can directly or indirectly reference the rule being defined (recursive)
+- string literals
+  * enclosed in single-quotes
+  * used for single characters too
+  * some control characters can be specified with backslashes
+    - \f, \n, \r, \t
+  * use \} to get right curly brace in an action
+  * can use Unicode escape sequences of the form \uXXXX,
+    but currently all input characters must be ASCII
+- specify cardinality of tokens in sequences with
+  ? (optional), * (zero or more) or + (one or more)
+- can group tokens with parentheses (creates a subrule) and
+  specify cardinality of groups after right paren.
+  * ex. method-call : method-name '(' (arg (',' arg)*)? ')'
+
+Lexer Rules
+- names begin with an uppercase letter and are typically all uppercase
+  * a token name if not a frament rule
+- the first lexer rule that matches input characters is used,
+  so order matters (order from most to least specific)
+- examples:
+  ID : ('a'..'z'|'A'..'Z')+; // character ranges
+  INTEGER : '0'..'9'+;
+  NEWLINE : '\r'? '\n';
+  WHITESPACE : (' ' | '\t')+ { skip(); }
+- the skip() action throws away matched tokens
+- use ~x to specify that a token can't contain x where x is a
+  single character, character range, token or subrule
+- can't have return values
+- lexer rules can use the emit() function to produce more than one token
+- fragment lexer rules (others are token lexer rules)
+  * don't create a token
+  * only used by other lexer rules
+  * prefix rule name with "fragment"
+  * can take parameters to control what they match,
+    but token lexer rules cannot
+  * example
+    fragment DIGIT: '0'..'9';
+    - you wouldn't want a token created from a single digit character
+- when there is a "+ loop" in a lexer rule, it uses k=1 lookahead, not k=*
+  * so it doesn't make choices based on what is further ahead in the stream
+  * an example of a "+ loop" is
+    NUMBER: ('0'..'9')+
+- Never have a top-level lexer rule that can match nothing.
+  For example, NUMBER: ('0'..'9')*;
+  It leads to infinite loops, since it can always match nothing
+  without advancing the input stream.
+
+Parser Rules
+  * names begin with a lowercase letter
+  * examples
+    program : statement+;
+    statement
+      : expression NEWLINE
+      | ID '=' expression NEWLINE
+      | NEWLINE
+      ;
+    expression : multiplication (('+' | '-') multiplication)*;
+    multiplication : atom ('*' atom)*;
+    atom: INTEGER | ID | '(' expression ')';
+- start rule
+  * the rule where parsing begins
+  * can be any rule
+
+Rule Parameters (p. 131-133)
+- syntax to specify arguments a rule accepts
+  <<rule-name>>[<<type>> <<name>>, ...] : ... ;
+  * note that square brackets are used instead of parens
+- syntax to pass parameters to a rule
+  name[arg1, arg2, ...]
+  * note that square brackets are used instead of parens
+- syntax to access argument values in a rule
+  $<<arg-name>>
+
+Rule Return Values (p. 133-135)
+- rules can return one or more objects
+- syntax to specify
+  <<rule-name>> returns [<<type>> <<name>>, ...] : ... ;
+  * naturally a rule can both accept arguments and have return values
+- syntax to set a return value in a rule action
+  $<<name>> = <<value>>;
+- callers of the rule access return values using $<<name>>
+- when there are multiple return values, they are
+  supported in generated Java code by a generated class named
+  <<rule-name>>_return that has a public field for each return value
+
+Rule Options
+- greedy (p. 85-86)
+  * match as much input as possible when selecting between alternatives
+  * true by default
+- backtrack, k and memoize (p. 98)
+  * same as grammar options, but scoped to a specific rule
+
+Rule Scopes (p. 87)
+- rules can define a scope for attributes visible to all rules they invoke
+- syntax to define
+  <<rule-name>>
+  scope {
+    // Use target language syntax for declaring variables.
+    <<type>> <<attribute-name>>;
+    ...
+  }
+  : ... ;
+- syntax to use
+  $<<rule-name>>::<<variable-name>>
+
+Rewrite Rules
+- specify output using AST or template syntax
+- follow rule alternatives
+- begin with ->
+
+Global Scopes (p. 142-146)
+- syntax to define scope attributes
+  scope <<scope-name>> {
+    <<type>> <<attribute-name>>;
+    ...
+  }
+- syntax to activate a scope
+  <<rule-name>>
+  scope <<scope-name>>; (can have more than one of these lines)
+  : <<rule-alternatives>> ;
+- syntax to refer to scope attributes
+  $<<scope-name>>::<<attribute-name>>
+
+Actions (p. 121-123)
+- blocks of code in the target language enclosed in curly braces
+- to add code to the generated lexer or treeparser source file
+  * before the class definition
+    @lexer::header { <<code>> }
+    or
+    @treeparser::header { <<code>> }
+    - for example, a Java package declaration and imports
+  * inside the class definition
+    @lexer::members { <<code>> }
+    or
+    @treeparser::members { <<code>> }
+    - for example, field declarations and method definitions
+- to add code to the generated parser source file
+  * before the class definition
+    @parser::header { <<code>> }
+    or simply
+    @header { <<code>> }
+    - for example, a Java package declaration and imports
+  * inside the class definition
+    @parser::members { <<code>> }
+    or simply
+    @members { <<code>> }
+    - for example, Java constants, fields, constructors and
+      method definitions
+- to add code to be executed before a rule alternative is matched
+  inside the method generated for the rule
+  <<rule-name>>
+  @init { <<code>> } : ...;
+- to add code to be executed when a rule alternative is matched
+  inside the method generated for the rule
+  <<rule-name>> : <<token-sequence>> { <<code>> };
+- to add code to be executed after a rule alternative is matched
+  inside the method generated for the rule
+  <<rule-name>>
+    @after { <<code>> } : ...;
+- code for a rule is automatically placed in a try block that has
+  * a catch for RecognitionException that calls reportError and recover
+    - see "Error Messages" later for more detail
+  * a finally block that is empty
+- to add/override catch blocks and/or override the finally block
+  in the generated code for the method that corresponds to a rule
+  <<rule-name>> : ... ;
+  catch[<<exception-name>> e] { <<code>> } (can have any number of these)
+  finally { <<code>> }
+  - a common exception to specify is RecognitionException
+    to override the catch block that is added by default
+
+Variables Available In Actions
+- can obtain CommonToken objects that matched tokens in a rule alternative
+  * if token rule is "foo", access the token object with "$foo"
+  * works with both lexer and parser rule names
+  * obtain the typed value of a CommonToken object with $name.value
+  * obtain the String value of a CommonToken object with $name.text
+- can assign an alternate name to a token in the sequence
+  * necessary when sequence contains multiple references to the same rule
+    - ex. for-loop : 'for' '(' e1=expr ';' e2=expr ';' e3=expr ')' block;
+    - reference with $e1, $e2 and $e3
+  * to collect multiple matching values into an ArrayList,
+    use += instead of =
+
+Phases
+- first phase is lexical analysis
+  * the lexer breaks the input character stream into tokens
+- second phase is parsing
+  * the parser translates the token stream into output or
+    an abstract syntax tree (AST)
+- optional third phase
+  * walks AST and generates output
+- more phases can be used for complicated translations,
+  breaking a large problem into several smaller problems
+  where alternate tree representations are passed between phases
+- if the final phase produces output, it is called the emitter
+- emitters can use templates to simplify producing output and
+  support multiple translations (ex. to multiple programming languages)
+  * ANTLR uses the StringTemplate library to process output templates
+- translators that produce an internal data structure instead of output
+  can also be created (ex. configuration file readers)
+
+Channels
+- the parser sees tokens created by the lexer on a single channel,
+  by default the DEFAULT_CHANNEL
+- the lexer can send tokens to other channels such as HIDDEN
+  so the parser won't see them
+- whitespace and comments are often handled this way
+- for example,
+  WS: (' ' | '\t')+ { $channel = HIDDEN; };
+- an alternative is to hide them all together with
+  WS: (' ' | '\t')+ { skip(); };
+- how can the parser inspect tokens on other channels?
+
+Abstract Syntax Trees (ASTs)
+- encode the order of operations according to their precedence
+- use an AST when multiple passes are required because walking an AST
+  is faster than making multiple passes through token streams
+- to generate from a parser,
+  * add
+    options {
+      output = AST;
+      ASTLabelType = CommonTree; // or a custom subclass
+    }
+  * to specify AST nodes in a rule token sequence,
+    - add ^ after tokens to be treated as parent nodes
+    - add ! after tokens for which no AST node should be created
+    - other tokens will be treated as child nodes
+  * to specify AST nodes using tree rewrite syntax (more readable),
+    at the end of an alternative add "-> rewrite-rule"
+    where rewrite-rule can be
+    - nothing to omit
+    - a single token reference
+    - ^(parent child-1 child-2 ... child-n)
+- to print a String representation of the AST for a rule,
+  do the following in a rule action:
+  System.out.println($<<rule-name>>.tree.toStringTree());
+
+ANTLR tools
+- to use ANTLR tools, these JARs must be in your classpath:
+  antlr-2.7.7.jar (because ANTLR 3 currently uses
+  ANTLR 2 to parse grammars)
+  antlr-3.0.jar
+  stringtemplate3.0.jar
+- to translate a grammar into lexer, parser and treeparser classes,
+  java org.antlr.Tool <<grammar-name>>.g
+  * see options at
+    http://www.antlr.org/wiki/display/ANTLR3/Command+line+options
+- this generates
+  <<grammar-name>>.tokens - contains constant definitions for tokens
+    which is needed for another grammar to use to the same tokens
+    (for example, a grammar that walks the AST
+     produced by the first grammar)
+  <<grammar-name>>__.g - contains generated lexer grammar
+  <<grammar-name>>Lexer.java - contains generated lexer (why needed?)
+  <<grammar-name>>Parser.java - contains generated parser
+  * note that when ANTLR 3.1 is released it will just use the grammar name
+    when generating classes from grammars of a single type
+    - this will allow grammars to have names like
+      MathLexer.g, MathParser.g and MathTree.g
+- generated lexer and parser classes contain one method for each rule
+- if the grammar rules do not contain actions,
+  then the generated code outputs nothing when given valid input
+  and error messages when given invalid input
+- when errors in the input are encountered,
+  ANTLR attempts to recover and continue parsing
+
+Application to use generated code
+- must write an application to use the generated classes
+- example
+  import java.io.FileInputStream;
+  import java.io.IOException;
+  import org.antlr.runtime.*;
+  import org.antlr.runtime.tree.*;
+
+  public class MyTranslator {
+    public static void main(String[] args)
+    throws IOException, RecognitionException {
+      if (args.length != 1) {
+        System.err.println("usage: java MyTranslator <<file-name>>");
+        System.exit(1);
+      }
+
+      FileInputStream fis = new FileInputStream(args[0]);
+      ANTLRInputStream ais = new ANTLRInputStream(fis);
+      Lexer lexer = new <<grammar-name>>Lexer(ais);
+      CommonTokenStream cts = new CommonTokenStream(lexer);
+      <<grammar-name>>Parser tokenParser = new <<grammar-name>>Parser(cts);
+      <<grammar-name>>Parser.classDef_return parserResult =
+        tokenParser.<<main-rule-name>>();
+      fis.close();
+
+      // The following code is only needed to walk an AST
+      // produced by the previous code.
+      CommonTree tree = (CommonTree) parserResult.getTree();
+      System.out.println(tree.toStringTree()); // for debugging
+      CommonTreeNodeStream tns = new CommonTreeNodeStream(tree);
+      <<grammar-name>>Tree treeParser = new <<grammar-name>>Tree(tns);
+      treeParser.<<main-rule-name>>();
+    }
+  }
+
+Grammar to walk an AST
+- syntax:
+  tree grammar <<tree-grammar-name>>;
+  options {
+    // Load token types from .tokens file of grammar that created the AST.
+    tokenVocab = <<parser-grammar-name>>;
+    ASTLabelType = CommonTree;
+  }
+  ...
+- rule differences
+  * tree grammar rules
+    - are typically simpler since the AST encodes the order of operations
+    - often correspond to language concepts like
+      attribute declaration, method definition, method call and assignment
+  * lexical rules aren't needed since
+    a character stream isn't being processed
+  * alternatives specify single nodes or subtrees to match
+    - ex. node-name
+    - ex. ^(parent child-1 child-2 ... child-n)
+  * nodes to be matched can be given variable names
+    so they can be uniquely referenced in actions
+    - ex. ^(p=parent c1=child c2=child)
+    - reference with $p, $c1 and $c2
+- files generated from a tree grammar
+  * <<grammar-name>>.java - contains generated tree parser
+  * <<grammar-name>>.tokens - contains token definitions
+    that aren't really needed
+
+ANTLRWorks
+- written in Java using Swing
+- an IDEA plugin is available, but none for Eclipse yet
+- probably want to uncheck Preferences...Editor...Auto-indent ':' in rule
+- editor shortcut keys
+  * to go to the definition of the rule name under the cursor, cmd-b
+  * to go to the definition of a rule whose name with be
+    entered or selected from a list, cmd-B
+- to see a syntax diagram for a rule, select "Syntax Diagram"
+  at the bottom and move the cursor to the desired rule
+- debugger
+  * to set a breakpoint at a rule,
+    click in gutter to left of a line that defines it
+  * after setting breakpoints, press the "Fast Forward" button
+    (it doesn't matter which "Break on" checkboxes are selected)
+  * when using debugger, be sure to select the correct start rule!
+  * parse trees
+    - leaves represent input tokens and non-leaves represent rules
+    - each subtree represents a phrase of a sentence in the input
+    - when there are conditional evaluations
+      requiring lookahead (> 1 pass),
+      successfully evaluated subtrees are drawn in green
+      (backtracking succeeded)
+      unsuccessully evaluated subtrees are drawn in red
+      (backtracking failed)
+      and subtrees actually selected ("with feeling") are drawn in black
+    - to view, press the "Parse Tree" button at the bottom
+  * ASTs
+    - leaves represent operation arguments and
+      non-leaves represent operations
+    - typically much smaller than the corresponding parse tree
+    - to view, press the "AST" button at the bottom
+  * for information on remote debugging
+    which is needed when the lexer and parser rules are in separate files,
+    see http://www.antlr.org/wiki/pages/viewpage.action?pageId=4554898
+- can generate lexer/parser code from the Generate menu
+
+DFA diagrams
+- DFA stands for Deterministic Finite Automaton, a kind of state machine
+  * "deterministic" means that all transitions from a given state
+    are unique
+  * "finite" means there are a fixed number of states
+- ANTLR uses DFAs
+- in state machine diagrams, states are represented by circles and
+  valid transitions between states are represented by
+  labelled arrows between states
+- ANTLRWorks displays DFA diagrams using Graphviz
+  which must be downloaded from http://www.graphviz.org
+  * still can't get this working under Mac OS X!
+  * see if new documentation has been added to the website
+- DFAs alone can't describe all programming language constructs
+  * don't support cycles
+  * don't remember past states
+  * can only describe syntactic validity (structure),
+    not semantic validity (meaning)
+- DFAs can't see past nested structures
+  * backtracking can be used to compensate for this
+  * backtracking tries alternatives in a specified order
+
+Pushdown machines
+- adding a stack to a state machine makes it a pushdown machine
+  which has a submachine for each grammar rule
+- each submachine can be represented by a syntax diagram
+  that resembles a flowchart
+  * rectangles represent vocabulary symbols
+  * rounded rectangles represent references to other submachines (rules)
+- can be recursive to represent arbitrarily nested constructs
+- ANTLR uses DFA, not pushdown machines
+
+Kinds of recognizers
+- LL recognizers (a.k.a. top-down)
+  * "recognize input from left to right using leftmost derivation"
+  * a popular implementation is called "recursive-descent"
+  * maps input to a tree to be walked in depth-first manner
+  * ANTLR can't process left-recursive grammars
+    where the leftmost construct on the right-side of a rule
+    recursively refers to that rule
+    - these must be rewritten to remove left-recursion
+- LR recognizers (a.k.a. bottom-up)
+  * "recognize input from left to right using rightmost derivation"
+  * YACC uses this approach
+
+Lookahead
+- needed when more than one left side of a rule alternative matches
+  the input and the parser needs to examine subsequent tokens
+  to determine which alternative to use
+- most LL recognizers only support a fixed amount of lookahead - LL(k)
+- ANTLR supports arbitrary lookahead - LL(*)
+
+Memoization
+- records the result of attempted matches (success or failure)
+  at specific points in the input stream
+- speeds processing, but increases memory required
+
+Symbol tables
+- track variable definitions and their scope
+- used to determine whether phrases are valid
+  in the context in which they appear
+
+Context-free vs. context-sensitive
+- a grammar is context-sensitive if determining its validity
+  requires knowledge of phrases before or after it
+- grammars that don't require this are context-free
+- predicates can be used to implement recognizers
+  for context-sensitive grammars
+
+StringTemplate
+- a Java library for substituting values into a text template
+- to use, set the grammar option "output" to "template"
+  * causes parser and tree parser rules to return templates
+    whose placeholders can be set with template rewrites
+- templates can be specified in the grammar or in separate files
+- syntax when in grammar
+  rule-name
+    : token-sequence -> template(name=<<target-language-expression>>, ...)
+  <<
+  literal-text <name> literal-text
+  more-lines
+  >>
+  * can also use double-quotes instead of << >>
+- syntax in separate files
+  <<template-name>>(<<arg-name>>={ <<code>> }, ...)
+  - code can refer to the populated template returned by
+    a rule invocation to the left of -> (ex. $var.st)
+- to define a template in a grammar file
+  <<template-name>>(<<arg-list>>) ::= "<<template-content>>"
+
+Resolving ambiguities/non-determinisms with lookahead
+- semantic predicates can be used
+  * enable/disable an alternative based on a boolean expression
+    in the target language
+  * syntax: rule-name : { boolean-expression }? alternative-sequence
+- syntactic predicates can be used
+  * specify the precedence of alternatives
+    to be used when more than one matches
+    - only needed for ambiguous predicates
+    - first match wins
+  * syntax: rule-name : ( enabling-sequence ) => consumed-sequence
+    - often the enabling and consumed token sequences are the same
+  * the sequence on the left of => is what to match in the 1st pass
+    (selecting an alternative)
+  * the sequence on the right of => is what to match in the 2nd pass
+    (using an alternative)
+  * if last alternative doesn't have a syntactic predicate,
+    it is treated as the default if previous predicates don't match
+  * add "options { backtrack = true; }" to a rule to automatically
+    insert syntactic predicates to each ambiguous alternative
+    that match their right sides
+  * "memoize = true;" option is usually used with "backtrack = true;"
+    - see Memoization
+
+Common Error Messages
+- output from generated parsers
+  * no viable alternative
+    - "no viable alternative at ..."
+  * mismatched token
+    - "mismatched input 'bad' expecting 'good'"
+  * early exit from a (..)+ subrule
+    - "required (..)+ loop did not match anything at input 'bad'"
+
+Statement Terminators
+- to use a newline as a statement terminator
+  it cannot be treated as whitespace
+
+Rule Exceptions
+- in generated code every rule is wrapped in a try block
+  try {
+    <<rule-body>>
+  } catch (RecognitionException e) {
+    reportError(e);
+    recover(input, e);
+  }
+- can replace that catch and/or add others
+  <<rule-name>: ...;
+  catch[<<exception-class>>] { <<code>> }
+  ...
+  finally { <<code>> }
+
+Tokens Specification
+- two purposes
+  1) introduce imaginary tokens, typically used as AST parent nodes
+     ex. output "^(VARDEF type name)"
+  2) assign a better token name to string literals,
+     typically used as AST node names
+     ex. output "MOD" instead of "%"
+- syntax
+  tokens {
+    VARDEF;
+    MOD = '%';
+  }
+- Steve Bennett wrote:
+  I found that there are three places for imaginary tokens:
+
+  1. If you want to rename a token to highlight the context it is in. For
+  example, '<', known as LT, can mean really the lower-than-operator or
+  the opening symbol for generics. I disambiguate with OP_LT[LT] or
+  OPEN_GENERICS[LT].
+
+  2. Use as root where no other normal token is available. I'm ambivalent
+  on this, as I'm not sure if you have to get to a situation like ^(ROOT
+  $rule otherToken) or if ^(otherToken $rule) is also sufficient. But
+  there is the case:
+
+  explicit_anonymous_function_parameter
+    : anonymous_function_parameter_modifier? type IDENTIFIER
+      -> ^(EXPLICIT_ANONYMOUS_FUNCTION_PARAMETER
+           ^(OPTIONAL anonymous_function_parameter_modifier?)
+           type IDENTIFIER)
+    ;
+
+    Without an imaginary token ANTLR would see "^(^(" - a tree as root of
+    another tree, which is illegal. The made up root prevents this.
+
+    3. Disambiguation for tree grammars. I prefer to remove backtracking and
+    predicates from tree grammars as much as possible, as those are usually
+    repetition of work of former used parsers. When the grammar analysis
+    complains about an ambiguity, which can't be solved by left-factoring
+    easily, I insert a special unique token at the beginning of the
+    ambiguous token stream.
+
+Error Messages
+- in order to improve error messages and/or
+  stop processing after the first error is encountered,
+  it is necessary to override certain methods in BaseRecognizer
+  (source is in runtime/Java/src/org/antlr/runtime/BaseRecognizer.java)
+- BaseRecognizer is the base class of Lexer, Parser and TreeParser
+  which are the base classes of the generated classes
+- the API documentation at http://www.antlr.org is very useful
+  for learning the method signatures and
+  viewing the source code for the default implementations
+  * click on a method to scroll to the detail
+  * you'll see text like
+    "Definition at line 147 of file BaseRecognizer.java."
+  * click on the line number hyperlink to view the source code
+- RecognitionException
+  * the base class of most exceptions thrown by the generated classes
+  * many methods in BaseRecognizer take a parameter of this type
+- to continue processing after an error is encountered you must
+  consume the remaining tokens that make up the invalid construct
+  * see the BaseRecognizer.consumeUntil and IntStream.consume methods 
+    (p. 243)
+- rule exception handling
+  * by default, the generated method for each rule contains the following:
+    catch (RecognitionException re) {
+      reportError(re);
+      recover(input, re);
+    }
+  * this can be overridden for every rule by adding the following
+    to the parser grammar
+    @rulecatch {
+      catch (RecognitionException re) {
+        // whatever you want here, perhaps
+        // only calling reportError(re) and not recover(input, re)
+      }
+    }
+  * reportError and recover are methods in BaseRecognizer
+    and can be overridden in the generated parser class
+    (inside @members { ... } in the parser grammar)
+  * reportError(RecognitionException e) call trace
+    - displayRecognitionError(String[] tokenNames, RecognitionException e)
+      * insures that only one message per token matched is written
+        to eliminate "spurious" messages
+      * concatentates an error header and message
+        and passes to emitErrorMessage
+      * override to eliminate message headers
+      - getErrorHeader(RecognitionException e)
+        * returns "line {line-#}:{column-#}"
+        * override to change the message headers
+      - getErrorMessage(RecognitionException e, String[] tokenNames)
+        * returns a String that is specific to each RecognitionException
+          subclass but MismatchedRangeException (an oversight?)
+        * override to customize messages
+        - getTokenErrorDisplay(Token t)
+          * returns token text in single quotes or, if there is no text,
+            the token type in angle brackets and single quotes
+          * no good reason to override
+      - emitErrorMessage(String msg)
+        * writes the message to stderr
+        * override to write elsewhere such as a log file
+  * recover call trace
+    - IntStream.consume
+      * only called if multiple errors occur at the same token
+        to consume a single token 
+    - computeErrorRecoverySet
+      - combineFollows(false)
+    - beginResync (does nothing; can override)
+    - consumeUntil
+    - endResync (does nothing; can override)
+  * generated token and tree parser classes call
+    BaseRecognizer.match(IntStream input, int ttype, BitSet follow)
+    which calls
+    BaseRecognizer.mismatch(IntStream input, int ttype, BitSet follow)
+    which calls
+    BaseRecognizer.recoverFromMismatchedSet(
+      IntStream input, RecognitionException e, BitSet follow)
+    - override mismatch to stop after the first error is found
+      and not attempting recovery
+    - for example,
+      protected void mismatch(IntStream input, int ttype, BitSet follow)
+      throws RecognitionException {
+        throw new MismatchedTokenException(ttype, input);
+      }
+    - there doesn't seem to be any reason to
+      override recoverFromMismatchedSet
+
+Tips
+- when you get a new feature to work, save the grammar file(s)
+  under a different name or directory before making additional changes
+  * it can be hard to retrace your steps if you break it later
+- use ANTLRWorks Grammar ... Check Grammar (cmd-R) often
+  to verify that your grammar is syntactically valid
+- use the ANTLRWorks debugger to verify AST-creating parsers
+  produce correct ASTs
+- rules cannot assign the result of a set of alternatives to a variable
+  * ex. instead of "var=(option1 | option2)"
+        use (var=option1 | var=option2)
+- as your grammar grows it becomes attractive to separate
+  lexer and parser rules into different grammar files

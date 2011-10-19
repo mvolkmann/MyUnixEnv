@@ -1,0 +1,41 @@
+Swing Notes
+
+Starting Point
+- for a good example of starting code for a Swing application,
+  see Programming/Languages/Java/Swing/SwingStart
+
+Event Dispatch Thread (EDT)
+- long running tasks shouldn't run on the EDT so the GUI can be responsive
+- Swing components should only be accessed and modified on the EDT
+- SwingUtilities class
+  * has invokeLater and invokeAndWait methods
+    that just call the same methods in java.awt.EventQueue
+  * invokeLater runs a given Runnable on the EDT
+    after pending events are processed
+  * invokeAndWait blocks until all pending events are processed
+    and then runs a given Runnable on the EDT
+- SwingWorker class
+  * added in Java 6
+  * can get a version for Java 5 from https://swingworker.dev.java.net/
+  * create a new class that extends this
+  * implement code to be run off the EDT in the doInBackground method
+  * implement code to be run on the EDT in the done method
+  * to run code on the EDT before doInBackground completes
+    - implement code to be run on the EDT in the process method
+    - invoke the publish method in doInBackground which runs off the EDT
+      to pass data to the process method which runs on the EDT
+  * "state" and "progress" are bound properties whose changes
+    are reported to registered PropertyChangeListeners
+    - others can be added
+  * call execute to start processing
+
+Swing Application Framework (JSR-296)
+- download from https://appframework.dev.java.net/
+- build by running "ant jar" which will
+  create AppFramework.jar in the dist directory
+
+Double-clickable JARs
+- see Programming/Languages/Java/Swing/DoubleClickable
+
+WebStart
+- see Programming/Languages/Java/Swing/WebStart

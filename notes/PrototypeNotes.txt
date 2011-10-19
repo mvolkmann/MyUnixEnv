@@ -1,0 +1,19 @@
+Prototype Notes
+
+Overview
+- Prototype is a JavaScript library from writing AJAX web applications.
+
+Dollar functions
+- $('{element-id}') is equivalent to
+  document.getElementById('{element-id}')
+- $F(arg) gets the value of a form field
+  * arg can be form form field id or component object
+- $A(arg) converts arg into an Array object
+  * for example, converting a DOM NodeList to an Array
+    for more efficient traversal
+- $R({lower}, {upper}, {include-bounds}) creates a range
+  from lower to upper, optionally including the bounds
+
+Who uses it?
+- Ruby on Rails
+- the script.aculo.us library is built on top of Prototype

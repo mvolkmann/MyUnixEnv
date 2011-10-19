@@ -1,0 +1,24 @@
+iTunes Notes
+
+Next track
+- right-click the iTunes dock icon and pick Next
+
+Play current track
+- right-click the iTunes dock icon and pick Play
+
+AppleScripts
+http://www.dougscripts.com/
+
+Playing all tracks found in the iTunes Store
+1) Download musicStorePlayer from http://www.dougscripts.com.
+2) Verify that you have a "Script" folder under {username}/Library/iTunes.
+3) If not, create it.
+4) Copy this script file into that folder.
+5) Start iTunes.
+6) Go to the iTunes Store.
+7) Do a search for the music you want to preview.
+8) Select "musicStorePlayer" from the AppleScript menu in iTunes.
+
+XML
+- an XML file describing your iTunes library is in
+  /Users/username/Music/iTunes/iTunes Music Library.xml

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR.html1/DTD.html1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999.html">
+  <head>
+    <title>CruiseControl at FRB</title>
+    <link rel="stylesheet" type="text/css" href="common.css" target="_blank"/>
+  </head>
+  <body>
+    <h2>CruiseControl at FRB</h2>
+
+    <h3>General Information</h3>
+  
+    <ul>
+
+      <li>
+        The main CruiseControl web site is
+        <a href="http://cruisecontrol.sourceforge.net/"
+        target="_blank">here</a>.</li>
+
+      <li>
+        A Wiki with useful information on CruiseControl is
+        <a href="http://confluence.public.thoughtworks.org/display/cc/home"
+        target="_blank">here</a>.</li>
+
+      <li>CruiseControl is installed on the "build box"
+          which is the PC named H1TRASSD6.
+          This is the PC that was initially used by Mark Volkmann.</li>
+
+      <li>The software is in C:\CruiseControl\cruisecontrol-2.1.6.</li>
+
+      <li>For detailed setup instructions,
+          see <a href="CruiseControlSetup.html">this</a>.</li>
+
+      <li>CruiseControl is composed of two pieces.
+          One is a process started from a command prompt
+          that performs builds.
+          The other is a web app. that provides reporting on builds.</li>
+
+      <li>The reporting web app. can be found in
+          C:\CruiseControl\cruisecontrol-2.1.6\reporting\jsp\dist\cruisecontrol.war.</li>
+
+      <li>To build the reporting web app., open a command prompt,
+          cd to C:\CruiseControl\cruisecontrol-2.1.6\reporting\jsp,
+          and enter "build war".</li>
+
+      <li>To deploy the reporting web app. to WebLogic,
+          copy the WAR file to
+          C:\bea\user_projects\domains\mydomain\applications.</li>
+
+      <li>WebLogic is started by running
+          C:\bea\user_projects\domains\mydomain\startWebLogic.cmd.
+          There is a shortcut on the desktop for running this script.</li>
+
+      <li>To start the CruiseControl build process,
+          open a command prompt, cd to
+          C:\cc_snapshot\h1mrv01_h7ptrs01\SHARED_VOB\Projects\CruiseControl
+          and enter "startCC".</li>
+
+      <li>To view the build history of all projects
+          managed by CruiseControl open a web browser and visit
+          <a href="http://h1trassd6:7001/cruisecontrol/" target="_blank">
+          http://h1trassd6:7001/cruisecontrol/</a>.
+      </li>
+
+      <li>CruiseControl builds from ClearCase snapshot views that are
+          stored on the build box in C:\C:\cc_snapshot\h1mrv01_h7ptrs01.
+          This directory contains a subdirectory for each VOB.</li>
+
+      <li>Configuration of CruiseControl is specified in
+          C:\cc_snapshot\h1mrv01_h7ptrs01\SHARED_VOB\Projects\CruiseControl\config.xml.</li>
+
+      <li>CruiseControl generates HTML reports on unit test results
+          by applying XSLT stylesheets (using Xalan) to an XML log file.
+          Merging of test result XML files with the CruiseControl
+          log file is specified in the config.xml file.
+          See the "log" element and its "merge" child elements.</li>
+
+      <li>There is a known problem with generating the
+          unit test results report when there are a large number of tests.
+          Xalan can generate an OutOfMemoryError.
+          This happens because some of the stylesheets use recursion
+          to replace a few characters in the log XML file
+          with specific strings and the stack grows too large.
+          The stylesheets that do this are
+          unittests.xsl and testdetails.xsl.
+          These stylesheets can be found in the
+          C:\CruiseControl\cruisecontrol-2.1.6\reporting\jsp\xsl directory.
+          Mark Volkmann modified these stylesheets to use a slightly
+          different approach for performing the string replacements.
+          These stylesheets now import another stylesheet
+          in C:\XML\XSLT\string-util.xslt.
+          This seems to have fixed the problem.
+          Whenever changes are made to the CruiseControl stylesheets,
+          the CruiseControl web app. must be rebuilt and redeployed.
+          The two "war" targets in the build.xml file in
+          C:\CruiseControl\cruisecontrol-2.1.6\reporting\jsp
+          were modified to include string-util.xslt.</li>
+
+    </ul>
+                  
+    <h3>Details on config.xml</h3>
+
+    <ul>
+
+      <li>
+        Information about the elements allowed in config.xml can be found
+        <a href="http://cruisecontrol.sourceforge.net/main/configxml.html"
+        target="_blank">here</a>.</li>
+
+      <li>
+        config.xml specifies
+        <ul>
+          <li>projects to be built (see "project" elements)</li>
+          <li>location of source repository to be checked for changes
+            (see "modificationset" elements)</li>
+          <li>frequency (in seconds) to check for changes
+            (see the "interval" attribute on "schedule" elements)</li>
+          <li>amount of time (in seconds) with no repository changes
+            that must pass before beginning a new build
+            (see the "quietperiod" attribute
+            of "modificationset" elements)</li>
+          <li>location of unit test XML result files
+            (see "merge" elements inside "log" elements)</li>
+          <li>whose should receive build result reports via email
+            (see "always" and "failure" elements
+            inside "htmlemail" elements)</li>
+          <li>and more</li>
+        </ul>        
+      </li>
+
+      <li>
+        Our config.xml currently describes three projects:
+        FPS, SAM and Shared.</li>
+
+      <li>
+        The "ant" element inside the "schedule" element of each "project"
+        specifies the Ant build file and target to be run
+        when a ClearCase modification is detected.
+        The three new Ant build files currently referenced
+        are in the same directory as config.xml and are named
+        fps-build.xml, sam-build.xml and shared-build.xml.</li>
+
+      <li>
+        The new Ant build files
+        (fps-build.xml, sam-build.xml and shared-build.xml)
+        perform two operations.
+        First, they perform ClearCase updates to get the latest changes.
+        Second, they execute "test" targets that have been added to
+        the existing Ant build files in
+        FPS_PROD_VOB, SAM_TRS_DEV and SHARED_VOB.
+        The new "test" targets depend on
+        existing "jar" or "war" targets,
+        which depend on existing "compile" targets.</li>
+
+      <li>
+        The Ant targets referenced from config.xml
+        can do anything we want them to do.
+        Currently they build compile Java source,
+        build JAR/WAR files and run JUnit tests.
+        We could also run targets to
+        deploy WAR/EAR files to a local server
+        and run HttpUnit and/or Cactus tests.</li>
+
+    </ul>
+
+    <hr/>
+    <p style="text-align:center">
+      Copyright &#169; 2004 Federal Reserve Bank. All rights reserved.
+    </p>
+  </body>
+</html>

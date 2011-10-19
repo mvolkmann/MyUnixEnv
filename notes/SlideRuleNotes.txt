@@ -1,0 +1,327 @@
+Slide Rule Notes
+
+Models
+- Think Geek
+  * patterned after a Pickett model
+- Sans & Streiffe No. 312
+  * Rich Seibel has this
+
+Virtual Slide Rules
+- web-based slide rules
+- collection of many
+  * http://www.antiquark.com/sliderule/sim/
+- Pickett 160-ES
+  * http://www.antiquark.com/sliderule/sim/160es/virtual-160-es.html
+  * scales: A B C CI D K L0
+  * only one side
+- Pickett N3-T
+  * http://www.antiquark.com/sliderule/sim/n3t/virtual-n3-t.html
+  * scales: A B C CF CI D DF DI K L LL0 LL1 LL2 LL3 Ln S ST T
+            square roots, cube roots
+- Pickett N4-ES
+  * http://www.antiquark.com/sliderule/sim/n4es/virtual-n4es.html
+  * scales: A B C CF CF/m CI D DF DF/m DI K L LL1 LL2 LL3 LL4 Ln S SH ST T TH
+            square roots, cube roots
+- Pickett N525-ES for statistics
+  * http://www.antiquark.com/sliderule/sim/n525es/virtual-n525-es.html
+  * scales: A B Bl C CI D L 
+            square roots
+            X^2df (p+q)^n Sp p q z Pl y N d X^2
+- Pickett N600-ES
+  * http://www.antiquark.com/sliderule/sim/virtual-slide-rule.html
+  * scales: A B C CF CI D DF DI K L LL1 LL2 LL3 Ln S ST T
+- Pickett N904-T
+  * http://www.antiquark.com/sliderule/sim/n904t/virtual-n904-t.html
+  * scales: A B C CI D K L S T
+            A* B* C* CI* D* K* L* (determine # of decimal places in results)
+- Pickett N909-ES
+  * http://www.antiquark.com/sliderule/sim/n909es/virtual-n909-es.html
+  * scales: A B C CI D K L S T
+            unit conversions
+
+Scales
+- Questions
+  * Why do most of the scales start at one instead of zero?
+    Is it because the values of log between zero and one are negative?
+- C & D: multiplication and division
+  * single scale
+   - represents numbers from 1 to 10
+- CF & DF: "folded"
+  * same as C & D, but go from pi to pi+10
+  * used to avoid resetting the slide
+    - if using C & D require a reset then using CF and DF will not
+  * to find the circumference of a circle,
+    set D to diameter and read circumference from DF
+  * to convert radians to degrees, move 180 on C to pi on D,
+    move cursor to radians on DF, and read degrees from CF
+  * to convert degrees to radians, move 180 on C to pi on D,
+    move cursor to degrees on CF, and read radians from DF
+- A & B: squares and square roots
+  * double scale - two sets of 1-10
+    - first set represents numbers from 1 to 10
+    - second set represents numbers from 10 to 100
+  * can also be used for multiplication and division like A & B,
+    but with less precision
+- K: cubes and cube roots
+  * triple scale - three sets of 1-10
+    - first set represents numbers from 1 to 10
+    - second set represents numbers from 10 to 100
+    - third set represents numbers from 100 to 1000
+- CI: inverted C scale
+  * same as C scale, but increases right to left
+  * useful for reciprocals
+  * useful for changing multiplication to an equivalent division
+    so slide doesn't have to be switched end-for-end
+    - "switch end-for-end" means to move the cursor to the left or right 1 on C
+      and then move the other 1 on C to the cursor
+  * can also change a division to an equivalent multiplication,
+    but why is that useful?
+- CIF: inverted, folded C scale
+- S: sines and cosines
+- T1 - tangents
+- ST: sines and tangents of angles less than 5.73 degrees
+- L: logarithms (base 10)
+  * the only evenly-spaced scale (linear)
+
+Decimal Places
+- must determine expected # of digits to left of decimal place mentally
+  and adjust the result
+  * for example, 123 * 0.2
+  * two decimal places to the left are expected
+  * multiple 1.23 and 2 to get 2.46
+  * answer is 24.6
+
+Direct Read vs. Slide
+- the slide is only used for multiplication and division
+- all other operations are performed by
+  directly reading from one scale to another
+
+Operations
+- reciprocals
+  * move cursor to x on C
+  * read 1/x from CI
+  * ex. find reciprocal of 6
+    - move cursor to 6 on C
+    - read result from CI (1.67)
+- squares
+  * move cursor to x on D or C
+  * read x^2 on A or B
+    - location of decimal point in result is determined
+      based on the side of A or B where the result falls
+    - see examples in middle of p. 26
+  * ex. find 1.25^2
+    - move cursor to 1.25 on D
+    - read result from A (1.56)
+  * ex. find 819^2
+    - move cursor to 8.19 on D
+    - read result from A (6.71 -> 671000; actual=670761)
+- square roots
+  * move cursor to x on A or B
+    - use left side of A or B if x has an odd number of digits or zeros;
+      otherwise use right side of A or B
+    - slightly more accurate to use B & C since they are closer to each other
+  * read x^(1/2) on D or C
+    - see rule for determining location of decimal point in result
+      at bottom of p. 25 and examples at top of p. 26
+  * ex. find square root of 43
+    - move cursor to 4.3 on A
+    - read result from D (6.56)
+  * ex. find square root of 5268
+    - move cursor to 5.27 on A
+    - read result from D (7.26 -> 72.6; actual=72.581)
+- cubes
+  * move cursor to x on D
+  * read x^3 on K
+  * ex. find 1.25^3
+    - move cursor to 1.25 on D
+    - read result from K (1.95; actual=1.953)
+  * ex. find 819^3
+    - move cursor to 8.19 on D
+    - read result from A (5.49 -> 549; actual=549.35)
+- cube roots
+  * move cursor to x on K
+  * read x^(1/3) on D
+  * ex. find cube root of 43
+    - move cursor to first 4.3 on K
+    - read result from D (3.52; actual=1.626)
+  * ex. find cube root of 5268
+    - move cursor to 5.27 on K
+    - read result from D (1.74 -> 17.4)
+- multiplication
+  * move left or right 1 on C to x on D
+    - using the right 1 on C is like determining where you'd be to the right
+      if another slide rule where placed there
+      * ex. 9 + 8 = 17; 9 - (10 - 8) = 7 where the next slide rule length = 10
+  * move cursor to y on C
+  * read x*y from cursor on D
+  * alternative #1 - turning multiplication into equivalent division
+    - move cursor to x on D
+    - move y on CI to cursor
+    - move cursor to whichever end of CI is on the rule
+    - read x*y from cursor on D
+    - works because a/b = a x 1/b
+  * alternative #2
+    - use A & B instead of C & D to avoid running off end,
+       but result has less accuracy
+  * special case: multiplication by pi
+    - move cursor to x on C or D
+    - read result from cursor on DF
+  * four methods to determine decimal point location
+    1) common sense - place so result is resonable for the problem
+    2) estimation - round numbers in problem; perform calculation with those,
+       and place decimal point in real result
+       so it is close to the estimated result
+    3) characteristics - sum of characteristics + 1 if result >= 10
+       from preliminary result location
+       - gives the number of places to move decimal point (see example on p. 11)
+       - also so similar method in "Slide Rule: How To Use It" by Bishop
+    4) "Decimal Keeper" scales on some Pickett models
+- division
+  * approach 1
+    - move top number (dividend) on C over bottom number (divisor) on D
+    - move cursor to left 1 on D
+    - read quotient from C
+  * approach 2
+    - move left or right 1 on C to top number (dividend) on D
+    - move cursor to bottom number (divisor) on CI
+    - read quotient from cursor on D
+  * approach 3
+    - move left or right 1 on C to bottom number (divisor) on D
+    - move cursor to top number (dividend) on D
+    - read quotient from cursor on C
+  * approach 4 - seems best!
+    - move bottom number on C over top number on D
+    - read quotient on D under left or right 1 on C
+  * shortcut for dividing many numbers by the same number
+    - move bottom number on C to left 1 on D
+    - move cursor to to each top number on C
+    - read each result from D
+- proportion
+  * to solve for x in a/b = c/x
+    - move cursor to a on D
+    - move b on C to cursor
+    - move cursor to c on D
+    - read x from C under cursor
+    - can swap C and D in the steps above
+- sines
+  * for angles >= 5.73 degrees
+    - move cursor to angle in degrees on S
+    - read sin x from C
+    - ex. sin 67
+      * move cursor to 67 on S
+      * read result from C (9.2 -> 0.92)
+  * for angles < 5.73 degrees
+    - move cursor to angle in degrees on ST
+    - read sin x from C
+    - ex. sin 3
+      * move cursor to 3 on ST
+      * read result from C (5.23 -> 0.0523)
+- cosines
+  * mentally calculate 90 - angle
+  * determine sine of that angle
+    - ex. cos 67
+      * 90 - 67 = 23
+      * move cursor to 23 on S
+      * read result from C (3.91 -> 0.391)
+    - ex. cos 3
+      * 90 - 3 = 87
+      * move cursor to 87 on S?
+      * TODO: How can you find cosines of small angles?
+      * read result from C ( -> 0.999)
+- tangents
+  * for angles >= 5.73 degrees
+    - move cursor to angle in degrees on T1
+    - read tan x from C
+  * for angles < 5.73 degrees
+    - sine of the angle is nearly the same as its tangent,
+      so use that
+  * for angles > 45
+    - the tangent of an angle greater than 45 is
+      the reciprocal of the tangent of 90 minus that angle
+    - ex. tan 63
+      * 90 - 63 = 27
+      * move the hairline to 27 on the T scale
+      * tan 27 is under the hairline on the D scale (approx. 5.09)
+      * slide the right 1 on the C scale to the hairline to divide 1 by 5.09
+      * move the hairline to the left 1 on the D scale
+      * read the result from the C scale under the hairline (approx. 1.96)
+
+- cotangent
+  * determine tangent of the angle, then determine reciprocal of that
+- logarithms (base 10)
+  * move cursor to x on D
+  * read mantissa of log x from L and add characteristic
+  * ex. log 38.7, mantissa is 0.588, characteristic is 1,
+    so answer is 1.588
+  * characteristic is
+    0 for 0 <= x < 10
+    1 for 10 <= x < 100
+    2 for 100 <= x < 1000
+    and so on
+- natural logs (base e)
+  * some slides rules have Ln and or LL scales that are used for this
+  * the Think Geek slide rule doesn't
+  * move cursor to x on C or D
+  * read result from Ln
+  * ex. ln 3
+    - move cursor to 2 on C or D
+    - read result from Ln (0.693)
+- chained calculations (a.k.a. continuous)
+  * a sequences of multiplications and divisions can be performed
+  * ex. 2 x 6 x 3
+    - move right 1 on C to 6
+    - move cursor to 2 on D (intermediate result is 12)
+    - move left 1 (or sometimes right 1) on C to the cursor
+    - move cursor to 3 on C
+    - read result from D (final result is 36)
+  * ex. 1.5 x 3.2 x 8
+    - move left 1 on C to 1.5
+    - move cursor to 3.2 on C (intermediate result is 4.8)
+    - move right 1 of C to cursor
+    - move cursor to 8 on C
+    - read result from D (final result is 38.4)
+  * ex. 8 * 3 / 5 * 2
+    - move right 1 on C to 8
+    - move cursor to 3 on C (intermediate result is 24)
+    - move left 1 on C to cursor
+    - move cursor to 5 on CI (intermediate result from D is 4.8)
+    - move left 1 on C to cursor
+    - move cursor to 2 on C
+    - read result from D (final result is 9.6)
+  * ex. 3 x 6 / 4 * 8
+    - move cursor to 3 on D
+    - move right 1 on C to cursor
+    - move cursor to 6 on C (3 x 6 = 18 on D)
+    - move 4 on C to cursor
+    - move cursor to right 1 on C (18 / 4 = 4.5 on D)
+    - move cursor to 8 on C
+    - read result from D (final result is 36)
+  * (a x c x e) / (b x d)
+    - solve as a / b * c / d x e
+
+Math Behind Slide Rules
+- multiplication
+  log(a * b) = log a + log b
+  so a * b = 10^(log a + log b)
+- division
+  log(a / b) = log a - log b
+  so a / b = 10(log a - log b)
+
+Example Calculations
+- http://www.antiquark.com/sliderule/sim/sr-calcs-by-example.html
+
+History
+- http://www.oughtred.org/history.shtml
+- contributors include:
+  * Galileo, Napier, Gunter, Oughtred, Newton, Gauss, Watt,
+    Priestley, Fulton, Fuller, Einstein, Fermi, and Von Braun
+
+Websites
+- http://www.oughtred.org/
+  * The Oughtred Society
+- http://sliderulemuseum.com/SR_Library_Books.htm
+  * great collection of books available as scanned PDFs
+- http://www.sliderule.ca/
+  * Eric's slide rule site
+- http://www.sliderule.ca/books.htm
+  * great review of books on slide rules from Eric's site

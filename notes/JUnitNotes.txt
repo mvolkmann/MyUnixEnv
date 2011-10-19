@@ -1,0 +1,13 @@
+JUnit Notes
+
+JUnit 4
+- when using this version, you must use Ant 1.7 or higher
+- imports
+  import org.junit.*;
+  import static org.junit.Assert.*;
+- annotate each test method with @Test
+- annotate the "setup" method with @Before
+- annotate the "teardown" method with @After
+- see API documentation at http://junit.sourceforge.net/javadoc/
+- assertions
+  * see junit.framework.Assert class

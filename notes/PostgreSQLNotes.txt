@@ -1,0 +1,132 @@
+PostgreSQL Notes
+
+There is a DZone Refcard for this!
+
+Installation
+- from source
+  * download and unzip
+  * cd to unzip directory
+  * ./configure
+  * make
+  * sudo make install
+  * sudo mkdir /usr/local/pgsql
+  * sudo mkdir /usr/local/pgsql/data
+  * sudo chown Mark /usr/local/pgsql
+  * sudo chown Mark /usr/local/pgsql/data
+  * all the commands are in /user/local/pqsel/bin
+  * initdb -D /usr/local/pgsql/data
+- from a prebuilt binary
+  * the installer creates a default user named "postgres" and
+    prompts for a password to assign to the user during the install
+    - you set the password to "postgres"
+  * by default this installs in /Library/PostgreSQL/8.3
+  * includes pgAdmin3 which is a GUI tool
+    for working with Postgres databases
+    (definitely use this!)
+  * all the commands are in the bin directory below that directory
+  * add "-Upostgres" to all commands to run as that user
+  * it seems that the server is always running when installed this way
+
+To start interactive mode
+- psql -U{username} {database-name}
+  * username can be "postgres"
+
+To create a user/role
+- createuser
+  * will prompt for name of role to add and
+    whether the role should be a superuser
+
+To change the password of a user
+- psql -Upostgres -dtemplate1
+- alter user {username} with password '{new-password}';
+- \q
+
+To start the database server
+- postgres -D /usr/local/pgsql/data >logfile 2>&1 &
+
+To create a database
+- createdb -U{username} {db-name}
+
+To delete a database
+- dropdb -U{username} {db-name}
+
+To use a database in interactive mode
+- psql -U{username} {db-name}
+  * for example, XAdemo
+
+To list all the public (non-system) tables
+- select * from pg_tables where schemaname='public';
+
+More on interactive mode
+- prompt
+  * begins with the database name
+  * ends in =# if you are the database superuser, otherwise ends in =>
+- see schemas that will be searched - show search_path;
+- change schemas that will be searched -
+  set search_path to {comma-separated-schema-list}
+  * for example, set search_path=sal;
+- help - \? or \h{command}
+- include - \i{file}
+  * reads SQL from the given file
+- list all databases - \l
+- list public tables - \d or \z
+- list system tables - \dS
+  * for example, the system table pg_tables
+- list columns in a table - \d {table-name}
+- version
+  * to see version of PostgreSQL, enter "select version();"
+- exit - \q
+- see http://www.postgresql.org/docs/6.4/static/app-psql.htm for more
+
+Run a single command
+- psql {db-name} {username} -c {query}
+
+Run commands in a file
+- psql  {db-name} {username} -f {file}
+
+Auto-incrementing keys
+- approach #1
+  CREATE TABLE foo (
+    id SERIAL PRIMARY KEY,
+    ... other columns ...
+  )
+- approach #2
+  CREATE SEQUENCE fooSeq;
+  CREATE TABLE foo (
+    id INTEGER NOT NULL PRIMARY KEY DEFAULT nextval('fooSeq'),
+    ... other columns ...
+  )
+
+JDBC
+- if prebuilt binary installer was used
+  then JDBC driver JAR files are in /Library/PostgreSQL/pgJDBC
+- download a driver from http://jdbc.postgresql.org/
+  * you have successfully used postgresql-8.2-504.jdbc3.jar
+  * the name of the driver class is org.postgresql.Driver
+- by default, listens on port 5432
+- connection URLs have the format
+  jdbc:postgresql://{host}:{port}/{database-name}
+- to set the schema from code,
+  stmt.execute("set search_path = {schema-name};");
+
+To dump the database to a file:
+- from a terminal window
+  * pg_dump -Upostgres {dbname} > {outfile}
+    - postgres password is postgres
+  * outfile will contain all SQL commands necessary to
+    recreate the database in its current state
+  * to recreate the database elsewhere
+    - use dropdb to delete the previous database
+      (see "To delete a database")
+    - use createdb to recreate an empty database
+      (see "To create a database")
+    - use psql to run the commands in outfile
+      (see "Run commands in a file")
+- from pgAdmin III
+  * right-click a table name
+  * select "Backup..."
+  * press "..." to specify the file where it will be saved
+  * select "PLAIN"
+  * select "Only data"
+  * press "OK"
+  * press "Done"

@@ -1,0 +1,392 @@
+C++ Notes
+
+Why use it?
+- performance
+- footprint (resulting .exe is smaller that what is needed
+  to implement the same functionality in other languages)
+- interface with low-level libraries
+
+Why avoid it?
+- complexity
+- productivity (low as a result of complexity)
+- maintainability (low as a result of complexity)
+
+Absolute Value
+  #include <cmath>
+  fabs(value)
+
+Abstract Classes
+- a C++ class is abstract if it defines one or more virtual functions
+- there is no abstract keyword like in Java
+
+Argument Passing Conventions
+- function(const Type& arg);
+  * arg is read but not modified in function and discarded after use
+- function(Type& arg);
+  * arg is modified in function and discarded after use
+- function(Type* arg);
+  * arg (pointer to Type) is stored by function
+    and may be modified later
+- function(const Type* arg);
+  * arg (pointer to type) is stored by function
+    and will not be modified later
+
+Assignment Operator (operator=)
+- return type must be a reference to the class type (ex. Foo&)
+- check for assignment to self (ex. if (this == &rhs) return *this;)
+- return *this
+- assign to all data members
+- if you write this then also write copy constructor and destructor
+- stop default implementation from being generated with
+  private:
+    Foo& operator=(const Foo&); // not implemented
+  This is common!
+
+Booleans
+- use the integral type bool
+
+Casting
+- dynamic casts only work if the base class
+  contains at least one virtual method
+  * without this compiler will say "source type is not polymorphic"
+  * reason is that dynamic_cast requires a vtable
+    which is only generated when there are virtual methods
+  * if subclasses never need to override methods in the base class,
+    just make the destructor virtual
+  * example: Derived* derivedPtr = dynamic_cast<Derived*>(basePtr);
+
+Class Member Functions
+- declare with "static" in header file, but not in .cpp file
+- invoke with {class-name}::{method-name}
+- if all the member functions of a class are static
+  it's probably better to put them in a namespace instead of a class
+  (invoked the same way, but don't allow objects to be created)
+
+Code Formatting
+- use Artistic Style from SourceForge
+
+Common Compiler Errors
+- something undeclared
+  * often caused by referring to data members in member function
+    that doesn't have {class-name}:: in front of the method name
+    in the .cpp file
+- "expected unqualified-id before using" error in a .cpp file
+  can be caused by a missing ; at the end of the class definition
+  in the corresponding header file
+
+Common Linker Errors
+- "{class-name}::{function-name} not found"
+  can be caused by forgetting to include "{class-name}::"
+  before the function name in the implementation (.cpp file).
+
+Const Correctness
+- for const member functions, "const" follows the parameter list
+  in the declaration (.h file) AND the definition (.cpp file)
+- it doesn't make sense for static member functions to be const
+  since they can't access data members
+- To cast away constness, use const_cast.
+  Here's an example of converting from a const std::string
+  to a non-const char*.
+    const string cppString = "foo";
+    const char* cString = cppString.c_str();
+    char* cString2 = const_cast<char*>(cString);
+
+Constants
+- define with const instead of #define
+  ex. static const int MILES_PER_MARATHON = 26.2;
+- class-specific example
+  * in .h file private section of class declaration
+    static const string NAME;
+  * in .cpp file outside method definitions
+    const string NAME = "Mark";
+- global example
+  * in .cpp file outside method definitions
+    static const string NAME = "Mark";
+
+Constructors
+- initialize all data members in the member initialization list
+- initialize in member initialization list in the order they are declared
+- when invoking a default (no-arg) constructor, parentheses cannot be used
+  ex. Foo* fooPtr = new Foo;
+- constructors cannot call other constructors in the same class
+
+Copy Constructors
+- must write if class dynamically allocates memory
+- if you write this then also write operator= and destructor
+- stop default implementation from being generated with
+  private:
+    Foo(const Foo&); // not implemented
+  This is common!
+- the previous bullet prevents pass-by-value which prevents inadvertent use
+
+Data Members
+- should almost always be private
+- should rarely be pointers
+- if they are pointers, they must be managed in the
+  copy constructor, assignment operator and destructor
+- when static, declare them as static in .h file
+  AND define and initialize them at top of .cpp file
+  ex. int Game::homeScore = 0;
+
+Debugging
+- see gdb_ddd_Notes.txt
+- to compile with debugging info. included in object files,
+  include the gcc option -g (in SOSCOE, make DEBUG=true)
+
+Destructors
+- must write if class dynamically allocates memory
+- delete all pointers, unless they are "smart pointers"
+- don't have to test pointers for null before calling delete on them
+- make destructors in base classes virtual so subclasses can override them
+- if you write this then also write copy constructor and operator=
+
+Exception Handling
+- in a catch, to rethrow the exception use "throw;"
+
+Floating Point Types
+- include float, double, long double
+- C and C++ only guarantee the minimum size of these which are as follows:
+  float=6 significant digits (usually 4 bytes)
+  double=10 signficant digits (usually 8 bytes)
+  long double=10 significant digits (usually 12 or 16)
+
+Functions
+- specify default arguments in header files, not source files
+
+Header Files
+- basic pattern
+  #ifndef NAME_H
+  #define NAME_H
+
+  // declarations
+
+  #endif
+
+- don't use "using namespace" statements in a header file
+  because source files that include them may not want them;
+  they pollute the global namespace in a way that
+  not every including source file will want
+
+Includes
+- put "header-name.h" includes before <header-name> includes
+- don't include header files that define classes that are only referenced
+  via pointers (*) and references (&); forward declare those classes instead
+
+Inheritance
+- syntax: class SubclassName : public BaseClassName
+  * public can be replaced with private (the default) or protected
+- the function implementation to be invoked is determined at runtime for
+  virtual functions (for non-virtual functions, this happens at compile-time)
+- only destructors and non-static member functions can be virtual
+- the virtual keyword is only used in function declarations (.h files),
+  not in function implementations (.cpp files)
+- derived classes can access protected data members of their base classes
+- derived classes can override and invoke
+  private member functions in the base class
+
+Inlining Methods
+- methods defined within a header file
+  inside a class definition will be inline
+  * advantages:
+    - only one place to modify to change method signature
+- methods defined within a header file
+  after a class definition with the inline keyword will be inline
+  * advantages:
+    - separates implementation from "interface"
+    - can move implementations to a separate file that is
+      included into either a header file or source file,
+      possibly controlled by preprocessor flags
+
+Integer Division
+- To get a double result,
+  double result = static_cast<double>(i1) / i2;
+
+Integral Types
+- include char, short (same as short int), int, long (same as int), long int
+- each of these can be signed (the default) or unsigned
+- C and C++ only guarantee the minimum size of these which are as follows:
+  char=1, short=2, int=2 (usually 4), long=4, long int=? (usually 8)
+
+Iterators
+- to advance to the next object, use ++iter instead of iter++
+  because it is slightly faster
+- there are six types:
+  * trivial - base class of the other iterators?
+  * input - extends trivial, forward-only, read-only, single-pass
+  * output - extends trivial, forward-only, write-only, single-pass
+  * forward - extends input and output, forward-only,
+              supports input and output operations,
+              may be const or mutable, multi-pass
+  * bidirectional - extends forward; adds ability to iterate backwards
+  * random access - extends bidirectional, allows pointer aritmetic,
+                    arbitrary offsets and subscripting
+- see notes for specific collection types to see how to iterate over them
+
+Lists
+- see Vectors
+
+Main
+- signature of main method is
+  int main(int argc, char* argv[])
+- return zero on successful termination
+
+Make
+- to see commands that would be executed without executing them,
+  make -n
+- to specify Makefile to use,
+  make -f {file-name}
+
+Maps
+- use STL map class
+- #include <map>
+- typedef map<key-type, value-type> type-name;
+  ex. typedef std::map<std::string, Contact> ContactMap;
+- to add a pair, myMap[key] = value
+- don't have to delete in destructor, but may need to
+  delete values if they are pointers
+- first() method on iterator returns key
+- second() method on iterator returns value
+- can you get a vector of the keys or values?
+- iterator example
+  typedef map<string, Foo> FooMap;
+  FooMap m;
+  for (FooMap::iterator it = m.begin(); it != m.end(); ++it) {
+    cout << "key = " < it->first << endl;
+    cout << "value = " < it->second << endl;
+  }
+
+Namespaces
+- declared in header files with namespace {name} { ... }
+- can be nested
+
+Naming Conventions
+- classes: camel-case with first upper
+- data members: same as variables, but end with _
+- parameters: same as variables
+- pointers: same as variables but end with Ptr (and _ if a data member)
+- variables: camel-case with first lower
+- functions: same as variables (first upper for SOSCOE)
+- names starting with _ and an uppercase letter are reserved for compiler use
+- names starting with __ and a lowercase letter are reserved for compiler use
+
+PIMPL Idiom (aka "compiler firewall")
+- hides implementation details
+- use this for widely used classes so if they are changed,
+  all the users of them don't have to be recompiled
+- example:
+  class Map {
+    private:
+      struct MapImpl* pimpl_;
+  };
+- see page 85 in the book "Exceptional C++"
+- for justification, see pages 103-106
+
+Pointers
+- when declaring pointers, put the * next to the type (ex. Foo* fooPtr;)
+- to dereference the pointer p, use *p
+- pass pointers to objects (or references) unless you want a copy to be made
+- to invoke methods on a pointer to an object,
+  use obj->method instead of obj.method
+- don't return raw pointers from functions,
+  return Boost smart_ptr objects instead
+- NULL is defined in cstdlib
+- an "opaque" pointer is a pointer to a forward declared, but undefined class
+
+References
+- alias to an object
+- to get the address of an object, use &obj
+- to declare that a variable is a reference to some object of type Foo,
+  use Foo& ref;
+- pass objects by reference (or pointer) unless you want a copy to be made
+
+Smart Pointers
+- implemented in many ways
+- examples include STL std::auto_ptr
+  (http://www.roguewave.com/support/docs/sourcepro/stdlibref/auto-ptr.html)
+  and Boost shared_ptr (http://www.boost.org/libs/smart_ptr/)
+- std::auto_ptr
+  * owns a dynamically allocated object
+  * performs cleanup when the object is no longer needed
+  * destroyed automatically when it goes out of scope,
+    at which point it destroys the object it owns
+  * when an auto_ptr is copied to another, it loses ownership
+    of the object it wrapped and resets its source to null
+  * when used to wrap class data members that are pointers
+    it does not free you from having to manage the data member
+    in the copy constructor and operator=
+    because of the previous bullet
+  * to create one that owns a dynamically allocated Foo object (the source),
+    auto_ptr<Foo> fooPtr(new Foo(1));
+  * the release method returns the source object and
+    sets the source of the auto_ptr to null so it no longer owns the source
+  * the reset method deletes the source object and
+    causes the auto_ptr to own a different object
+    fooPtr.reset(new Foo(2));
+  * get and set values in the wrapped object through the auto_ptr
+    with no change in syntax (ex. fooPtr->setBar("baz");
+  * don't put auto_ptr's in STL containers
+  * const auto_ptr's can never lose ownership of their original source object
+
+Strings
+- use string class in STL
+- to use in header files,
+    #include <string>
+    then refer to "std::string"
+- to use in source files,
+    #include <string>
+    using namespace std; // or using std::string;
+    then refer to "string"
+- to compare to string objects use ==
+- to get a char* version of a string s,
+  char* c = s.c_str();
+- to concatenate C strings,
+  string s("first");
+  s += "second";
+- to create a string by concatentating many kinds of values,
+  #include <sstream>
+  std::ostringstream oss;
+  oss << "text" << 19 << false;
+  std::string s = oss.str();
+  oss.str(""); // to reset
+- to convert a string to a numeric type
+  std::string text = "19";
+  std::istringstream iss(text);
+  int value;
+  iss >> value;
+- The recommended way to enable an object to output its string representation
+  is to override the << operator for the class as follows.
+  Note that this is NOT a member function.
+  ostream& operator <<(ostream& os, const {class-name}& object) {
+    os << whatever you want to output without endl at end;
+    return os;
+  }
+- insert, erase, assign, substr, append, replace, find and compare
+  operations are described on p. 335-348 in C++ Primer 4th edition
+
+Unit Tests
+- a popular C++ unit testing library is CppUnit
+- download from http://cppunit.sourceforge.net/cppunit-wiki
+- see your CppUnitNotes.txt
+
+Vectors
+- use STL vector class
+- #include <vector>
+- typedef vector<value-type> type-name;
+  ex. typedef std::vector<Contact> ContactVector;
+- don't have to delete in destructor, but may need to
+  delete values if they are pointers
+- iterator example
+  // If you typedef'ed the Vector, you can use
+  // that type below instead of vector<Foo>.
+  vector<Foo> v;
+  for (vector<Foo>::iterator it = v.begin(); it != v.end(); ++it) {
+    cout << *it << endl;
+  }
+- converting to an array
+  ???
+
+Virtual Functions
+- reasons to avoid
+  * performance - vtable lookup at run-time makes invoking them slower
+  * consistency - only calls made through pointers or references
+    use dynamic lookup, direct calls are resolved at compile-time

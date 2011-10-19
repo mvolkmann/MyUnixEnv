@@ -1,0 +1,19 @@
+YouTube Notes
+
+* Downloading local copies of YouTube videos
+  - the URL of a YouTube video will end with a query parameter
+    that looks like ?v={id}
+  - use the id value to browse this URL
+    http://www.youtube.com/v/{id}
+  - you'll be redirected to another URL
+  - look for ";t={t}" at the end of this new URL
+  - to download the video in Flash Video (FLV) format, browse this URL
+    http://www.youtube.com/get_video.php?video_id={id}&amp;t={t}
+
+* Playing FLV files
+  - the Mac applications "SWF & FLV Player" and "VLC" can play these
+  - web browsers should play them with the following HTML tag
+    but it doesn't seem to work in Safari or Firefox
+    <object data="{name}.flv"
+      type="application/x-shockwave-flash"
+      width="425" height="355"/>

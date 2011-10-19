@@ -1,0 +1,80 @@
+Java Notes
+
+Executable JARs
+- assuming that your Java application is contained within one JAR,
+  add a Main-Class attribute to your manifest which points to
+  the class with the main method
+  i.e.: Main-Class: org.foo.bar.Main
+- can also create these with the Mac application
+  /Developer/Applications/Utilities/Jar Bundler.app
+- double-click the JAR to run the application
+- for an example of this, see
+  Programming/Languages/Java/Swing/DoubleClickable
+  and
+  Programming/Languages/Java/Swing/DoubleClickableJarInJar
+- when JAR files are included in another JAR file,
+  includes ones are not added to the classpath!
+  * in the Ant jar task, use the zipfileset subtask
+    to expand other JARs into the JAR being created (see AntNotes.txt)
+
+Generics
+- advanced example that sorts a List of any objects that are Comparable
+  * of course in real code you would use TreeSet to do this
+  * note how T is "declared" and used
+
+    public static <T extends Comparable> void bubbleSort(List<T> list) {
+        int count = list.size();
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = i + 1; j < count; j++) {
+                T a1 = list.get(i);
+                T a2 = list.get(j);
+                if (a1.compareTo(a2) > 0) {
+                     list.set(i, a2);
+                     list.set(j, a1);
+                }
+            }
+        }
+    }
+
+- typesafe gets from a Map declared as Map<String, Object>
+  that is a field named m in some class
+  @SuppressWarnings("unchecked")
+  public <T> T get(String key) { return (T) m.get(key); }
+  Boolean b = get("bob);
+  int i = get("foo");
+  Car c = get("car");
+
+Java Web Start
+- to deploy an application using this
+  * create a JAR containing all the required .class files
+    - can it also contain all the JAR files on which it depends?
+  * create a Java Network Launching Protocol (JNLP) file
+    which is an XML document
+    - some of the most important parts of this file are
+      * the codebase attribute on the jnlp root element
+      * the offline-allowed element inside the information element
+        which allows the application to run when not on the web
+      * the shortcut element inside the information element
+        that allows a desktop icon to be created for running the application
+      * the application-desc element that specifies the main class
+  * copy the JAR file and the JNLP file to a web server
+  * add a link to the JNLP file to the web page
+    from which it will be downloaded
+    - for example, <a href="sample.jnlp">Sample Application</a>
+- to run the application
+  * browse to the web page and click the link to the JNLP file
+- for an example, see
+  Programming/Languages/Java/Swing/WebStart
+- to view Web Start applications that have been downloaded,
+  run "javaws -viewer" from a command prompt
+  * right-click an application and select "Browse Home Page"
+    to go the home page specified in the JNLP file
+  * running "javaws -h" displays a help dialog in Java 6,
+    but not in Java 5 on Mac
+
+Serial Version UIDs
+- to generate this for a Java class
+  * compile the source file
+  * suppose the .class files are written to a subdirectory named "classes"
+  * run "serialver -classpath classes {class-full-name}"
+  * copy the line of code it outputs into the source file for the class

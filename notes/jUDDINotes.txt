@@ -1,0 +1,50 @@
+jUDDI Notes
+
+Download
+- from http://ws.apache.org/juddi/
+
+Requires
+- Apache Tomcat (see TomcatNotes.txt)
+- Log4J (see Log4JNotes.txt)
+  * this should already be in webapp/WEB-INF/lib/log4j-1.2.8.jar
+- MySQL (see MySQLNotes.txt)
+
+Building
+- create a symbolic link for lib directory with
+  ln -s webapp/WEB-INF/lib lib
+- copy /opt/apache-tomcat/common/lib/servlet-api.jar to lib directory
+- copy /opt/log4j/dist/lib/log4j-1.2.13.jar to lib directory
+- modify build.xml to add
+  source="1.4"
+  to the two javac tasks
+  due to use of "enum" as a variable in XMLDocAuthenticator.java
+- running "ant" creates build/juddi.jar 
+- cp build/juddi.jar webapp/WEB-INF/lib
+
+Database setup
+- cd sql/mysql
+- mysql < create_database.sql
+  * this creates a MySQL database named juddi
+- mysql < insert_publishers.sql
+  * this is meant to populate tables in the juddi database
+    but currently doesn't do anything
+
+Jakarta Commons setup
+- download Jakarta-Commons DBCP 1.0 from
+  http://jakarta.apache.org/site/downloads/downloads_commons-dbcp.cgi
+  - want commons-dbcp-1.2.1.tar.gz
+- download Jakarta-Commons Collections 2.0 from
+  http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi
+  - want commons-collections-2.1.1.tar.gz
+- download Jakarta-Commons Pool 1.0 from
+  http://jakarta.apache.org/site/downloads/downloads_commons-pool.cgi
+  - want commons-pool-1.2.tar.gz
+- unpackage each of these and copy their jar file to
+  /opt/apache-tomcat/common/lib
+
+Installing
+- cp webapp /opt/apache-tomcat/webapps
+
+Running
+- start Tomcat (see TomcatNotes.txt)
+- browse to http://localhost:8080/juddi

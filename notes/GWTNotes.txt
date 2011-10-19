@@ -1,0 +1,37 @@
+GWT Notes
+
+See more complete notes in Save-A-Lot/website/gwt.html.
+
+Important URLs
+- main web site
+  * http://code.google.com/webtoolkit/
+- class reference
+  * http://code.google.com/webtoolkit/documentation/gwt.html
+
+Creating a new project
+- mkdir {app-dir}
+- cd {app-dir}
+- $GWT_HOME/applicationcreator {package}.{app-name}
+- ex. com.ociweb.demo.client.ManningDemo
+- it wants "client" to be the last part of the package name
+
+Initial files to be edited
+- src/{package-dirs}/public/{app-name}.html
+  * the HTML file that is loaded to execute the application
+- src/{package-dirs}/client/{app-name}.java
+  * the entry point class
+  * place the Java code that will be compiled to JavaScript here
+
+Module definition
+- in src/{package-dirs}/{app-name}.gwt.xml
+
+Running the project in "hosted mode".
+- ./{app-name}-shell
+
+Compiling Java code to JavaScript
+- ./{app-name}-compile
+  * creates a www directory and places generated JavaScript there
+  * deploy this directory to a web server
+    - for Tomcat, copy the directory in www to $TOMCAT_HOME/webapps/ROOT
+    - to run the application from a browser, browse
+      http://localhost:8080/{package}/{app-name}.html

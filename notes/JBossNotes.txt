@@ -1,0 +1,87 @@
+JBoss Notes
+(page references are to
+ "Enterprise JavaBeans 3.0 - 5th Edition" from O'Reilly)
+
+- Overview
+  * JBoss is a JEE server that uses Tomcat.
+
+- Download the JEMS installer
+  * get it from http://labs.jboss.com/portal/jemsinstaller/downloads
+  * the file to download is jems-installer-1.2.0.GA.jar
+  * unzip this and double-click it to start installer
+  * select "ejb3" for the InstallType
+  * see the book "Enterprise JavaBeans 3.0 - 5th Edition" pages 528-529
+    for more installation hints
+  * set JBOSS_HOME environment variable to point to where it is installed
+
+- Classpath
+  * to see the classpath used by JBoss clients,
+    run $JBOSS_HOME/bin/classpath.sh -c
+  * to see the classpath used by JBoss servers,
+    run $JBOSS_HOME/bin/classpath.sh -s
+
+- Configuration files
+  * stored in $JBOSS_HOME/server/default/conf
+
+- Database files
+  * for some databases, these are written to
+    $JBOSS_HOME/server/default/data
+  * JBoss uses the Hypersonic SQL embedded database by default
+ 
+- Database GUI 
+  * browse to the Management Console (see the URL below)
+  * under "jboss", click the "database=localDB,service=Hypersonic" link
+  * click the "Invoke" button under
+    "void startDatabaseManager() MBean Operation"
+  * enter "select * from {table-name}" in the upper-right text area
+    and click the "Execute SQL" button
+
+- Deploying a web app.
+  * copy a WAR file to $JBOSS_HOME/server/default/deploy
+  * to deploy in exploded form, unzip the WAR to a directory
+    with the same name as the WAR file, including the .war extension
+  * other kinds of files can also be copied here (see p. 531)
+
+- DTDs for JBoss XML files
+  * in $JBOSS_HOME/docs/dtd
+
+- Exercises
+  * download from http://sourceforge.net/projects/jboss
+  * select Download ... Download Files
+  * select "O'Reilly EJB 3.0 Workbook"
+  * download oreilly-ejb3-workbook_for_jboss404_GA.zip
+  * this unzips to a directory named "workbook"
+  * an Ant build file is provided for each exercise
+  * the workbook directory contains a version of Ant
+    in the ant subdirectory
+  * to build, deploy and run most exercises
+    - cd to the exercise directory
+    - run "ant" to build and deploy the server
+    - run "ant run.client" to run the client
+
+- JNDI
+  * to see registered JNDI names
+    - browse http://localhost:8080/jmx-console
+    - click the "service=JNDIView" link
+    - click the "Invoke" button under the MBean operation "list()" method
+
+- Log files
+  * stored in $JBOSS_HOME/server/default/log
+
+- Libraries used by JBoss clients
+  * see JARs in $JBOSS_HOME/client
+
+- Libraries used my multiple web apps.
+  * copy to $JBOSS_HOME/server/default/lib
+ 
+- Management Console
+  * browse http://localhost:8080/jmx-console
+
+- Starting server
+  * $JBOSS_HOME/bin/run.sh
+
+- Stopping server
+  * $JBOSS_HOME/bin/shutdown.sh -S
+
+- Temporary files
+  * are written to $JBOSS_HOME/server/default/tmp

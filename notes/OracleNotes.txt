@@ -1,0 +1,250 @@
+Oracle Notes
+
+Installation
+- under Windows, download and double-click setup.exe
+- you set password to "password"
+- username is "system"
+
+To create a new database
+- select start...All Programs...Oracle...
+  Configuration and Migration Tools...Database Configuration Assistant
+- it may take a long time for the main window to appear
+- press Next three times to accept the defaults on those screens
+- enter a "Global Database Name" and press Next
+- press Next to accept the defaults
+- select "Use the Same Administrative Password for All Accounts"
+- in the Password and Confirm Password fields, enter "password"
+- press Next, then Finish, then OK
+- wait about 10 minutes
+- make a note of the "Database Control URL"
+  * https://oci1403:5501/em
+  * CT -> https://130.76.159.61:5503/em
+- press Exit
+
+To verify names of databases that have been created
+- cd c:/programming/oracle/db_1/NETWORK/ADMIM
+- examine the contents of tnsnames.ora
+
+To configure a listener for a database
+- select start...All Programs...Oracle...
+  Configuration and Migration Tools...Net Configuration Assistant
+- select "Listener Configuration" and press Next
+- select "Add" and press Next
+- enter a listener name (ex. SIDR_listener) and press Next
+- press Next
+- make a note of the port being used
+- press Next two more times
+- select the new listener from a drop-down list and press Next
+- press Next two more times
+- press Finish
+
+To start a listener
+- dbl-click ...\oracle\db_1\BIN\LSNRCTL.EXE
+  (under C:\programming for you)
+- a Command Prompt window will open
+- enter start {listener-name}
+  (ex. "start SIDR_listener")
+
+To verify that the listener is running
+- from a Command Prompt, enter "netstat"
+- look for an entry in the "Foreign Address" column
+  that ends with a colon and the port number assigned to the listener
+  (1521 for your SIDR_1 database)
+
+To create a new user in Oracle SQL Developer
+- expand the "sys" connection
+- right-click "Other Users"
+- select "Create User"
+- enter information about the new user
+- select the "System Privileges" tab to grant privileges to the user
+
+To create a new schema within an existing database
+- create a new user since apparently users map to schemas
+- example
+  * create user "sidr_ct" profile "DEFAULT" \
+    identified by "sidr_ct" account unlock;
+  * alter user "sidr_ct" identified by "password";
+  * grant create session, connect, resource to "sidr_ct";
+
+Oracle SQL Developer
+- to add a new connection
+  * right-click "Connections" in the left-nav tree
+  * select "New Connection"
+  * enter a name for the connection
+  * enter a username and password that has access to the database
+  * for the Connection Type, select "Basic"
+  * for the host name, enter "localhost" if the database is on your machine
+  * for the port, enter the port assigned when the listener was created
+  * select "SID" and enter the database name
+    (Note that the service name or the SID
+     is the same as the database name!)
+  * press "Test" to verify that the connection can be made
+  * press "Save" to save the new connection
+- to see the century in displayed dates
+  * select a connection (ex. orcl_sidr_1)
+  * enter "alter session set nls_date_format = 'MM/DD/YYYY';"
+  * press the "Run Script" button
+
+SQL Plus
+- used to interact with an Oracle database from a terminal window
+- to start
+  * enter "sqlplus" in a Command Prompt window
+    to connect to the default database
+  * enter "sqlplus {username}[/{password}@{connection-identifier}"
+    in a Command Prompt window to connect to a specific database
+    - one kind of connection identifier is
+      host:port/db-name
+    - ex. sqlplus sidr_1/password@localhost:1521/orcl
+  * can also select
+    start...All Programs...Oracle...Application Development...SQL Plus
+- to get a list of help topics
+  ? index
+- to get help on a specific topic
+  ? {topic}
+- to see a list of the tables
+  select table_name from user_tables;
+- to exclude most "system tables"
+  select table_name from user_tables where table_name not like '%$%';
+- to get a description of the columns in a given table
+  desc {table-name}
+- to run a query, enter any SQL select statement
+- to run all the SQL statements in a file
+  @{file-path}
+- to exit, enter "exit" or "quit"
+- to run a script instead of using interactively
+  sqlplus {username}/{password}@{host}/{db-name} @{script-path}
+
+To delete a database
+  $ sqlplus {username}/{password}@{host}:{port}/db-name "/ as sysdba"
+  (ex. sqlplus system/password@localhost:1521/SIDR as sysdba)
+  SQL> shutdown immediate
+  SQL> startup mount exclusive
+  SQL> alter system enable restricted session;
+  SQL> exit
+  $ rman target /
+  RMAN> drop database including backups;
+  Do you really ... (enter YES or NO)? YES
+
+To use a database in interactive mode
+- start sqlplus
+
+To list all the public (non-system) tables
+- select * from USER_TABLES where ?
+
+THE REMAINDER OF THIS DOCUMENT IS STILL SPECIFIC TO POSTGRES!
+
+More on interactive mode
+- prompt
+  * begins with the database name
+  * ends in =# if you are the database superuser, otherwise ends in =>
+- see schemas that will be searched - show search_path;
+- change schemas that will be searched -
+  set search_path to {comma-separated-schema-list}
+  * for example, set search_path=sal;
+- help - \? or \h{command}
+- include - \i{file}
+  * reads SQL from the given file
+- list all databases - \l
+- list public tables - \d or \z
+- list system tables - \dS
+  * for example, the system table pg_tables
+- list columns in a table - \d {table-name}
+- version
+  * to see version of PostgreSQL, enter "select version();"
+- exit - \q
+- see http://www.postgresql.org/docs/6.4/static/app-psql.htm for more
+
+Run a single command
+- psql {db-name} {username} -c {query}
+
+Run commands in a file
+- psql  {db-name} {username} -f {file}
+
+Auto-incrementing keys
+- approach #1
+  CREATE TABLE foo (
+    id SERIAL PRIMARY KEY,
+    ... other columns ...
+  )
+- approach #2
+  CREATE SEQUENCE fooSeq;
+  CREATE TABLE foo (
+    id INTEGER NOT NULL PRIMARY KEY DEFAULT nextval('fooSeq'),
+    ... other columns ...
+  )
+
+JDBC
+- if prebuilt binary installer was used
+  then JDBC driver JAR files are in /Library/PostgreSQL/pgJDBC
+- download a driver from http://jdbc.postgresql.org/
+  * you have successfully used postgresql-8.2-504.jdbc3.jar
+  * the name of the driver class is org.postgresql.Driver
+- by default, listens on port 5432
+- connection URLs have the format
+  jdbc:postgresql://{host}:{port}/{database-name}
+- to set the schema from code,
+  stmt.execute("set search_path = {schema-name};");
+
+To dump the database to a file:
+- from a terminal window
+  * pg_dump -Upostgres {dbname} > {outfile}
+    - postgres password is postgres
+  * outfile will contain all SQL commands necessary to
+    recreate the database in its current state
+  * to recreate the database elsewhere
+    - use dropdb to delete the previous database
+      (see "To delete a database")
+    - use createdb to recreate an empty database
+      (see "To create a database")
+    - use psql to run the commands in outfile
+      (see "Run commands in a file")
+- from pgAdmin III
+  * right-click a table name
+  * select "Backup..."
+  * press "..." to specify the file where it will be saved
+  * select "PLAIN"
+  * select "Only data"
+  * press "OK"
+  * press "Done"
+
+To print to stdout from a procedure
+- DBMS_OUTPUT.PUT_LINE('text = ' || rowref.column_name);
+
+To create a sequence
+  create sequence {name}
+    start with 1 minvalue 100 increment by 1
+    nocycle noorder cache 20;
+
+To get the next value from a sequence (using JRuby)
+  sql = "select #{sequence-name}.nextval as nextval from dual"
+  rs = query sql
+  nextval = rs.next ? rs.getLong('nextval') : nil
+  rs.close
+
+Comments
+- single-line comments start with --
+- multi-line comments are wrapped in /* and */
+
+CLOBs
+- VARCHAR2 is limited to 4000 characters
+- to hold more, use CLOB instead
+
+Regular Expressions
+- Oracle supports a regexp_like function that can be used in select statements
+- see example in SQLNotes.txt
+
+Stored Procedures
+- example
+  create or replace procedure drop_tables is
+  begin
+    for row in (select table_name from all_tables
+                where owner = 'foo')
+    loop
+      dbms_output.put_line('dropping table ' || row.table_name);
+      execute immediate 'drop table ' || row.table_name;
+    end loop;
+  end drop_tables;
+  /
+
+  set serveroutput off -- set to "on" to get debugging output
+  exec drop_tables;

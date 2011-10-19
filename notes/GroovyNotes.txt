@@ -1,0 +1,15 @@
+Groovy Notes
+
+Stack traces
+- to eliminate lines that are internal to Groovy
+  groovy filename | grep -v "groovy\." | grep -v "sun\.reflect\."
+  
+Value of a code block
+- not necessarily the value of the last expression evaluated
+- for example, the value of
+  if (condition) then value1 else value2
+  is null
+
+Value of a method
+- is the value of the last statement in the method,
+  not the value of the last expression evaluated

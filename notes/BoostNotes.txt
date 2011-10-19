@@ -1,0 +1,19 @@
+Steps to build Boost under Linux
+
+- browse http://www.boost.org
+- download boost_1_36_0.tar.gz
+- download boost-jam-3.1.16.tgz
+- gunzip them
+- tar xf them
+- delete the tar files
+- this creates a boost_1_33_0 directory
+  and a boost-jam-3.1.16 directory
+
+- cd boost-jam-3.1.16
+- ./build.sh
+- cp bin.macosxx86/bjam ../../boost_1_36_0
+
+- cd ../boost_1_36_0
+- sudo bjam install
+- this puts .so files in /usr/local/lib
+  and puts .hpp files in /usr/local/include/boost_1_33_0

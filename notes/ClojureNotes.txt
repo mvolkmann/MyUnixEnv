@@ -1,0 +1,4 @@
+Clojure Notes
+
+- To paste code for viewing in the #clojure IRC channel
+  * browse http://paste.lisp.org/new/clojure

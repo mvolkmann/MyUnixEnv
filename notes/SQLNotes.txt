@@ -1,0 +1,127 @@
+SQL Notes
+
+Comments
+- single line: --
+- multi-line: /* */
+
+Create table
+  create table {table-name} (
+    {column-name} {type} {modifiers},
+    ...
+  )
+
+Delete table
+  drop table {table-name}
+
+Add column
+  alter table {table-name}
+    add column {column-name} {type} {modifiers}
+
+Delete column
+  alter table {table-name}
+    drop column {column-name}
+
+Insert row
+  insert into {table-name}
+    ({column-name}, ...)
+    values (value, ...)
+
+Modify rows
+  update {table-name}
+  set {column-name}={value}, ...
+  where {condition}
+
+Delete rows
+  delete from {table-name}
+  where {condition}
+
+Select rows
+  select [unique] {column-name}, ...
+  from {table-name}, ...
+  where {condition}
+  order by {column-name}, ...
+- the where and order by clauses are optional
+- the where clause can use "like" for wildcard matching
+  * % matches any number of characters including zero
+  * _ matches any single character
+  * ex. select age from people where lastname like 'V_lk%';
+- to find records where a given column is or isn't null
+  * {column-name} IS NULL   or   {column-name} IS NOT NULL
+- when selecting from more than one table (a join),
+  select columns are prefixed by a table alias and
+  can have their own alias to avoid name conflicts
+  * example
+    select n.namespace as namespace
+    from Element e, Namespace n
+    where e.sourceFileID = 253 and
+          e.namespaceID = n.id
+- can limit the number of rows returned,
+  but the syntax is database-specific
+  * in Postgres and MySQL, add "limit {n}" to the end of the select
+- Oracle supports regular expressions in queries!
+  * example
+    select FOO from BAR where regexp_like(BAZ, 'regex-goes-here', 'i')
+    - the 'i' makes it case-insensitive
+
+Reset a sequence
+- sequences are used to assign sequential ids to new rows
+- alter sequence {sequence-name} restart with 1
+
+Joins
+- see http://en.wikipedia.org/wiki/Join_(SQL)
+- returns column values from two tables based on
+  matching a column value in one table with a column value in another
+- the many kinds of joins are described next
+- inner
+  * the most common, default kind of join
+  * finds the intersection between two tables
+  * only returns rows in the first table that
+    have a corresponding row in the second table
+  * rows in the first table will be returned once
+    for each matching row in the second table
+  * example
+    select e.name as eName, s.filename as sName
+    from Element e, SourceFile s
+    where e.sourceFileID = s.id
+    order by eName
+    - the names "eName" and "sName" can be used to
+      retrieve those columns from the rows in the result set
+- left outer
+  * returns all rows in the first table
+    plus matching rows in the second table
+    or null values if there are no matching rows
+- right outer
+  * returns all rows in the second table
+    plus matching rows in the first table
+    or null values if there are no matching rows
+- full outer
+  * returns all rows from both tables
+    with matching rows from the other table
+    or null values if there are no matching rows
+  * some databases don't support this
+- cross
+  * returns the cartesian product (all possible combinations)
+    of rows from two tables
+
+Getting last auto-increment key
+- when keys are automatically assigned from a sequence as
+  new rows are added, the last key assigned in the current process
+  can be obtained using currval()
+- steps
+  * select currval('sequence_name') as id
+  * advance to the first row in the result set that is returned
+  * get the integer value of the column named "id"
+  
+Getting number of rows in a table
+- select COUNT(*) as count from table-name
+- get value of 'count' as an integer
+
+Checking for duplicate rows
+- from Andy Knudsen
+  select col1, col2, col3, count(*) from table-name
+  group by col1, col2, col3
+  having count(*) > 1
+
+Getting the current date/time
+  * select CURRENT_DATE from dual
+  * retrieve the string value of 'CURRENT_DATE' from the result set

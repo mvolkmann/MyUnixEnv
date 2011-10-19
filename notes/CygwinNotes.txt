@@ -1,0 +1,50 @@
+Cygwin Notes
+
+clearing screen
+- create clear.c containing the following:
+  #include <stdio.h>
+  int main(void) { printf("\033[2J"); }
+- compile this with gcc -o clear.exe clear.c
+- move clear.exe to a directory in PATH
+- enter "clear" to clear a Cygwin window
+
+things to add that aren't installed by default
+- Archive: unzip, zip
+- Devel: gcc, gcc-core, gcc-g++,
+    git, git-completion, git-gui, gitk,
+    mercurial, ruby, subversion
+- Editors: gvim, vim
+- Games: gnugo
+- Interpreters: ruby
+- Net: inetutils (contains ftp), ncftp, openssh (contains ssh and scp)
+
+- Utils: diffutils
+- Web: tidy
+
+ncftp
+- you don't get the ncftp* commands by default,
+  you have to explicitly ask for ncftp in the Net category
+- to put a single file
+  ncftpput -u username -p password target-host file-path
+- to enter normal FTP commands from an ftp prompt
+  ncftp -u username -p password target-host
+- to save a bookmark
+  * enter "bye"
+  * it will reply with "You have not saved a bookmark for this site.
+    Would you like to ..."
+  * answer "yes"
+  * it will reply with "Enter a name for this bookmark:"
+  * enter a short name you'll remember
+  * it will ask if you want to save the password
+  * answer "yes"
+  * now when you enter "ncftp {name}" it will
+    connect, log in and provide an ftp prompt
+
+to install at Boeing
+- download setup.exe from
+  http://osstoolkit-depot.web.boeing.com:9999/
+  toolkit-8_1/cygwin/cygwinmirror/
+- double-click setup.exe
+- select "Direct Connection"
+- add the download site
+  http://osstoolkit-depot.web.boing.com:9999

@@ -1,0 +1,9 @@
+CVS Notes
+
+See ~/Documents/Programming/Tools/CVS/CVS.ppt on your laptop.
+
+To check changes you've made in a given date range
+* for example, cvs log -d"2008-08-10<2008-08-16" -wmvolkmann 
+
+To see the differences between two revisions
+* cvs diff -r{v1} -r{v2} {file-path}

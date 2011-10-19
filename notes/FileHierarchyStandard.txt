@@ -1,0 +1,183 @@
+Filesystem Hierarchy Standard (FHS)
+
+See note from Tom Wheeler at bottom on using symlinks!
+
+/bin   - essential user command binaries
+
+/boot  - static files needed by boot loader
+  ex. compiled kernel (ex. vmlinuz-2.6.11-1.1369_FC4)
+
+/dev   - device files
+  includes /dev/null and /dev/zero
+  cd drives - cdrom
+  floppy drives - floppy
+  IDE drives - hda, hda1, hda2, ...
+  mouse - mouse0, mouse1, ...
+  SCSI drives - sda, sda1, sda2, ...
+  standard devices - stderr, stdin, stdout
+  terminals - tty*
+
+/etc    - host-specific system configuration
+  includes fstab, group, hosts, passwd, profile, shells, ...
+
+/home   - user home directories
+  contain . configuration files
+
+/lib    - essential shared libraries and kernel modules
+
+/media  - mount points for removable media
+  such as CDROMs, floppies, USB devices and iPods
+
+/mnt    - mount points for temporarily mounted file systems
+  such as hard drives of other hosts?
+
+/opt    - add-on application software packages
+  Add libraries needed by your applications here!
+  C++ libraries like ACE, Boost, CppUnit, gSOAP and Xerces
+  Java libraries like JDOM and Saxon
+  JDK
+  applications like DDD, Firefox and Vim
+
+/proc   - kernel and process information virtual filesystem
+
+/root   - home directory of root user
+
+/sbin   - essential system binaries
+  see also /usr/sbin, /usr/local/sbin and /bin
+
+/srv    - data for services provided by this system
+
+/tmp    - temporary files
+  Programs must not assume contents are preserved between invocations.
+  Contents should be deleted when the system is booted.
+
+/usr
+  /bin  - most user commands
+    includes ant, apropos, awk, bjam, crontab, curl, cvs, dia, emacs, enscript,
+             fetchmail, firefox, g++, gawk, gcc, gdb, ghostscript, gimp, gmake,
+             gunzip, gzip, indent, java, javac, mahjongg, make, man, mutt,
+             mysql, nslookup, OpenOffice tools, passwd, perl, php, python,
+             rhythmbox, rlogin, rsh, scp, screen, Samba tools, ssh, sudo,
+             Subversion tools, swig, TCL, telnet, umbrello, units, valgrind,
+             vim, vimdiff, VNC tools, which, XML tools, xterm, yacc and yum
+  /include   - standard C header files
+  /lib       - libraries
+  /local     - local hierarchy added after main installation
+               (also a common place to install applications and libraries
+                as an alternative to /opt)
+    /bin     - local binaries (ex. Ruby, mutt, gSOAP and SWIG tools
+    /etc     - host-specific configuration for local binaries
+    /include - local C header files
+    /lib     - local libraries
+    /man     - local man pages
+    /sbin    - local system binaries
+    /share   - local architecture-independent hierarchy
+    /src     - local source code
+  /sbin      - non-essential system binaries
+  /share     - architecture-independent data
+  /src       - source code including kernel code
+
+/var
+  /account - process accounting logs
+  /cache   - application cache data
+  /crash   - system crash dumps
+  /lib     - variable state information
+  /local   - variable data for /usr/local
+  /lock    - lock files for locking devices and other resources
+             used by multiple applications
+  /log     - log files and directories
+  /mail    - user mailbox files
+  /opt     - variable data for /opt
+  /run     - data relevant to running processes
+  /spool   - application spool data waiting for later processing
+    /cron  - variable data for cron and at programs
+    /lpd   - line-printer print queues
+  /tmp     - temporary files preserved between system reboots
+  /yp      - NIS database files
+
+Notes from Tom Wheeler
+----------------------
+
+I tend to use /usr/local instead of /opt, though I also create a
+symbolic link from /opt to /usr/local so I can address it either way.
+This is mainly for compatibility on some of the UNIX systems I have
+(Solaris, AIX and HP/UX) where packages from vendors get put into /opt.
+It does not really matter either way.
+
+The main thing that I do is put things in directories that specify their
+versions, i.e.:
+        /usr/local/jdk-1.4.2
+        /usr/local/jdk-1.5.0
+and so on.  I also create a symlink *without* the version number that
+points to the preferred version.  For example, I might have a symlink
+/usr/local/jdk that points to /usr/local/jdk-1.4.2, so all my scripts
+can refer to the symlink and I don't need to change them when I want to
+make JDK 5 the preferred version -- I just change the symlink to point
+to it instead.  This helps a lot in reverting changes since I can just
+point the symlink back to the old version.  I also set environmental
+variables like JAVA_HOME to point to the symlink.  
+
+I can't emphasize enough what a valuable feature symlinks are.  It is
+easily one of the biggest advantages over MS Windows since the registry
+is a mess and it is otherwise not easy (and in some cases, not even
+possible) to manage multiple versions of the same program.  Ironically,
+I have read that NTFS has internal support for symlinks but there is
+just no application support for them.  If that's true, I hope that they
+fix it in their next OS.
+
+Adding another directory (such as /usr/local/jdk/jdk-1.4.2) is also
+fine, but I usually don't have enough versions of anything installed to
+make that worthwhile.
+
+Notes from Weiqi Gao
+--------------------
+
+I believe /usr/local is the place where the local system administrator
+install things, and /opt is the place where third party vendors install
+things.  The /usr/local directory is present on the original UNIX
+system.  The /opt directory convention is invented later by one
+commercial UNIX vendor (probably Sun or HP) and copied by others.
+
+The Filesystem Hierarchy Standard (FHS) http://www.pathname.com/fhs/ is
+as close a guideline as you can get.  However not everybody or even
+every vendor follows the standard.
+
+For me personally, I always install new software in /opt.  For example,
+my Berkeley DB XML 2.2.13 is installed at /opt/dbxml-2.2.13, by using
+the --prefix=/opt/dbxml-2.2.13 switch during the building process.
+
+Pros: easy to see what packages are installed, easy to removed an
+obsoleted package, things are "clean."
+
+Cons: need to add /opt/<package>/bin to PATH, /opt/<package>/lib to
+LD_LIBRARY_PATH or /etc/ld.so.conf (or /etc/ld.so.conf.d/<package>.conf
+in the latest Fedora Core 4), etc. for every package.  If the number of
+packages you install is big (more than a couple dozen), this may lead to
+ridiculously long PATH environment variables that sometimes go over the
+limit of the shell.
+
+I use /usr/local only for older packages that does not provide a "make
+install" target.  These packages usually build into one binary.  I'll
+simply copy that binary into /usr/local/bin.
+
+Some notable exceptions to the "/usr/local or /opt" rule: /usr/X11R6 for
+X Window System, and /usr/java for Java.
+
+The JPackage people (http://jpackage.org) have a set of guidelines for
+packaging Java stuff in a uniformed way for Linux.  Red Hat, Debian and
+Ubuntu are using their conventions.  Under the JPackage regime, jar
+files goes into /usr/share/java directory.
+
+Sun provides two ways to install Java on Linux: an RPM file and a
+self extracting jdk-*.bin file.  The Sun RPM will install Java at
+/usr/java.  The *.bin file will extract to the current directory.  I've
+never used Sun's RPMs.  When I use Sun's *.bin file, I do install the
+JDK at /opt/jdk-*.
+
+I've heard Sun people argueing for the /usr/java spot by saying "Java is
+not just any software package.  It's an important piece of software
+infrastructure, just like the X Window System.  So why not allow it to
+be installed at /usr/java, just like /usr/X11R6?"
+
+Again, JPackage.org has a different idea.  Under JPackage, JDKs and JREs
+are installed at /usr/lib/jvm/<jdk-name>.

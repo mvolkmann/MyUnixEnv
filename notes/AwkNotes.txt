@@ -1,0 +1,138 @@
+awk Notes
+- some features described here are only available in gawk
+
+The name
+- stands for Aho, Kernighan and Weinberger who invented it
+
+Versions
+- original awk, new awk (nawk), GNU awk (gawk)
+- gawk seems to be the most popular and full-featured now
+- under Mac OS X /sw/bin/awk is a symbolic link to /sw/bin/gawk
+
+Resources
+- full text of the O'Reilly "Effective awk Programming" book
+  is at http://www.gnu.org/software/gawk/manual/
+
+Input
+- can come from one or more files
+- can be piped in from another command (such as ls -l)
+- can be read from stdin
+
+Terminology
+- each input line is called a "record"
+- each contiguous set of non-whitespace characters in a record
+  is called a "field"
+- whitespace characters include space, tab and newline
+
+Basics
+- searches records for ones that match given conditions
+  and performs a specified action for each match
+- conditions are often regular expressions
+- if more than one condition is matched,
+  each of their actions will be performed in order
+- an awk program is a collection of rules and optional function definitions
+- each rule can specify a pattern and an action, but both are optional
+  * if the pattern is omitted, the action is performed on every line
+  * if the action and the braces that surround it are omitted,
+    matching lines are printed to stdout
+    - the default action is "print $0"
+  * if empty braces are supplied, no action is performed
+- rule syntax is "pattern { action }"
+  * can split a rule across multiple lines as long as lines before the last
+    end with one of these tokens: , { ? || && do else
+  * can also use the \ continuation character
+  * the action must begin on the same line as the pattern
+    unless the continuation character is used
+  * the action can consist of multiple statements,
+    each on a separate line or separated by semicolons if on the same line
+
+Running
+- can specify the awk program to be run on the command-line or in a file
+  * awk program files typically have a ".awk" file extension
+- awk 'program' [infile]*
+- awk -f program-file [infile1]*
+- output goes to stdout by default
+- if no input file is specified, input is read from stdin
+  * useful to pipe input in from another command
+- can run awk programs like shell scripts
+  * add first line of "#!/bin/awk -f
+  * chmod a+x program-file
+
+Example
+- this lists all the files in the current directory followed by their size
+  * ls -l | awk '$5 > 0 { print $9 " is " $5 " bytes" }'
+
+---
+
+Built-in Functions
+- getline
+  * reads the next line in the current file or
+    a line from a file not specified on the command-line
+  * returns 1 if a record is found, 0 if the end of the file is reached,
+    and -1 if an error reading the file occurs
+    (ERRNO variable is set to an error string)
+- print - prints its arguments to stdout and outputs a newline at the end
+
+Comments
+- start comment lines with a #
+
+Header Records
+- can be skipped with a rule like this
+  NR > 2 { ... } # skips processing first two records
+
+Regular Expressions
+- rule conditions that only contain a regular expression are equivalent to
+  $0 ~ /regexp/
+- match (~) and not match (!~) operators
+  take a regular expression on their right side
+  * to output only lines that do not contain "text"
+    $0 !~ /text/ { print }
+- see book chapter 2 for more regular expression details
+
+Special Patterns
+- BEGIN - action is performed once before any input lines are processed
+- END - action is performed once after all input lines are processed
+
+Special Variables
+- $0 holds the current line that was parsed from the input
+- $1, $2, ... hold "fields" in the current line separated by whitespace
+  * references to fields beyond the last one return the empty string
+  * an expression can follow $ to calculate a field number
+  * negative field numbers are not allowed
+  * can assign to field variables to change their
+    current value in the program
+    - doing this changes the value of $0
+    - can assign to fields beyond the current last field
+      which affects the value of NF
+- FIELDWIDTHS holds a space-separated list of integers
+  that represent fixed field widths
+  - example: FIELDWIDTHS = "5 3 7"
+- FNR holds the number of records read so far from the current input file
+- FS holds the field separator
+  * defaults to " " which is a special case that
+    respresents any number of contiguous whitespace characters
+    and trims leading and trailing whitespace from each record
+  * commonly changed in BEGIN rule
+  * can be a regular expression
+  * to use a single space, set to "[ ]"
+  * when set to something other than " " (such as ","),
+    contiguous occurrences delimit empty fields
+  * when set to "", each character in a record
+    is treated as a separate field
+  * can set on command-line with -Fvalue or FS="value"
+- NF holds the number of fields in the current record
+  * setting this to a smaller value discards fields and changes $0
+- NR holds the number of records read so far from all input files
+- RS holds the record separator (defaults to "\n")
+  * commonly changed in BEGIN rule
+  * when set to "", records are separated by one or more blank lines
+  * can be a regular expression
+  * when set to "\0", the entire input file is treated as one record
+  * can set on command-line with RS="value"
+- RT holds the last text that matched RS
+
+Loops
+- for (i = 1; i <= 7; i++)
+
+Variables
+- assign with "name = value"

@@ -1,0 +1,76 @@
+Mac OS X Common Key Commands
+
+Command keys (precede with Apple key)
+
+  a - select all
+  c - copy
+  d - duplicate in Finder
+  f - find
+  g - find next
+  h - hide
+  i - get info.
+  k - in Mail, deletes all mail in trash
+  m - minimize (click green button in title bar to maximize)
+  o - open
+  p - print
+  q - quit
+  r - reply in Mail
+    - reload page in Safari
+  shift-r - reply all in Mail
+  s - save
+  t - new tab in Safari
+  v - paste
+  w - close
+  x - cut
+  z - undo
+  ? - help
+  + - make text bigger
+  - - make text smaller
+  [ - back in Safari
+  ] - forward in Safari
+  ` - next window in Terminal
+  ~ - previous window in Terminal
+  shift-delete - empties dock trash can
+
+  tab          - program switcher
+  Delete       - deletes
+  space        - Spotlight
+  shift-3      - capture entire screen;
+                 image is placed in a PNG file on the desktop
+  shift-4      - screen shot of area subsequently selected by dragging;
+                 follow with spacebar to turn cursort to a camera
+                 and click any window to capture it;
+                 ctrl-click to put image in clipboard instead of a file
+  shift-4-spacebar
+               - click a window to capture it
+                 (see MacNotes.txt for more info. on screen capture)
+  option-eject - sleep
+  option-esc   - force quit
+  option-=     - zoom in
+  option--     - zoom out
+  esc          - start Front Row
+
+Function keys
+
+  delete - deletes to right
+  F9  - Expose on all windows
+  F10 - Expose only on windows of the current application
+  F11 - show desktop by moving all windows to the screen edge
+  F12 - Dashboard
+  
+Ctrl keys (precede with ctrl)
+
+  home - go to beginning of current line
+  end  - go to end of current line
+  cmd-d - dictionary lookup on the word under the cursor;
+          don't have to click or select the word;
+          release "d", continue holding cmd-ctrl,
+          and move mouse cursor to get definitions of other words
+  zoom in - scroll up
+  zoom out - scroll down
+  left drag - pans entire display when zoomed in
+  right drag - zooms entire display in and out
+
+Other keys (not preceded by another)
+
+  delete - deletes to left

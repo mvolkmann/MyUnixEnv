@@ -1,0 +1,11 @@
+Kyoto Cabinet Notes
+
+To install
+  - couldn't find in yum
+  curl http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.70.tar.gz > kyoto.tar.gz
+  tar zxf kyoto.tar.gz
+  cd kyotocabinet-1.2.70
+  ./configure
+  make
+  sudo make install
+  export LD_LIBRARY_PATH=/usr/local/lib

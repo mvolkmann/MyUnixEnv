@@ -1,0 +1,212 @@
+NetBeans Notes
+
+Downloads
+- get NetBeans from http://www.netbeans.org
+
+Ant
+- use "Java Free-Form Project" in order to use your own Ant build.xml
+
+Building
+- when building a project with a large number of Java source files
+  you may get an OutOfMemoryError
+- right-click the project and select "Properties"
+- select Build...Compiling
+- in "Additional Compiler Options",
+  enter something like "-J-Xmx1g" for Java 6
+
+Code Folds
+- javadoc
+  * to hide all, right-click source code
+    and select Code Folds...Collapse All Javadoc
+  * to show all, right-click source code
+    and select Code Folds...Expand All Javadoc
+- method implementations
+  * to hide all, right-click source code
+    and select Code Folds...Collapse All Java Code
+  * to show all, right-click source code
+    and select Code Folds...Expand All Java Code
+- can also select options from the View...Code Folds... menu
+
+Code Templates/Abbreviations
+- press tab key to expand
+- see list of them, delete and add more in
+  NetBeans...Preferences...Editor...Code Templates
+- commonly used abbreviations include
+  dowhile - do { } while (true);
+  fori - for (int i = 0; i < {nearest-array}.length; i++) { ... }
+  ifelse - if (condition) { } else { }
+  iff - if (condition) { }
+  psvm - public static void main(String[] args)
+  serr - System.err.println("");
+  sout - System.out.println("");
+  soutv - System.out.println("var = " + var);
+  trycatch - try { } catch (Exception e) { }
+  whileit - while (iter.hasNext()) { Object object = iter.next(); }
+
+Debugging
+- to toggle a breakpoint, click the line number,
+  right-click and select "Toggle Breakpoint" or press cmd-F8
+  * a red square will be displayed in place of the line number
+- to debug the current source file, right-click in the source code
+  and select "Debug {name}.java"
+
+Find
+- to find all source files in the current project that contain given text
+  * select Edit...Find in Projects... 
+  * enter the text to be found
+  * select "Main Project"
+  * press the "Find" button
+  * drag titlebar of result window to dock area
+  * press up and down arrow buttons to move between occurrences
+    in the Search window
+  * double-click an occurrence to navigate to the source file
+- to run a different search, press the "Modify Criteria" button
+- to find where a displayed file is located within the
+  project directory hierarchy, right-click anywhere in the editor window
+  of the file and select "Select in...Projects"
+
+Formatting
+- to configure formatting options,
+  select NetBeans...Preferences...
+  * select Editor...Indentation to set options
+    such as "Expand Tabs to Spaces"
+  * also see Java Code...Formatting and the "Indents" category
+- to format the code in a source file,
+  right-click in source code and select "Format",
+  select Source...Format or press ctrl-F
+  * may need to turn off jVi by selected Tools...jVi before doing this
+
+Free-Form Projects
+- allow use of your own Ant build file
+- in Project Properties
+  * in the "Java Sources Classpath" category
+    - the "Source Package Folder" drop-down list allows you to
+      specify a different classpath for each source folder
+      * for example, test would need the JUnit JAR file, but src wouldn't
+
+Generating Code
+- right-click in source code and select "Insert Code..."
+  or select Source...Insert Code...
+
+Help
+- see http://jvi.sourceforge.net/ReadmeNetBeans.html
+- when clicking on the Help menu, it takes a few seconds to appear
+- don't keep clicking it!
+
+Imports
+- to add missing imports and remove unused ones,
+  right-click in source code and select "Fix Imports",
+  select Source...Fix Imports... or press cmd-I
+
+Javadoc
+- to make NetBeans aware of JDK javadoc
+  * download from http://java.sun.com
+  * unzip
+  * select Tools...Java Platform
+  * select a version of the JDK
+  * select the "Javadoc" tab
+  * press the "Add Zip/Folder" button
+  * select the api directory from the unzipped javadoc directory
+- to see full javadoc for the class under the cursor
+  or a class whose name you will enter,
+  right-click on a class name in source code and select "Show Javadoc",
+  select Help...Javadoc Index Search or press shift-F1
+  * can leave this window open to speed future lookups
+- to see the javadoc header for the class or method name under the cursor,
+  select Windows...Other...Javadoc View
+- this opens a window at the bottom where the javadoc is displayed
+
+Keyboard Shortcuts
+- see Help...Keyboard Shortcuts Card
+- under Windows, use ctrl instead of cmd
+- cmd-B - go to source for selected name
+- cmd-o - go to type... (prompts for a class name)
+- cmd-I - fix imports
+- cmd-i - insert code
+
+Libraries
+- right-click project name and select "Properties"
+- under "Categories", select "Libraries"
+- verify that the "Compile" tab is selected
+- to add a JAR or folder to the classpath of just this project,
+  press the "Add JAR/Folder" button
+- to define a global library that can be used by any project,
+  press the "Add Library" button
+
+Line Numbers
+- to display them, select View...Show Line Numbers
+
+Navigation
+- to go to the definition of a method
+  select Navigate...Go To Source or press cmd-b
+
+Projects
+- to create a new project
+  * press the "New Project" toolbar button
+    (the yellow box with a green plus on it)
+  * choose the project type and press "Next>"
+    - for an existing project with an existing Ant build file,
+      choose "Java Free-Form Project"
+      * for this type of project, JARs must be added to the classpath
+        in Project Properties "Java Sources Classpath"
+        instead of using global libraries
+      * Ant targets will be displayed in the Navigator window
+        in the lower-left corner
+  * enter a project name, specify a location and press "Finish"
+- to change which project is run when pressing F6
+  right-click the project and select "Set as Main Project"
+
+Running
+- to run the current source file, right-click in the source code
+  and select "Run {name}.java"
+- to run the "main project", press F6,
+  press the green triangle toolbar button,
+  or select Run...Run Main Project
+- this automatically saves modified files
+- sysout output appears in the output window at the bottom
+- to run again, press the green double triangle button in the output window
+
+Sorting
+- it doesn't seem that NetBeans can sort class members like Eclipse
+
+Source File Tabs
+- to move between them without using the mouse, press ctrl-tab
+- to view more than one source file at the same time,
+  drag a tab down and release
+  * can also right-click tabs and select "Undock Window"
+
+Task List
+- to view all TODO comments in the current project,
+  select Window...Task List or press cmd-6
+
+URLs
+- http://wiki.netbeans.org/KeymapProfileFor60
+- http://wiki.netbeans.org/RubyShortcuts
+
+Vi Keystrokes
+- jVi is a plugin for Vi keystroke support from http://jvi.sourceforge.net/
+- to install
+  * download from the jVi website
+  * Tools...Plugins...Downloaded...Add Plugins...
+  * locate the two .nbm files that come in the jVi zip file
+  * press the "Install" button
+- to configure
+  * Netbeans...Preferences...jVi Config...Buffer Modifications
+  * uncheck tildeop
+  * set shiftwidth and tabstop to 4
+  * check expandtab
+  * restart NetBeans
+- items on the Refactor menu don't work,
+  but jVi command equivalents are provided
+  :rfr[ename] = Rename...
+  :rfm[ove] = Move...
+  :rfc[opy] = Copy...
+  :rfde[lete], :rfsa[fedelete] = Safe Delete...
+  :rfch[angemethodparameters] = Change Method Parameters...
+  :rfenc[apsulatefields] = Encapsulate Fields...
+  :rfup, :rfpul[lup] = Pull Up...
+  :rfdo[wn], :rfpus[hdown] = Push Down...
+  :rfvar[iable] = Introduce Variable...
+  :rfcon[stant] = Introduce Constant...
+  :rffie[ld] = Introduce Field...
+  :rfmet[hod] = Introduce Method...

@@ -1,0 +1,37 @@
+Make Notes
+
+- a simple Makefile for compiling and running a C++ application
+
+MY_LIB_DIR=some-path
+
+run : Hello
+	@ ./Hello
+
+Hello : Hello.o
+	g++ -o $@ $^
+
+clean :
+	@ rm -f *.o Hello *.stackdump
+
+%.cpp : %.h
+	@ touch $@
+
+%.o : %.cpp
+	g++ -c -o $@ -I$(MY_LIB_PATH) $<
+
+- typical steps to build Unix-based software
+  * generate .configure file by running "autoconf"
+    (processes configure.ac or configure.in file)
+  * generate Makefile by running "./configure"
+  * compile and link code by running "make"
+  * install the code in its intended location by running "make install"
+    - typically need to be root to do this
+
+- variables
+  * can be defined near top of Makefile and referred to later
+  * often used for directory paths
+  * to define, NAME=value
+  * to use, $(NAME)
+
+- passing compiler flags
+  make CCFLAGS="-D{flag-name}"

@@ -1,0 +1,20 @@
+Ubuntu Notes
+
+Package Manager
+- to install a package
+  * apt-get install {name}
+
+Root User
+- after installing, open a Terminal window and enter "sudo passwd"
+  to set the root password for the first time
+
+Shared Directory
+- /media/sf_UbuntuShared
+
+Squeak
+- to install Squeak, select Applications...Add/Remove...,
+  select the "All" category, and search for "Squeak"
+  * will install in /usr/bin
+
+Terminal Window
+- to open a Terminal window, select Applications...Accessories...Terminal

@@ -1,0 +1,41 @@
+FindBugs Notes
+
+- download from http://findbugs.sourceforge.net
+- can run from command-line and from Ant
+
+- to run from command-line
+  * java -jar $FINDBUGS_HOME/lib/findbugs.jar -gui 
+  * in GUI, for a new project:
+    - select File...New Project...
+    - enter a name for the project
+    - under "Class archives and directories to analyze",
+      add the build/classes directory of the project
+    - under "Auxilary class locations",
+      add all JARs used by the project that shouldn't be analyzed
+      such as junit-4.4.jar
+    - under "Source directories"
+      add the src and test directories of the project
+    - press the "Finish" button
+  * in GUI, for an existing project:
+    - select File...Recent...{project-name}.fbp
+  * after making code changes to address issues it identifies,
+    build the code from outside FindBugs, perhaps using Ant,
+    and press ctrl-r to redo the analysis
+
+- to run from Ant
+  * add the following to build.properties
+  findbugs.dir=${java.dir}/FindBugs/findbugs-1.3.5
+  * add the following to build.xml
+  <target name="findbugs" depends="compile">
+    <taskdef name="findbugs"
+      classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
+    <findbugs home="${findbugs.dir}"
+      output="html" outputFile="build/wax-fb.html">
+      <sourcePath path="src"/>
+      <auxClasspath location="${junit.jar}"/>
+      <class location="${classes.dir}"/>
+    </findbugs>
+    <antcall target="browse"> <!-- see WAX project -->
+      <param name="file.path" value="build/wax-fb.html"/>
+    </antcall>
+  </target>

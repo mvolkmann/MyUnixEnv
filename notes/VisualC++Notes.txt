@@ -1,0 +1,9 @@
+Visual C++ Notes
+
+- downloaded Visual C++ 2005 Express Edition
+- installed in C:\Programming\Languages\C++\Microsoft Visual Studio 8
+- registered
+  - key is 0W3SFN0CNKJK1C
+  - started Visual C++ 2005 Express Edition
+  - selected Help...Register Product... and entered key
+

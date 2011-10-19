@@ -1,0 +1,65 @@
+OCI Notes
+
+Boxes
+- for a list of machines,
+  browse http://scoreboard.ociweb.com and click "Build Farm"
+- you should be able to ssh and scp to any of these
+  ssh xi -lvolkmanm
+- recommended Linux boxes are spider and xi
+  * why doesn't vivaldi work?
+- for Mac OS X, try mac (why doesn't it work?)
+
+Copying Files
+- to copy files from Windows to an OCI Linux box,
+  * open a Command Prompt
+  * cd to directory containing a file to be copied
+  * scp {filename} {username}@{host}.ociweb.com:{directory}
+
+CVS
+- to access, set CVSROOT to :pserver:volkmanm@cvs:/cvs
+  or use "cvs -d :pserver:volkmanm@cvs:/cvs ..."
+
+Email Server
+- mail.ociweb.com
+
+Printers
+- to use Samsung color laser printer outside Kristin's office
+  * download driver from http://www.samsung.com/au/support/productsupport/
+    download/Model_Select.aspx?type=Printer&typecode=300500&
+    subtype=Color+Laser+Printer&subtypecode=300503&model=CLP-510&
+    filetype=DR&language=
+  * open the printer control panel
+  * double-click the printer "Samsung CLP-510 Series"
+  * select Printer...Properties
+  * select the "Ports" tab
+  * click the "Add Port..." button
+  * select "Standard TCP/IP Port"
+  * click the "New Port..." button
+  * click the "Next" button
+  * enter "CLP510N" for the Printer Name
+  * click the "Next" button
+
+Status reports
+- email by noon every Tuesday to ociops@ociweb.com and spencem@ociweb.com
+
+Subversion 
+- see SubversionNotes.txt
+
+Voicemail
+- to check voice mail remotely
+  * dial your phone number
+  * press * when greeting starts
+  * enter 242#
+  * enter your password and #
+- to change phone options such as the voicemail message
+  * dial 500
+  * press *
+  * enter 242#
+  * enter your password and #
+
+Wiki
+- the old Wiki is at https://internal.ociweb.com/wiki/oci
+- the new Wiki is at https://wiki.ociweb.com
+
+Working from home
+- email notification to ociops@ociweb.com and cc admin@ociweb.com

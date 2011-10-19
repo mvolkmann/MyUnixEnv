@@ -1,0 +1,9 @@
+Red Hat Notes
+
+Package Manager
+- to update list of available packages
+  * sudo yum update
+- to search for a package whose name contains a given substring
+  * yum search {substring}
+- to install a package
+  * sudo yum install {name}

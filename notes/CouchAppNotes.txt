@@ -1,0 +1,43 @@
+CouchApp Notes
+
+- To install
+  * install Node.js (see node-jsNotes.txt)
+  * install npm (see node-jsNotes.txt)
+  * sudo npm install couchapp
+    - adding " -g" to end made "couchapp push" fail
+
+- To create a new app
+  * couchapp boiler {name}
+  * cd {name}
+  * edit app.js
+    - change _id value of '_design/app' to '_design/{name}'
+  * edit attachments/index.html
+    - add content to body
+  * edit attachments/layout.css to add CSS rules
+  * create additional .js files in the attachments directory
+    and add script tags for them to attachments/index.html
+  * probably want to add the following to use jquery.couch.js
+    <script language="javascript" type="text/javascript" src="jquery.couch.js">
+    </script>
+    - need to download the file
+
+- To push app changes to CouchDB
+  * create a file named "push"
+  * chmod a+x push
+  * edit push and add the following line
+    couchapp push app.js http://localhost:5984/{name}
+  * enter ./push every time any files below the project directory change
+
+- Web app URL
+  * http://localhost:5984/{name}/_design/{name}/index.html
+    - can't omit /index.html
+
+- Sammy
+  * by default, CouchApps use Sammy, a small web framework
+    - RESTful, evented, JavaScript
+  * http://sammyjs.org/
+
+- jQuery
+  * currently CouchApps are given an old version of jQuery
+    - get 1.4.4
+    - can safely replace with a newer version

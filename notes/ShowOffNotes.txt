@@ -1,0 +1,47 @@
+ShowOff Notes
+
+* presentation software built on Ruby and the Sinatra web framework
+  - see http://github.com/schacon/showoff
+* to install
+  - if using RVM, see RVMNotes.txt for notes on installing that
+  - gem install showoff
+* to create a new presentation
+  - rvm use 1.8.7
+    * to use Ruby 1.9, see http://github.com/schacon/showoff/issues#issue/33
+    * need to use fileutils instead of ftools
+  - showoff create {dir-name}
+* to start server
+  - cd {dir-name}
+  - showoff serve
+    * port defaults to 9090, but can specify with -p option
+* to view presentation
+  - browse localhost:9090
+  - in Chrome, press cmd-F to enter and exit full-screen mode
+* sections
+  - each presentation contains one or more sections
+  - slides for each section are defined in a subdirectory
+    with the same name as the section
+  - sections are defined in the showoff.json file
+  - to add a new section, manually edit showoff.json
+* slides
+  - slides in each section are defined in one or more MarkDown files (.md)
+    * these files typically start with a two-digit number
+      that defines their order
+      - don't need to start with a number if
+        only one MarkDown file is used for the section
+  - each MarkDown file defines one or more slides
+  - to add a slide to a section
+    * showoff add -d {section-name}
+  - to edit a slide, edit its MarkDown file
+* to pickup changes to a presentation
+  - refresh browser window
+* to make bullets smaller on a slide
+  - add "smbullets" instead of "bullets" to !SLIDE line
+* to cause bullets to be revealed one at a time
+  - add "incremental" to !SLIDE line
+* to specify the transition to be used for entering a slide
+  - add transition={name} to !SLIDE lines
+  - not used when going backward through slides
+  - there doesn't seem to be a way to
+    set the default transition for all slides
+* see examples in /Applications/showoff

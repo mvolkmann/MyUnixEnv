@@ -1,0 +1,152 @@
+IDEA Notes
+
+Help
+- for help on common keystrokes, select Help...Default Keymap Reference
+  * opens a PDF that can be printed
+- visit http://www.jetbrains.com/idea/documentation/documentation.html
+  * includes printable keymaps and articles
+
+To create a new Java project
+- File...New Project...
+  * can choose "from scratch", "from existing sources" or
+    "from external model" (another IDE or tool)
+
+To add a package or source file
+- right-click the src directory in the project view and
+  select New...Package, New...Class or New...Interface
+
+Live Templates
+- see File...Settings...Live Templates
+  - "other" category contains psvm
+  - "output" category contains sout, soutm (class and method name)
+    and soutv (value)
+  - "plain" category contains psf (public static final) and variants
+- can select the key used to expand them; space, tab (default) or enter
+  * ctrl-j expands them too
+
+To run an application
+- the easiest way is to right-click the source file and
+  select Run "{class-name}.main()"
+- Run...Edit Configurations...
+- click "+" button (can have more than one configuration for the same project)
+- select "Application"
+- give the configuration a name
+- specify the main class
+- optionally uncheck "Display settings before launching"
+- press the "OK" button
+- select Run...Run...
+- select the name of the configuration to run
+- press the "Run" button
+- pressing the "Run" toolbar button (green, right-pointing triangle)
+  reruns the last run configuration
+
+File Templates
+- one thing these do is supply initial content for new files
+- new Java class source files use the "Class" template
+- to modify this, select File...Settings...File Templates...Templates...Class
+- by default this includes the contents of "File Header.java"
+  which is under the Includes tab
+  * this can be modified
+- note that there is a separate "Interface" template
+  which also includes "File Header.java"
+
+Generating code
+- position cursor to location where code should be inserted
+- press ctrl-n
+- select the type of code to be generated
+  * constructors
+    - select the fields to be initialized in the order
+      in which they should appear in the parameter list
+  * getter and setter methods
+  * equals and hashcode methods
+  * override superclass methods
+  * implement abstract methods such as those in interfaces
+
+Refactor menu (highlights)
+- Rename...
+  * right-click a package, class, constant, field, method, parameter or
+    variable name and select Refactor...Rename
+- Extract Method
+  * creates a new method from selected code and
+    replaces it with a call to the new method
+
+Editor windows
+- to close, right-click (many options)
+- to split/unsplit vertically/horizontally, right-click
+- to navigate to the left window, press cmd-option-left arrow
+- to navigate to the right window, press cmd-option-right arrow
+- to close the current window, press cmd-F4
+
+To quickly open a file
+- for a class or interface, press cmd-n and
+  enter the beginning of the name in any case
+- for other kinds of files, press cmd-shift-n
+
+For code completion
+- press ctrl-space
+
+To see javadoc for a class or method under the cursor
+- press ctrl-j
+
+To add a JAR or directory to the classpath
+- select File...Settings...Project Settings
+- in the tree on the left, select
+  "Project Settings...Libraries" to add a library to just this project, or
+  "Platform Settings...Global Libraries" to add a library
+  that can be used by many projects
+- click the "+" button at the top to add the selected type of library 
+- enter the library name
+- press "Attach Classes..." and select a JAR file
+
+To add a dependency on a Global Library to the current project
+- select Settings...Project Structure
+- in the tree on the left, select the Project...Modules...{module-name}
+- in the center of the Project Structure dialog, select the "Dependencies" tab
+- press the Add button
+- select Global Library...
+- select the name of the Global Library to add
+- press the "OK" button
+
+To add a Java SDK
+- select File...Settings...Project Settings...General
+- select a "Project JDK" or press "New" to specify one that isn't listed
+- under Mac OS X, select a version that was installed under
+  System/Library/Frameworks/JavaVM.framework/Versions
+
+To configure available javadoc
+- select File...Settings...Project Settings...Platform Settings...JDKs
+- select the JDK to which the javadoc will be associated
+- select the "JavaDoc Paths" tab
+- press the "Add" button
+- select the directory containing javadoc
+
+More key mappings
+- ctrl-down arrow - go to next method
+- ctrl-up arrow - go to previous method
+- ctrl-h - shows inheritance hierarchy of class defined in current source file
+- F4 - in project tree opens file under cursor in editor
+- shift-F6 - rename refactoring
+- cmd-n - enter a class name, select desired class from list,
+    and press enter to open its source file
+- cmd-delete - safe delete; verifies that something
+    (fields, methods, classes) isn't used before deleting it
+- cmd-mouse over - see popup of declaration; click to go to it
+- cmd-click or cmd-opt-b - go to implementation of class or method under cursor
+
+IdeaVIM plugin
+- in Preferences ... Plugins, select the "Available" tab,
+  right-click "IdeaVim", and select "Download and Install"
+- download IdeaVIM from a browser to get the keymap file
+  * click the "Download" link at http://ideavim.sourceforge.net/
+  * unzip and untar it
+  * copy Vim.xml to ~/Library/Preferences/IntellijIDEA60/keymaps
+  * restart IDEA
+  * Preferences ... Keymap
+  * select "Vim" from the Keymaps dropdown
+  * there is currently a conflict that prevents this from working on Ruby files
+
+GWT-specific tips
+- After changing methods in synchronous interface,
+  delete all methods in asynchronous interface
+  and press alt-enter to replace them with new versions.
+- GWT run target - runs hosted mode inside IDEA

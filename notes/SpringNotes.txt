@@ -1,0 +1,112 @@
+Spring Notes
+
+Overview
+- it's an Inversion Of Control (IOC) framework
+- other capabilities include
+  * MVC web app. framework with Portlet support
+  * AOP framework supporting the AOP Alliance API
+  * DAO framework that works with many persistence APIs
+  * support for AspectJ, JPA, Hibernate, JMS, JDBC, JMX
+  * task scheduling
+
+Obtaining
+- download from http://www.springframework.org
+
+Setup
+- basic IOC functionality only requires spring.jar in classpath
+- it's in the dist subdirectory
+
+Basic Usage
+- write Java Bean classes that will be configured by Spring
+- these can optionally implement interfaces
+- create an XML file the describes the Java Beans to be configured
+  * beans can also be described using a Java property file,
+    but using XML is more common
+- use an XMLBeanFactory to create configured beans
+  * there are other ways to read bean descriptions,
+    but using an XmlBeanFactory is more common
+  * sample code
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.beans.factory.xml.XmlBeanFactory;
+    import org.springframework.core.io.FileSystemResource;
+    ...
+    BeanFactory beanFactory =
+      new XmlBeanFactory(new FileSystemResource("spring.xml"));
+    // Also consider using ClassPathResource.
+    MyBeanInterface bean =
+      (MyBeanInterface) beanFactory.getBean("myBeanId");
+  * other kinds of resources
+    - to read XML file from the WAR of a web app.,
+      use ClassPathResource instead of FileSystemResource
+    - to read XML file from a URL, use UrlResource
+    - see javadoc for org.springframework.core.io.Resource
+      for more options
+
+XML syntax
+- see dist/resources/spring-beans.dtd
+- basic layout is
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE beans
+    PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+  <beans>
+    <bean ...>...</bean>+
+  </beans>
+- XMLBeanFactory validates the XML, so the DOCTYPE is required
+- beans element
+  * attributes
+    - default-autowire
+    - default-dependency-check
+    - default-destroy-method
+    - default-init-method
+    - default-lazy-init
+    - default-merge
+  * child elements
+    - description? - text
+    - import*
+    - alias*
+    - bean*
+- bean element
+  * attributes
+    - abstract
+    - autowire
+    - autowire-candidate
+    - class
+    - dependency-check
+    - depends-on
+    - destroy-method
+    - factory-bean
+    - factory-method
+    - id
+    - init-method
+    - lazy-init
+    - name
+    - parent
+    - scope
+  * child elements
+    - description? - text
+    - meta*
+    - constructor-arg*
+    - property*
+    - lookup-method*
+    - replaced-method*
+- constructor-arg element
+  * child of bean element
+  * used in constructor injection
+  * attributes
+    - value - literal value (can also use value child element)
+    - ref - id of a bean to use as the value, conflicts with value
+    - index - index of the arg in the constructor starting at zero
+      * not needed if constructor-arg elements appear in the correct order
+    - type - type of an arg in the ctor
+    - note that index and type are only needed to avoid
+      selecting the wrong overloaded ctor
+  * child elements
+    - description? - text
+    - (bean|ref|idref|value|null|list|set|map|props)?
+- meta element
+  * child of bean element
+  * used to attach arbitrary metadata to beans
+  * has key and value CDATA attributes
+  * not used by Spring
+  * could be used by custom code that parses this XML

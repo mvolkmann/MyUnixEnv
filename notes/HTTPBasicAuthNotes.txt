@@ -1,0 +1,28 @@
+HTTP Basic Auth Notes
+
+See http://httpd.apache.org/docs/1.3/howto/auth.html
+
+To create passwords and groups files:
+- touch passwords
+- touch groups
+
+For each user:
+- htpasswd -b passwords {username} {password}
+
+For each group:
+- add a line like the following to the groups file:
+  {group-name}: {username-1} {username-2} ...
+
+To configure, create .htaccess file with the following content:
+AuthType Basic
+AuthName "{login-prompt}"
+AuthUserFile {path}/passwords
+AuthGroupFile {path}/groups
+Require user {space-separated-list-of-allowed-usernames}
+
+The .htaccess file can be shared by all applications
+or be specific to the files in a directory of a single web application.
+When shared, place the file in the Apache conf directory?
+Whenever the file is modified, restart the server.
+When specific to a single web app. directory, place the file in that directory.
+In this case, the server doesn't need to be restarted when changes are made.

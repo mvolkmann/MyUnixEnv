@@ -1,0 +1,29 @@
+Icon Notes
+
+- icons are stored in Mark/pictures/icons
+
+- some are from http://www.fasticon.com/
+
+- a good source is http://findicons.com/
+
+- To change the resolution of an icon
+  * open it in Preview
+  * select Tools...Adjust Size...
+  * enter a new width or height
+  * press the "OK" button
+  * select File...Save As...
+  * enter a new name, perhaps the original name with the resolution included
+
+- To convert an icon file to a .PNG file
+  * launch the "Iconographer X 2.5" application
+  * open an icon file
+  * select File...Save As...
+  * save it in "Mac OS X (.icns file)" format
+  * drag the .icns file to the "ICNS to PNG" application
+  * that creates a .png file in the same directory as the dragged file
+  * double-click the .png file to open it in Preview
+  * select Tools...Adjust Size...
+  * change the resolution to one that divides evenly into the current value
+  * press the OK button
+  * select File...Save As...
+  * include the new resolution in the file name

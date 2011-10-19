@@ -1,0 +1,15 @@
+Lisp Notes
+
+Lisp1
+- has a single namespace that serves a dual role
+  as the function namespace and value namespace
+- the functional position of a form and the argument positions of forms
+  are evaluated according to the same rules
+- Scheme and Clojure are Lisp1 dialects
+
+Lisp2
+- has distinct function and value namespaces
+- the rules for evaluation in the functional position of a form are
+  distinct from those in the argument positions of the form
+- Common Lisp is a Lisp2 dialect
+

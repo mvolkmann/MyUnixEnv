@@ -1,0 +1,184 @@
+Standard Widget Toolkit (SWT) Notes
+
+Download
+- from http://www.eclipse.org/swt/
+
+Useful websites
+- http://www.eclipse.org/swt/snippets/
+
+Usage
+- Eclipse is implemented using SWT
+- custom plug-ins typically also use SWT
+- classes are in the org.eclipse.swt package and subpackages
+
+Class Hierachy
+- all of these are in the org.eclipse.swt.graphics package
+  unless otherwise noted
+- Object
+  * Device
+    - Display
+  * Widget
+    - Control - a windowed user interface class
+      * Scrollable - a control with standard scrollbars
+        - Composite - a control containing other controls
+          * Group - groups other widgets inside an etched border
+          * org.eclipse.swt.custom.ScrolledComposite -
+            a Composite that includes scrollbars
+          * org.eclipse.swt.browser.Browser -
+            renders HTML and supports hyperlink navigation
+          * Canvas - for drawing arbitrary graphics
+            - CLabel - a label that can contain an image and styled borders
+            - Decorations
+              * Shell - represents a window that can be
+                normal, maximized or minimized
+            - FormText - a label that supports text wrapping
+            - GLCanvas - displays OpenGL content
+            - StyledText - rich text field
+          * org.eclipse.swt.custom.CBanner
+          * org.eclipse.swt.custom.CCombo -
+            similar to Combo, but works around native combo box issues
+          * Combo - combines a text field and a drop-down list
+          * CoolBar
+          * org.eclipse.swt.custom.CTabFolder -
+            provides a notebook interface with selectable tabs
+            How does this differ from TabFolder?
+          * DateTime - allows date or time entry
+          * org.eclipse.ui.part.DrillDownComposite
+          * ExpandBar
+          * org.eclipse.ui.dialogs.FilteredTree
+          * org.eclipse.ui.forms.widgets.Form
+          * org.eclipse.ui.jface.dialogs.ImageAndMessageArea -
+            displays a message and an image
+          * org.eclipse.ui.part.PageBook - like CTabFolder but without tabs
+          * org.eclipse.jface.dialogs.ProgressIndicator -
+            shows progress feedback for a long running operation
+          * org.eclipse.jface.wizard.ProgressMonitorPart -
+            display task and subtask names and a progress indicator
+          * org.eclipse.swt.custom.SashForm -
+            lays out controls in rows and columns with a draggable sash
+            between each child
+          * Spinner - allow entry of numeric values
+          * TabFolder - provides a tabbed notebook of controls
+            How does this differ from CTabFolder?
+          * Table - displays string and images specified with
+            TableItem objects in rows and columns
+          * org.eclipse.swt.custom.TableTree - deprecated
+          * ToolBar - lays out ToolItem children
+          * Tree - displays TreeItem objects in a tree hierarchy
+          * org.eclipse.swt.custom.ViewForm - ?
+        - List - displays a list of strings and supports
+          single or multiple selections
+        - Text - provides SINGLE or MULTI line text entry and editing
+      * Button - provides many styles of buttons including
+        CHECK, PUSH, RADIO, TOGGLE and others
+      * Label - displays a string, image or
+        separator line (either horizontal or vertical)
+      * Link - displays text as a hyperlink and supports a SelectionListener
+      * ProgressBar - displays progress for a long running operation
+      * Sash - allows the user to drag an outline within the parent control
+      * Scale - allows the user to select a numeric value from a range
+        How does this differ from Slider?
+      * Slider - allows the user to select a numeric value from a range
+        specified by dragging a "slider" along a horizontal or vertical bar
+    - Item - superclass of objects that are added to specific controls
+      * CoolItem
+      * CTabItem
+      * ExpandItem
+      * MenuItem
+      * TabItem
+      * TableColumn
+      * TableItem
+      * TableTreeItem
+      * ToolItem
+      * TrayItem
+      * TreeColumn
+      * TreeItem
+    - Menu - contains MenuItem objects
+    - ScrollBar
+    - ToolTip - a popup window used to inform or warn the user
+    - Tracker - a rubber banding rectangle drawn on a Composite or Display
+    - Tray - the system tray in the task bar status area
+      on some OSes like Windows
+
+Layouts
+- see classes in the org.eclipse.swt.layout package
+- ColumnLayout (in the org.eclipse.ui.forms.widgets package)
+  * lays out controls in columns of equal widths
+  * controls are stretched to the common width
+  * the number of columns can change between a minimum and maximum
+    when the area is resized
+  * example
+    ColumnLayout cl = new ColumnLayout();
+    cl.minNumColumns = 2; // defaults to 1
+    cl.maxNumColumns = 5; // defaults to 3
+    shell.setLayout(cl);
+- FillLayout (in the org.eclipse.swt.layout package)
+  * the simplest
+  * lays out controls in a single row or column
+  * all controls are sized to match the largest of them
+  * example
+    FillLayout fl = new FillLayout();
+    fl.type = SWT.VERTICAL;
+    shell.setLayout(fl);
+- FormLayout (in the org.eclipse.swt.layout package)
+  * controls the position and size of controls using FormAttachment objects
+    to configure the four edges of each control
+  * each side of a control can be attached to
+    a side of the parent composite or
+    a side of another control in the same parent composite
+  * FormData holds the FormAttachment values for the
+    left, right, top and bottom sides
+  * FormData can also specify a fixed width and height for a control
+  * FormAttachment holds
+    a reference to a control
+    or a numerator (percentage from a parent composite side
+    and an offset from it
+  * example
+    FormLayout fl = new FormLayout();
+    FormData fd = new FormData();
+    // Place a button in the upper-left corner.
+    fd.left = new FormAttachement(0, 0);
+    fd.top = new FormAttachement(0, 0);
+    shell.setLayout(fl);
+    button.setLayoutData(fd);
+    shell.add(button);
+- GridLayout (in the org.eclipse.swt.layout package)
+  * controls are laid out in columns from left to right
+  * a new row is created when numColumns + 1 controls are added
+  * example
+    GridLayout gl = new GridLayout();
+    gl.numColumns = 3;
+    shell.setLayout(gl);
+- RowLayout (in the org.eclipse.swt.layout package)
+  * lays out controls in a single row or column
+  * can optionally wrap controls to a new row or column
+  * can justify controls across the space available
+  * all controls will have the same size unless pack is set to true
+  * example
+    RowLayout rl = new RowLayout(SWT.HORIZONTAL);
+    rl.pack = true;
+    rl.wrap = true;
+    shell.setLayout(rl);
+- StackLayout (in the org.eclipse.swt.custom package)
+  * lays out controls on top of each other and only display the top control
+  * all controls are resized to the maximum width and height
+    of all controls added
+  * example
+    StackLayout sl = new StackLayout();
+    shell.setLayout(sl);
+    // add controls
+    sl.topControl = controlToDisplay;
+- TableLayout (in the org.eclipse.jface.viewers package)
+  * lays out controls in rows and columns
+  * to add a column, call addColumnData(ColumnLayoutData cld)
+    on the TableLayout
+  * example
+    TableLayout tl = new TableLayout();
+    // Pass true to get a resizable column.
+    ColumnLayoutData cld = new ColumnLayoutData(true);
+    tl.addColumnData(cld);
+    shell.setLayout(tl);
+- TableWrapLayout (in the org.eclipse.ui.forms.widgets package)
+  * layouts out controls in a manner similar to HTML tables
+  * simpilar to GridLayout, but can flow text controls
+    that support line wrap

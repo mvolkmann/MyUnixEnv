@@ -1,0 +1,1012 @@
+Common Lisp Notes
+
+Standards
+- 1981 - Common Lisp
+- 1986 - ANSI Common Lisp (abbreviated "CL")
+
+Characteristics
+- a multiparadigm language supporing these programming styles
+  * OO
+  * functional
+    - most functions only operate on their arguments and have no side-effects
+    - easier to reason about and test
+    - "higher-order functions"
+      * accept arguments that are functions and/or return a function
+  * generic
+  * domain-specific
+
+Implementations
+- Armed Bear CL
+  * http://armedbear.org/
+  * runs on JVM
+  * free
+- GNU CLISP
+  * http://clisp.cons.org/
+  * free
+- Steel Bank Common Lisp (SBCL)
+  * http://www.sbcl.org/
+  * faster that CLISP
+  * free
+  * possibly better tools
+  * by default, installed in /usr/local/bin
+  * enter "sbcl" to start REPL
+- Allegro Common Lisp
+  * commercial
+- LispWorks
+  * http://www.lispworks.com/
+  * commercial except for free personal edition
+- Clozure CL
+  * http://ccl.clozure.com/
+  * free
+- CMUCL
+  * from Carnegie Mellon University
+  * http://www.cons.org/cmucl/
+  * free
+- other implementations are described at
+  http://common-lisp.net/~dlw/LispSurvey.html
+
+CLISP
+- http://clisp.cons.org/
+- runs on Windows, Mac OS X and Linux
+- to install on Mac OS X
+  * browse http://www.macports.org
+  * download .dmg file for Snow Leopard
+  * double-click it to install
+  * open a Terminal window
+  * run "sudo port install clisp" (takes about a half hour to build)
+- to run, enter "clisp [file-path]"
+  * with no argument, a REPL is started
+- to quit REPL, enter "(quit)"
+- if the REPL gets confused to do bad input, enter ":q"
+
+Documentation
+- there are two commands for viewing documentation in a REPL
+  * (documentation '{name} '{type})
+    - ex. (documentation 'car 'function)
+    - can't find a single example that works!
+  * (describe '{name})
+    - (set *browser* :FIREFOX) to display in browser
+    - haven't gotten this to work yet
+
+Comments
+- preceded by ;
+- conventions is to use
+  ;;; for comments before function definitions
+  ;; for comments before blocks of code
+  ; for end of line comments
+
+Names
+- not case-sensitive
+- example
+  (defun foo () 19)
+  (defun FOO () 20)
+  (foo) -> 20
+
+Constants
+- there are several predefined constants
+  * t
+  * nil
+  * others?
+- pi is a predefined variable, but it is not a constant
+  * it is allowed to be changed because it is recomputed when
+    ext:long-float-digits is changed (defaults to 64)
+    - example
+      pi -> 3.1415926535897932385L0
+      (setf (ext:long-float-digits) 128)
+      pi -> 3.1415926535897932384626433832795028842L0
+  * (incf pi) changes pi and does not generate an error
+- can define more constants
+  * (defconstant {name} {value})
+  * ex. (defcontant dozen 12) (incf dozen)
+    - generates error message
+      "SETQ: AGE is a constant, may not be used as a variable"
+- to get a list of all constants
+  (do-all-symbols (s "CL") (when (constantp s) (print s)))
+- to get a list of constants in the CL package
+  (do-external-symbols (s "CL") (when (constantp s) (print s)))
+- how does do-symbols differ from do-all-symbols?
+
+Global Variables
+- a.k.a. dynamic variable or special variable
+- names are surrounded by asterisks by convention
+  to distinguish them from local variables
+  * called "earmuffs"
+  * ex. *foo*
+- three ways to set
+  * (defvar *{name}* {value})
+    - if already defined, the value is not changed
+  * (defparameter *{name}* {value})
+    - weird because global variables are not parameters and it's very verbose
+    - if already defined, its value will be changed
+  * (setf *{name}* {value})
+    - is there a reason to not use this approach to set initial value?
+- to change value, (setf {reference} {value})
+
+Types
+- character
+- number
+  - integer
+    * fixnum - fixed size
+    * bignum - arbitrary size
+  - ratio
+  - floating-point - arbitrary size and precision
+    * short-float
+    * single-float
+    * double-float
+    * long-float
+  - complex
+- symbol - can have properties
+- sequence
+  * list - built with cons cells
+    - association list - list of key/value pairs
+  * vector - one-dimensional array
+    - string - vector of characters
+    - bit-vector - vector of bits
+- multi-dimensional array
+- hash table
+- function
+
+Functions
+- to define, (defun {name} ({params}) {code})
+  * parameters are separated by spaces
+  * parens after name are needed even when there are no parameters
+  * to accept optional arguments, add &optional before them
+    - ex. (defun foo (a b &optional c d) ...)
+      * a and b are required; c and d are optional
+    - default values can be specified for optional parameters
+      by replacing the parameter name with ({name} {value})
+    - to detect if a value was supplied versus just using the default value,
+      specify the parameter with ({name} {value} {name-p}
+      * name-p will be set to t if supplied and nil otherwise
+  * to accept keyword arguments, add &key before them
+    - ex. (defun foo (a b &key c d)
+    - default values can be specified for keyword parameters
+      by replacing the parameter name with ({name} {value})
+  * to gather an arbitrary number of remaining parameters into a list,
+    add &rest {name} at the end
+    - ex. (defun foo (a b &rest more)
+    - the parameter "more" will refer to a list of the remaining arguments
+  * see examples in defun.lisp
+- to call, ({name} {args})
+  * called a "form"
+  * all arguments are evaluated
+    - built-in special forms and macros do not
+      have to evaluate all their arguments
+- value of last expression in function is returned
+  * no equivalent of a return statement exists
+- to pass a named function as an argument,
+  #'{name} which is shorthand for (function name)
+  * needed because it's a Lisp-2 (see below on namespaces)
+  * why does it sometimes work to omit the #?
+- to supply arguments from a list
+  * (apply #'{name} {list})
+  * ex. (apply #'+ '(1 2 3)) -> 6
+    - same as (+ 1 2 3)
+
+Anonymous Functions
+- (lambda ({params}) {expressions})
+- ex. (lambda (n) (* n 2))
+- often passed to functions that accept other functions
+  such as mapcar
+
+Namespaces
+- Common Lisp has one namespace for global variables and one for functions,
+  which makes it a Lisp-2
+- Scheme has one namespace for both, which makes it a Lisp-1
+
+Arithmetic Shift
+- (ash {integer} {places-to-shift)
+- multiples and divides by multiples of two
+- examples
+  * (ash 5 1) -> 10
+  * (ash 5 2) -> 20
+  * (ash 5 0) -> 5
+  * (ash 5 -1) -> 2 (2.5 truncated) 
+
+Set Field
+- (setf {pair}*)
+  * where each pair is {place} {value}
+  * each place is a "generic reference"
+  * ex. (setf width 5 height 7)
+    - same as (progn (setf width 5) (setf height 7))
+  * setq (set quote) is somewhat similar, but cannot be used
+    to set values of generic references, only variables
+- psetf is the same as setf except assignments are performed in parallel
+- this is a "generic setter"
+- used to change the value of a generalized reference which can be
+  * a variable
+  * an element in an array
+  * a value for a key in a hash table
+  * a global variable
+  * what else?
+- related functions
+  * (incf {field-name}) - increments by 1
+  * (decf {field-name}) - decrements by 1
+
+Local Variables
+- (let (({name1} {value1})
+        ({name2} {value2})
+        ...)
+    {code})
+- binds values to variables that scoped to code inside let
+- after let, previous values are visible
+- values cannot access other local variables defined in this let
+  unless let* is used instead
+- example
+  (setf width 1)
+  (let ((width 4)
+        (height 6))
+     (* width height)) -> 24
+  (princ width) -> 1
+
+Local Functions
+- (flet (({fn-name1} ({params})
+           {code})
+         ({fn-name2} ({params})
+           {code})
+         ...)
+    {code})
+- scoped to code inside flet
+- example
+  (flet ((times2 (x) (* x 2)))
+    (times2 3)) -> 6
+- alternative is to replace "flet" with "labels"
+  * only difference is that local functions can be called
+    inside definitions of other local functions
+    including recursive calls
+
+Symbols
+- somewhat like interned strings
+- case-insensitive
+- often preceded by a single quote in code
+- to create a symbol from a string, (intern {string} [{package}])
+  * package defaults to the current package
+
+Property Lists
+- symbols can have associated properties
+- each property has a key (or indicator) and a value (or property)
+- to add a property, (setf (get {symbol} {key}) {value})
+- to get a property value, (get {symbol} {key} [{default})
+  * can specify a default value to be returned when the key isn't found
+    - defaults to nil
+- to remove a property, (remprop {symbol} {key})
+- example
+  (setf (get 'Mark 'age) 49)
+  (setf (get 'Mark 'height) 74)
+  (get 'Mark 'age) -> 49
+  (symbol-plist 'Mark) -> (height 74 age 49)
+- to get the property list of a symbol, (symbol-plist {symbol})
+- to get a property from a property list, (getf {plist} {key})
+  * ex. (getf (symbol-plist 'Mark) 'height) -> 74
+- to remove a property from a property list, (remf {plist} {key})
+
+Numbers
+- three types
+  * integer - no decimal point
+  * floating-point - decimal point
+  * rational - result of integer division that isn't an integer
+    - (/ 4 6) creates the rational value "2/3"
+
+Characters
+- literal characters are preceded with #\
+- ex. #\a is the literal character "a"
+- some characters have a name that can be specified with #\{name}
+  * space, newline, tab
+  * backspace, linefeed, page, return, rubout
+- many implementations represent characters internally using unicode
+- comparing
+  * can't use < and >
+  * for case-sensitve
+    - char=, char/=, char<, char>, char<=, char>=
+  * for case-insensitive
+    - char-equal, char-not-equal
+    - char-lessp, char-greaterp
+    - char-not-greaterp, char-not-lessp
+
+Strings
+- surrounded with double-quotes
+- represented by a vector of characters
+- symbols are often preferred over strings (ex. 'foo over "foo")
+- comparing
+  * can't use < and >
+  * for case-sensitve
+    - string=, string/=, string<, string>, string<=, string>=
+  * for case-insensitive
+    - string-equal, string-not-equal
+    - string-lessp, string-greaterp
+    - string-not-greaterp, string-not-lessp
+- get length with (length {string})
+- to get a character from a string, there are three ways
+  (aref {string} {index}) ; works with any array
+  (elt {string} {index}) ; works with any sequence
+  (char {string} {index}) ; works with any string
+
+Regular Expressions
+- built-in?
+
+Types
+- these type specifiers can be used in parameter lists
+  * string
+  * numeric types
+    - integer, signed-byte, unsigned-byte
+    - double-float, float, long-float, real, short-float
+    - rational, complex
+  * collection types
+    - array, values, vector
+  * function
+  * cons
+
+Printing
+- from REPL, printed values appear twice since
+  value of print functions is the same as what they print
+- there are four print functions that all ...
+  - take one object to print and an optional stream (defaults to stdout)
+  - bind various printer control variables and
+    call the more generic write function
+  - current values of printer control variables are used
+    for print methods that do not bind them
+  * prin1 generates output that escapes special characters
+    * produces output that the read function can use,
+      escaping special characters
+    * binds *print-escape* to true
+  * princ is the same as prin1, but doesn't escape special characters
+    - produces output for humans to read
+    * binds *print-escape* to false
+    * binds *print-readably* to false
+  * print is like prin1, but the output is
+    preceded by a newline and followed by a space
+  * pprint is link print except the trailing space is omitted and
+    it performs pretty printing useful for outputting Lisp expressions
+    * binds *print-pretty* to true
+  * show examples of using write directly!
+  * some of the printer control variables are 
+    - *print-base*
+    - *print-escape*
+    - *print-pretty*
+    - *print-radix*
+    - *print-readably*
+    - describe each of these!
+    - add more?
+- to print the characters in a value, (princ {value})
+  * prints strings without double-quotes
+- format provides many more options (see next section)
+
+Format
+- printing on steriods
+- sytnax: (format {destination} {control-string} {values})
+  * destination is
+    - t for stdout; returns nil
+    - nil for printing to a string; returns the string
+    - a stream; returns nil
+  * control-string can contain directives
+  * each directive begins with a tilde
+  * many directives are replaced by
+    a certain printed form of the corresponding value
+    - ~a - any type made human-readable without delimiters
+      * ex. (format nil "Hello ~s!" "Mark") -> "Hello Mark!"
+    - ~s - any type made human-readable with delimiters
+      * ex. (format nil "Hello ~s!" "Mark") -> "Hello \"Mark\"!"
+    - ~d - integer in decimal (base 10)
+      * ex. (format nil "~d" 41) -> "41"
+      * can pad on left
+        - ex. (format nil "~4d" 41) -> "  41"
+        - can also pad on right and specify the padding character
+      * can add comma separators
+        - ex. (format nil "~:d" 1234567) -> "1,234,567"
+    - ~x - integer in hexadecimal (base 16)
+      * ex. (format nil "~x" 41) -> "29"
+    - ~b - integer in binary (base 2)
+      * ex. (format nil "~b" 41) -> "101001"
+    - ~f - floating point
+      * ex. (format nil "~f" 2.3456) -> "2.3556"
+      * can control total width including decimal point
+        - ex. (format nil "~4f" 2.3456) -> "2.35"
+      * can control number of digits to right of decimal point
+        - ex. (format nil "~,3f" 2.3456) -> "2.346"
+      * can multiple by a factor of 10 (ex. for percentages)
+        - ex. (format nil "~,,2f%" (/ 3 4)) -> "75.0%"
+    - ~t - specifies column position when outputting lines in a table
+      * example
+        (let ((control-string "~&~3t~a ~23t~a ~43t~a"))
+          (format t control-string "Name" "Spouse" "Dogs")
+          (format t control-string "Mark" "Tami" "Rudy, Dasher")) ->
+   Name                Spouse              Dogs
+   Mark                Tami                Rudy, Dasher
+        where first two are a maximum of 20 characters wide
+    - ~$ - monetary floating point; two decimal places with rounding
+      * ex. (format nil "$~$" 2.3456) -> "$2.35"
+    - ~% - carriage return like terpri (see below)
+      * ex. (format nil "foo~%bar") -> "foo\nbar"
+      * can use use (terpri) and (fresh-line) to output a newline
+        * (fresh-line) won't output anything if
+          already at the start of a new line
+        * examples
+          (progn (princ "foo") (princ "bar")) -> "foobar"
+          (progn (princ "foo") (terpri) (princ "bar")) -> "foo\nbar"
+          (progn (princ "foo") (terpri) (terpri) (princ "bar")) ->
+          "foo\n\nbar"
+          (progn (princ "foo") (fresh-line) (princ "bar")) -> "foo\nbar"
+          (progn (princ "foo") (fresh-line) (fresh-line) (princ "bar")) ->
+          "foo\nbar"
+      * add a parameter to output multiple newlines
+        * ex. ~3% outputs three newlines
+    - ~& - carriage return only if needed (like fresh-line)
+    - ~~ - hyphen
+    - ~{ and ~} for iterating though a list of data
+      * example
+        (let ((control-string "~&begin ~{ ~&~5t~a ~15t~a ~} ~&end")
+              (data '(Mark Tami Frank Laura Allan Pam)))
+           (format t control-string data)) ->
+begin  
+     MARK      TAMI  
+     FRANK     LAURA  
+     ALLAN     PAM  
+end
+      * try to do this using split-sequence on a string
+        so the names don't come out all uppercase
+        - ex. (cl-utilities:split-sequence #\comma "foo,bar,baz") ->
+          ("foo" "bar" "baz")
+  * directive parameters
+    - follow tilde in ~a and ~s with an integer to specify the field width
+      * will pad with spaces on right, but will not truncate
+      * ex. (format nil "|~5a|" "foo") -> "|foo  |"
+      * to pad with spaces on left instead of right, follow number with @
+      * ex. (format nil "|~5@a|" "foo") -> "|  foo|"
+
+Code Reading Modes
+- when code is read or parsed, there are two modes, code and data
+- default mode is code
+- switch from code to data mode by quoting
+  * examples
+    (foo bar) - foo is a function name and bar is a variable name
+    '(foo bar) - treats contents as data; prevents executing as a form
+    - called quoting
+    - foo and bar are both symbols
+- quasiquoting
+  - switches from code to data mode within an expression
+  - example, '(Drive your ,(get-car person) to ,(get-location trip) now)
+
+Lists
+- built from chains of "cons cells"
+  * which are tuples that hold left and right pointers
+- in a normal list, last right pointer is nil
+- in a circular list, last right pointer points to first cons cell
+- to create a cons cell, (cons {left-value} {right-value})
+  * examples
+    (cons 'foo 'bar) -> (FOO . BAR)
+    (cons 'foo nil) -> (FOO)
+    (cons 'foo ()) -> (FOO)
+    (cons 'foo '(bar baz)) -> (FOO BAR BAZ)
+- to get left value of a cons cell, (car {cons-cell})
+  * example, (car '(foo bar baz)) -> FOO
+- to get right value of a cons cell, (cdr {cons-cell})
+  * example, (cdr '(foo bar baz)) -> (BAR BAZ)
+- to create a list without explicitly creating each cons cell,
+  (list 'foo 'bar 'baz) -> (FOO BAR BAZ)
+  * same as '(foo bar baz)
+  * same as (cons 'foo (cons 'bar (cons 'baz ())))
+- lists can be nested
+  * example, '(one (two three) four)
+  * implemented as a tree of cons cells
+- combination functions
+  * can use c*r where * is one to four "a" or "d" characters
+  * these letters are evaluated right to left
+  * example (cadr '(foo bar baz)) -> BAR
+
+Association Lists
+- a.k.a. alists
+- lists of key/value pairs represent by cons cells (dotted pair)
+- to lookup a pair by key, (assoc {key} {list})
+- example
+  (assoc 'yellow '((red hot) (yellow warm) (blue cold))) -> '(yellow warm)
+- use car to get key and cadr to get value
+- but isn't this inefficient, requiring a list scan?
+
+Vectors
+- a one-dimensional array
+- to create from items, (vector {items})
+  * ex. (setf myvec (vector 5 4 3))
+  * similar to the list function for creating lists
+  * just a convenience function that is a alternative to
+    the more capable make-array function
+    - can't specify type of elements or other features, only initial contents
+- to get an item from a vector by index, (elt {vector} {index})
+  * ex. (elt myvec 1) -> 4
+- a string is a vector of characters
+- a bit-vector is a vector of bits
+  * to specify a literal bit vector, #*{(0|1)+}
+    - ex. #*1001
+  * to create, (setf {name} (copy-seq #*01010101))
+  * to get a bit, (bit {bit-vector} {index})
+  * to set a bit, (setf (bit {bit-vector} {index}) {0|1})
+  * functions for operating on all bits
+    - bit-and - normal and
+      * (bit-and #*1001 #*1110) -> #*1000
+    - bit-andc1 - and complement of 1st with 2nd
+    - bit-andc2 - and 1st with complement of 2nd
+    - bit-nand - complement of result of and'ing 1st with 2nd
+    - bit-ior - inclusive or (normal or)
+    - bit-orc1 - or complement of 1st with 2nd
+    - bit-orc2 - or 1st with complement of 2nd
+    - bit-nor - complement of result of or'ing 1st with 2nd
+    - bit-xor - exclusive or
+    - bit eqv - complement of result or xor'ing 1st with 2nd
+
+Sequences
+- can be a list or vector
+  * a string is a vector of characters
+  * a one-dimensional array is a vector
+- get length with (length {sequence})
+- cannot use with multi-dimensional arrays
+
+Arrays
+- have a fixed size that cannot change unless marked as adjustable
+- advantage over lists is that elements can be accessed in constant time
+- indexes start at zero
+- can have any number of dimensions
+- Is an array a special kind of vector?
+- to create,
+  (make-array {size}
+    :element-type {value}
+    :initial-element {value}
+    :initial-contents {value}
+    :adjustable {value}
+    :fill-pointer {value}
+    :displaced-to {value}
+    :displaced-index-offset {value})
+  * size
+    - required
+    - for one dimension, specify its length
+      * ex. (make-array 3) -> #(NIL NIL NIL)
+    - for multiple dimensions, specify a list of lengths
+      * ex. (make-array '(3 2)) -> #2A((NIL NIL) (NIL NIL) (NIL NIL))
+      * "2A" indicates a two-dimensional array
+  * all others are keyword parameters
+  * element-type
+    - defaults to t which means any type
+  * initial-element specified initial value for all elements
+    - has an implementation-dependent default 
+  * initial-contents specifies a different initial value for each element
+    - has no default
+  * adjustable - set to t to indicate that
+    adjust-array can be used to change the size
+    - defaults to nil
+  * fill-pointer - allows an array to be used as a queue
+    with the functions vector-psh, vector-push-extend and vector-pop
+    - has no default
+  * displaced-to
+    - defaults to nil
+  * displaced-index-offset
+    - defaults to nil
+- to set an element, (setf (aref {array} {index}) {value})
+  * example
+    (defvar arr (make-array 3))
+    (setf (aref arr 1) "foo")
+    arr is now #(NIL "foo" NIL)
+    - prepending with # in output indicates it is an array, not a list
+- to get an element, (aref {array} {index})
+  * ex. (aref arr 1) -> "foo"
+- to adjust the size of an adjustable array, (adjust-array {array} {new-size})
+
+Hash Tables
+- to create, (make-hash-table)
+- to add a key/value pair, (setf (gethash {key} {hash-table}) {value})
+- to get a value for a key, (gethash {key} {hash-table} [{default}])
+- to remove a key/value pair, (remhash {key} {hash-table})
+- to remove all key-value pairs, (clrhash {hash-table})
+- example
+  (defvar ht (make-hash-table))
+  (setf (gethash 'red ht) 'hot)
+  (gethash 'red ht) -> 'hot
+  (remhash 'red ht)
+  (gethash 'red ht) -> nil 
+- fine print
+  * gethash actually returns two values
+  * the second indicates whether the value returned was found
+    (i.e. not just the default)
+  * to capture it,
+    (multiple-value-bind (value present) (gethash {key} {hash-table})
+      {expressions})
+
+Conditional Values
+- values equivalent to nil are (), '() and 'nil
+- all other values are treated as true
+  * includes t and 't
+  * includes 0 and 0.0
+- allows functions that are typically used in boolean settings
+  to return another useful value (ex. see member)
+
+Comparison Functions
+- eq
+  * use to compare symbols
+- equal
+  * use for nearly everything else including lists
+  * returns true for values that "look the same"
+- eql
+  * similar to eq bu also compares characters and numbers
+- equalp
+  * similar to equal, but can compare
+    - strings that differ in case
+    - integers and floating-point numbers (ex. (equalp 3 3.0) -> t)
+- string-equal compares only strings
+- char-equal compares only characters
+
+Relational Functions
+- <, <=, >, >=
+- all return boolean
+
+Logical Functions
+- and, or, not
+
+Mathematical Functions
+- basic: +, -, *, / 
+- (1+ {value}) returns value plus one; doesn't change value
+- (1- {value}) returns value minus one; doesn't change value
+- (complex {real} {imaginary}) creates a complex number
+- (denominator {ratio}) returns the denominator of a ratio
+- (incf {value}) changes value by adding one
+- (decf {value}) changes value by subtracting one
+- (min {values}) returns smallest
+- (max {values}) returns largest
+- (mod {dividend} {divisior}) returns mod of two numbers
+  * floor is called on floating point arguments
+- (logand {values}) returns bitwise logical and of values
+- (logior {values}) returns bitwise logical or of values
+- (numerator {ratio}) returns the numerator of a ratio
+- (rem {dividend} {divisior}) returns remainder of division of two numbers
+  * ex. (rem 13 5) -> 3
+- relational functions that take two arguments
+  * =, /=, <, <=, >=, >
+- trig functions: sin, cos, tan, asin, acos, atan
+- hyperbolic trig functions: sinh, cosh, tanh, asinh, acosh, atanh
+- truncating functions:
+  * floor, ceiling, round, truncate - return an integer
+  * ffloor, fceiling, fround, ftruncate - convert result to type of first arg
+- others: abs, cis, conjugate, exp, expt, gcd, isqrt, lcd, log, random, sqrt
+
+Predicate Functions
+- (array {value}) returns true if value is an array
+- (atom {value}) returns true if value is not a cons cell
+- (complexp {value}) returns true if a complex number
+- (consp {value}) returns true if value is a cons cell
+- (constantp {value}) returns true if value is a constant
+- (evenp {value}) returns true if even
+- (floatp {value}) returns true if a float number
+- (integerp {value}) returns true if an integer number
+- (listp {value}) returns true if a list
+- (minusp {value}) returns true if negative (< 0)
+- (null {value}) returns true if any nil value
+  * can be used to terminate recursion
+- (oddp {value}) returns true if odd
+- (plusp {value}) returns true if positive (> 0)
+- (rationalp {value}) returns true if a rational number
+- (realp {value}) returns true if a real number
+- (vectorp {value}) returns true if value is a vector
+  * one-dimensional arrays are vectors
+- (zerop {value}) returns true if zero
+
+List Functions
+- append - joins multiple lists into one
+  * examples
+    (append '(1 2) '(3 4 5) '(6)) -> '(1 2 3 4 5 6)
+    (setf l1 '(1 2 3) l2 '(4 5))
+    (append l1 l2) -> '(1 2 3 4 5); l1 and l2 are unchanged
+- assoc - returns the first cons cell in a list
+  whose car is eql to a given value
+  * ex. (assoc 'yellow '((red hot) (yellow warm) (blue cold))) ->
+    '(yellow warm)
+- butlast - returns a copy of list that excludes the last n items
+  * n defaults to 1
+  * ex. (butlast '(a b c d) 2) -> '(a b)
+- car - returns the first item in a list (left part of first cons cell)
+  * names comes from "Contents of Address part of Register"
+- cdr - returns the list without the first item
+  (right part of first cons cell)
+  * names comes from "Contents of Decrement part of Register"
+- cons - creates a cons cell
+  * first argument becomes the car
+  * second argument becomes the cdr
+  * when second argument is not a list, a dotted pair is created
+  * ex. (cons 'a 'b) -> (a . b)
+  * ex. (cons 'a ()) -> '(a)
+  * ex. (cons 'a '(b c)) -> '(a b c)
+- find - searches for an item in a sequence
+  * returns the item if found; nil otherwise
+  * (find {item} {sequence} {test} {from-end} {start} {end} {key})
+    - all parameters after {sequence} are keyword parameters and optional
+    - {test} is the function that is used to compare items (defaults to eql)
+    - {from-end} defaults to nil; pass t to start from end
+    - {start} is starting index for search (defaults to 0)
+    - {end} is ending index for search (defaults to nil for end)
+    - {key} is function for extracting the value to be tested
+  * examples
+    (find #\r "Mark") -> #\r
+    (find 'bar '(foo bar baz)) -> 'bar
+    (find 'bar '(foo bar baz)) -> 'bar
+    - find the first number in a list whose squared value is greater than 10
+      (find 10 '(1 2 3 4 5)
+        :test (lambda (target item) (> (* item item) target))) -> 4
+    - find the temperature that goes with a color
+      (find color '((red hot) (yellow warm) (blue cold)) :key #'car)
+- find-if - returns first value for which a given function evaluates to true
+  * ex. (find-if #'evenp '(7 3 4 5 2)) -> 4
+- first - identical to car
+  * ex. (first '(1 2 3)) -> '(1)
+- last - returns the last item in a list as a list
+  * ex. (last '(1 2 3)) -> '(3)
+- list - creates a list from its arguments
+  ex. (list 'a 'b 'c) -> '(a b c)
+- list-length - returns the number of items in a list
+  ex. (list-length '(a b c)) -> 3
+  ex. (list-length '(a (b c) d)) -> 3
+- mapc - same as mapcar, but only used for side effects
+  * returns first list
+- mapcan - like mapcar, but results are combined using nconc instead of list
+  - useful when result of mapcar is a list of lists,
+    but a single, concatentated list is desired
+  * examples
+    - (mapcan (lambda (n) (list n (* n 2) (* n 3))) '(5 6 7)) ->
+        (5 10 15 6 12 18 7 14 21)
+- mapcar - returns a list containing the results of applying a given function
+  to each item in a list or
+  each corresponding item in multiple lists up to length of shortest list
+  * examples
+    - (mapcar (lambda (n) (* n 2)) '(1 3 5)) -> '(2 6 10)
+    - (mapcar #'+ '(1 3) '(4 5)) -> '(5 8)
+    - (mapcar (lambda (a b c) (+ a b c)) '(1 3) '(4 2) '(7 1)) -> '(12 6)
+    - (mapcar (lambda (n) (list n (* n 2) (* n 3))) '(5 6 7)) ->
+        ((5 10 15) (6 12 18) (7 14 21))
+- mapcon - like maplist, but results are combined using nconc instead of list
+  - useful when result of mapcar is a list of lists,
+    but a single, concatentated list is desired
+- maplist - like mapcar, but successive cdrs are passsed to the function
+  * ex. if '(1 2 3) and '(4 5) are passed,
+    first call receives '(1 2 3) and '(4 5),
+    second call receives '(2 3) and '(5), and
+    there are no more calls since the second list is exhausted
+- member - returns true if a given item is in a list
+  * (member {item} {list})
+  * returns the list tail starting from the item
+  * example, (member 2 '(5 2 1 4 2 7)) -> '(2 1 4 2 7)
+- nconc - concatenates lists; same as append, but modifies first list
+  * example
+    (setf l1 '(1 2 3) l2 '(4 5))
+    (nconc l1 l2) ; l1 is now '(1 2 3 4 5) and l2 is unchanged
+- pop - removes and returns the first item in a list
+  * changes the variable value to be its cdr
+  * parameter is a variable that refers to a list
+  * example
+    (defvar numbers '(1 2 3))
+    (pop numbers) -> 1 and numbers is now '(2 3)
+- push - adds an item to the front of a list
+  * changes the variable value to be a new cons cell
+    where its car is the new item and its cdr is the previous list
+  * first parameter is the item; second is a variable that refers to a list
+  * example
+    (defvar numbers '(2 3))
+    (push 1 numbers) -> numbers is now '(1 2 3)
+- pushnew - similar to push, but only adds the item
+  if it isn't eql to the current car
+  * can specify a function to extract the value to be tested
+    rather than using the car value
+  * can specify a different comparison test
+- rest - identical to cdr
+- rplaca - changes the car of a list to a given value
+  * ex.
+    (defvar x '(a b c))
+    (rplaca x 'd)
+    x is now '(d b c)
+- rplacd - changes the cdr of a list to a given value
+  * ex.
+    (defvar x '(a b c))
+    (rplacd x '(d e f))
+    x is now '(a d e f)
+- second - returns the second item in a list
+  * ex. (second '(1 2 3)) -> '(2)
+  * same as cadr
+- set-difference - returns a new list that contains
+  elements in first list that are not in second list
+- union - returns a new list that is the union of multiple lists
+  * item order is not changed
+  * all items in lists to left come before all items in lists to right
+
+Sequence Functions
+- should any of the "List Functions" above be moved to this section?
+- delete - same as remove, but may modify sequence
+- delete-if - same as remove-if, but may modify sequence
+- delete-if-not - same as remove-if-not, but may modify sequence
+- remove - returns a new sequence in which all occurrences of
+  a specific item in a given sequence are removed
+  ex. (remove #\a "banana") -> "bnn"
+- remove-if - returns a new sequence of values from another
+  that do not satisfy a given predicate
+  * ex. (remove-if #'oddp '(1 2 3 4)) -> '(2 4)
+  * (remove-if #'null {list}) is equivalent to
+    (remove nil {list})
+- remove-if-not - returns a new sequence of items from another
+  that satisfy a given predicate
+  * like "filter" in other languages
+  * ex. (remove-if-not #'oddp '(1 2 3 4)) -> '(1 3)
+- sort - (sort {sequence} {predicate})
+  * the predicate is used to compare items in the sequence
+  * ex. (sort myarr #'<)
+  * ex. (sort "Mark" 'string-lessp) -> "akrM"
+  * keyword parameter :key can be used to specify
+    how to get value to be compared from each item
+    - example - sorting an array of numbers on their absolute values
+      (setf myarr (make-array 3))
+      (setf (aref myarr 0) 5)
+      (setf (aref myarr 1) -4)
+      (setf (aref myarr 2) 3)
+      (sort myarr '< :key 'abs) -> (3 -4 5)
+
+If
+- (if {condition} {true-expression} {false-expression})
+- example, (if (evenp n) 'even 'odd)
+- only one expression after condition is evaluated
+  * it's a special form, not a function
+
+Blocks
+- to evaluate multiple expressions in a setting where only one is allowed
+  (such as the then/else parts of an if), use progn
+- (progn {expressions})
+- value of last expression is returned
+
+When
+- (when {condition} {expressions})
+- if condition evaluates to true, all expressions are evaluated
+- otherwise none are evaluated
+- example, (when (evenp n) (setf name (read)) (princ "Hello ") (princ name))
+
+Cond
+- (cond ({condition1} {expressions1})
+        ({condition2} {expressions2})
+        ...)
+- only evaluates expressions of first condition that evaluates to true
+  and returns last value
+- example
+  (cond ((minusp diff) 'low)
+        ((plusp diff) 'high)
+        (t 'correct))
+
+Case
+- similar to cond, but uses eq to compare a given expression to a set of values
+- (case {expression}
+    ({value1} {expressions1})
+    ({value2} {expressions2}))
+    ...)
+- values are typically symbols; they cannot be strings
+- example
+  (case color
+    ('red 'hot)
+    ('yellow 'warm)
+    ('blue 'cold))
+
+And & Or
+- both use shortcut evaluation
+- (and {expr1} {expr2} ...)
+- (or {expr1} {expr2} ...)
+
+Conversions
+- to convert one type of value to another, (coerce {value} {type})
+
+Reflection
+- to get the type of an expression, (type-of {expression})
+  * examples
+    (typeof t) -> BOOLEAN
+    (typeof nil) -> NULL
+    (typeof ()) -> NULL
+    (typeof "foo") -> (SIMPLE-BASE-STRING 3)
+    (type-of 19) -> (INTEGER 0 16777215)
+    (type-of 1.2) -> SINGLE-FLOAT
+    (type-of (vector 5 4 3)) -> (SIMPLE-VECTOR 3)
+    (type-of (make-hash-table)) -> HASH-TABLE
+
+Load
+- To load a source file, (load "(file-path}")
+  * file must have a ".lisp" extension that is omitted from file-path
+
+Macros
+- see macroexpand, macrolet, ...
+
+Packages
+- namespaces for collections of symbols
+- a package can export a subset of its symbols to make them public
+- packages can depend on other packages
+- provided packages
+  * common-lisp - defines all the symbols defined by the language standard
+  * common-lisp-user 
+    - the default package in a REPL
+    - serves as a scratchpad for
+      user-defined functions and global variables
+    - uses common-lisp
+    - nickname is cl-user
+  * keyword
+    - holds symbols whose name begins with :
+- the current package is held in *package*
+- to package-qualify a symbol
+  * precede the name with {pkg-name}: if the symbol has been exported
+  * precede the name with {pkg-name}:: otherwise
+- to create a package there are two options
+  * (make-package :{pkg-name})
+    - ex. (make-package :com.ociweb.math)
+  * (defpackage :{pkg-name}
+      (:use :common-lisp)
+      (:export {colon-prefixed-symbols})
+    - ADD MORE ON THIS!
+- to change the default package, (in-package {pkg-name})
+  * the REPL prompt will change to indicate the current default package
+  * to change back to the original default, (in-package :cl-user)
+- to add a function to a package, change the default package
+  and then define functions
+  * example
+    (in-package com.ociweb.math)
+    (defun double (x) (* x 2))
+    (defun square (x) (* x x))
+    (double 3) -> 6
+    ; may want to export symbols before changing default package
+    (in-package :cl-user)
+    (com.ociweb.math::double 4) -> 8
+- to export symbols from the current package,
+  (export '(symbols))
+  * ex. (export '(double square))
+- to import symbols from the current package into another one,
+  (import '({symbols}) :{target-pkg})
+  * target-pkg can be the normal default cl-user
+  * ex. (import '(double square) :cl-user)
+- to import symbols from another package into the current one
+  (import '{pkg-name}:{symbol} [:{target-pkg}])
+  * target-pkg defaults to current package
+  * can import more than one symbol by passing a quoted list of symbols
+  * example
+    (import 'com.ociweb.math:double) or
+    (import '(com.ociweb.math:double com.ociweb.math:square))
+    (double 3) -> 6
+- to remove a symbol from a package, (unintern {symbol})
+  * ex. (unintern 'double)
+- ADD MORE INFO. FROM SEIBEL DOCUMENT IN BINDER!
+
+IDEs
+- Slime - runs inside GNU Emacs
+
+Thread Libraries
+- Bordeaux
+
+User Interface Libraries
+- McCLIM
+- LTK - binding for Tk
+
+Quicklisp
+- a library maanger for Common Lisp
+- http://www.quicklisp.org/
+- download quicklisp.lisp
+- from a CLISP REPL, enter
+  (load "{path}/quicklisp")
+  (quicklisp-quickstart:install)
+- to cause Quicklist to be loaded automatically when Lisp is started
+  (ql:add-to-init-file)
+- to search for a library by a keyword
+  (ql:system-apropos "{keyword}"); ex. "split"
+- to install a library
+  (ql:quickload "{library-name}"); ex. cl-utilities
+- to get updates for libraries that have already been loaded
+  (ql:update-all-dists)
+- to get updates for Quicklist
+  (ql:update-client)
+
+Quotes
+- "A bad day in () is better than a good day in {}."
+- for more see http://lispers.org/
+
+Libraries
+- see cl-utilties at http://www.cliki.net/cl-utilities
+  * (ql:quickload "cl-utilities")
+
+References
+- "Practical Common Lisp" online book - http://www.gigamonkeys.com/book/
+- "The Common Lisp Cookbook" - http://cl-cookbook.sourceforge.net/
+- "Simplified Common Lisp Reference" - http://jtra.cz/stuff/lisp/sclr/
+- "Common Lisp HyperSpec" (CLHS) -
+  http://www.lispworks.com/documentation/HyperSpec/Front/
+  * a web version of the ANSI Common Lisp standard
+- collection of Lisp and Scheme resources - http://www.lispmachine.net/

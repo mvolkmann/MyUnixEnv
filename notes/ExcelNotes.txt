@@ -1,0 +1,28 @@
+Excel Notes
+
+To add a newline inside a cell
+- press alt-enter on Windows
+- press ctrl-option-return on Mac OS X
+
+To create an XY Scatter chart
+- press the "Chart Wizard" button
+- select "XY (Scattered)"
+- select a chart subtype
+- press "Next"
+- select the "Series" tab
+- the first column is automatically selected for the x-axis values
+- in the "Series" list, for each column name that shouldn't be plotted,
+  select the column name and press the "Remove" button
+- press "Next"
+- select the "Titles" tab and enter values
+- select the "Legend" tab and uncheck "Show Legend" if desired
+- press "Next"
+- choose between having the chart displayed on
+  the current sheet or a new one
+- press "Finish"
+- save the workbook
+
+To create a hyperlink in a cell
+- type the link text in a cell
+- select Insert...Hyperlink
+- enter the URL

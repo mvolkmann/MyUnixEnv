@@ -1,0 +1,27 @@
+Fink Notes
+
+- "We modify Unix software so that it compiles and runs on Mac OS X
+  (port it) and make it available for download as a coherent distribution.
+  Fink uses Debian tools like dpkg and apt-get to provide powerful
+  binary package management. You can choose whether you want to download
+  precompiled binary packages or build everything from source."
+
+- See http://finkproject.org for more information
+  and to download a Mac OS X installer.
+
+- Some Fink scripts use grep and don't work properly
+  if grep is configured to color-code results.
+  * do not do this
+    export GREP_OPTIONS="--color=ALWAYS"
+
+- To allow downloading new, "unstable" releases, modify /sw/etc/fink.conf
+  so that the "Trees" property contains "unstable/main".
+  For example,
+  Trees: local/main unstable/main stable/main stable/crypto
+
+- To update Fink, run
+  fink selfupdate
+
+- To install a package, run
+  fink install {package-name}
+  * examples include "ruby"

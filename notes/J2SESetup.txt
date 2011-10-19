@@ -1,0 +1,15 @@
+Here are the steps I followed to install J2SE.
+
+- download J2SE 1.4.2 (j2sdk-1_4_2_04-linux-i586-rpm.bin)
+  from http://java.sun.com/j2se/1.4.2/download.html
+  to /home/downloads/J2SE
+- chmod +x j2sdk-1_4_2_04-linux-i586-rpm.bin
+- extract the RPM by running
+  ./j2sdk-1_4_2_04-linux-i586-rpm.bin
+- rpm -iv j2sdk-1.4.2_04-linux-i586.rpm
+- this installs J2SE into /usr/java
+- edit ~/.bashrc to add the following lines
+  export JAVA_HOME=/usr/java/j2sdk1.4.2_04
+  export PATH=$PATH:$JAVA_HOME/bin
+- verify that this worked by opening a new terminal
+  and entering "java -version"

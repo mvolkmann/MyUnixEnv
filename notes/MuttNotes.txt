@@ -1,0 +1,44 @@
+Mutt Notes
+
+- Download from http://www.mutt.org
+
+- To build,
+  gunzip it
+  untar it
+  ./configure
+  make
+  su root
+  make install (puts it in /usr/local/bin)
+
+- Use fetchmail to pull email from OCI to your Linux box.
+
+  Create ~/.fetchmailrc containing the following:
+  poll mail.ociweb.com protocol pop3 auth password
+    user volkmanm is mark here
+    pass java19 ssl
+
+  Use cron to cause it to run.
+  Add the following to ~/crontab:
+  */5 * * * * fetchmail -k -s
+  The "*/5" means run every five minutes.
+  If you used just "5" it would mean run at five minutes after every hour.
+
+  -k keeps mail on OCI server.
+  -s runs silently.
+
+  Run "crontab crontab".
+
+- To run, enter "mutt"
+
+- Commonly used commands
+  * - go to last message
+  Page Up - scrolls up in list of messages
+  Page Down - scrolls down in list of messages
+  $ - commits current state of mailbox including purging deleted messages
+
+- Limit - limits list of messages
+  * press "l" to start
+  * to see only messages with "foo" in subject, ~s foo
+  * to see only messages less than 3 days old, ~d <3d
+  * to see only messages less than 2 weeks old, ~d <2w
+  * to see all messages, .

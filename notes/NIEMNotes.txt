@@ -1,0 +1,30 @@
+NIEM Notes
+
+- see http://www.niem.gov/
+- stands for National Information Exchange Model
+- an XML-based standard for exchanging information between
+  federal, state, local and tribal agencies
+- created by a partnership between the U.S. Department of Justice (DOJ)
+  and the U.S. Department of Homeland Security (DHS)
+- extends the Global Justice XML Data Model (GJXDM)
+  to support data needed for:
+  * justice
+  * public safety
+  * emergency and disaster management
+  * intelligence
+  * homeland security
+- provides reusable software components for working with NIEM data
+- provides a tool that builds a schema subset for the data
+  that must be exchanged by a particular application
+  * see "Build Schema Subset" at
+    http://niem.gtri.gatech.edu/niemtools/home.iepd
+- while OCI doesn't have specific expertise in NIEM,
+  we do have significant experience in using XML Schemas to:
+  * understand and explain the requirements on conforming XML
+  * automate generation of conforming XML from
+    a variety of data sources including
+    relational databases and in-memory object graphs
+  * automate parsing of XML to create corresponding object graphs
+  * generate source code from XML Schemas that
+    simplifies working with conforming XML
+    - both custom code generation and using JAXB

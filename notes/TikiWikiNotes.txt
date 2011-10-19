@@ -1,0 +1,56 @@
+TikiWiki Notes
+(some of this may be incorrect because it was copied from notes on TiddlyWiki)
+
+Markup
+- blockquotes
+  <<<
+  quote text
+  <<<
+- bold - surround with ''
+- box around text
+  ^text^
+- bulleted lists
+  *
+  **
+  ***
+- CSS formatting
+  * inline
+    - @@css-attr-1(value):css-attr-2(value):text@@
+  * for example
+    - to set text color - @@color(color-name):text@@
+    - to set background color - @@bgcolor(color-name):text@@
+  * non-inline
+    - add CSS formatting rules to the special "StyleSheet" tiddler
+    - see AnotherExampleStyleSheet tiddler at http://www.tiddlywiki.com/
+- deWikify a WikiWord - ))text((
+- embedded HTML - surround with <html> </html>
+- external links - [url|text]
+- headings
+  !level-1-title
+  !!level-2-title
+  !!!level-3-title
+- horizontal line - with ----
+- images - [img[alternate text|imageURL]]
+- italic - surround with //
+- monospaced text
+  * method #1
+    {CODE(ln=>1,wrap=>1,wiki=>1,rtl=>1)}code{CODE}
+    - see http://doc.tikiwiki.org/tiki-index.php?page_ref_id=2971    
+  * method #2
+    ~pp~first line
+    middle lines
+    last line~/pp~
+- numbered lists
+  #
+  ##
+  ###
+- strikethrough - surround with ==
+- subscript - surround with ~~
+- superscript - surround with ^^
+- tables
+  |!heading-1-text|!heading-2-text|!heading-3-text|
+  |cell-1|cell-2| cell-3 right-aligned by preceding space|
+  |>|>|Cell-4 spans three columns.|
+  |Cell-5 spans two rows.~|cell-6|cell-7|
+  |~|cell-8|cell-9|
+- underline - surround with __

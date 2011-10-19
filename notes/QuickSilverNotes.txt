@@ -1,0 +1,89 @@
+QuickSilver Notes
+
+This is a launcher utility for Mac OS X.
+Download it from http://quicksilver.blacktree.com/.
+See tutorials at
+http://lifehacker.com/software/quicksilver/quicksilver-tutorial-roundup-155077.php
+http://vjarmy.com/archives/2004/03/quicksilver_a_b.php
+
+To open QuickSilver
+- by default, press ctrl-space
+- this can be configured in Preferences...Command...HotKey Activation
+
+Plugins
+- these allow Quicksilber to work with other applications
+- to configure, select the Quicksilver menu from the top of the screen
+  and select "Plug-ins..."
+
+Panes
+- Quicksilver is displays two panes.
+- The first pane is for selecting the item on which to operate.
+  Type the first few letters of the item to locate it.
+  This is case insensitive.
+  Type fast.  If you pause, it starts over.
+  The number of matching items will be displayed
+  and the first one will be highlighted. 
+  To highlight a different item, use the up and down arrow keys.
+- The second pane is for selecting the action to perform on the item.
+  It displays the number of applicable actions for the highlighted item.
+  The first one will be highlighted.
+  To highlight another action, press tab to move the focus to the second pane
+  and use the up and down arrow keys to highlight an action.
+  Press return to execute the highlighted action.
+
+To open an application
+- type09-JNI.ppt the first few letters of the application name
+  until the desired application is selected
+- press return
+
+To open a folder in a Finder window
+- type the first few letters of the folder name
+  until the desired folder is selected
+- press return
+
+To operate on a file
+- type the first few letters of the file name
+  until the desired file is selected
+- select an action such as
+  * Open (the default) using the default application
+  * Open With... doesn't seem to work - no choice of application
+  * Copy To...
+  * Email To...
+  * Get Info
+  * Make Alias In...
+  * Move To...
+  * Move to Trash
+  * Rename...
+
+To locate a folder or file in Finder
+- type the first few letters of the folder or file name
+  until the desired item is selected
+- select the "Reveal" action
+
+To close a QuickSilver dialog, including the last one
+- press esc
+
+To operate on a person
+- type the first few letters of their name
+  until the desired person is selected
+  * Compose Email - using Mail
+  * Show Contact - to display in Address Book
+  * IM - to start a text chat using iChat
+  * Audio Chat - using iChat
+  * Video Chat - using iChat
+
+iTunes
+- enable iTunes actions by opening the Quicksilver menu,
+  selecting "Triggers...", then iTunes,
+  then checking the checkbox for each action you wish to enable
+- to use, enter "it" to select iTunes
+  and press the right arrow to tell it what to browse
+
+External drives
+- To get Quicksilver to scan the contents of external drives
+  * open the QuickSilver menu, select "Catalog...",
+    press the "+" button at the bottom,
+    select "File & Folder Scanner",
+    and locate the folders to be scanned
+  * make sure you check the checkbox to the
+    right of each folder to be scanned!

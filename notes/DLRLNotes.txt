@@ -1,0 +1,72 @@
+DLRL Notes
+
+Data Distribution Service (DDS)
+
+Data Centric Publish and Subscribe (DCPS)
+- publishers use type-specific DataWriters to write data
+- subscribers use type-specific DataReaders to read data
+- classes for data types, TypeSupport, DataWriters and DataReaders
+  are generated from IDL
+  * the code generator has a GUI and a command-line interface
+  * this is the XSLT-based tool that you worked on for J-UCAS
+- the only types supported by default are BinaryData and StringData
+- topics have a unique name and data type within a domain
+- domains
+  * the data space can be partitioned into domains
+  * domains have a unique id
+  * publishers and subscribers belong to a single domain
+  * a DomainParticipant is tied to a domain and acts as a factory
+    for creating publishers, subscribers and topics in its domain
+- data type instances
+  * have a key that consists of one or more attributes specified in the IDL
+    (surrounded by double square brackets - [[key]])
+- DataReader
+  * read method reads data from the queue and removes it
+  * take method reads data from the queue, but leaves it there
+- TypeSupport
+  * each data type to be used must be registered
+    with the TypeSupport register_type method
+- two types of notifications
+  * callbacks to listeners
+    - each entity type that supports listeners has a listener base class
+      that must be subclasses to handle notifications
+    - entity types include DomainParticipant (What is this?),
+      Publisher, Subscriber, DataWriter and DataReader
+  * synchronous wait using WaitSet
+    - waits for one of a set of conditions to occur
+    - the thread blocks until one of the conditions is satisfied
+      or a timeout occurs
+
+Data Distribution Infrastructure (DDI)
+- an implementation of a higher level profile of DLRL
+- an object-oriented representation of pub/sub
+- main capabilities
+  * can model complex data types
+    - objects with attributes of various types
+      and associations with other objects
+    - distributed applications can have components
+      written in both C++ and Java
+  * complex data types are mapped to DCPS topics
+    - a topic is a data type
+    - provides automatic data publication
+      (Does this mean that objects of registered data types are
+       automatically published when they are created
+       instead of requiring an API call?)
+  * a monotype is a complex type that only contains
+    primitive attributes and relations (object references)
+  * a multitype is a complex type that contains a collection of objects
+- What are "cache notifications"?
+- update notifications
+  * notifications of modified objects, including details about
+    the attributes that were modified, are sent to ? (subscribers? listeners?)
+- objects in the cache (What is this?) can be filtered
+  based on their content (attribute values?)
+  * Is the cache a collection of objects on each node that are
+    kept in sync. with the objects in caches on other nodes?
+  * Does filtering mean that object that don't meet the criteria
+    are deleted from the cache?
+
+Data Local Reconstruction Layer (DLRL)
+- an OMG DDS specification
+- maps objects to DCPS topics
+- published data is reconstructed in reader caches

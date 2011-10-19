@@ -1,0 +1,36 @@
+These are the main git commands I think we will be using:
+
+setup
+  git config --global user.name "{your-username}"
+  git config --global user.email "{your-email}"
+  git config --global color.ui "auto"
+  * these are saved in .gitconfig and can also be edited there
+
+git clone ssh://{your-account}@{host}/{remote-repo-dir-path}
+- ex. git clone ssh://{your-account}@141.102.95.154/~volkmarm/master/svcport
+- can added an entry in Windows C:\windows\system32\drivers\etc\hosts file
+  for hostname (ex. dogstar) so it can be used instead of the IP address
+- will create a local repo directory with
+  the same name as the remote repo directory
+
+git status = displays a list of files that have been locally modified, but not committed to your local repo
+
+git add {file-path} = stages a file to be committed 
+(only necessary for files that aren't already in the remote repo, but can be used to commit only a subset of modified files)
+
+git diff {file-path} = displays differences between the potentially modified file and the newest version in your local repo
+
+git diff rev1 rev2 {file-path} = displays differences between specific revisions of a given file
+
+git commit -v = commits only "staged" files to your local repo 
+(v option runs vi for entering a commit message and displays file diffs)
+
+git commit -av = commits all locally modified files and staged files
+
+git push = pushs changes committed in local repo to the shared remote repo
+
+git pull = pulls changes from the shared remote repo to your local repo
+
+git checkout {file-name} = revert working copy to latest local repo version
+
+git revert {file-name} = revert local repo version to latest remote repo version

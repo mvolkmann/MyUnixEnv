@@ -1,0 +1,22 @@
+REST Notes
+
+Books
+- RESTful Web Services from O'Reilly
+
+Articles
+- JNB on "REST Architectural Style"
+  * http://www.ociweb.com/jnb/jnbNov2004.html
+
+Java API for RESTful Web Services (JAX-RS - JSR-311)
+- https://jsr311.dev.java.net/
+- the reference implemenation is Jersey from the Glassfish project
+  * see https://jersey.dev.java.net/
+- another implemetation is Resteasy from JBoss
+  * see http://wiki.jboss.org/wiki/RESTeasyJAXRS
+
+Jersey
+- resources
+  * implemented as POJOs
+  * annotate class with @Path("/path")
+  * annotate methods that handle HTTP requests with
+    @GET, @POST, @DELETE or @PUT

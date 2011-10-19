@@ -1,0 +1,217 @@
+Subversion Notes
+
+Common Commands
+- svn add
+  to add files to the repository
+- svn checkout
+  to check out a directory/project from a repository
+  * example: svn co svn+ssh://oci-svn/projects/JBoss
+- svn commit
+  to check-in changes
+- svn delete
+  to delete files from the repository
+- svn diff {filename}
+  to see differences in a file between the working directory
+  and the latest revision in the repository or
+  between two specified versions in the repository
+  * To see diffs between the HEAD (newest in repo.) and
+    PREV (newest change in repo. before HEAD) revisions
+    svn diff -rPREV {filename}
+  * To ignore whitespace differences under UNIX,
+    svn diff --diff-cmd 'diff' -x '-w' {filename}
+    In Subversion 1.4, svn diff -x [-u | -b | -w | --ignore-eol-style]
+  * for a graphical diff on a Mac,
+    - see http://ssel.vub.ac.be/ssel/internal:fmdiff
+    - uses FileMerge app. in /Developer/Applications/Utilities
+    - after installing fmdiff and other scripts,
+      svn diff --diff-cmd fmdiff {filename}
+      or use your svndiff alias as follows:
+      svndiff {filename}
+    - select changes between left and right displays
+    - save merge results back in one of the files
+    - check that file into Subversion
+- svn export
+  to create an unversioned copy of the tree,
+  free of Subversion bookkeeping files
+  * svn export {url}
+  * for example, svn export $SVN_PREFIX/UNIX/ESOS07-01-Ruby
+    creates a directory named ESOS07-01-Ruby in the current directory
+  * the url can be found in a .svn/entries file
+  * see value of SVN_PREFIX later in this document
+- svn import
+  to import a directory structure and its files
+  * cd to the directory containing the directory to be imported
+  * svn import -m '' {dir-name} {svn-path}
+  * example: svn import -m '' JBoss svn+ssh://oci-svn/projects/JBoss
+- svn log [-v] {file|directory}
+  to see the change history for a file or directory
+- svn merge -r{v1}:{v2} {file|directory}
+  to apply the differences between two revisions to the working copy 
+  for example, to remove the changes made between revisions 19 and 21 
+  from the file foo.bar,
+  svn merge -r21:19 foo.bar
+- svn mkdir
+  to create a new "project" directory in an existing repository
+  for example,
+  cd ~/Documents/OCI/SVN/projects
+  svn mkdir svn+ssh://oci-svn/projects/{project-name}
+  Insure that the {project-name} directory doesn't currently exist.
+  svn co svn+ssh://oci-svn/projects/{project-name}
+  Populate the {project-name} directory and add the files to Subversion. 
+- svn status
+  to see the status of files and directories such as
+  what has been modified but not committed
+- svn update
+  to merge changes into working directory
+For more, see page 183 in "Pragmatic Version Control Using Subversion".
+
+Location of OCI Subversion Repositories
+- on the UNIX box maple under /storage/svnrepos
+
+Current OCI Repository Names
+- education/training/tracks
+- oci/internal
+- projects
+
+Setup
+- See https://willow.ociweb.com/tikiwiki/tiki-index.php?page=Subversion.
+  Especially see WindowsSubversionSetup and SubversionCommandExamples.
+
+Mac Setup
+- open a terminal window and enter ssh volkmanm@ssh.ociweb.com
+- open another terminal window and enter svn commands
+
+Windows Setup
+- start a session on hickory
+  * method #1: double-click "PuttyLoad" shortcut on desktop
+  * method #2: open a command prompt and enter "putty -load oci-ssh" 
+- use TortoiseSVN from Windows Explorer
+  or open and command-prompt, cd to \OCI\SVN, and enter svn commands
+
+UNIX Setup
+- create a ".ssh" directory below your home directory
+- create a file named "config" in the ".ssh" directory
+  with the following content:
+
+Host oci-svn
+   HostName svn.ociweb.com
+   User {unix-user-name}
+   IdentityFile {location-of-key-file} ex. ~/.ssh/authorized_keys
+   CompressionLevel 6
+
+- ssh xi -lvolkmanm
+- in svn commands, use URLs that look like svn+ssh://oci-svn/...
+- passphrase and password
+  - if prompted for a passphrase, just press Enter
+  - if prompted for a password, enter your UNIX password
+  - may have to do this twice - why?
+
+UNIX commands
+- To checkout a repository under maple,
+  * ssh volkmanm@maple.ociweb.com
+  * cd to directory where you want to checkout
+  * svn co svn+ssh://oci-svn/{path}
+    - for example, path could be projects/BAE
+- To create a new repository from UNIX
+  * ssh maple -lvolkmanm
+  * cd /storage/svnrepos
+  * svnadmin create --fs-type fsfs {repository-name}
+    (for example, oci/internal/knowledgebase)
+- To delete a repository and all projects inside it from UNIX
+  * ask yourself if you really want to do this!
+  * cd /storage/svnrepos
+  * rm -rf {repository-name}
+- To list the content of a repository or project from UNIX
+  * svn ls svn+ssh://oci-svn/{repository-name}
+  * svn ls svn+ssh://oci-svn/{repository-name}/{project-name}
+- To list the files that have been modified, but not committed,
+  in the working copy
+  * svn status
+    - A = Added, C = Conflicted, D = Deleted, G = Merged, I = Ignored,
+      M = Modified, R = Replaced, X = unversioned,
+      ? = not under version control, ! = missing, - = obstructed
+- To rename a file that has already been added to a repository
+  * svn mv {old-name} {new-name}
+- To rename a directory in a project
+  * svn mv svn+ssh://oci-svn/{repository-name}/{project-name}/{old-dir}
+      svn+ssh://oci-svn/{repository-name}/{project-name}/{new-dir}
+- To create a branch
+  * svn cp trunk branches/{branch-name}
+  * svn commit
+- To create a tag
+  * svn cp trunk tags/{tag-name}
+  * svn commit
+  * note that the only difference between a tag and a branch
+    is that you shouldn't modify files under a tag directory
+
+Using Tortoise from Windows
+- To browse a repository
+  * right-click in Windows Explorer
+  * select TortoiseSVN...Repo-browser
+  * enter a repository URL like
+    svn+ssh://oci-svn/education/training/tracks
+    or svn+ssh://oci-svn/projects
+    or svn+ssh://oci-svn/oci/internal
+- To checkout a repository and all its projects
+  * in Windows Explorer, right click C:\OCI\SVN
+  * select SVN Checkout...
+  * for "URL of repository", enter "svn+ssh://oci-svn/{repository-name}"
+    (for example, repository-name could be "oci/internal/knowledgebase"
+  * for "Checkout directory", enter "C:\OCI\SVN\{repository-name}"
+  * click the OK button
+- To add a project to a repository
+  * right-click the project directory not yet in Subversion
+    and not under C:\OCI\SVN
+  * select TortoiseSVN...Import...
+  * for the URL of repository,
+    enter "svn+ssh://oci-svn/{repository-name}/{project-name}
+  * click the "OK" button
+  * to do this from the command-line,
+    - cd to directory containing files to import
+    - svn import -m '' . svn-dir-path
+    - for example,
+      svn import -m '' . svn+ssh://oci-svn/education/training/tracks/ \
+      CustomClasses/ESCU19-01-AGE-Adv-XML
+
+Training-specific notes
+-----------------------
+
+- You created several scripts in /Users/Mark/bin for doing common things.
+  They use the environment variable SVN_PREFIX which is set to
+  svn+ssh://oci-svn/education/training/tracks
+
+- To list tracks, run "lstracks".  Also see "lsprojects".
+
+- To list courses in a track, run "lscourses {track-name}".
+
+- To list the content of a course (didn't carry this over to Mac!),
+  run "listcoursecontent {track-name} {course-name}".
+  Additional subdirectories can be added to last parameter
+  separated by slashes.
+
+- To add a new course
+  * svn mkdir $SVN_PREFIX/{track-name}/{course-name}
+  * cd to directory where you want to checkout the course
+  * cocourse {track-name} {course-name}
+  * create a directory named "trunk" in the new course directory
+  * create diretories named "slides" and "labs" in the "trunk" directory
+  * our convention is for the labs directory to contain the following
+    subdirectories: examples, exercises, solutions, tools
+  * copy slide files into the slides directory
+  * copy lab files into the labs directory
+  * cd to the new course directory
+  * svn add trunk
+  * svn ci
+
+- To checkout a course, run "cocourse {track-name} {course-id}".
+  Also see "coproject".
+
+- To rename a course directory, run
+  svn move -m "renamed"
+    %SVN_PREFIX%/{track-name}/{old-course-id}
+    %SVN_PREFIX%/{track-name}/{new-course-id}
+
+- To delete a course directory, run
+    svn delete %SVN_PREFIX%/{track-name}/{course-id}
+    This requires the EDITOR environment variable to be set to the name
+    of the editor to be used for entering a comment (for example, vim).

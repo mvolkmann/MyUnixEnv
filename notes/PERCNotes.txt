@@ -1,0 +1,17 @@
+PERC Notes
+
+- PERC is a real-time Java virtual machine
+  that supports static compilation of Java code
+
+- To run the Wind River Workbench,
+  * insure that the environment variable LM_LICENSE_FILE
+    includes to a valid license file location
+  * run C:\WindRiver\workbench-2.3\wrwb\2.3\x86-win\bin\wrwb.exe
+    (you have a desktop shortcut for this)
+
+- Wind River Workbench
+  - an Eclipse-based IDE
+  - File...New...VxWorks Real Time Process Project
+  - name it "CPPThreads"
+  - by default, the project is saved in C:\WindRiver\workspace\CPPThreads
+

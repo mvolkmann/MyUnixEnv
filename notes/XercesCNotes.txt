@@ -1,0 +1,32 @@
+Xerces C++ Notes
+
+Setup
+- download the source version of Xerces C++ (xerces-c-src_2_7_0.tar.gz)
+  from http://archive.apache.org/dist/xml/xerces-c/Xerces-C_2_2_0/
+  to /opt/xerces
+- su root
+- cd /opt/xerces
+- gunzip xerces-c-src_2_7_0.tar.gz
+- tar xf xerces-c-src_2_7_0.tar
+- rm *.tar
+- runConfigure -plinux -cgcc -xg++ -minmem -nsocket -tnative -rpthread
+- gmake
+
+Working with strings
+- Xerces C++ strings are null-terminated arrays of UTF-16 characters
+  represented by the type XMLCh
+- many Xerces methods such as getNodeValue return Xerces strings
+- to create a Xerces string from a C string
+  char* cString = "Hello World!";
+  int maxLength = 100;
+  XMLCh xercesString[maxLength];
+  XMLString::transcode(cString, xercesString, maxLength - 1);
+- to create a C string from Xerces string
+  char* cString = XMLString::transcode(xercesString);
+- when finished using a transcoded cString
+  XMLString::release(&cString);
+- when a node is released, it's Xerces string value is released
+- to retain a copy
+  XMLCh* xercesStringCopy = XMLString::replicate(xercesString);
+- when finished using a copy
+  XMLString::release(&xercesStringCopy);

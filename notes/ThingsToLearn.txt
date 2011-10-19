@@ -1,0 +1,39 @@
+Things to Learn
+---------------
+
+C++ topics
+- MPC (need a base project for using CppUnit)
+- test-first development with C++
+- Valgrind (open source alternative to Purify)
+- ACE
+- Boost
+- STL
+- TAO
+- make your own Timer class
+
+Editor topics
+- more Vim (use horizontal split?)
+- running make and other shell commands from Vim
+
+Ruby topics
+
+UNIX/Linux topics
+- Linux USB devices with Hardware Abstraction Layer (HAL)
+  * see http://www.linuxfromscratch.org/blfs/view/svn/general/hal.html
+  * will allow you to backup home Linux box to external drive
+- Linux printing
+- version of pkg script that emails to you (with Ruby?)
+- Linux partitioning (backup before changing this!)
+- Yum (to upgrade Fedora Core and other software)
+- Linux music players
+- kernel understanding (from "UNIX Power Tools" book)
+- sed
+- awk
+
+Version Control topics
+- Subversion under Windows and Linux
+
+XML topics
+- XPath 2.0
+- XSLT 2.0
+- XQuery

@@ -1,0 +1,170 @@
+Book Notes
+
+Books I want to read
+
+- Java Concurrency In Practice (JCIP)
+- Real World Haskell, O'Sullivan
+- I Am A Strange Loop, Douglas Hofstadter
+- Structure and Interpretation of Computer Programs (SICP),
+  Abelson & Sussman
+- On Lisp, Paul Graham
+- Hackers and Painters, Paul Graham
+- books on AI
+- The Annotated Turing, Petzold
+
+Books I've read
+
+2009
+- Programming Clojure, Stuart Halloway, printed PDF
+- I Robot, Isaac Asimov, paperback
+- Adobe PDF Reference, printed PDF
+- Pragmatic Version Control Using Git, Kindle
+- Outliers, Malcolm Gladwell, Kindle
+- The Last Lecture, Randy Pausch, Kindle
+- Tuesdays With Morrie, Mitch Albom, borrowed from Amanda
+- The Five People You Meet In Heaven, Mitch Albom, borrowed from Amy
+
+2008
+- Squeak - A Quick Trip To ObjectLand, paperback
+- Squeak by Example, paperback
+- Smalltalk Best Practice Patterns, Kent Beck, paperback
+
+A Long Time Ago
+- Animal Farm - George Orwell
+- Dragon series
+  * The Dragonriders of Pern - Anne McCaffrey
+  * The Harper Hall of Pern - Anne McCaffrey
+- Dune - Frank Herbert
+- Ecotopia - Ernest Callenbach
+- Einstein's Dreams - Alan Lightman
+- Ender's Game
+- The Hitchhiker's Guide to the Galaxy - Douglas Adams
+- The Hobbit, J.R.R. Tolkien
+- I Robot, Isaac Asimov
+- Jurassic Park, Michael Crichton
+- Lord of the Rings series, J.R.R. Tolkien
+  * Fellowship of the Ring
+  * The Two Towers
+  * The Return of the King
+- The Odyssey, Homer
+- Once a Runner, John L. Parker
+- Pragmatic Version Control Using Git
+- Pragmatic Version Control Using Subversion
+- Programming Scala, Venkat Subramaniam
+- Rama series - Arthur C. Clarke
+  * Rendezvous with Rama
+  * Rama II
+  * The Garden of Rama
+  * Rama Revealed
+- Robot Dreams, Isaac Asimov
+- The Running Man, Stephen King
+- Shepard of the Hills, Harold Bell Wright
+- Space Odyssey series
+  * 2001: A Space Odyssey
+  * 2010: Odyssey Two
+  * 2061: Odyssey Three
+  * 3001: The Final Odyssey
+- 1984, George Orwell
+
+Books they say I should read
+
+ 1 Pride and Prejudice - Jane Austen
+ 2 The Lord of the Rings - JRR Tolkien - DONE
+ 3 Jane Eyre - Charlotte Bronte
+ 4 Harry Potter series - JK Rowling
+ 5 To Kill a Mockingbird - Harper Lee
+ 6 The Bible - DONE
+ 7 Wuthering Heights - Emily Bronte
+ 8 Nineteen Eighty Four - George Orwell - DONE
+ 9 His Dark Materials - Philip Pullman
+10 Great Expectations - Charles Dickens
+11 Little Women - Louisa M Alcott
+12 Tess of the D’Urbervilles - Thomas Hardy
+13 Catch 22 - Joseph Heller
+14 Complete Works of Shakespeare
+15 Rebecca - Daphne Du Maurier
+16 The Hobbit - JRR Tolkien - DONE
+17 Birdsong - Sebastian Faulks
+18 Catcher in the Rye - JD Salinger
+19 The Time Traveller’s Wife - Audrey Niffenegger
+20 Middlemarch - George Eliot
+21 Gone With The Wind - Margaret Mitchell
+22 The Great Gatsby - F Scott Fitzgerald
+23 Bleak House - Charles Dickens
+24 War and Peace - Leo Tolstoy
+25 The Hitch Hiker’s Guide to the Galaxy - Douglas Adams - partly
+26 Brideshead Revisited - Evelyn Waugh
+27 Crime and Punishment - Fyodor Dostoyevsky
+28 Grapes of Wrath - John Steinbeck
+29 Alice in Wonderland - Lewis Carroll
+30 The Wind in the Willows - Kenneth Grahame
+31 Anna Karenina - Leo Tolstoy
+32 David Copperfield - Charles Dickens
+33 Chronicles of Narnia - CS Lewis
+34 Emma - Jane Austen
+35 Persuasion - Jane Austen
+36 The Lion, The Witch and The Wardrobe - CS Lewis
+37 The Kite Runner - Khaled Hosseini
+38 Captain Corelli’s Mandolin - Louis De Bernieres
+39 Memoirs of a Geisha - Arthur Golden
+40 Winnie the Pooh - AA Milne
+41 Animal Farm - George Orwell - DONE
+42 The Da Vinci Code - Dan Brown
+43 One Hundred Years of Solitude - Gabriel Garcia Marquez
+44 A Prayer for Owen Meaney - John Irving
+45 The Woman in White - Wilkie Collins
+46 Anne of Green Gables - LM Montgomery
+47 Far From The Madding Crowd - Thomas Hardy
+48 The Handmaid’s Tale - Margaret Atwood
+49 Lord of the Flies - William Golding
+50 Atonement - Ian McEwan
+51 Life of Pi - Yann Martel
+52 Dune - Frank Herbert - DONE
+53 Cold Comfort Farm - Stella Gibbons
+54 Sense and Sensibility - Jane Austen
+55 A Suitable Boy - Vikram Seth
+56 The Shadow of the Wind - Carlos Ruiz Zafon
+57 A Tale Of Two Cities - Charles Dickens
+58 Brave New World - Aldous Huxley
+59 The Curious Incident of the Dog in the Night-time - Mark Haddon
+60 Love In The Time Of Cholera - Gabriel Garcia Marquez
+61 Of Mice and Men - John Steinbeck
+62 Lolita - Vladimir Nabokov
+63 The Secret History - Donna Tart
+64 The Lovely Bones - Alice Sebold
+65 Count of Monte Cristo - Alexandre Dumas
+66 On The Road - Jack Kerouac - STARTED
+67 Jude the Obscure - Thomas Hardy
+68 Bridget Jones’s Diary - Helen Fielding
+69 Midnight’s Children - Salman Rushdie
+70 Moby Dick - Herman Melville - DONE
+71 Oliver Twist - Charles Dickens
+72 Dracula - Bram Stoker
+73 The Secret Garden - Frances Hodgson Burnett
+74 Notes From A Small Island - Bill Bryson
+75 Ulysses - James Joyce
+76 The Bell Jar - Sylvia Plath
+77 Swallows and Amazons - Arthur Ransome
+78 Germinal - Emile Zola
+79 Vanity Fair - William Makepeace Thackeray
+80 Possession - AS Byatt
+81 A Christmas Carol - Charles Dickens
+82 Cloud Atlas - David Mitchell
+83 The Color Purple - Alice Walker
+84 The Remains of the Day - Kazuo Ishiguro
+85 Madame Bovary - Gustave Flaubert
+86 A Fine Balance - Rohinton Mistry
+87 Charlotte’s Web - EB White - DONE
+88 The Five People You Meet In Heaven - Mitch Albom
+89 Adventures of Sherlock Holmes - Sir Arthur Conan Doyle
+90 The Faraway Tree Collection - Enid Blyton
+91 Heart of Darkness - Joseph Conrad
+92 The Little Prince - Antoine De Saint-Exupery - DONE
+93 The Wasp Factory - Iain Banks
+94 Watership Down - Richard Adams
+95 A Confederacy of Dunces - John Kennedy Toole
+96 A Town Like Alice - Nevil Shute
+97 The Three Musketeers - Alexandre Dumas
+98 Hamlet - William Shakespeare X
+99 Charlie and the Chocolate Factory - Roald Dahl
+100 Les Miserables - Victor Hugo 

@@ -1,0 +1,48 @@
+Git Notes For OCI Training
+
+- To login to an OCI Linux box
+  * open Terminal
+  * enter "ssh volkmanm@ssh.ociweb.com"
+    - logs me into the "hickory" box
+  * ssh mosquito
+
+- Setup
+  * Git is installed in Mark Volkmann's home directory on mosquito
+    (~volkmanm)
+  * ~volkmann/master contains the Git master repos
+
+- To create a new, empty, master Git repository
+  * cd to directory where master repos will be kept
+    - such as ~volkmanm/master on mosquito
+  * create an empty directory for the repo
+  * cd to that directory
+  * enter "git init --bare --shared"
+
+- To clone a Git repository
+  * cd to the directory where the clone should reside
+  * if not on an OCI Linux box
+    - open an new terminal window
+    - set up a tunnel to an OCI Linux box such as "mosquito"
+      ssh -lvolkmanm -L9999:mosquito:22 ssh.ociweb.com
+    - leave that terminal window open
+    - open another terminal window
+
+    - use localhost:9999 to acesss mosquito
+  * enter a command like the following:
+    git clone ssh://volkmanm@localhost:9999/~volkmanm/master/ESJA03-02-InterJava
+
+- To add files to a local Git repository
+  * add them below the clone repo directory
+  * enter "git add {path}"
+  * enter "git commit"
+
+- To push changes committed in local repo to the master repo
+  * enter "git push origin master" for the first push
+    and just "git push" after that
+
+- To prevent being prompted for password by every Git command
+  * cd
+  * ssh-keygen
+  * cd .ssh
+  * mv id_rsa.pub authorized_keys
+  * chmod 700 authorized_keys

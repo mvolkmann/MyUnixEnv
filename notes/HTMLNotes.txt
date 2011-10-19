@@ -1,0 +1,11 @@
+HTML Notes
+
+Anchors
+- basic link is <a href="url">link</a>
+- marking a spot on a page is done with <a name="marker"/>
+- target attribute
+  * _blank - open in new window
+  * _self - open in current frame (the default)
+  * _parent - open in immediate frameset parent
+  * _top - open in topmost window, regardless of frameset nesting
+  * {name} - open in the frame with the given name

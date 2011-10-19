@@ -1,0 +1,118 @@
+MySQL Notes
+
+Mac OS X
+- MySQL is installed in /usr/local/mysql by default
+- PATH should include /usr/local/mysql/bin
+- to start the daemon
+    sudo safe_mysqld (can't run in background; it prompts for root password)
+    ctrl-z
+    Is this the best way?
+  * another way
+    cd /usr/local/mysql
+    sudo ./bin/safe_mysqld
+    ctrl-z
+- to use interactive commands
+    mysql -uroot
+- to execute an SQL script
+    mysql -uroot < {script-name}.sql
+
+Linux
+- in many distributions, MySQL is installed by default
+- the daemon is a service that isn't started by default
+- to start the daemon,
+  pick menu...System Settings...Server Settings...Services
+  select the "mysqld" checkbox
+  press the "Start" button
+
+JDBC
+- download JDBC driver for MySQL from
+  http://dev.mysql.com/downloads/connector/j/5.0.html
+  * want mysql-connector-java-5.0.4.tar.gz
+- unpackage
+- for use with web applications running under Tomcat,
+  cp mysql-connector-java-5.0.4-bin.jar /opt/apache-tomcat/common/lib
+- to use in Java code
+  * add to classpath
+    ?.jar
+  * load driver with
+    Class.forName("com.mysql.jdbc.Driver");
+  * database URL for database on localhost using default port (3306)
+    "jdbc:mysql://localhost:3306/{database-name}"
+
+Interactive usage common commands
+- mysql
+- show databases;
+- create database {database-name};
+- use {database-name};
+- show tables;
+- drop table if exists {table-name};
+- create table ( {col-name} {col-type}, ... );
+- select * from {table-name};
+- source {file-name}.sql;
+- exit
+
+Supported column types
+(see http://dev.mysql.com/doc/refman/5.0/en/data-type-overview.html)
+- numeric
+  * BIT[(m)] - m defaults to 1; maximum is 64
+  * BOOL, BOOLEAN - same as TINYINT(1); zero is considered false
+  * TINYINT[(m)] [UNSIGNED] [ZEROFILL] - 1 byte
+  * SMALLINT[(m)] [UNSIGNED] [ZEROFILL] - 2 bytes
+  * MEDIUMINT[(m)] [UNSIGNED] [ZEROFILL] - 3 bytes
+  * INT[(m)] [UNSIGNED] [ZEROFILL] - 4 bytes
+  * INTEGER - same as INT
+  * BIGINT[(m)] [UNSIGNED] [ZEROFILL] - 8 bytes
+  * SERIAL - same as BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE
+  * FLOAT[(m,d)] [UNSIGNED] [ZEROFILL]
+  * DOUBLE[(m,d)] [UNSIGNED] [ZEROFILL]
+  * DOUBLE PRECISION[(m,d)] [UNSIGNED] [ZEROFILL]
+  * REAL - same as DOUBLE PRECISION
+  * FLOAT(p) [UNSIGNED] [ZEROFILL]
+  * DECIMAL[(m[,d])] [UNSIGNED] [ZEROFILL]
+  * DEC - same as DECIMAL
+  * NUMERIC - same as DECIMAL
+  * FIXED - same as DECIMAL
+- date and time
+  * DATE
+  * DATETIME
+  * TIMESTAMP
+  * TIME
+  * YEAR[(2|4)] - defaults to 4
+- string
+  * [NATIONAL] CHAR[(m)] [CHARACTER SET name] [COLLATE name]
+  * [NATIONAL] VARCHAR[(m)] [CHARACTER SET name] [COLLATE name]
+  * ASCII - same as CHARACTER SET latin1
+  * UNICODE - same as CHARACTER SET ucs2
+  * TEXT[(m)] [CHARACTER SET name] [COLLATE name]
+  * TINYTEXT [CHARACTER SET name] [COLLATE name]
+  * MEDIUMTEXT [CHARACTER SET name] [COLLATE name]
+  * LONGTEXT [CHARACTER SET name] [COLLATE name]
+  * ENUM('v1','v2',...) [CHARACTER SET name] [COLLATE name] - one value
+  * SET('v1','v2',...) [CHARACTER SET name] [COLLATE name] - zero or more values
+  * BINARY(m)
+  * VARBINARY(m)
+  * BLOB[(m)]
+  * TINYBLOB
+  * MEDIUMBLOB
+  * LONGBLOB
+
+Primary keys
+- example
+  CREATE TABLE Patients (
+    id INTEGER,
+    name VARCHAR(50),
+    PRIMARY KEY (id)
+  );
+
+Foreign keys
+- example
+  CREATE TABLE Prescriptions (
+    id INTEGER,
+    name VARCHAR(50),
+    patientId INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY (patientId) references Patients(id)
+  );
+
+Reserved words
+- can't name a column "desc"

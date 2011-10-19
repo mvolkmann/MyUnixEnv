@@ -1,0 +1,13 @@
+CppUnit Notes
+
+To install
+- download from http://sourceforge.net/projects/cppunit/
+- unzip and untar
+- su root
+- move unzipped directory to /opt
+- cd to unzipped directory
+- ./configure
+- make install
+  * this builds and puts libcppunit.a in /usr/local/lib
+
+See example code in ~/Documents/Programming/Languages/C++/CppUnitDemo.

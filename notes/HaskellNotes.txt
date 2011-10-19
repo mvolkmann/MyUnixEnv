@@ -1,0 +1,15 @@
+Haskell Notes
+
+Download
+- from http://hackage.haskell.org/platform/
+- there is a .dmg file for Mac OS X
+
+Install
+- open a Terminal window
+- cd to directory created by unzip
+- enter "./configure"
+- enter "sudo make install"
+
+Interactive sessions
+- enter "ghci"
+- to exit, press ctrl-d

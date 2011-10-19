@@ -1,0 +1,151 @@
+Keynote Notes
+
+Bullet line breaks
+- position cursor where a break is desired and press option-enter
+
+File Details
+- A Keynote file is really a folder.
+- Right-click on the file in Finder and select "Show Package Contents".
+- Images embedded in the presentation will be in that directory.
+- .pict files can be opened in Preview and saved as .png files.
+
+Themes
+- To change the theme, select File...Choose Theme...
+
+Format Painter
+- Keynote doesn't have this feature like PowerPoint does,
+  but formats can be copied and pasted
+  * Format ... Copy Style (cmd-opt-c)
+  * Format ... Paste Style (cmd-opt-v)
+
+Playing Presentations
+- Press "h" to hide the presentation temporarily in order to
+  demonstrate things in the previous application that was running,
+  such as an IDE where you'd like to demo some code.
+  To resume the presentation, click the Keynote icon in the dock
+  that will have a green play button on it.
+- Press "w" to turn the screen white and any other key to restore it.
+- Press "b" to turn the screen black and any other key to restore it.
+- Press the "+" or "-" key to bring up the "heads up display"
+  that shows three slide minatures (previous, current and next) and
+  allows you to move to any slide by repeatedly pressing the "+" and "-" keys.
+- Enter any number followed by the enter key to go to that slide number.
+  This also displays the "heads up display".
+
+Animation Effects
+- "Build In" effects specify effects to be applied
+   when an object is first displayed on a slide.
+- "Build Out" effects specify effects to be applied
+  when an object is removed from a slide.
+- "Action" effects specify
+  * Move - to move an object along a line or curve
+  * Opacity - to make an object fade a given percentage
+  * Scale - to make an object shrink or expand from 50% to 200$
+  * Rotate - to make an object spin through any number of degrees
+   in either directory
+- To specify a "Build In", "Build Out" or "Action" effect,
+  select an object and click the third toolbar button in the Build Inspector.
+- Use the "Order" drop down to specify
+  the order in which the effects take place.
+- To apply the same effect to multiple objects at the same time,
+  group the objects before specifying the effect.
+  If multiple objects are selected, the effect will be applied to each
+  in the order they were selected instead of at the same time.
+- Grouping or ungrouping objects removes the effect that was assigned.
+- To specify when an effect should begin, click "More Options" and
+  set "Start Build" to "On Click" or "Automatically after transition".
+
+Aligning objects
+- right-click the toolbar and select "Customize Toolbar..."
+- add "Guides" and "Edges"
+- click the "Edges" icon so it says "Edges On"
+- click the "Guides" icon and select both
+  "Show Guides at Object Center" and "Show Guides at Object Edges"
+- this enables OmniGraffle-like alignment
+
+Deleting slides
+- right-click the toolbar and select "Customize Toolbar..."
+- add "Delete" which makes it easier to delete a slide
+- otherwise you have to right-click it in the Navigator list on the left
+  and select "Delete"
+
+Printing handouts
+- if white image bullets were used
+  * open the "Title & Bullets" master slide
+  * select all the lines that start will bullets
+  * open the Inspector
+  * select the "Text" toolbar button and the "Bullets" tab
+  * select "Text Bullets"
+  * select any bullet shape from the drop-down list
+- select File...Page Setup...
+- select the Orientation button for portrait mode
+- select File...Print
+- select the "Handout" radio button
+- select the desired number of slides per page
+- deselect "Draft-quality printout
+- select "Don't print slide backgrounds or object fills"
+- select "Add borders around slides"
+- select PDF...Save as PDF...
+
+Slide Numbers
+- To add slide numbers,
+  * select the master slide
+  * open the inspector
+  * select the second toolbar button
+  * select the "Appearance" tab
+  * select the "Slide Number" checkbox
+  * a text field for the slide number
+    will be added to the lower-right corner
+  * it can be moved to another location
+
+Transitions
+- To add the same transition to every slide
+  * click the first slide in the list on the left
+  * shift-click the last slide in the list on the left
+  * if the Inspector isn't visible, select Show...Inspector
+  * click the second toolbar button in the Inspector ("Slide")
+  * select something from the "Effects" drop-down
+
+Missing Features
+- Shapes can't auto-size themselves based on the text inside them.
+- There is no "curly brace" shape like in PowerPoint.
+  Perhaps one could be drawn using the polygon tool and bezier curves.
+- A shape can't be changed to a different shape.  For example, you can't
+  change a rectangle with rounded corners to one with square corners.
+  Well, you can by selecting the rounded rectangle and dragging a special
+  handle that controls the corner radii to the left.
+- Lines can't be connected to points on shapes.  This is an issue
+  when shapes need to be dragged to new locations and you want
+  the lines to remain connected.
+- When zooming in, the display isn't centered on the selected item.
+- You can only mask images with shapes, not shapes with shapes.
+  More OmniGraffle-like shape operations would be nice.
+
+Questions
+- Is there a way to move to the next or previous slide when
+  focus is in a text box?
+
+Issues
+- When text spills off the bottom side of a text box, it is invisible.
+  However, a small + in a box at the bottom of the text box indicates
+  that this has happened.
+- The first line of text in rounded rectangles is indented slightly.
+- It is inconvenient to store KeyNote presentations in Subversion
+  because of the .svn directory problem.  See
+  http://tapestryjava.blogspot.com/2007/09/mac-os-x-bundles-vs-subversion.html
+  for a script that helps me with this by bundling presentations in
+  an archive before committing.
+  SVK, a decentralized version control system built on top of
+  Subversion works better since it doesn't store the meta information
+  in the project tree like Subversion does.  A nice aspect of this is
+  when you commit, only the pieces of your presentation that have
+  changed get committed.
+- Group and Ungroup options aren't on context menu.  They must be selected
+  from the Arrange menu or keyboard shortcut can be used.
+  * cmd-option-g to group
+  * cmd-option-shift-g to ungroup
+- The colors of image bullets aren't adjusted when printing black & white
+  handouts.  If they are white on a dark background then they don't
+  appear at all. This happens when using the "Blackboard" theme.
+- When "Bullets & Numbering" for a text box is set to "No Bullets",
+  "Text Indent" should be set to "0 px".

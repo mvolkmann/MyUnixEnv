@@ -1,0 +1,16 @@
+- Create ~/.Xdefaults and add the following lines.
+  emacs.geometry:=80x62+100+0
+  emacs.Font:-*-courier-*-r-*-*-14-*-100-100-*-*-*-*
+
+- Run "xrdb ~/.Xdefaults" every time you change this file
+  and run it from ~/.bashrc!
+
+- Create ~/.emacs and add the following lines.
+
+- CUA setup
+  - Download cua.el from http://www.cua.dk/emacs.html
+    to /usr/share/emacs/site-lisp.
+  - Open it in emacs and select Emacs-Lisp...Byte-compile This File
+  - Add the following lines to ~/.emacs.
+    (require 'cua)
+    (CUA-mode t)

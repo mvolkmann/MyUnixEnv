@@ -1,0 +1,28 @@
+Gimp Notes
+
+To make parts of an image transparent
+- select the rectangular selection tool
+- right-click image and select Layer ... Transparency ... Add Alpha Channel
+- right-click image and select Select ... By Color
+- click the background to select all the pixels that are that color
+- select Edit ... Clear
+- select File ... Save As ...
+- save the image as a .gif, not .jpg
+
+To get white text
+- you may have to select Image ... Mode ... RGB
+
+To scale an image
+- select Tools...Transform Tools...Scale or press shift-t
+
+To reduce the resolution of an image
+- see Documents/Programming/Ruby/RMagick/scale_images.rb
+
+To crop an image
+- select Tools ... Transform Tools ... Crop
+- drag out crop rectangle
+- press return/enter key
+
+If the pencil or paintbrush tools are not working ...
+- select Select ... None
+- try again

@@ -1,0 +1,23 @@
+Parallels Notes
+
+- This is Mac OS X software that supports many virtual machines
+  including Windows XP.
+  
+- Useful optional tools to install
+  * Clipboard Sync.
+  * Time Sync.
+  * Shared Folders
+
+- To exit Parallels full screen mode press alt-enter.
+- To exit VNC Viewer full screen mode press ctrl-alt-shift-f
+
+- Sharing files between Mac OS X and Windows
+  * you created the Documents/Parallels directory on your Mac laptop 
+    that is shared with Parallels
+  * in Windows there is a desktop icon named "Parallels Shared Folders"
+    for opening this shared folder
+  * to get to this folder from cygwin, enter "cd /cygdrive/z"
+
+- Windows Task Manager
+  * ctrl-alt-delete doesn't seem to work
+  * use Start...Run...taskmgr instead

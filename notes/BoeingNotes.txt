@@ -1,0 +1,174 @@
+Boeing Notes
+
+Java resources
+- see http://java.web.boeing.com from inside the network
+- JRuby is here!
+
+Parallels setup steps
+- start Parallels
+- click green triangle to start Windows XP
+- select View...Full Screen to switch to full screen mode
+- press alt-enter to exit full screen mode of Parallels
+- double-click "RAM 2.5.6 + Ztoken"
+- select "Nortel IPSec"
+- for Connection, select "29 Non-Boeing Users Midwest Split Tunnel"
+- do not check "Use DES Gold Card"
+- enter User Name of jz317b
+- enter PIN of java19
+- press "Connect"
+- press "Accept/Close"
+- to check Boeing email
+  * run Outlook
+- other info
+  * Windows userid: MW\jz317b
+  * Windows password: Java1919
+  * telephone PIN - 19191919
+
+Boeing email
+- to check Boeing email
+  * follow Parallels setup steps above, including Ztoken setup
+  * use Outlook inside Parallels
+
+Old information
+- if VSClient icon appears on right side of task bar
+  and it's not moving, double-click it;
+  otherwise click VSClient icon on left side of task bar
+- press "Connect" button
+- enter password from gold card
+- open a Cygwin window
+- telnet to barracuda by entering its alias
+  because it has the latest version of the FCS Studio software
+  and you have credentials on that box
+- scLogin starts the scKeyAgent
+
+VNC setup steps
+- download TightVNC for Windows from http://www.tightvnc.com/download.html
+- install TightVNC
+- ssh to the target Linux box
+  ex. ssh -lvolkmarm 141.102.95.154
+  * for running from Boeing PC, see PuTTY instructions below
+- to kill a running VNC server
+  * find the process id by running
+    ps -ef | grep Xvnc | grep volkmarm
+  * kill {process-id}
+- to start a new VNC server
+  * enter "startvnc"
+  * this is an alias in your .bashrc to
+    vncserver -geometry 1280x1024 :19
+- may need to enter a command to keep this terminal from timing out such as
+  while true; do sleep 30; echo hi; done
+  Does this stop "Boeing VSClient VPN" from being stopped due to inactivity?
+- configuration is in ~/.vnc/xstartup
+- start the VNC client by double-clicking
+  the "TightVNC Viewer" desktop icon
+  * for the VNC server, use dogstar.sim.ssd.bna.boeing.com:19
+  * none of the radio buttons under "Connection profile"
+    need to be selected
+  * press the "Connect" button
+  * see the "VNC Authentication" password in your
+    Address Book entry for Boeing
+- press the button with four arrows in the top toolbar
+  to switch to full screen mode
+- press ctrl-alt-shift-f to exit full screen mode of TightVNC Viewer
+- to open a terminal window, select start menu...System Tools...Terminal
+- can drag the Terminal icon to the task bar for easier startup
+- to change default geometry of Terminal windows,
+  right-click the Terminal icon and change "Command"
+  (for example, "gnome-terminal --geometry 81x50")
+- to exit VNC Viewer, click "X" in toolbar
+- to reset password
+  * kill VNC server
+  * rm .vnc/passwd
+  * restart VNC server
+
+To FTP a file from a Boeing Linux server to your Mac
+- ftp 128.225.63.140 (stingray)
+- get filename
+- quit
+- mv filename //.psf/Parallels\ Shared\ Folder
+- The file should now be in ~/Documents on your Mac.
+
+Encrypted email
+- To get a certificate for a Boeing person
+  * browse
+    http://www.boeing.com/companyoffices/doingbiz/ldap_proxy/get_cert.html
+  * in the "Email address" text box, enter their email address
+  * under "Email Encryption Certificates From"
+    select "Boeing Issued Certificates (Class 2)"
+  * under "Select How to Load Certificates:"
+    select "Cut-and-Paste Certficate(s)"
+  * press "Get Certificate(s)"
+  * certificate data will be displayed in the browser
+  * select all the data including the first begin marker line
+    and the last end marker line
+  * paste this in a new text file with a file extension of .cer
+  * double-click the .cer file
+  * this will open Keychain Access and import the certificates
+- Many boeing and SAIC employees send email with a "From" address
+  that uses different case than the email address in their certificate.
+- When replying to an email like this, in order to make the reply encrypted
+  you need to correct the email address you're sending to
+  to match the one in their certificate.
+- To make this easier, enter both email addresses in your
+  Mac Address Book application.
+
+Getting a document from ACE
+- Tim Gundy likes to put documents for us in an OCI folder.
+- To access the OCI folder
+  * browse https://www.fcsace.com
+  * login with the username and password in your AddressBook Boeing entry
+  * click the "TOOLS" tab
+  * click "ProjectLink" in the left nav.
+  * click "Enter ProjectLink" in the left nav.
+  * click the "Project" tab
+  * click the "OCI" folder
+  * click a document to open it
+
+Software Development Folders (SDF)
+- allows access to secure, shared folders from Windows
+- quicker and easier to use than ACE
+- to use
+  * double-click "SOSCOE SDF Share.ica" icon on Windows desktop (in Parallels)
+  * a splash dialog box titled "Citrix MetaFrame" will appear
+  * click "OK" in the warning dialog
+  * enter username and password (see AddressBook Boeing entry)
+  * a Windows Explorer window will open to show the contents of \\warbird\sdf$
+
+To get the "target architecture" of the current host
+- TARGET_ARCH="$(uname -m)-$(lsb_release -is)-$(lsb_release -rs)-se"
+- echo $TARGET_ARCH
+
+Extra disk space
+- when your home directory quota is exhausted
+  you can use /fcs/c4isr/bvj519
+
+Clearcase for BCTM
+- from a Command Prompt, cd to D:\BCTM and enter the following:
+  mountvobs
+  cleartool startview mv_SOSSWA_Model
+  cleartool catcs - to see the config. spec.
+- software is in M:\mv_SOSWA_Model\fcseuml_swarch
+  * see DDWizard below that
+
+dogstar Linux box
+- IP address: 141.102.95.154
+- full name: dogstar.sim.ssd.bna.boeing.com
+- username: oracle or cormiesj
+- pasword: oradogstar or boeing7ax
+- PuTTY info:
+  * port: 22
+  * connection type: SSH
+- to copy a file to dogstar
+  * open a Command Prompt
+  * cd to directory containing file
+  * pscp {file-name} {username}@dogstar:
+    - this is the PuTTY scp command
+    - DON'T FORGET THE COLON AT THE END!
+- to login using ssh
+  * double-click PuTTY
+  * select "dogstar" in Saved Sessions list
+  * press Open button
+  * after "login as:", enter volkmam
+  * after "password:", enter boeing9zx
+  * to start VNC server, enter startvnc&
+    - that's an alias in .bashrc

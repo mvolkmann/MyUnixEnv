@@ -1,0 +1,27 @@
+Log4J Notes
+
+See http://www.ociweb.com/mark/Log4J.html.
+
+Download
+- from http://logging.apache.org
+- want logging-log4j-{version}.tar.gz
+
+Setup
+- unpackage
+- add dist/lib/log4j-{version}.jar to CLASSPATH
+
+Configuration
+- old way was to create a log4j.properties file
+- new way is to create a log4j.xml file
+- the configuration file is automatically loaded
+  if it is found in the classpath
+- see Programming/Languages/Java/Log4j/Demo
+
+Usage
+- see Programming/Languages/Java/Log4j/Demo
+
+Log file location
+- If a Log4J configuration file specifies a log file name with no path,
+  it will be written to the directory from where the application was started.
+  For servlets, this is the directory from where the server (such as Tomcat)
+  was started.

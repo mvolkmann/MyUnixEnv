@@ -1,0 +1,279 @@
+PDF Notes
+
+Versions
+- PDF 1.3 and earlier only support opaque painting
+- PDF 1.4 and later support transparency/compositing
+
+Postscript
+- PDF documents can be convert to and from Postscript without losing data
+
+Contents
+- can contain text, graphics, and images
+- can also contain annotations that support
+  non-displayed notes, hypertext links, file attachments, sounds and video
+- can specify a user interface with form fields
+- can respond to keyboard and mouse events
+- can import values for form fields from other applications
+- can export values from form fields to other applications
+
+Graphics Objects
+- three primary types
+  * path object
+    - a sequence of points, lines and curves
+    - paint can be a solid color or a repeating pattern
+  * text object
+    - a sequence of glyphs from a font, stroked or filled
+  * image object
+    - rectangular image
+- can specify clipping regions
+
+Compression
+- for color and grayscale images
+  * JPEG
+- for monochrome images
+  * CCITT
+  * run-length
+  * JBIG2
+- for text, graphics and images
+  * LZW
+  * Flate (can decompress with gunzip)
+
+Fonts
+- 14 standard fonts can be used without embedding font data
+  * four faces in each of the fonts Courier, Helvetica and Times
+  * Symbol
+  * ITC Zapf Dingbats
+
+Security
+- documents can be encrypted so only authorized users can read them
+  * separate authorization for the owner and all others
+  * can restrict operations such as viewing, printing and editing
+
+Comments
+- begin with % and extend to the end of the line
+
+Objects
+- there are 8 types
+- Boolean: represented by the keywords "true" and "false"
+- Numeric: integer or real
+- String
+  * two types, literal and hexadecimal
+  * literal: delimited by ( and )
+    - escape special characters, including unbalanced parens,
+      by preceding with \ (ex. \n, \t, \(, \), \\)
+    - can split over multiple lines by ending lines with \
+    - can include non-printable characters with \ddd
+      where the d's are octal codes
+    - ex. (foo)
+  * hexadecimal: delimited by < and >
+    with a pair of hex values for each character
+    - ex. <666F6F>
+- Name
+  * a unique identifier that begins with / which isn't part of the name
+  * case-sensitive
+  * ex. /foo
+- Array
+  * lists of any kinds of objects separated by spaces
+  * delimited by [ and ]
+  * can nest arrays for multiple dimensions
+  * ex. [(foo) 7 [(bar) true 3.14] (baz)]
+- Dictionary
+  * collection of entries that each have a key and a value
+  * entries are separated by spaces
+  * keys and values are separated by spaces
+  * keys must be names
+  * values can be any kind of object, including other dictionaries
+  * delimited by << and >>
+  * ex. <</apple (green) /banana (yellow)>>
+- Stream
+  * binary data used to represent objects with
+    large amounts of data such as images, page layouts
+  * represented by a dictionary,
+    followed by a line containing the keyword "stream",
+    followed by any number of lines of binary data,
+    followed by a line containing the keyword "endstream"
+  * the dictionary always contains a /Length key
+  * another common key is /Filter
+    - the value often specifies a type of compression
+      that was applied to the stream data
+    - a commonly used filter is FlateDecode
+      * based on zlib/deflate compression
+      * can be decompressed using gunzip
+- Null - represented by the keyword "null"
+
+Indirect Objects
+- objects with unique identifiers that allow them to be
+  referred to from other places in the file
+- syntax:
+  object-number generation-number obj
+    value
+  endobj
+- object-number is a positive integer that normally
+  starts at one and increments for each indirect object in the file
+- generation-number starts at zero and is
+  incremented for each new indirect object that represents
+  an update made to the previous generation
+- "obj" and "endobj" are keywords that delimit the value of the object
+- indirect reference
+  * refers to an indirect object
+  * syntax: object-number generation-number R
+  * if the object doesn't exist, the reference is treated the same as null
+
+File Structure
+- line terminators can be cr (13), lf (10) or both  
+- five parts
+  * one line header that specifies the PDF version being used in a comment
+    - ex. %PDF-1.4
+    - version can be overridden by updates
+    - it is recommended that this line be followed by another comment line
+      that contains at least four binary characters (>= 128) to help
+      file transfer applications recognize the file as binary instead of text
+  * body containing the objects
+    - a sequence of indirect objects representing components
+      such as fonts, pages and images
+  * cross-reference table for locating indirect objects
+    - enables random access to indirect objects
+    - one line for each indirect object
+      that specifies its location in the body
+    - contains one section for the initial version
+      and one section for each update
+    - each section begins with the keyword "xref"
+    - each entry describes an object that has been added or deleted
+    - object numbers start at zero
+      * object zero isn't a real object
+      * it just marks the head of the list
+    - each section begins with a line containing two integers
+      * the first is the number of the first object in the section
+      * the second is the number of entries/lines in the section
+    - each entry within a section is 20 bytes on a separate line
+      * 10-digit byte number
+        - for in-use objects, this is the
+          offset from the beginning of the file to the object description
+        - for free objects, this is the object number of the next free object
+      * space
+      * 5-digit generation number that is
+        incremented by one each time an object is deleted,
+        to indicate the next generation number to use
+        if that object number is reused in a future update
+        - object 0 always has a generation number of 65535
+      * space
+      * the letter "n" (for in-use) or "f" (for free or deleted)
+      * end of line marker which is one of
+        - space followed by cr
+        - space followed by lf
+        - cr followed by lf
+      * entries do not contain an object number
+        - it can be calculated
+        - let a be the first object number in the line that begins the section
+        - let b be the number of the line within the section
+        - the entry object number is a + b - 1
+  * trailer
+    - gives the location of the cross-reference table
+      and some special objects in the body
+    - syntax:
+      trailer
+        << key1 value1
+           key2 value2
+           ...
+        >>
+      startxref
+      byte-offset-to-last-xref-section
+      %%EOF
+    - /Size is a required key that is
+      the number of entries in the cross-reference table
+      (same as one greater than the highest object number used)
+    - /Root is a required key whose value is
+      an indirect reference to the catalog dictionary
+    - see page 68 for optional keys
+  * elements added by updates, if any
+
+Updates
+- it is possible to have more than one object definition
+  with the same object number and generation number
+  where each duplicate represents a modified object
+- only the most recent, in-use versions should be used
+
+Parsing
+- applications should parse PDF files from the end, beginning with the trailer
+  * because they can't assume all objects in the body are in-use
+
+Document Structure
+- a PDF document can be thought of as a hierarchy of objects
+- most objects in the tree are dictionaries
+- relationships in the tree are implemented by
+  dictionary values that are indirect object references
+- the root is the catalog dictionary
+  * the value of the Root entry in the trailer dictionary
+    is an indirect referenct to the catalog dictionary
+  * entries in the catalog dictionary are described in section 3.6.1
+- children of the page tree node are page objects
+  that each represent one page in the PDF
+- children of page objects are
+  content streams, thumbnail images and annotations
+
+Catalog Dictionary
+- entries include:
+  * /Type - the name /Catalog
+  * /Pages - an indirect reference to a page tree
+  * /Outlines - a dictionary that provides an outline hierarchy
+  * /Threads - an array of the article threads
+  * /Dests - a dictionary of named destinations
+  * /AcroForm - the interactive form dictionary
+
+Page Tree dictionary
+- the root page tree node is referred to by
+  the /Pages entry in the catalog dictionary
+- other page tree nodes in the tree are used to define
+  attribute default values  for the pages below them
+- entries include:
+  * /Type - the name (Pages)
+  * /Parent - an indirect reference to the parent page tree node
+              unless this is the root
+  * /Kids - an array of indirect references to children
+            which can be page tree nodes or page objects
+  * /Count - the number of page objects below this
+
+Page objects
+- specify the attributes of a single page
+- many attributes can be inherited from ancestor page tree nodes
+- entries include:
+  * /Type - the name (Page)
+  * /Parent - an indirect reference to the immediate page tree node parent
+  * /Resources - a dictionary of resources such as fonts and procedures
+  * /MediaBox - a rectangle that defines the boundaries of the page
+                [lower-left-x lower-left-y upper-right-x upper-right-y]
+  * /Contents - an indirect reference to a stream or
+                array of streams that will be concatenated;
+                empty for empty pages
+  * /Rotate - an integer number of degrees that must be a multiple of 90
+
+Content Streams
+- sequences of instructions to paint graphical elements
+- see operators such as Tf (set text font and size),
+  Td (move text position), Tj (move text),
+  m (move to), l (line to), and many more
+- a page can be painted by any number of content streams
+  that are painted sequentially
+
+Operators
+- specify painting attributes or operations
+- use postfix; all operands come before the operator that uses them
+- operands must be direct objects or
+  names of named resources (specified in a resource dictionary),
+  not indirect references
+- examples
+  * select next font - /F1 24 Tf
+    - F1 is a name assigned in a font object (named resource)
+    - 24 is the point size
+  * prepare to paint text at (100, 200) - 100 200 Td
+  * paint text - (some text) Tj
+  * prepare to draw at (150, 250) - 150 250 m
+  * draw line to (150, 350) - 150 350 l
+- see appendix A for a summary of all the operators
+
+Example PDF Files
+- see appendix G
+
+YOU DON'T HAVE TO DECOMPRESS THE IMAGES TO CREATE A NEW PDF!
+YOU COULD JUST COPY THE STREAMS INTO A NEW PDF
+THAT YOU CREATE DIRECTLY WITHOUT USING PRAWN!

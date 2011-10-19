@@ -1,0 +1,37 @@
+iChat Notes
+
+Smileys
+- to disable, View...Messages...Hide Smileys
+- to enable, View...Messages...Show Smileys
+
+Multi-person text chatting
+- select all the buddies to participate by holding down the cmd key
+- double-click one to start the chat
+
+Video chatting
+- in order to get this to work you may have to open some ports on your router
+- to do this with a Linksys router
+  * open System Preferences
+  * select "Network"
+  * in Location drop-down select "Home wireless"
+  * select "TCP/IP" tab
+  * in the "Configure IPv4 drop-down select "Using DHCP with manual address"
+  * in IP Address enter "192.168.1.2"
+  * press the "Apply Now" button
+  * open a web browser and browse http://192.168.1.1 (router local address)
+  * click the "Applications & Gaming" tab
+  * click the "Port Range Forward" tab
+  * enter a row with Application="iChat AV", Start=5060, End=5278,
+    Protocol=Both, IP Address=192.168.1.2, Enable=checked
+    - should End be set to 5678?
+  * enter a row with Application="iChat AV", Start=16384, End=16403,
+    Protocol=Both, IP Address=192.168.1.2, Enable=checked
+  * press the "Save Settings" button
+  * see LinksysPortRangeForwardScreenshot.png
+- for more information, see
+  * http://docs.info.apple.com/article.html?artnum=93208
+  * http://www.blumenthalassociates.com/mod.php?mod=faq&op=show_answer&faq_id=25
+
+Screen sharing
+- to end a session, press cmd-esc (or is it ctrl-esc?)
+  or right-click the iChat dock icon and select "End Screen Sharing"

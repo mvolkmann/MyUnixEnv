@@ -1,0 +1,112 @@
+Bash Shell Notes
+
+Arithmetic expressions
+- to assign a number to a variable use "var=$((value))" or "let var=value"
+- many assignment operators are supported including =, +=, -=, *=, /=, %=
+
+Assignment
+- environment variable
+  export name=value
+- shell variable
+  name=value (no spaces around =)
+- dynamic name
+  n=5
+  eval v$n=19
+  # The shell variable v5 is now set to 19.
+
+Command-line arguments
+- number of them is in $#
+- array of them is in $*
+- individual arguments are in $1, $2, ...
+- $0 is the name of the program being run, not a command-line argument
+- testing
+  if [ $# -ne 3 ]; then
+    echo "usage: ..."
+    exit 1
+  fi
+  if [ "$1" == "some-value" ]; then
+    ...
+  fi
+
+Command-line prompts
+- PS1 is the normal prompt
+- PS2 is the continuation line prompt
+- PS3 is the prompt used by the select command
+
+Command-line shortcuts
+- !foo - run the most recent command that started with "foo"
+- ^foo^bar - replace "foo" with "bar" in the previous command and run it
+
+Files
+- to get the part of a file path after the directory path,
+  bn=`basename $filePath`
+- to loop through files
+  for file in *.xml
+  do
+    # Use file here.
+  done
+
+Functions
+- syntax to define
+  function fn-name {
+    # Refer to parameters with $1, $2, ...
+  }
+  * parameters are not listed inside the parens after the function name
+  * empty parens after the function name are optional
+- syntax to call
+  fn-name p1 p2 ...
+  * parameters are not in parens and are not separated by commas
+- to return before reaching the end,
+  use the "return" keyword which can be followed by a return value
+  (if not, the status of the last command executed is returned)
+
+if statements
+- syntax
+  if [ condition ]; then
+    {statements}
+  elif [ condition ]; then
+    {statements}
+  else
+    {statements}
+  fi
+- to negate a condition,
+  if [ ! condition ] ...
+- to test whether a variable isn't set
+  if [ -z "$name"]; then
+    {statements}
+  fi
+- to test more than one thing in a condition
+  use -a for and and -o for or
+  * inside double brackets [[ ]], use && and ||
+
+Regular Expressions
+- just strings with no slashes surrounding them
+- evaluate with value-to-test =~ regular-expression
+- example:
+  value="foobarbaz"
+  re = "az$"
+  if [[ $value =~ $re ]]; then
+    echo "matched"
+  fi
+
+Scripts
+- begin with #!/bin/bash
+
+Status
+- the status of the last command is stored in $?
+- success is zero
+- to test the status of the last command and exit if bad
+  if (( $? != 0 )); then exit 1; fi
+
+Strings
+- surrounded by double quotes
+
+Variables
+- to assign a value to a variable
+  name=value (note no spaces)
+- to reference a variable
+  $name
+
+vi command-line editing
+- add "set -o vi" to startup script
+- press esc to enter command mode

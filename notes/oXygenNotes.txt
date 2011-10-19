@@ -1,0 +1,146 @@
+oXygen Notes
+
+Main web site
+* http://www.oxygenxml.com
+
+To get temporary student licenses
+* browse http://www.oxygenxml.com/resellers_cp/login.php
+* username is Ociweb and password is OC89dbh7z
+* for "Registration name" and "Company / organisation name"
+  enter "Object Computing, Inc."
+
+To change the font used by the XML editor
+* select Options ... Preferences ... Fonts
+* click font name after "Editor"
+* select a font family and size in the dialog
+
+To change indentation characters
+* select Options ... Preferences ... Editor ... Format
+* uncheck "Detect indent on open"
+* select a new value for "Indent size"
+
+To specify the default web browser
+- select Options ... Preferences ... Global
+- specify "Default Internet browser"
+
+To open a new XML document
+* select File ... New ... XML Document
+* check "Use a DTD or a schema" to be guided by a schema when entering content
+* uncheck it otherwise
+* press "OK"
+
+To rearrange tabs for multiple open documents
+* drag tabs left or right
+
+To move a tab to a new pane
+(so multiple documents can be viewed simultaneously)
+* drag the tab away from other tabs until the top of the gray outline
+  doesn't show the shape of a tab
+
+To move a tab to an existing pane
+* drag the tab onto other tabs until the top of the gray outline
+  does show the shape of a tab
+
+To resize a pane
+* drag its edges
+
+To pretty-print XML
+* select Document ... XML Document ... Format and Indent
+  - doesn't add or remove blank lines unless you
+    uncheck "Preserve empty lines" in
+    Options ... Preferences ... Editor ... Format ... XML
+
+To verify that an XML document is well-formed
+- select Document ... Validate ... Check Document Form
+  or press toolbar button with blue checkmark and "W"
+
+To compare two XML documents
+- open the first document
+- select Document ... File ... Compare...
+- in the right pane of the resulting dialog, select the second document
+
+To associate a schema with an XML document
+- select Document ... XML Document ... Associate Schema
+  or press toolbar button
+
+To validate an XML document against a schema
+that is already associated with the document
+using a DOCTYPE or the schemaLocation attribute
+- select Document ... Validate ... Validate Document
+  or press toolbar button with red checkmark and no ellipsis
+- look for green square followed by "Document is valid."
+  or a red square followed by "Validate failed." at bottom
+- click an error message to position the cursor at the related location
+
+To validate an XML document against a selected schema
+that is not specified in the document
+- select Document ... Validate ... External Validation
+  or press toolbar button with red checkmark and ellipsis
+
+To generate a schema from example XML documents
+- select Tools ... Trang Converter
+- under "Input" select "XML Documents"
+- press "Add" and add one or more sample XML documents
+- under "Output", select the desired schema type
+- press the "Choose" button and select
+  a location and file name for the new schema
+- press "Convert"
+- don't seem to have as much control over the output as in XML Spy
+
+To generate an XPath expression for a selected node
+- select Document ... XML Document ... Copy XPath
+- paste it in another document
+
+To evaluate an XPath expression against an XML document
+- type the XPath expression in the XPath combobox in the toolbar
+  and press enter to evaluate it
+- results are displayed in a pane at the bottom
+
+To use "XPath Builder"
+- select Perspective ... Show View ... XPath Builder
+- previously evaluated XPath expressions appear in "History" panel below
+  * select one to copy it to the "XPath Builder" panel
+- enter an XPath expression
+- press "Execute" button
+- results are display in new panel above
+- click a result to scroll to it and highlight it
+
+To associate an XSLT or CSS stylesheet with an XML Document
+- select Document ... XML Document ... Associate XSLT/CSS Stylesheet
+  or press toolbar button
+
+To open an XML document in browser view
+- Document ... XML Document ... Open in browser
+  or press globe toolbar button
+- this is a quick way to see how the browser will apply
+  an XSLT stylesheet that is specified in the XML document
+  with an xml-stylesheet processing instruction
+
+To transform an XML document using XSLT
+- select Document ... Transformation ... Apply Transformation Scenario
+  or press toolbar button that has a white circle containing a red triangle
+- if the XML contains an xml-stylesheet processing instruction
+  then you wil be prompted whether to use the referenced XSLT file
+- otherwise press "New", click the folder icon after "XSL URL",
+  select an XSLT file, and press "OK"
+- the name of the XSLT file will appear in the list of
+  transformation scenarios
+- select the new scenario and press "OK"
+- if the result is HTML, it will be displayed in the default browser
+- otherwise the result will be displayed in a pane at the bottom
+- right-click the result and select "Save Result..." to save it in a file
+
+To run an XQuery program
+- open the XQuery source file
+- select Document ... Transformation ... Apply Transformation Scenario
+  or press toolbar button that has a white circle containing a red triangle
+- results are displayed in a pane at the bottom
+
+To generate a PDF from an XSL-FO file
+- open the XSL-FO file
+- select Document ... Transformation ... Apply Transformation Scenario
+  or press toolbar button that has a white circle containing a red triangle
+- select the "FO PDF" scenario
+- a PDF file is saved in the same directory as the XSL-FO file
+  with the same name, but with a .pdf file extension
+- the PDF file is displayed in the default web browser

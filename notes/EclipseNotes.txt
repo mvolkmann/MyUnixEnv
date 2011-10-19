@@ -1,0 +1,235 @@
+Eclipse Notes
+
+Startup
+- on startup it will ask for a workspace directory
+- this is where projects will be stored by default
+
+Configuration
+- Eclipse...Preferences (Mac) or Windows...Preferences (Windows)
+  * General...Appearance...Colors and Fonts
+    - Java Editor Text Font...Change...
+  * General...Editors...Text Editors
+    - "Insert spaces for tabs"
+    - "Show line numbers"
+
+Error/Warning Markers
+- small, colored rectangles that appear on right side of source code
+- to navigate to next one, press ctrl-.
+- to navigate to previous one, press ctrl-,
+
+JVM selection
+- select Eclipse...Preferences...Java...Installed JREs
+- from here you can add a new JVM and select the one that will be used
+
+Projects
+- to create a new project in the workspace directory
+  * File...New...Java Project... or
+    press the "New Java Project" toolbar button
+  * enter a project name
+  * leave remaining options set to defaults
+  * press "Finish"
+- to create a new project using source files in an existing directory
+  * File...New...Java Project...
+  * enter a project name
+  * select the "Create project from existing source" radio button
+  * press the "Browse..." button and locate the existing directory
+  * leave remaining options set to defaults
+  * press "Finish"
+- to import an existing Eclipse project
+  * File...Import...General...Existing Projects Into Workspace...Next
+  * press the "Browse..." button after "Select root directory"
+  * locate the directory containing the existing Eclispe project
+
+Classes
+- to create a new class (just the basics)
+  * File...New...Class... or
+    press the "New Java Class" toolbar button or
+    right-click the project name in the "Package Explorer"
+    and select New...Class
+  * enter a package name if this class should be in one
+  * enter the name of the new class
+  * select the "public static void main(String[] args)" checkbox
+    if this class is the beginning of an application
+- to add missing imports
+  * for just the class name under the cursor,
+    press cmd-1 and select "Import ..."
+  * for all classes referenced in the source file, 
+    select Source...Organize Imports or press cmd-O or ctrl-O
+    - the file cannot contain syntax errors
+    - if there are conflicts, you'll be prompted to resolve them
+- to find a class or interface with a given name, press cmd-T/ctrl-T
+  which displays a dialog box where the name can be entered
+
+Implementors
+- to find all the classes that implement a given interface,
+  right-click the interface name and select "Open Type Hierarchy"
+  * even finds anonymous inner classes that implement the interface
+
+Interfaces
+- to create a new interface
+  * the steps are very similar to those for creating a new class
+
+Methods
+- to generate get/set methods for already specified fields
+  * select Source...Generate Getters and Setters
+  * press the "OK" button
+- to generate constructors that can set already specified fields
+  * select Source...Generate Constructors using Fields...
+  * select fields that should be used as parameters
+  * select the "Omit call to default constructor super()" checkbox
+  * press the "OK" button
+- to add equals and hashCode methods
+  * select Source...Generate hashCode() and equals()...
+  * select the "Use 'instanceof' to compare types" checkbox
+  * press the "OK" button
+- to override and/or implement methods in
+  the superclass and implemented interfaces
+  * select Source...Override/Implement Methods...
+  * select the checkboxes next to the methods to be overridden/implemented
+  * press the "OK" button
+- to sort methods alphabetically
+  * configure sort order by selecting
+    Eclipse...Preference...Java...Appearance...Member Sort Order
+  * select Source...Sort Methods...
+  * don't select the "Sort all members" radio button
+  * press the "OK" button
+- completion
+  * to get a list of methods whose names begin with
+    what has been entered so far, press ctrl-space
+    - for example, press that after entering "obj.get"
+      to see all the available get methods in the class of obj
+  * press ctrl-. repeatedly to complete the current word
+- to see callers of a method,
+  right-click and select "Open Call Hierarchy" or press option-ctrl-h
+
+Source files
+- to open a source file
+  * locate it in the "Package Explorer" window on the left
+  * double-click it
+
+Navigating
+- to jump to the definition of a method under the cursor press F3
+- to return to the previous location, press cmd-[
+- to move between matching brackets, press cmd-P
+
+Formatting Code
+- select Source...Format or press cmd-F
+
+Keyboard Shortcuts
+- to get a list of them, press cmd-shift-l
+
+Code Template Expansion
+- enter an abbrevation and press ctrl-space (you changed it to tab)
+  * in Preferences...General...Keys, this is called "Content Assist"
+- abbreviations include
+  * syso -> System.out.println();
+  * main -> public static void main(String[] args) { }
+- for more see Preferences...Java...Editor...Templates
+- for templates used for generating code see
+  Preferences...Java...Code Style...Code Templates
+
+Modifying Classpath
+- select Project...Properties...Java Build Path
+- select the "Source" tab to add directories containing .class files
+- select the "Libraries" tab to add JAR files
+  * press "Add External JARs" to select unregistered libraries
+  * press "Add JARs..." to select registered libraries
+    - how are they registered?
+- to create a new library
+  * press "Add Library..."
+  * select "User Library" and press "Next"
+  * press "User Libraries.."
+  * press "New..."
+  * enter user library name
+  * press "Add JARs.."
+  * select the JARs to be associated with this library
+  * press "OK"
+  * press "Finish"
+  * press "OK"
+
+Running an application without Ant
+- select Run...Run
+  or press the toolbar button with a green circle
+     that has a white triangle inside it
+  or press cmd-shift-F11
+- output will appear in the "Console" tab at the bottom
+- to run with specified command-line arguments
+  * select Run...Open Run Dialog...
+  * select the "Arguments" tab
+- if the project contains multiple source files that contain a main method,
+  right-click the one you want to run and select Run As...Java Application
+
+Debugging an application
+- double-click line numbers in source files to set breakpoints
+- select Run...Debug
+- a dialog box will ask for permission to switch to the Debug perspective
+- use the Resume, Step Into, Step Over, Step Return and Terminate buttons
+
+Ant
+- to view targets in build.xml for the project
+  * select Window...Show View...Ant
+  * press the button contains a plus and a picture of an ant
+  * locate the build.xml file
+  * press the right-pointing triangle to expose the targets
+- to run an Ant target, double-click it
+  * output will appear in the "Console" tab at the bottom
+
+Console tab at the bottom
+- to clear the contents of the "Console" tab
+  press the button with a document icon that has
+  a small "X" in the lower-right corner
+
+javadoc
+- to see the javadoc for a class, interface or method
+  hover the mouse over it and wait for a tooltip to appear
+
+Open Declaration
+- to see the implementation of a selected class or method
+  * select it
+  * select Navigate...Open Declaration,
+    right-click it and select "Open Declaration", or press F3
+
+Outline View
+- this displays methods in the current source file
+  and allows jumping to them by clicking a method name
+- select Window...Open View...Outline
+- this panel display in the same area as the Ant view
+
+Search
+- to search the workspace for references to the item under the cursor,
+  press ctrl-G
+
+Shortcuts
+- to display shortcut keys, press ctrl-L
+
+Surrounding code in a block statement
+- select the code to be surrounded
+- select Source...Surround...
+- select the desired type of block statement
+  * options include do while, for, if, Runnable, synchronized, try and while
+
+Refactoring
+- select the code to be refactored
+- select Refactor menu and select one of the refactorings
+- examples include
+  * Rename...
+  * Move... to a different package
+  * Change Method Signature...
+  * Extract Method...
+  * Extract Local Variable...
+  * Extract Constant...
+  * Inline... (opposite of Extract Method...)
+  * Convert Local Variable to Field...
+  * Extract Superclass...
+  * Extract Interface...
+
+viPlugin
+- download from http://www.satokar.com/viplugin/
+- copy the directory inside the features directory
+  to the Eclipse features directory
+- copy the directories inside the plugins directory
+  to the Eclipse plugins directory
+- place viPlugin.licence file in top directory of Eclipse installation
+- restart Eclipse
+- configuration by selecting Window...Preferences...General...Keys
+  and setting the Scheme to ViPlugin

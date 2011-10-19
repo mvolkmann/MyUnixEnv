@@ -1,0 +1,279 @@
+MacNotes.txt
+
+* Why I Like Macs
+  - Address Book
+    * simple, effective UI
+    * my storage place for everything interesting I want to remember
+      about a person or place
+    * integration with Mail
+    * integration with Google Maps
+  - iCal
+    * reminds me of upcoming events
+    * flexible snoozing of alerts
+  - Desktop
+    * the Dock
+    * Stacks
+      - customizable collections of dock application launching icons
+      - convenient collection of recent downloads
+    * F10 to see all windows of the current application in Expose mode
+  - iChat
+    * very easy text and video chatting
+  - iMovie and iDVD
+    * for creating DVDs of home movies
+  - iPhoto
+    * great app. for organizing photos
+    * great for simple editing like cropping and red eye removal
+  - iTunes
+    * cover art screen saver
+    * library sharing
+  - Finder
+    * Cover Flow to quickly flip through images
+    * Quick Look (select a file and press spacebar
+      to quickly view file contents)
+    * Sidebar shortcuts to commonly visited directories
+      - these also appear in file dialog boxes
+    * View as Columns
+  - Mail
+    * integration with Address Book
+    * great integration and ease of use
+  - Keynote
+    * produces much more polished presentations than PowerPoint
+  - OmniGraffle
+    * an excellent diagramming tool
+  - Parallels
+    * for those rare times that I must run Windows software
+  - Preview
+    * for viewing images and PDFs
+    * can annotate PDFs
+  - Safari
+    * can reorder tabs by dragging them
+    * "Enhanced Find" which highlights matches
+       and dims the rest of the page
+    * "Merge All Windows" to change separate windows into tabs in one window
+    * View...Show Status Bar
+      - displays at the bottom of the browser window
+      - when hovering over a link it shows what it will do if clicked
+        * goto - means it will replace the current page
+        * open in a new tab
+        * open in a new window
+    * hold cmd key when clicking a link to open in a new tab  
+  - Spotlight
+    * can quickly finding documents whose name or contents
+      contain given words
+  - Terminal
+    * BSD UNIX instead of Windows batch commands
+    * tabbed sessions instead of multiple Windows Command Prompt windows
+  - Time Machine
+    * most care-free backups I've ever experienced;
+      just plug in an external drive and it does the rest
+    * can click a menu on the desktop to see date/time of last backup
+  - Miscellaneous
+    * application consistency
+      - cmd-q quits out of any app.
+      - cmd-w closes the current window in any app.
+    * mostly reliable ability to sleep and wakeup
+    * ease of creating screenshots of windows
+      and selected areas of the screen
+      and pasting them into applications
+    * stability
+      - crashes/locks up less frequently than Windows,
+        but still more often than I find acceptable
+    * attractive design of computers, monitors, keyboards and mice
+
+* Additions
+  - Check Off - http://www.carpeaqua.com/software/checkoff/
+    * manages checklists such as travel packing
+    * also install the Quickpick file from the website to support Backup
+  - Firefox
+  - iTerm
+    * alternative to Terminal application that provides tabbed shells
+  - Microsoft Office:mac
+    * using Word, Excel and PowerPoint
+  - PodWorks
+    * for copying songs from an iPod to iTunes
+    * can show songs on iPod that are not in iTunes library
+    * http://www.versiontracker.com/dyn/moreinfo/macosx/17443
+  - Show Desktop
+    * http://www.versiontracker.com/dyn/moreinfo/macosx/10005
+  - Vim 7
+  - MPEG Streamclip and VLC for playing MPEG-2 videos
+  - Xcode
+  - You Control: Tunes
+    * allows control of iTunes from menu bar
+    * http://www.yousoftware.com/itunes/itunes.php
+* Address Book
+  - to see the groups a card is in, select the "All" group,
+    select the card and press the option key
+    * the groups will be highlighted
+  - to find cards not in any group, create a Smart Group using
+    "Card" "is not member of" "any group"   
+  - to move contacts from Palm Desktop under Windows
+    * in Palm Desktop, select "Addresses" in the left nav.
+    * press Ctrl-A to select all
+    * select File...Export vCard...
+    * specify a file name to save the data into
+    * email the file to the Mac
+    * on the Mac, save the file somewhere
+    * Address Book will detect this and offer to import the data
+* Automator
+  - to get Automator scripts to run with double-clicked
+    instead of opening in Automator, do a "Get Info" on the script
+    and change "Open with" to "Automator Launcher.app"
+* Boot Disk
+  - when multiple bootable drives are available, hold down the option key
+    during startup in order to select the one to use
+* Cocoa applications (applies to any app. written using Cocoa,
+  such as Safari)
+  - To select all the content of a text box, click the border of the box.
+* Dock
+  - To make icons of hidden applications be dimmed,
+    * open a Terminal window
+    * enter "defaults write com.apple.dock showhidden -bool true"
+    * enter "killall Dock"
+* Finder
+  - cmd-O to open selected document with the associated application
+  - To change the application used to open all files of a given type,
+    select one of them, press cmd-i for "Get Info",
+    under "Open With:" select the application and
+    click the "Change All..." button
+  - To see hidden files like .bash_profile, enter the following
+    in a Terminal window and relaunch the Finder:
+    defaults write com.apple.finder AppleShowAllFiles TRUE
+* Keys - see MacKeys.txt
+* iCal
+  - to move events from Palm Desktop under Windows
+    * ???
+* iPhoto
+  - to find duplicate pictures in iPhoto library,
+    use Duplicate Annihilator shareware software
+    * adds the word "duplicate" to the description of each duplicate picture
+      and "original" to each original
+    * after verifying that it correctly found the duplicates
+      - set their rating to 1 star
+        (assumes you don't use ratings for anything else)
+      - view entire library
+      - filter by rating of 1 star (using dropdown at bottom)
+      - delete all that match
+      - view all photos with "original" in their description
+      - select all these and use "Batch Change" from the context menu
+        to set their description to an empty string
+* iTunes
+  - to play or pause, press spacebar
+  - when trying to burn a playlist to a CD, if Parallels is running
+    you will get the message "The disc burner is busy."
+  - to move music from iTunes under Windows
+    * ???
+* Java
+  - Java 6 isn't currently supported on 32-bit Macs and may never be
+  - one solution is to use "Soy Latte" 
+    at http://landonf.bikemonkey.org/static/soylatte/
+    * download and unzip it
+    * set JAVA_HOME to point to it
+    * add $JAVA_HOME/bin to PATH if it's not there already
+* Mail
+  - distribution lists
+    * to create one, create a group in Address Book and
+      drag the entries for the group members into it
+    * when people in an AddressBook group have more than one email address
+      and you want to select which one is used
+      when email is sent to the group
+      - right-click the group in AddressBook
+      - select "Edit Distribution List..."
+      - click the email addresses to be used
+  - speed
+    * to improve performance, periodically
+      - quit Mail
+      - open a Terminal window
+      - enter "sqlite3 ~/Library/Mail/Envelope\ Index vacuum;"
+      - press ctrl-d
+      - restart Mail
+    * you may be able to do the same thing from within Mail
+      by selecting the Inbox and them selecting Mailbox...Rebuild
+
+* Memory
+  - to determine how much you have
+    Apple menu...About This Mac
+  - to determine how much each application is using
+    Applications/Utilities/Activity Monitor
+* Printer setup
+  - Samsung CLP-510
+    * download driver from http://www.samsung.com/support/
+      - enter "CLP-510" for model number,
+        select "Computers & Related Products" for product category,
+        and click the "GO" buttton
+      - click the "Driver" tab
+      - click the zip icon in the "MAC OS" row
+      - double-click the downloaded installer
+    * add the printer
+      - launch System Preferences
+      - select "Print & Fax"
+      - click the "+" button
+      - set Protocol to "Internet Printing Protocol - IPP"
+      - set Address to 10.201.200.200
+      - set Name to "CLP-510"
+      - set Location to "north office"
+      - set Print Using to "Samsung"
+      - under Model, select "CLP-510"
+      - click the "Add" button
+* Safe mode
+  - to boot in safe mode, shut down, press power button,
+    hold down shift key when you hear startup tone,
+    release shift key when you see gray apple
+* Screenshots
+  - full screen: cmd-shift-3
+  - selected area: cmd-shift-4
+  - selected area to clipboard: cmd-ctrl-shift-4
+  - selected window: cmd-shift-4 spacebar
+  - to capture popup windows that disappear when the cmd key is pressed,
+    use Applications/Utilities/Grab.app and
+    select the Capture...Timed Screen menu option
+    * it saves in TIFF format, so you may need to
+      convert that to another format
+* Scripts
+  - to make a script runnable by double-clicking it,
+    change the file extension to ".command"
+    * Terminal will open a new window and run the script there
+* Spotlight - cmd-spacebar
+* SSH
+  - see Documents/SSH/ssh_setup.txt
+* Terminal
+  - to open a document using the associated application,
+    enter "open {file-name}"
+  - reasonable fonts include "Andale Mono", Courier, Monaco and SimSun
+* Trash
+  - when emptying trash can, if it says files are in use
+    and you know they are not, open Terminal and
+    cd ~/.Trash
+    rm {file-name}
+
+Ejecting CDs and DVDs
+- sometimes an inserted disk isn't recognized, stays in the drive,
+  and doesn't appear in the Finder or on the desktop
+- one way to eject the disk is to
+  * select Apple menu ... About This Mac ... More Info...
+  * select ATA or Serial-ATA under Hardware
+  * select the device
+    - on your laptop the device is "HL-DT-ST DVDRW GS23N"
+  * note the value of "BSD Name" (ex. disk1)
+  * open a Terminal window
+  * enter "diskutil umount disk3" (may not need this step)
+  * enter "diskutil eject disk3"
+
+Enabling Root User
+- from the Apple menu choose System Preferences....
+- from the View menu choose Accounts
+- click the lock and authenticate with an administrator account
+- click Login Options...
+- click the "Edit..." or "Join..." button at the bottom right
+- click the "Open Directory Utility..." button
+- click the lock in the Directory Utility window
+- enter an administrator account name and password, then click OK
+- choose Enable Root User from the Edit menu
+- enter the root password you wish to use in both
+  the Password and Verify fields, then click OK
+- quit Directory Utility
+
+Safari
+- to enable the Develop menu for debugging JavaScript
+  * open a Terminal window
+  * enter "defaults write com.apple.Safari IncludeDebugMenu 1"

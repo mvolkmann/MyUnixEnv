@@ -1,0 +1,27 @@
+Ant Notes
+
+Creating JAR files
+- to create a JAR that contains files contained in other JARs,
+  use the zipfileset subtask
+  * this is especially useful for creating double-clickable JAR applications
+  * see Programming/Languages/Java/Swing/DoubleClickableJarInJar
+- example
+    <jar manifest="manifest.mf"
+      destfile="build/${ant.project.name}.jar">
+      <fileset dir="build/classes" includes="**"/>
+      <zipfileset src="${jcommon.jar}"/>
+      <zipfileset src="${jfreechart.jar}"/>
+    </jar>
+
+Cygwin
+- to use the exec task under Cygwin,
+  try setting the os attribute to "Windows XP" as opposed to just "Windows"
+
+Installing under Red Hat Linux or Fedora Core
+- even if a new version of Ant is first in PATH, it will not be used
+  because Red Hat and Fedora will use the version of Ant they came with
+- to fix this,
+  su - # switches to root user
+  rpm -e ant ant-libs # deletes the Ant packages that came with the OS
+  exit
+  hash -r # forgets remembered paths so PATH will be searched again

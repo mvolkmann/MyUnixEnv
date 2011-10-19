@@ -1,0 +1,141 @@
+Getting Starting on SIDR
+
+Create a local repo from the existing master repo.
+- cd to your home directory
+- enter "git clone /home/volkmarm/team/sidr"
+- if the repo is on a remote server, enter
+  "git clone ssh://{your-username}@host/path"
+- creates a directory named "sidr" that contains
+  the starting point application
+
+Verify that you can build and deploy the web app.
+- add the following line to your .bash_profile
+  export PATH=/home/{your-username}/sidr/bin:$PATH
+- enter ". .bash_profile" to make the change take effect
+- cd ~/sidr
+- enter "go"
+
+Verify that the web app. works
+- open a web browser
+- copy the URL output by the go script into the browser
+  * it should be http://141.102.95.154:8080/sidr_{your-username}
+- press the "Get OTPs" button on the Dashboard tab
+  and verify that OTP acronyms are displayed below it
+- try clicking the other tabs
+
+Make a change to the web app.
+- edit sidr/docroot/index.html
+- find the div element with an id of "compareTab"
+- add the following lines at the end of its content
+  <br/>
+  {your-name} was here!
+- from your sidr directory, enter "go"
+- refresh the page in the web browser
+- click the "Compare" tab
+- verify that your name appears
+
+Commit your changes
+- cd to your sidr/docroot directory
+- enter "git commit -av"
+  * the -a option causes it to commit all files that have been modified
+    (without this you'd need to run "git add {file-path}"
+    before the commit)
+  * the -v option causes it to display diffs for your changes
+    so you can craft accurate comments
+- this will launch the vi editor where you can
+  enter comments decribing your changes
+  * you may need to learn some basic vi commands
+  * pressing i puts you in insert mode
+  * pressing Esc returns you to command mode
+  * move the cursor using j (down), k (up), l (right) and h (left)
+  * when finshed adding comments, press Esc to go to command mode,
+    press :, enter wq, and press Enter
+- as an alternative, you can enter a comment on the command-line
+  "git commit -m "{comment-goes-here}"
+
+Push your changes to the "master" repository
+- from your sidr directory, enter "git push"
+- if others have committed changes that you don't have yet,
+  the push will fail
+  * enter "git pull"
+  * the changes will be merged with yours
+  * if there are any conflicts, edit the affected files to resolve them
+  * enter "git push" again
+
+Verify that others can see your changes
+- ask someone to
+  * cd to their sidr directory
+  * run "git pull"
+  * verify that they have your changes
+    by looking at one of the modified files
+
+More tips on using git follow
+-----------------------------
+
+To get help
+- for top-level help, "git help"
+- for command-specific help, enter "git help {command-name}"
+- see on-line manual at http://kernel.org/pub/software/scm/git/docs
+
+To add a new file to the repo
+- git add {file-path}
+  * still need to commit after this
+
+To move or rename a file
+- git mv {old-path} {new-path}
+  * new-path can be just a directory
+  * keeps history
+  * still need to commit after this
+
+To delete a file
+- git rm {file-path}
+  * still need to commit after this
+
+To delete a directory
+- git rm -r {directory-path}
+  * still need to commit after this
+
+To see history
+- git log
+  * outputs history in reverse chronological order
+
+To see the status of your repo
+- git status
+  * lists files that have been added (git add), deleted (git rm)
+    or modified (git add), but not committed
+  * lists new files that haven't been added to the repo
+    - possibly they are files that should not be added
+      such as .class, .war and .*lint files
+
+To see differences between versions of a file
+- between your uncommitted changes and your repo
+  * git diff {file-path}
+- between your uncommitted changes and
+  the newest code in the master repo
+  * git diff HEAD {file-path}
+- between specific commits
+  * git diff {commit-1} {commit-2} {file-path}
+    - where the commits are the first seven characters
+    - use git log {file-path} to determine commits
+- added lines are preceded with a "+"
+- deleted lines are preceded with a "-"
+
+To replace a working copy of a file with the latest version in the local repo
+- git checkout {file}
+
+To revert a file in the local repo with the latest version in the remote repo
+- git revert {file}
+
+Conflicts
+- when a merge fails due to conflicts, files with conflicts are listed
+- these files will contain conflict markers
+- three approaches to resolving conflicts
+  * first approach
+    - resolve conflicts manually with any text editor or IDE
+    - stage (add) and commit changes
+  * second approach
+    - run "git mergetool" which runs a diff tool and stages changes
+    - commit changes
+  * third approach
+    - delete the local file and run "git checkout {file-name}"
+      to toss your version and keep the master version

@@ -1,0 +1,179 @@
+VxWorks Notes
+
+- References to the document "VxWorks Application Programmer's Guide 6.0"
+  are abbreviated as "VAPG".
+
+- Startup and Shutdown
+  * The chassis containing two boards running VxWorks
+    is under Chip's desk.
+  * It's usually off, so you have to power it up
+    with a switch on the top, back side.
+  * It's usually is ready in two minutes.
+  * If it isn't ready in five minutes, power it down and back up.
+  * To see output as it boots, telnet to Chip's Linux box
+    (b878361; jz317b/password) and enter "minicom".
+  * There is no orderly shutdown procedure, just power it down.
+
+- To login to a board,
+  * telnet b878361 (jz317b/password)
+    (b878361 is Chip's Linux box)
+  * telnet 6100a or 6100b
+  * note that you can't compile and link code on a VxWorks board
+  * do that under Linux (on Chip's box) or Windows (your box)
+
+- Shells
+  - command prompts
+    "-> " for C shell
+    "[vxWorks *]# " for command shell
+  - to switch to command shell, enter "cmd".
+  - to switch to C shell, enter "C".
+  - in C shell, cd command requires quotes around directory name
+
+- To backspace when telnet was run from Linux, use ctrl-h.
+  The backspace key works if you
+  * start an xterm from your Linux box
+  * hold down Ctrl key, hold down left moust button and select "Backarrow key"
+  * telnet from that window
+  The backspace key also works if you telnet from Windows instead of Linux.
+
+- To access files from Chip's /tmp directory from a board,
+  in C shell
+  nfsAuthUnixSet "b878361", 63524, 1761, 0
+  nfsMount "b878361", "/tmp", "/tmp"
+  * 63524 is your UNIX id (get with "id jz317b")
+  * 1761 is your group id (get in same way)
+  cmd (to switch to command shell)
+  cd /tmp
+  ls (to see files there; not in alphabetical order!)
+
+- To move files (such as VxWorks executables built elsewhere)
+  to Chip's /tmp directory,
+  scp {filename} jz317b@b878361:/tmp
+
+- To see list of running tasks and their priorities,
+  in C shell enter "i" command.
+
+- In VxWorks, tasks with lower priority numbers run first.
+  ACE and pthreads remap their priorities to VxWorks priorities.
+  Specify higher priority numbers to run first in those APIs.
+
+- To compile and link C++ code for VxWorks
+  * to work from Linux
+    - telnet to Chip's Linux box (b878361)
+    - add VxWorks compiler to environment with
+      /usr/local/WindRiver/wrenv.sh -p vxworks-6.1
+      (you have a vxwsetup alias that does this)
+    - for an example Makefile, see
+      ~/C++/HelloWorld/Makefile.vxworks on your Boeing Linux box
+    - ACE on Chip's box is under
+      /data/n1134266_integ_snapview/vobs/COS_ACE/ACE_wrappers
+      * header files are in ace subdirectory
+      * ACE shared library is in ace/libACE_PPC32gnu_DEBUG_RTP.a
+        - export ARCH=PPC32gnu_DEBUG_RTP
+        - link with -lACE_$(ARCH)
+  * to work from Windows, install WindRiver software
+    Need these disks:
+    - Workbench 2.3.1
+    - GNU Compiler 3.3.2
+    - VxWorks 6.1 for all platforms
+    - VxWorks 6.1 BSPs for PowerPC
+
+- To setup environment for using SOSCOE on VxWorks
+  - vxw1 (alias in your .bashrc)
+  - . vxw2 (script in your home directory)
+
+- To conditionally include code specific to VxWorks
+  #ifdef ACE_VXWORKS_RTP (or SC_TARGET_VXWORKS)
+    // put VxWorks code here
+  #else
+    // put Linux code here
+  #endif
+
+- Java steps using the pre-built PERC JVM (pvm.o)
+  * PERC_HOME is set to D:\Java\PERC\perc4.2
+    which is on your Boeing Windows box
+    - contains the platforms and lib directories mentioned below.
+  * one time, using Windows Explorer copy these files to M:/PERC
+    (M is your Samba shared Linux home directory)
+      %PERC_HOME%\platforms\VxWorks-ppc-hwfp\bin\pvm.o
+      %PERC_HOME%\lib\perclib.jar
+      %PERC_HOME%\lib\perctool.jar
+      %PERC_HOME%\lib\gcp.jar
+  * one time, from Linux copy the files in ~/PERC
+    (pvm.o, gcp.jar, perclib.jar and perctool.jar)
+    to Chip's Linux /tmp directory using scp 
+      cd ~/PERC
+      scp * jz317b@b878361:/tmp
+  * compile Java code under Windows or Linux
+    using any Java 1.4 compiler such as Sun's or IBM Jikes
+    - for example, ~/Java/HelloWorld
+  * copy the .class files to a directory under /tmp
+    on Chip's Linux box (b878361)
+      scp *.class jz317b@b878361:/tmp
+  * telnet to a VxWorks board (6100a or 6100b)
+  * enter these commands
+    C (to enter C shell; may already be in C shell by default)
+    nfsAuthUnixSet "b878361", 63524, 1761, 0 (should get "value = 0")
+    nfsMount "b878361", "/tmp", "/tmp" (should get "value = 0")
+    ld 1,0,"/tmp/pvm.o" (should get "value = some non-negative number")
+    cmd
+    cd /tmp
+    C
+    pvm "-classpath .:perclib.jar:perctool.jar:gcp.jar {main-class}"
+
+- To build a custom pvm that includes statically linked Java classes
+  * see "PERC Getting Started Guide" p. 21
+  * see D:\Java\PERC\perc4.2\examples\VxWorks-ppc-hwfp,
+    especially Makefile!
+    - you had to make several path changes in that Makefile
+      and remove references to TORNADO
+  * under Windows, open a "VxWorks Development Shell" with
+    start...All Programs...Wind River...
+    VxWorks 6.1...VxWorks Development Shell
+  * cd D:\Java\PERC\perc4.2\examples\VxWorks-ppc-hwfp
+  * "make" or "make fast-jit"
+  * rename pvm.o to pvmCustom.o
+  * copy pvmCustom.o to M:\PERC (your Samba share to Linux)
+  * follow the steps above for using the pre-built PERC JVM, except
+    - add "scp pvmCustom.o jz317b@b878361:/tmp"
+    - don't need to copy .class files
+      since they are statically linked into pvmCustom.o
+    - change ld command to "ld 1,0,"/tmp/pvmCustom.o"
+    - in pvm command, don't need "." in -classpath
+      and main-class is ExampleJavaProgram
+    - this outputs "Thank you for using PERC(R)!"
+
+- See D:\Java\PERC\VxWorksThreadDemo  
+
+- Steps to run executables on Boeing VxWorks boards
+  * Sign up for a board on SDF (shared Windows drive)
+    06-Test\Formal Qualification Test\FQT 1.8\Test Environment\
+    Real-Time Edition\RTE Board sign up sheet.
+  * In first window
+    - telnet to a Linux server (such as stingray).
+    - cd to the directory of the executable to be run (.vxe),
+    - ftp to the node manager
+    - "put" the executable to copy it to the node manager
+  * In second window
+    - telnet to a Linux server
+    - telnet to the String 3 node manager (141.102.94.109)
+      using tester/soscoe018
+    - cd to the directory of the executable to be run (.vxe),
+    - chmod 777 {name}.vxe
+    - cp {name}.vxe /sftest/SOSCOE-RE/bvj519/slash
+  * In third window
+    - telnet to a Linux server
+    - telnet to the String 3 node manager,
+    - telnet to a board (no login required);
+      If this works then the board is not in use.
+    - To see if someone else has mounted the board, run 'nfsDevShow'.
+    - If they have, unmount them with 'nfsUnmount "/"'
+    - Verify that this worked with 'nfsDevShow'.
+    - Mount the board with
+     'nfsMount "fcssnap6", "/sftest/SOSCOE-RE/bvj519/slash","/"'.
+    - Verify that this worked with 'nfsDevShow'.
+    - Enter 'cd "/"'.
+    - Run the executable with
+      'rtpSp "{name}.vxe",100,131072,0x43,0x01000000'.
+    - Press the enter key when the executable finishes running
+      to return to the command prompt.

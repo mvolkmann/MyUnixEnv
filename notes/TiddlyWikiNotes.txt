@@ -1,0 +1,208 @@
+TiddlyWiki Notes
+
+Description
+- TiddlyWiki is a Wiki implemented completely in JavaScript, HTML and CSS.
+- It is contained in a single HTML file.
+- It's main purpose is for personal Wikis, not collaboration.
+- Read about it at http://www.tiddlywiki.com.
+- There is a good tutorial at http://www.blogjones.com/TiddlyWikiTutorial.html.
+
+Downloading
+- click the "DownloadSoftware" link in the left nav.
+- under DownloadSoftware, right-click the "this link to empty.html" link
+  and pick "Save Link As..."
+- save it as a .html file anywhere you'd like
+  * for example, you can save it on a USB stick
+- the initial size of this file is approximately 150K
+
+Tiddlers
+- "a chunk of information about a particular topic"
+- can be edited separately from other tiddlers
+- can be closed
+- can be linked from other tiddlers
+- links in the left nav. can open them
+- to see a list of tiddlers that have been created or edited
+  on a given date, click the "Timeline" tab on the right side
+- to see an alphabetical list of all tiddlers that have been created
+  click the "More" tab on the right side
+  * contains orphans which are tiddlers that
+    aren't currently referenced by another
+- to see a list of tiddlers that are referenced, but don't yet contain data
+  click the "Missing" tab on the right side
+
+Tags
+- used to categorize tiddlers
+- clicking a tag display a list of all tiddlers marked with that category
+- to add a tag to a tiddler, edit it and
+  add tag works to the bottom text field
+
+Creating a tiddler
+- there are two ways
+- #1 - click the "new tiddler" link on the right side
+- #2 - in an existing tiddler, enter the name of the tiddler
+  either as a WikiWord (a mixed case word) or
+  enclosed in double square brackets (for non-WikiWords)
+  * for WikiWords, the first letter must be uppercase, no spaces,
+    and at least two letters must be uppercase
+  * click the tiddler name to open it
+  * double click the content of the tiddler to edit it
+  * a common place to add these is in the MainMenu tiddler
+
+Editing an existing tiddler
+- to edit the content of a tiddler, double-click any of its text
+- when finished, click "done" in the upper-right corner of the tiddler
+- line limit
+  * the content of each tiddler is limited to 30 lines by default
+  * to increase, click "options >>" on the right side,
+    click "AdvancedOptions", and modify the value for
+    "Maximum number of lines in a tiddler edit box"
+
+Deleting a tiddler
+- edit it and click the "delete" link
+
+Saving changes
+- click the "save changes" link on the right side
+  * this creates a backup copy of the file with a timestamp in the name
+    and then overwrite the original .html file
+  * changes must be saved to a local file
+  * when viewing over HTTP, changes cannot be saved back
+    to the original .html file
+- SaveBackups option
+  * this option is enabled by default
+  * to disable it, click "options >>" on the right side
+    and deselect the "SaveBackups" checkbox
+  * with SaveBackups enabled (recommended), changes are also saved
+    in a copy of the file with a timestamp in the name
+  * at the end of an editing session with many saves,
+    there will be many timestamped files
+  * these timestamped files are the only means for
+    returning to previous versions of the Wiki
+  * delete them if not needed
+- AutoSave option
+  * this option is disabled by default
+  * to enable it, click "options >>" on the right side
+    and select the "AutoSave" checkbox
+  * with AutoSave enabled (recommended), every time an edit of a tiddler
+    is closed by clicking "done", the file is saved
+  * without AutoSave enabled, if you close the browser window without saving,
+    your changes will be lost!
+
+Searching tiddler content
+- using the search box in the upper-left corner
+- regular expression searching
+  * disabled by default
+  * to enable it, click "options >>" on the right side
+    and select the "RegExpSearch" checkbox
+
+Tiddler Markup
+- monospaced text - surround in triple curly braces {{{text}}}
+- bold - surround with ''
+- strikethrough - surround with ==
+- underline - surround with __
+- italic - surround with //
+- superscript - surround with ^^
+- subscript - surround with ~~
+- images - [img[alternate text|imageURL]]
+- bulleted lists
+  *
+  **
+  ***
+- numbered lists
+  #
+  ##
+  ###
+- external links - [[text|url]]
+- tables
+  |!heading-1-text|!heading-2-text|!heading-3-text|
+  |cell-1|cell-2| cell-3 right-aligned by preceding space|
+  |>|>|Cell-4 spans three columns.|
+  |Cell-5 spans two rows.~|cell-6|cell-7|
+  |~|cell-8|cell-9|
+- headings
+  !level-1-title
+  !!level-2-title
+  !!!level-3-title
+- blockquotes
+  <<<
+  quote text
+  <<<
+- horizontal line - with ----
+- CSS formatting
+  * inline
+    - @@css-attr-1(value):css-attr-2(value):text@@
+  * for example
+    - to set text color - @@color(color-name):text@@
+    - to set background color - @@bgcolor(color-name):text@@
+  * non-inline
+    - add CSS formatting rules to the special "StyleSheet" tiddler
+    - see AnotherExampleStyleSheet tiddler at http://www.tiddlywiki.com/
+- deWikify a WikiWord - precede with ~
+- monospaced text - {{{ text }}}
+- embedded HTML - surround with <html> </html>
+
+Changing title and subtitle at top of Wiki
+- edit the SiteTitle and SiteSubtitle tiddlers
+
+Changing left nav. menu
+- edit the MainMenu tiddler
+
+Changing tiddlers that appear by default
+- create or edit the DefaultTiddlers tiddler
+  and add to it a list of tiddler names to display
+  with each on a separate line
+
+Determining linkers
+- to find which tiddlers link to the current one, click "references"
+  in the upper right corner of the tiddler
+
+Macros
+- special tags surrounded by double angle brackets
+  that provide special effects
+- many are preinstalled
+- others can be obtained from the web
+- examples
+  * <<today>> - inserts the date today
+  * <<tag tag-name>> - when clicked, displays a popup menu
+    containing links to all tiddlers with the given tag
+  * <<tiddler tiddler-name>> - opens a given tiddler
+    when the one containing this is opened
+  * <<slider slider-name tiddler-name "pop-up text">> -
+    creates a link that when clicked slides open the content of a given tiddler
+    - when clicked again, slides it closed
+  * tabbed pane
+    <<tabs css-class-name
+    "tab-1 text" "tab-1 popup text" tiddler-1-name
+    "tab-2 text" "tab-2 popup text" tiddler-2-name
+    ...
+    "tab-n text" "tab-n popup text" tiddler-n-name
+    >>
+    The tiddler for each is only displayed if the corresponding tab is clicked.
+    css-class-name is the name of a CSS class used for formatting the tabs.
+    To use default formatting, just use "no-style".
+    Quotes around tab text are only needed if it contains
+    spaces or other special characters.
+    Bullets in the tiddlers associated with tabs are disabled by default.
+    To enable them, add the following to the StyleSheet tidder.
+      .tabContents li {
+        list-style: disc;
+      }
+
+      #sidebarTabs .tabContents li {
+        list-style: none;
+      }
+
+Options
+- many options can be controlled by clicking the "options" link
+  on the right side
+- one option that is enabled by default is to
+  hide editing features when the page is viewed over HTTP (not locally)
+- color themes
+  * TODO
+
+Questions/TODOs
+- What is a "shadowed" tiddler?
+- How do you escape Wiki markup?
+- Try serving with WEBrick.
+- Extract tiddler content to another form using Tidy and XSLT.
+- You wrote a Ruby script to extract tiddler content.
+  See C:\Programming\Languages\Ruby\Projects\TiddlyWiki\parse.rb.

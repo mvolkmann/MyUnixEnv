@@ -1,0 +1,89 @@
+C# Notes
+
+Terminology
+- assembly
+  * a collection of .NET types, code and resources
+  * can be an application (.exe) with an entry point
+  * can be a library (.dll) without an entry point
+
+Microsoft Visual C# 2005 Express Edition
+- to install
+  * browse http://www.msdn.com
+  * click "Downloads"
+  * click "Get a Free Copy of Visual Studio 2005 Express Editions"
+  * click "Visual C# 2005 Express Edition"
+  * click "Download Now" and "Download"
+  * will get vcssetup.exe
+  * double-click it
+  * follow instructions to register the product
+- to customize
+  * to access all indentation, brace placement and spacing options,
+    Tools...Options...Show all settings
+- to create a project
+  * File...New Project...
+- to run a project
+  * Ctrl-F5 or Debug...Start Without Debugging
+- to change the "output type" of a project
+  * Project ... {project-name} Properties
+  * change "Output type:" to "Windows Application",
+    "Console Application" or "Class Library"
+  * for NUnit this needs to be set to "Class Library"
+
+NUnit
+- to install
+  * browse http://www.nunit.org
+  * click "DOWNLOAD"
+  * click the link next to "win .net 2.0"
+  * double-click the .msi file to run the installer
+  * this installs a GUI version of NUnit that can be run from the start menu
+  * by default it is installed in C:\Program Files\NUnit-Net-2.0 2.2.7
+- to use it in a C# project
+  * in the Solution Explorer, right-click the References folder
+    and select "Add Reference..."
+  * on the .NET tab, select nunit.framework
+  * to register NUnit as a tool,
+    - select Tools ... External Tools...
+    - for Title, enter "NUnit"
+    - for Command, enter
+      "C:\Program Files\NUnit-Net-2.0 2.2.7\bin\nunit-console.exe"
+    - for Arguments, enter the path to the DLL
+      * Why can't you just select "Solution File Name"?
+    - for Initial directory, select "Solution Directory"
+    - select the "Use Output window" checkbox
+    * select Tools ... NUnit to run it
+- make sure test classes are public!
+
+Windows Forms
+- to popup a dialog containing debugging output,
+  MessageBox.Show(text);
+- to add a Dialog box
+  * in Solution Explorer, right-click the project name and
+    pick Add ... Windows Form ... Windows Form
+  * this will create a class that extends from Form
+  * modify the default name
+- Dialog OK and Cancel buttons
+  * set the DialogResult property of the OK button to "OK"
+  * set the DialogResult property of the Cancel button to "Cancel"
+  * set the AcceptButton property of the Dialog to "okButton"
+  * set the CancelButton property of the Dialog to "cancelButton"
+- to display a modal dialog,
+  DialogResult dr = dialog.ShowDialog();
+  The value of dr will be DialogResult.OK or DialogResult.Cancel.
+
+Command-line Usage
+- to compile .NET code from a command prompt,
+  * instead of using a normal Command Prompt window, open one with
+    Start ... Visual C++ 2005 Express Edition ...
+    Visual Studio Tools ... Visual Studio 2005 Command Prompt
+    so PATH is set correctly
+    - consider creating a desktop shortcut for this
+  * running "csc {file-name}.cs" will compile the code and create a .exe
+  * specify output type for csc command with /target={type}
+    - type can be exe (console), winexe (GUI), or library (DLL)
+
+C# Syntax
+- to output a message to stdout,
+  System.Console.WriteLine(obj);
+- to output a trace message to stdout,
+  using System.Diagnostics;
+  Trace.Write(text);

@@ -1,0 +1,149 @@
+NetBeans Platform Notes
+
+Create an application
+- New Project...NetBeans Modules...NetBeans Platform Application 
+
+Spice it up
+- right-click project node and select "Properties"
+- select the Build category
+- improve the "Application Title"
+- specify an icon
+- press OK
+- select Build...Splash Screen
+- press Browse... and select a .gif or .png file
+
+Add a module to an application
+- open the application project node in the Projects tree
+- right-click Modules
+- select "Add New..."
+
+To make classes visible in other modules
+- right-click the module node and select "Properties"
+- select the "API Versioning" category
+- under "Public Packages:" select the checkbox next a package name
+
+Create a TopComponent
+- right-click a module project node and select "New...Window Component"
+- select a "Window Position"
+- optionally select the "Open on Application Start" checkbox
+- press the "Next >" button
+- enter a "Class Name Prefix", say "Foo"
+- press the "Finish" button
+- this will create "FooTopComponent.java" and open it in Design mode
+  which uses the GUI builder
+- add components to it and save
+- these components aren't draggable and resizable in the normal sense
+  unless you right-click their title bar and select "Undock"
+- How do you get back to Design mode?
+
+Change window position
+- suppored window positions are:
+  * editor - top center
+  * output - bottom
+  * explorer - top left
+  * properties - top right
+  * leftSlidingSide - start minimized on left side, but get added to explorer
+  * rightSlidingSide - start minimized on right side, but get added to explorer
+  * bottomSlidingSide - start minimized on bottom side, but get added to explorer
+
+Change window title
+- window titles are specified in the Bundle.properties file
+  which is in the same directory as the source code
+
+- to change the window position of a TopComponent subclass, edit layer.xml
+  which is colocated with the source for the TopComponent subclass
+- change what is at the XPath
+  /filesystem/folder[@name='Windows2']/folder[@name='Modes']/folder/@name
+
+Run an application
+- right-click the application project node and select "Run"
+  or press the green triangle run button in the NetBeans toolbar
+- it takes about 20 seconds to start a small application
+
+Create an action
+- right-click the module project node and select "New...Action..."
+- select "Always Enabled" (see "Cookie actions" later)
+- press the "Next >" button
+- select a category (meaning?)
+- select whether the action should appear in
+  a global menu, a global toolbar, or both
+- optionally specify a global keyboard shortcut
+- press the "Next >" button
+- enter a class name ending in "Action"
+- enter a display name to appear in menus and toolbar button tool tips
+- select an icon that is 16x16 pixels to appear in menus
+  * the Mac Preview application can be used to scale images
+    to a specific pixel size
+- specify the code to be executed when the action is invoked
+  in the performAction method of the Action subclass
+
+Cookie actions
+- todo
+
+Create a JPanel subclass to be used by a TopComponent
+- right-click a package under "Source Packages" and select New...JPanel Form...
+  or select File...New File...Swing GUI Forms...JPanel Form
+- press the "Next >" button
+
+Internationalization
+- to obtain internationalized strings, for example, for use in JLabels
+  String text = NbBundle.getMessage(getClass(), "key");
+  The Class parameter is used to find the source package that contains
+  Bundle.properties from which English strings will be retrieved.
+- create additional property files in the same directory for other languages
+  with names like Bundle_es.properties (Spanish)
+
+Window sizes and locations
+- these are saved when the user exits the application
+- when the application is run from inside the NetBeans IDE,
+  the data is saved under the project directory in
+  build/testuserdir/config/Windows2Local/WindowManager.wswmgr
+- when the application is run from outside the NetBeans IDE,
+  the data is saved under the user home directory
+
+Create a new module (separate from an application)
+- Why do this?
+- New Project...NetBeans Modules...Module 
+
+Use a library JAR only in the current project
+- open the project node in the Projects tree
+- right-click Modules
+- select "Add Library..."
+- select the .jar file and a text file describing the license
+
+Create a library module for use in many applications
+- to use a normal Java library JAR file from a NetBeans Module
+  wrap it in a "library module"
+- New Project...NetBeans Module...Library Wrapper Module
+- select the .jar file and a text file describing the license
+- in most cases, accept the remaining defaults
+
+Add a module dependency
+- the module on which the dependency will be added must have
+  at least one public package before a dependency is added on it
+  * see Properties...API Versioning
+- right-click project node and select "Properties"
+- select the "Libraries" category
+- press the "Add Dependency..." button
+- select the module
+  * for example, to use GUI components, select "Window System API"
+
+Open a TopComponent that isn't displayed
+- Window...{component-name}
+
+Run all tests in a module
+- right-click the project node and select "Test"
+
+---
+
+Build a zip distribution
+- right-click project node and select "Build ZIP Distribution"
+- How do you run it?
+
+Build a JNLP application
+- right-click project node and select "Build JNLP Application"
+- This fails because it can't find jnlp-servlet.jar!
+
+Build a Mac OS X application
+- right-click project node and select "Build Mac OS X Application"
+- .app file will be written to the dist subdirectory of the project

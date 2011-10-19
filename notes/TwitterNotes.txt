@@ -1,0 +1,10 @@
+Twitter Notes
+
+To direct a message to a specific user that others still see:
+  @{username} {message}
+
+To send a private message:
+  d {username} {message}
+
+To see the identity of a person:
+  whois {username}

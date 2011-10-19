@@ -1,0 +1,86 @@
+Derby Notes
+
+Overview
+- Derby is a relational database implemented completely in Java.
+- It can be used in two modes, embedded and client/server.
+- In embedded mode only one local application can at a time can access it
+  and no network access is allowed.
+- In client/server mode, multiple applicaions can access it
+  and they can do so remotely.
+
+History
+- work on Cloudscape database began in 1996
+- Informix purchased Cloudscape in 1999
+- IBM purchased Informix in 2001
+- IBM donated Cloudscape to Apache in 2004
+- Apache renamed it to Derby
+
+Download
+- from http://db.apache.org/derby/
+
+Install
+- unzip and untar
+- set the DERBY_HOME environment variable to point to it
+- add $DERBY_HOME/bin to PATH
+- verify proper installation by entering "sysinfo" at a shell prompt
+
+---
+
+Create a database in interactive mode
+- enter "connect 'jdbc:derby:{database-name};create=true'";
+- this creates a directory with the same name as the database
+  under the current directory
+
+Column names
+- column names that are reserved words must be quoted
+  * for example, "year"
+
+Connect to a database in interactive mode
+- enter "connect 'jdbc:derby:{database-name}[;url-attributes]';"
+
+Database connection URLs
+- jdbc:derby:{database-name}[;url-attributes]
+- url attributes
+  * to create the database if it doesn't already exist, specify "create=true"
+  * for other attributes, see the "Derby Reference Manual" section titled
+    "Setting attributes for the database connection URL"
+    (docs/pdf/ref/refderby.pdf)
+
+Delete database
+- there is no command to do this
+- just delete the directory that corresponds to the database
+
+Interactive mode
+- to start this mode, enter "ij" at a shell prompt
+  * stands for "interactive Java"
+- command recall doesn't work in this mode!
+- all commands must be terminated with a semicolon
+- to get help in this mode, enter "help;"
+- commands not recognized by "ij" are treated as SQL-J commands
+  and executed directly
+- to exit, enter "exit;"
+
+JDBC drivers
+- in embedded mode, use org.apache.derby.jdbc.EmbeddedDriver
+- in client/server mode, use org.apache.derby.jdbc.ClientDriver
+
+List columns in a table
+- describe {table-name};
+
+List tables in a database
+- connect to the database
+- enter "show tables;"
+
+Load JDBC driver
+- in Java 5 code and below, execute
+  'Class.forName("org.apache.derby.jdbc.EmbeddedDriver");'
+- in Java 6 code and above, the driver loads automatically
+
+Run commands in a file
+- from inside ij, enter "run 'filename';"
+- from a shell prompt, enter "ij filename"
+- haven't yet found a way to put comments in these files
+
+Start database
+- in embedded mode, loading the JDBC driver starts the database
+- in client/server mode, 

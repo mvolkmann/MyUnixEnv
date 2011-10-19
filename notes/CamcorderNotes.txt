@@ -1,0 +1,117 @@
+Camcorder Notes
+
+Our camcorder
+- JVC Everio GZ-MG27U, 20GB hard drive, wide screen
+- records in MPEG2 format
+
+Software to install
+- MPEG Streamclip (can download from free from http://www.versiontracker.com)
+- QuickTimeMPEG2 (had to purchase from Apple)
+
+To see movies on Camcorder from Mac
+- find gray cable with a USB connector on one end
+  and a small camera plug on the other
+- connect small plug end into camcorder jack
+  above battery and behind rubber cover
+- connect USB end into computer
+- in Finder, a new drive named "EVERIO_HDD" will appear
+- in the SD_VIDEO folder there can be many folders
+  with names that begin with "PRG{number}"
+- the newest videos will be in the highest numbered folder
+
+To convert movies from .MOD to .dv
+- start "MPEG Streamclip" application (free software)
+- open .MOD file from Everio harddrive
+- File ... Export to DV...
+- export to a file on the computer harddrive
+  * will have a file extension of ".dv"
+
+To edit movies in iMovie
+- start "iMovie HD" application
+- press the "Create a New Project" button
+- give the project a name and press the "Create" button
+  * by default it's saved in your Movies folder
+- File ... Import...
+- select a .dv file
+
+To trim beginning and end of a video clip
+- drag the triangles below the timeline to mark the desired beginning and end
+- Edit ... Crop
+
+To delete a section of a clip
+- select the section using the triangles below the timeline (scrubber bar)
+- Edit ... Cut
+
+To split a clip into two clips
+- position the playhead (upside-down triangle) in scrubber bar
+- Edit ... Split Video Clip at Playhead
+
+To delete a clip
+- select it in the clips pane
+- press delete key
+
+To specify the order of the clips
+- drag them from the clips pane to the area at the bottom
+
+To save a frame from a movie clip as a graphic file
+- position the movie at the desired frame
+- File ... Save Frame...
+- specify name and location for the file
+- import the files into iPhoto so iDVD can see them
+
+To specify chapter titles in iMovie
+- click "Chapters" in the lower-right corner
+- move playhead to start of chapter
+- Markers ... Add Chapter Marker
+
+To create a QuickTime movie
+- select all the clips in the clips pane
+- File ... Export...
+- select "Compress movie for" option such as Web or Full Quality
+- press "Share" button
+- specify name and location for the file
+  * will have a file extension of ".mov"
+
+To burn movies to DVD using iDVD
+- in iMovie, add chapter markers by positioning the video
+  or selecting a clip, and selecting Markers...Add Chapter Marker
+- in iMovie, select Share ... iDVD
+- press the "Share" button
+- this will launch the "iDVD" application
+- the iDVD project will take the name of the iMovie project
+- select a theme
+
+To specify drop zone pictures on title screen
+- click "Menu" in the lower-right corner
+- press "Edit Drop Zones" button
+- select photos or movies to use in drop zones
+  * movies actually play in the drop zones
+- drag them to a drop zone
+- to restrict the segment of the movie that will play in a drop zone,
+  click the drop zone and drag the left and right sliders
+
+To edit the title on the main screen
+- if looking at the "Scene Selection" screen,
+  click the left triangle near the bottom to return to the main screen
+- double-click the title and type something different
+
+To edit the title on the "Scene Selection" screen
+- if looking at the main screen, double-click "Scene Selection"
+- double-click the title and type something different
+
+To add music that plays when the main screen or
+the "Scene Selection" screen is displayed
+- click "Media" in the lower-right corner
+- click "Audio" in the upper-right corner
+- select a song
+- press the "Apply" button
+
+To preview the DTD
+- press the play button at the bottom
+- when finished, press the stop button in the little remote control
+  that is displayed to return to editing mode
+
+To burn a DVD
+- File ... Burn DVD...
+- insert a blank DVD
+- wait a long time for it to finish

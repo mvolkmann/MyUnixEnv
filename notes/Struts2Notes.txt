@@ -1,0 +1,18 @@
+Struts 2 Notes
+
+- main web site is http://structs.apache.org/2.x/
+
+- to start a new application
+  * make a copy of $STRUTS2_HOME/apps/struts2-blank-2.0.1.war
+    and rename it {app-name}.war
+  * copy {app-name}.war to $TOMCAT_HOME/webapps
+  * after Tomcat explodes the WAR file, edit the application there
+  * when finished, copy it elsewhere for long term storage
+
+- Internationalization
+  * To display strings from JSPs, use <s:property> and <s:text> tags.
+  * The property tag gets its value from 
+  * The text tag gets its value from 
+
+- Structs 2 JSP tags are documented at
+  http://struts.apache.org/2.x/docs/tag-reference.html

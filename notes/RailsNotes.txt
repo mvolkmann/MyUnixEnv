@@ -1,0 +1,43 @@
+Ruby on Rails Notes
+
+- Installing
+  * sudo gem install rails -y
+
+- Behaviour-driven Development
+  * http://behaviour-driven.org/
+  * evolution of test-driven development and
+    acceptance test-driven planning
+  * supported by RSpec Ruby library
+    - http://rspec.rubyforge.org
+    - works with Rails
+    - install with "gem install rspec"?
+    - run with "spec {name}_spec.rb [--format {specdoc|html|...}]"
+    - has built-in mocks
+      * http://respec.rubyforge.org/docmentation/mocks/
+    - has built-in stubs
+      * http://respec.rubyforge.org/docmentation/mocks/stubs.html
+    - status of a test can be passing, failing or not implemented
+  * three core principles
+    - business and technology should refer to the same system in the same way
+    - any system should have an identified, verifiable value to the business
+    - up-front analysis, design and planning all have a diminishing return
+  * advantages
+    - focuses on the behaviour you want
+    - common language for devlopers, business, QA
+    - many types of documentation
+      * behaviour text
+      * specs illustrate use of the API in context of a behaviour
+      * errors indicate what behaviour failed
+        in addition to the failure and stack trace
+
+- Zentest
+  * http://www.zenspider.com/ZSS/Products/ZenTest
+  * a collection of testing utilities
+  * autotest
+    - automatically reruns tests when related code is modified
+  * gem install zentest
+
+- Typical order of development
+  * model then controller then view
+
+

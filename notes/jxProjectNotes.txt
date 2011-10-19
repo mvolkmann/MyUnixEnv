@@ -1,0 +1,14 @@
+jxProject Notes
+
+Overview
+- jxProject is an open-source application written in Java
+  that is used to manage projects
+- it can produce Gantt charts
+
+Steps to run
+- open a Terminal window
+- cd /Applications/jxProject
+- enter "./jxProjectStart.sh"
+- File...Open...
+- one project you've created in the past is in
+  /Users/Mark/Documents/OCI/clients/LimeWire/LimeWire.jxp

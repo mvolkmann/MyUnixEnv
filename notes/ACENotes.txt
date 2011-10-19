@@ -1,0 +1,34 @@
+ACE Notes
+
+- Download documentation and code from
+  http://deuce.doc.wustl.edu/Download.html
+  ACE-html.tar.gz
+  ACE.tar.gz
+
+- To build ACE,
+  su root
+  mv ACE.tar.gz /opt
+  cd /opt
+  unzip and untar ACE.tar.gz
+  mkdir objdir
+  cd objdir
+  ../configure
+  make install
+  This copies header files to /usr/local/include/ace,
+  /usr/local/include/ACEXML and /usr/local/include/Kokyu.
+  This copies library files to /usr/local/lib.
+  See libACE.so, libACEXML.so, libKokyu.so and others. 
+
+- To unpack documentation,
+  mv ACE-html.tar.gz /opt/ACE_wrappers
+  cd /opt/ACE_wrappers
+  unzip and untar it (creates an html directory)
+  browse /opt/ACE_wrappers/html/index.html
+
+- Threads
+  * In order to use thread priorities under Linux,
+    you must be root and
+    the environment variable LD_ASSUME_KERNEL must be set to 2.4.1
+  * Under Linux, thread ids and thread handles are the same.
+  * Under Linux, thread handles for real-time threads are 5 digits
+    and for non-real-time threads are 10 digits.  

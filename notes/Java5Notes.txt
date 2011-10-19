@@ -1,0 +1,87 @@
+Java 5 Notes
+
+Annotations (Metadata)
+- avoids need for external configuration files,
+  allowing configuration data to be embedded in source files
+- avoids duplicated boilerplate code by enabling tools to
+  generate it from annotations in source code
+- leads to a declarative programming style
+- see
+  http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html
+
+Autoboxing/Unboxing
+- avoids need to convert between primitives and
+  their corresponding type wrapper objects
+- basic example
+  int i = 19;
+  Integer iObj = i;
+  int j = iObj;
+  // i and j are equal
+- collections example
+  List<Integer> list = new ArrayList<Integer>();
+  int i = 19;
+  list.add(i);
+  int j = list.get(0);
+  // i and j are equal
+- overuse can result in performance issues
+- see example in Programming/Languages/Java/Autoboxing
+- see
+  http://java.sun.com/j2se/1.5.0/docs/guide/language/autoboxing.html
+
+Enhanced For Loop
+- example
+  List<Car> cars = ... // see "Generics"
+  for (Car car : cars) {
+    // Use the variable car inside the loop.
+  }
+
+Enums
+- can create enumerated types with arbitrary fields and methods
+- example
+  enum Season { WINTER, SPRING, SUMMER, FALL }
+  Season season = SPRING;
+  for (Season season : Season.values()) {
+    // use season variable
+  }
+- when printing an enum value,
+  its toString method returns the name of the value
+- see more examples at
+  http://java.sun.com/j2se/1.5.0/docs/guide/language/enums.html
+  * includes an example of adding fields and methods to enums
+
+Generics
+- most often used for type-safe collections
+- example
+  List<String> myList = new ArrayList<String>();
+  // Only String objects can be added to myList.
+- see
+  http://java.sun.com/j2se/1.5.0/docs/guide/language/generics.html
+
+Static Import
+- to avoid the need to qualify static members of classes or interfaces
+  with the class or interface name
+- example from JUnit 4
+  import static org.junit.Assert.*;
+  // can now use static assert methods from the Assert class
+  // without prefixing them with "Assert."
+- note that the ".*" part says to import all the static members
+  from the Assert class (can't omit that!)
+- see
+  http://java.sun.com/j2se/1.5.0/docs/guide/language/static-import.html
+
+Varargs
+- eliminates the need to put arguments into an array for the
+  purpose of passing a variable number of arguments to a method
+- example
+  public void washCars(Car... cars) {
+    for (int i = 0; i < cars.length; i++) {
+      Car car = cars[i];
+      // wash the car
+    }
+  }
+
+  // call like this
+  washCars(car1, car2, car3);
+- see example in Programming/Languages/Java/Varargs
+- see
+  http://java.sun.com/j2se/1.5.0/docs/guide/language/varargs.html

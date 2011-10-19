@@ -1,0 +1,552 @@
+Vim Notes
+
+Installing Plugins
+- see instructions under "Ruby Support"
+  that describe using Pathogen
+
+Starting
+  vim [filename]          - to start in a specified file
+  vim +E                  - to start in file explorer
+  vim .                   - same as vim +E
+  vim --remote {filename} - to edit file in existing vim session
+
+Help
+- for general help, :help user-manual
+- for help on version 7 features, :help version7
+- to navigate a link in the help, position the cursor over the link
+  and press ctrl-]
+- to return to the previous page, press ctrl-t
+
+Configuration is specified in
+  _vimrc under Windows (in your C:\VIM directory)
+  .vimrc under Unix (in ~)
+
+---
+
+Installing Vim 7 under Windows
+- download gvim70d.exe from ftp://ftp.vim.org/pub/vim/unstable/pc
+- double-click the .exe file
+- for better Ruby support,
+  * add the following to C:\Vim\_vimrc
+    autocmd FileType ruby,eruby
+    set omnifunc=rubycomplete#Complete
+  * from a command prompt, run "gem install vim-ruby
+  * download rubycomplete.vim from
+    http://blog.hasno.info/blog/segfault/dev/2006/04/10/
+    vim-7-ruby-omni-completion.html
+    into C:\Vim\vim70d\autoload
+
+---
+
+Bash
+- To use vi keystrokes for bash command-line editing,
+  set -o vi
+
+Build under Linux
+- download source from http://www.vim.org
+- bunzip2 vim-6.3.tar.bz2
+- ./configure
+- make GUI=yes
+- make install (as root)
+- to run GUI version, enter "gvim"
+
+Buffers
+  ctrl-^               - switch to previous buffer
+  :bn[ext]             - switch to next buffer
+  :bp[rev]             - switch to previous buffer
+  :ls                  - list buffers (same as :buffers)
+		buffer characteristic indicators include: 
+    % - buffer in current window
+    # - alternate buffer for ":e #" and CTRL-^
+    a - active buffer: it is loaded and visible
+    h - hidden buffer: loaded, but not displayed in a window
+    = - readonly buffer
+    + - modified buffer
+    x - buffer with read errors
+  :b{buffer-number} - to switch to the indicated buffer
+  :b {name-fragment} - to switch to the indicated buffer
+    Tab completion can be used to cycle through all the buffers
+    whose file path contains the text.
+    Very cool!
+  :bd[{buffer-number}] - to delete the indicated buffer
+    If buffer-number is omitted, currently displyed buffer is deleted.
+    Multiple buffer numbers can be specified, separated by spaces.
+    This really just marks the buffer as unlisted.
+    To see it, use :ls!.
+  :bw[{buffer-number}] - to wipeout the indicated buffer
+    Unlike :bd, this completely deletes the buffer.
+ 
+Change (delete and enter insert mode)
+  c  - change selection (deletes selected text)
+  cc - change line (deletes current line)
+  cw - change word (deletes word under cursor)
+  c$ - change from cursor to end of line
+  C  - same as c$
+  s  - substitute characters (can precede with # of characters)
+       and enter insert mode
+  c/{text}Enter - change all characters from cursor to given text
+
+Code Indenting
+  Put "filetype indent plugin on" in .vimrc to use filetype-dependent
+  settings specified in files in the .vim/ftplugin directory.
+  The settings in these files will override settings in your .vimrc.
+  For example, create .vim/ftplugin/java.vim containing
+    set shiftwidth=4
+    set tabstop=4
+  :set cindent        - for indenting source code
+                        (requires "filetype indent on" in .vimrc)
+  :set shiftwidth={#} - sets number of spaces used for indentation
+  :set sw={#}         - same as above
+  :set cinoptions=(1s - to indent continuation lines with an open paren
+                        by one shiftwidth
+                        (see :help cinoptions-values for more options
+                         and a list of the defaults)
+  ==                  - fixes indentation of current line or selected lines
+  =                   - fixes indentation of selected lines
+  >                   - indents selected lines
+  >>                  - indents current line
+  <                   - outdents selected lines
+  <<                  - outdents current line
+  gg=G                - goes to first line then reindents entire file
+
+Color Schemes
+- Now using Solarized color theme
+- See Syntax...Highlight Test in GVim
+- Put "syntax enable" in .vimrc to enable colors.
+- :hi - to see all the current syntax colors
+- color numbers (Are these standard?)
+  0 = gray
+  1 = red
+  2 = green
+  3 = yellow
+  4 = blue
+  5 = magenta
+  6 = cyan
+  7 = white
+- Standard color names (case insensitive)
+    white, lightgray, gray, darkgray, black,
+    red, green, yellow, blue, magenta, cyan
+    above preceded by "light" or "dark"
+    lightpink, pink, orange, darkorange, purple
+- Save color scheme .vim files in
+    ~/.vim/colors for Unix
+    $VIM_HOME/vimfiles/colors for Windows
+    Also look in /usr/share/vim/vim72/colors.
+- Find valid color names in /usr/X11R6/lib/X11/rgb.txt.
+- To change to a named color scheme defined in a .vim file
+  stored in the appropriate colors directory ...
+  :colo[rscheme] {name} - use color scheme from file {name}.vim
+  For example, :colo evening
+  To cycle through all the installed color schemes,
+  enter ":colorscheme " and then continually press Tab.
+  To see all the installed color schemes,
+  enter ":colo " and press ctrl-d.
+- Font styles
+    bold, italic, underline, reverse, standout, NONE (to reset)
+- Font names
+    default is FixedSys
+    set with font attribute
+    ex. hi Comment font=Courier
+- To change an individual color, here are some exxamples.
+  :hi Normal guifg=black guibg=white
+  :hi comment ctermfg=blue - when using a terminal window
+  :hi comment guifg=blue - when using a GUI
+  :hi Search ctermfg=white ctermbg=red
+  :hi LineNr ctermfg=0 - to display line numbers in gray
+- Can also set ctermbg and guibg
+- Recommendations
+  hi Normal font=Fixedsys ctermfg=black ctermbg=white guifg=black guibg=white
+  hi Comment ctermfg=darkgray guifg=darkgray
+  hi Constant ctermfg=darkgreen guifg=darkgreen
+  hi Define ctermfg=magenta guifg=magenta
+  hi Fold ctermfg=0 ctermbg=1 " gray on red
+  hi Identifier ctermfg=blue guifg=blue
+  hi IncSearch ctermfg=white ctermbg=gray
+  hi LineNr ctermfg=gray guifg=gray
+  hi Search cterm=reverse ctermfg=3 ctermbg=1 \
+            gui=reverse guifg=yellow guibg=red
+  hi Special ctermfg=5 guifg=orange
+  hi Statement ctermfg=blue guifg=blue
+  hi Todo ctermfg=3 - to display TODO in comments in yellow
+  hi Type ctermfg=red guifg=red
+
+Comments in .vimrc file
+- precede with " character
+
+Compiling code
+- See :help quickfix.txt
+
+Completion after :
+  tab - to complete a command name, file path, ...
+    - To cycle through possible matches, keep pressing tab.
+  ctrl-d - display list of all possible matches
+
+Completion in insert mode
+  ctrl-n - cycle to next matching word
+  ctrl-p - cycle to previous matching word
+  To enable this with tab key,
+  imap <TAB> <C-n>
+
+Copy (yank)
+  y  - yank (copy) selection
+  yw - yank (copy) word (cursor position to end of work)
+  yiw - yank (copy) word (under cursor)
+  yy - yank (copy) current line
+  Y  - same as yy
+
+Counts
+  Most commands can be preceded by a number that indicates
+  how many times the command should be executed.
+
+Delete
+  d  - delete selection
+  dd - delete current line
+  dw - delete word under cursor or
+       whitespace from cursor to next non-whitespace
+  d$ - delete from cursor to end of line
+  D  - same as d$
+  x  - delete character under cursor or visual selection
+  d/{text}Enter - delete all characters from cursor to given text
+  To delete without affecting the clipboard, preceded command with "_
+  which sends the deleted content to the "blackhole" register.
+  For example, "_dd.
+
+Diffs
+  There are many ways to use this.  One way is as follows.
+  - open first file
+  - ":sp" to split the window
+  - open second file in second window
+  - ":diffthis" in both buffers
+  - "]c" to move to next difference
+  - "[c" to move to previous difference
+  - ":set nodiff" to turn off diff in the current buffer
+  - ":set noscrollbind" to turn off coordinated scrolling
+    in the current buffer
+  There must be an easier way to turn this off!
+  Supposedly it's much better in Vim 7 which isn't stable yet.
+  
+Exploring
+  :E[xplore] [start-path]  - open explorer in current window
+  :S[explore] [start-path] - open explorer in split window
+  Once in explorer window,
+  ?         - toggles display of help on keys to use in explorer
+  Enter key - opens file/directory under cursor in explorer 
+  o         - opens file/directory in new window, leaving explorer displayed
+  -         - goes up to parent directory
+  i         - toggles display of file sizes and modification dates
+  D         - delete file
+  R         - rename file
+  :pwd to see directory of current file
+
+Filtering Lines
+- To pass a range of lines to a shell command,
+  select the lines using V, type ! and then a shell command.
+- The selected lines will be replaced by the command output.
+- For example, to sort imports at the top of a Java source file,
+  select them and enter "!sort".
+
+Folding
+- To configure folding of javadoc comments, add this to .vimrc.
+  autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
+- Commands to control folding include
+  zfap - create a new fold
+  zr - open all folds
+  zm - close all folds
+  zo - open fold under cursor
+  zc - close fold under cursor
+  zf - fold selected lines
+  zj - move to next fold
+  zk - move to previous fold
+  zd - delete fold, not content of it
+  zE - delete all folds, not their content
+
+Fonts
+- example
+  :set guifont=Monaco:h14
+
+HTML Output
+- To write a source file out as HTML,
+  including color-coded syntax highlighting,
+  run :TOhtml.
+
+Key Definitions
+- To show current key mappings,
+
+- To define a key for insert mode,
+  imap 
+
+- To map a key to run a command
+  map <{key}> :{command}<CR>
+  * ex. map <F5> :CoffeeRun<CR>
+
+Keyboard Macros
+  Macros are saved across editing sessions.
+  q{letter} - to start recording macro {letter}
+  q         - to stop recording
+  @{letter} - to call macro {letter}
+  @@        - to call the last executed macro again
+
+Marks
+  To set, :ma[rk] {letter}
+  To visit, `{letter}
+
+Modes
+  a      - enter insert mode after cursor
+  A      - enter insert mode at end of current line
+  i      - enter insert mode before cursor
+  I      - enter insert mode at start of current line
+  o      - "open" new line after current one and enter insert mode
+  O      - "open" new line before current one and enter insert mode
+  r      - replace char under cursor with next char typed
+           but don't enter insert mode
+  R      - enter replace mode (overstrike) at cursor;
+           every char typed replaces one under cursor
+  Esc    - exit current mode and return to command mode
+  ctrl-[ - same as Esc
+
+Moving Around
+  gg       - beginning of file
+  G        - end of file
+  ctrl-f   - forward one page
+  ctrl-b   - backward one page
+  ctrl-d   - forward half page
+  ctrl-u   - backward half page
+  H        - highest (top) line in window
+  L        - lowest (bottom) in window
+  zt       - move current line to top of window (z Enter also)
+  zb       - move current line to bottom of window
+  {        - backward one paragraph
+  }        - forward one paragraph
+  (        - backward one sentence
+  )        - forward one sentence
+  0        - beginning of line
+  ^        - first non-blank char in line
+  $        - end of line
+  e        - end of next word
+  w        - forward to beginning of next word
+  b        - backward to beginning of previous word
+  {count}G - line number {count}
+  arrows   - one char or line at a time;
+             must hold shift key when in visual mode if "behave mswin"
+  h        - move left one char
+  l        - move right one char
+  j        - move down one line
+  k        - move up one line
+  f{char}  - forward to next occurrence of {char}
+  F{char}  - backward to previous occurrence of {char}
+  t{char}  - forward to just before next occurrence of {char}
+  T{char}  - backward to just before previous occurrence of {char}
+
+Omni Completion
+- to get a list of possible completions, press ctrl-x ctrl-o
+- to navigate the list of possible completions,
+  use ctrl-n for next and ctrl-p for previous
+- once the desired completion is under the cursor, just continue typing
+
+Opening, Saving and Quiting
+  :e {name} - edit file {name}; file is created if it doesn't exist
+              Can use FTP to edit remote files.  For example,
+              :e ftp://www.ociweb.com/index.html
+              Can use scp to edit remote files.  For example,
+              :e scp://volkmanm@xi/BAE/JSFTacan/
+                 branches/dev-branch/test/vector/baevector.h
+              (will prompt for username/password;
+               didn't seem to write changes back!)
+  :e        - reload the current file (useful if modified outside vim)
+  :r {name} - insert content of file {name} after cursor
+  :w        - write (save)
+  :q        - quit unless changed
+  :q!       - quit and discard changes
+  :wq       - write and quit
+  :x        - same as :wq, but only writes if changed
+  ZZ        - same as :x
+  ctrl-s    - saves changes regardless of mode (same as :update)
+    This is a problem under Unix because it pauses execution!
+    Press ctrl-Q to resume.
+
+Options
+  One way to view and set options is to enter ":options:".
+  This opens a window that displays all the options,
+  provides a description of each, and shows the current value.
+
+Paste
+  p  - paste after cursor
+  P  - paste before cursor
+  ]p - paste with indentation adjustment (for source code)
+  * To paste text from another application
+    that may contain comment delimiters
+    - :set paste!
+    - cmd-v (without being in insert mode)
+    - :set paste!
+
+Registers
+  A register is like a named clipboard.
+  It holds deleted text that can be pasted.
+  To place deleted text in a register,
+  precede delete or change command with "{register-name} (a-z).
+  To paste text from a register,
+  precede paste command with "{register-name} (a-z).
+
+Reverse order of all lines
+  :g/.*/m0 - for all lines, move it to line zero
+
+Ruby Support
+- install Pathogen
+  * see https://github.com/tpope/vim-pathogen
+- cd ~/.vim/bundle
+- git clone https://github.com/vim-ruby/vim-ruby.git
+- add the following to .vimrc
+  set nocompatible      " We're running Vim, not Vi! (default setting)
+  syntax on             " Enable syntax highlighting
+  filetype on           " Enable filetype detection
+  filetype indent on    " Enable filetype-specific indenting
+  filetype plugin on    " Enable filetype-specific plugins
+- the previous three lines can be written as
+  filetype indent plugin on
+
+Search and Replace
+  :set incsearch - move to search matches while typing
+  :set hlsearch - highlight all matches after pressing Enter
+  :set ic - case-insensitive searches
+  :set noic - case-sensitive searches
+  /{pattern} - search forward for next occurrence, cursor placed at match start
+  /{pattern}/e - same as previous, but cursor placed at match end
+  ?{pattern} - search backward for previous occurence
+  * - search forward for next occurence of word under cursor
+  # - search backward for previous occurence of word under cursor
+  :noh[lsearch] - turn off highlighting of matches from last search
+  n - repeat last search (use ctrl-n in insert mode?)
+  N - repeat last search in opposite direction (use ctrl-p in insert mode?)
+  * - search forward for next occurrence of word under cursor
+  # - search backward for next occurrence of word under cursor
+  :%s/{pattern}/{string} - replace first occurrence of {pattern} with {string}
+  :%s/{pattern}/{string}/g  - all occurrences 
+  :%s/{pattern}/{string}/gc - all occurences with confirmation prompts
+  :%s/\t/  /g - replace all tabs with two spaces
+  :set ff=unix - removes Windows carriage returns from all lines
+  :%s/ctrl-vctrl-m$//g - also removes Windows carriage returns from all lines
+                         and is sometimes needed instead of the previous
+  :%s/ctrl-vctrl-m/ctrl-vctrl-m/g - replaces Windows carriage with Unix ones
+  :.,$s/{pattern}/{string}/g - all occurrences from the cursor to end of file
+
+Select
+  v - begin visual selection in char mode;
+      now move cursor to end of selection;
+      includes char under cursor;
+      Under Windows, hold down shift key while moving cursor.
+      To avoid this, change "behave mswin" to "behave xterm" in _vimrc.
+  V - begin visual selection in line mode
+  ctrl-V - begin visual selection in block mode
+
+Tab Pages
+- to open a new, empty tab, :tabe
+- to close the current tab, :tabc
+- to close all other tabs, :tabo
+- to open a file in a new tab, 
+  ???
+- to navigate to a different tab,
+  click the tab with the mouse
+  or type "gt" for goto tab
+  or press ctrl-PgDn or ctrl-PgUp
+- to have tabs always show even when there is only one window,
+  add the following to _vimrc
+  set showtabline=2
+- to use a tab to edit a file opened using "Edit with Vim"
+  from the Windows Explorer context-sensitive menu,
+  add " -p" to the Windows registry under
+  HKEY_LOCAL_MACHINE\SOFTWARE\Vim\Gvim\path using regedit
+
+Tags
+- To generate a "tags" file for the current directory and all subdirectories,
+  enter "ctags -R".
+  This works for 41 languages!
+- To visit a tag in Vim, do one of the following:
+  1) :ta[g] {tag}
+  2) position cursor over tag-string and press ctrl-]
+     This is the default telnet escape character.
+     To avoid escaping to a telnet prompt,
+     include the -E option when starting telnet to disable escaping.
+- To return to the previous location, press ctrl-t.
+- To start vi and immediately visit a given tag,
+  vi -t {tag}
+- When there is more than one match,
+  vi displays all matches and allows one to be selected by number.
+- For more info, enter ":help tags" in vi
+
+Shell commands
+- see Conque at http://code.google.com/p/conque/
+- may need to install newer version of python (works with 3.2.1)
+- download and unzip into .vim/bundle directory
+- to run a bash shell in the current Vim buffer, :ConqueTerm bash
+- other examples
+  :ConqueTermSplit mysql -h localhost -u joe -p sock_collection
+  :ConqueTermTab bash
+  :ConqueTermVSplit bash
+
+Tools that use vi
+- To cause tools that launch vi (such as cleartool edcs)
+  to launch vim instead, set the VISUAL environment variable to "vim".
+
+Windows
+  :win {width} {height} - to set default window size (put in .vimrc)
+  :sp[lit] [{name}]  - horizontal split screen into two windows
+                       and optional open file {name}
+  ctrl-w s           - same as :split
+  :vs[plit] [{name}] - vertical split screen
+  ctrl-w v           - same as :vsplit
+  :new               - split screen and start new file
+  ctrl-w n           - same as :new
+  ctrl-w j           - move to window below
+  ctrl-w down-arrow  - move to window below
+  ctrl-w k           - move to window above
+  ctrl-w up-arrow    - move to window above
+  ctrl-w ctrl-w      - move to next window
+  :clo[se]           - close current window (doesn't delete buffer)
+  :clo[se]!          - close current window and discard changes
+  ctrl-w c           - same as :close
+  :on[ly]            - close all windows but current one
+  ctrl-w o           - same as :only
+  {n}ctrl-W +        - increase size by {n} lines
+  {n}ctrl-W -        - decrease size by {n} lines
+  ctrl-w =           - make all windows the same size
+  ctrl-w r           - rotate windows
+
+Other
+  :help [topic] - get help
+    To navigate to topics surrounded by vertical bars
+    put cursor on topic and press ctrl-]
+  ~          - change case of char under cursor or every character selected
+  J          - join current line with next line
+  u          - undo last change
+  ctrl-r     - redo last undo
+  ctrl-l     - refreshes display (useful if it gets scrambled)
+  .          - repeat last non-colon command
+  :hardcopy  - sends to printer
+  :set nu    - displays line numbers
+  :set nonu  - undisplays line numbers
+  :set et    - future tabs are expanded to spaces
+  :retab     - expands all tabs currently in file to spaces
+               if the previous option is set
+  :!{os-cmd} - executes an OS command from within vi (ex. :!ls)
+  :so[urce] {file} - executes a file containing Ex commands such as _vimrc
+  :set wm=5  - sets the wrap margin so that text automatically wraps
+               as it is entered when it is less then 5 characters
+               for the right edge of the window
+               To disable, set textwidth to zero with ":set tw=0".
+  :make      - runs Makefile in current directory
+  gd         - go to definition of method or variable under cursor
+  K          - go to man page for wod under cursor
+  ctrl-g     - display name of file being edited, # of lines, % thru
+  %          - find matching {}, () or []
+  To avoid line wrap
+    :set nowrap textwidth=0 wrapmargin=0
+  To wrap lines at the window edge
+    :set wrap nolinebreak textwidth=0 wrapmargin=0
+  To break lines with hard line breaks and make them <= 80
+    :set textwidth=80
+  To send a buffer to a shell command
+    :w !{command}
+    For example, to execute Ruby code in a buffer, :w !ruby
+    Can map the following to a key to save all open files
+    and run the current buffer.
+    :wall<CR>:!ruby %<CR>

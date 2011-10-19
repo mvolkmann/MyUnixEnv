@@ -1,0 +1,15 @@
+Virtual Box Notes
+
+File sharing
+- to setup sharing between Windows and Mac
+  * 
+- to copy files from Windows to Mac
+  * in Windows, copy them to
+    My Network Places ... Entire Network ... Microsoft Windows Network ...
+    VirtualBox Shared Folder ... \\Vboxsvr ... \\VBOXSVR\WindowsXPShared
+  * in Mac, copy them from Documents/WindowsXPShared
+- to setup sharing between Ubuntu and Mac
+  * get instructions from your desk!
+  * the shared folder is
+    - /Users/Mark/Documents/UbuntuShared on Mac
+    - /media/sf_UbuntuShared on Ubuntu

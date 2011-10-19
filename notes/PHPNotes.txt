@@ -1,0 +1,70 @@
+PHP Notes
+
+Help on PHP
+- http://www.w3schools.com/PHP
+
+Comments
+- single line - // ...
+- multi-line - /* ... */
+
+
+Mac OS X
+
+  Easy way to get started under Mac OS X
+  - taken from http://foundationphp.com/tutorials/php_leopard.php
+  - Apache and PHP are already installed
+  - to enable PHP in Apache
+    * edit /private/etc/apache2/httpd.conf
+    * uncomment the line containing
+      "LoadModule php5_module libexec/apache2/libphp5.so"
+    * restart Apache (see below)
+  - to start Apache web server
+    * open System Preferences
+    * select Sharing
+    * select "Web Sharing" checkbox
+  - to restart Apache web server
+    * deselect "Web Sharing" checkbox
+    * select "Web Sharing" checkbox
+
+  To add static files to web server
+  - add them under /Library/WebServer/Documents
+  - there is no need to restart Apache after making changes to files here,
+    just press browser refresh button
+  - may need to "sudo chown root {file-path}"
+    and "chmod a+r {file-path}" on each file
+
+  To browse a static file
+  - browse http://localhost/{filename}
+
+Windows
+
+  Easy way to get started under Windows
+  - install UniformServer from http://uniformserver.com/
+    * it's a WAMP package that includes PHP, MySQL, Perl and Apache
+    * WAMP stands for Windows, Apache, MySQL, Perl/Python/PHP
+
+  To install
+  - create C:\php directory
+  - download UniServer4_3.exe into C:\php
+  - double-click it
+
+  To start server
+  - open Windows Explorer
+  - navigate to C:\php\UniServer
+  - double-click Server_Start.bat
+
+  To stop server
+  - open Windows Explorer
+  - navigate to C:\php\UniServer
+  - double-click Stop.bat
+
+ To test a PHP program
+  - place .php files in the C:\php\UniServer\udrive\www directory
+  - browse http://localhost/filename.php
+
+  To configure everything through a web interface
+  - browse http://localhost/apanel
+
+  To configure Apache by editing a text file
+  - edit the httpd.conf file in
+    C:\php\UniServer\udrive\usr\local\apache2\conf\httpd.conf

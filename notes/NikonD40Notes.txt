@@ -1,0 +1,222 @@
+Nikon D40 Notes
+
+Aperture
+- this specifies the size of the shutter opening
+- depth of field (DOF) is the distance between
+  the nearest and farthest objects that appear in focus
+- smaller aperture values
+  * provide a larger shutter opening
+  * provide a smaller depth of field
+  * typically result in a faster shutter speed
+- larger aperture values
+  * provide a smaller shutter opening
+  * provide a larger depth of field
+  * typically result in a slower shutter speed,
+    so may require use of a tripod
+
+Auto-focus
+- in order for auto-focus to work,
+  the "A | M" switch on the left side of the lens must be on "A"
+- to use auto-focus:
+  * point camera so the subject to be in focus is in the center
+  * press the shoot button halfway down
+  * reaim camera to compose the picture
+  * press the shoot button the rest of the way down to take picture
+
+Date and Time
+- to set the time zone, date, date format and daylight savings time,
+  go to the wrench menu and select "World time"
+
+Deleting Pictures
+- there are three ways to delete pictures from the card
+- #1 - use trash can button while viewing a picture
+       (see "Viewing Pictures" below)
+- #2 - use the Play menu
+  * go to the Play menu, select "Delete"
+  * select "Selected" to delete only some of the pictures
+    - move the yellow selection box to the thumbnail of each picture
+      to be deleted
+    - press up or down on the navigation ring to toggle
+      whether the picture in the yellow box should be deleted
+    - press and hold the "magnify +" button to
+      see the picture on the full screen
+    - press OK in the center of the navigation ring
+      to delete all the pictures that were marked to be deleted
+  * select "All" to delete all pictures from the card
+- #3 - reformat the card
+       (see "Reformatting Card" below)
+
+Flash
+- in automatic modes, the flash pops up when needed
+  * includes AUTO, portrait, landscape, child, sports, closeup
+    and night portrait
+- in manual modes, the flash won't fire unless it is popped up
+  manually by pressing the flash button the left side of the lens
+  * includes P, S, A and M
+- pressing the flash button only pop up the flash
+  when in one of the manual modes
+- flash modes available from the info screen
+  * modes available depend on the mode dial setting
+  * bolt - always flash
+  * bolt + eye - redeye reduction
+  * bolt + slow - flash with slow shutter speed (for night scenes)
+  * bolt + slow + eye - flash with slow shutter speed
+    (for night scenes with people in foreground)
+  * bold + "rear" - for motion in poor lighting
+    (like pool halls shooting the balls in motion)
+
+Menus
+- to view menus, press the "MENU" button on the back-left
+- to change the menu being displayed,
+  press the left side of the navigation ring
+  to move from a menu item to its menu,
+  then press up or down on the navigation ring
+- to select a menu item on the current menu,
+  press right on the navigation ring to move from the menu to an item,
+  press up or down on the navigation ring to choose an item,
+  and press "OK" in the center of the navigation ring to select it
+- to change the number of menu items that are displayed,
+  go to the wrench menu and select "CSM/Setup menu"
+  * options are "Simple", "Full" and
+    "My menu" (to create a custom menu of frequently used items)
+
+Modes
+- AUTO mode adjusts everything by itself
+- P is program mode
+  * what is this?
+- S is shutter priority
+  * you select a shutter speed
+    - press the "info" button on the top-right
+      or "magnify +" button on the back-lower-left
+    - turn the command dial on the back-upper-right
+    - changes to the shutter speed will appear on the screen
+      with values from 1" up to 30"
+  * the camera selects the aperture and other things
+- A is aperture priority
+  * you select a aperture speed
+    - press the "info" button on the top-right
+      or "magnify +" button on the back-lower-left
+    - turn the command dial on the back-upper-right
+    - changes to the aperture will appear on the screen
+      with values from F4.5 up to F29
+  * the camera selects the shutter speed and other things
+  * this is good for controlling the depth of field
+    which is the range of distances that are in focus
+    - small aperture numbers make the shutter opening larger,
+      decrease the amount of time the shutter must remain open,
+      and increase the depth of field
+    - large aperture numbers make the shutter opening smaller,
+      increase the amount of time the shutter must remain open,
+      and reduce the depth of field
+      * using a tripod is recommended with small apertures
+  * this mode is most often used with a telephoto lens to
+    reduce the depth of field for a subject that is relatively far away
+    - for example, taking a picture of a zoo animal
+      so the cage between you and the animal disappears
+- M is manual mode
+  * you select all settings
+- all other modes are for specific situations
+  * the "sports" mode is good for outdoor action photos
+    but not usually good for indoor photos
+  * the "no flash" and "night portrait" modes
+    typically require the use of a tripod
+    because the shutter will remain open too long
+    to manually hold the camera still
+
+Reformatting Card
+- go to the wrench menu and select "Format memory card"
+
+Reset to Factory Settings
+- this is a two-step process
+- step 1: simultaneously press the green buttons
+  on the top-right (info) AND back-lower-left (magnify +)
+- step 2: press the menu button, select the pencil menu, and select "Reset"
+
+Retouch
+- to retouch pictures on the camera instead of using computer software,
+  go to the retouch menu (picture of a brush on paper)
+
+Screen On Duration
+- to adjust how long menus and other things are displayed on the screen,
+  go to the wrench menu and select "15 Auto off timers"
+  * choices are SHORT, NORM, LONG and Custom
+
+Self Timer
+- this is often used so you can get in the picture
+- setup the camera on a table or tripod
+- press the Fn button on the left side near where the lens attaches
+- by default the picture will be taken in 10 seconds
+- to adjust the time, open the pencil menu, select "16 Self-timer"
+  and choose from 2, 5, 10 and 20 seconds
+
+Settings
+- to view the camera settings
+  * press the "magnify +" button on the back-left
+    of the "info" button on the top-right
+- to change the camera settings
+  * press the "magnify +" button again
+  * use the navigation ring to choose the setting to be changed
+    and press the "OK" button in the center of the navigation ring
+  * to exit without changing setting, press left on navigation ring
+- to see a description of a setting
+  * press and hold the ? button (magnify -) on the back-left
+- settings include:
+  * image quality:
+    RAW, FINE, NORM, BASIC or RAW+B
+  * image size:
+    L (large), M (medium) or S (small)
+  * white balance:
+    AUTO, Incandescent, Fluorescent, Direct Sunlight, Flash, Cloudy, Shade
+    and PRE (using 18% gray card to calibrate current light)
+  * ISO sensitivity: 200, 400, 800, 1600, HI 1
+  * shooting mode:
+    single-frame, continuous, self-timer and remote control modes
+  * focus mode:
+    AF-A (auto-focus automatic?),
+    AF-S (auto-focus, single servo),
+    AF-C (auto-focus, continuous servo) and
+    MF (manual focus)
+  * auto-focus-area mode:
+    closest subject (camera focuses on closest subject),
+    dynamic area (good for moving subjects) and
+    single area (you select focus area manually)
+  * light metering:
+    matrix (considers light from entire frame equally),
+    center-weighted (considers light from entire frame,
+    but weights center more heavily) and
+    spot (only considers light in focus area)
+  * flash compensation:
+    - adjusts the brightness of the subject relative to the background
+    - positive values increase light on subject
+    - negative values decrease light on subject
+  * exposure compensation:
+    - makes the entire frame lighter (positive values)
+      or darker (negative values)
+  * flash mode:
+    - AUTO means the camera decides if flash is needed
+    - SLOW means slow shutter speed is used to capture background lighting more
+    - REAR means flash doesn't fire until just before shutter closes
+      * creates effect of streams of light behind moving subjects
+    - choices include combinations of the above:
+      AUTO,
+      AUTO + red eye reduction,
+      AUTO + red eye reduction + SLOW,
+      AUTO + SLOW and
+      AUTO + REAR
+
+Viewing Pictures
+- to view pictures that have been taken
+  * press the triangle play button on the back-upper-left
+  * press the left and right sides of the navigation ring
+    to go forward and backward one picture
+  * press the magnify + and - buttons to zoom in an out
+  * after zooming, press the left, right, up and down on the navigation ring
+    to scroll the picture
+  * press OK in the center of the navigation ring to undo zooming
+- to delete a picture that is being viewed
+  * press the trash can button on the back-lower-right
+  * press it again to confirm or press the play button to cancel
+
+White Balance
+- to change, press Info button and then the Set button (labelled <i>)
+- set to incandescent for indoor lighting unless under flourescent lights

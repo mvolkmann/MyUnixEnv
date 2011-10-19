@@ -1,0 +1,71 @@
+JavaFX Script Notes
+
+- Resources
+  * slides from Weiqi Gao at
+    http://www.ociweb.com/javasig/knowledgebase/2007-07/JavaFXScript.pdf
+  * main website at http://openjfx.dev.java.net
+  * blog at http://blogs.sun.com/chrisoliver/
+  * wiki at http://jfx.wikia.com/wiki/Main_Page
+
+- Things I like about it
+  * limited number of primitive types
+    - Boolean, String, Number, Integer (may go away)
+  * use of cardinality characters ?, * and + in attribute declarations
+    - defines sequences (implemented like Java ArrayList)
+  * object literal syntax
+  * range syntax
+  * open classes like Ruby
+    - can add attributes, functions and operations
+  * for loop supports SQL-like syntax (where clause)
+  * can obtain a sequence of indexes in another sequence
+    whose values meet some criteria
+    - example
+      var scores = [98, 103, 72, 119]
+      var indexes = scores[. > 100]
+      // returns [1, 3] which are indexes in the scores sequence
+  * SQL-like syntax for obtaining a sequence of values computed from
+    one or more other sequences (similar to XQuery)
+  * SQL-like syntax for inserting and deleting sequence elements
+  * triggers which define blocks of code to be executed
+    when certain events occur
+    - examples
+      * creating a new instance of a given class
+      * changing the value of a given attribute in an instance
+      * changing the value of an element in a given sequence
+      * inserting a new element into a given sequence
+      * deleting an element from a given sequence
+  * reflection
+    - can learn about the attributes, functions and operations of a class
+      at run-time
+  * bind operator
+    - can define an instance attribute so its value is computed
+      based on the current values of other attributes
+  * GUI widget set that wraps Swing widgets
+  * GUI widget set that wraps the Java 2D API
+    - transformations are composable
+  * animation with the "dur" operator
+  * deployment options
+    - JavaFX Script application
+    - Java application
+    - Java Web Start
+    - Java applet
+    - use JSR 223 "Scripting for the Java Platform"
+
+- Questionable things
+  - distinction between functions and operations
+    * functions
+      -  defined by a set of declarations followed by one return statement
+      - cannot have side effects
+    * operations
+      - defined by a sequence of statements
+      - can have side effects
+  - no hash collection type?
+  - weird use of "var:" in object literals to select a variable name
+    to be used like the Java "this" keyword
+    * but the "this" keyword is supported in operations
+
+- Threads
+  * can't explicitly control threads
+  * by default everything happens on the AWT event thread
+  * to do work on a different thread, put code in a do statement
+    - like Swing's invokeLater

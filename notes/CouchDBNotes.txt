@@ -1,0 +1,247 @@
+CouchDB Notes
+
+- To install on a Mac
+  * install Homebrew
+  * sudo port selfupdate
+  * sudo port install couchdb
+    - this takes a VERY LONG TIME!
+  * this installs CouchDB in
+    /opt/local/var/macports/software/couchdb/1.1.0_0
+
+- To start
+  * sudo couchdb
+
+- To use browser interface
+  * browse http://{host}:5984/_utils/
+    - {host} can be localhost
+
+- To test the installation
+  * click "Test Suite" on the right
+  * click "Run All" at the top
+
+- JSONP
+  * it's disabled by default
+  * to enable it, 
+    - browse http://localhost:5984/_utils/
+    - click "Configuration" in the right nav.
+    - change "allow_jsonp" in the httpd group to "true"
+    - click the green checkbox to save the change
+
+- To create a new, empty database
+  * click "Create Database ..." in web UI
+  * the name cannot contain uppercase letters
+
+- To add a document
+  * click "New Document"
+  * click "Add Field" for each field in the document
+  * enter values for each field
+  * optionally upload attachements which can be any kind of file
+    - the content of the attachment is copied into the database,
+      so the original file can be renamed, moved or deleted
+    - can click an attachment name in the web UI to view it
+  * click "Save Document"
+
+- To view a document in JSON format
+  * click the document
+  * switch from the "Fields" tab to the "Source" tab
+
+- To see list of documents in database
+  * click database name at top
+
+- Views
+  * used to
+    - filter documents
+    - extract data from documents
+    - build efficient indexes
+    - represent relationships between documents
+    - perform calculations using data in documents
+  * have a map function and an optional reduce function
+    written in JavaScript
+    - reduce functions
+      * often used to count results using sum function
+      * rereduce parameter is false wihen run on leaf nodes of the b-tree
+  * map functions
+    - have a doc parameter that represents
+      a single document being processed
+    - use the emit(key, value) function to produce a view result
+      * can be called any number of times, including none,
+        for a single document
+      * consider representing date keys as arrays of
+        [yyyy, mm, dd, hh, mm, ss]
+        - can then pull out all the records with a given year,
+          year/month, etc.
+      * can call more than once for the same document
+        - ex. once for each skill of a person using the skill as the key
+      * can pass null to emil for either key or value
+        - can then find all records with a null key
+          * could represent people with no skills
+    - are run once on each document when created or modified
+      and then only run again on documents that are added or modified
+  * view results
+    - are sorted by key
+    - can contain more than one row for the same key
+      if there are more than one with a given value
+    - are stored in a B-tree
+    - each row contains the id of the document from which it was created
+    - when a document is deleted, rows created from it are deleted
+  * relationship to indexes in relational databases
+    - similar in that views make queries more efficient
+    - more flexible in that they can be created
+      from arbitrary JavaScript logic
+
+- To create a temporary (non-optimized) view of a database
+  * select "Temporary view..." from the View menu
+  * modify the "Map Function" JavaScript code
+    - can drag bottom edge down to see more lines of code
+    - emit function takes a key and a value to be returned
+      * both key and value can be any JSON type, including an array
+    - check for existence of keys before using them
+      * ex. if (doc.spouse) { ... }
+  * press "Run" button below code
+
+- To make a temporary view permanent
+  * press "Save As..." button
+  * enter a name for the design document where it will be stored
+    - can be the same as the name of the database
+    - see detail on design documents later
+  * enter a name for the view
+    - ex. "allUsers"
+  * will appear in View menu now
+  * selecting a permanent view from the View menu displays its results
+
+- To edit a permanent view
+  * select the view from the View menu
+  * select the triangle to the left of "View Code"
+  * can save changes under the existing name or a new name
+
+- RESTful operations using curl
+  * to see detail from each step executed
+    - add -v for verbose to curl command
+  * to verify the server is running
+    - curl http://{host}:5984
+  * to create a new, empty database
+    - curl -XPUT http://{host}:5984/{db-name}
+  * to delete a database
+    - curl -XDELETE http://{host}:5984/{db-name}
+  * to create a document
+    - obtain a UUID with curl -XGET http://{host}:5984/_uuids
+    - to create from a JSON string,
+      curl -XPUT http://{host}:5984/{db-name}/{uuid} -d '{json}'
+    - to create from a file containing JSON,
+      curl -XPUT http://{host}:5984/{db-name}/{uuid} -d @{filename}.json
+    - ex. curl -XPUT http://{host}:5984/music/
+          35c9fde6920b12a1a4e943d9127335b7 -d
+          '{"title":"Codes and Keys", "artist":"Deathcab For Cutie"}'
+  * to retreive a document by UUID
+    - curl -XGET http://{host}:5984/{db-name}/{uuid}
+    - ex. curl -XGET http://{host}:5984/music/
+          35c9fde6920b12a1a4e943d9127335b7
+  * to update a document
+    - retreive its JSON representation
+      which will contain _id and _rev fields
+    - make desired changes to the JSON
+      without changing the _id or _rev fields
+    - use same command as creating a new document with new JSON
+      * curl -XPUT http://{host}:5984/{db-name}/{uuid} -d '{new-json}'
+    - a new _rev value will be assigned to the new revision of the document
+  * to add an attachment to a document that can be any kind of file
+    - curl -XPUT http://{host}:5984/{db-name}/{uuid}/{attachment-name}
+      ?rev={doc-rev} --data-binary @{file-path}
+      -H "Content-Type: {mime-type}
+      * the -H option adds an HTTP header
+      * attachment-name can be the same as file-path
+  * to retrieve all the results in a permanent view
+    - curl -XGET http://{host}:{port}/{db-name}/
+      _design/{design-doc-name}/_view/{view-name}
+      * ex. curl -XGET http://localhost:5984/ocistaff/
+            _design/ocistaff/_view/allMobile
+  * to retrieve only the results for a given key in a permanent view
+    - curl -XGET 'http://{host}:{port}/{db-name}/
+      _design/{design-doc-name}/_view/{view-name}?key={value}'
+      * note the single quotes around the URL
+      * ex. curl -XGET 'http://localhost:5984/ocistaff/
+            _design/ocistaff/_view/allMobile?key='Volkmann"'
+  * to retrieve results for a range of key values
+    - append startkey={value}&endKey={value} to end
+  * add descending=true to get results in reverse sorted order
+    - and reverse values for startKey and endKey
+
+- To create a replication database
+  * curl -XPOST http://{host}:5984/_replicate
+    -d '{"source":"{src-db-name}",
+         "target":"{target-db-name},
+         "create_target":true"}'
+    -H "Content-Type: application/json"
+    (Why must the content type be specified?)
+  * replication databases are useful for backups and snapshots
+    - changes after replication are not reflected!
+  * push replication
+    - {target-db-name} can begin with http://{host}:{port}/
+      to create a replication database on another host
+      from the current host
+  * pull replication
+    - {src-db-name} can begin with http://{host}:{port}/
+      to create a replication database on the current host
+      from another host
+
+- Virtual documents
+  * combine data from multiple documents and give the appearance
+    that all the data is in a single document
+    - see "CouchDB Joins"
+
+- Design documents
+  * it is typical for each application to have its own design document
+  * an actual document where the JavaScript code is stored inside JSON
+  * ids for these begin with "_design/"
+  * replicated like other documents
+  * files can be served from CouchDB
+    if stored as attachments to design documents
+    - includes HTML, CSS, JavaScript and images
+    - does these mean that the CouchDB server
+      can take the place of a web server?
+
+- View repsonses
+  * are in JSON by default, but can be transformed into
+    HTML, XML and other content types
+    by show and list functions
+
+- Validation
+  * see the validate_doc_update function
+
+- JavaScript API
+  * Futon uses jquery.couch.db and you can too
+  * browse http://localhost:5984/_utils and view source to get link to it
+  * documentation is at
+    http://daleharvey.github.com/jquery.couch.js-docs/symbols/
+
+- Same Origin Policy
+  * "A common question I get from people starting to write Ajax apps
+    using CouchDB, is "when I try to query the CouchDB with jQuery,
+    it doesn't work."  Usually it turns out that they have an
+    index.html file on their filesystem, which is attempting to do
+    an Ajax call against the CouchDB server.  After I explain to them
+    the same origin security policy, they start to understand this means
+    CouchDB needs to serve their HTML (rather than loading it in the
+    browser direct from the filesystem)."
+
+- Show Functions
+  * convert a document (represented by a JSON object)
+    to an arbitrary output format such as HTML
+  * generating HTML from show functions
+    rather than from JavaScript in browsers
+    allows applications to function
+    in browsers where JavaScript is disabled
+  * also allws content to be indexed by search engines
+
+- List Functions
+  * convert a view query result (represented by a JSON array)
+    to an arbitrary output format such as HTML
+
+- Update Functions
+  * take arbitrary input and turn it into JSON for saving in database
+    - can create a new document or update an existing one
+  * returns a two-element array
+    - first is the document object
+      * if updating, set _id to that of the existing document
+      * if creating, set _id to req.uuid (a supplied, unused value)
+    - second is an object containing HTTP response headers and a body

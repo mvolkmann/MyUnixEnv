@@ -1,0 +1,46 @@
+Tomcat Notes
+
+Download
+- from http://tomcat.apache.org
+- want binary distribution apache-tomcat-5.5.20.tar.gz
+
+Setup
+- unpackage it into /opt
+- ln -s apache-tomcat-5.5.20 apache-tomcat
+- set CATALINA_HOME and TOMCAT_HOME to point to unpackaged directory
+
+Startup
+- $TOMCAT_HOME/bin/startup.sh
+
+Shutdown
+- $TOMCAT_HOME/bin/shutdown.sh
+
+To see if it's running
+- browse to http://localhost:8080
+
+To enable access to "Tomcat Manager"
+- edit $TOMCAT_HOME/conf/tomcat-users.xml
+- add <role rolename="manager"/>
+- add <user username="manager" password="manager"/>
+- restart Tomcat server
+
+To use "Tomcat Manager"
+- browse http://localhost:8080
+- click "Tomcat Manager" link in left nav.
+
+To deploy static HTML files
+- copy them to $TOMCAT_HOME/webapps/ROOT 
+
+To deploy a web application that is packaged in a .war file
+- copy the .war file to $TOMCAT/webapps
+
+To see stdout output from servlets
+- view $TOMCAT_HOME/logs/catalina.out
+
+To see server errors
+- view $TOMCAT_HOME/logs/localhost.yyyy-mm-dd.log
+
+To see files that a Tomcat instance has open
+- determine the process id
+  ps -a | grep apache
+  lsof -p{process-id}

@@ -1,0 +1,74 @@
+Make Project Creator (MPC) Notes
+  
+Installation
+- download from http://www.ociweb.com/products/mpc/down.html
+- gunzip it and untar it
+- add the directory containing it to PATH
+
+Generating Makefiles
+- enter "mwc.pl -type make"
+- probably want to create a makegen alias to this command
+- looks for all .mpc files in current directory and subdirectories
+- generates Makefile.{project-name} for each project described in .mpc files
+- generates Makefile that runs targets in all project-specific makefiles
+
+Help
+- to get help on MPC options, run "mpc.pl -help"
+
+---
+
+Here are some simple examples of using MPC.
+All of them automatically find all .h and .cpp files
+in and below the current directory.
+
+By default, MPC creates a shared library in the current directory.
+If exename is specified, it creates an executable.
+Otherwise, it creates a shared library.
+
+Example: Creating an executable (produces {exe-name})
+
+project({project-name}) {
+  exename = {exe-name}
+
+  includes += {include-dir}
+  libpaths += {lib-dir} // a location to search for shared libraries
+  libs += {shared-lib-name} // without "lib" and ".so"
+}
+
+Example: Creating a shared library (produces lib{project-name}.so}
+
+project({project-name}) {
+  // If libout is omitted, the library is created in the current directory.
+  libout = {lib-directory} // can be a relative directory like ..
+
+  // Other options are the same as previous example except omit exename.
+}
+
+Can explicitly list source files to be compiled with
+  Source_Files {
+    {name}.cpp
+    {name}.cpp
+    ...
+  }
+
+Can require that a project be built after a list of other projects.
+  after += {porject-1} {project-2} ...
+
+---
+
+Clean
+- "make clean" doesn't delete generated executables,
+  but "make realclean" does
+
+Include Directories
+- can be specified in a .mpw (workspace) file
+
+Inheritance
+- .mpc files can "inherit" rules in .mpb (base) files with
+  project({project-name}) : {base-project-name} {
+
+Search path
+- MPC searches for .mpb files in the current directory
+  and in directories specified in the -include option
+
+

@@ -1,0 +1,24 @@
+Here are the steps I followed to install Apache.
+
+- download httpd-2.2.20.tar.gz from http://httpd.apache.org/download.cgi
+- gunzip httpd-2.2.20.tar.gz
+- tar xf httpd-2.2.20.tar
+- su root
+- mv httpd-2.2.20 /opt
+- cd /opt
+- ln -s httpd-2.2.20 httpd
+- cd httpd
+- see instructions in the file INSTALL
+  * ./configure --prefix=/opt/apache2
+  * make install
+
+To start the Apache server, enter the following command from a terminal.
+- su root
+- /opt/apache2/bin/apachectl start
+
+To stop the Apache server, enter the following command from a terminal.
+- su root
+- /opt/apache2/bin/apachectl stop
+
+Verify that Apache is running by browsing to http://localhost (default port 80)
+or entering "ps -ef | grep httpd" from a terminal.

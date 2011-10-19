@@ -1,0 +1,137 @@
+Eclipse Plug-in Notes
+
+javadoc on related classes and interfaces
+- select Help...Help Contents or browse http://help.eclipse.org/help33
+- select Platform Plug-in Developer Guide...Reference...API Reference
+- classes and interfaces mentioned in these notes are in the
+  org.eclipse.ui package unless otherwise specified
+
+Standard Widget Toolkit (SWT)
+- Eclipse is implemented using SWT
+- custom plug-ins typically also use SWT
+- see SWTNotes.txt
+
+Help on developing plug-ins
+- see Help...Help Contents...Platform Plug-in Developer Guide
+  * for help on extension points, select Reference...Extension Points Reference
+  * for steps to create a basic view plug-in, select
+    Programmer's Guide...Simple plug-in example
+  * for details on the relationships between
+    the workbench, pages, views and editors,
+    see Programmer's Guide..Plugging into the workbench...
+    Workbench under the covers
+
+Overview
+- Most plug-ins alter or add to the Eclipse GUI,
+  but plug-ins can also be simply class libraries that other plug-ins use.
+- A plug-in can have any number of extension points.
+  * These are areas of the Eclipse GUI that can be customized by a plug-in.
+- Eclispe provides two tools that help with plug-in development.
+  * Java Development Tools (JDT) implements a full-featured
+    Java development environment.
+  * Plug-in Developer Environment (PDE) adds tools that assist in the
+    development of plug-ins and extensions.
+- All plug-ins depend on the org.eclipse.osgi and
+  org.eclipse.core.runtime plug-ins.
+- Each area of the Eclipse workbench is either and Editor or a View.
+  * Editors allow the user to edit some object.
+  * Views allow the user to view details about some object.
+    - The "Project Explorer" is an example of a view.
+    - When an item in the Project Explorer is double-clicked, an editor
+      is opened that allows the user to view, edit and save that item.
+- An action set is a strategy for the addition and removal of
+  menu and toolbar items.  A strategy is executed if the user selects
+  Window...Customize Perspective...Other... and selects it.
+  A perspective can also add an action set to the initial page layout
+  by invoking IPageLayout.addActionSet(id).
+
+Creating a new view
+- write a Java class that implements org.eclipse.ui.IViewPart
+  or inherits from org.eclipse.ui.ViewPart
+
+Anatomy of the Workbench
+- the workbench window
+  * contains a menu bar, a tool bar and a page
+  * implements IWorkbenchWindow
+- the page
+  * contains many views and editors
+  * implements IWorkbenchPage
+- perspectives
+  * define collections of views, their layouts (positions and sizes)
+    and available actions
+  * do not control editors, only views
+- views
+  * implement iViewPart or extend org.eclipse.ui.part.ViewPart
+  * typically used to navigate a hierarchy of information,
+    open an editor, or display properties for the active editor
+    - for example, the project explorer view allows you to
+      navigate the workspace hierarchy
+  * the properties and outline views show information about
+    an object in the active editor
+  * modifications made in a view (such as changing a property value)
+    are saved immediately
+- editors
+  * implement iEditorPart or extend org.eclipse.ui.part.EditorPart
+  * typically used to edit or browse a document or object
+  * modifications made in an editor follow an open-save-close model
+  * the platform text editor and Java editor are examples of workbench editors
+
+Anatomy of a plug-in
+- Each plug-in has a name, id, provider name, version,
+  a list of other required plug-ins, and a specification for its runtime.
+- Each plug-in is stored in a subdirectory of eclipse/plugins.
+  * consists of
+    - a manifest file named manifest.mf that describes
+      the packaging and prerequisites of the plug-in
+    - a plug-in manifext named plugin.xml that describes
+      the extensions used by the plug-in
+    - build.properties to configure the build process
+    - optional Java code library
+    - other resources such as property files and icons
+
+Writing plug-ins
+- to create plug-ins you need a version of Eclipse that includes
+  the Plug-in Development Environment (PDE)
+  * this includes the JEE, RCP/Plugin and Classic versions
+- simplified by using the Plug-in Development Environment (PDE)
+- each plug-in is encapsulated in a single Eclipse project
+- to create a new plug-in
+  * File...New...Project...
+  * Plug-in Development...Plug-in Project and press "Next"
+  * on the "Plug-in Project" page
+    in "Project name", enter a package name and press "Next"
+  * on the "Plug-in Content" page, press "Next"
+  * on the "Templates" page
+    select the "Custom plug-in wizard" template and press "Next"
+  * on the "Template Selection" page, select the features
+    your plug-in will use and press "Finish"
+  * (this step may not be required)
+    on the "Main View Settings" page,
+    change "Sample" to "Hello" everywhere,
+    uncheck "Add the view to the resource perspective",
+    and press "Next".
+  * (this step may not be required)
+    on the "View Features" page, uncheck everything and press "Finish"
+
+Implementing new views and editors
+- implement a particular interface
+- write a createPartControl method
+  * creates and arranges the required SWT widgets
+- write a setFocus method, if needed, that is invoked
+  when your view/editor receives focus
+- write a dispose method, if needed, that is invoked
+  when your view/editor is being closed
+  * dispose of graphic resources and other resources that you allocated,
+    possibly in the createPartControl method
+
+Testing plug-ins
+- build it by selecting Project...Build Project
+  * not necessary if Build Automatically is selected
+- tell Eclipse where your plug-ins are located
+- start a second workbench where the plug-in will run by selecting
+  Run...Run
+- if the plug-in provides a new view, show it by
+  selecting it from the Window...Show View...Other... menu
+
+You stopped reading help at
+Pluggin into the workbench...Basic workbench extension points using actions

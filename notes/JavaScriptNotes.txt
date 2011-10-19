@@ -1,0 +1,28 @@
+JavaScript Notes
+
+JSLint
+- checks for errors and questionable coding practices
+  in JavaScript source files
+- read about and download from http://www.jslint.com/
+- each source file can configure JSLint options with comments at the top
+- to run using Rhino
+  java org.mozilla.javascript.tools.shell.Main jslint.js myprogram.js
+- you wrote a jslint script to simply running it
+
+Dumping properties
+- 
+
+Ajax
+- use for implementing Ajax made it popular again
+
+Use outside browsers
+- Rhino
+  * to run in interactive mode, enter "java -jar js.jar"
+  * to quit, enter "quit()"
+
+PDF generation
+- http://code.google.com/p/jspdf/
+
+Prototype-based, not class-based
+
+See the OCI Wiki under Programming Languages ... JavaScript for more.

@@ -1,0 +1,3 @@
+Smalltalk Notes
+
+See http://www.ociweb.com/mark/programming/Smalltalk.html.

@@ -1,0 +1,37 @@
+Here are the steps I followed to install Axis C++.
+
+- download axis-c-linux-current-bin.tar.gz
+  from http://www.apache.org/dist/ws/axis-c/
+  to /home/downloads/axis
+- unzip to /opt/axis
+- edit /root/.bashrc to add the following line
+  export AXISCPP_HOME=/opt/axis/axis-c-1-0-linux
+  export AXIS_HOME=$AXISCPP_HOME/deploy
+- source ~/.bashrc
+- cp -f $XERCESCROOT/include/xercesc/* \
+  $AXISCPP_HOME/include/xercesc
+- cp -f $XERCESCROOT/lib/* /usr/lib
+- cp -f /opt/apache2/include/* $AXISCPP_HOME/include/apache2_0/
+- edit /opt/apache2/conf/httpd.conf
+- add the following lines to the end of this file
+  LoadModule axis_module modules/libaxiscpp_mod2.so
+  <Location /axis>
+  SetHandler axis
+  </Location>
+- cp /opt/axis/axis-c-1-0-linux/bin/libaxiscpp_mod2.so /opt/apache2/modules/
+- verify that installation worked by hitting http://localhost/axis from Mozilla
+  (should see Axis C++ welcome page)
+
+- edit ~/.bashrc to add the following lines to the end
+  AL=$AXISCPP_HOME/lib/axisjava
+  export CLASSPATH=\
+  $AL/axis.jar:\
+  $AL/commons-discovery.jar:\
+  $AL/commons-logging.jar:\
+  $AL/jaxrpc.jar:\
+  $AL/saaj.jar:\
+  $AL/wsdl4j.jar:\
+  $AL/xml-apis.jar
+
+- change 2nd line in $AXIS_HOME/axiscpp.conf to be
+  WSDDFILEPATH:/opt/axis/axis-c-1-0-linux/deploy/conf/server.wsdd

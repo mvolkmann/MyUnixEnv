@@ -1,0 +1,88 @@
+C:\C++\gdbNotes.txt
+
+To compile code with debug information using gcc, include -g flag.
+
+To run gdb,
+  gdb {executable}
+
+gdb Commands
+------------
+
+help - displays help catgegories
+help {category} - displays help for a given category
+
+l[ist] [start-line,end-line] - prints lines around current position
+b[reak] {line-number}
+b[reak] {scope-qualified-method-name}
+  - ex. COS::MW::Discovery::unregisterAsyncQueries
+  - ex. COS::MW::Subscriber::~Subscriber() - note the parens!
+  - supports tab completion of method names!
+inf[o] b[reak] - lists breakpoints
+disable {breakpoint-number} - disables a breakpoint
+d[elete] {breakpoint-number} - deletes a breakpoint
+  
+r[un] - runs from beginning
+c[ont] - continues from current location
+
+n[ext] - executes current line, but doesn't step in
+s[tep] - executes current line and steps in if it's a method call
+Enter key - repeats last command (useful with next and step)
+
+ins[pect] {variable} - displays value of a variable
+
+bt - displays backtrace
+up - moves up in the stack frame so calling code can be examined
+down - moves down in the stack frame
+frame # - moves to a specified stack frame
+
+attach {pid} - to attach to a running process
+  - after this it's common to use "bt" to get a back trace
+    in order to find out where the process is in the code
+
+q[uit] - exits the debugger
+
+Other Notes
+-----------
+- can set breakpoints in .gdbinit file in the current directory
+  so they are reused across sessions
+- to examine a core file in gdb
+  * build the application with -g for debugging
+  * enter "ulimit -c unlimited" (so large core files can be produced)
+  * run the application
+  * enter "gdb {executable-file} {core-file}"
+  * enter "bt" to get a backtrace
+
+ddd Notes
+---------
+
+This is a GUI for gdb.
+
+To install it,
+  download from http://sourceforge.net/projects/ddd
+  gunzip it
+  tar xf it
+  rm the .tar file
+  cd ddd-3.3.11
+  ./configure
+  make
+  add the following lines to .bashrc
+    export DDD_HOME=/home/mvolkmann/ddd/ddd-3.3.11
+    export PATH=$PATH:$DDD_HOME/ddd
+
+To run it, just enter "ddd".
+
+Select File...Open Program, then enter path to executable to be debugged.
+
+To see line numbers, select Source...Display Line Numbers or press alt-n.
+
+You can enter gdb commands in the GDB Console which is the bottom pane.
+You can also select commands from the floating palette or the Commands menu.
+
+To resize the panes, drag the small boxes on the right side of the dividers.
+
+To inspect variables graphically,
+- open the "Data Window" by selecting View...Data Window
+- double-click a variable in the Source Window to view it graphically
+- to see the value of a string, open _M_dataplus and then _M_p
+- double-click a property in the Data Window to expand it
+- double-click a propery again to collapse it

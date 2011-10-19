@@ -1,0 +1,10 @@
+Palm Pre Notes
+
+To reboot
+- press red key + Sym + R
+
+To reset voicemail count
+- open the phone application
+- select Preferences from the menu
+- scroll to the bottom
+- press the "Reset Voicemail Count" button

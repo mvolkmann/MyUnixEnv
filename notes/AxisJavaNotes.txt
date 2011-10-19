@@ -1,0 +1,20 @@
+Axis Java Notes
+
+Basic Requirements
+- JDK 1.4.2 or higher suggested
+- Ant 1.6 or higher suggested
+
+Installation
+- download and unzip Tomcat
+  * you used version 5.5.15
+  * requires JDK 1.5
+- verify that JAVA_HOME is set to directory path of JDK
+- set CATALINA_HOME environment variable to directory path of Tomcat
+- download and unzip Axis
+- cp -r $AXIS_HOME/webapps/axis $CATALINA_HOME/webapps
+- download the Java Activation Framework
+- copy activation.jar to $CATALINA_HOME/common/lib
+- run $CATALINA_HOME/bin/startup.sh to start Tomcat
+- browse http://localhost:8080/axis
+- click the "Validation" link
+- run $CATALINA_HOME/bin/shutdown.sh to stop Tomcat

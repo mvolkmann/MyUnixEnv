@@ -1,0 +1,51 @@
+ClearQuest Notes
+
+Boeing SOSCOE access
+- start Parallels and VSClient
+- start Firefox (IE7 is not supported)
+- browse http://clearquest.msc.az.boeing.com:8080/cqweb/login
+  * you have a bookmark for this named "ClearQuest"
+  * this server is 134.51.39.7
+- username=volkmannm, password=volkmannm, schema repository=oracle91prod
+- select the PCR database from the upper-left drop-down
+- press the "Go" button
+
+To create a new PCR
+- select "PCR" in the second drop-down
+- press the "Go" button to the right of it
+- fill in the required data
+
+PRs
+  - Main tab: enter Priority
+  - Associations tab: associcate CRs with PR
+  - Resolution tab: enter "Origin"
+  - Resolution tab: enter "Products Impacted"
+  - Resolution tab: enter F build number under "Planned/Actual Incorporation"
+    (ex. product=J-UCAS COS, product_version=COS00.0_F002.0)
+  - To change State from Investigate to CCB_Review,
+    select Analyze from the Actions drop-down.
+  - When a PR needs to be rejected, add a Journal entry explaining why
+    and change "Next Action" on the Main tab to "recommend rejecting this PR".
+    Nothing needs to be changed in the corresponding CR if there is one.
+
+CRs
+  - Main tab: Enter the following in the "Description" field.
+    * High-level description of the change.
+    * API change description
+      If there is no API change, then state "No API change".
+      If this is a CR for new development that has been peer reviewed,
+      no details are required.  Just reference the peer review.
+    * Change details
+      It should be enough information for the CR verifier to know
+      what needs to be verified.
+      If this is a CR for new development that has been peer reviewed,
+      no details are required.  Just reference the peer review.
+    The first two items should be provided before the CR is approved.
+  - Main tab: Select a developer under "Assigned To".
+  - Development Status tab: enter name of person that will verify changes
+    under Status/responsible_engineer and set engineer_status to Open
+  - Tracking tab: enter E build number under "Planned/Actual Incorporation"
+    (ex. product=J-UCAS COS, product_version=COS00.0_E002.3)
+  - CCB tab: In the "Recommended Solution" field,
+    enter "see Description field on Main tab" 
+  - Go to the "Associations" tab of the PR to associate the CR with it

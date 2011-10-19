@@ -1,0 +1,5 @@
+webOS Notes
+
+Don't add notes here!
+Add them in ~/Documents/VolkmannWebSite/programming/webOS.html
+Also see ~/Documents/Programming/webOS/steps.txt.

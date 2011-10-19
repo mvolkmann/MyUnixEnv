@@ -1,0 +1,25 @@
+Purify Notes
+------------
+
+Some of this may be Boeing/J-UCAS-specific.
+
+- Add the following to a Makefile.
+  PURIFY_BIN = {exe-name}.purify
+  purify: ${PURIFY_BIN)
+  $(PURIFY_BIN): $(BIN)
+    purify $(CXX) $(LIBPATHS) $(LDFLAGS) $(OUTPUT_OPTION) $(OBJ) $(LDLIBS) $(LIBS)
+  For example, {exe-name} could be client or server.
+
+- Warning!
+  If you regenerate makefiles using MPC, these changes will be lost!
+
+- Run "make -f {name-of-makefile} purify
+  For example,
+  make -f Makefile.server purify
+  make -f Makefile.client purify
+  You created a makepurify script to do both of these.
+
+- Run "{exe-name}.purify
+  For example,
+  server.purify
+  client.purify

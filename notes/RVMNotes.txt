@@ -1,0 +1,31 @@
+RVM Notes
+
+- stands for Ruby Version Manager
+- download from http://rvm.beginrescueend.com/
+- see installation steps there
+- after install, add these lines to end of .bash_profile
+  if [[ -s /Users/Mark/.rvm/scripts/rvm ]] ; then
+    echo "running rvm script"
+    source /Users/Mark/.rvm/scripts/rvm
+  fi
+- to get information about the RVM installation
+  * rvm info
+- to install a version of Ruby
+  * rvm install {version}
+    - ex. rvm install 1.9.2
+  * may need readline installed first
+    - curl -O ftp://ftp.gnu.org/gnu/readline/readline-6.1.tar.gz
+    - tar xzvf readline-6.1.tar.gz
+    - cd readline-6.1
+    - ./configure --prefix=/usr/local
+    - make
+    - sudo make install
+    - rvm install 1.8.7 -C --with-readline-dir=$HOME/.rvm/usr
+- to use a version of Ruby
+  * rvm use {version}
+- to set the default version of Ruby
+  * rvm use {version} --default
+- to use "system" version of Ruby
+  * rvm use system
+- to list installed versions of Ruby
+  * rvm list

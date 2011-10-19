@@ -1,0 +1,405 @@
+Adobe Notes
+
+These notes cover the use of Flash, Flex and Air.
+
+Flash CS3
+- CS stands for Creative Suite
+- lineage
+  * SmartSketch -> FutureSplash Animiator -> Flash
+  * also previously called Shockwave Flash and Macromedia Flash
+- Macromedia Flash was introduced in 1996; Flash CS3 was released in 2007
+- used to create rich, interactive content for web browsers and mobile devices
+- works with vector and raster graphics
+- supports streaming of audio and video
+- contains a scripting language called ActionScript
+- Adobe Flash Player is supported by most popular web browsers
+  and some cell phones
+- .swf files
+  * are often called "Flash movies"
+  * can be an object in an HTML web page
+    <object data="name.swf" type="application/x-shockwave-flash"
+      width="500" height="500">
+      <param name="movie" value="movie.swf"/>
+    </object>
+  * can execute Flash Video (.flv) files
+    - all YouTube and Google Video videos are in this format
+- browser plugin is smaller and initializes more quickly that other plugins
+  including Java, Acrobat Reader, Quicktime and Windows Media Player
+- the Flash Player includes the ActionScript Virtual Machine (AVM)
+- can be developed under Windows or Mac OS X
+- Adobe Flash CS3 Professional costs $699
+- see http://en.wikipedia.org/wiki/Criticism_of_Adobe_Flash
+
+Flex 3
+- from the main web page at http://www.adobe.com/products/flex
+  * "Flex is a highly productive, free open source framework for
+    building and maintaining expressive web applications that deploy
+    consistently on all major browsers, desktops, and operating systems.
+    While Flex applications can be built using only the free Flex SDK,
+    developers can use Adobe Flex Builder software to
+    dramatically accelerate development."
+- there is a free, open-source SDK
+  * license is Mozilla Public License Version 1.1
+  * see installation instructions at
+    http://www.adobe.com/support/documentation/en/flex/3/
+    releasenotes_flex3_sdk.html#installation
+    - requires uninstalling previous version of Flash
+    - stop Parallels before running the uninstaller
+  * includes Flex framework, AIR frameword, command-line tools and more
+- there is a commercial SDK called "Adobe Flex Builder 3"
+  * costs $249
+  * implemented as an Eclipse plugin
+  * see video demo at http://www.adobe.com/products/flex/
+    - click the link "See a Flex app built" on the main web page
+- see http://livedocs.adobe.com/flex/3/langref/
+- it's implemented as an ActionScript class library
+- uses ActionScript
+  * an application can have any number of ActionScript files
+- Flex applications are
+  * compiled into SWF files
+  * rendered by Adobe Flash Player in web browsers
+  * rendered by Adobe AIR for desktop use
+
+MXML
+- stands for Macromedia XML or Maximum eXperience Markup Language
+  * it was invented at Macromedia
+  * Adobe bought Macromedia on 12/05/2005
+- an XML language, for
+  * laying out user interface components
+    - includes data grids, trees, tab navigators, accordians, menus
+      and animation effects
+    - can add custom components
+  * declaring access to server-side data sources
+  * specifying data bindings between user interface components
+    and server-side data sources
+- in can be thought of as a more capable substitute for HTML
+- an application can have any number of MXML files
+- file extension is ".mxml"
+- the namespace is http://www.adobe.com/2006/mxml
+- the Script tag can contain ActionScript code inside a CDATA section
+  or it can have a source attribute that references
+  an ActionScript file with a ".as" file extension
+- by default components are laid out vertically from top to bottom
+- the root element is Application
+  * maps to the Application class in the mx.core package
+
+- Containers
+  * in the mx.containers package
+  * can be nested
+  * pictures are in the Flex 3 Language Reference
+    at the bottom of each container page
+  * Accordian - a collapsable collection of children
+    where only one is shown at a time
+  * ApplicationControlBar - a toolbar (no picture on website)
+  * Box - lays out children in a single column or row
+  * Canvas - supports absolute positioning of children
+  * ControlBar - places children inside the bottom border
+    of a Panel or TitleWindow
+  * DividedBox - same as Box, but includes draggable dividers between children
+  * Form - controls form layout, marks fields as required or optional,
+    handles error messages, and binds form data to the Flex data method
+    to perform validation
+    - contains FormHeading controls that
+      display a heading for a group of controls in a Form
+    - contains FormItem controls that define a label and
+      one or more children arranged horizontally or vertically
+    - see the many classes whose names end in "Validator"
+    - how is a Form object associated with a Model object?
+  * Grid - arranges children in rows and columns where
+    row heights can vary, column widths can vary,
+    and children can span more than one row and/or column
+    - contains GridRow objects which contain GridItem objects
+  * HBox - shortcut for a Box that uses a single row
+  * HDividedBox - shortcut for a DividedBox that uses a single row
+  * Panel - a top-level container that contains
+    a title bar, caption, border and content area for children;
+    default layout is "vertical", but can be changed to
+    "horizontal" or "absolute"
+  * TabNavigator - adds a TabBar to a ViewStack and only displays
+    the component associated with the selected tab
+  * Tile - lays out children in rows and columns
+    where the cells are equally sized
+  * TitleWindow - extends Panel and can be used to implement dialog boxes
+  * VBox - shortcut for a Box that uses a single column
+  * VDividedBox - shortcut for a DividedBox that uses a single column
+  * ViewStack - a collection of children stacked on top of other
+    so only one is visible at a time
+    - the visible child is selected programatically
+
+- Controls
+  * in the mx.controls package
+  * they inherit from mx.core.UIComponent
+  * investigate "effects"
+  * can be styled by setting object properties or using CSS
+    - to use CSS, add a <Style source="filename.css"/> tag
+      as a child of Application and set the styleName property of controls
+  * how do these differ from the classes in the fl.controls package?
+  * controls can
+    - participate in tabbing
+    - respond to keyboard and mouse events
+    - be disabled
+    - have widths and heights that are percentages of their parents
+      so they scale with the parent
+    - have an id attribute that is used to access it from ActionScript code
+  * most controls provide support for
+    - declaring them and their properties and events using the MXML API
+    - setting their properties and calling their methods using
+      the ActionScript API
+    - customizing appearance using fonts, styles and skins
+  * these are ActionScript objects that inherit from mx.core.UIComponent
+    which inherits from flash.display.Sprite
+    - does this mean native widgets aren't used?
+  * Alert - a modal dialog box that can contain a title, an icon, a message
+    and buttons (like OK, Cancel, Yes and No)
+  * Button - can have a text label and/or and icons
+    - label attribute specifies text to appear on it
+    - icon attribute can refer to a GIF, JPEG, PNG, SVG or SWF file
+      * example: icon="@Embed(source='file-path')"
+    - click attribute specifies ActionScript to be executed when pressed
+    - can specify icons for eight states
+      * not selected and up/down/over/disabled
+      * selected and up/down/over/disabled
+  * ButtonBar - a horizontal or vertical group of Buttons
+  * CheckBox - an optional label and a small box that can be checked
+    - the label can be on any side of the box
+  * ColorPicker - a combination of a TextInput for entering a six-digit
+    hex value and palette of colors from which to choose
+  * ComboBox - a drop-down list that allows selection of a single value
+  * DataGrid - a table that displays multiple columns of
+    optionally editable data where rows can be selected and
+    the columns can
+    - have different widths
+    - be resized
+    - be reordered,
+    - have custom headers
+    - use custom cell renderers
+    - be sorted by clicking headers
+  * DateChooser - a calendar style control for selecting a date
+  * DateField - a text field that allows optionally allows entry of a date
+    and has a calendar icon that can be clicked to open a DateChooser
+  * FileSystemComboBox - a ComboBox for selecting an ancestor directory
+  * FileSystemDataGrid - displays the contents of a single directory in a Grid
+  * FileSystemList - displays the contents of a single directory in a List
+  * FileSystemTree - displays the contents of the file system in a Tree
+  * FlexNativeMenu - defines a native operating system menu
+  * HorizontalList - a horizontal list of items with a scrollbar when needed
+  * HRule - draws a horizontal line across the container
+  * HSlider - allows the user to select a value by sliding a thumb
+    in a horizontal bar
+  * Image - displays a JPEG, PNG, GIF or SWF file
+  * Label - displays a single line of text, but not an icon;
+    use the Text control for multiline values
+  * LinkBar - a row or column of LinkButton controls
+    which can active controls ina ViewStack
+  * LinkButton - a borderless Button whose contents are highlighted
+    when the mouse is over it
+  * List - a vertical list of items with a scrollbar when needed;
+    one or optionally more items can be selected
+  * Menu - a pop-up menu that can contain menuitems and submenus
+  * MenuBar - a horizontal container of menus
+  * NumericStepper - a "spinner" that allows selection of a number from a range
+  * PopUpButton - a drop-down list
+  * ProgressBar - provides a visual representation of the progress of a task
+  * RadioButton - for selected one option from a mutually exclusive set
+  * RadioButtonGroup - a group of RadioButtons
+  * RichTextEditor - includes a TextArea and a set of formatting controls
+    at the bottom that allows the user to enter and format text
+  * Spacer - takes up space for the purpose of arranging other controls
+  * SWFLoader - loads and displays a SWF file
+  * Text - displays multiple lines of read-only text without scrollbars;
+    useful for multiline labels
+  * TextArea - multiline editable text field with a border
+    and optional scrollbars
+  * TextInput - single line editable text field with a border
+  * TileList - a scrollable list of items arranged in rows and columns
+    where each "tile" is the same size
+  * ToggleButtonBar - a horizontal or vertical group of ToggleButtons
+  * ToolTip - displays information about the control under the mouse
+  * Tree - allows the user to view hierarchical data as a tree,
+    expand and collapse branches, and select a branch or leaf;
+    icons for branches and leaves are customizable;
+    custom renderers can be specified;
+    item editors can be specified
+  * VideoDisplay - plays an Flash video (FLV file)
+  * VRule - draws a vertical line across the container
+  * VSlider - allows the user to select a value by sliding a thumb
+    in a vertical bar
+
+- Validators
+  * in the mx.validators package
+  * all extend from Validator
+  * CreditCardValidator
+  * CurrencyValidator
+  * DateValidator
+  * EmailValidator
+  * NumberValidator
+  * PhoneNumberValidator
+  * RegExpValidator
+    - can test regular expressions using example at bottom of doc. page
+    - curly braces in the expression must be escaped by preceding with \
+  * SocialSecurityValidator
+  * StringValidator
+  * ZipCodeValidator
+
+- Charts
+  * in the mx.charts package
+  * AreaChart - a LineChart where the area under each curve is shaded
+  * BarChart - a horizontal bar chart
+  * CandlestickChart - displays financial data with "candlesticks" that
+    represent high, low, opening and closing values
+  * ColumnChart - a vertical bar chart
+  * HLOCChart - High Low Open Close chart for financial data;
+    similar to CandlestickChart
+  * Legend - adds a legend to a chart
+  * LineChart - a chart that connects data points by lines
+  * PieChart - a pie chart
+  * PlotChart - a chart that plots data points, but doesn't connect them;
+    data points in different series are plotted with different markers;
+    markers can be circles, squares and diamonds filled with selected colors
+
+- styles
+  * can set for a specific control in its MXML element
+  * can set for all instances of a control type using the MXML Style element
+  * can define a "theme" which can "reskin" all components
+
+- ActionScript code can be specified in a Script element
+  to change components at run time
+* to deploy, compile to SWF file
+  - can use command-line MXML compiler named mxmlc
+  - Ant can be used to do this
+- HelloWorld
+  * simple mxml file that's in $PROGRAMMING_DIR/Adobe/Flex/HelloWorld
+    <Application xmlns="http://www.adobe.com/2006/mxml">
+      <Panel title="Demo Flex Application">
+        <Label text="Hello World!" fontWeight="bold" fontSize="24"/>
+      </Panel>
+    </Application>
+  * compile with "mxmlc --strict=true --file-specs hello.mxml"
+    to create hello.swf
+    - mxmlc is in $FLEX_DIR/bin
+    - SWF stands for Shockwave Flash
+  * enter "open hello.swf" to open in Safari
+    - you set the default application for ".swf" files to Safari
+
+ActionScript 3
+- based on ECMAScript which is the basis for JavaScript
+- it has basically the same syntax as JavaScript,
+  but includes different libraries
+- it can be thought of as a replacement for JavaScript
+- file extension is ".as"
+- an ActionScript source can import others just like in Java
+  * package names correspond to directories just like in Java
+- syntax for defining classes
+  package pkg-name {
+
+  // imports
+
+  public class class-name
+  [extends superclass-name]
+  [implements interface-name-list] {
+  } // class
+
+  } // package
+- components can be added to a user interface using either mxml or ActionScript
+- see API docs at http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/
+  * see "Language Elements" link at the top
+- see PDFs in Programming/Adobe/ActionScript
+- some top level classes
+  * Array
+  * Boolean
+  * Class
+  * Date
+  * Function
+  * int (a class that represents 32-bit integers)
+  * Math
+  * Namespace
+  * Number (double-precision floating-point)
+    - can represent integers up to 53 bits
+  * Object
+  * RegExp
+  * String
+  * uint (a class that represents unsigned integers)
+  * XML
+  * XMLList
+- data types
+  * most of the top level classes above can be used as data types
+  * common ones are Array, Boolean, Date, int, Number and String
+  * custom classes can be used as data types
+  * can also use * as a data type wildcard
+  * use void as the return type of functions that don't return anything
+- debugging output
+  * the trace function takes any number of arguments
+    and outputs the string representation of each
+    - example: trace("The value of x is ", x);
+- classes
+  * each ActionScript source file can only define one public class
+    that is visible outside that source file
+    and the source file name must match that class name
+  * to allow objects to add and access dynamic properties at runtime,
+    precede the "class" keyword with the "dynamic" keyword
+  * to create a subclass, use the "extends" keyword
+    - can only extend on class
+  * to implement one or more interfaces, use the "implements" keyword
+  * properties are typically defined with "private var name:type;"
+  * methods are typically defined with "public function name(param-list) { ... }
+
+AIR
+- stands for Adobe Integrated Runtime
+- Adobe began work on this in October 2005
+- a precursor to this was Tahoe, developed at Macromedia
+- a runtime environment that allows rich web applications
+  to run on the desktop of multiple operating systems
+- advantanges
+  - no confusion with browser notions such as the back button
+  - can access the local file system and databases
+  - drag and drop between AIR apps and non-AIR apps
+- currently a beta release
+- currently the one time download size is a little over 10 MB
+- before being released, the code name was Apollo
+- allows development of desktop applications using
+  HTML, JavaScript, Ajax, Flash, Flex and PDF
+- Adobe AIR SDK is free
+- Adobe AIR runtime is free like Flash Player and Adobe Reader
+- supported platforms
+  * Windows 2000, XP and Vista - 11 MB installer
+  * Mac OS X - 16.4 MB installer
+  * not yet supported under Linux, but will be soon
+  * not yet supported on mobile devices, but will be later
+- doesn't require use of a specific IDE or editor
+- uses the WebKit HTML/JavaScript engine
+  * http://webkit.org
+  * also used Mac applications including Safari, Dashboard, iChat AV,
+    Mail and others
+  * also used by Applie iPhones and Nokia cell phones
+  * Adobe will become an active member of the WebKit community
+    and submit fixes and enhancements
+  * they are currently working on adding support for SVG
+- AIR applications can communicate with each other
+- databases
+  * can't communicate directly with databases
+    - use REST-based services
+  * includes embedded SQLite database
+- native code cannot be used
+- update mechanism for AIR applications is provided
+- a forum for obtaining help is available
+- how do you run a .swf file under AIR?
+- see Programming/Adobe/AIR/HelloWorld/README.txt
+  for information on packaging an AIR file
+- for an example of a web page that makes an AIR app.
+  available for download and install, see
+  Documents/VolkmannWebSite/programming/AIR/RunningCalculator/index.html
+  * this requires the following
+    - the file AC_RunActiveContent.js
+    - the file badge.swf
+    - the .air file to be installed (RunningCalculator.air in this example)
+    - a graphic for the "badge" (screenshot.png in this example)
+    - MIME type configuration in the web server
+      AddType application/vnd.adobe.air-application-installer-package+zip .air
+- is there any support for internationalization?
+
+Other Products
+- Audition
+- ColdFusion
+- LiveCycle
+- Photoshop
+- PDF Reader and Writer

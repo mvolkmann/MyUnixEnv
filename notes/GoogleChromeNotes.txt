@@ -1,0 +1,4 @@
+Google Chrome Notes
+
+To use developer tools
+- select Page menu icon ... Developer ... Developer Tools

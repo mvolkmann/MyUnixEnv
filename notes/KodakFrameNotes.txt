@@ -1,0 +1,33 @@
+Kodak Frame Notes
+
+Images
+- can be place in memory of frame or on an SD card
+  * we have just used the memory of frame so far
+- for images to completely fill the screen,
+  they should be 800 pixels wide and 480 pixels tall
+
+Using iPhoto to crop and size images
+- select picture
+- press cmd-d to duplicate it (so original isn't changed)
+- press the "Edit" button
+- press the "Crop" button
+- on Constrain menu, select "Custom..."
+- enter 800 x 480
+- sometimes also need to select "Constrain as landscape"
+  from the same menu
+- drag and resize the selection rectangle
+- press return (which presses the Apply button)
+- press return (which presses the Done button)
+
+Copying pictures to frame
+- plug in frame using power adapter
+- attach frame to computer using USB cable
+- turn frame on
+- verify that the frame appears in the Finder as a drive
+- select all pictures to be copied to the frame in iPhoto
+- select File...Export...
+- press the Export button
+- select the frame drive
+  * can also export them to a directory on the hard drive first
+    and then copy them to the frame
+- press the OK button

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR.html1/DTD.html1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999.html">
+  <head>
+    <title>CruiseControl Setup</title>
+    <link rel="stylesheet" type="text/css" href="common.css" target="_blank"/>
+  </head>
+  <body>
+    <h2>CruiseControl Setup</h2>
+  
+    <p>
+      From the <a href="http://cruisecontrol.sourceforge.net/" target="_blank">
+      CruiseControl web site</a> ...
+    </p>
+    <blockquote>
+      "CruiseControl is a framework for a continuous build process.
+      It includes, but is not limited to, plugins for
+      email notification, Ant, and various source control tools.
+      A web interface is provided to view the details
+      of the current and previous builds."
+    </blockquote>
+    
+    <p>
+      These notes focus on installing and running CruiseControl under Windows.
+      Running it under UNIX or Linux is similar.
+      An excellent source of information on these steps is a
+      <a href="http://www.pragmaticprogrammer.com/starter_kit/au/scheduled.pdf"
+      target="_blank">chapter</a> extracted from
+      <a href="http://clarkware.com/cgi/blosxom" target="_blank">
+      Mike Clark</a>'s book
+      "<a href="http://www.amazon.com/exec/obidos/ASIN/0974514039/qid=1095943006/sr=ka-2/ref=pd_ka_2/103-2647672-9690201"
+      target="_blank">Pragmatic Project Automation</a>".
+    </p>
+    
+    <p>
+      CruiseControl requires the following software.
+    </p>
+    
+    <ul>
+      <li><a href="http://java.sun.com/j2se/"
+          target="_blank">J2SE</a> (1.4)</li>
+      <li><a href="http://ant.apache.org"
+          target="_blank">Ant</a> (1.6)</li>
+      <li>a J2EE server such as WebLogic or
+          <a href="http://commerce.bea.com/index.jsp"
+          target="_blank">WebLogic</a> (8.1)</li> or
+          <a href="http://jakarta.apache.org/tomcat/"
+          target="_blank">Tomcat</a> (5)</li>
+      <li><a href="http://xml.apache.org/xalan-j/"
+          target="_blank">Xalan-Java</a> (2.6)</li>
+    </ul>
+    
+    <h3>Tomcat Setup</h3>  
+    <ol>
+      <li>Download Tomcat and unzip (.zip) or install it (.exe)</li>
+      <li>Download latest version of Xalan-J.</li>
+      <li>Copy xalan.jar, xercesImpl.jar and xml-apis.jar
+          to Tomcat's common/endorsed directory.</li>
+    </ol>
+    
+    <h3>CruiseControl Setup</h3>
+    <ol>
+      <li>Download from <a href="http://cruisecontrol.sourceforge.net"
+          target="_blank">http://cruisecontrol.sourceforge.net</a>.</li>
+      <li>Unzip to any directory (for example, C:\CruiseControl).</li>
+      <li>Set the environment variable to the directory created by unzipping
+          (for example, C:\CruiseControl\cruisecontrol-2.1.6).</li>
+      <li>From a command-prompt, cd to %CC_HOME%\main.</li>
+      <li>Enter "build".  You'll see lots of messages that
+          look like errors, but if it ends with "BUILD SUCCESSFUL"
+          then everything is okay.</li>
+      <li>Create a directory named "builds" somewhere
+          (for example, C:\CruiseControl\builds).</li>
+      <li>Create a subdirectory named "logs" under "builds".</li>
+      <li>Create a subdirectory named "checkouts" under "builds".</li>
+      <li>For each project whose build is to be automated,
+          checkout the source code from the repository (CVS, ClearCase, ...)
+          into the checkouts directory.</li>
+      <li>Create the file cc-build.xml in the builds directory.
+          Here's an example cc-build.xml file.
+        <pre class="code">
+&lt;project name="cc-build" default="build" basedir="checkout">
+
+  &lt;target name="build">
+    &lt;delete dir="project-name"/>
+    &lt;!-- Put target to checkout or update
+         code from source control here. -->
+    &lt;ant antfile="build.xml" dir="project-name" target="test"/>
+
+    &lt;!-- Steps for additional projects can appear here. -->
+  &lt;/target>
+
+&lt;/project></pre>
+      </li>
+      <li>Test cc-build.xml from a command prompy
+          by cd'ing to the builds directory and
+          running "ant -buildfile cc-build.xml".</li>
+      <li>Create the file config.xml in the builds directory
+          Here's an example config.xml file.
+          For details, see
+          <a href="http://cruisecontrol.sourceforge.net/main/configxml.html"
+          target="_blank">here</a>.
+        <pre class="code">
+&lt;cruisecontrol>
+
+  &lt;project name="project-name" buildafterfailed="false">
+    &lt;!-- If a build fails, don't attempt another unless
+         something has changed in source control. --> 
+
+    &lt;!-- Define things to be done before each build starts. -->
+    &lt;bootstrappers>
+      &lt;!-- Write a message to a log file indicating
+           the time that the latest build started. -->
+      &lt;currentbuildstatusbootstrapper
+        file="logs/project-name/currentbuildstatus.txt"/>
+    &lt;/bootstrappers>
+
+    &lt;!-- If anything has changed in source control in
+         the last minute, don't start the build yet.
+         Someone may be in the middle of checking in changes. -->
+    &lt;modificationset quietperiod="60">
+      &lt;!--cvs localworkingcopy="checkout/project-name"/-->
+      &lt;clearcase branch="prod"
+        viewpath="local-path-to-directory-containing-source-code"/>
+    &lt;/modificationset>
+
+    &lt;!-- Check whether a build is needed every two minutes.
+         A build will only be performed if
+         something has changed in source control. -->
+    &lt;schedule interval="120">
+      &lt;ant buildfile="cc-build.xml" target="build"/>
+    &lt;/schedule>
+
+    &lt;!-- Merge unit test results into logs.
+         This can cause OutOfMemoryErrors, but it is necessary
+         in order for CruiseControl to report unit test results. -->
+    &lt;log dir="logs/project-name">
+      &lt;merge dir="checkout/project-name/test-results"/>
+    &lt;/log>
+
+    &lt;!-- Define things to be notified when the build completes. -->
+    &lt;publishers>
+      &lt;currentbuildstatuspublisher
+        file="logs/project-name/currentbuildstatus.txt"/>
+
+      &lt;!-- Send email describing build results
+           to specified people. -->
+      &lt;htmlemail mailhost="172.30.123.164"
+        returnaddress="mark.r.volkmann@stls.frb.org"
+        buildresultsurl="http://H1TRASSD6:8080/cruisecontrol/buildresults/project-name"
+        css="C:\CruiseControl\cruisecontrol-2.1.6\reporting\jsp\css\cruisecontrol.css"
+        xsldir="C:\CruiseControl\cruisecontrol-2.1.6\reporting\jsp\xsl"
+        logdir="logs/project-name">
+        &lt;map alias="Mark" address="mark.r.volkmann@stls.frb.org"/>
+        &lt;always address="Mark"/>
+      &lt;/htmlemail>
+    &lt;/publishers>
+
+  &lt;/project>
+
+  &lt;!-- Additional project elements can appear here. -->
+
+&lt;/cruisecontrol></pre>
+      </li>
+      <li>Add the following test target to the
+          Ant build.xml file of each project.
+          If a test target already exists, modify it to match this.
+          Note that this target must depend on whatever targets
+          are necessary to prepare for running unit tests.
+          The value of the test.dir property is "test-results".
+        <pre class="code">
+  &lt;target name="test" depends="compile"
+    description="runs unit tests">
+    &lt;delete dir="${test.dir}"/>
+    &lt;mkdir dir="${test.dir}"/>
+    &lt;junit errorProperty="test.failed" failureProperty="test.failed">
+      &lt;classpath refid="classpath"/>
+      &lt;formatter type="brief" usefile="false"/>
+      &lt;formatter type="xml"/>
+      &lt;batchtest todir="${test.dir}">
+        &lt;fileset dir="${test.classes.dir}"
+          includes="**/*Test.class"/>
+      &lt;/batchtest>
+      &lt;sysproperty key="doc.dir" value="doc"/>
+      &lt;sysproperty key="index.dir" value="index"/>
+    &lt;/junit>
+    &lt;fail if="test.failed" message="Tests failed! Check test reports."/>
+  &lt;/target></pre>
+      </li>
+      <li>Create the file %CC_HOME%\reporting\jsp\override.properties.
+          Here's an example override.properties file.
+        <pre class="code">
+user.log.dir=/CruiseControl/builds/logs
+user.build.status.file=currentbuildstatus.txt
+cruise.build.artifacts.dir=/CruiseControl/builds/logs</pre>
+      </li>
+      <li>From a command-prompt, cd to %CC_HOME%\reporting\jsp.</li>
+      <li>Build the CruiseControl web app. by running "build war".</li>
+      <li>Copy %CC_HOME%\reporting\jsp\dist\cruisecontrol.war
+          to Tomcat's webapps directory.</li>
+      <li>Start Tomcat.  One way is to run %TOMCAT_HOME%\bin\startup.bat.</li>
+      <li>From a command-prompt, cd to the builds directory
+          (for example, C:\CruiseControl\builds).</li>
+      <li>Start CruiseControl from the command-prompt by
+          running "%CC_HOME%\main\bin\cruisecontrol".</li>
+      <li>Check something into source control to cause a build to occur.</li>
+    </ol>
+    
+    <p>
+      Email will be sent when builds are run.
+    </p>
+    
+    <p>
+      A web site describing the build history can be viewed at
+      <a href="http://H1TRASSD6:7001/cruisecontrol" target="_blank">
+      http://H1TRASSD6:7001/cruisecontrol</a>.
+    </p>
+                  
+    <hr />
+    <p style="text-align:center">
+      Copyright &#169; 2004 Federal Reserve Bank. All rights reserved.
+    </p>
+  </body>
+</html>

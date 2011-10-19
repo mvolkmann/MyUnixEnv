@@ -1,0 +1,23 @@
+Firebug Notes
+
+Overview
+- allows editing, debugging and monitoring of HTML, CSS and JavaScript
+  from within Firefox
+
+To install
+- run Firefox
+- browse http://getfirebug.com
+- press the "INSTALL FIREBUG" button
+
+To open
+- select Tools...Firebug...Open Firebug
+- can also press the bug button in the
+  lower-right corner of the browser window
+
+To enable JavaScript debugging
+- click the down triangle on the Script tab
+- select "Enabled"
+
+To stop on all JavaScript errors
+- click the down triangle on the Script tab
+- select "Break on All Errors"

@@ -1,0 +1,59 @@
+Semantic Web Notes
+
+- see http://en.wikipedia.org/wiki/Semantic_web
+
+- "Humans are capable of using the Web to carry out tasks such as
+  finding the Finnish word for "monkey", reserving a library book,
+  and searching for a low price for a DVD.
+  However, a computer cannot accomplish the same tasks
+  without human direction because web pages are
+  designed to be read by people, not machines.
+  The semantic web is a vision of information
+  that is understandable by computers,
+  so that they can perform more of the tedious work involved in
+  finding, sharing, and combining information on the web."
+
+- an extension of the World Wide Web in which the semantics
+  of information and services on the web is defined
+
+- releated specifications include Resource Description Framework (RDF),
+  various interchnage formats and notations such as
+  RDF Schema (RDFS) and the Web Ontology Language (OWL)
+
+- Semantic HTML adds information about the intention of data
+  in an HTML document.
+
+- Microformats are an attempt to extend HTML to with markup
+  that allows software to determine the meaning of data.
+  * example from http://en.wikipedia.org/wiki/Microformat#Example
+    <div class="vcard">
+      <div class="fn">Joe Doe</div>
+      <div class="org">The Example Company</div>
+      <div class="tel">604-555-1234</div>
+      <a class="url" href="http://example.com/">http://example.com/</a>
+    </div>
+  * some specific microformats have been defined
+    - see http://en.wikipedia.org/wiki/Microformat#Specific_microformats
+
+- While OCI doesn't have specific experience with
+  semantic web applications, we do have significant experience with
+  related technologies that will provide value.  These include:
+  * HTML
+    - necessary as the basis of microformats
+  * XML
+    - necessary to extend HTML into a particular microformat
+  * XML Schema
+    - one way to describe the requirements
+      of a particular microformat
+  * XSLT to transform one XML format to another
+    - one way to transform generic HTML to a microformat
+  * XML parsers
+    - to parse and create XML-based data 
+    - event-based (SAX), document object model-based (DOM)
+      and pull-parser-based (ex. Woodstox)
+    - OCI created an open-source library (WAX)
+      for extremely efficient XML generation
+      * provides high performance and minimal memory usage
+  * REST
+    - a populate way to implement services that
+      receive and/or send semantic web data

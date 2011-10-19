@@ -1,0 +1,19 @@
+Tokyo Cabinet Notes
+
+To install
+- couldn't find in yum
+- install bzip2
+  * curl http://bzip.org/1.0.6/bzip2-1.0.6.tar.gz > bzip.tgz
+  * tar zxf bzip.tgz
+  * cd bzip2-1.0.6
+  * edit Makefile and add "-fPIC " to beginning of CFLAGS
+  * make
+  * sudo make install
+- install Tokyo Cabinet
+  * curl http://fallabs.com/tokyocabinet/tokyocabinet-1.4.47.tar.gz > tokyo.tgz
+  * tar zxf tokyo.tgz
+  * cd tokyocabinet-1.4.47
+  * ./configure
+  * make
+  * sudo make install
+  * export LD_LIBRARY_PATH=/usr/local/lib

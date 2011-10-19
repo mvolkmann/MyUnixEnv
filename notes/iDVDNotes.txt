@@ -1,0 +1,15 @@
+iDVD Notes
+
+Here are the steps for one way to create a DVD.
+1) Start iDVD
+2) Select "iMagic DVD"
+3) Enter a title.
+4) Select a theme.
+4) Drag movies from Finder to the appropriate boxes.
+5) Drag photos, if any, from Finder to the appropriate boxes.
+6) Press the "Create Project" button.
+7) Press the burn button (twice?) that is
+   just to the right of the triangle play button.
+8) When prompted, insert a blank DVD.
+9) Wait a long time for the encoding and burning process to finish.
+10) The DVD will be ejected automatically.

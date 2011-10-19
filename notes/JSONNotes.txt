@@ -1,0 +1,5 @@
+JSON Notes
+
+References
+- http://json.org
+- http://www.rojotek.com/blog/2009/05/07/a-review-of-5-java-json-libraries/

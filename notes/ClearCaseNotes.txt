@@ -1,0 +1,257 @@
+ClearCase Command-line Commands
+
+SOSCOE
+  The Boeing SOSCOE project provides many scripts
+  to simplify use of ClearCase.
+  They are in /soscoe/ccase/scripts.
+
+Help
+
+  To get help on a command,
+    cleartool man {command}
+
+---------------------------------------------------------------------------
+Config. Specs.
+
+  Output config. spec.
+    cd to /view/{view-name} or any subdirectory
+    cleartool catcs
+
+  Edit config. spec.
+    cd to /view/{view-name} or any subdirectory
+    cleartool edcs
+
+  Comments inside
+    use leading #
+
+  Latest
+    it is common to include the following as the last line:
+    element * /main/LATEST
+
+---------------------------------------------------------------------------
+VOBs
+
+  List VOBs
+    ct lsvob
+
+  Mount VOB
+    ct mount {vob-tag}
+
+  Unmount VOB
+    ct unmount {vob-tag}
+
+---------------------------------------------------------------------------
+Branches
+
+  List branch types
+    cd {directory-of-vob}
+    ct lstype -kind brtype | grep jz317b
+
+  Create branch type (only for VOB of current directory)
+    cd {directory-of-vob}
+    ct mkbrtype -ordinary {branch-name}
+    For COS the branch-name should be jz317b_cos0.0_cr{cr#}
+    or jz317b_soscoe1.0jucas_pcr{pcr#}_cr{cr#}
+
+  List files in a given VOB that were modified on a given branch
+    ct find {vob-name} -branch 'brtype({branch-name})' -nxn -print
+    An example vob-name is /vobs/COS_MW_Code.
+    An example branch-name is jz317b_cos0.0_cr14336.
+    If files were added, only the directory is output.
+
+  Delete a file from a branch
+    ct rmbranch -nc {file}@@{branch-full-path}
+    An example branch-full-path is /main/cos0.0_stl/jz317b_cos0.0_cr14264.
+
+  Delete a branch
+    ct rmtype -rmall brtype:{branch-name}
+
+---------------------------------------------------------------------------
+Views
+
+  Show current view
+    cleartool pwv
+
+  List available views
+    cleartool lsview
+
+  Create a view
+    ct mkview -tag {view-name} {storage-directory}
+    (For COS, storage-directory should be
+     /data03/jucas/ccdata/viewstrg/{view-name}.)
+
+    Another way to create a COS view under Linux is to run the script
+    /data01/jucas/scripts/view_scripts/make_view.pl.
+    (The config. spec. this creates may not use
+     the current versions of some things.)
+
+  Set view
+    cleartool setview {view-name}
+    (Note that setview isn't available in Windows.
+     Use startview instead.)
+    (For JUCAS work, run ~/COSsetup.sh after this!)
+
+  Delete view
+    /soscoe/ccase/scripts/remove_view.pl
+
+---------------------------------------------------------------------------
+Labels
+
+  Add a label to all files in a directory
+  - convention is for labels to be all uppercase
+  - cd to directory containing files to be labelled
+  - ct mklbtype -nc {label}
+  - ct mklabel -recurse {label} .
+  - ct mklbtype -nc {label}
+  - cd to parent directory and run "ct mklabel {label} .
+  - repeat previous step until top VOB directory is reached
+
+---------------------------------------------------------------------------
+
+Add directory (must be empty)
+  cleartool co -nc .
+  cleartool mkdir -nc {dir}
+  cleartool ci -nc {dir}
+  cleartool ci -nc .
+
+Add file
+  cleartool co -nc .
+  cleartool mkelem -nc {file}
+  (can also use "find . -name '*' | xargs cleartool mkelem -nc"
+   to add many files at once)
+  cleartool ci -nc {file}
+  cleartool ci -nc .
+
+Cat an earlier revision
+  copy the version string from output of lshistory
+  paste it after a cat command
+  for example,
+  cat {file-name}@@/main/soscoe2.5/{view-name}/{revision-number}
+
+Check-in
+  cleartool ci -nc {file}
+  cleartool ci -c '{comment}' {file}
+  To check in all files that are checked out with the same comment,
+    alias lsco 'ct lsco -s -cvi -a'
+    lsco | xargs cleartool ci -c '{comment}'
+    You defined the following alias.
+    alias ciall 'lsco | xargs grep cleartool ci -c '
+    To use this, enter "ciall {comment}".
+    Also see /soscoe/ccase/scripts/ci_all.pl.
+
+Check-out latest revision
+  cleartool co -nc [-unr] {file}
+    -nc is for no comment
+    -unr is for unreserved
+
+Check-out an earlier revision
+  cleartool co -ver {file}@@{version-string}
+  * The string after -ver is just like what is displayed by lshistory.
+
+Delete a file
+  cleartool co -nc .
+  cleartool rm -nc {file}
+  cleartool ci -nc .
+
+Delete a version of a file
+  cleartool rmver -version {version-spec} {file}
+
+Delete view private files
+  cleartool lsprivate | xargs rm -rf
+
+Differences between checked out, modified file and last version checked in
+  cleartool diff -g -pred {file}
+
+Differences between specific revisions of a file
+  cleartool lsvtree -g {file}
+  click a circle to select the first revision
+  select Version...Diff...Selected vs. other...
+  a new dialog will appear
+  click a circle to select the second revision
+  press the OK button
+
+Differences between files on a branch and current view
+  cleartool find . -branch 'brtype({branch})' -nxn \
+  -exec 'cleartool diff -g $CLEARCASE_XPN/LATEST $CLEARCASE_PN'
+
+Find files modified in the current view from
+their state at the time the view was created
+  /soscoe/ccase/scripts/find_changed_files.pl
+
+Find where files were obtained (within config. spec lines)
+  cleartool ls [{file}]
+
+History
+  cleartool lshistory {file}
+
+List check-outs
+  - only in your view
+    cleartool lsco -s -avobs -cvi
+    * -s is for short output
+    * -avobs is for all vobs
+    * -cvi is for current view only
+  - of a specific file in any view
+    cleartool lsco {file}
+
+List view private files
+  cleartool ls -l -recurse | grep private
+  cleartool lsprivate | grep -v "\.o" | grep -v "\.so"
+  You have the script "lsprivate" in ~/bin that does this.
+
+Merge - command line
+  cd {top-vob-dir} (for example, /vobs/fcsc_userProfilePolicy)
+  ct findmerge . -all -fver .../{from-view-name}/LATEST -merge -gmerge
+  * note that only checked in files are merged
+
+Merge - graphical
+  start Exceed
+  cleartool lsvtree -g {file}
+  click merge button in toolbar
+  select version to merge from
+  select version to merge to
+  click "Yes" button to try automatic merge
+  select File...Update..Force on this Browser
+  select latest version
+  click diff button (triangle) in toolbar to verify changes
+  close lsvtree window
+
+Modify a private copy of a file
+- for cases where you need to temporarily change a file
+  and not checkin the changes
+  1) cp {file-name} {file-name}-save
+  2) cleartool edcs
+  3) add the following line after "element * CHECKEDOUT" (first line)
+     element {file-path} -none
+  4) mv {file-name}-save {file-name}
+  5) edit {file-name}
+
+Move a file
+  to move a file from one directory to another
+  cleartool co {src-dir}
+  cleartool co {target-dir}
+  cleartool mv {src-dir}/{file} {target-dir}
+  cleartool ci {src-dir}
+  cleartool ci {target-dir}
+
+Remove a file
+  cleartool co {src-dir}
+  cleartool rnname {src-dir}/{file}
+  cleartool ci {src-dir}
+
+Uncheckout
+  cleartool unco [-rm] {file}
+    -rm doesn't keep a copy of the local version
+  /soscoe/ccase/scripts/unco_all.pl
+
+Update a view
+  ct setview {view-name}
+  cd {top-directory-to-be-updated}
+  /soscoe/ccase/scripts/update_view.pl
+  Note that this doesn't update your config. spec.
+
+Version tree graphical view
+  start Exceed
+  cleartool lsvtree -g {file}
+
+Version-extended paths
+/view/{view-name}/vobs/{rest-of-path}@@{label}
