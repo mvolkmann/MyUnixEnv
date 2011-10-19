@@ -643,9 +643,11 @@ Submodules
 - to list submodules, git submodule
 - to add a submodule, from top project directory
   * git submodule add {git-url} {dir-path-below-current}
-- to get files in submodules, from top project directory
+- to populate the files in submodules, from top project directory
   * git submodule init
   * git submodule update
+- to remove a submodule, from top project directory
+  * see the webpage below ... it's complicated!
 - for more detail, see
   http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
 
