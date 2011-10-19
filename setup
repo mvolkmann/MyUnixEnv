@@ -4,9 +4,21 @@ git submodule init
 git submodule update
 
 cd
+
+mv .bash_profile .bash_profileOLD
 ln -s MyUnixEnv/.bash_profile .bash_profile
+
+mv .bashrc .bashrcOLD
 ln -s MyUnixEnv/.bashrc .bashrc
+
+mv bin binOLD
 ln -s MyUnixEnv/bin bin
+
+mv .jshintrc .jshintrcOLD
 ln -s MyUnixEnv/.jshintrc .jshintrc
+
+mv .vim .vimOLD
 ln -s MyUnixEnv/.vim .vim
+
+mv .vimrc .vimrcOLD
 ln -s MyUnixEnv/.vimrc .vimrc
