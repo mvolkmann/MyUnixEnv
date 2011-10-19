@@ -11,8 +11,8 @@ ln -s MyUnixEnv/.bash_profile .bash_profile
 mv .bashrc .bashrcOLD
 ln -s MyUnixEnv/.bashrc .bashrc
 
-mv bin binOLD
-ln -s MyUnixEnv/bin bin
+mkdir bin
+cp MyUnixEnv/bin/* bin
 
 mv .jshintrc .jshintrcOLD
 ln -s MyUnixEnv/.jshintrc .jshintrc
