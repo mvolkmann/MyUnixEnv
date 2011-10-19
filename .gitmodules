@@ -1,3 +1,24 @@
 [submodule ".vim/bundle/vim-colors-solarized"]
 	path = .vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule ".vim/bundle/snipmate.vim.git"]
+	path = .vim/bundle/snipmate.vim.git
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule ".vim/bundle/vim-coffee-script.git"]
+	path = .vim/bundle/vim-coffee-script.git
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule ".vim/bundle/vim-coffee-script"]
+	path = .vim/bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule ".vim/bundle/vim-javascript"]
+	path = .vim/bundle/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
+[submodule ".vim/bundle/vim-l9"]
+	path = .vim/bundle/vim-l9
+	url = https://github.com/slack/vim-l9.git
+[submodule ".vim/bundle/vim-ruby"]
+	path = .vim/bundle/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule ".vim/bundle/snipmate.vim"]
+	path = .vim/bundle/snipmate.vim
+	url = https://github.com/msanders/snipmate.vim.git
