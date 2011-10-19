@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/volkmannm/Documents'
+let g:netrw_dirhist_2='/Users/volkmannm'
+let g:netrw_dirhist_3='/Users'
+let g:netrw_dirhist_4='/Users/volkmannm'
+let g:netrw_dirhist_5='/Users/volkmannm/Documents/GEP/prototypes/kvs/lib'
+let g:netrw_dirhist_6='/Users/volkmannm'
+let g:netrw_dirhist_7='/Users/volkmannm/Documents/GEP/prototypes/kvs/lib'

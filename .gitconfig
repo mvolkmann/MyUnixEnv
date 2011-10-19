@@ -1,0 +1,7 @@
+[url "https://"]
+	insteadOf = git://
+[core]
+	editor = /usr/bin/vim
+[user]
+	name = R. Mark Volkmann
+	email = m.volkmann@elsevier.com
