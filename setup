@@ -22,3 +22,5 @@ ln -s MyUnixEnv/.vim .vim
 
 mv .vimrc .vimrcOLD
 ln -s MyUnixEnv/.vimrc .vimrc
+
+echo success!
