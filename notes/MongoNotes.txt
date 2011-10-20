@@ -1,5 +1,14 @@
 Mongo Notes
 
+To install
+- browse http://www.mongodb.org/downloads
+- download the appropriate file
+- unzip the file
+- mkdir -p /data/db (default database directory)
+
+To get detailed documentation
+- browse http://www.mongodb.org/display/DOCS/Manual
+
 To start server
 ./bin/mongod
 
@@ -19,4 +28,5 @@ Mongo Shell
 - to exit the shell, enter "exit"
 
 Node modules
-- sudo npm install mongodb
+- https://github.com/christkv/node-mongodb-native
+  * install with "sudo npm install mongodb"
