@@ -16,7 +16,7 @@ export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 # \$ outputs # if superuser (like root), $ otherwise.
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /root/.bashrc too.
-export PS1='\h \W\$ ' # sets bash shell prompt
+export PS1='\n \W\$ ' # sets bash shell prompt
 
 #-------------------------------------------------------------------------
 
