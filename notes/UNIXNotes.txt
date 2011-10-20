@@ -208,10 +208,11 @@ Host
 - To determine name of current host, enter "hostname".
 
 IP address
-- To determine the IP address of the current host
-  run /sbin/ifconfig and look for en0 (wired) or en1 (wireless) inet addr
-  * on some machines, ifconfig is in /sbin
-  or nslookup {hostname}
+- To determine the IP address of the current host (three ways)
+  * google "what is my ip"
+  * run /sbin/ifconfig and look for en0 (wired) or en1 (wireless) inet addr
+    - on some machines, ifconfig is in /sbin
+  * nslookup {hostname}
 
 Konsole
 - To open a new session (tab), Ctrl-Shift-N.
