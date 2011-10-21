@@ -22,7 +22,7 @@ export PS1='\n \W\$ ' # sets bash shell prompt
 
 # Commonly used directory prefixes.
 
-export DOCUMENTS_DIR=/Users/volkmannm/Documents
+export DOCUMENTS_DIR=$HOME/Documents
 
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
