@@ -110,11 +110,6 @@ Express module
       query, session, static
 - npm install express
 
-Socket.IO Module
-- http://socket.io/
-- see configuration options at
-  https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
-
 goog Module
 - https://github.com/hsch/node-goog
 - allows the Google Closure library to be used with Node.js
@@ -133,3 +128,12 @@ goog Module
     goog = require('goog').goog;
 - require modules to be used
   * ex. goog.require('goog.structs.Set');
+
+Optimist Module
+- provides command-line option parsing
+- https://github.com/substack/node-optimist
+
+Socket.IO Module
+- http://socket.io/
+- see configuration options at
+  https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
