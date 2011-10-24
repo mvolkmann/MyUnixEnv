@@ -22,7 +22,7 @@ export PS1='\n \W\$ ' # sets bash shell prompt
 
 # Commonly used directory prefixes.
 
-export DOCUMENTS_DIR=/Users/volkmannm/Documents
+export DOCUMENTS_DIR=$HOME/Documents
 
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
@@ -32,7 +32,7 @@ export COUCHDB_DIR=$DATABASES_DIR/CouchDB
 export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/Java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
-export MONGO_DIR=$DATABASES_DIR/MongoDB/mongodb-osx-x86_64-2.0.1-rc1
+export MONGODB_DIR=$DATABASES_DIR/MongoDB/mongodb-osx-x86_64-2.0.1-rc1
 export NODE_VERSION=0.4.11
 export NODE_DIR=$JAVASCRIPT_DIR/node.js/node-v$NODE_VERSION
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
