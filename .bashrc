@@ -1,5 +1,5 @@
 #!/bin/bash
-echo running .bashrc
+#echo running .bashrc
 
 # Source global definitions.
 if [ -f /etc/bashrc ]; then
@@ -18,6 +18,7 @@ alias cdclojure='cd $CLOJURE_DIR'
 alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
 alias cdcouchdb='cd $COUCHDB_DIR'
 alias cdelsevier='cd $ELSEVIER_DIR'
+alias cdfinder='cd $APTO_DIR/node_modules/apto-finder'
 alias cdgep='cd $GEP_DIR'
 alias cdjava='cd $JAVA_DIR'
 alias cdjavascript='cd $JAVASCRIPT_DIR'

@@ -346,6 +346,8 @@ GitHub
   - ssh git@github.com
   - enter "yes"
   - you are now permanently authenticated
+  - verify that .git/config [remote "origin"] url value
+    uses the git protocol, not http or https
 
 To create a clone of another repo
 - git clone {repo-url} [{local-repo-name}]

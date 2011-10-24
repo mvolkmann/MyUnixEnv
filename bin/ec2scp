@@ -1,0 +1,9 @@
+#!/bin/bash
+# Copies a given file to my EC2 instance.
+
+if [ $# -ne 1 ]; then
+  echo usage: ec2scp {file-path}
+  exit 1
+fi
+
+scp $1 mvolkmann@ec2-50-17-7-237.compute-1.amazonaws.com:
