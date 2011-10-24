@@ -10,11 +10,17 @@ To add files to new branch
 To commit changes in new branch
   git commit -av
 
+To push the new branch to github (unmerged)
+  * may need to do a pull first like this
+    git pull origin {branch-name}
+  git push origin {branch-name}
+
 To squash commits in current branch
   git rebase -i master
 
 To merge a branch back to master
   git checkout master
+  git pull
   git merge {branch-name}
 
 To push changes to master out to GitHub
