@@ -1,0 +1,71 @@
+Jake Notes
+
+Jake is a "make" tool for JavaScript and that can be used with Node.js.
+
+To install
+- npm install jake
+
+To run
+- jake {targets}
+  * targets is a space-separated list
+  * if none are specified, the task named "default" is run
+
+To pass arguments to a task
+- follow target name with [p1,p2,p3]
+- spaces are only allowed inside quotes
+- the task handler function must have matching parameters
+  * extra arguments are ignored
+
+Build files
+- default name is Jakefile
+- can specify a different file with the -f or --jakefile option
+- Jakefiles are valid JavaScript files
+  * so can start with 'use strict';
+  * can also be written in CoffeeScript
+- often use the exec function in the Node child_process module
+  * var exec = require('child_process').exec;
+
+To list the tasks in a build file
+- jake -T or --tasks
+
+Task syntax
+- desc('{task-description}'); // precedes the task to which it applies
+  task({name}, {dependencies}, {handler}, {async});
+  * name is a string
+  * dependencies is an array of other task names
+    - if no dependencies, pass [] or omit
+    - each dependency is only run once regardless of
+      the number of executed tasks that depend on it
+  * handler is a function that implements the task
+    - it can be omitted if the task only needs to run dependencies
+  * async is a optional boolean that defaults to false
+    - if true, the handler must call complete() when the task is finished
+
+Default task
+- named 'default'
+- can simply depend on another task
+- ex. task('default', ['foo']);
+
+File tasks
+- create a file
+- only run with a given file doesn't exist or
+  is older than files specfied in prerequisite tasks
+- for an example, see jake-jshint.js
+
+Directory tasks
+- create a directory
+- only run if the directory doesn't exist
+
+Aborting a task
+- fail({message} [,{exit-status}]);
+
+Package task
+- creates tasks that package the project for distribution
+- task names are 'package', 'clobberPackage' and 'repackage'
+
+jake.FileList class
+- creates a list of files that match given glob patterns and names
+
+To programmatically run a task from the handler of another
+- jake.Task.{name}.invoke(); // also runs dependencies
+- jake.Task.{name}.execute(); // doesn't run dependencies
