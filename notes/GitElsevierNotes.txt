@@ -15,6 +15,7 @@ To squash commits in current branch
 
 To merge a branch back to master
   git checkout master
+  git pull (to get changes others merged in the interim)
   git merge {branch-name}
 
 To push changes to master out to GitHub
