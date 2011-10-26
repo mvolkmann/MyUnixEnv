@@ -23,6 +23,10 @@ To merge a branch back to master
   git pull (to get changes others merged in the interim)
   git merge {branch-name}
 
+To determine if a branch has already been merged back to master
+- attempt to merge it again
+- it's already been done if it says "Already up-to-date"
+
 To push changes to master out to GitHub
   git pull (to get changes others merged in the interim)
   git push
