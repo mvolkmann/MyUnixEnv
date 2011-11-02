@@ -38,7 +38,7 @@ export NODE_DIR=$JAVASCRIPT_DIR/node.js/node-v$NODE_VERSION
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 
 export GEP_DIR=$DOCUMENTS_DIR/GEP
-export APTO_DIR=$GEP_DIR/apto
+export APTO_HOME=$GEP_DIR/apto
 export PROTOTYPES_DIR=$GEP_DIR/prototypes
 export SANDBOX_DIR=$GEP_DIR/sandboxes/mvolkmann
 

@@ -1,5 +1,9 @@
 Elsevier Notes
 
+Phones
+- to dial 314 numbers, start with #9
+- to dial other numbers, start with #91{area-code}
+
 To login to EC2 instance
 - ec2login (it's in ~/bin)
 

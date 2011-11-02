@@ -3,7 +3,10 @@
 
   "predef": [
     "console",
-    "$"
+    "exports",
+    "$",
+    "__dirname",
+    "__filename"
   ],
 
   "bitwise": true,

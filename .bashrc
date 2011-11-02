@@ -13,12 +13,12 @@ fi
 alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
 alias bigdirs="du -sk * | sort -nr | head"
 
-alias cdapto='cd $APTO_DIR'
+alias cdapto='cd $APTO_HOME'
 alias cdclojure='cd $CLOJURE_DIR'
 alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
 alias cdcouchdb='cd $COUCHDB_DIR'
 alias cdelsevier='cd $ELSEVIER_DIR'
-alias cdfinder='cd $APTO_DIR/node_modules/apto-finder'
+alias cdfinder='cd $APTO_HOME/node_modules/apto-finder'
 alias cdgep='cd $GEP_DIR'
 alias cdjava='cd $JAVA_DIR'
 alias cdjavascript='cd $JAVASCRIPT_DIR'
@@ -33,7 +33,7 @@ alias cdprototypes='cd $PROTOTYPES_DIR'
 alias cdruby='cd $RUBY_DIR'
 alias cdsandbox='cd $SANDBOX_DIR'
 alias python=python3.2
-alias test='clear; expresso -I lib'
+alias test='clear; expresso'
 
 # Ask for confirmation before overwriting or deleting files.
 alias cp="cp -i"

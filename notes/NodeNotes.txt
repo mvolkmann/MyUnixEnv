@@ -1,4 +1,4 @@
-node-js Notes
+Node.js Notes
 
 Stable versions
 - part before first dot is an even number
@@ -83,6 +83,8 @@ To get a list of installed modules
 To create a new package
 - create a package.json file that describes it
   * enter "npm help json" for details
+  * run "npm init" to have it prompt for details and create the file
+    - safe to run in a non-empty directory
 ...
 - enter "npm publish ..."
 
@@ -98,6 +100,12 @@ To install node-jslint
 - run "npm list | grep jslint" to find the latest version
   - it was "jslint@0.0.3"
 - run "sudo npm install jslint@0.0.3"
+
+Events module
+- EventEmitter
+  * don't use 'error' as an event name because
+    Node will throw an error if such an event is emitted
+    and there is no listener for it
 
 Express module
 - http://expressjs.com
