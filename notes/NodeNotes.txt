@@ -54,10 +54,6 @@ To install Node Package Manager (npm)
   * enter "sudo make dev"
   * enter "sudo make link"
 
-NODE_PATH
-- this environment variable is used to locate Node modules
-- a good value for this is .:/usr/local/lib/node_modules
-
 To update npm itself
 - enter "npm update npm"
 
@@ -95,6 +91,10 @@ npm commands include:
 
 To get help on an npm command
 - enter "npm help {command}"
+
+NODE_PATH
+- this environment variable is used to locate Node modules
+- a good value for this is .:/usr/local/lib/node_modules
 
 To install node-jslint
 - run "npm list | grep jslint" to find the latest version

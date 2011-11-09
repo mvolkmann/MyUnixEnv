@@ -483,6 +483,11 @@ Shell commands
   :ConqueTermTab bash
   :ConqueTermVSplit bash
 
+Snippets
+- using SnipMate plugin
+- see snippet definitions in ~/.vim/bundle/snipmate.vim/snippets directory
+- enter snippet name and press tab to expand
+
 Tools that use vi
 - To cause tools that launch vi (such as cleartool edcs)
   to launch vim instead, set the VISUAL environment variable to "vim".

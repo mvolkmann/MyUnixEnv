@@ -39,6 +39,7 @@ export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 
 export GEP_DIR=$DOCUMENTS_DIR/GEP
 export APTO_HOME=$GEP_DIR/apto
+export DOCTOR_DIR=$GEP_DIR/doctor
 export PROTOTYPES_DIR=$GEP_DIR/prototypes
 export SANDBOX_DIR=$GEP_DIR/sandboxes/mvolkmann
 
