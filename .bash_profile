@@ -109,6 +109,7 @@ export RHINO_HOME=$RHINO_DIR/rhino1_7R3
 export RUBY_DIR=$LANGUAGES_DIR/Ruby
 #export RUBY_HOME=/usr/local/lib/ruby
 #export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:/usr/local/Cellar/ruby/1.9.2-p290/bin
 export RUBYOPT=-rubygems
 # Tell less not to complain about ANSI escape codes, and run ri.
 alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
