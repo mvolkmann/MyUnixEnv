@@ -2,8 +2,14 @@
   "indent": 2,
 
   "predef": [
+    "alert",
     "console",
     "exports",
+    "localStorage",
+    "module",
+    "parseInt",
+    "sessionStorage",
+    "window",
     "$",
     "__dirname",
     "__filename"
