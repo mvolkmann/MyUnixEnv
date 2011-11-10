@@ -8,12 +8,15 @@ To install node-js on a Mac
   - link was "Xcode 3.2.3 and iOS SDK 4.0.2"
 - run installer
   - don't need to install development environment
+- option #1
 - download node-js from http://nodejs.org/#download
 - unzip it
 - cd to the directory
 - enter "./configure"
 - enter "make"
 - enter "sudo make install"
+- n
+  * see Google Docs presentation "Node Version Mgmt Using "n""
 
 To open a REPL
 - enter "node"
