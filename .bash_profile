@@ -43,6 +43,8 @@ export DOCTOR_DIR=$GEP_DIR/doctor
 export PROTOTYPES_DIR=$GEP_DIR/prototypes
 export SANDBOX_DIR=$GEP_DIR/sandboxes/mvolkmann
 
+export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
+
 # Ant settings
 export ANT_HOME=$JAVA_DIR/Ant/apache-ant-1.8.2
 export PATH=$ANT_HOME/bin:$PATH

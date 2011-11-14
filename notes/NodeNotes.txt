@@ -148,3 +148,6 @@ Socket.IO Module
 - http://socket.io/
 - see configuration options at
   https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
+
+Stack Traces
+- to print one, call console.trace();

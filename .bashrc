@@ -36,6 +36,8 @@ alias cdsandbox='cd $SANDBOX_DIR'
 alias python=python3.2
 alias test='clear; expresso'
 
+alias cdtraining='cd $TRAINING_DIR'
+
 # Ask for confirmation before overwriting or deleting files.
 alias cp="cp -i"
 alias mv="mv -i"
