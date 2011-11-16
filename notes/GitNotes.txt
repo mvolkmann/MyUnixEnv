@@ -101,6 +101,12 @@ Diffs
 Aliases
 - can create aliases for git commands with
   git config --global alias.{alias} "{command}"
+  or edit ~/.gitconfig and add them under [alias] section
+  * ex.
+    [alias]
+      br = branch
+      ci = commit
+      co = checkout
 
 Reporting (log, blame and status)
 - to list commits showing author, date and message
