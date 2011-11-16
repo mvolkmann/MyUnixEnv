@@ -1,7 +1,7 @@
 #!/bin/bash
 # This merges the current git branch with master
 # and deletes the current git branch.
-branchName=`git name-rev --name-only HEAD`
+branch=`git name-rev --name-only HEAD`
 echo $branch
 git checkout master && \
 git merge $branch && \
