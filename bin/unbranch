@@ -1,9 +1,13 @@
 #!/bin/bash
 # This merges the current git branch with master
 # and deletes the current git branch.
+# Changes to the current branch should be committed before running this.
+
+# Get name of current branch.
 branch=$(git symbolic-ref -q HEAD)
 branch=${branch##refs/heads/}
 branch=${branch:-HEAD}
+
 git checkout master && \
 git merge $branch && \
 git branch -d $branch
