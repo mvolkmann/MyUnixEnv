@@ -482,6 +482,9 @@ Shell commands
   :ConqueTermSplit mysql -h localhost -u joe -p sock_collection
   :ConqueTermTab bash
   :ConqueTermVSplit bash
+- when running Vim from a terminal window,
+  can press ctrl-z to put Vim in the background
+  and enter fg to return to Vim in the foreground
 
 Snippets
 - using SnipMate plugin
