@@ -27,4 +27,6 @@ pushd MyUnixEnv/.vim/bundle/jshint.vim
 git checkout 3c393147
 popd
 
+cp -f MyUnixEnv/javascript.snippets .vim/bundle/snipmate.vim/snippets
+
 echo success!

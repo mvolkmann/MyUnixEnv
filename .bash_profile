@@ -74,15 +74,15 @@ export CLOSURE_BASE_PATH=$JS_DIR/GoogleClosure/closure-library-read-only/closure
 #export GREP_OPTIONS="--color=ALWAYS"
 
 # Java settings
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
-export PATH=$JAVA_HOME/bin:$PATH
+#export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
+#export PATH=$JAVA_HOME/bin:$PATH
 
 # JavaScript settings
 export JS_CMD=node
 export JS_DIR=$LANGUAGES_DIR/JavaScript
 
 # MacPorts settings.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/opt/local/sbin:$PATH
 
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
