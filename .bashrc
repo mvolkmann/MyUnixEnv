@@ -34,7 +34,7 @@ alias cdprototypes='cd $PROTOTYPES_DIR'
 alias cdruby='cd $RUBY_DIR'
 alias cdsandbox='cd $SANDBOX_DIR'
 alias python=python3.2
-alias test='clear; tapr test'
+alias test='clear; tapr test/*.test.js'
 
 alias cdtraining='cd $TRAINING_DIR'
 
