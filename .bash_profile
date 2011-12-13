@@ -32,7 +32,7 @@ export COUCHDB_DIR=$DATABASES_DIR/CouchDB
 export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/Java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
-export MONGODB_DIR=$DATABASES_DIR/MongoDB/mongodb-osx-x86_64-2.0.1-rc1
+export MONGODB_DIR=$DATABASES_DIR/MongoDB/mongodb-osx-x86_64-2.0.1
 export NODE_VERSION=0.4.11
 export NODE_DIR=$JAVASCRIPT_DIR/node.js/node-v$NODE_VERSION
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
@@ -83,6 +83,9 @@ export JS_DIR=$LANGUAGES_DIR/JavaScript
 
 # MacPorts settings.
 export PATH=/opt/local/sbin:$PATH
+
+# MongoDB settings
+export PATH=$MONGODB_DIR/bin:$PATH
 
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
