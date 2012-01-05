@@ -255,6 +255,7 @@ Ejecting CDs and DVDs
   * select the device
     - on your laptop the device is "HL-DT-ST DVDRW GS23N"
   * note the value of "BSD Name" (ex. disk1)
+  * may also be able to determine name by running "diskutil list"
   * open a Terminal window
   * enter "diskutil umount disk3" (may not need this step)
   * enter "diskutil eject disk3"
@@ -277,3 +278,7 @@ Safari
 - to enable the Develop menu for debugging JavaScript
   * open a Terminal window
   * enter "defaults write com.apple.Safari IncludeDebugMenu 1"
+
+Internet Sharing
+- can set up a wireless hotspot from a Mac with an ethernet connection
+- System Preferences ... Sharing ... Internet Sharing

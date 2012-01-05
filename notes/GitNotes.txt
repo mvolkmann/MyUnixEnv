@@ -534,6 +534,7 @@ To remove an alias
 To revert a file back to the HEAD version
 - git checkout HEAD {file-path}
 - file-path can be just the file name if in its directory
+- also works to undelete a file
 
 To tag the repository at a milestone, such as a release
 - git tag {tag-name} [commit-or-branch-name]

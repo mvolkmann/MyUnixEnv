@@ -31,3 +31,6 @@ Mongo Shell
 Node modules
 - https://github.com/christkv/node-mongodb-native
   * install with "sudo npm install mongodb"
+
+Examples
+- see /Users/Mark/Documents/GEP/sandboxes/mvolkmann/mongodb
