@@ -10,14 +10,6 @@ export FIGNORE='.o:.swp'
 # Look for libraries in standard places.
 export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 
-# Sets the bash shell prompt.
-# \h outputs the host name.
-# \w outputs the working directory.
-# \$ outputs # if superuser (like root), $ otherwise.
-# Single quotes delay evaluation until each time prompt is output.
-# Do this in /root/.bashrc too.
-export PS1='\n \W\$ ' # sets bash shell prompt
-
 #-------------------------------------------------------------------------
 
 # Commonly used directory prefixes.
@@ -48,6 +40,10 @@ export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
 # Ant settings
 export ANT_HOME=$JAVA_DIR/Ant/apache-ant-1.8.2
 export PATH=$ANT_HOME/bin:$PATH
+
+# Apto settings
+export PATH=$PATH:$APTO_HOME/os/osx/bin
+export PATH=$PATH:$APTO_HOME/node_modules/.bin
 
 # Clojure settings
 export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
@@ -138,7 +134,7 @@ export HISTCONTROL=ignoredups
 
 # Show Git information in prompt.
 # See https://github.com/matthewmccullough/MatthewsShellConfig
-source ~/.bash_gitprompt
+#source ~/.bash_gitprompt
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
