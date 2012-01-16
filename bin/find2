@@ -1,0 +1,10 @@
+#!/bin/bash
+# Finds all files with a given name in and below the current directory.
+# The name can contain wildcard characters.
+
+if [ $# -ne 1 ]; then
+  echo usage: find2 {file-name}
+  exit 1
+fi
+
+find . -name "$1"
