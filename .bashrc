@@ -6,6 +6,16 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
+# Sets the bash shell prompt.
+# This overrides the setting in /etc/bashrc.
+# \h outputs the host name.
+# \W outputs the working directory.
+# \w outputs the full working directory.
+# \$ outputs # if superuser (like root), $ otherwise.
+# Single quotes delay evaluation until each time prompt is output.
+# Do this in /root/.bashrc too.
+export PS1='\W\$ ' # sets bash shell prompt
+
 #---------------------------------------------------------------------------
 # Aliases
 #---------------------------------------------------------------------------
@@ -83,30 +93,6 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 complete -C complete-ant-cmd.pl ant build.sh
 
 #----------------------------------------------------------------------------
-
-function changeDirectory {
-  "cd" "$@"
-  es=$? 
-  if (( ${#PWD} > 27 ));
-  then
-    p=${PWD:0-30}
-    #PS1="\u@\h:.../${p#*/}> "
-  else
-    typeset p=$PWD
-    # bash
-    #PS1="\u@\h:$p> "
-  fi
-  setTitle $PWD
-}
-typeset -fx changeDirectory
-#alias cd=changeDirectory
-
-#  Set iterm window and tabs.
-#function setTitle {
-#  echo -n "]2; $PWD"
-#}
-#export PROMPT_COMMAND=setTitle
-#export PS1=']1; \W\h \u> '
 
 function setTitle {
   # Mac OS X Terminal
