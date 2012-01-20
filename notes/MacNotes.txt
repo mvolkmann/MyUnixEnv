@@ -282,3 +282,6 @@ Safari
 Internet Sharing
 - can set up a wireless hotspot from a Mac with an ethernet connection
 - System Preferences ... Sharing ... Internet Sharing
+
+Disable Caps Lock
+- System Preferences ... Keyboard ... Modifier Keys ... Caps Lock Key ... No Action
