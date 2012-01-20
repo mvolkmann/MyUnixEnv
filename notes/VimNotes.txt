@@ -486,6 +486,29 @@ Shell commands
   can press ctrl-z to put Vim in the background
   and enter fg to return to Vim in the foreground
 
+Slime and Screen
+- to install vim-slime
+  * install Pathogen if not already done
+  * cd ~/.vim/bundle
+  * git clone git://github.com/jpalardy/vim-slime.git
+  * restart Vim?
+- on a Mac, screen is already installed
+- to use
+  * open a Terminal window
+  * enter "screen -S {session-name}" to start a screen session (ex. name is node)
+  * start Vim
+  * open a file
+  * position the cursor in a block of lines (forward and backward to a blank line)
+  * press ctrl-c ctrl-c to copy it to a screen session
+  * the first time this is done, slime will prompt for a screen session name
+  * the code will be copied to the screen session
+- common use case
+  * start a REPL in the screen session (such as node)
+  * open a JavaScript file in Vim
+  * position the cursor in a function definition
+  * press ctrl-c ctrl-c to copy the function definition into the REPL
+  * test the function by enter a call to it in the REPL
+
 Snippets
 - using SnipMate plugin
 - see snippet definitions in ~/.vim/bundle/snipmate.vim/snippets directory

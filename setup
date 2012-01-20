@@ -26,9 +26,9 @@ ln -s MyUnixEnv/.vim .vim
 mv .vimrc .vimrcOLD
 ln -s MyUnixEnv/.vimrc .vimrc
 
-pushd MyUnixEnv/.vim/bundle/jshint.vim
-git checkout 3c393147
-popd
+#pushd MyUnixEnv/.vim/bundle/jshint.vim
+#git checkout 3c393147
+#popd
 
 cp -f MyUnixEnv/javascript.snippets .vim/bundle/snipmate.vim/snippets
 
