@@ -502,6 +502,8 @@ Slime and Screen
     or select the lines to be copied
   * press ctrl-c ctrl-c to copy it to a screen session
   * the first time this is done, slime will prompt for a screen session name
+    - enter a name (like "node")
+    - press return a second time to accept the screen window name of "0"
   * the code will be copied to the screen session
 - common use case
   * start a REPL in the screen session (such as node)
