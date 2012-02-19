@@ -508,6 +508,7 @@ Slime and Screen
   * start Vim
   * open a file
   * position the cursor in a block of lines (forward and backward to a blank line)
+    or select the lines to be copied
   * press ctrl-c ctrl-c to copy it to a screen session
   * the first time this is done, slime will prompt for a screen session name
     - enter a name (like "node")

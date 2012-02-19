@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo File extension:
+read ext
+echo From word:
+read from
+echo To word:
+read to                         
+
+#for file in $(grep -il "$FIND" $NAME)
+for file in *.$ext
+do
+sed -e "s/$from/$to/g" $file > /tmp/replace
+mv $file ${file}OLD
+mv /tmp/replace $file
+done
