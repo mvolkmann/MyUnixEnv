@@ -1,8 +1,13 @@
 Vim Notes
 
 Installing Plugins
-- see instructions under "Ruby Support"
-  that describe using Pathogen
+- see instructions under "Ruby Support" that describe using Pathogen
+  * definitely the way to manage plugins!
+- see "Submodules" section in GitNotes.txt
+  * describes how you want to add Vim plugin Git repos
+  * example
+    - cd ~/MyUnixEnv
+    - git submodule add https://github.com/wincent/Command-T.git .vim/bundle/command-t
 
 Starting
   vim [filename]          - to start in a specified file
@@ -243,7 +248,7 @@ Filtering Lines
   select the lines using V, type ! and then a shell command.
 - The selected lines will be replaced by the command output.
 - For example, to sort imports at the top of a Java source file,
-  select them and enter "!sort".
+  elect them and enter "!sort".
 
 Folding
 - To configure folding of javadoc comments, add this to .vimrc.
@@ -285,6 +290,10 @@ Keyboard Macros
   q         - to stop recording
   @{letter} - to call macro {letter}
   @@        - to call the last executed macro again
+
+Leader Key
+- first key pressed to invoke many plugin commands
+- defaults to \
 
 Marks
   To set, :ma[rk] {letter}
@@ -583,3 +592,64 @@ Other
     Can map the following to a key to save all open files
     and run the current buffer.
     :wall<CR>:!ruby %<CR>
+
+BufExplorer plugin
+- see https://github.com/vim-scripts/bufexplorer.zip
+- works with MacVim
+- installing using Pathogen
+  * cd .vim/bundle
+  * git clone https://github.com/vim-scripts/bufexplorer.zip.git
+    - alternative you use: see "Installing Plugins" at top of this file
+  * restart Vim
+- using
+  * \be for open in current pane
+  * \bs for horizontal split open
+  * \bv for vertical split open
+  * use j and k keys to move up and down to highlight a buffer
+  * press return to open highlighted buffer
+  * press F1 for help on other command keys used in this mode
+
+Command-T plugin
+- see https://github.com/wincent/Command-T
+- works with MacVim
+- Ruby version must be 1.8.7
+- installing using Pathogen
+  * cd .vim/bundle
+  * git clone https://github.com/wincent/Command-T.git
+    - alternative you use: see "Installing Plugins" at top of this file
+  * cd Command-T
+  * rake make
+  * restart Vim
+  * :call pathogen#helptags()
+- using
+  * start MacVim
+  * :cd {path-to-project}
+  * can verify with :pwd
+  * press \t
+  * enter letters in path and filename to narrow list
+  * use up and down arrow keys to highlight desired file
+  * to open highlighted file
+    - press return key to open in current pane
+    - press ctrl-return or ctrl-s to open in new horizontal split 
+    - press ctrl-v to open in new vertical split 
+  * to exit without selecting a file, press esc
+
+Notes from Bill Odom's talk on 2/16/12
+
+NERD_Tree plugin
+Google "recommended vim plugins for javascript coding"
+#1 JavaScript indenter - by Preston Koprivica
+#2 Vastly improved javascript indentation - by Darrick Wiebe
+default syntax highlighting for JavaScript just uses highlighting for C?
+Pathogen
+JSLint - see link from crypticswarm blog to Jonathan Palardy page
+JSHint - manalang jshint.vim - is this what you are using?
+Conque - a shell that runs in Vim
+see "Resources" slides in his deck
+Bufexplorer
+Taglist - works with exuberant-ctags; runs it for you
+DoctorJS - from Mozilla; tags JavaScript source files
+Yehuda Katz article "Everyone Who Tried to Convice Me to use Vim was Wrong"
+- Bill doesn't like his recommended list of plugins for newbies
+See Steven Pritchard's minimal Vim environment
+http://vimcasts.org/ - a book is in the works

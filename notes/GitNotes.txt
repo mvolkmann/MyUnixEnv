@@ -649,6 +649,7 @@ Rebasing
 
 Submodules
 - allow one repo to store others but keep independent histories
+  * you used this for your MyUnixEnv module which includes Vim plugin submodules
 - to list submodules, git submodule
 - to add a submodule, from top project directory
   * git submodule add {git-url} {dir-path-below-current}
