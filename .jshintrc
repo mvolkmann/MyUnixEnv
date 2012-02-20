@@ -4,7 +4,7 @@
   "predef": [
     "Arguments",
     "alert",
-    "consolex",
+    "console",
     "exports",
     "localStorage",
     "module",
@@ -13,7 +13,13 @@
     "window",
     "$",
     "__dirname",
-    "__filename"
+    "__filename",
+    "suite",
+    "test",
+    "before",
+    "beforeEach",
+    "after",
+    "afterEach"
   ],
 
   "bitwise": true,

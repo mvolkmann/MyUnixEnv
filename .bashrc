@@ -23,6 +23,7 @@ export PS1='\W\$ ' # sets bash shell prompt
 alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
 alias bigdirs="du -sk * | sort -nr | head"
 
+alias apto='$APTO_HOME/bin/apto.sh'
 alias cdapto='cd $APTO_HOME'
 alias cdclojure='cd $CLOJURE_DIR'
 alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
