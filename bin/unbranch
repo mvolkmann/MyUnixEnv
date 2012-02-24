@@ -1,7 +1,8 @@
 #!/bin/bash
 # This merges the current git branch with master
 # and deletes the current git branch.
-# Changes to the current branch should be committed before running this.
+# Changes to the current branch must be committed before running this.
+# If they are not, this script will remind you.
 
 # Get name of current branch.
 branch=$(git symbolic-ref -q HEAD)
@@ -21,7 +22,8 @@ fi
 
 unstaged=`git ls-files --exclude-standard --others| wc -l`
 if [ $unstaged != 0 ]; then
-  echo Need to run "git add" on new files.
+  echo There are new, unstaged files.
+  echo Run "git add" on them and try again.
   exit 3
 fi
 
@@ -32,4 +34,4 @@ echo Changes have been merged to master.
 
 git branch -d $branch
 
-echo You still need to run "git pull" and "git push".
+echo You still need to run "git pull", retest and run "git push".
