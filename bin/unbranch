@@ -19,12 +19,17 @@ if ! git diff-index --quiet HEAD --; then
   exit 2
 fi
 
+unstaged=`git ls-files --exclude-standard --others| wc -l`
+if [ $unstaged != 0 ]; then
+  echo Need to run "git add" on new files.
+  exit 3
+fi
+
 git checkout master && \
 
 git merge $branch && \
 echo Changes have been merged to master.
 
 git branch -d $branch
-echo The $branch branch has been deleted.
 
 echo You still need to run "git pull" and "git push".
