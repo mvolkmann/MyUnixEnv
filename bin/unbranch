@@ -8,6 +8,23 @@ branch=$(git symbolic-ref -q HEAD)
 branch=${branch##refs/heads/}
 branch=${branch:-HEAD}
 
+if [ "$branch" == "master" ]; then
+  echo Cannot run this when current branch is master.
+  exit 1
+fi
+
+if ! git diff-index --quiet HEAD --; then
+  echo There are uncommitted changes.
+  echo Commit them and try again.
+  exit 2
+fi
+
 git checkout master && \
+
 git merge $branch && \
+echo Changes have been merged to master.
+
 git branch -d $branch
+echo The $branch branch has been deleted.
+
+echo You still need to run "git pull" and "git push".

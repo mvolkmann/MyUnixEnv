@@ -22,6 +22,7 @@ To merge a branch back to master
   git checkout master
   git pull (to get changes others merged in the interim)
   git merge {branch-name}
+  OR use your "unbranch" script to perform all the steps above
 
 To determine if a branch has already been merged back to master
 - attempt to merge it again

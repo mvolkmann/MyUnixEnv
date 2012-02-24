@@ -8,4 +8,4 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-find . -name '*.js' | xargs grep '$1'
+find . -name '*.js' | xargs grep "$1"
