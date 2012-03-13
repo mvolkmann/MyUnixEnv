@@ -25,12 +25,6 @@
 [submodule ".vim/bundle/jshint.vim"]
 	path = .vim/bundle/jshint.vim
 	url = https://github.com/gillesruppert/jshint.vim.git
-[submodule ".vim/bundle/bufexplorer"]
-	path = .vim/bundle/bufexplorer
-	url = https://github.com/vim-scripts/bufexplorer.zip
-[submodule ".vim/bundle/command-t"]
-	path = .vim/bundle/command-t
-	url = https://github.com/wincent/Command-T.git
 [submodule ".vim/bundle/javascript-indent"]
 	path = .vim/bundle/javascript-indent
 	url = https://github.com/cawinkelmann/vim-web-indent.git

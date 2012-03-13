@@ -326,6 +326,10 @@ Panel Buttons
   right-click in panel
   Panel Menu ... Add to Panel ... Application ... System Tools ... Terminal
 
+Netstat
+- To see which ports are currently being listened on by some server
+  netstat -an | grep LISTEN
+
 Password
 - To change password
   passwd [username]

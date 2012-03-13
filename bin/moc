@@ -1,0 +1,11 @@
+#!/bin/bash
+# Runs all Mocha tests in the test subdirectory or a specified test.
+# For example, "moc foo" runs the tests in test/foo.mocha.js.
+
+case "$1" in
+  "") name="*" ;;
+  *) name="$1" ;;
+esac
+files="test/$name.mocha.js"
+
+clear; mocha -u qunit -R list $files

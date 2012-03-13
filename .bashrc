@@ -44,7 +44,6 @@ alias cdprogramming='cd $PROGRAMMING_DIR'
 alias cdprototypes='cd $PROTOTYPES_DIR'
 alias cdruby='cd $RUBY_DIR'
 alias cdsandbox='cd $SANDBOX_DIR'
-alias moc='clear; mocha -u qunit -R list test/*.mocha.js'
 alias python=python3.2
 alias test='clear; tapr test/*.tap.js'
 

@@ -123,7 +123,8 @@ export BASEDIR=$TOMCAT_HOME
 export CATALINA_HOME=$TOMCAT_HOME
 
 # Vim settings
-set -o vi # for vi-mode command-line editing
+#set -o vi # for vi-mode command-line editing
+set editing-mode vi # for vi-mode command-line editing and all utilities that use readline
 export EDITOR=vim
 export VISUAL=vim
 

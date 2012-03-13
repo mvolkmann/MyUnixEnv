@@ -657,6 +657,10 @@ Submodules
   * git submodule init
   * git submodule update
 - to remove a submodule, from top project directory
+  1) delete relevant lines from the .gitmodules file
+  2) delete the relevant section from the .git/config file
+  3) run "git rm --cached {path-to-submodule}" (no trailing slash)
+  4) delete and commit the now untracked submodule files
   * see the webpage below ... it's complicated!
 - for more detail, see
   http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
