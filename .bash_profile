@@ -90,7 +90,7 @@ export PATH=$MONGODB_DIR/bin:$PATH
 export NETBEANS_HOME=/Applications/NetBeans
 
 # Node.js settings
-export NODE_PATH=.:/usr/local/lib/node_modules
+export NODE_PATH=.:/usr/local/lib/node_modules:$APTO_HOME/plugins:$APTO_HOME/node_modules
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
 
 # Postgres settings
