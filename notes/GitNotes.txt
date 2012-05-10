@@ -159,6 +159,7 @@ Branches
   * HEAD always points the current branch
 - to combine creating a new branch and switching to it
   * git checkout -b {new-branch-name} [{from-branch-name}]
+    - ex. git checkout -b foo origin/foo
 - to see list of all branches
   * git branch [-a|-r]
     - with no options, only local branches are listed
