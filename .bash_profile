@@ -139,6 +139,6 @@ export HISTCONTROL=ignoredups
 # See https://github.com/matthewmccullough/MatthewsShellConfig
 #source ~/.bash_gitprompt
 
-export PATH=$HOME/bin:$PATH:/usr/local/bin
+export PATH=$HOME/bin:$PATH:/usr/local/bin:/usr/local/sbin
 
 . ~/.bashrc
