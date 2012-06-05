@@ -162,6 +162,7 @@ Branches
   * HEAD always points the current branch
 - to combine creating a new branch and switching to it
   * git checkout -b {new-branch-name} [{from-branch-name}]
+    - ex. git checkout -b foo origin/foo
 - to see list of all branches
   * git branch [-a|-r]
     - with no options, only local branches are listed
@@ -480,6 +481,8 @@ To undo commits
   * reverts files on the current branch to match HEAD
 
 To reset the repo to an earlier state
+- git checkout -- {dir-name}
+  * restores the given directory to its last committed state
 - git reset
   * deletes unwanted revisions
   * defaults to resetting the current branch to match HEAD
@@ -591,6 +594,7 @@ Project to repo mapping
 To clone a repo and its submodules
 - yikes!  too complicated!
 - probably shouldn't use submodules
+  * but see notes on submodules below
 
 To optimize history storage, occassionally run
 - git gc --aggressive

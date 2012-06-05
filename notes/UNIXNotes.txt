@@ -112,6 +112,7 @@ Display
 Directory Structure
 - To see the content of the current directory
   including subdirectories as a tree, enter "tree".
+- install on Mac with "brew install tree"
 
 Environment Variables
 - To set in bash,

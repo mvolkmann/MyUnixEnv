@@ -524,6 +524,9 @@ Slime and Screen
 Snippets
 - using SnipMate plugin
 - see snippet definitions in ~/.vim/bundle/snipmate.vim/snippets directory
+- indentation in snippets must be done with tabs, not spaces
+  * depending on other Vim configuration,
+    tabs can expand to spaces when a snippet is used
 - enter snippet name and press tab to expand
 
 Tools that use vi
