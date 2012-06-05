@@ -1,0 +1,364 @@
+# RabbitMQ Notes
+
+## License
+Mozilla Public License, Version 1.1
+http://www.rabbitmq.com/mpl.html
+
+## Installing in Mac OS X
+```
+brew update
+brew install rabbitmq
+```
+
+## Starting Server
+```
+./usr/local/sbin/rabbitmq-server
+```
+
+Consider adding /usr/local/sbin to the PATH environment variable.
+
+## Node Client 
+
+### Option #1: node-amqp
+node-amqp at https://github.com/postwait/node-amqp
+
+Ryan Dahl and James Carr have contributed to this.
+```
+npm install amqp
+```
+
+An issue with this client module is that async functions that
+take a callback do not pass an error description to the callback
+as the first argument.  That means flow control libraries such as
+async cannot be used with them unless a wrapping layer is created
+around those functions that fixes this.  It wouldn't be too
+difficult to do that.
+
+### Option #2: STOMP
+This can communicate with ActiveMQ, RabbitMQ and HornetQ.
+It is a very simple API, perhaps too simple.
+It may not be possible to configure all the options
+of a particular implementation with this API.
+
+## AMQP
+RabbitMQ uses the Advanced Message Queuing Protocol (AMQP) which is "an
+open standard application layer protocol for message-oriented middleware".
+It is defines both an API and a wire-level protocol.
+
+The working group that defines the AMQP standard is composed of
+representatives from 23 companies, primarily in the financial industry.
+
+Version 1.0 of the AMQP standard was released on 10/30/11.
+The standard is now managed by OASIS.
+
+AMQP implementations are interoperable.  Other message servers that
+implement AMQP include Apache Qpid, JORAM and StormMQ.
+
+For more information, see http://en.wikipedia.org/wiki/AMQP
+
+One somewhat troubling statement from this Wikipedia article is:
+"The 1.0 specification changes the AMQP model illustrated above
+by removing the concepts of exchanges and bindings,
+and replacing these with queues and links."
+So some of what is described below
+only applies to the 0-9-1 version of the spec.
+James Carr feels that 1.0 adoption won't happen anytime soon
+because it is a radical change.  That in itself is not comforting.
+
+Open specifications that compete with AMQP include Stomp and XMPP.
+Vendor-specific specifications that compete with AMQP include
+Amazon Simple Queue Service, IBM WebSphere MQ, Microsoft Message Queuing,
+Java Message Service (JMS) and OpenWire (used by ActiveMQ).
+
+A close competitor of RabbitMQ, 0MQ (a.k.a. ZeroMQ), was developed by iMatrix.
+The CEO of iMatrix, Pieter Hintjens was the original designer of AMQP.
+iMatrix no longer participates in the AMQP working group.
+They claim that 0MQ is simpler and faster than AMQP implementations.
+
+There is a Node.js binding for 0MQ at
+https://github.com/JustinTulloss/zeromq.node.
+visionmedia has contributed to this.
+
+## Component Overview
+Message brokers (a.k.a. servers) manage server-side components
+and support user authentication.
+Some AMQP implementations, including RabbitMQ, support clustered servers.
+See http://www.rabbitmq.com/clustering.html.
+
+Connections connect to a server and are used to
+create and access exchanges and queues.
+
+Messages have a body and optional headers.
+
+Producers send messages to exchanges by publishing them,
+along with a routing key.
+
+Exchanges route messages to queues based on the routing key of the messages.
+
+Consumers subscribe to queues in order to receive messages.
+
+Bindings bind a queue to an exchange and specify a binding key
+that is used to determine which messages should be routed to the queue.
+
+Clients cannot request lists of exchanges and queues that have been
+created in a server.  They must know their names in order to use them.
+
+## Connections
+Connections are created by calling <code>amqp.createConnection()</code>.
+This immediately returns a reference to the new connection,
+but it isn't ready for use until it emits a "ready" event.
+
+Connections emit "close", "error" and "ready" events.
+One use of listening for error events is to attempt to
+reestablish a connection every second or so until successful.
+The Connection class has a reconnect method.
+
+The createConnection function takes an options object
+which can include the following properties:
+host, port, login, password and vhost.
+Host and port specify where the server is running/listening.
+To require a login and password, start the server with ???
+
+vhost specifies the virtual host on which the connection will be created.
+The main use of this seems to be to restrict user capabilities.
+Users can be restricted to only obtain connections to specific virtual hosts.
+
+Connection objects have the properties "exchanges" and "queues"
+that hold objects that store references to those, keyed by name.
+Connection objects have the property "channels" that holds an array.
+The first element in the array refers to the connection object itself.
+The remaining elements are the Queue objects that have been accessed or created
+from this Connection object using the conn.queue method.
+
+Connection objects only know about exchanges and queues that are
+explicitly created or looked up from the connection.
+It doesn't automatically discover all the exchanges and queues
+known to the server.
+
+## Channels
+The Exchange and Queue classes inherits from the Channel class.
+The Channel class inherits from EventEmitter.
+Channel objects have a "channel" property that is an integer that
+uniquely identifies Exchange and Queue objects associated with a Connection.
+
+## Exchanges
+There are three types of exchanges: fanout, direct and topic.
+
+A fanout exchange routes all messages to all queues bound to the exchange.
+
+A direct exchange routes messages to only the queue whose
+binding key (specified when binding the queue to an exchange)
+exactly matches the message routing key (specified when the message is published).
+
+A topic exchange routes messages to each queues bound to the exchange
+whose binding key matches the message routing key.
+For example, a message with the routing key "foo.bar" would be
+routed to the queues with binding keys "foo.#" and "#.bar".
+There are two wildcard characters that can be used in binding keys.
+"#" can be replaced by zero or more words.
+"*" can be replaced by exactly one word.
+In this context, "words" are separated by periods.
+
+An exchange can be bound to the same queue more than once with different
+binding keys.  This way the messages that are routed to a given queue
+do not all have to have the similar routing keys, regardless of whether
+a direct or topic exchange is being used.
+
+Multiple exchanges can be bound to the same queue.
+
+Multiple consumers can subscribe to the same queue.
+Each message will only be delivered to one of the consumers.
+This can be used to partition work.
+For a demo of this, follow these steps:
+
+1. start RabbitMQ server
+2. in another window, node topicConsumer.js
+3. in another window, node topicConsumer.js
+4. in anoter window, node topicProducer.js
+5. note that some messages went to the first consumer
+   and the others went to the second consumer
+
+Multiple consumers can use separate queues that have identical bindings
+so messages that match the bindings are delivered to each consumer.
+
+Messages with a routing key that doesn't match any binding key
+for the exchange are discarded.  The next section describes
+how this can be detected.
+
+The type of an exchange cannot be changed after it is created.
+To use an exchange with the same name as an existing one,
+but with a different type, destroy the existing exchange either
+by retrieving it with conn.exchange() and calling destroy on it
+or destroying it from the web management UI (described later).
+
+Exchanges emit "basic-return", "close", "error" and "open" events.
+A use for the first of these is described in the next section.
+The others do not seem useful.
+The conn.exchange method passes the exchange to its callback
+and that can be used immediately, so the open event isn't needed.
+
+## Publishing Messages
+There are two ways to publish messages.
+```
+conn.publish(queueName, message);
+exchange.publish(routingKey, message, options);
+```
+
+When a message is published directly to a queue, it uses the default exchange
+which can be specified when the connection to the server is created.
+Default exchanges are always "direct" exchanges.
+
+When a message is published to an exchange, the queues that receive it
+are determined by the exchange type and the message routing key.
+
+If a message is published to an exchange and the routing key doesn't
+match the binding key of any queue, the message will be dropped.
+To be notified of this, set the "mandatory" property to true in the
+publish options and listen for "basic-return" events on the exchange
+as follows:
+```
+var NO_ROUTE = 312;
+exchange.on('basic-return', function (reply) {
+  if (reply.replyCode === NO_ROUTE) {
+    console.log('exchange "' + reply.exchange +
+      '" failed to route message with key "' + reply.routingKey +
+      '" to a queue');
+  }
+});
+```
+
+## Queues
+Queues are created and/or retrieved using conn.queue();
+Queues emit "close", "data", "error", "message" events.
+None of these seems very useful.
+The queue.subscribe method passes messages to its callback
+when they arrive, so the data and message events aren't needed.
+
+## Subscribing to Queues
+```
+queue.subscribe(function (msg, headers, deliveryInfo) { ... });
+```
+The message object passed to the subscribe callback
+has the properties "data" and "contentType".
+The value of the "data" property is a Buffer.
+Call toString on the Buffer to get text values.
+The deliveryInfo object contains the following properties:
+
+* contentType - MIME type of the message
+* queue - name of the queue from which the message came
+* deliveryTag - may be a legacy property
+* redelivered - false if delivered on first try; true otherwise
+* exchange - name of the exchange to which the queue is bound
+* routingKey - routing key specified when the message was published
+* consumerTag - needed to unsubscribe from the queue
+
+## Durability and autoDelete
+To publish messages that survive server restarts,
+make exchanges and queues durable by setting their
+"durable" option to true.
+
+When this is done it is likely also desirable to
+set their "autoDelete" option to false.
+Exchanges that have autoDelete set to true
+are deleted if no queues are bound to them.
+Queues that have autoDelete set to true
+are deleted if they have no subscribers.
+
+For a demo of this, follow these steps:
+
+1. start RabbitMQ server
+2. node topicProducer.js
+3. ctrl-c to stop step 2
+4. ctrl-c to stop the RabbitMQ server started in step 1
+5. restart RabbitMQ server
+6. node topicConsumer.js
+7. note that the messages published in step 2 are received in step 6!
+
+## Acknowledgement
+To acknowledge receipt of a message in a subscriber, ?
+Is this done automatically?
+
+To guarantee that some consumer has received a given message, ?
+
+## Browser Clients
+RabbitMQ cannot be used directly in browser JavaScript code.
+The RabbitMQ code can run in a web server process.
+Browser code can communicate with a web server process in many ways.
+Socket.IO is a recommended approach.
+For a demo of this, see sandboxes/mvolkmann/rabbitmq/web-demo.
+Its README.md file provides instructions on running it.
+Also see Dropbox/GEP/RabbitMQ.graffle which describes this architecture.
+
+## Some Use Cases
+1. batch processing
+2. image uploading
+3. distributed logging
+
+## Programming Languages
+The RabbitMQ server is implemented in Erlang.
+There is client support for many programming languages including:
+* C/C++
+* Clojure
+* Erlang
+* Haskell
+* Java
+* JavaScript (Node.js)
+* Lisp
+* .NET (C#, VB, ...)
+* Ocaml
+* Perl
+* PHP
+* Python
+* Ruby
+* Scala
+
+## Platforms
+RabbitMQ is supported on these platforms:
+* Android
+* Amazon EC2
+* Linux
+* OpenVMS
+* Mac OS X
+* Solaris
+* Windows
+
+## Web Management UI
+To enable, enter "/usr/local/sbin/rabbitmq-plugins enable rabbitmq_management".
+Restart the server and browse http://localhost:55672/mgmt/
+
+The "Exchanges" tab lists the exchanges.
+Select one to see details about it.
+From this screen one can:
+* see counts of incoming and outgoing messages that were published and confirmed
+* see, create and delete bindings to queues
+* publish messages
+* delete an exchange
+
+The "Users" tab lists the registered users.
+From this screen one can:
+* see all registered users
+* add a user
+* set permissions for a user
+* change a user password
+* delete a user
+
+For more detail on the web management UI,
+see http://www.rabbitmq.com/management.html.
+
+## Other Options
+Other messaging software that could be used in place of RabbitMQ includes:
+* ActiveMQ - seems very Java-centric, supporting JMS, JCA and Spring
+* Redis - an in-memory datastore that also has pub/sub capabilities
+* Kue - backed by Redis
+* ZeroMQ - also spelled "0MQ"
+  * too low-level
+  * more of a transport protocol
+  * "no services or daemons to start, unless you build them yourself. ØMQ is a library."
+  * LGPL license
+
+## Resources
+* Node.js client - https://github.com/postwait/node-amqp
+* RabbitMQ site - http://www.rabbitmq.com/
+* James Carr's article -
+  http://blog.james-carr.org/2010/09/09/rabbitmq-nodejs-and-java-goodness/
+* Alvaro Videla's Slides - http://www.slideshare.net/old_sound/scaling-web-apps-with-rabbitmq-erlang-factory-lite
