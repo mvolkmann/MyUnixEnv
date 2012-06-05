@@ -1,5 +1,10 @@
 OmniGraffle Notes
 
+To add a new page
+- open the "Canvas" section of the inspector
+- click the "Size" tab (leftmost)
+- enter a different number for horizontal or vertical pages
+
 To control routing of lines
 - use the magnet tool to change where lines attach to shapes
 - right-click a line and select "Add Midpoint" or "Remove Midpoint"
