@@ -19,6 +19,12 @@ To see movies on Camcorder from Mac
   with names that begin with "PRG{number}"
 - the newest videos will be in the highest numbered folder
 
+To convert a move from .MOD to .mp4
+- start "Miro Video Converter"
+- drag .MOD file into app window
+- select "MP4" in drop-down at bottom
+- press "Convert"
+
 To convert movies from .MOD to .dv
 - start "MPEG Streamclip" application (free software)
 - open .MOD file from Everio harddrive

@@ -156,7 +156,7 @@ Branches
   * git checkout {branch-name} or @{commit-number}
   * typically you will want to commit any changes before doing this
     - if not, you can stash changes and reapply them to the current branch later
-      * to temporarily save uncommitted changes: git stash save
+      * to temporarily save uncommitted changes: git stash save "{comment"}
       * to reapply saved changes to the current branch: git stash apply
   * the commit number can be obtained from "git log" or "git reflog"
   * HEAD always points the current branch
