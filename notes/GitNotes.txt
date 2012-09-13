@@ -74,6 +74,9 @@ Diffs
   * git diff {file-path}
 - to see diffs between local repo and origin repo
   * git diff origin -- {file-path}
+- to see diffs between files committed to local repo and origin repo
+  * git checkout origin (to update local copy of origin files, not replace visible files)
+  * git diff --name-status head origin
 - to see diffs between specific commits
   * git diff {commit-1} {commit-2} -- {file-path}
     - where the commits are the first seven characters
@@ -481,8 +484,8 @@ To undo commits
   * reverts files on the current branch to match HEAD
 
 To reset the repo to an earlier state
-- git checkout -- {dir-name}
-  * restores the given directory to its last committed state
+- git checkout -- {file-name|dir-name}
+  * restores the given file directory to its last committed state
 - git reset
   * deletes unwanted revisions
   * defaults to resetting the current branch to match HEAD
