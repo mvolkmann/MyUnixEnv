@@ -523,6 +523,8 @@ To merge local, committed changes with a remote repo
 - git push [remote-repo [branch]]
   * with no arguments, the current branch is merged into
     the same branch in the origin repo
+  * all local branches are merged to their origin unless this option is set:
+    git config [--global] push.default current
 
 To create a remote repo from a local one that was created with git init
 - git remote add {name} {repo-url}

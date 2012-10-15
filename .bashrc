@@ -14,7 +14,8 @@ fi
 # \$ outputs # if superuser (like root), $ otherwise.
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /root/.bashrc too.
-export PS1='\W\$ ' # sets bash shell prompt
+#export PS1='\W\$ ' # sets bash shell prompt
+export PS1='\[\e[0;35m\]\h:\[\e[0;36m\]\w\[\e[0;32m\]$(__git_ps1 " [%s]")\[\e[m\]$ '
 
 #---------------------------------------------------------------------------
 # Aliases
@@ -25,6 +26,7 @@ alias bigdirs="du -sk * | sort -nr | head"
 
 alias apto='$APTO_HOME/bin/apto.sh'
 alias cdapto='cd $APTO_HOME'
+alias cdbrowser='cd $APTO_HOME/resources/apps/browser'
 alias cdclojure='cd $CLOJURE_DIR'
 alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
 alias cdcouchdb='cd $COUCHDB_DIR'
