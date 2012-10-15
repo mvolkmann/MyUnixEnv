@@ -15,7 +15,8 @@ fi
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /root/.bashrc too.
 #export PS1='\W\$ ' # sets bash shell prompt
-export PS1='\[\e[0;35m\]\h:\[\e[0;36m\]\w\[\e[0;32m\]$(__git_ps1 " [%s]")\[\e[m\]$ '
+#export PS1='\[\e[0;35m\]\h:\[\e[0;36m\]\w\[\e[0;32m\]$(__git_ps1 " [%s]")\[\e[m\]$ '
+export PS1='\[\e[0;36m\]\W\[\e[0;32m\]$(__git_ps1 " [%s]")\[\e[m\]$ '
 
 #---------------------------------------------------------------------------
 # Aliases
