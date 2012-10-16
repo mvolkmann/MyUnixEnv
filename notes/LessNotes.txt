@@ -2,15 +2,18 @@ LESS is a CSS tool like Sass and Stylus
 
 Here are some issues I have with LESS:
 
-LESS requires all mixin parameters to have default values.
-That means they cannot have required parameters.
+LESS doesn't support conditional logic and looping.
+Those are important for implementing certain kinds of mixins.
+Stylus supports these.
 
-LESS doesn't support conditional logic and looping. I think those
-are important for implementing certain kinds of mixins.
+To install
+* npm install -g less
 
-Stylus looks much better than LESS.
-It doesn't have any of the issues I identified in LESS.
+To compile .less files
+* lessc {name}.less > {name}.less.css
 
-It's too bad the authors of Sass, LESS and Stylus didn't get together
-and create one awesome tool so we wouldn't have to choose between
-them!
+To watch for changes and automatically compile
+* npm install -g less-watch
+* create ~/.less-watch containing "*.less:lessc {file} {file}.css"
+* cd to directory containing .less files
+* less-watch .

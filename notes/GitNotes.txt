@@ -130,6 +130,8 @@ Reporting (log, blame and status)
     * omit the end revision but include .. to go all the way to HEAD
     * can use tag names in place of revision names
   * for help on other git log options, enter "git log --help"
+- to list commits only for a single file
+  * git log -- {file-name}
 - blame is similar to log
   * but it prefixes output lines with
     the commit name, committer and timestamp
