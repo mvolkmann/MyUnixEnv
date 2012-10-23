@@ -1,0 +1,50 @@
+tmux Notes
+
+To install
+- brew install tmux
+
+To change Caps Lock key to function as Control key
+- on Mac
+  * System Preferences ... Keyboard ... Modifier Keys
+  * set Caps Lock key to Control
+
+To configure
+- edit ~/.tmux.conf
+- to change prefix keystroke (ex. ctrl-a)
+  * add this line to ~/.tmux.conf: set -g prefix C-a
+- to load configuration changes in a running tmux session
+  * prefix :
+  * source-file ~/.tmux.conf
+
+Sessions
+- to start a new session: $ tmux new -s {name}
+- to list existing sessions: $ tmux ls
+- to use an existing session: $ tmux attach -t {name}
+- to detach from a session, leaving it running: prefix d
+- to kill a session: $ tmux kill-session -t {name}
+
+Windows
+- to open a new window: prefix c
+- to list current windows: prefix w
+- to rename a window: prefix ,
+- to switch to an existing window by number: prefix {0..9}
+- to close curent window: prefix &
+
+Panes
+- to open a new pane
+  * horizontally: prefix "
+  * vertically: prefix %
+- to cycle through panes in current window: prefix o
+- to switch to different pane: prefix o
+- to change layout of panes: prefix esc {0-5}
+- to cycle through layouts: prefix space
+- to briefly display pane numbers in each pane: prefix q
+- to move to a numbered pane: 
+- to close a pane: prefix x
+
+Help
+- to show: prefix ?
+- to exit: q
+
+Command Mode
+- to enter: prefix :
