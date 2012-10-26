@@ -10,11 +10,18 @@ To change Caps Lock key to function as Control key
 
 To configure
 - edit ~/.tmux.conf
+- comments
+  * everything from # to end of a line
 - to change prefix keystroke (ex. ctrl-a)
   * add this line to ~/.tmux.conf: set -g prefix C-a
+- to bind a key to a command
+  * bind {key} {command}
+  * ex. bind r source-file ~/.tmux.conf
+- to unbind a key so it can be assigned differently later
+  * unbind {key}
 - to load configuration changes in a running tmux session
-  * prefix :
-  * source-file ~/.tmux.conf
+  * prefix : and enter source-file ~/.tmux.conf
+  * or prefix r with key binding above
 
 Sessions
 - to start a new session: $ tmux new -s {name}
@@ -32,15 +39,15 @@ Windows
 
 Panes
 - to open a new pane
-  * horizontally: prefix "
-  * vertically: prefix %
+  * horizontally: prefix " (customized to prefix -)
+  * vertically: prefix % (customized to prefix |)
 - to cycle through panes in current window: prefix o
-- to switch to different pane: prefix o
+- to switch to different pane: prefix o (cycles) or prefix {arrow-key}
 - to change layout of panes: prefix esc {0-5}
 - to cycle through layouts: prefix space
 - to briefly display pane numbers in each pane: prefix q
 - to move to a numbered pane: 
-- to close a pane: prefix x
+- to close a pane: enter "exit" or press prefix x
 
 Help
 - to show: prefix ?
