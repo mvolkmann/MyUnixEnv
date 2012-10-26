@@ -57,8 +57,13 @@ Curl
 - The ampersands separating query parameters must be preceded by backslashes.
 - Surround url in single or double quotes if it contains special characters
   like double quotes.
+- To specify a request body for a POST or PUT
+  * -d '{body-payload}'
 - To use a verb other than GET which is the default, use -X{verb}
   * ex. curl -XPUT http://localhost:3000 -d '{body-payload}'
+- To specify the body content type
+  * -H "Content-Type: {type}"
+  * for example, application/json
 - To specify output to be added after successful output, use -o
   * for example, to add a newline,
     curl -w'\n' http://java.ociweb.com/mark/

@@ -1,6 +1,10 @@
 Gimp Notes
 
 To make parts of an image transparent
+- save as a .gif file if not already that format
+  * File ... Save As ...
+  * Select File Type
+  * select "GIF image"
 - select the rectangular selection tool
 - right-click image and select Layer ... Transparency ... Add Alpha Channel
 - right-click image and select Select ... By Color

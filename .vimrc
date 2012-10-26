@@ -18,6 +18,8 @@ set shiftround
 set incsearch " use incremental searching
 set hlsearch " highlight all search matches, not just the first
 
+set mouse=a
+
 set ruler
 
 " Automatically fold javadoc-style comments in .java, .h and .cpp files.
