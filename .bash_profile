@@ -34,6 +34,7 @@ export APTO_HOME=$GEP_DIR/apto
 export DOCTOR_DIR=$GEP_DIR/doctor
 export PROTOTYPES_DIR=$GEP_DIR/prototypes
 export SANDBOX_DIR=$GEP_DIR/sandboxes/mvolkmann
+export RIAK_DIR=$APTO_HOME/os/osx/riak
 
 export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
 
@@ -42,15 +43,14 @@ export ANT_HOME=$JAVA_DIR/Ant/apache-ant-1.8.2
 export PATH=$ANT_HOME/bin:$PATH
 
 # Apto settings
+export PATH=$PATH:$APTO_HOME/bin
 export PATH=$PATH:$APTO_HOME/os/osx/bin
 export PATH=$PATH:$APTO_HOME/node_modules/.bin
 
+# CoffeeScript settings
+export PATH=$PATH:$COFFEESCRIPT_DIR/jashkenas-coffee-script-79492aa/bin
 # Clojure settings
 export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
-
-# ClojureScript settings
-export CLOJURESCRIPT_HOME=$LANGUAGES_DIR/clojurescript
-export PATH=$PATH:$CLOJURESCRIPT_HOME/bin
 
 # Developer settings
 export PATH=$PATH:/Developer/usr/bin
@@ -61,6 +61,8 @@ export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
 # Git settings
 . ~/bin/git-completion.bash
 export PATH=$PATH:/usr/local/git/bin
+export GITHUB_USER=mvolkmann
+export GITHUB_PASS=github19
 
 # Google Closure settings
 export CLOSURE_BASE_PATH=$JS_DIR/GoogleClosure/closure-library-read-only/closure/goog/
@@ -81,16 +83,13 @@ export JS_DIR=$LANGUAGES_DIR/JavaScript
 export PATH=/opt/local/sbin:$PATH
 
 # MongoDB settings
-export PATH=$MONGODB_DIR/bin:$PATH
+#export PATH=$MONGODB_DIR/bin:$PATH
 
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
 
-# NetBeans settings
-export NETBEANS_HOME=/Applications/NetBeans
-
 # Node.js settings
-export NODE_PATH=.:/usr/local/lib/node_modules:$APTO_HOME/plugins:$APTO_HOME/node_modules
+export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
 
 # Postgres settings
@@ -106,6 +105,9 @@ export CVSROOT=:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot
 export RHINO_DIR=$JS_DIR/Rhino
 export RHINO_HOME=$RHINO_DIR/rhino1_7R3
 
+# Riak settings
+export PATH=$PATH:$RIAK_DIR/dev/dev1/bin
+
 # Ruby settings
 export RUBY_DIR=$LANGUAGES_DIR/Ruby
 export RUBY_HOME=$RUBY_DIR/ruby-1.8.7-p22
@@ -116,6 +118,9 @@ export PATH=$RUBY_HOME:$PATH
 export RUBYOPT=-rubygems
 # Tell less not to complain about ANSI escape codes, and run ri.
 alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
+
+# Apache Solr settings
+SOLR_DIR=$DATABASES_DIR/solr
 
 # Tomcat settings
 export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.19

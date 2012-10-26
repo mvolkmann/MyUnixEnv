@@ -64,6 +64,11 @@ Curl
 - To specify the body content type
   * -H "Content-Type: {type}"
   * for example, application/json
+- To put data from a text file
+  * ex. curl -XPUT http://localhost:3000 -H"Content-Type: application/json" --data @security.json
+  * ex. curl http://localhost:3000/security/admin/rights/%2F
+- To put data from a binary file
+  * ex. curl -XPUT http://localhost:3000 -H"Content-Type: image/png" --data-binary @{file-path}
 - To specify output to be added after successful output, use -o
   * for example, to add a newline,
     curl -w'\n' http://java.ociweb.com/mark/
@@ -632,6 +637,8 @@ Yum package manager
 
 Zip
 - To create a zip file named foo.zip containing
-  all the files in a below the directory bar
+  all the files in and below the directory bar
   zip -r foo bar
 - To unzip .bz2 files, use "bunzip2 {name}.bz2".
+- To list the files inside a zip file,
+  zipinfo foo.zip

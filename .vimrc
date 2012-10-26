@@ -23,14 +23,14 @@ set mouse=a
 set ruler
 
 " Automatically fold javadoc-style comments in .java, .h and .cpp files.
-autocmd FileType cpp :set fmr=/**,*/ fdm=marker fdc=1
-autocmd FileType h :set fmr=/**,*/ fdm=marker fdc=1
-autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
+"autocmd FileType cpp :set fmr=/**,*/ fdm=marker fdc=1
+"autocmd FileType h :set fmr=/**,*/ fdm=marker fdc=1
+"autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
 
 " Automatically fold C-style comments in .java files.
-autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
+"autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
 
-map <F5> :CoffeeRun<CR>
+"map <F5> :CoffeeRun<CR>
 
 " Allow insert mode completion with tab key in addition to ctrl-n.
 imap <TAB> <C-n>
@@ -38,9 +38,10 @@ imap <TAB> <C-n>
 "colorscheme torte
 "colorscheme desert
 "colorscheme volkmann
-colorscheme solarized
 "colorscheme Tomorrow
-call togglebg#map("<F5>")
+colorscheme solarized
+
+"call togglebg#map("<F5>")
 
 "hi Comment ctermbg=white ctermfg=green cterm=italic " Why doesn't this work?
 "hi Constant ctermfg=purple 

@@ -11,7 +11,7 @@ ln -s MyUnixEnv/.bash_profile .bash_profile
 mv .bashrc .bashrcOLD
 ln -s MyUnixEnv/.bashrc .bashrc
 
-mv .bash_gitprompt .bash_gitprompt
+mv MyUnixEnv/.bash_gitprompt .bash_gitprompt
 ln -s MyUnixEnv/.bash_gitprompt .bash_gitprompt
 
 mkdir bin

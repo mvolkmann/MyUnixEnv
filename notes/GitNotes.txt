@@ -74,6 +74,9 @@ Diffs
   * git diff {file-path}
 - to see diffs between local repo and origin repo
   * git diff origin -- {file-path}
+- to see diffs between files committed to local repo and origin repo
+  * git checkout origin (to update local copy of origin files, not replace visible files)
+  * git diff --name-status head origin
 - to see diffs between specific commits
   * git diff {commit-1} {commit-2} -- {file-path}
     - where the commits are the first seven characters
@@ -127,6 +130,8 @@ Reporting (log, blame and status)
     * omit the end revision but include .. to go all the way to HEAD
     * can use tag names in place of revision names
   * for help on other git log options, enter "git log --help"
+- to list commits only for a single file
+  * git log -- {file-name}
 - blame is similar to log
   * but it prefixes output lines with
     the commit name, committer and timestamp
@@ -481,8 +486,8 @@ To undo commits
   * reverts files on the current branch to match HEAD
 
 To reset the repo to an earlier state
-- git checkout -- {dir-name}
-  * restores the given directory to its last committed state
+- git checkout -- {file-name|dir-name}
+  * restores the given file directory to its last committed state
 - git reset
   * deletes unwanted revisions
   * defaults to resetting the current branch to match HEAD
@@ -520,6 +525,8 @@ To merge local, committed changes with a remote repo
 - git push [remote-repo [branch]]
   * with no arguments, the current branch is merged into
     the same branch in the origin repo
+  * all local branches are merged to their origin unless this option is set:
+    git config [--global] push.default current
 
 To create a remote repo from a local one that was created with git init
 - git remote add {name} {repo-url}

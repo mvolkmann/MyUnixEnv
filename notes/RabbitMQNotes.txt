@@ -12,7 +12,7 @@ brew install rabbitmq
 
 ## Starting Server
 ```
-./usr/local/sbin/rabbitmq-server
+/usr/local/sbin/rabbitmq-server
 ```
 
 Consider adding /usr/local/sbin to the PATH environment variable.
