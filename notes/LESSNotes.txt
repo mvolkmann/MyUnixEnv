@@ -1,6 +1,8 @@
-LESS is a CSS tool like Sass and Stylus
+LESS notes
 
-http://lesscss.org
+Overview
+* LESS is a CSS tool like Sass and Stylus
+* http://lesscss.org
 
 Issues
 * LESS doesn't support conditional logic and looping.
