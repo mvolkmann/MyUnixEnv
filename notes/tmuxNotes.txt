@@ -64,6 +64,10 @@ To configure
   * prefix : source-file ~/.tmux.conf
   * or prefix r with key binding above
 
+Help
+- to show: prefix ?
+- to exit: q
+
 Sessions
 - consider creating a separate session from each group of related activities
   * perhaps one for each project
@@ -123,10 +127,6 @@ Panes
   * omit {session-name}: for current session (typical)
   * omit .{source-pane} if only one pane in source window
   * pane is added after pane with focus
-
-Help
-- to show: prefix ?
-- to exit: q
 
 Command Mode
 - to enter: prefix :
