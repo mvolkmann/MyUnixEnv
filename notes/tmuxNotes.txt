@@ -23,17 +23,17 @@ To configure
     - shared by users that do not have ~/.tmux.conf
 - comments
   * everything from # to end of a line
-- to change prefix keystroke (ex. ctrl-a)
+- change prefix keystroke (ex. ctrl-a)
   * add this line to ~/.tmux.conf: set -g prefix C-a
-- to bind a key to a command
+- bind a key to a command
   * bind {key} {command}
   * ex. bind r source-file ~/.tmux.conf
-- to unbind a key so it can be assigned differently later
+- unbind a key so it can be assigned differently later
   * unbind {key}
-- to list all key bindings
+- list all key bindings
   * prefix ?
   * press return when finished viewing
-- to configure status bar
+- configure status bar
   * set -g status-left-length 30
   * set -g status-left "session #S window #I pane #P -"
     - default is "[#S]"
@@ -44,9 +44,9 @@ To configure
   * set -g status-right-length 45
   * set -g status-right "#h %a %m/%d/%y"
     - shows host name, day of week abbrev., month abbrev., day and 2-digit year
-  * to include result of a shell command
+  * include result of a shell command
     - use $(shell-command) in format string
-  * to change font color in status bar
+  * change font color in status bar
     * add #[fg={color}] to a format string
     * can use 16 color names and colour0 to colour255
       - black, red, green, yellow, blue, magenta, cyan, white
@@ -54,13 +54,13 @@ To configure
     - updates every minute instead of default of 15 seconds
   * window list
     - displayed after status-left by default
-    - to center
+    - center
       * set -g status-justify centre
       * lists each window by displaying index:name (#I:#W)
-    - to have window in list get blue background when activity occurs in it
+    - have window in list get blue background when activity occurs in it
       * setw -g monitor-activity on
       * set -g visual-activity on
-- to load configuration changes in a running tmux session
+- load configuration changes in a running tmux session
   * prefix : source-file ~/.tmux.conf
   * or prefix r with key binding above
 
@@ -71,58 +71,61 @@ Help
 Sessions
 - consider creating a separate session from each group of related activities
   * perhaps one for each project
-- to start a new session: $ tmux new -s {name} [{command}](-s for session)
+- start a new session: $ tmux new -s {name} [{command}](-s for session)
   * if a command is specified, it is run in the window created
-- to detach from a session, leaving it running: prefix d
-- to list existing sessions
+- detach from a session, leaving it running: prefix d
+- list existing sessions
   * from command-line: $ tmux ls
   * from a session: prefix s
-- to use an existing session: $ tmux attach -t {name} (-t for target-session)
-- to kill a session: $ tmux kill-session -t {name} (-t for target-session)
-- to switch to a different session
+- use an existing session: $ tmux attach -t {name} (-t for target-session)
+- kill a session: $ tmux kill-session -t {name} (-t for target-session)
+- switch to a different session
   * for previous: prefix (
   * for next: prefix )
 
 Windows
-- to open a new window: prefix c
-- to list current windows: prefix w
-- to rename a window: prefix ,
-- to switch to an existing window by number: prefix {0..9}
-- to switch to a different window
+- create new window: prefix c
+- list windows: prefix w
+- rename window: prefix ,
+- switch to different window
+  * by number: prefix {0..9}
+  * for last selected: prefix l
   * for previous: prefix p
   * for next: prefix n
-- to close current window: prefix &
-- to move current window to a different session
+- close current window: prefix &
+- move current window to a different session
   * prefix .
   * enter other session name
 
 Panes
-- to open a new pane
+- create a new pane
   * horizontally: prefix " (customized to prefix -)
   * vertically: prefix % (customized to prefix |)
-- to cycle through panes in current window: prefix o
-- to switch to different pane: prefix o (cycles) or prefix {arrow-key}
-- to change layout of panes: prefix esc {0-5}
-- to cycle through layouts: prefix space
-- to rotate panes in current window
+- switch to different pane
+  * next: prefix o (cycles)
+  * by direction: prefix {arrow-key} - can repeat
+  * by index: prefix q {number}
+    - pane numbers appear briefly
+    - type pane number
+- change layout of panes: prefix esc {0-5}
+- cycle through layouts: prefix space
+- rotate panes in current window
   * clockwise: prefix ctrl-o
   * counter-clockwise: prefix ctrl-option-o
-- to swap the current pane
+- swap current pane
   * with the previous one: prefix {
   * with the next one: prefix }
   * with a given pane: prefix : swap-pane -s {pane-index}
-- to briefly display pane numbers in each pane: prefix q
-- to move to a numbered pane: ? 
-- to close a pane: enter "exit" or press prefix x
-- to move current pane to new window: prefix !
-- to move current pane to another window
+- close pane: enter "exit" or press prefix x
+- move current pane to new window: prefix !
+- move current pane to another window
   * prefix : join-pane -t {session-name}:{target-window}.{target-pane}
   * pane is added after target pane
   * omit {session-name}: for current session (typical)
   * .{target-pane} must be specified
     - otherwise it treats the -t value
       as a pane index within the current window (bad!)
-- to move a given pane to the current window
+- move given pane to current window
   * prefix : join-pane -s {session-name}:{source-window}.{source-pane}
   * omit {session-name}: for current session (typical)
   * omit .{source-pane} if only one pane in source window
