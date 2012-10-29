@@ -60,7 +60,7 @@ export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
 
 # Git settings
 . ~/bin/git-completion.bash
-export PATH=$PATH:/usr/local/git/bin
+#export PATH=$PATH:/usr/local/git/bin
 export GITHUB_USER=mvolkmann
 export GITHUB_PASS=github19
 
@@ -71,6 +71,9 @@ export CLOSURE_BASE_PATH=$JS_DIR/GoogleClosure/closure-library-read-only/closure
 # This setting may interfere with fink scripts!
 #export GREP_OPTIONS="--color=ALWAYS"
 
+# Homebrew settings.
+export PATH=/opt/local/bin:$PATH
+
 # Java settings
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
 #export PATH=$JAVA_HOME/bin:$PATH
@@ -80,7 +83,7 @@ export JS_CMD=node
 export JS_DIR=$LANGUAGES_DIR/JavaScript
 
 # MacPorts settings.
-export PATH=/opt/local/sbin:$PATH
+#export PATH=/opt/local/sbin:$PATH
 
 # MongoDB settings
 #export PATH=$MONGODB_DIR/bin:$PATH
@@ -144,6 +147,6 @@ export HISTCONTROL=ignoredups
 # See https://github.com/matthewmccullough/MatthewsShellConfig
 #source ~/.bash_gitprompt
 
-export PATH=$HOME/bin:$PATH:/usr/local/bin:/usr/local/sbin
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 . ~/.bashrc

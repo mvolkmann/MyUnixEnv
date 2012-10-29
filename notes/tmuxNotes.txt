@@ -2,14 +2,25 @@ tmux Notes
 
 To install
 - brew install tmux
+- to see version installed
+  * tmux -V
 
-To change Caps Lock key to function as Control key
-- on Mac
+Mac keys
+- meta key is ctrl-option
+- to change Caps Lock key to function as Control key
   * System Preferences ... Keyboard ... Modifier Keys
   * set Caps Lock key to Control
 
+To allow 256 colors on a Mac
+- must use iTerm2 instead of Terminal app
+- iTerm ... Preferences ... Profiles ... Terminal
+  * set "Report Terminal Type" to "xterm-256color"
+- Do you have to start tmux with "tmux -2" to get 256 colors?
+
 To configure
 - edit ~/.tmux.conf
+  * can also create /etc/tmux.conf
+    - shared by users that do not have ~/.tmux.conf
 - comments
   * everything from # to end of a line
 - to change prefix keystroke (ex. ctrl-a)
@@ -19,23 +30,67 @@ To configure
   * ex. bind r source-file ~/.tmux.conf
 - to unbind a key so it can be assigned differently later
   * unbind {key}
+- to list all key bindings
+  * prefix ?
+  * press return when finished viewing
+- to configure status bar
+  * set -g status-left-length 30
+  * set -g status-left "session #S window #I pane #P -"
+    - default is "[#S]"
+    - shows current session, window and pane numbers
+    - includes some arbitrary text
+  * for parts of date and time, use strftime tokens
+    - see http://www.foragoodstrftime.com
+  * set -g status-right-length 45
+  * set -g status-right "#h %a %m/%d/%y"
+    - shows host name, day of week abbrev., month abbrev., day and 2-digit year
+  * to include result of a shell command
+    - use $(shell-command) in format string
+  * to change font color in status bar
+    * add #[fg={color}] to a format string
+    * can use 16 color names and colour0 to colour255
+      - black, red, green, yellow, blue, magenta, cyan, white
+  * set -g status-interval 60
+    - updates every minute instead of default of 15 seconds
+  * window list
+    - displayed after status-left by default
+    - to center
+      * set -g status-justify centre
+      * lists each window by displaying index:name (#I:#W)
+    - to have window in list get blue background when activity occurs in it
+      * setw -g monitor-activity on
+      * set -g visual-activity on
 - to load configuration changes in a running tmux session
-  * prefix : and enter source-file ~/.tmux.conf
+  * prefix : source-file ~/.tmux.conf
   * or prefix r with key binding above
 
 Sessions
-- to start a new session: $ tmux new -s {name}
-- to list existing sessions: $ tmux ls
-- to use an existing session: $ tmux attach -t {name}
+- consider creating a separate session from each group of related activities
+  * perhaps one for each project
+- to start a new session: $ tmux new -s {name} [{command}](-s for session)
+  * if a command is specified, it is run in the window created
 - to detach from a session, leaving it running: prefix d
-- to kill a session: $ tmux kill-session -t {name}
+- to list existing sessions
+  * from command-line: $ tmux ls
+  * from a session: prefix s
+- to use an existing session: $ tmux attach -t {name} (-t for target-session)
+- to kill a session: $ tmux kill-session -t {name} (-t for target-session)
+- to switch to a different session
+  * for previous: prefix (
+  * for next: prefix )
 
 Windows
 - to open a new window: prefix c
 - to list current windows: prefix w
 - to rename a window: prefix ,
 - to switch to an existing window by number: prefix {0..9}
-- to close curent window: prefix &
+- to switch to a different window
+  * for previous: prefix p
+  * for next: prefix n
+- to close current window: prefix &
+- to move current window to a different session
+  * prefix .
+  * enter other session name
 
 Panes
 - to open a new pane
@@ -45,9 +100,29 @@ Panes
 - to switch to different pane: prefix o (cycles) or prefix {arrow-key}
 - to change layout of panes: prefix esc {0-5}
 - to cycle through layouts: prefix space
+- to rotate panes in current window
+  * clockwise: prefix ctrl-o
+  * counter-clockwise: prefix ctrl-option-o
+- to swap the current pane
+  * with the previous one: prefix {
+  * with the next one: prefix }
+  * with a given pane: prefix : swap-pane -s {pane-index}
 - to briefly display pane numbers in each pane: prefix q
-- to move to a numbered pane: 
+- to move to a numbered pane: ? 
 - to close a pane: enter "exit" or press prefix x
+- to move current pane to new window: prefix !
+- to move current pane to another window
+  * prefix : join-pane -t {session-name}:{target-window}.{target-pane}
+  * pane is added after target pane
+  * omit {session-name}: for current session (typical)
+  * .{target-pane} must be specified
+    - otherwise it treats the -t value
+      as a pane index within the current window (bad!)
+- to move a given pane to the current window
+  * prefix : join-pane -s {session-name}:{source-window}.{source-pane}
+  * omit {session-name}: for current session (typical)
+  * omit .{source-pane} if only one pane in source window
+  * pane is added after pane with focus
 
 Help
 - to show: prefix ?
@@ -55,3 +130,53 @@ Help
 
 Command Mode
 - to enter: prefix :
+- can use tab completion when entering command name
+- can use up and down arrows to recall previous commands
+
+Scripting tmux environments
+- three approaches
+  * project-specific shell scripts
+    - see example in programming/Tools/tmux/mytmux
+  * project-specific tmux config files
+    * in config file, use shared config file from home directory with
+      source-file ~/.tmux.conf
+    * in config file, start new session with
+      new-session -s {session-name} -n {window-name} -d
+    * start tmux with "tmux -f {file-path} attach
+  * tmuxinator - a Ruby app that uses YAML
+
+Output buffers
+- copy mode
+  * to enter, prefix [
+  * to exit, press return
+- to move around
+  * enter copy mode
+  * use Vim keys or arrow keys to navigate
+- to copy text
+  * enter copy mode
+  * move to start
+  * press spacebar
+  * move to end
+  * press return
+- to copy all visible text in current pane
+  * prefix : capture-pane
+- each copy creates a new paste buffer on a stack
+  * it seems the stack just grows forever
+  * pasting from it doesn't remove a buffer
+- to see list of paste buffers
+  * prefix : list-buffers
+  * press return when finished viewing
+- to see content of top paste buffer
+  * prefix : show-buffer
+- to save content of top paste buffer to a file
+  * prefix : save-buffer {file-path}
+- to paste text from top paste buffer
+  * prefix ]
+- to paste test from a specific paste buffer
+  * prefix = or prefix : choose-buffer
+  * move cursor to one of the buffers and press return
+  * press q to exit without choosing a buffer
+
+Options
+- to see list of all options
+  * prefix : show-options -g

@@ -20,6 +20,9 @@ cp MyUnixEnv/bin/* bin
 mv .jshintrc .jshintrcOLD
 ln -s MyUnixEnv/.jshintrc .jshintrc
 
+mv .tmux.conf .tmux.confOLD
+ln -s MyUnixEnv/.tmux.conf .tmux.conf
+
 mv .vim .vimOLD
 ln -s MyUnixEnv/.vim .vim
 
