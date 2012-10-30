@@ -293,6 +293,10 @@ Make
   make -n 
 - Use MPC to generate makefiles for various platforms
 
+Man Pages
+- to save a man page in a text file that can be printed
+  * man {command} | col -b > {command}.txt
+
 Messages
 - To send a message to a particular user that they will see
   at their command prompt, "write {user-name}".
