@@ -13,10 +13,10 @@ Mac keys
 To allow 256 colors on a Mac
 - must use iTerm2 instead of Terminal app
 - iTerm ... Preferences ... Profiles ... Terminal
-  * set "Report Terminal Type" to "xterm-256color"
-  * do this for every profile
+  * in the Default profile, set "Report Terminal Type" to "xterm-256color"
   * restart iTERM2
-  * verify that the TERM environment variable is set to "xterm-256color" instead of "xterm"
+  * verify that the TERM environment variable
+    is set to "xterm-256color" instead of "xterm"
 
 To configure
 - edit ~/.tmux.conf
