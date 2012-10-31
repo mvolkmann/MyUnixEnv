@@ -134,7 +134,7 @@ Panes
   * omit {session-name}: for current session (typical)
   * .{target-pane} must be specified
     - otherwise it treats the -t value
-      as a pane index within the current window (bad!)
+      as a pane index within current window (bad!)
 - move given pane to current window
   * prefix : join-pane -s {session-name}:{source-window}.{source-pane}
   * omit {session-name}: for current session (typical)
