@@ -2,11 +2,10 @@ tmux Notes
 
 To install
 - brew install tmux
-- to see version installed
-  * tmux -V
+- to see version installed: $ tmux -V
 
 Mac keys
-- meta key is ctrl-option
+- meta key (M) is ctrl-option
 - to change Caps Lock key to function as Control key
   * System Preferences ... Keyboard ... Modifier Keys
   * set Caps Lock key to Control
@@ -23,8 +22,9 @@ To configure
     - shared by users that do not have ~/.tmux.conf
 - comments
   * everything from # to end of a line
-- change prefix keystroke (ex. ctrl-a)
-  * add this line to ~/.tmux.conf: set -g prefix C-a
+- change prefix keystroke
+  - default is C-b
+  * to change to C-a, add this line to ~/.tmux.conf: set -g prefix C-a
 - bind a key to a command
   * bind {key} {command}
   * ex. bind r source-file ~/.tmux.conf
@@ -35,7 +35,7 @@ To configure
   * press return when finished viewing
 - configure status bar
   * set -g status-left-length 30
-  * set -g status-left "session #S window #I pane #P -"
+  * set -g status-left "session #S window #I pane #P"
     - default is "[#S]"
     - shows current session, window and pane numbers
     - includes some arbitrary text
@@ -50,77 +50,87 @@ To configure
     * add #[fg={color}] to a format string
     * can use 16 color names and colour0 to colour255
       - black, red, green, yellow, blue, magenta, cyan, white
+      - what are the other eight colors?
   * set -g status-interval 60
     - updates every minute instead of default of 15 seconds
   * window list
+    - lists each window by displaying index:name (#I:#W)
     - displayed after status-left by default
-    - center
-      * set -g status-justify centre
-      * lists each window by displaying index:name (#I:#W)
+    - center: set -g status-justify centre
     - have window in list get blue background when activity occurs in it
       * setw -g monitor-activity on
       * set -g visual-activity on
 - load configuration changes in a running tmux session
   * prefix : source-file ~/.tmux.conf
-  * or prefix r with key binding above
+  * or prefix r with example key binding above
 
 Help
 - to show: prefix ?
-- to exit: q
+- press return when finished viewing
+
+Command Mode
+- to enter: prefix :
+- can use tab completion when entering command name
+- can use up and down arrows to recall previous commands
 
 Sessions
-- consider creating a separate session from each group of related activities
+- consider creating a separate session for each group of related activities
   * perhaps one for each project
-- start a new session: $ tmux new -s {name} [{command}](-s for session)
+- create new: $ tmux new -s {name} [{command}]
+  * -s for session
   * if a command is specified, it is run in the window created
-- detach from a session, leaving it running: prefix d
+- detach from current, leaving it running: prefix d
 - list existing sessions
   * from command-line: $ tmux ls
   * from a session: prefix s
-- use an existing session: $ tmux attach -t {name} (-t for target-session)
-- kill a session: $ tmux kill-session -t {name} (-t for target-session)
-- switch to a different session
-  * for previous: prefix (
-  * for next: prefix )
+    - can select to switch
+- use existing session
+  * from command-line: $ tmux attach -t {name}
+    - -t for target-session
+  * from a session
+    - previous: prefix (
+    - next: prefix )
+- kill: $ tmux kill-session -t {name}
+  * -t for target-session
 
 Windows
-- create new window: prefix c
-- list windows: prefix w
-- rename window: prefix ,
-- switch to different window
+- create new: prefix c
+- list: prefix w
+- rename: prefix ,
+- switch
   * by number: prefix {0..9}
   * for last selected: prefix l
   * for previous: prefix p
   * for next: prefix n
-- close current window: prefix &
-- move current window to a different session
+- close current: prefix &
+- move current to different session
   * prefix .
   * enter other session name
 
 Panes
-- create a new pane
+- create new via split
   * horizontally: prefix " (customized to prefix -)
   * vertically: prefix % (customized to prefix |)
-- switch to different pane
+- switch
   * next: prefix o (cycles)
   * by direction: prefix {arrow-key} - can repeat
   * by index: prefix q {number}
     - pane numbers appear briefly
     - type pane number
-- change layout of panes: prefix esc {0-5}
+- change layout: prefix esc {0-5}
 - cycle through layouts: prefix space
 - rotate panes in current window
   * clockwise: prefix ctrl-o
   * counter-clockwise: prefix ctrl-option-o
 - swap current pane
-  * with the previous one: prefix {
-  * with the next one: prefix }
+  * with previous: prefix {
+  * with next: prefix }
   * with a given pane: prefix : swap-pane -s {pane-index}
-- close pane: enter "exit" or press prefix x
-- move current pane to new window: prefix !
-- move current pane to another window
+- close current: prefix x or enter "exit"
+- move current to new window: prefix !
+- move current to existing window
   * prefix : join-pane -t {session-name}:{target-window}.{target-pane}
-  * pane is added after target pane
+  * added after target pane
   * omit {session-name}: for current session (typical)
   * .{target-pane} must be specified
     - otherwise it treats the -t value
@@ -131,22 +141,20 @@ Panes
   * omit .{source-pane} if only one pane in source window
   * pane is added after pane with focus
 
-Command Mode
-- to enter: prefix :
-- can use tab completion when entering command name
-- can use up and down arrows to recall previous commands
-
 Scripting tmux environments
 - three approaches
   * project-specific shell scripts
     - see example in programming/Tools/tmux/mytmux
+    - my preferred approach
   * project-specific tmux config files
     * in config file, use shared config file from home directory with
       source-file ~/.tmux.conf
     * in config file, start new session with
       new-session -s {session-name} -n {window-name} -d
-    * start tmux with "tmux -f {file-path} attach
-  * tmuxinator - a Ruby app that uses YAML
+      - -d detaches after creating
+    * start tmux with: $ tmux -f {file-path} attach
+  * tmuxinator
+    - a Ruby app that uses YAML
 
 Output buffers
 - copy mode
@@ -175,7 +183,7 @@ Output buffers
   * prefix : save-buffer {file-path}
 - to paste text from top paste buffer
   * prefix ]
-- to paste test from a specific paste buffer
+- to paste text from a specific paste buffer
   * prefix = or prefix : choose-buffer
   * move cursor to one of the buffers and press return
   * press q to exit without choosing a buffer
