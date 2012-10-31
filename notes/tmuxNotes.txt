@@ -14,7 +14,9 @@ To allow 256 colors on a Mac
 - must use iTerm2 instead of Terminal app
 - iTerm ... Preferences ... Profiles ... Terminal
   * set "Report Terminal Type" to "xterm-256color"
-- Do you have to start tmux with "tmux -2" to get 256 colors?
+  * do this for every profile
+  * restart iTERM2
+  * verify that the TERM environment variable is set to "xterm-256color" instead of "xterm"
 
 To configure
 - edit ~/.tmux.conf
