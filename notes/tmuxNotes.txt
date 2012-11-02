@@ -204,5 +204,7 @@ Same session from multiple terminal windows
   $ tmux new -t {session-name}
 - the number of cells (rows and columns) displayed in each terminal window
   will be the minimum that can be displayed in one of them
+  * additional cells will display period characters
 - to fully utilize the larger window, add the following to ~/.tmux.conf
   set-window-option -g aggressive-resize on
+  AND view different tmux windows in the terminal windows
