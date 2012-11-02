@@ -1,8 +1,0 @@
-Linksys Router Notes
-
-To configure the router
-- open a web browser and browse http://192.168.1.1.
-- username is mvolkmann and password is java19
-
-WEP key is 4CC9C238A4
-

@@ -81,6 +81,8 @@ Sessions
 - create new: $ tmux new -s {name} [{command}]
   * -s for session
   * if a command is specified, it is run in the window created
+  * add -t {session-name} to create a new session that shares windows
+    with an existing one running in a different terminal window
 - detach from current, leaving it running: prefix d
 - list existing sessions
   * from command-line: $ tmux ls
@@ -193,3 +195,14 @@ Output buffers
 Options
 - to see list of all options
   * prefix : show-options -g
+
+Same session from multiple terminal windows
+- sometimes it is convenient to be able to simultaneously view
+  two tmux windows that are associated with the same session
+- to do this, in a second terminal window
+  create a new, grouped session by entering
+  $ tmux new -t {session-name}
+- the number of cells (rows and columns) displayed in each terminal window
+  will be the minimum that can be displayed in one of them
+- to fully utilize the larger window, add the following to ~/.tmux.conf
+  set-window-option -g aggressive-resize on
