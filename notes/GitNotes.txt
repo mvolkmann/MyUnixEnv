@@ -545,7 +545,7 @@ To remove an alias
 - git remote rm {alias-name}
 
 To revert a file back to the HEAD version
-- git checkout HEAD {file-path}
+- git checkout {file-path}
 - file-path can be just the file name if in its directory
 - also works to undelete a file
 

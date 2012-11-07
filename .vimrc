@@ -1,3 +1,5 @@
+set t_Co=256
+
 call pathogen#infect()
 call pathogen#helptags()
 syntax on
@@ -34,6 +36,9 @@ set ruler
 
 " Allow insert mode completion with tab key in addition to ctrl-n.
 imap <TAB> <C-n>
+
+"set t_AB=^[[48;5;%dm
+"set t_AF=^[[38;5;%dm
 
 "colorscheme torte
 "colorscheme desert

@@ -552,8 +552,11 @@ Windows
   ctrl-w c           - same as :close
   :on[ly]            - close all windows but current one
   ctrl-w o           - same as :only
-  {n}ctrl-W +        - increase size by {n} lines
-  {n}ctrl-W -        - decrease size by {n} lines
+  ctrl-w =           - make split windows equal width
+  {n}ctrl-w <        - decrease window width by {n}
+  {n}ctrl-w >        - increase window width by {n}
+  {n}ctrl-w +        - increase height by {n}
+  {n}ctrl-w -        - decrease height by {n}
   ctrl-w =           - make all windows the same size
   ctrl-w r           - rotate windows
 
