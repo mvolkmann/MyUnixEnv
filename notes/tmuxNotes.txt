@@ -65,6 +65,8 @@ To configure
 - load configuration changes in a running tmux session
   * prefix : source-file ~/.tmux.conf
   * or prefix r with example key binding above
+  * configuration files are read when a new session is created,
+    not when attaching to an existing session
 
 Help
 - to show: prefix ?
@@ -84,54 +86,65 @@ Sessions
   * add -t {session-name} to create a new session that shares windows
     with an existing one running in a different terminal window
 - detach from current, leaving it running: prefix d
-- list existing sessions
+- list existing
   * from command-line: $ tmux ls
   * from a session: prefix s
     - can select to switch
-- use existing session
+- use existing
   * from command-line: $ tmux attach -t {name}
     - -t for target-session
   * from a session
+    - choose: choose-session
     - previous: prefix (
     - next: prefix )
+- rename: rename-session -t {old} {new} or prefix $
 - kill: $ tmux kill-session -t {name}
   * -t for target-session
 
 Windows
-- create new: prefix c
-- list: prefix w
+- create new: new-window [-n {name}] [{command}] or prefix c
+  * alias neww
 - rename: prefix ,
 - switch
   * by number: prefix {0..9}
-  * for last selected: prefix l
+  * for last selected: last-window or prefix l
   * for previous: prefix p
   * for next: prefix n
-- close current: prefix &
+  * interactive: choose-window or prefix w
+- list: list-windows (can't choose)
+- kill current: kill-window or prefix &
 - move current to different session
   * prefix .
   * enter other session name
 
 Panes
 - create new via split
-  * horizontally: prefix " (customized to prefix -)
-  * vertically: prefix % (customized to prefix |)
+  * horizontally: split-window -h or prefix " (customized to prefix -)
+  * vertically: split-window -v (default) or prefix % (customized to prefix |)
 - switch
-  * next: prefix o (cycles)
+  * next: select-pane -t i:.+ or prefix o (cycles)
+  * last: last-pane or prefix ;
   * by direction: prefix {arrow-key} - can repeat
-  * by index: prefix q {number}
-    - pane numbers appear briefly
-    - type pane number
+  * by index: display-panes or prefix q
+    - pane indexes appear briefly
+    - type pane index
 - change layout: prefix esc {0-5}
+  * even-horizonatal (left to right)
+  * even-vertical (top to bottom)
+  * main-horizontal (top fills width)
+  * main-vertical (left fills height)
+  * tiled
 - cycle through layouts: prefix space
+- resize: prefix C-arrow - can repeat
 - rotate panes in current window
   * clockwise: prefix ctrl-o
   * counter-clockwise: prefix ctrl-option-o
 - swap current pane
-  * with previous: prefix {
-  * with next: prefix }
+  * with previous: prefix { - doesn't repeat
+  * with next: prefix } - doesn't repeat
   * with a given pane: prefix : swap-pane -s {pane-index}
-- close current: prefix x or enter "exit"
-- move current to new window: prefix !
+- kill current: kill-pane or prefix x or enter "exit"
+- move current to new window: break-pane or prefix !
 - move current to existing window
   * prefix : join-pane -t {session-name}:{target-window}.{target-pane}
   * added after target pane
