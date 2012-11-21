@@ -1,0 +1,8 @@
+HipChat Notes
+
+To set status
+* to available
+  /available {status}
+  /here {status}
+* to away
+  /away {status}
