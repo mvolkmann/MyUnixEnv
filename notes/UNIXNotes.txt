@@ -74,6 +74,8 @@ Curl
     curl -w'\n' http://java.ociweb.com/mark/
 - To see headers,
   curl -i {url}
+- To send a HEAD requests
+  * use --head or -I, not -XHEAD
 
 Default Shell
 - To change, enter "ypchsh".

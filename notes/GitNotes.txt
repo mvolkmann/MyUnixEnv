@@ -254,7 +254,8 @@ Merging
   * cherry-picking - merges only a single, selected commit
 - to merge one branch into another
   * git checkout {to-branch} # if it isn't already the current branch
-  * git merge {from-branch}
+  * git fetch
+  * git merge {from-branch} (ex. master)
   * after a succesful merge, typically you'll want to delete from-branch
     - git branch -d {from-branch}
     - reduces distraction when viewing a list of existing branches
@@ -545,7 +546,7 @@ To remove an alias
 - git remote rm {alias-name}
 
 To revert a file back to the HEAD version
-- git checkout HEAD {file-path}
+- git checkout {file-path}
 - file-path can be just the file name if in its directory
 - also works to undelete a file
 

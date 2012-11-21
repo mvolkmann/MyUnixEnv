@@ -217,3 +217,4 @@ Same session from multiple terminal windows
 - to fully utilize the larger window, add the following to ~/.tmux.conf
   set-window-option -g aggressive-resize on
   AND view different tmux windows in the terminal windows
+- to switch terminals on Mac, cmd-`

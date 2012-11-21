@@ -26,6 +26,7 @@ alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5
 alias bigdirs="du -sk * | sort -nr | head"
 
 alias apto='$APTO_HOME/bin/apto.sh'
+alias cdapps='cd $APTO_HOME/resources/apps'
 alias cdapto='cd $APTO_HOME'
 alias cdbrowser='cd $APTO_HOME/resources/apps/browser'
 alias cdclojure='cd $CLOJURE_DIR'
