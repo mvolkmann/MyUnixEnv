@@ -68,10 +68,6 @@ To configure
   * configuration files are read when a new session is created,
     not when attaching to an existing session
 
-Help
-- to show: prefix ?
-- press return when finished viewing
-
 Command Mode
 - to enter: prefix :
 - can use tab completion when entering command name
@@ -129,7 +125,7 @@ Panes
     - pane indexes appear briefly
     - type pane index
 - change layout: prefix esc {0-5}
-  * even-horizonatal (left to right)
+  * even-horizontal (left to right)
   * even-vertical (top to bottom)
   * main-horizontal (top fills width)
   * main-vertical (left fills height)
@@ -137,8 +133,8 @@ Panes
 - cycle through layouts: prefix space
 - resize: prefix C-arrow - can repeat
 - rotate panes in current window
-  * clockwise: prefix ctrl-o
-  * counter-clockwise: prefix ctrl-option-o
+  * clockwise: prefix C-o
+  * counter-clockwise: prefix C-option-o
 - swap current pane
   * with previous: prefix { - doesn't repeat
   * with next: prefix } - doesn't repeat
