@@ -5,7 +5,7 @@ To install
 - to see version installed: $ tmux -V
 
 Mac keys
-- meta key (M) is ctrl-option
+- meta key (M) is cmd-option
 - to change Caps Lock key to function as Control key
   * System Preferences ... Keyboard ... Modifier Keys
   * set Caps Lock key to Control
@@ -124,7 +124,7 @@ Panes
   * by index: display-panes or prefix q
     - pane indexes appear briefly
     - type pane index
-- change layout: prefix esc {0-5}
+- change layout: prefix esc {1-5}
   * even-horizontal (left to right)
   * even-vertical (top to bottom)
   * main-horizontal (top fills width)
