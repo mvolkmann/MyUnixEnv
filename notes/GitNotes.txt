@@ -256,6 +256,7 @@ Merging
   * git checkout {to-branch} # if it isn't already the current branch
   * git fetch
   * git merge {from-branch} (ex. master)
+    - typically want to pull remote changes into master first
   * after a succesful merge, typically you'll want to delete from-branch
     - git branch -d {from-branch}
     - reduces distraction when viewing a list of existing branches

@@ -298,6 +298,8 @@ Make
 Man Pages
 - to save a man page in a text file that can be printed
   * man {command} | col -b > {command}.txt
+- to save it in a much more appealing Postscript format
+  * man -t {command} > {command}.ps
 
 Messages
 - To send a message to a particular user that they will see
