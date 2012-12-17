@@ -70,6 +70,8 @@ GUIs
   * http://code.google.com/p/gitextensions/
 
 Diffs
+- to see list of files changed between two branches
+  * git diff --name-only {branch-or-sha-1} {branch-or-sha-2}
 - to see diffs between working tree and local repo
   * git diff {file-path}
 - to see diffs between local repo and origin repo
