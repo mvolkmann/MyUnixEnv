@@ -64,3 +64,8 @@ colorscheme solarized
 "set guifont=Monaco:h14
 set guifont=Inconsolata:h18
 set antialias
+
+"Slimux setup - http://github.com/epeli/slimux
+map <Leader>s :SlimuxREPLSendLine<CR> " sends current line to another pane
+vmap <Leader>s :SlimuxREPLSendSelection<CR> " sends selected text to another pane
+map <Leader>a :SlimuxShellLast<CR> " reruns last shell command
