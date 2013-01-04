@@ -1,220 +1,45 @@
 tmux Notes
 
-To install
-- brew install tmux
-- to see version installed: $ tmux -V
+See your article!
 
-Mac keys
-- meta key (M) is cmd-option
-- to change Caps Lock key to function as Control key
-  * System Preferences ... Keyboard ... Modifier Keys
-  * set Caps Lock key to Control
+Configure status bar
+* set -g status-left-length 30
+* set -g status-left "session #S window #I pane #P"
+  - default is "[#S]"
+  - shows current session, window and pane numbers
+  - includes some arbitrary text
+* for parts of date and time, use strftime tokens
+  - see http://www.foragoodstrftime.com
+* set -g status-right-length 45
+* set -g status-right "#h %a %m/%d/%y"
+  - shows host name, day of week abbrev., month abbrev., day and 2-digit year
+* include result of a shell command
+  - use $(shell-command) in format string
+* change font color in status bar
+  * add #[fg={color}] to a format string
+  * can use 16 color names and colour0 to colour255
+    - black, red, green, yellow, blue, magenta, cyan, white
+    - what are the other eight colors?
+* set -g status-interval 60
+  - updates every minute instead of default of 15 seconds
+* window list
+  - lists each window by displaying index:name (#I:#W)
+  - displayed after status-left by default
+  - center: set -g status-justify centre
+  - have window in list get blue background when activity occurs in it
+    * setw -g monitor-activity on
+    * set -g visual-activity on
 
-To allow 256 colors on a Mac
-- must use iTerm2 instead of Terminal app
-- iTerm ... Preferences ... Profiles ... Terminal
-  * in the Default profile, set "Report Terminal Type" to "xterm-256color"
-  * restart iTERM2
-  * verify that the TERM environment variable
-    is set to "xterm-256color" instead of "xterm"
-
-To configure
-- edit ~/.tmux.conf
-  * can also create /etc/tmux.conf
-    - shared by users that do not have ~/.tmux.conf
-- comments
-  * everything from # to end of a line
-- change prefix keystroke
-  - default is C-b
-  * to change to C-a, add this line to ~/.tmux.conf: set -g prefix C-a
-- bind a key to a command
-  * bind {key} {command}
-  * ex. bind r source-file ~/.tmux.conf
-- unbind a key so it can be assigned differently later
-  * unbind {key}
-- list all key bindings
-  * prefix ?
-  * press return when finished viewing
-- configure status bar
-  * set -g status-left-length 30
-  * set -g status-left "session #S window #I pane #P"
-    - default is "[#S]"
-    - shows current session, window and pane numbers
-    - includes some arbitrary text
-  * for parts of date and time, use strftime tokens
-    - see http://www.foragoodstrftime.com
-  * set -g status-right-length 45
-  * set -g status-right "#h %a %m/%d/%y"
-    - shows host name, day of week abbrev., month abbrev., day and 2-digit year
-  * include result of a shell command
-    - use $(shell-command) in format string
-  * change font color in status bar
-    * add #[fg={color}] to a format string
-    * can use 16 color names and colour0 to colour255
-      - black, red, green, yellow, blue, magenta, cyan, white
-      - what are the other eight colors?
-  * set -g status-interval 60
-    - updates every minute instead of default of 15 seconds
-  * window list
-    - lists each window by displaying index:name (#I:#W)
-    - displayed after status-left by default
-    - center: set -g status-justify centre
-    - have window in list get blue background when activity occurs in it
-      * setw -g monitor-activity on
-      * set -g visual-activity on
-- load configuration changes in a running tmux session
-  * prefix : source-file ~/.tmux.conf
-  * or prefix r with example key binding above
-  * configuration files are read when a new session is created,
-    not when attaching to an existing session
-
-Command Mode
-- to enter: prefix :
-- can use tab completion when entering command name
-- can use up and down arrows to recall previous commands
-
-Sessions
-- consider creating a separate session for each group of related activities
-  * perhaps one for each project
-- create new: $ tmux new -s {name} [{command}]
-  * -s for session
-  * if a command is specified, it is run in the window created
-  * add -t {session-name} to create a new session that shares windows
-    with an existing one running in a different terminal window
-- detach from current, leaving it running: prefix d
-- list existing
-  * from command-line: $ tmux ls
-  * from a session: prefix s
-    - can select to switch
-- use existing
-  * from command-line: $ tmux attach -t {name}
-    - -t for target-session
-  * from a session
-    - choose: choose-session
-    - previous: prefix (
-    - next: prefix )
-- rename: rename-session -t {old} {new} or prefix $
-- kill: $ tmux kill-session -t {name}
-  * -t for target-session
-
-Windows
-- create new: new-window [-n {name}] [{command}] or prefix c
-  * alias neww
-- rename: prefix ,
-- switch
-  * by number: prefix {0..9}
-  * for last selected: last-window or prefix l
-  * for previous: prefix p
-  * for next: prefix n
-  * interactive: choose-window or prefix w
-- list: list-windows (can't choose)
-- kill current: kill-window or prefix &
-- move current to different session
-  * prefix .
-  * enter other session name
-
-Panes
-- create new via split
-  * horizontally: split-window -h or prefix " (customized to prefix -)
-  * vertically: split-window -v (default) or prefix % (customized to prefix |)
-- switch
-  * next: select-pane -t i:.+ or prefix o (cycles)
-  * last: last-pane or prefix ;
-  * by direction: prefix {arrow-key} - can repeat
-  * by index: display-panes or prefix q
-    - pane indexes appear briefly
-    - type pane index
-- change layout: prefix esc {1-5}
-  * even-horizontal (left to right)
-  * even-vertical (top to bottom)
-  * main-horizontal (top fills width)
-  * main-vertical (left fills height)
-  * tiled
-- cycle through layouts: prefix space
-- resize: prefix C-arrow - can repeat
-- rotate panes in current window
-  * clockwise: prefix C-o
-  * counter-clockwise: prefix C-option-o
-- swap current pane
-  * with previous: prefix { - doesn't repeat
-  * with next: prefix } - doesn't repeat
-  * with a given pane: prefix : swap-pane -s {pane-index}
-- kill current: kill-pane or prefix x or enter "exit"
-- move current to new window: break-pane or prefix !
-- move current to existing window
-  * prefix : join-pane -t {session-name}:{target-window}.{target-pane}
-  * added after target pane
-  * omit {session-name}: for current session (typical)
-  * .{target-pane} must be specified
-    - otherwise it treats the -t value
-      as a pane index within current window (bad!)
-- move given pane to current window
-  * prefix : join-pane -s {session-name}:{source-window}.{source-pane}
-  * omit {session-name}: for current session (typical)
-  * omit .{source-pane} if only one pane in source window
-  * pane is added after pane with focus
-
-Scripting tmux environments
-- three approaches
-  * project-specific shell scripts
-    - see example in programming/Tools/tmux/mytmux
-    - my preferred approach
-  * project-specific tmux config files
-    * in config file, use shared config file from home directory with
-      source-file ~/.tmux.conf
-    * in config file, start new session with
-      new-session -s {session-name} -n {window-name} -d
-      - -d detaches after creating
-    * start tmux with: $ tmux -f {file-path} attach
-  * tmuxinator
-    - a Ruby app that uses YAML
-
-Output buffers
-- copy mode
-  * to enter, prefix [
-  * to exit, press return
-- to move around
-  * enter copy mode
-  * use Vim keys or arrow keys to navigate
-- to copy text
-  * enter copy mode
-  * move to start
-  * press spacebar
-  * move to end
-  * press return
-- to copy all visible text in current pane
-  * prefix : capture-pane
-- each copy creates a new paste buffer on a stack
-  * it seems the stack just grows forever
-  * pasting from it doesn't remove a buffer
-- to see list of paste buffers
-  * prefix : list-buffers
-  * press return when finished viewing
-- to see content of top paste buffer
-  * prefix : show-buffer
-- to save content of top paste buffer to a file
-  * prefix : save-buffer {file-path}
-- to paste text from top paste buffer
-  * prefix ]
-- to paste text from a specific paste buffer
-  * prefix = or prefix : choose-buffer
-  * move cursor to one of the buffers and press return
-  * press q to exit without choosing a buffer
-
-Options
-- to see list of all options
-  * prefix : show-options -g
-
-Same session from multiple terminal windows
-- sometimes it is convenient to be able to simultaneously view
-  two tmux windows that are associated with the same session
-- to do this, in a second terminal window
-  create a new, grouped session by entering
-  $ tmux new -t {session-name}
-- the number of cells (rows and columns) displayed in each terminal window
-  will be the minimum that can be displayed in one of them
-  * additional cells will display period characters
-- to fully utilize the larger window, add the following to ~/.tmux.conf
-  set-window-option -g aggressive-resize on
-  AND view different tmux windows in the terminal windows
-- to switch terminals on Mac, cmd-`
+Three approaches to scripting tmux environments
+* project-specific shell scripts
+  - see example in programming/Tools/tmux/mytmux
+  - my preferred approach
+* project-specific tmux config files
+  * in config file, use shared config file from home directory with
+    source-file ~/.tmux.conf
+  * in config file, start new session with
+    new-session -s {session-name} -n {window-name} -d
+    - -d detaches after creating
+  * start tmux with: $ tmux -f {file-path} attach
+* tmuxinator
+  - a Ruby app that uses YAML

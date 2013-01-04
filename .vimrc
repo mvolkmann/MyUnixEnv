@@ -69,3 +69,5 @@ set antialias
 map <Leader>s :SlimuxREPLSendLine<CR> " sends current line to another pane
 vmap <Leader>s :SlimuxREPLSendSelection<CR> " sends selected text to another pane
 map <Leader>a :SlimuxShellLast<CR> " reruns last shell command
+
+set clipboard=unnamed
