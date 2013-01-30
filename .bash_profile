@@ -74,7 +74,7 @@ export CLOSURE_BASE_PATH=$JS_DIR/GoogleClosure/closure-library-read-only/closure
 #export GREP_OPTIONS="--color=ALWAYS"
 
 # Homebrew settings.
-export PATH=/opt/local/bin:$PATH
+# See addition of /opt/local/bin to PATH later.
 
 # Java settings
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
@@ -83,12 +83,6 @@ export PATH=/opt/local/bin:$PATH
 # JavaScript settings
 export JS_CMD=node
 export JS_DIR=$LANGUAGES_DIR/JavaScript
-
-# MacPorts settings.
-#export PATH=/opt/local/sbin:$PATH
-
-# MongoDB settings
-#export PATH=$MONGODB_DIR/bin:$PATH
 
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
@@ -149,7 +143,7 @@ export HISTCONTROL=ignoredups
 # See https://github.com/matthewmccullough/MatthewsShellConfig
 #source ~/.bash_gitprompt
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/bin:/opt/local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 export TERM=xterm-256color
 
