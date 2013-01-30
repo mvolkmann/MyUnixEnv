@@ -44,6 +44,8 @@ imap <TAB> <C-n>
 "colorscheme desert
 "colorscheme volkmann
 "colorscheme Tomorrow
+set background=light
+let g:solarized_termcolors=256
 colorscheme solarized
 
 "call togglebg#map("<F5>")
