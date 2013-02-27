@@ -73,3 +73,16 @@ vmap <Leader>s :SlimuxREPLSendSelection<CR> " sends selected text to another pan
 map <Leader>a :SlimuxShellLast<CR> " reruns last shell command
 
 set clipboard=unnamed
+
+" Switching buffers
+" Use C-^ to toggle to last buffer
+nnoremap <left> :bprev<cr>
+nnoremap <right> :bnext<cr>
+
+" Resize panes to be equal width when window is resized.
+augroup resizeWindow
+  if has("autocmd")
+    autocmd!
+    autocmd VimResized * exe "normal \<C-W>="
+  endif
+augroup end

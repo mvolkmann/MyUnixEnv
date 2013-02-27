@@ -83,6 +83,8 @@ Diffs
   * git diff {commit-1} {commit-2} -- {file-path}
     - where the commits are the first seven characters
     - use git log {file-path} to determine commits
+- to see diffs between the previous commit and a given commit
+  * git diff {commit}^ {commit}
 - added lines are preceded with a "+"
 - deleted lines are preceded with a "-"
 - options for "git log" can also be used with "git diff"
