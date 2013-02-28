@@ -446,6 +446,7 @@ Select
       To avoid this, change "behave mswin" to "behave xterm" in _vimrc.
   V - begin visual selection in line mode
   ctrl-V - begin visual selection in block mode
+  o - changes end of selection being moved
 
 Tab Pages
 - to open a new, empty tab, :tabe
