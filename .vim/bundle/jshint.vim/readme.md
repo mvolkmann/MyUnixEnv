@@ -1,53 +1,64 @@
 # jshint.vim
 
-A [jshint](https://github.com/jshint/jshint) flavor of [hallettj's
-jslint.vim](https://github.com/hallettj/jslint.vim).
-
-v0.9.0
+This plugin is a front for the jshint NodeJS cli module.
+This plugin will allow you to run jshint from vim, and shows the results in a split window.
 
 ## Installation
 
-**[Node.js](http://nodejs.org) must be in your path.**
 
-Recommended for use with [tpope's
-Pathogen](https://github.com/tpope/vim-pathogen) plugin runtime
-management system.
+### jshint
 
-If you're old school or not into pathogen, there a Makefile to copy
-everything into your `~/.vim` directory.
+You have to install [jshint](http://jshint.org/), of course.
+
+Install on a system with npm:
+
+    npm install jshint
+
+Otherwise, you are on your own.
+
+### The Plugin
+
+Use [pathogen.vim](https://github.com/vim-scripts/pathogen.vim)
+
 
 ## Usage
 
-* This plugin automatically checks the JavaScript source and highlights the lines with errors.
+    :JSHint {file}
 
-It also will display more information about the error in the commandline if the curser is in the same line.
+It default to current file.
 
-* You also can call it manually via `:JSHintUpdate`
+### Keyboard Shortcuts
 
-* You can toggle automatic checking on or off with the command
-  `:JSHintToggle`. You can modify your `~/.vimrc` file to bind this command to a key or to turn off error checking by default.
+In the quickfix window, you can use:
 
-* (optional) Add any valid JSHint options to `~/.jshintrc` file, they
-  will be used as global options for all JavaScript files. For example:
-
-      /*jshint browser: true, laxcomma, true, asi: true */
-      /*global deepEqual, equal, notEqual, test, ok, raises */
-
-To disable error highlighting altogether add this line to your ~/.vimrc file:
-
-    let g:JSHintHighlightErrorLine = 0
+    o to open in new window
+    go to preview file (open but maintain focus on jshint results)
+    q to close the quickfix window
 
 
-### Working with quickfix
 
-When automatic error checking is enabled jshint.vim will automatically display
-errors in the [quickfix][] window in addition to highlighting them.
+## License
 
-You can open and close the quickfix window with the commands `:copen` and
-`:cclose`.  Use the command `:cn` to go to the next error or `:cc [nr]` to go
-to a specific error, where `[nr]` is a number.  The first error in the list is
-`1`, the second is `2`, and so on.
+Copyright (c) 2011 Andreas Wålm <andreas@walm.net>, except where otherwise 
+noted.
 
-Once an error is fixed the corresponding quickfix line will disappear.
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
 
-[quickfix]: http://vimdoc.sourceforge.net/htmldoc/quickfix.html  "Vim documentation: quickfix"
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+The Software shall be used for Good, not Evil.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
