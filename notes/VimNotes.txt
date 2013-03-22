@@ -364,8 +364,9 @@ Opening, Saving and Quiting
   :e        - reload the current file (useful if modified outside vim)
   :r {name} - insert content of file {name} after cursor
   :w        - write (save)
-  :q        - quit unless changed
-  :q!       - quit and discard changes
+  :q        - quit current window unless changed
+  :q!       - quit current window and discard changes
+  :qall     - quit all windows
   :wq       - write and quit
   :x        - same as :wq, but only writes if changed
   ZZ        - same as :x
@@ -543,17 +544,19 @@ Windows
   ctrl-w v           - same as :vsplit
   :new               - split screen and start new file
   ctrl-w n           - same as :new
-  ctrl-w j           - move to window below
+  ctrl-w {h|j|k|l}   - move to window in direction of key
+  ctrl-w {H|J|K|L}   - swap windows in direction of key
   ctrl-w down-arrow  - move to window below
-  ctrl-w k           - move to window above
   ctrl-w up-arrow    - move to window above
+  ctrl-w _           - maximize height of current window
+  ctrl-w |           - maximize width of current window
   ctrl-w ctrl-w      - move to next window
   :clo[se]           - close current window (doesn't delete buffer)
   :clo[se]!          - close current window and discard changes
   ctrl-w c           - same as :close
   :on[ly]            - close all windows but current one
   ctrl-w o           - same as :only
-  ctrl-w =           - make split windows equal width
+  ctrl-w =           - make split windows equal width or height
   {n}ctrl-w <        - decrease window width by {n}
   {n}ctrl-w >        - increase window width by {n}
   {n}ctrl-w +        - increase height by {n}
