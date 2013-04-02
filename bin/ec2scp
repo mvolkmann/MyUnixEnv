@@ -6,4 +6,4 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-scp $1 mvolkmann@ec2-50-17-7-237.compute-1.amazonaws.com:
+scp -i ~/.ssh/mark-ec2.pem $1 ubuntu@ec2-54-224-116-109.compute-1.amazonaws.com:

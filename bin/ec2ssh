@@ -1,5 +1,3 @@
 #!/bin/bash
 # Logs in to my EC2 instance using SSH.
-#ssh -i ~/.ssh/id_rsa.pub -lmvolkmann -p 443 ec2-50-17-7-237.compute-1.amazonaws.com
-#ssh -lmvolkmann -p 443 ec2-50-17-7-237.compute-1.amazonaws.com
-ssh mvolkmann@ec2-50-17-7-237.compute-1.amazonaws.com
+ssh -i ~/.ssh/mark-ec2.pem ubuntu@ec2-54-224-116-109.compute-1.amazonaws.com

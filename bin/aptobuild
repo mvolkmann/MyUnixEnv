@@ -1,2 +1,0 @@
-cd $APTO_HOME
-./bin/apto.sh build ci:build-and-show

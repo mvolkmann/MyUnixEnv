@@ -5,26 +5,29 @@ Setup
 - setup an account - requires a credit card
 - a free tier is available for one year
 - use Amazon Web Services (AWS) Management Console
-  - https://console.aws.amazon.com/console/home
+  - browse http://console.aws.amazon.com
+  - click "EC2"
+  - click "Instances" in left nav.
+  - displays all instances in the selected region
+    * change region with dropdown in upper-left
+  - to stop an instance, click its checkbox and
+    pick "Stop" from the "Actions" menu
+    * takes a while to finish
+  - to delete an instance, click its checkbox and
+    pick "Terminate" from the "Actions" menu
+    * it should disappear from the list of instances in about an hour
 
-Can get an Ubuntu images from http://cloud-images.ubuntu.com/releases/
-- select a version
+Can get an Ubuntu images from http://cloud-images.ubuntu.com
+- select a version (ex. "quantal" for version 12.10)
+- select a release date folder (ex. 20130401) or "current"
 - select an AMI with
   * a region that starts with us-east-1
   * arch = 64-bit
   * root store = instance
-- note the AMI id after the "Launch" button
-- browse Management Console
-- select "US East (N. Virginia)" in region dropdown in upper-right
-- press "Launch Instance" button
-- press "Continue" button
-- select "Community AMIs" tab
-- enter AMI id in search field
-- wait for it to be found
-- press "Select" button
+- press the "Launch" button for the AMI
 - press "Continue" button several times to accept defaults
-- enter name for key pair; ex. mark-ec2
-- click "Create & Download your Key Pair"
+- create a new key pair or use an existing one
+  * creates a .pem file that is needed to ssh to server (described below)
 - press "Continue" button
 - press "Launch" button
 - press "Close" button
@@ -41,23 +44,33 @@ To ssh to an instance
 - move generated .pem file to ~/.ssh directory
 - cd ~/.ssh
 - chmod 400 markec2.pem
-- ssh -i ~/.ssh/markec2.pem ubuntu@{instance-url}
+- ssh -i {path-to-pem-file} ubuntu@{instance-url}
+  * ex. ssh -i ~/.ssh/mark-ec2.pem ubuntu@ec2-54-224-116-109.compute-1.amazonaws.com
   * ubuntu is the non-privileged account that is created by default
   * can copy instance-url from EC2 management console
+  * EC2 Linux instance accounts do not have passwords.
+    You must use a key pair (.pem file) to login to them.
 - default shell is bash
+- your ~/bin/ec2ssh script does this!
+  * just enter "ec2ssh"
 
 Generate ssh key
+- you must do this for GitHub
 - cd ~/.ssh
 - ssh-keygen -t rsa -C 'r.mark.volkmann@gmail.com'
   * press return several times to accept defaults
 
 To copy files from an instance
-- scp -i ~/.ssh/markec2.pem ubuntu@{instance-url}:{relative-file-path-from-home-dir} .
+- scp -i {path-to-pem-file} ubuntu@{instance-url}:{relative-file-path-from-home-dir} .
   * copies the file into the current directory using the same file name
+  * ex. scp -i ~/.ssh/mark-ec2.pem ubuntu@ec2-54-224-116-109.compute-1.amazonaws.com:.ssh/id_rsa.pub .
+  * mv id_rsa.pub .ssh/ec2.pub
+- your ~/bin/ec2scp script does this!
+  * just enter "ec2scp {file-path}"
 
 To add public key to GitHub
-- copy ~/.ssh/id_rsa.pub from instance to your computer
-- pbcopy < id_rsa.pub
+- copy .pub file from instance to your computer using steps above
+- pbcopy < .ssh/ec2.pub
 - browse http://github.com and sign in
 - click account settings icon in upper-right
 - click "SSH Keys" in left nav.
@@ -67,18 +80,28 @@ To add public key to GitHub
 - press the "Add key" button
 - enter GitHub password
 
-Your UNIX setup
-- git clone git@github.com:mvolkmann/MyUnixEnv.git
-- cd MyUnixEnv
-- .setup
-- logout and back in
-
 Development environment setup
 - sudo apt-get update
-- sudo apt-get install gcc
-- sudo apt-get make
+  * so latest versions of all available software are known
+- sudo apt-get install build-essential
+  * to get common tools such as cpp, gcc, make, perl, python and tmux
+- sudo apt-get install git
+- sudo apt-get install ruby
+- to install Node.js
+  * mkdir node
+  * cd node
+  * wget -N http://nodejs.org/dist/node-latest.tar.gz
+  * tar xf node-latest.tar.gz
+  * cd node-v0.10.2
+  * ./configure
+  * sudo make install
+    - this takes a REALLY LONG TIME!
+  * npm install -g jshint
+  * npm install -g express
 
 tmux
+- you may get this when build-essential is installed
+  * if so, the steps below are not necessary
 - download and install libevent from http://www.monkey.org/~provos/libevent/
   * ./configure; make; sudo make install
 - download and install ncurses from http://invisible-island.net/ncurses/
@@ -86,6 +109,12 @@ tmux
 - copy tmux-{version}.tar.gz to instance
 - tar -xf tmux-{version}.tar.gz
 - ./configure; make; sudo make install
+
+Your UNIX setup
+- git clone git@github.com:mvolkmann/MyUnixEnv.git
+- cd MyUnixEnv
+- .setup
+- logout and back in
 
 Enable FTP to the instance
 - add TCP rule for port 21
@@ -99,9 +128,21 @@ Enable FTP to the instance
 - sudo apt-get install vsftpd
 - HAVE NOT TESTED THIS!
 
-Software installs
-- sudo apt-get git
-- git clone git git@github.com:mvolkmann/MyUnixEnv.git
+Static IP addresses
+- associated with your EC2 account, not a specific instance, to allow failover between instances
+- browse management console
+- click "Elastic IPs" in left nav.
+- press "Allocate New Address" button
+  * you got 54.225.173.157
+
+To associate a domain name with an IP address
+- often the domain provider website can be used
+- for hover.com
+  * sign in
+  * click "DNS" tab
+  * hover over the first "@" and click "edit DNS"
+  * enter the static IP address
+- can this also be done in the EC2 management console?
 
 Billing alerts
 - send an email when certain limits are passed
