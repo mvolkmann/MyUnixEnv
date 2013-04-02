@@ -468,6 +468,7 @@ Tab Pages
   HKEY_LOCAL_MACHINE\SOFTWARE\Vim\Gvim\path using regedit
 
 Tags
+- For better tagging, brew install ctags-exuberant
 - To generate a "tags" file for the current directory and all subdirectories,
   enter "ctags -R".
   This works for 41 languages!

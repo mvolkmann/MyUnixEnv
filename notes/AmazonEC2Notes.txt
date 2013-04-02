@@ -1,0 +1,107 @@
+Amazaon EC2 Notes
+
+Setup
+- browse http://aws.amazon.com/ec2/
+- setup an account - requires a credit card
+- a free tier is available for one year
+- use Amazon Web Services (AWS) Management Console
+  - https://console.aws.amazon.com/console/home
+
+Can get an Ubuntu images from http://cloud-images.ubuntu.com/releases/
+- select a version
+- select an AMI with
+  * a region that starts with us-east-1
+  * arch = 64-bit
+  * root store = instance
+- note the AMI id after the "Launch" button
+- browse Management Console
+- select "US East (N. Virginia)" in region dropdown in upper-right
+- press "Launch Instance" button
+- press "Continue" button
+- select "Community AMIs" tab
+- enter AMI id in search field
+- wait for it to be found
+- press "Select" button
+- press "Continue" button several times to accept defaults
+- enter name for key pair; ex. mark-ec2
+- click "Create & Download your Key Pair"
+- press "Continue" button
+- press "Launch" button
+- press "Close" button
+- wait for image state to change to "running"
+- click instance to see address (starts with "ec2-")
+- click "Security Groups" in left nav.
+- click "Inbound" tab
+- in 'Create a new rule" dropdown, select "SSH"
+- press "Add Rule" button
+- press "Apply Rule Changes" button
+- two users are created, root and ubuntu
+
+To ssh to an instance
+- move generated .pem file to ~/.ssh directory
+- cd ~/.ssh
+- chmod 400 markec2.pem
+- ssh -i ~/.ssh/markec2.pem ubuntu@{instance-url}
+  * ubuntu is the non-privileged account that is created by default
+  * can copy instance-url from EC2 management console
+- default shell is bash
+
+Generate ssh key
+- cd ~/.ssh
+- ssh-keygen -t rsa -C 'r.mark.volkmann@gmail.com'
+  * press return several times to accept defaults
+
+To copy files from an instance
+- scp -i ~/.ssh/markec2.pem ubuntu@{instance-url}:{relative-file-path-from-home-dir} .
+  * copies the file into the current directory using the same file name
+
+To add public key to GitHub
+- copy ~/.ssh/id_rsa.pub from instance to your computer
+- pbcopy < id_rsa.pub
+- browse http://github.com and sign in
+- click account settings icon in upper-right
+- click "SSH Keys" in left nav.
+- press "Add SSH key" button
+- enter a title
+- paste the key
+- press the "Add key" button
+- enter GitHub password
+
+Your UNIX setup
+- git clone git@github.com:mvolkmann/MyUnixEnv.git
+- cd MyUnixEnv
+- .setup
+- logout and back in
+
+Development environment setup
+- sudo apt-get update
+- sudo apt-get install gcc
+- sudo apt-get make
+
+tmux
+- download and install libevent from http://www.monkey.org/~provos/libevent/
+  * ./configure; make; sudo make install
+- download and install ncurses from http://invisible-island.net/ncurses/
+  * ./configure; make; sudo make install
+- copy tmux-{version}.tar.gz to instance
+- tar -xf tmux-{version}.tar.gz
+- ./configure; make; sudo make install
+
+Enable FTP to the instance
+- add TCP rule for port 21
+  * open management console from browser
+  * select instance
+  * select "Security Groups"
+  * select "Inbound" tab
+  * enter 21 in "Port Range" field
+  * press "Add Rule"
+  * press "Apply Rule Changes"
+- sudo apt-get install vsftpd
+- HAVE NOT TESTED THIS!
+
+Software installs
+- sudo apt-get git
+- git clone git git@github.com:mvolkmann/MyUnixEnv.git
+
+Billing alerts
+- send an email when certain limits are passed
