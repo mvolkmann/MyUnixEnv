@@ -32,12 +32,28 @@ Can get an Ubuntu images from http://cloud-images.ubuntu.com
 - press "Launch" button
 - press "Close" button
 - wait for image state to change to "running"
+- click "Name" field and enter a name for the instance
 - click instance to see address (starts with "ec2-")
 - click "Security Groups" in left nav.
-- click "Inbound" tab
-- in 'Create a new rule" dropdown, select "SSH"
-- press "Add Rule" button
-- press "Apply Rule Changes" button
+  * rather than editing the default one, create a new one
+  * click "Inbound" tab
+  * to enable SSH
+    - in 'Create a new rule" dropdown, select "SSH"
+    - press "Add Rule" button
+    - press "Apply Rule Changes" button
+  * to enable ping
+    - in 'Create a new rule" dropdown, select "Custom ICMP Rule"
+    - leave the Type set to "Echo Reply"
+    - leave the source set to "0.0.0.0/0" so anyone can ping the server
+    - press "Add Rule" button
+    - press "Apply Rule Changes" button
+  * to enable HTTP
+    - in 'Create a new rule" dropdown, select "HTTP"
+    - press "Add Rule" button
+    - press "Apply Rule Changes" button
+- right-click instance and select "Reboot"
+  after making changes to the instance configuration
+  
 - two users are created, root and ubuntu
 
 To ssh to an instance
@@ -134,6 +150,10 @@ Static IP addresses
 - click "Elastic IPs" in left nav.
 - press "Allocate New Address" button
   * you got 54.225.173.157
+- right-click the new address and select "Associate"
+- select an instance
+- press the "Yes, Associate" button
+- after this, use that IP address to ssh and scp with the instance
 
 To associate a domain name with an IP address
 - often the domain provider website can be used
@@ -141,8 +161,23 @@ To associate a domain name with an IP address
   * sign in
   * click "DNS" tab
   * hover over the first "@" and click "edit DNS"
-  * enter the static IP address
+  * enter the static IP address obtained via "Elastic IPs"
 - can this also be done in the EC2 management console?
+
+To add users to an instance
+- log in as ubuntu
+- sudo add user {username}
+- respond to prompts, including password
+
+To enable password authentication with SSH instead of using a key
+- ssh to the instance
+- sudo vim /etc/ssh/sshd_config
+- change PasswordAuthentication to yes and save
+- sudo service ssh reload
+
+To ssh as a new user
+- ssh {user-name}@{instance-url}
+  * will prompt for password
 
 Billing alerts
 - send an email when certain limits are passed
