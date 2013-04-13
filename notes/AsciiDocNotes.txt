@@ -1,0 +1,25 @@
+AsciiDoc Notes
+
+Overview
+- alternative to Markdown
+- homepage is http://www.methods.co.nz/asciidoc/
+
+To install
+- option #1
+  * brew install asciidoc
+- option #2
+  * download tarball from http://sourceforge.net/projects/asciidoc/
+  * to install, ./configure; sudo make install
+- add to .bash_profile
+  export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
+
+To generate PDF
+- brew install fop
+- a2x --fop -f pdf --verbose {input-file}
+
+Pandoc
+- converts various markup formats
+- http://johnmacfarlane.net/pandoc/
+- there is a Mac .dmg file
+- requires pdflatex to convert to PDF
+  * may be able to get from http://www.tug.org/mactex/2012/

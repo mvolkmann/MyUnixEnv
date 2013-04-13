@@ -1,0 +1,44 @@
+Amazon S3 Notes
+
+Overview
+- web-based file storage
+- can add permissions for other users
+- can enable static website hosting
+- can enable logging
+- can enable file versioning
+- there is a REST API
+
+To create a bucket (like a drive)
+- browse http://console.aws.amazon.com/s3
+- press "Create Bucket" button
+- enter a name (ex. "mvolkmann")
+  * name must be unique across all of S3
+- pick a Region (ex. "US Standard")
+- press "Create" button
+
+To create a folder
+- click the bucket
+- select "Create Folder..." from the "Actions" dropdown
+  * can create folders inside folders
+
+To upload files into a folder
+- click the folder
+- select "Upload" from the "Actions" dropdown
+- press "Add Files" button
+- select any number of files
+- press "Start Upload" button
+
+To copy, delete, download, make public, open or rename a file
+- right-click it and select the appropriate menu item
+
+To open a file
+- double-click it
+
+REST API
+- to GET a file, use the URL
+  http://{bucket-name}.s3.amazonaws.com/{folders}/{filename}
+  * make file public to do this without authentication
+- supply authorization header for operations that require it
+  * -H'Authorization: AWS {access-key}:{signature}
+  * access-key and signature are in credentials.csv file?
+  * see http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html#ConstructingTheAuthenticationHeader

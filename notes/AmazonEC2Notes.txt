@@ -179,5 +179,12 @@ To ssh as a new user
 - ssh {user-name}@{instance-url}
   * will prompt for password
 
+Web hosting
+- to run simple website
+  * ssh to instance as ubuntu user
+  * cd website
+  * sudo node server.js (need sudo because it listens on port 80)
+  * browse runsoft.com
+
 Billing alerts
 - send an email when certain limits are passed

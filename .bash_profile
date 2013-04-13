@@ -16,6 +16,7 @@ export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 
 export DOCUMENTS_DIR=$HOME/Documents
 
+export BMX_DIR=$DOCUMENTS_DIR/OCI/clients/bioMerieux
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
 export LANGUAGES_DIR=$PROGRAMMING_DIR/languages
@@ -30,24 +31,14 @@ export NODE_VERSION=0.4.11
 export NODE_DIR=$JAVASCRIPT_DIR/node.js/node-v$NODE_VERSION
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export TB_DIR=$CSS_DIR/TwitterBootstrap
-
-export GEP_DIR=$DOCUMENTS_DIR/GEP
-export APTO_HOME=$GEP_DIR/apto
-export DOCTOR_DIR=$GEP_DIR/doctor
-export PROTOTYPES_DIR=$GEP_DIR/prototypes
-export SANDBOX_DIR=$GEP_DIR/sandboxes/mvolkmann
-export RIAK_DIR=$APTO_HOME/os/osx/riak
-
 export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
 
 # Ant settings
 export ANT_HOME=$JAVA_DIR/Ant/apache-ant-1.8.2
 export PATH=$ANT_HOME/bin:$PATH
 
-# Apto settings
-export PATH=$PATH:$APTO_HOME/bin
-export PATH=$PATH:$APTO_HOME/os/osx/bin
-export PATH=$PATH:$APTO_HOME/node_modules/.bin
+# AsciiDoc settings
+export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # CoffeeScript settings
 export PATH=$PATH:$COFFEESCRIPT_DIR/jashkenas-coffee-script-79492aa/bin
