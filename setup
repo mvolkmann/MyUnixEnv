@@ -5,29 +5,17 @@ git submodule update
 
 cd
 
-mv .bash_profile .bash_profileOLD
-ln -s MyUnixEnv/.bash_profile .bash_profile
-
-mv .bashrc .bashrcOLD
-ln -s MyUnixEnv/.bashrc .bashrc
-
-mv MyUnixEnv/.bash_gitprompt .bash_gitprompt
 ln -s MyUnixEnv/.bash_gitprompt .bash_gitprompt
-
-mkdir bin
-cp MyUnixEnv/bin/* bin
-
-mv .jshintrc .jshintrcOLD
+ln -s MyUnixEnv/.bash_profile .bash_profile
+ln -s MyUnixEnv/.bashrc .bashrc
 ln -s MyUnixEnv/.jshintrc .jshintrc
-
-mv .tmux.conf .tmux.confOLD
 ln -s MyUnixEnv/.tmux.conf .tmux.conf
-
-mv .vim .vimOLD
 ln -s MyUnixEnv/.vim .vim
-
-mv .vimrc .vimrcOLD
 ln -s MyUnixEnv/.vimrc .vimrc
+ln -s MyUnixEnv/mytmux mytmux
+
+mkdir -p bin
+cp MyUnixEnv/bin/* bin
 
 #pushd MyUnixEnv/.vim/bundle/jshint.vim
 #git checkout 3c393147

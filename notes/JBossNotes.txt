@@ -78,7 +78,23 @@ JBoss Notes
   * browse http://localhost:8080/jmx-console
 
 - Starting server
-  * $JBOSS_HOME/bin/run.sh
+  * cd $JBOSS_HOME
+  * ./bin/standalone.sh
+
+- Adding users
+  * ./bin/add-user.sh
+  * created management user mvolkmann/jboss19
+
+- Web console
+  * browse http://localhost:9990/console
+  * will have to login
+  * click "OSGi" in left nav. to see bundles
+
+- Command-line console
+  * need to enable, but couldn't get it to work
+  * see https://docs.jboss.org/author/display/AS71/Management+Clients
+  * ./bin/jboss-cli.sh
+  * connect
 
 - Stopping server
   * $JBOSS_HOME/bin/shutdown.sh -S

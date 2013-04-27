@@ -224,12 +224,16 @@ Refactoring
   * Extract Interface...
 
 viPlugin
-- download from http://www.satokar.com/viplugin/
-- copy the directory inside the features directory
-  to the Eclipse features directory
-- copy the directories inside the plugins directory
-  to the Eclipse plugins directory
-- place viPlugin.licence file in top directory of Eclipse installation
-- restart Eclipse
-- configuration by selecting Window...Preferences...General...Keys
-  and setting the Scheme to ViPlugin
+- new way to install
+  * browse http://www.viplugin.com/viplugin.htm
+  * drag "Install" image onto Eclipse workspace
+- old way to install
+  * download from http://www.satokar.com/viplugin/
+  * copy the directory inside the features directory
+    to the Eclipse features directory
+  * copy the directories inside the plugins directory
+    to the Eclipse plugins directory
+  * place viPlugin.licence file in top directory of Eclipse installation
+  * restart Eclipse
+  * configuration by selecting Window...Preferences...General...Keys
+    and setting the Scheme to ViPlugin

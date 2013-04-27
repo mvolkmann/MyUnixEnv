@@ -1,0 +1,399 @@
+Raspberry Pi Notes
+
+Flashing SD card
+- from Mac OS X
+  * download a Linux distribution zip file from http://www.raspberrypi.org
+    - Raspian "whezzy" is recommended
+    - Soft-float Debian "whezzy" is needed to use JVMs
+  * unzip it to get .img file
+  * insert SD card into reader
+  * open Terminal window
+  * diskutil list
+    - find SD card path by disk size
+  * diskutil unmountdisk /dev/disk{number}
+  * cd to directory containing .img file
+  * dd if={file-name}.img of=/dev/disk{number} bs=2m
+    - takes a really long time to finish! ~ 26 minutes
+    - if stands for input file
+    - of stands for output file
+    - bs stands for block size
+    - when this finished it outputs "{n} bytes transferred"
+  * can rename SD card in Finder
+  * diskutil eject /dev/disk{number}
+
+Power
+- many phone chargers with Micro-B USB plugs will work
+- plugging power into the RPi turns it on
+  and unplugging it turns it off
+- to avoid weakening the power jack on the RPi,
+  consider getting a surge suppressor strip with an on/off switch
+  * plug the RPi power supply, powered USB hub and monitor
+    into the strip and use the switch to turn them all on/off
+- verify power delivered to device
+  * touch the spots marked "TP1" and "TP2" on the board
+    with the points of a digital multimeter
+  * should be between 4.8 and 5 volts
+- if you are getting power to the RPi through a powered USB hub,
+  it probably means you have a cheap hub
+
+First time startup
+- will get "Raspi-config" dialog
+  * responses slowly
+- use keyboard to select options
+  * select "expand_rootfs"
+  * select "change_locale"
+    - deselect en_GB.UTF-8 UTF-8
+    - select en_US.UTF-8 UTF-8
+    - why doesn't this change the keyboard layout to "us"?
+  * select "change_timezone"
+    - select "US"
+    - select "Central"
+  * select "Finish"
+  * select "Yes" for "Reboot now"
+
+Default user
+- pi/raspberry
+
+Orderly shutdown
+- alternative to yanking power cable
+- logout
+- sudo shutdown now
+- unplug power
+
+Reboot from a terminal
+- sudo reboot
+
+Mouse
+- to change from right-handed to left
+  * select LXDE...Preferrences...Keyboard and Mouse...Mouse
+  * select "Left handed" checkbox
+
+Keyboard
+- layout defaults to "gb" for Great Britain
+- to change to "us"
+  * sudo vi /etc/default/keyboard
+  * change XKBLAYOUT from "gb" to "us"
+  * sudo setupcon
+    - reduces startup time for keyboard configuration
+    - takes about 15 seconds to complete
+  * sudo restart
+- to see current key binding
+  * xmodmap
+- to change caps lock key to be ctrl key
+  * determine keycode of caps lock key
+    - xev
+    - press caps lock key
+    - note value of keycode in output (66)
+    - close "Event Tester" window opened by xev
+  * touch .xmodmap
+  * add these lines to .xmodmap
+    - keycode 66 = Control_L
+    - clear Lock
+    - add Control = Control_L
+    - why Control_L?
+  * touch .xinitrc
+  * add this line to .bashrc
+    - xmodmap ~/.xmodmap
+    - TODO: Why does putting it in .xinitrc prevent startx from working later?
+  * logout
+  * startx
+
+Start X Windows
+- startx
+- default window manager is Lightweight X11 Desktop Environment (LXDE)
+
+Partitions
+- list space on each
+  * sudo fdisk -l
+- to change non-primary (/) partition sizes
+  * sudo apt-get install gparted
+  * sudo gparted
+- to maximize size of / partition (/dev/mmcblk0p2)
+  * not needed if "expand_rootfs" was selected during first time startup
+  * if a partition will be deleted, removing mounting of it
+    - sudo vi /etc/fstab
+    - delete line for partition
+  * perform these steps on another computer
+  * some steps below are Mac-specific
+  * create GParted CD
+    - browse http://gparted.sourceforge.net
+    - click "Download"
+    - click "gparted-live-{version}.iso" link for latest stable release
+    - launch Applications/Utilities/Disk Util.app
+    - select File...Open Disk Image...
+    - open the downloaded "gparted-live-{version}.iso" file
+    - select the downloaded file in left column
+    - press "Burn" button
+    - insert blank CD
+  * boot from GParted CD
+    - restart Mac with "c" key held down
+    - if this doesn't work, select the CD in System Preferences...Startup Disk
+  * attach SD card reader to USB port and insert RPi SD card
+  * if there is a free partition after the primary one, delete it
+  * maximize size of primary partition
+
+USB drives
+- automatically mounted under /media
+
+New user accounts
+- see user guide page 36
+- you created mark/pi19
+- get nothing on desktop by default
+- right-click apps in start menu and select "Add to desktop"
+
+Backup
+- can backup up selected folders on SD card to a flash drive
+- example backup script
+  #!/bin/bash
+  dest=/media/PIDRIVE
+  #echo removing old backup files
+  #rm -rf $dest/home/pi
+  #sudo rm -rf $dest/opt
+  mkdir -p $dest/home
+  echo backing up pi home directory to $dest
+  cp -Ru /home/pi $dest/home
+  echo backing up /opt to $dest
+  sudo cp -Ru /opt $dest
+  echo finished
+
+apt-get package manager
+- update local package database
+  * sudo apt-get update
+- install a package
+  * sudo apt-get install {pkg-name}
+- uninstall a package
+  * sudo apt-get remove {pkg-name}
+- update all installed packages
+  * sudo apt-get update
+- update a specific package
+  * install it again
+- search for a package by keywords
+  * apt-cache search "{keywords}"
+- list dependencies of a package
+  * apt-cache depends {pkg-name}
+- list installed packages
+  * dpkg -l
+- get package description
+  * dpkg --info {pkg-name}
+- list files owned by a package
+  * dpkg -L {pkg-name}
+- determine the package that owns a file
+  * dpkg -S {file-path}
+- determine if a package is installed
+  * dpkg -s {pkg-name} | grep Status
+
+Bluetooth setup
+- I COULD NOT GET THIS TO WORK!
+- install packages
+  * sudo apt-get install bluetooth
+  * sudo apt-get bluez-utils
+  * sudo apt-get blueman
+  * really need all three?
+  * does one of these add "Bluetooth Manager" to LXDE...Preferences?
+- verify it is running
+  * /etc/init.d/bluetooth status
+- if not running, start it
+  * /etc/init.d/bluetooth start
+  * it was already running for me
+- select LXDE...Preferences...Bluetooth Manager
+  - press "Setup" button
+  - press "Connect" button
+- get MAC addresses of all accessible devices
+  * turn on all wireless devices
+  * hcitool scan
+    - found Apple mouse and keyboard, but not every time
+  * sudo bluez-simple-agent hci0 {mac-address}
+    - enter any four digit pin code and press return
+    - enter the same on wireless keyboard and press return
+    - should output "New device"
+  * sudo bluez-test-device trusted {mac-address} yes
+  * sudo bluez-test-input connect {mac-address}
+  * sudo restart
+
+git install
+- sudo apt-get install git
+
+Clojure
+- to install
+  * browse http://clojure.org/downloads
+  * click link for Clojure 1.5.1
+  * unzip clojure-1.5.1.zip
+  * rm clojure-1.5.1.zip
+  * sudo mv clojure-1.5.1 /opt
+  * sudo chown root:root -R /opt/clojure-1.5.1
+  * sudo chmod a+r /opt/clojure-1.5.1/clojure-1.5.1.jar
+  * edit .bash_profile
+    - export CLOJURE_HOME=/opt/clojure-1.5.1
+    - alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
+- verify install
+  * start new terminal
+  * clj -version - TEST THIS!
+- REPL
+  * to start, clj
+  * to exit, ctrl-d
+- Hello World!
+  * cd clojure
+  * clj Hello.clj
+    - takes 26.8 seconds!
+
+Node.js install
+- wget http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz
+- tar -zxf node-v0.10.4.tar.gz
+- cd node-v0.10.4
+- ./configure
+- make
+- sudo make install
+- to install a module
+  * sudo npm install [-g] {module-name}
+- to use "n" version manager
+  * THIS DID NOT WORK!
+  * sudo npm install -g n
+  * sudo n 0.10.5
+
+Java install
+- current versions of Java SE Embedded require
+  an OS that provides softfp support, not hardfp
+  * need "Soft float Debian Wheezy" from http://www.raspberrypi.org/downloads
+  * downside is that it cannot take advantage of hardware floating
+    point instructions, so will be slow for some apps
+  * this means bad performance for all JVM languages including
+    Clojure, JRuby and Scala
+- can use a beta version of Java 8 now
+  * browse http://download.java.net/JavaFXarm
+  * download jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
+  * tar zxf jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
+  * rm jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
+  * sudo mv jdk1.8.0 /opt
+  * sudo chown root:root -R /opt/jdk1.8.0
+  * edit .bash_profile
+    - export JAVA_HOME=/opt/jdk1.8.0
+    - export PATH=$PATH:$JAVA_HOME/bin
+- verify install
+  * start new terminal
+  * java -version
+  * if using Java 7 in Raspbian Wheeyzy with hardfp support,
+    will get "error while loading shared libraries: libjli.so"
+- Hello World!
+  * cd java
+  * javac Hello.java
+    - takes 11.9 seconds!
+  * java Hello
+    - takes 1.4 seconds!
+
+Python
+- already installed
+- python --version
+- Hello World!
+  * python hello.py
+    - takes 1.3 seconds
+
+Ruby
+- sudo apt-get install ruby
+- ruby -v
+- Hello World!
+  * ruby hello.rb
+    - takes 0.7 seconds
+
+Scala
+- to install
+  * browse http://www.scala-lang.org/downloads
+  * download scala-2.10.1.tgz
+  * tar zxf scala-2.10.1.tgz
+  * sudo mv scala-2.10.1 /opt
+  * sudo chown root:root -R /opt/scala-2.10.1
+  * edit .bash_profile
+    - export SCALA_HOME=/opt/scala-2.10.1
+    - export PATH=$PATH:$SCALA_HOME/bin
+- verify install
+  * start new terminal
+  * scala -version
+- Hello World!
+  * cd java
+  * scalac Hello.java
+    - takes 45.0 seconds!
+  * scala Hello
+    - takes 7.8 seconds!
+
+Solarized install
+- browse http://ethanschoonover.com/solarized
+- click "Click Here To Download Latest Version"
+- unzip solarized.zip
+- cd solarized/xresources-colors-solarized
+
+
+Squeak Smalltalk
+- already installed, but need an image
+- see script to download image at
+  http://www.raspberrypi.org/phpBB3/viewtopic.php?f=34&t=9046
+  * you saved it in ~/Smalltalk/getimage
+  * cd Smalltalk
+  * ./getimage
+  * may have to execute the three mv commands at end again
+- select start...Programming...Squeak
+- works!
+
+tmux install
+- sudo apt-get install libevent-dev
+- sudo apt-get install libncurses5-dev
+- downloaded latest version of tmux from http://tmux.sourceforge.net
+- tar -zxvf tmux-{version}.tar.gz
+- cd tmux-{version}
+- ./configure
+- make
+- sudo make install
+- if ~/.tmux.conf sets default-command to reattach-to-user-namespace
+  for Mac copy/paste with system clipboard, remove that
+- "tmux -V" reports "tmux 1.8"
+- "tmux new -s mytmux" outputs "[exited]" - BROKEN!
+
+Vim
+- sudo apt-get install vim
+
+WiFi setup
+- need to be connected to internet via ethernet
+- determine WiFi adapter model
+  * dmesg | grep usb
+  * look for line containing "802.11n WLAN Adapter"
+  * look for line after that containing "Manufacturer:"
+  * mine is "Realtek"
+- get name of firmware to install
+  * apt-cache search {manufacturer}
+- install firmware
+  * sudo apt-get install {firmware-name}
+  * mine is "firmware-realtek"
+- get list of reachable wireless networks
+  * sudo iwlist scan | grep ESSID
+  * select the ESSID value of one of them
+  * ex. "Volkmann AirPort" (note the capital P)
+- verify that the wireless adapter is working
+  * iwconfig
+  * look for "wlan0" followed by "unassociated"
+- set up use of DHCP and encryption
+  * sudo vi /etc/network/interfaces
+  * comment out existing lines that contains "wlan0" and "wpa-roam"
+  * add these lines
+    - auto wlan0
+    - iface wlan0 inet dhcp
+    - wpa-conf /etc/wpa.conf
+- setup use of a specific kind of encryption
+  * create the file /etc/wpa.conf
+  * add a line containing "network={"
+  * add a line containing "[tab]ssid="{essid-value}""
+  * if wireless network uses WPA
+    - add a line containing "[tab]key_mgmt=WPA-PSK"
+    - add a line containing "[tab]psk="{your-wpa-key}""
+  * if wireless network uses WEP
+    - add a line containing "[tab]key_mgmt=NONE"
+    - add a line containing "[tab]wep_key0="{your-wep-key}""
+  * if wireless network uses no encryption
+    - add a line containing "[tab]key_mgmt=NONE"
+  * add a line containing "}"
+- start wireless networking
+  * sudo ifup wlan0
+  * it may output "interface wlan0 already connected"
+- disconnect ethernet cable
+- test wireless connection
+  * ping -c 1 www.raspberrypi.org
+
+Other packages installed
+- tightvncserver

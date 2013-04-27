@@ -21,14 +21,10 @@ export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
 export LANGUAGES_DIR=$PROGRAMMING_DIR/languages
 export COFFEESCRIPT_DIR=$LANGUAGES_DIR/coffeescript
-export COUCHDB_DIR=$DATABASES_DIR/CouchDB
 export CSS_DIR=$LANGUAGES_DIR/CSS
 export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/Java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
-export MONGODB_DIR=$DATABASES_DIR/MongoDB/mongodb-osx-x86_64-2.0.1
-export NODE_VERSION=0.4.11
-export NODE_DIR=$JAVASCRIPT_DIR/node.js/node-v$NODE_VERSION
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export TB_DIR=$CSS_DIR/TwitterBootstrap
 export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
@@ -45,9 +41,6 @@ export PATH=$PATH:$COFFEESCRIPT_DIR/jashkenas-coffee-script-79492aa/bin
 # Clojure settings
 export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
 
-# Developer settings
-export PATH=$PATH:/Developer/usr/bin
-
 # FindBugs settings
 export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
 
@@ -56,9 +49,6 @@ export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
 #export PATH=$PATH:/usr/local/git/bin
 export GITHUB_USER=mvolkmann
 export GITHUB_PASS=github19
-
-# Google Closure settings
-export CLOSURE_BASE_PATH=$JS_DIR/GoogleClosure/closure-library-read-only/closure/goog/
 
 # grep settings
 # This setting may interfere with fink scripts!
@@ -75,6 +65,9 @@ export CLOSURE_BASE_PATH=$JS_DIR/GoogleClosure/closure-library-read-only/closure
 export JS_CMD=node
 export JS_DIR=$LANGUAGES_DIR/JavaScript
 
+# JBoss settings
+export JBOSS_HOME=$JAVA_DIR/JBoss/jboss-as-7.1.1.Final
+
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
 
@@ -84,19 +77,6 @@ export PATH=$PATH:$NODE_DIR/deps/v8/tools
 
 # Postgres settings
 #export PATH=$PATH:$POSTGRES_DIR/bin
-
-# Rhino settings
-# To checkout and build latest source,
-# cd $RHINO_DIR/latest
-# cvs co mozilla/js/rhino
-# cd mozilla/js/rhino
-# ant jar
-export CVSROOT=:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot
-export RHINO_DIR=$JS_DIR/Rhino
-export RHINO_HOME=$RHINO_DIR/rhino1_7R3
-
-# Riak settings
-export PATH=$PATH:$RIAK_DIR/dev/dev1/bin
 
 # Ruby settings
 export RUBY_DIR=$LANGUAGES_DIR/Ruby
@@ -108,9 +88,6 @@ export PATH=$RUBY_HOME:$PATH
 export RUBYOPT=-rubygems
 # Tell less not to complain about ANSI escape codes, and run ri.
 alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
-
-# Apache Solr settings
-SOLR_DIR=$DATABASES_DIR/solr
 
 # Tomcat settings
 export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.19

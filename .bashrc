@@ -28,27 +28,18 @@ alias bigdirs="du -sk * | sort -nr | head"
 alias cdbmx='cd $BMX_DIR'
 alias cdclojure='cd $CLOJURE_DIR'
 alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
-alias cdcouchdb='cd $COUCHDB_DIR'
 alias cdcss='cd $CSS_DIR'
-alias cddoctor='cd $DOCTOR_DIR'
-alias cdgep='cd $GEP_DIR'
 alias cdjava='cd $JAVA_DIR'
 alias cdjavascript='cd $JAVASCRIPT_DIR'
 alias cdjug='cd $JAVA_DIR/JUG'
 alias cdjq='cd $JQUERY_DIR'
 alias cdjs='cd $JAVASCRIPT_DIR'
 alias cdlanguages='cd $LANGUAGES_DIR'
-alias cdmongodb='cd $MONGODB_DIR'
 alias cdmyoci='cd $MYOCI_DIR'
 alias cdnode='cd $JAVASCRIPT_DIR/Node.js'
 alias cdprogramming='cd $PROGRAMMING_DIR'
-alias cdprototypes='cd $PROTOTYPES_DIR'
 alias cdruby='cd $RUBY_DIR'
-alias cdsandbox='cd $SANDBOX_DIR'
-alias cdsolr='cd $SOLR_DIR'
 alias cdtb='cd $TB_DIR'
-alias python=python3.2
-alias test='clear; tapr test/*.tap.js'
 
 alias cdtraining='cd $TRAINING_DIR'
 
@@ -64,22 +55,9 @@ alias eld="echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/
 alias ens="enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 # --printer='LaserJet 1300n'"
 
-# JRuby setup
-
-# Rhino setup
-#alias rhino='java org.mozilla.javascript.tools.shell.Main '
-#alias rhino='java -jar $RHINO_HOME/js.jar '
-
-# Subversion aliases
-alias svndiff='svn diff --diff-cmd fmdiff'
-
-alias ll='ls -l'
-
 # Display directories and executables in different colors.
 #alias ls='ls --color=tty'
 alias ls='ls -G'
-
-alias lt='ls -lrt'
 
 # See MySQLNotes.txt for steps to start mysqld, the daemon.
 alias mysql=/usr/local/mysql/bin/mysql

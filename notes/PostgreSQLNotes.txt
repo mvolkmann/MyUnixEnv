@@ -2,6 +2,36 @@ PostgreSQL Notes
 
 There is a DZone Refcard for this!
 
+Version 9.2.1 notes
+- to create a database
+  * sudo sysctl -w kern.sysv.shmmax=12582912
+  * sudo sysctl -w kern.sysv.shmall=12582912
+  * initdb /usr/local/var/postgres -E utf8
+- to start server
+  * postgres -D /usr/local/var/postgres
+    - will continue running
+- to stop server
+  * pg_ctl -D /usr/local/var/postgres stop -s -m fast
+- to create a database
+  * createdb {db-name}
+- to delete a database
+  * dropdb {db-name}
+- interactive mode
+  - to start for a given database
+    * psql -d {db-name}
+  - to list tables
+    * \d
+  - to execute a query
+    * select * from foo where bar = 'baz';
+    * don't forget the semicolon at the end!
+  - to quit
+    * \q
+- to execute SQL statements in a file
+  * psql -d {db-name} -f {file-path}
+- to execute a single SQL statement
+  * psql -d {db-name} -c '{stmt}'
+    - ex. psql -d bmx-demo -c 'select * from states'
+
 Installation
 - from source
   * download and unzip
