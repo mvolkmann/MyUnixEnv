@@ -1,6 +1,9 @@
 #!/bin/bash
 echo running .bashrc
 
+# This doesn't work on Mac, but does on RPi.
+#xmodmap ~/.xmodmap
+
 # Source global definitions.
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc

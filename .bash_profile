@@ -38,8 +38,11 @@ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # CoffeeScript settings
 export PATH=$PATH:$COFFEESCRIPT_DIR/jashkenas-coffee-script-79492aa/bin
+
 # Clojure settings
 export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
+export CLOJURE_HOME-/opt/clojure-1.5.1 # for RPi
+alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
 
 # FindBugs settings
 export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
@@ -60,6 +63,8 @@ export GITHUB_PASS=github19
 # Java settings
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
 #export PATH=$JAVA_HOME/bin:$PATH
+export JAVA_HOME=/opt/jdk1.8.0 # for RPi
+export PATH=$PATH:$JAVA_HOME/bin
 
 # JavaScript settings
 export JS_CMD=node
@@ -88,6 +93,10 @@ export PATH=$RUBY_HOME:$PATH
 export RUBYOPT=-rubygems
 # Tell less not to complain about ANSI escape codes, and run ri.
 alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
+
+# Scala settings
+export SCALA_HOME=/opt/scala-2.10.1 # for RPi
+export PATH=$PATH:$SCALA_HOME/bin
 
 # Tomcat settings
 export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.19
