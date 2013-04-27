@@ -41,7 +41,7 @@ export PATH=$PATH:$COFFEESCRIPT_DIR/jashkenas-coffee-script-79492aa/bin
 
 # Clojure settings
 export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
-export CLOJURE_HOME-/opt/clojure-1.5.1 # for RPi
+export CLOJURE_HOME=/opt/clojure-1.5.1 # for RPi
 alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
 
 # FindBugs settings
