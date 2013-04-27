@@ -1,5 +1,5 @@
 #!/bin/bash
-#echo running .bash_profile
+echo running .bash_profile
 
 unset COLUMNS # to prevent ps from truncating lines
 set noclobber

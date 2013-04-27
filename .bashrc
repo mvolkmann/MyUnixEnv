@@ -1,5 +1,5 @@
 #!/bin/bash
-#echo running .bashrc
+echo running .bashrc
 
 # Source global definitions.
 if [ -f /etc/bashrc ]; then
