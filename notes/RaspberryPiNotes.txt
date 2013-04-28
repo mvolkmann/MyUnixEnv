@@ -76,7 +76,7 @@ Keyboard
   * sudo setupcon
     - reduces startup time for keyboard configuration
     - takes about 15 seconds to complete
-  * sudo restart
+  * sudo reboot
 - to see current key binding
   * xmodmap
 - to change caps lock key to be ctrl key
@@ -173,6 +173,10 @@ apt-get package manager
   * apt-cache depends {pkg-name}
 - list installed packages
   * dpkg -l
+- determine which packages you installed, not installed by defaul
+  * vi /var/log/apt/history.log
+  * look for sections with start date later than date of Linux distro
+  * look at all "Commandline" entries from that point to the end
 - get package description
   * dpkg --info {pkg-name}
 - list files owned by a package
@@ -208,7 +212,7 @@ Bluetooth setup
     - should output "New device"
   * sudo bluez-test-device trusted {mac-address} yes
   * sudo bluez-test-input connect {mac-address}
-  * sudo restart
+  * sudo reboot
 
 git install
 - sudo apt-get install git
@@ -236,21 +240,27 @@ Clojure
   * clj Hello.clj
     - takes 26.8 seconds!
 
-Node.js install
-- wget http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz
-- tar -zxf node-v0.10.4.tar.gz
-- cd node-v0.10.4
-- ./configure
-- make
-- sudo make install
+Node.js
+- to install
+  * wget http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz
+  * tar -zxf node-v0.10.4.tar.gz
+  * cd node-v0.10.4
+  * ./configure
+  * make
+  * sudo make install
+  * rm -rf node-v0.10.4
 - to install a module
   * sudo npm install [-g] {module-name}
 - to use "n" version manager
   * THIS DID NOT WORK!
   * sudo npm install -g n
   * sudo n 0.10.5
+- Hello World!
+  * cd node
+  * node hello.js
+    - takes 1.07 seconds
 
-Java install
+Java
 - current versions of Java SE Embedded require
   an OS that provides softfp support, not hardfp
   * need "Soft float Debian Wheezy" from http://www.raspberrypi.org/downloads
@@ -259,6 +269,7 @@ Java install
   * this means bad performance for all JVM languages including
     Clojure, JRuby and Scala
 - can use a beta version of Java 8 now
+- to install Java 8 beta
   * browse http://download.java.net/JavaFXarm
   * download jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
   * tar zxf jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
@@ -279,6 +290,14 @@ Java install
     - takes 11.9 seconds!
   * java Hello
     - takes 1.4 seconds!
+
+Perl
+- already installed
+- perl -v
+  * v5.14.2
+- Hello World!
+  * perl hello.pl
+    - takes 0.06 seconds
 
 Python
 - already installed
@@ -314,12 +333,28 @@ Scala
   * scala Hello
     - takes 7.8 seconds!
 
+SSH
+- can SSH from another computer on local network to RPi
+  * see http://blog.kugelfish.com/2012/09/raspberry-pi-tethering.html
+- setup
+  * sudo apt-get install avahi-daemon
+  * sudo update-rc.d avahi-daemon defaults
+  * give your RPi a unique name
+    - sudo vi /etc/hostname
+      * change "raspberrypi" to "MarkPi"
+    - sudo vi /etc/hosts
+      * change "raspberrypi" to "MarkPi"
+  * sudo reboot
+- from other computer
+  * ssh pi@markpi.local
+  * Darren uses the -X and -6 options - Why?
+
 Solarized install
 - browse http://ethanschoonover.com/solarized
 - click "Click Here To Download Latest Version"
 - unzip solarized.zip
 - cd solarized/xresources-colors-solarized
-
+- didn't get this to work yet
 
 Squeak Smalltalk
 - already installed, but need an image
@@ -395,5 +430,16 @@ WiFi setup
 - test wireless connection
   * ping -c 1 www.raspberrypi.org
 
-Other packages installed
-- tightvncserver
+Packages you installed
+- blueman - for bluetooth
+- bluetooth
+- bluez-tools - for bluetooth
+- git - version control
+- libevent-dev - needed by tmux
+- libncurses5-dev - needed by tmux
+- nodejs - JavaScript programming enviroment
+- python-gobject - needed by pygame?
+- ruby - programming language
+- tightvncserver - to use VNC from Mac
+- tmux - terminal multiplexor
+- vim - editor
