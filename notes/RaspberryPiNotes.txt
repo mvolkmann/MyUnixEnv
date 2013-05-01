@@ -1,10 +1,104 @@
 Raspberry Pi Notes
 
+Overview
+- $35 credit card-sized computer that runs Linux
+  * 85.6mm x 56mm x 21mm
+  * 45 grams
+- goals and common uses
+  * education
+  * introducing more people to programming
+  * hobbiests
+    - hardware projects including robotics
+    - can interact with Arduino
+    - sensors (motion, temperature, light, ...)
+    - cameras
+    - breadboards
+    - LCDs
+  * media center
+    - XBMC
+
+Models
+- Model A
+  * 256MB of RAM
+  * one USB port
+  * no ethernet port
+  * $25
+- Model B
+  * 512MB of RAM
+  * two USB ports
+  * one ethernet port
+  * $35
+
+What's on the board
+- processor - System on a Chip (SOC) Broadcom BCM2835
+  * CPU - ARM11 (ARM1176JZFS) with floating point running at 700Mhz
+  * GPU - Videocore 4, BluRay quality playback using H.264 at 40Mbs
+  * can overclock, but voids warranty
+- memory
+  * 512MB in Model B, 256MB in Model A
+  * cannot add memory
+- LEDs
+  - power
+  - others?
+- ports
+  * power Micro-B USB requires 5 volts
+    * turn on and off by connecting and disconnecting power cable
+  * SD card
+    * boots from this
+    * can use for storage
+    * can also use USB flash drives and standard external drives
+  * audio 3.5mm for standard speakers and headphones
+  * HDMI video and audio
+  * composite video (RCA)
+  * Display Serial Interface (DSI) for tablets and smartphones
+  * USB - 2 on Model B, 1 on Model A
+  * RJ45 ethernet on Model B
+  * General Purpose Input Output (GPIO) 26-pin
+  * others (camera, tablet display)
+
+Video options
+- HDMI TV or monitor
+- VGA monitor
+- RCA TV
+- cables and adapters
+
+Audio options
+- HDMI
+- stereo plug (what is this called?)
+
+Where to buy
+- in US
+  * Newark (element14) - http://www.newark.com
+  * Allied Electronics - http://www.alliedelec.com
+
+What to buy
+- power supply with Micro-B USB plug that supplies 5 volts
+  * many phone charges will work
+- SD card
+  * what kind?
+  * what size?
+- USB keyboard
+- USB mouse
+- HDMI cable
+- HDMI to DVI adapter (for non-HDMI monitors)
+
+Optional accessories
+- fitted case
+- powered USB hub
+  * avoid cheap ones that supply power to the RPi when connected
+- flash drive for additional storage space
+- WiFi dongle
+- bluetooth dongle
+  * can buy one that supports both WiFi and bluetooth
+
 Flashing SD card
 - from Mac OS X
   * download a Linux distribution zip file from http://www.raspberrypi.org
     - Raspian "whezzy" is recommended
-    - Soft-float Debian "whezzy" is needed to use JVMs
+    - Soft-float Debian "whezzy" is needed to use JVMs before Java 8
+  - others supported by the Raspberry Pi Foundation
+    * Arch Linux ARM
+    * RISC OS
   * unzip it to get .img file
   * insert SD card into reader
   * open Terminal window
@@ -38,9 +132,10 @@ Power
 
 First time startup
 - will get "Raspi-config" dialog
-  * responses slowly
+  * responds to input very slowly
 - use keyboard to select options
   * select "expand_rootfs"
+    - to utilize all the space available on the card
   * select "change_locale"
     - deselect en_GB.UTF-8 UTF-8
     - select en_US.UTF-8 UTF-8
@@ -50,6 +145,9 @@ First time startup
     - select "Central"
   * select "Finish"
   * select "Yes" for "Reboot now"
+- to change these options after the first startup
+  * sudo rasp-config
+  * takes about 15 seconds to launch
 
 Default user
 - pi/raspberry
@@ -67,6 +165,8 @@ Mouse
 - to change from right-handed to left
   * select LXDE...Preferrences...Keyboard and Mouse...Mouse
   * select "Left handed" checkbox
+- to change scroll direction of mouse wheel
+  * ?
 
 Keyboard
 - layout defaults to "gb" for Great Britain
@@ -97,10 +197,6 @@ Keyboard
     - TODO: Why does putting it in .xinitrc prevent startx from working later?
   * logout
   * startx
-
-Start X Windows
-- startx
-- default window manager is Lightweight X11 Desktop Environment (LXDE)
 
 Partitions
 - list space on each
@@ -134,6 +230,45 @@ Partitions
 
 USB drives
 - automatically mounted under /media
+
+X Windows
+- to start, startx
+  * how can it be configure to run this automatically after login?
+- default window manager is Lightweight X11 Desktop Environment (LXDE)
+- the start menu in the lower-left corner is often referred to as "LXDE"
+- how can the default desktop font used below icons be changed?
+- to open Task Manager, press ctrl-alt-delete
+- to exit, press ctrl-alt-backspace
+  * this isn't configured by default
+  * sudo raspi-config
+  * use tab key to move selection
+  * press enter to select item under cursor
+  * select "configure_keyboard"
+  * accept current value for first four options
+  * set "Use Control+Alt+Backspace to terminate the X server?" to Yes
+  * sudo reboot
+
+Terminals
+- to open a new terminal window, double-click the "LXTerminal" icon
+  or select LXDE...Accessories...LXTerminal
+- can the default size of location of terminals be configured?
+
+Web browsers
+- two are provided, Midori and Dillo
+- both are very slow
+- Midori looks nicer
+- Dillo is faster then Midori
+  * all cookies are disabled by default
+  * edit ~/.dillo/cookiesrc to enable cookies for all or selected sites
+    - ex. add the line "google.com ACCEPT"
+    - couldn't get this to work!
+- likely no chance of getting reasonable performance from Chrome or Firefox
+
+Office software
+- offline
+  * OpenOffice
+- online
+  * Google Drive
 
 New user accounts
 - see user guide page 36
@@ -240,26 +375,6 @@ Clojure
   * clj Hello.clj
     - takes 26.8 seconds!
 
-Node.js
-- to install
-  * wget http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz
-  * tar -zxf node-v0.10.4.tar.gz
-  * cd node-v0.10.4
-  * ./configure
-  * make
-  * sudo make install
-  * rm -rf node-v0.10.4
-- to install a module
-  * sudo npm install [-g] {module-name}
-- to use "n" version manager
-  * THIS DID NOT WORK!
-  * sudo npm install -g n
-  * sudo n 0.10.5
-- Hello World!
-  * cd node
-  * node hello.js
-    - takes 1.07 seconds
-
 Java
 - current versions of Java SE Embedded require
   an OS that provides softfp support, not hardfp
@@ -291,6 +406,26 @@ Java
   * java Hello
     - takes 1.4 seconds!
 
+Node.js
+- to install
+  * wget http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz
+  * tar -zxf node-v0.10.4.tar.gz
+  * cd node-v0.10.4
+  * ./configure
+  * make
+  * sudo make install
+  * rm -rf node-v0.10.4
+- to install a module
+  * sudo npm install [-g] {module-name}
+- to use "n" version manager
+  * THIS DID NOT WORK!
+  * sudo npm install -g n
+  * sudo n 0.10.5
+- Hello World!
+  * cd node
+  * node hello.js
+    - takes 1.07 seconds
+
 Perl
 - already installed
 - perl -v
@@ -301,6 +436,7 @@ Perl
 
 Python
 - already installed
+- comes with IDLE IDE
 - python --version
 - Hello World!
   * python hello.py
@@ -333,6 +469,23 @@ Scala
   * scala Hello
     - takes 7.8 seconds!
 
+Scratch
+- programming environment for kids
+- runs on top of Squeak Smalltalk
+- ADD MORE NOTES ON THIS
+
+Squeak Smalltalk
+- already installed, but need an image
+- see script to download image at
+  http://www.raspberrypi.org/phpBB3/viewtopic.php?f=34&t=9046
+  * you saved it in ~/Smalltalk/getimage
+  * cd Smalltalk
+  * ./getimage
+  * may have to execute the three mv commands at end again
+- select start...Programming...Squeak
+- works!
+- benchmark this!
+
 SSH
 - can SSH from another computer on local network to RPi
   * see http://blog.kugelfish.com/2012/09/raspberry-pi-tethering.html
@@ -355,17 +508,6 @@ Solarized install
 - unzip solarized.zip
 - cd solarized/xresources-colors-solarized
 - didn't get this to work yet
-
-Squeak Smalltalk
-- already installed, but need an image
-- see script to download image at
-  http://www.raspberrypi.org/phpBB3/viewtopic.php?f=34&t=9046
-  * you saved it in ~/Smalltalk/getimage
-  * cd Smalltalk
-  * ./getimage
-  * may have to execute the three mv commands at end again
-- select start...Programming...Squeak
-- works!
 
 tmux install
 - sudo apt-get install libevent-dev
@@ -443,3 +585,7 @@ Packages you installed
 - tightvncserver - to use VNC from Mac
 - tmux - terminal multiplexor
 - vim - editor
+
+Books
+
+Websites

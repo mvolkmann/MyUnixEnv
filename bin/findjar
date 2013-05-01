@@ -1,0 +1,24 @@
+#!/bin/bash
+# This looks for the class in jar files in and under
+# the current working directory.
+
+if (( $# != 1 )) ; then
+  echo "usage: findjar {class-name}"
+  exit -1
+fi
+
+searchString="$1.*\.class"
+
+for jarFile in $(find . -name "*.jar" -print)
+do
+  # grep returns a status of 0 if pattern is found
+  jar tvf $jarFile | grep -e $searchString
+  if (( $? == 0 )); then
+    echo "found $classFile in $jarFile"
+    found=1
+  fi
+done
+
+if [[ ! $found ]]; then
+  echo "$searchString not found"
+fi
