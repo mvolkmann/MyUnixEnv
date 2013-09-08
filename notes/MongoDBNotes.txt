@@ -1,30 +1,40 @@
 Mongo Notes
 
 To install
-- browse http://www.mongodb.org/downloads
-- download the appropriate file
-- unzip the file
-- mkdir -p /data/db (default database directory)
+- on Mac OS X
+  * brew install mongodb
+- from source
+  * browse http://www.mongodb.org/downloads
+  * download the appropriate file
+  * unzip the file
+  * mkdir -p /data/db (default database directory)
+  * ???
 
 To get detailed documentation
 - browse http://www.mongodb.org/display/DOCS/Manual
 
 To start server
-./bin/mongod
+- enter mongod
 
 Mongo Shell
 - to get help, enter "help"
-- to start a Mongo shell, ./bin/mongo
+- to start a Mongo shell, enter mongo
+- to get a list of existing databases, enter show dbs
 - to create a database, do nothing since databases
   are automatically created when referenced
 - to select a database, use {name}
 - to delete a database, db.dropDatabase()
-- to get the names of the collections in a database, db.getCollectionNames()
+- to get the names of the collections in a database, show collections
 - to create a collection, db.createCollection('{name}')
 - to delete a collection, db.{coll}.drop()
 - to see the first 20 documents in a collection, db.{coll}.find()
 - to get the number of documents in a collection,
   db.{coll}.find().count() or db.{coll}.find().length()
+- to find a document in a collection, db.{coll}.findOne(query)
+  * a query is just a JavaScript object where
+    the keys are document property names and
+    the values are documentproperty values
+- to delete a document from a collection, db.{coll}.remove(query)
 - to add an index to a collection, db.{coll}.ensureIndex({key: 1});
 - to exit the shell, enter "exit"
 

@@ -3,6 +3,10 @@ AsciiDoc Notes
 Overview
 - alternative to Markdown
 - homepage is http://www.methods.co.nz/asciidoc/
+- recommended file extension is .txt
+
+Character Escaping
+- these characters must be escaped for literal versions: + {
 
 To install
 - option #1
@@ -12,6 +16,33 @@ To install
   * to install, ./configure; sudo make install
 - add to .bash_profile
   export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
+
+To install dblatex
+- download source from http://sourceforge.net/projects/dblatex/?source=dlp
+- unzip and cd to directory
+- sudo python setup.py install
+
+To generate HTML
+- asciidoc {name}.txt
+  * generates {name}.html
+
+To generate slidy slides
+- asciidoc -b slidy {input-file}
+  * generates {name}.html, but it's in slidy format
+- new slides
+  * level 1 & 2 headers start new slides
+- slidy keys
+  * left arrow goes to previous slide
+  * right arrow or spacebar goes to next slide
+    - can also mouse click anywhere on slide
+  * s or < makes font smaller
+  * b or > makes font bigger
+  * c shows table of contents
+  * f toggles display of status line
+  * home goes to first slide
+  * end goes to last slide
+  * a toggles between showing all slides on one page
+    and one slide at a time
 
 To generate PDF
 - brew install fop

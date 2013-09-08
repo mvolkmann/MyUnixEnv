@@ -1,5 +1,18 @@
 Windows Notes
 
+Keyboard Layout
+- to make Caps Lock key to be a Ctrl and keep existing Ctrl keys
+- run regedit
+- navigate to HKEY_LOCAL_MACHINE...SYSTEM...
+  CurrentControlSet...Control...Keyboard Layout
+- right-click and select "New" to create a new key
+- enter "Scancode Map" for the key name
+- right-click and select "Modify Binary Data..."
+- enter
+  00 00 00 00 00 00 00 00
+  02 00 00 00 1D 00 3A 00
+  00 00 00 00
+
 IP Address
 - enter "ipconfig" in a Command Prompt window
 - to map IP addresses to names, add lines to

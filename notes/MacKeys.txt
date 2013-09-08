@@ -9,7 +9,7 @@ Command keys (precede with Apple key)
   g - find next
   h - hide
   i - get info.
-  k - in Mail, deletes all mail in trash
+  k - in Mail, deletes all mail in trash; in Terminal, clears screen and buffer
   m - minimize (click green button in title bar to maximize)
   o - open
   p - print

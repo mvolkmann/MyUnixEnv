@@ -1,0 +1,5664 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.7" />
+<title>Raspberry Pi Notes</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Raspberry Pi Notes</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_overview">Overview</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/RaspberryPi.jpg" alt="Raspberry Pi Model B" />
+</div>
+<div class="title">Figure 1. Raspberry Pi Model B</div>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+$35 credit card-sized computer that runs Linux
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+85.6mm x 56mm x 21mm
+</p>
+</li>
+<li>
+<p>
+45 grams
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+name comes from tradition of companies named after fruit (Raspberry)<br />
+  and recommended programming language (Python)
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_characteristics">Characteristics</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+somewhat slow for desktop apps, including web browsers
+</p>
+</li>
+<li>
+<p>
+good for multimedia and 3D graphics
+</p>
+</li>
+<li>
+<p>
+good for interacting with other decies and creating custom circuits
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_goals_and_common_uses">Goals and Common Uses</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+education
+</p>
+</li>
+<li>
+<p>
+introducing more people to programming
+</p>
+</li>
+<li>
+<p>
+hobbyists
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+hardware projects including robotics
+</p>
+</li>
+<li>
+<p>
+lights
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ACT - activity
+</p>
+</li>
+<li>
+<p>
+PWR - power
+</p>
+</li>
+<li>
+<p>
+FDX - full duplex Ethernet
+</p>
+</li>
+<li>
+<p>
+LNK - link; blinks when there is Ethernet activity
+</p>
+</li>
+<li>
+<p>
+100 - Ethernet speed (100M if lit, 10M if not)
+</p>
+</li>
+<li>
+<p>
+the last three only light when using Ethernet, not wireless
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+sensors (motion, temperature, light, &#8230;)
+</p>
+</li>
+<li>
+<p>
+motors
+</p>
+</li>
+<li>
+<p>
+cameras
+</p>
+</li>
+<li>
+<p>
+microcontrollers (like Arduino)
+</p>
+</li>
+<li>
+<p>
+breadboards, stripboards
+</p>
+</li>
+<li>
+<p>
+LCDs
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+media center
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+XBMC
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_raspberry_pi_foundation">Raspberry Pi Foundation</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+founded by Eben Upton, executive director and overall hardware/software architect of RPi
+</p>
+</li>
+<li>
+<p>
+community is managed by his wife Liz
+</p>
+</li>
+<li>
+<p>
+trustee Pete Lomas designed the RPi hardware
+</p>
+</li>
+<li>
+<p>
+"a charity founded in 2009 to promote the study of basic computer science in schools" - Wikipedia
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+non-profit
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+develops Raspberry Pi
+</p>
+</li>
+<li>
+<p>
+manufacturing and distribution
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+handled by two companies
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+RS Compenents - Allied Electronics in the US
+</p>
+</li>
+<li>
+<p>
+Farnell Group - a group of many companies including element14, Newark Electronics and MCM Electronics
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models">Models</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Model A
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+256MB of RAM
+</p>
+</li>
+<li>
+<p>
+one USB port
+</p>
+</li>
+<li>
+<p>
+no Ethernet port (can buy a USB Ethernet adapter)
+</p>
+</li>
+<li>
+<p>
+$25
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Model B
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+512MB of RAM
+</p>
+</li>
+<li>
+<p>
+two USB ports
+</p>
+</li>
+<li>
+<p>
+one Ethernet port
+</p>
+</li>
+<li>
+<p>
+$35
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_8217_s_on_the_board">What&#8217;s On The Board</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+processor - System on a Chip (SOC) Broadcom BCM2835 System-on-Chip (SoC)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+CPU - ARM11 (ARM1176JZFS) processor design with floating point running at 700Mhz
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ARM stands for Advanced RISC Machines
+</p>
+</li>
+<li>
+<p>
+uses ARMv6 instruction set, not ARMv7 which is used in some PCs
+</p>
+</li>
+<li>
+<p>
+uses Reduced Instruction Set Computing (RISC)
+</p>
+</li>
+<li>
+<p>
+good for mobile devices
+</p>
+</li>
+<li>
+<p>
+low power requirements
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+GPU - Videocore 4, BluRay quality playback using H.264 at 40Mbs
+</p>
+</li>
+<li>
+<p>
+can overclock, but voids warranty
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+memory
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+512MB in Model B, 256MB in Model A
+</p>
+</li>
+<li>
+<p>
+cannot add memory
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+LEDs
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+power
+</p>
+</li>
+<li>
+<p>
+others?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+ports
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+power Micro-B USB requires 5 volts
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+turn on and off by connecting and disconnecting power cable
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+SD card
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+boots from this
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+may be faster to boot from a flash drive (see. p. 99)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+can use for storage
+</p>
+</li>
+<li>
+<p>
+can also use USB flash drives and standard external drives
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+audio 3.5mm for standard speakers and headphones
+</p>
+</li>
+<li>
+<p>
+HDMI video and audio
+</p>
+</li>
+<li>
+<p>
+composite video (RCA)
+</p>
+</li>
+<li>
+<p>
+Display Serial Interface (DSI) for tablets and smartphones
+</p>
+</li>
+<li>
+<p>
+USB - 2 on Model B, 1 on Model A
+</p>
+</li>
+<li>
+<p>
+RJ45 Ethernet on Model B
+</p>
+</li>
+<li>
+<p>
+General Purpose Input Output (GPIO) 26-pin
+</p>
+</li>
+<li>
+<p>
+others (camera, tablet display)
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_video_options">Video Options</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+High Definition Multimedia Interface (HDMI) TV or monitor (best)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can purchase adapters for Digital Video Interconnect (DVI)<br />
+   and Video Graphics Array (VGA)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Video Graphics Array (VGA) monitor
+</p>
+</li>
+<li>
+<p>
+composite video using Radio Corporation of America (RCA) jack (worst)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+for older TVs
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Display Serial Interface (DSI)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+for flat panel displays of tablets and phones
+</p>
+</li>
+<li>
+<p>
+connect with a ribbon cable
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_audio_options">Audio Options</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+HDMI
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+using same cable as for video
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+3.5 mm mini-stereo plug
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+for analog audio
+</p>
+</li>
+<li>
+<p>
+need powered speakers for good volume
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_where_to_buy">Where To Buy</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+in US
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Newark (element14) - <a href="http://www.newark.com">http://www.newark.com</a>
+</p>
+</li>
+<li>
+<p>
+Allied Electronics - <a href="http://www.alliedelec.com">http://www.alliedelec.com</a>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+slow delivery!
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_to_buy">What To Buy</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+power supply with Micro-B USB plug that supplies 5 volts
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+many phone charges will work
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+SD card
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+see list of verified SD cards at <a href="http://www.elinux.org/RPi_SD_cards#Verification">http://www.elinux.org/RPi_SD_cards#Verification</a>
+</p>
+</li>
+<li>
+<p>
+minimum size is 2GB, recommended size is 4GB
+</p>
+</li>
+<li>
+<p>
+get even large to store more user files and user-installed software
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+USB keyboard
+</p>
+</li>
+<li>
+<p>
+USB mouse
+</p>
+</li>
+<li>
+<p>
+HDMI cable
+</p>
+</li>
+<li>
+<p>
+HDMI to DVI adapter (for non-HDMI monitors)
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optional_accessories">Optional Accessories</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+fitted case
+</p>
+</li>
+<li>
+<p>
+powered USB hub
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+for devices that require more that the RPi can provide
+</p>
+</li>
+<li>
+<p>
+avoid cheap ones that supply power to the RPi when connected
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+why does user guide recommend this in p. 18 tip?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+a good one is Belkin Hi-Speed USB 2.0 4-Port Hub (F5U234v1)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+flash drive for additional storage space
+</p>
+</li>
+<li>
+<p>
+WiFi USB adapter
+</p>
+</li>
+<li>
+<p>
+bluetooth USB adapter
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can buy one that supports both WiFi and bluetooth
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Raspberry Pi Camera
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+see instructions below on using this
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_flashing_sd_card">Flashing SD Card</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+download a Linux distribution zip file from <a href="http://www.raspberrypi.org">http://www.raspberrypi.org</a>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Raspian "whezzy" is recommended
+</p>
+</li>
+<li>
+<p>
+Soft-float Debian "whezzy" is needed to use JVMs before Java 8
+</p>
+</li>
+<li>
+<p>
+others supported by the Raspberry Pi Foundation
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Arch Linux ARM
+</p>
+</li>
+<li>
+<p>
+RISC OS
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+unzip it to get .img file
+</p>
+</li>
+<li>
+<p>
+insert SD card into reader
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+from Windows
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+download "Image Writer for Windows" from <a href="http://sourceforge.net/projects/win32diskimager/">http://sourceforge.net/projects/win32diskimager/</a>
+</p>
+</li>
+<li>
+<p>
+double-click Win32DiskImager.exe
+</p>
+</li>
+<li>
+<p>
+browse to locate and select the .img file to copy
+</p>
+</li>
+<li>
+<p>
+in "Device" dropdown, select drive letter of SD card
+</p>
+</li>
+<li>
+<p>
+click "Write" button
+</p>
+</li>
+<li>
+<p>
+takes a long time to finish
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+from Mac OS X
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+open Terminal window
+</p>
+</li>
+<li>
+<p>
+enter <tt>diskutil list</tt> and find the SD card path by disk size
+</p>
+</li>
+<li>
+<p>
+enter <tt>diskutil unmountdisk /dev/disk{number}</tt>
+</p>
+</li>
+<li>
+<p>
+cd to directory containing .img file
+</p>
+</li>
+<li>
+<p>
+enter <tt>dd if={file-name}.img of=/dev/disk{number} bs=2M</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+if stands for input file
+</p>
+</li>
+<li>
+<p>
+of stands for output file
+</p>
+</li>
+<li>
+<p>
+bs stands for block size
+</p>
+</li>
+<li>
+<p>
+when this finished it outputs "{n} bytes transferred"
+</p>
+</li>
+<li>
+<p>
+takes a really long time to finish! ~ 26 minutes
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+can rename SD card in Finder
+</p>
+</li>
+<li>
+<p>
+enter <tt>diskutil eject /dev/disk{number}</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+from Linux (very similar to Mac OS X instructions)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+open a terminal window
+</p>
+</li>
+<li>
+<p>
+enter <tt>sudo fdisk -l</tt> and find the SD card path by disk size
+</p>
+</li>
+<li>
+<p>
+cd to directory containing .img file
+</p>
+</li>
+<li>
+<p>
+enter <tt>sudo dd if={file-name}.img of=/dev/sd{number} bs=2M</tt>
+</p>
+</li>
+<li>
+<p>
+takes a long time to finish
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_power">Power</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+many phone chargers with Micro-B USB plugs will work
+</p>
+</li>
+<li>
+<p>
+plugging power into the RPi turns it on and unplugging it turns it off
+</p>
+</li>
+<li>
+<p>
+to avoid weakening the power jack on the RPi, consider getting a surge suppressor strip with an on/off switch
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+plug the RPi power supply, powered USB hub and monitor into the strip and use the switch to turn them all on/off
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+verify power delivered to device
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+touch spots marked "TP1" and "TP2" on board (called "vias")<br />
+   with the points of a digital multimeter
+</p>
+</li>
+<li>
+<p>
+should be between 4.8 and 5 volts
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+if you are getting power to the RPi through a powered USB hub, it probably means you have a cheap hub
+</p>
+</li>
+<li>
+<p>
+a USB hub will shutdown if a device plugged into it draws too much power (polyfuse trips)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+reboot to restore?
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_first_time_startup">First Time Startup</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+will get "Raspi-config" dialog
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+responds to input very slowly
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+use keyboard to select options
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+select "expand_rootfs"
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+to utilize all the space available on the card for the primary (/) partition
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+select "change_locale"
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+deselect en_GB.UTF-8 UTF-8
+</p>
+</li>
+<li>
+<p>
+select en_US.UTF-8 UTF-8
+</p>
+</li>
+<li>
+<p>
+why doesn&#8217;t this change the keyboard layout to "us"?
+</p>
+</li>
+<li>
+<p>
+try "configure_keyboard" option!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+select "change_timezone"
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+select "US"
+</p>
+</li>
+<li>
+<p>
+select "Central"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+select "Finish"
+</p>
+</li>
+<li>
+<p>
+select "Yes" for "Reboot now"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to change these options after the first startup
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo rasp-config
+</p>
+</li>
+<li>
+<p>
+takes about 15 seconds to launch
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+if timezone is not correct
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo dpkg-reconfigure tzdata</tt>
+</p>
+</li>
+<li>
+<p>
+select "US" and "Central"
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_default_user">Default User</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+pi/raspberry
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware_configuration">Hardware Configuration</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+/boot/config.txt is used for much of this
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+many options for display settings, overclocking and overvoltage
+</p>
+</li>
+<li>
+<p>
+only read at startup, so changes do not take effect until rebooted
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_orderly_shutdown">Orderly Shutdown</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+alternative to yanking power cable
+</p>
+</li>
+<li>
+<p>
+logout
+</p>
+</li>
+<li>
+<p>
+sudo shutdown now
+</p>
+</li>
+<li>
+<p>
+unplug power
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reboot_from_a_terminal">Reboot From A Terminal</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+sudo reboot
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mouse">Mouse</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+to change from right-handed to left
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+select LXDE&#8230;Preferrences&#8230;Keyboard and Mouse&#8230;Mouse
+</p>
+</li>
+<li>
+<p>
+select "Left handed" checkbox
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to change scroll direction of mouse wheel
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+?
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_keyboard">Keyboard</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+layout defaults to "gb" for Great Britain
+</p>
+</li>
+<li>
+<p>
+to change to "us"
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can this be done with the raspi-config "configure_keyboard" option?
+</p>
+</li>
+<li>
+<p>
+sudo vi /etc/default/keyboard
+</p>
+</li>
+<li>
+<p>
+change XKBLAYOUT from "gb" to "us"
+</p>
+</li>
+<li>
+<p>
+sudo setupcon
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+reduces startup time for keyboard configuration
+</p>
+</li>
+<li>
+<p>
+takes about 15 seconds to complete
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+sudo reboot
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to see current key binding
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+xmodmap
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to change caps lock key to be ctrl key
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+determine keycode of caps lock key
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+xev
+</p>
+</li>
+<li>
+<p>
+press caps lock key
+</p>
+</li>
+<li>
+<p>
+note value of keycode in output (66)
+</p>
+</li>
+<li>
+<p>
+close "Event Tester" window opened by xev
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+touch .xmodmap
+</p>
+</li>
+<li>
+<p>
+add these lines to .xmodmap
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+keycode 66 = Control_L
+</p>
+</li>
+<li>
+<p>
+clear Lock
+</p>
+</li>
+<li>
+<p>
+add Control = Control_L
+</p>
+</li>
+<li>
+<p>
+why Control_L?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+touch .xinitrc
+</p>
+</li>
+<li>
+<p>
+add this line to .bashrc
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+xmodmap ~/.xmodmap
+</p>
+</li>
+<li>
+<p>
+TODO: Why does putting it in .xinitrc prevent startx from working later?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+logout
+</p>
+</li>
+<li>
+<p>
+startx
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_partitions">Partitions</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+typically have two partitions on SD card
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+/boot VFAT partition for files required to boot Linux (7MB)
+</p>
+</li>
+<li>
+<p>
+/ EXT4 partition for rest of Linux and user files (much larger)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+list space on each
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo fdisk -l</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to change non-primary (not /) partition sizes
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+probably want to delete all partitions except /boot and / and maximize size / partition instead
+d
+</p>
+</li>
+<li>
+<p>
+enter <tt>sudo apt-get install gparted</tt>
+</p>
+</li>
+<li>
+<p>
+enter <tt>sudo gparted</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to maximize size of primary (/) partition (/dev/mmcblk0p2)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+not needed if "expand_rootfs" was selected during first time startup
+</p>
+</li>
+<li>
+<p>
+if a partition will be deleted, remove mounting of it
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo vi /etc/fstab</tt>
+</p>
+</li>
+<li>
+<p>
+delete line for partition
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+perform these steps on another computer
+</p>
+</li>
+<li>
+<p>
+some steps below are Mac-specific
+</p>
+</li>
+<li>
+<p>
+create Parted Magic CD
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+"gparted" is the GUI for "Parted Magic"
+</p>
+</li>
+<li>
+<p>
+browse <a href="http://gparted.sourceforge.net">http://gparted.sourceforge.net</a>
+</p>
+</li>
+<li>
+<p>
+click "Download"
+</p>
+</li>
+<li>
+<p>
+click "gparted-live-{version}.iso" link for latest stable release
+</p>
+</li>
+<li>
+<p>
+launch Applications/Utilities/Disk Util.app
+</p>
+</li>
+<li>
+<p>
+select File&#8230;Open Disk Image&#8230;
+</p>
+</li>
+<li>
+<p>
+open the downloaded "gparted-live-{version}.iso" file
+</p>
+</li>
+<li>
+<p>
+select the downloaded file in left column
+</p>
+</li>
+<li>
+<p>
+press "Burn" button
+</p>
+</li>
+<li>
+<p>
+insert blank CD
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+boot from Parted Magic CD
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+works on PCs and Macs
+</p>
+</li>
+<li>
+<p>
+try on a PC and document how to boot from CD on one
+</p>
+</li>
+<li>
+<p>
+on Mac OS X
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+restart with "c" key held down
+</p>
+</li>
+<li>
+<p>
+if this doesn&#8217;t work, select the CD in System Preferences&#8230;Startup Disk
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+attach SD card reader to USB port and insert RPi SD card
+</p>
+</li>
+<li>
+<p>
+if there is a free partition after the primary one, delete it
+</p>
+</li>
+<li>
+<p>
+maximize size of primary partition
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+could make /opt on SD card be a symbolic link to a directory<br />
+  on flash drive to have more space for user-installed software
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+where does apt-get install software? not in /opt?
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usb_drives">USB Drives</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+automatically mounted under /media when X Windows starts
+</p>
+</li>
+<li>
+<p>
+to access outside of X Windows
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+you documented these steps elsewhere in this file
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_x_windows">X Windows</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+to start, startx
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+how can it be configure to run this automatically after login?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+default window manager is Lightweight X11 Desktop Environment (LXDE)
+</p>
+</li>
+<li>
+<p>
+the start menu in the lower-left corner is often referred to as "LXDE"
+</p>
+</li>
+<li>
+<p>
+how can the default desktop font used below icons be changed?
+</p>
+</li>
+<li>
+<p>
+to open Task Manager, press ctrl-alt-delete
+</p>
+</li>
+<li>
+<p>
+to exit, press ctrl-alt-backspace
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+this isn&#8217;t configured by default
+</p>
+</li>
+<li>
+<p>
+sudo raspi-config
+</p>
+</li>
+<li>
+<p>
+use tab key to move selection
+</p>
+</li>
+<li>
+<p>
+press enter to select item under cursor
+</p>
+</li>
+<li>
+<p>
+select "configure_keyboard"
+</p>
+</li>
+<li>
+<p>
+accept current value for first four options
+</p>
+</li>
+<li>
+<p>
+set "Use Control+Alt+Backspace to terminate the X server?" to Yes
+</p>
+</li>
+<li>
+<p>
+sudo reboot
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lxde">LXDE</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+default window manager in Raspian OS
+</p>
+</li>
+<li>
+<p>
+access software menu by clicking LXDE icon in lower-left
+</p>
+</li>
+<li>
+<p>
+software is organized into categories
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Accessories - Debian Reference, File Manager, Galculator, Image Viewer, Leafpad, LXTerminal, Root Terminal, Xarchiver
+</p>
+</li>
+<li>
+<p>
+Education - Scratch, Squeak
+</p>
+</li>
+<li>
+<p>
+Graphics - xpdf
+</p>
+</li>
+<li>
+<p>
+Internet - Dillo, Midori, Midori Private Browsing, NetSurt Web Browser, wpa_gui
+</p>
+</li>
+<li>
+<p>
+Other - too many to list
+</p>
+</li>
+<li>
+<p>
+Programming - IDLE, IDLE 3, Scratch, Squeak
+</p>
+</li>
+<li>
+<p>
+System Tools - Task Manager
+</p>
+</li>
+<li>
+<p>
+Preferences - Bluetooth Manager, Customize Look and Feel, Desktop Session Settings, Keyboard and Mouse, Monitor Settings, Openbox Configuration Manager, Preferred Applications
+</p>
+</li>
+<li>
+<p>
+to change clock in lower-right from 24-hour format to 12-hour with am/pm
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+right-click clock and select "Digital Clock Settings"
+</p>
+</li>
+<li>
+<p>
+change "Clock Format" from %R to %r
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>man 3 strftime</tt> for more optionsman 3 strftime+ for more options
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+press "Close" button
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_terminals">Terminals</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+to open a new terminal window, double-click the "LXTerminal" icon or select LXDE&#8230;Accessories&#8230;LXTerminal
+</p>
+</li>
+<li>
+<p>
+can the default size of location of terminals be configured?
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ethernet_networking_verification">Ethernet Networking Verification</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>ifconfig</tt>
+</p>
+</li>
+<li>
+<p>
+look for network port with "Link encap:Ethernet"
+</p>
+</li>
+<li>
+<p>
+verify no errors for RX or TX packets
+</p>
+</li>
+<li>
+<p>
+verify no significant number of collisions
+</p>
+</li>
+<li>
+<p>
+test by entering <tt>ping -c1 www.raspberrypi.org</tt> or some other domain
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_web_browsers">Web Browsers</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+three are provided, Midori, Dillo and NetSurf
+</p>
+</li>
+<li>
+<p>
+all are somewhat slow
+</p>
+</li>
+<li>
+<p>
+Midori looks the nicest
+</p>
+</li>
+<li>
+<p>
+Dillo and NetSurf are faster then Midori
+</p>
+</li>
+<li>
+<p>
+Dillo
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+all cookies are disabled by default
+</p>
+</li>
+<li>
+<p>
+edit ~/.dillo/cookiesrc to enable cookies for all or selected sites
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ex. add the line "google.com ACCEPT"
+</p>
+</li>
+<li>
+<p>
+couldn&#8217;t get this to work!
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Chromium - the best!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+open source basis of Google Chrome browser; most code is shared
+</p>
+</li>
+<li>
+<p>
+to install, enter <tt>sudo apt-get install chromium-broswer</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+adds "Chromium Web Browser" to Internet menu
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+likely no chance of getting reasonable performance from Chrome or Firefox
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_office_software">Office Software</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+offline (installed)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+OpenOffice.org
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+provides word processor, spreadshet, presentations, drawing/diagrams, calendar and image editing
+</p>
+</li>
+<li>
+<p>
+to install, enter <tt>sudo apt-get install openoffice.org</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+adds an Office menu to LXDE that contains menu items for each app
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+less popular options include Zoho, Office 365 and Thinkfree Online
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The Gimp
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+free alternative to Adobe Photoshop
+</p>
+</li>
+<li>
+<p>
+slow on RPi
+</p>
+</li>
+<li>
+<p>
+to install, enter <tt>sudo apt-get install gimp</tt>
+</p>
+</li>
+<li>
+<p>
+adds "GNU Image Manipulation Program" to Graphics menu
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+online (cloud-based)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Google Drive (was Google Docs)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+requires a better web browser than Midori such as Chromium
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_new_user_accounts">New User Accounts</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+to create a new account
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+log in using an existing account such as "pi"
+</p>
+</li>
+<li>
+<p>
+enter +sudo useradd -m -G adm,dialout,cdrom,audio,plugdev,users,lpadmin {username}
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+-m tells it to create a home directory for the new user
+</p>
+</li>
+<li>
+<p>
+-G specifies the groups to which the new user should belong
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+enter +sudo passwd {username}
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+prompts for new password
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+you created mark/pi19
+</p>
+</li>
+<li>
+<p>
+new user will have nothing on X Windows desktop by default
+</p>
+</li>
+<li>
+<p>
+right-click apps in start menu and select "Add to desktop"
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_backup">Backup</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+can backup up selected folders on SD card to a flash drive
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">example backup script</div>
+<div class="content">
+<pre><tt>#!/bin/bash
+dest=/media/PIDRIVE
+#echo removing old backup files
+#rm -rf $dest/home/pi
+#sudo rm -rf $dest/opt
+mkdir -p $dest/home
+echo backing up pi home directory to $dest
+cp -Ru /home/pi $dest/home
+echo backing up /opt to $dest
+sudo cp -Ru /opt $dest
+echo finished</tt></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_apt_get_package_manager">apt-get Package Manager</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+update local package database
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get update</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+install a package
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get install {pkg-name}</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+uninstall a package
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get remove {pkg-name}</tt>
+</p>
+</li>
+<li>
+<p>
+can use <tt>purge</tt> instead of <tt>remove</tt> to also remove related configuration files
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+update all installed packages
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get update</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+update a specific package
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+install it again
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+update the Linux distribution
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get upgrade</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+search for a package by keywords
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>apt-cache search "{keywords}"</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+list dependencies of a package
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>apt-cache depends {pkg-name}</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+list installed packages
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>dpkg -l</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+determine which packages you installed, not installed by default
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>vi /var/log/apt/history.log</tt>
+</p>
+</li>
+<li>
+<p>
+look for sections with start date later than date of Linux distro
+</p>
+</li>
+<li>
+<p>
+look at all "Commandline" entries from that point to the end
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+get package description
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>dpkg --info {pkg-name}</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+list files owned by a package
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>dpkg -L {pkg-name}</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+determine the package that owns a file
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>dpkg -S {file-path}</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+determine if a package is installed
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>dpkg -s {pkg-name} | grep Status</tt>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bluetooth_setup">Bluetooth Setup</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+primarily for wireless keyboard and mouse
+</p>
+</li>
+<li>
+<p>
+I COULD NOT GET THIS TO WORK!
+</p>
+</li>
+<li>
+<p>
+install packages
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get install bluetooth</tt>
+</p>
+</li>
+<li>
+<p>
+enter <tt>sudo apt-get bluez-utils</tt>
+</p>
+</li>
+<li>
+<p>
+enter <tt>sudo apt-get blueman</tt>
+</p>
+</li>
+<li>
+<p>
+really need all three?
+</p>
+</li>
+<li>
+<p>
+does one of these add "Bluetooth Manager" to LXDE&#8230;Preferences?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+verify it is running
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>/etc/init.d/bluetooth status</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+if not running, start it
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>/etc/init.d/bluetooth start</tt>
+</p>
+</li>
+<li>
+<p>
+it was already running for me
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+select LXDE&#8230;Preferences&#8230;Bluetooth Manager
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+press "Setup" button
+</p>
+</li>
+<li>
+<p>
+press "Connect" button
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+get MAC addresses of all accessible devices
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+turn on all wireless devices
+</p>
+</li>
+<li>
+<p>
+enter <tt>hcitool scan</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+found Apple mouse and keyboard, but not every time
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+sudo bluez-simple-agent hci0 {mac-address}
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter any four digit pin code and press return
+</p>
+</li>
+<li>
+<p>
+enter the same on wireless keyboard and press return
+</p>
+</li>
+<li>
+<p>
+should output "New device"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+sudo bluez-test-device trusted {mac-address} yes
+</p>
+</li>
+<li>
+<p>
+sudo bluez-test-input connect {mac-address}
+</p>
+</li>
+<li>
+<p>
+sudo reboot
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_raspberry_pi_camera">Raspberry Pi Camera</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+to install camera, see video at
+  <a href="http://www.mobilemag.com/2013/05/16/raspberry-pi-camera-board/">http://www.mobilemag.com/2013/05/16/raspberry-pi-camera-board/</a>
+</p>
+</li>
+<li>
+<p>
+to configure software, see
+  <a href="http://www.element14.com/community/docs/DOC-54413?ICID=rasp-accessory-group">http://www.element14.com/community/docs/DOC-54413?ICID=rasp-accessory-group</a>
+</p>
+</li>
+<li>
+<p>
+to use camera
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+get help and see all the options: enter <tt>raspistill</tt>
+</p>
+</li>
+<li>
+<p>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+</p>
+</li>
+<li>
+<p>
+to make preview window fullscreen, add <tt>-f</tt>
+</p>
+</li>
+<li>
+<p>
+to use an encoding other than jpg, add <tt>-e {bmp|gif|png}</tt>
+</p>
+</li>
+<li>
+<p>
+to take timelapse pictures every n milliseconds; add <tt>-tl n</tt> and
+include <tt>%d</tt> in filename which will be replaced with integer picture
+numbers
+</p>
+</li>
+<li>
+<p>
+there are MANY more options
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+press ctrl-c to terminate
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+</p>
+</li>
+<li>
+<p>
+to display video on screen without saving, enter <tt>raspivid</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+only runs for 5 seconds
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+</p>
+</li>
+<li>
+<p>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+install with <tt>sudo apt-get install omxplayer</tt>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_screenshots">Screenshots</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+scrot - shortened version of SCReenshOT
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+to install, enter <tt>sudo apt-get install scrot</tt>
+</p>
+</li>
+<li>
+<p>
+to capture entire screen, enter <tt>scrot</tt>
+</p>
+</li>
+<li>
+<p>
+to capture a specific window, enter <tt>scrot -s</tt> and click window title bar
+</p>
+</li>
+<li>
+<p>
+to capture a specific rectangle, enter <tt>scrot -s</tt> and drag out rectangle with mouse
+</p>
+</li>
+<li>
+<p>
+to view resulting file, enter <tt>gpicview {file-path}</tt>
+</p>
+</li>
+<li>
+<p>
+file created
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can specify file path at end of command
+</p>
+</li>
+<li>
+<p>
+file extension specifies desired image format (.png or .jpg, not .gif)
+</p>
+</li>
+<li>
+<p>
+if omitted, it creates a file in current directory<br />
+    whose name starts with date/time and ends with .png
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+enter <tt>man scrot</tt> or <tt>scrot -h</tt> for more options
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+can also use "The Gimp", but this is much slower due to startup time
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">git</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+distributed version control system
+</p>
+</li>
+<li>
+<p>
+free and open source
+</p>
+</li>
+<li>
+<p>
+to install, enter <tt>sudo apt-get install git</tt>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sending_email_from_terminal">Sending Email From Terminal</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>sudo apt-get install ssmtp</tt>
+</p>
+</li>
+<li>
+<p>
+enter +sudo vim /etc/ssmtp/ssmtp.conf
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_programming_languages">Programming Languages</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_c">C</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+compiler is already installed
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">hello.c</div>
+<div class="content">
+<pre><tt>#include &lt;stdio.h&gt;
+
+int main(void) {
+  printf("Hello World!\n);
+  return 0;
+}</tt></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>cc -o hello hello.c</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can use gcc instead of cc; they are the same
+</p>
+</li>
+<li>
+<p>
+/usr/bin/cc is a symbolic link to /etc/alternatives/cc
+</p>
+</li>
+<li>
+<p>
+/etc/alternatives/cc is a symbolic link to /usr/bin/gcc
+</p>
+</li>
+<li>
+<p>
+/usr/bin/gcc is a symbolic link to gcc-4.6
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+enter <tt>./hello</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 0.015 seconds
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_c_2">C++</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+compiler is already installed
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">hello.cpp</div>
+<div class="content">
+<pre><tt>#include &lt;iosteram&gt;
+using namespace std;
+
+int main() {
+  printf("Hello World!\n);
+  return 0;
+}</tt></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>g</tt>+ -o hello hello.c+
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+/usr/bin/g<tt> is a symbolic link to g</tt>-4.6
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+enter <tt>./hello</tt>
+</p>
+</li>
+<li>
+<p>
+enter <tt>./hello</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 0.04 seconds
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_clojure">Clojure</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+to install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+browse <a href="http://clojure.org/downloads">http://clojure.org/downloads</a>
+</p>
+</li>
+<li>
+<p>
+click link for Clojure 1.5.1
+</p>
+</li>
+<li>
+<p>
+unzip clojure-1.5.1.zip
+</p>
+</li>
+<li>
+<p>
+rm clojure-1.5.1.zip
+</p>
+</li>
+<li>
+<p>
+sudo mv clojure-1.5.1 /opt
+</p>
+</li>
+<li>
+<p>
+sudo chown root:root -R /opt/clojure-1.5.1
+</p>
+</li>
+<li>
+<p>
+sudo chmod a+r /opt/clojure-1.5.1/clojure-1.5.1.jar
+</p>
+</li>
+<li>
+<p>
+edit .bash_profile
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+export CLOJURE_HOME=/opt/clojure-1.5.1
+</p>
+</li>
+<li>
+<p>
+alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+verify install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+start new terminal
+</p>
+</li>
+<li>
+<p>
+clj -version - TEST THIS!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+REPL
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+to start, clj
+</p>
+</li>
+<li>
+<p>
+to exit, ctrl-d
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+cd clojure
+</p>
+</li>
+<li>
+<p>
+clj Hello.clj
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 26.8 seconds!
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_java">Java</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+current versions of Java SE Embedded require an OS that provides softfp support, not hardfp
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+need "Soft float Debian Wheezy" from <a href="http://www.raspberrypi.org/downloads">http://www.raspberrypi.org/downloads</a>
+</p>
+</li>
+<li>
+<p>
+downside is that it cannot take advantage of hardware floating point instructions, so will be slow for some apps
+</p>
+</li>
+<li>
+<p>
+this means bad performance for all JVM languages including Clojure, JRuby and Scala
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+can use a beta version of Java 8 now
+</p>
+</li>
+<li>
+<p>
+to install Java 8 beta
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+browse <a href="http://download.java.net/JavaFXarm">http://download.java.net/JavaFXarm</a>
+</p>
+</li>
+<li>
+<p>
+download jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
+</p>
+</li>
+<li>
+<p>
+tar zxf jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
+</p>
+</li>
+<li>
+<p>
+rm jdk-8-ea-b36e-linux-arm-hflt-29_nov_2012.tar.gz
+</p>
+</li>
+<li>
+<p>
+sudo mv jdk1.8.0 /opt
+</p>
+</li>
+<li>
+<p>
+sudo chown root:root -R /opt/jdk1.8.0
+</p>
+</li>
+<li>
+<p>
+edit .bash_profile
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+export JAVA_HOME=/opt/jdk1.8.0
+</p>
+</li>
+<li>
+<p>
+export PATH=$PATH:$JAVA_HOME/bin
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+verify install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+start new terminal
+</p>
+</li>
+<li>
+<p>
+java -version
+</p>
+</li>
+<li>
+<p>
+if using Java 7 in Raspbian Wheeyzy with hardfp support, will get "error while loading shared libraries: libjli.so"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+cd java
+</p>
+</li>
+<li>
+<p>
+javac Hello.java
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 11.9 seconds!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+java Hello
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 1.4 seconds!
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_lua">Lua</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+to install, enter <tt>sudo apt-get install lua5.2</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+to see a list of available versions, enter <tt>sudo apt-get update; apt-get install lua</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+lua hello.lua
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 0.04 seconds!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to compile, enter <tt>luac hello.lua</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+creates hello.out
+</p>
+</li>
+<li>
+<p>
+runs much faster
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_node_js">Node.js</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+to install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+wget <a href="http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz">http://nodejs.org/dist/v0.10.4/node-v0.10.4.tar.gz</a>
+</p>
+</li>
+<li>
+<p>
+tar -zxf node-v0.10.4.tar.gz
+</p>
+</li>
+<li>
+<p>
+cd node-v0.10.4
+</p>
+</li>
+<li>
+<p>
+./configure
+</p>
+</li>
+<li>
+<p>
+make
+</p>
+</li>
+<li>
+<p>
+sudo make install
+</p>
+</li>
+<li>
+<p>
+rm -rf node-v0.10.4
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to install a module
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo npm install [-g] {module-name}
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to use "n" version manager
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+THIS DID NOT WORK!
+</p>
+</li>
+<li>
+<p>
+sudo npm install -g n
+</p>
+</li>
+<li>
+<p>
+sudo n 0.10.5
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+cd node
+</p>
+</li>
+<li>
+<p>
+node hello.js
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 1.07 seconds
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+GPIO
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+there are at least two libraries
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://npmjs.org/package/pi-gpio">https://npmjs.org/package/pi-gpio</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/EnotionZ/GpiO">https://github.com/EnotionZ/GpiO</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to install pi-gpio library
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+npm install pi-gpio
+</p>
+</li>
+<li>
+<p>
+git clone git://github.com/quick2wire/quick2wire-gpio-admin.git
+</p>
+</li>
+<li>
+<p>
+cd quick2wire-gpio-admin
+</p>
+</li>
+<li>
+<p>
+make
+</p>
+</li>
+<li>
+<p>
+sudo make install
+</p>
+</li>
+<li>
+<p>
+sudo adduser $USER gpio
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to use
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+see API at <a href="https://npmjs.org/package/pi-gpio">https://npmjs.org/package/pi-gpio</a>
+</p>
+</li>
+<li>
+<p>
+see ~/node/gpio/led.js
+</p>
+</li>
+<li>
+<p>
+cd ~/node/gpio; sudo node led.js
+</p>
+</li>
+<li>
+<p>
+press ctrl-c to stop
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_perl">Perl</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+already installed
+</p>
+</li>
+<li>
+<p>
+perl -v
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+v5.14.2
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+perl hello.pl
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 0.06 seconds
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_python">Python</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+already installed
+</p>
+</li>
+<li>
+<p>
+comes with IDLE IDE
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+provides syntax checking, debugger and code running
+</p>
+</li>
+<li>
+<p>
+does it also provide syntax highlighting?
+</p>
+</li>
+<li>
+<p>
+there are two versions, one for Python 2.7 and one for Python 3.2
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to see python versions
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>python --version</tt>
+</p>
+</li>
+<li>
+<p>
+enter <tt>python3 --version</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+python hello.py
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 1.3 seconds
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Can you compile Python?
+</p>
+</li>
+<li>
+<p>
+pygame library
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+makes it easier to implement games
+</p>
+</li>
+<li>
+<p>
+to install, enter <tt>sudo apto-get install python-pygame</tt>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+GPIO
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+install raspbery-gpio-python library
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo apt-get install python-dev
+</p>
+</li>
+<li>
+<p>
+wget <a href="http://raspberry-gpio-python.googlecode.com/files/RPi.GPIO-0.5.2a.tar.gz">http://raspberry-gpio-python.googlecode.com/files/RPi.GPIO-0.5.2a.tar.gz</a>
+</p>
+</li>
+<li>
+<p>
+tar xvzf RPi.GPIO-0.5.2a.tar.gz
+</p>
+</li>
+<li>
+<p>
+cd RPi.GPIO-0.5.2a
+</p>
+</li>
+<li>
+<p>
+sudo python setup.py install
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to use
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+see ~/python/gpio/led.py
+</p>
+</li>
+<li>
+<p>
+cd ~/python/gpio; sudo python led.py
+</p>
+</li>
+<li>
+<p>
+press ctrl-c to stop
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_ruby">Ruby</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo apt-get install ruby
+</p>
+</li>
+<li>
+<p>
+ruby -v
+</p>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ruby hello.rb
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 0.7 seconds
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_scala">Scala</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+to install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+browse <a href="http://www.scala-lang.org/downloads">http://www.scala-lang.org/downloads</a>
+</p>
+</li>
+<li>
+<p>
+download scala-2.10.1.tgz
+</p>
+</li>
+<li>
+<p>
+tar zxf scala-2.10.1.tgz
+</p>
+</li>
+<li>
+<p>
+sudo mv scala-2.10.1 /opt
+</p>
+</li>
+<li>
+<p>
+sudo chown root:root -R /opt/scala-2.10.1
+</p>
+</li>
+<li>
+<p>
+edit .bash_profile
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+export SCALA_HOME=/opt/scala-2.10.1
+</p>
+</li>
+<li>
+<p>
+export PATH=$PATH:$SCALA_HOME/bin
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+verify install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+start new terminal
+</p>
+</li>
+<li>
+<p>
+scala -version
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Hello World!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+cd java
+</p>
+</li>
+<li>
+<p>
+scalac Hello.java
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 45.0 seconds!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+scala Hello
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+takes 7.8 seconds!
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_scratch">Scratch</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+programming environment for kids
+</p>
+</li>
+<li>
+<p>
+runs on top of Squeak Smalltalk
+</p>
+</li>
+<li>
+<p>
+comes with Raspian OS; can download from <a href="http://scratch.mit.edu">http://scratch.mit.edu</a>
+</p>
+</li>
+<li>
+<p>
+also runs on Windows and Mac OS X
+</p>
+</li>
+<li>
+<p>
+write scripts by dragging and dropping jigsaw pieces
+</p>
+</li>
+<li>
+<p>
+8 "palettes" of code blocks (jigsaw pieces)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+provide screenshots of each palette
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+code can control "sprites"
+</p>
+</li>
+<li>
+<p>
+sprites can have "costumes"
+</p>
+</li>
+<li>
+<p>
+code can play sounds
+</p>
+</li>
+<li>
+<p>
+can you add more sprites, costumes and sounds?
+</p>
+</li>
+<li>
+<p>
+sprites appear on and move on a "stage"
+</p>
+</li>
+<li>
+<p>
+a stage can display many sprites
+</p>
+</li>
+<li>
+<p>
+a new "project" starts with a cat sprite with no costume and a blank stage
+</p>
+</li>
+<li>
+<p>
+indentation shapes of code blocks restrict the kinds of code blocks
+that can be attached
+</p>
+</li>
+<li>
+<p>
+clicking green flag in upper-right starts program
+</p>
+</li>
+<li>
+<p>
+save project from File menu
+</p>
+</li>
+<li>
+<p>
+sprites can show, hide, move, turn, resize, change costume,<br />
+  change layer, speak, play a sound, and respond to events
+</p>
+</li>
+<li>
+<p>
+events include mouse clicks, key presses,<br />
+  sprites touching other sprites, and message broadcasts
+</p>
+</li>
+<li>
+<p>
+many control structures are supported
+</p>
+</li>
+<li>
+<p>
+sprites are organized into categories
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+list them
+</p>
+</li>
+<li>
+<p>
+provide a screenshot of each sprite category
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+can drag sprites on a stage to set then starting location
+</p>
+</li>
+<li>
+<p>
+can adjust initial sizes of sprites
+</p>
+</li>
+<li>
+<p>
+scripts are specific to a single sprite (true?)
+</p>
+</li>
+<li>
+<p>
+can interact with add-on hardware such as<br />
+  PicoBoard (<a href="http://www.sparkfun.com/products/10311">http://www.sparkfun.com/products/10311</a>) and<br />
+  "LEGO WeDo" robotics kit (<a href="http://info.scratch.mit.edu/WeDo">http://info.scratch.mit.edu/WeDo</a>)
+</p>
+</li>
+<li>
+<p>
+see "Getting Started Guid" written for children<br />
+  at <a href="http://info.scratch.mit.edu/support">http://info.scratch.mit.edu/support</a>
+</p>
+</li>
+<li>
+<p>
+include a screenshot of one script that you will demo
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_squeak_smalltalk">Squeak Smalltalk</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+already installed, but need an image
+</p>
+</li>
+<li>
+<p>
+see script to download image at <a href="http://www.raspberrypi.org/phpBB3/viewtopic.php?f=34&amp;t=9046">http://www.raspberrypi.org/phpBB3/viewtopic.php?f=34&amp;t=9046</a>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+you saved it in ~/Smalltalk/getimage
+</p>
+</li>
+<li>
+<p>
+cd Smalltalk
+</p>
+</li>
+<li>
+<p>
+./getimage
+</p>
+</li>
+<li>
+<p>
+may have to execute the three mv commands at end again
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+select start&#8230;Programming&#8230;Squeak
+</p>
+</li>
+<li>
+<p>
+works!
+</p>
+</li>
+<li>
+<p>
+benchmark this!
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ssh">SSH</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+can SSH from another computer on local network to RPi
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+see <a href="http://blog.kugelfish.com/2012/09/raspberry-pi-tethering.html">http://blog.kugelfish.com/2012/09/raspberry-pi-tethering.html</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+setup
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo apt-get install avahi-daemon
+</p>
+</li>
+<li>
+<p>
+sudo update-rc.d avahi-daemon defaults
+</p>
+</li>
+<li>
+<p>
+give your RPi a unique name
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo vi /etc/hostname
+</p>
+</li>
+<li>
+<p>
+change "raspberrypi" to "MarkPi"
+</p>
+</li>
+<li>
+<p>
+sudo vi /etc/hosts
+</p>
+</li>
+<li>
+<p>
+change "raspberrypi" to "MarkPi"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+sudo reboot
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+from other computer
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ssh <a href="mailto:pi@markpi.local">pi@markpi.local</a>
+</p>
+</li>
+<li>
+<p>
+Darren uses the -X and -6 options - Why?
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_solarized_install">Solarized Install</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+browse <a href="http://ethanschoonover.com/solarized">http://ethanschoonover.com/solarized</a>
+</p>
+</li>
+<li>
+<p>
+click "Click Here To Download Latest Version"
+</p>
+</li>
+<li>
+<p>
+unzip solarized.zip
+</p>
+</li>
+<li>
+<p>
+cd solarized/xresources-colors-solarized
+</p>
+</li>
+<li>
+<p>
+didn&#8217;t get this to work yet
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tmux_install">tmux Install</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+sudo apt-get install libevent-dev
+</p>
+</li>
+<li>
+<p>
+sudo apt-get install libncurses5-dev
+</p>
+</li>
+<li>
+<p>
+downloaded latest version of tmux from <a href="http://tmux.sourceforge.net">http://tmux.sourceforge.net</a>
+</p>
+</li>
+<li>
+<p>
+tar -zxvf tmux-{version}.tar.gz
+</p>
+</li>
+<li>
+<p>
+cd tmux-{version}
+</p>
+</li>
+<li>
+<p>
+./configure
+</p>
+</li>
+<li>
+<p>
+make
+</p>
+</li>
+<li>
+<p>
+sudo make install
+</p>
+</li>
+<li>
+<p>
+if ~/.tmux.conf sets default-command to reattach-to-user-namespace for Mac copy/paste with system clipboard, remove that
+</p>
+</li>
+<li>
+<p>
+"tmux -V" reports "tmux 1.8"
+</p>
+</li>
+<li>
+<p>
+"tmux new -s mytmux" outputs "[exited]" - BROKEN!
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_vim">Vim</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+sudo apt-get install vim
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_name_servers">Name Servers</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+stored in /etc/resolv.conf
+</p>
+</li>
+<li>
+<p>
+to use Google&#8217;s, this file should contain
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>nameserver 8.8.8.8
+nameserver 8.8.4.4</tt></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+after changing, restart the network interface with<br />
+  <tt>sudo /etc/init.d/networking restart</tt>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wifi_setup">WiFi Setup</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+need to be connected to internet via Ethernet to install WiFi adapter firmware
+</p>
+</li>
+<li>
+<p>
+determine WiFi adapter model
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>dmesg | grep usb</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+dmesg prints contents of kernel ring buffer where Linux saves error messages
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+find line containing "802.11n WLAN Adapter"
+</p>
+</li>
+<li>
+<p>
+find line after that containing "Manufacturer:"
+</p>
+</li>
+<li>
+<p>
+mine is "Realtek"
+</p>
+</li>
+<li>
+<p>
+my USB adapter is a Cirago Bluetooth 3.0 High Speed<br />
+   and Wi-Fi Combo Mini USB Adapter (model BTA7300)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+get name of firmware to install
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+apt-cache search {manufacturer}
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+install firmware
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo apt-get install {firmware-name}
+</p>
+</li>
+<li>
+<p>
+mine is "firmware-realtek"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+get list of reachable wireless networks
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo iwlist scan | grep ESSID
+</p>
+</li>
+<li>
+<p>
+select the ESSID value of one of them
+</p>
+</li>
+<li>
+<p>
+ex. "Volkmann AirPort" (note the capital P)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+verify that the wireless adapter is working
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+iwconfig
+</p>
+</li>
+<li>
+<p>
+look for "wlan0" followed by "unassociated"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+set up use of DHCP and encryption
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo vi /etc/network/interfaces
+</p>
+</li>
+<li>
+<p>
+comment out existing lines that contains "wlan0" and "wpa-roam"
+</p>
+</li>
+<li>
+<p>
+add these lines
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+auto wlan0
+</p>
+</li>
+<li>
+<p>
+iface wlan0 inet dhcp
+</p>
+</li>
+<li>
+<p>
+wpa-conf /etc/wpa.conf
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+setup use of a specific kind of encryption
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+create the file /etc/wpa.conf
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+this file is used by the wpasuppicant tool for all kinds of encryption,<br />
+    even though the name contains "wpa"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+add a line containing "network={"
+</p>
+</li>
+<li>
+<p>
+add a line containing "[tab]ssid="{essid-value}""
+</p>
+</li>
+<li>
+<p>
+if wireless network uses WPA
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+add a line containing "[tab]key_mgmt=WPA-PSK"
+</p>
+</li>
+<li>
+<p>
+add a line containing "[tab]psk="{your-wpa-key}""
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+if wireless network uses WEP
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+add a line containing "[tab]key_mgmt=NONE"
+</p>
+</li>
+<li>
+<p>
+add a line containing "[tab]wep_key0="{your-wep-key}""
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+if wireless network uses no encryption
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+add a line containing "[tab]key_mgmt=NONE"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+add a line containing "}"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+start wireless networking
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+sudo ifup wlan0
+</p>
+</li>
+<li>
+<p>
+it may output "interface wlan0 already connected"
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+need to disconnect and reconnect wireless adapter<br />
+  so Linux will search for firmware again?
+</p>
+</li>
+<li>
+<p>
+disconnect Ethernet cable
+</p>
+</li>
+<li>
+<p>
+test wireless connection
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ping -c 1 www.raspberrypi.org
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+-c sets the count for number of packets that will be sent
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_multimedia">Multimedia</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+music on console (moc)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+to install, enter +sudo apt-get install moc*
+</p>
+</li>
+<li>
+<p>
+to start, enter <tt>mocp</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+opens a curses-based GUI for locating and playing music files
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to use
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+press arrow keys to navigate the file system (flash drives are mounted under /media)
+</p>
+</li>
+<li>
+<p>
+press enter to play a song
+</p>
+</li>
+<li>
+<p>
+press h for help and again to dismiss
+</p>
+</li>
+<li>
+<p>
+press spacebar to toggle between pause and play
+</p>
+</li>
+<li>
+<p>
+press n to skip to next song
+</p>
+</li>
+<li>
+<p>
+press b to skip to song before
+</p>
+</li>
+<li>
+<p>
+press l to toggle layout (hides and shows playlist)
+</p>
+</li>
+<li>
+<p>
+press q to quit
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+from another terminal window
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+enter <tt>mocp -h</tt> to print help
+</p>
+</li>
+<li>
+<p>
+enter <tt>mocp -i</tt> to print information about current song
+</p>
+</li>
+<li>
+<p>
+enter <tt>mocp -G</tt> to toggle between pause and play
+</p>
+</li>
+<li>
+<p>
+enter <tt>mocp -f</tt> to skip forward to next song
+</p>
+</li>
+<li>
+<p>
+enter <tt>mocp -r</tt> to return to previous song
+</p>
+</li>
+<li>
+<p>
+enter <tt>mocp -x</tt> to stop song and quit:w
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+to control volume
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+open a new terminal and enter <tt>alsamixer</tt>
+</p>
+</li>
+<li>
+<p>
+press up and down arrows; value of "dB gain" will change
+</p>
+</li>
+<li>
+<p>
+File&#8230;Quit closes ALL terminal windows!
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+video
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+OpenELEC
+</p>
+</li>
+<li>
+<p>
+Rasbmc
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_on_hardware">Add-on Hardware</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+typically communicates with RPi through its GPIO port using protocols<br />
+  like Serial Peripheral Interface (SPI) and Inner-Integrated Circuit (I<sup>2</sup>C)
+</p>
+</li>
+<li>
+<p>
+breadboards
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can temporarily attach components and test circuits without soldering
+</p>
+</li>
+<li>
+<p>
+connections can become loose when the breadboard is moved
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+electrical components
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+used to affect electrons and their associated fields
+</p>
+</li>
+<li>
+<p>
+have two or moer terminals
+</p>
+</li>
+<li>
+<p>
+they may be discrete or several may be integrated into a package
+</p>
+</li>
+<li>
+<p>
+two categories: passive and active
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+active cannot supply energy
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+include LEDs, capcitors, diodes, integrated circuits, motors,
+   potentiometers, push-buttons, resistors, sensors, transistors,
+   wires, others?
+</p>
+</li>
+<li>
+<p>
+potentiometer
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+varies resistance based on the position of a knob or slider
+</p>
+</li>
+<li>
+<p>
+can be used to control volume, light brightness, motor speed, &#8230;
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+sensors include light, motion, pressure, smell?, sound, temperature, wind, others?
+</p>
+</li>
+<li>
+<p>
+can get many of these at Radio Shack and online at Newark/element14 (<a href="http://www.newark.com">http://www.newark.com</a>)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+stripboard
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+insert and solder components to build permanent circuits
+</p>
+</li>
+<li>
+<p>
+can break into desired size
+</p>
+</li>
+<li>
+<p>
+a popular brand is Veroboard
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+add-on boards
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+in US, can purchase from Newark and Adafruit (<a href="http://www.adafruit.com">http://www.adafruit.com</a>)
+</p>
+</li>
+<li>
+<p>
+attach to GPIO port
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+has 26 pins arranged in two rows of 13
+</p>
+</li>
+<li>
+<p>
+pins on board are not labelled
+</p>
+</li>
+<li>
+<p>
+and an image like the one on p. 187
+</p>
+</li>
+<li>
+<p>
+sending more than 3.3 volts to a pin can damage the RPi
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+to use a device that sends more, add a voltage regulator etween
+it and the GPIO port
+</p>
+</li>
+<li>
+<p>
+many Arduino-compatible devices send 5V instead of 3.3V
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+there are libraries for many programming languages that send voltage to a given pin and turn it off
+</p>
+</li>
+<li>
+<p>
+see notes for specific programming languages in this document
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+add-on boards
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+can make it easier to access GPIO pins
+</p>
+</li>
+<li>
+<p>
+some limit the voltage that can be sent to them to prevent damage
+</p>
+</li>
+<li>
+<p>
+some provide circuitry needed to attach other devices such as motors
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+popular add-on boards
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Ciseco Slice of Pi - $7.99
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+covers less than half of the RPi surface
+</p>
+</li>
+<li>
+<p>
+doesn&#8217;t expose the pins previous noted as "do not connect"
+</p>
+</li>
+<li>
+<p>
+labels other pins, but not with the same labels as used in RPi
+</p>
+</li>
+<li>
+<p>
+has a small circuit prototyping area that requires soldering<br />
+    to attach components, so somewhat permanent but these are cheap)
+</p>
+</li>
+<li>
+<p>
+doesn&#8217;t prevent sending more than 3.3V to a pin
+documentation, so have to translate (see p. 213)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Adafruit Prototyping Plate/Dish - $15.95/$22.50
+</p>
+</li>
+<li>
+<p>
+Fen Logic Gertboard - $?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+from MCM; <a href="http://www.mcmelectronics.com">http://www.mcmelectronics.com</a>; $50
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Raspberry Pi Camera Board
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://www.raspberrypi.org/archives/3890">http://www.raspberrypi.org/archives/3890</a>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_packages_i_installed">Packages I Installed</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+blueman - for bluetooth
+</p>
+</li>
+<li>
+<p>
+bluetooth
+</p>
+</li>
+<li>
+<p>
+bluez-tools - for bluetooth
+</p>
+</li>
+<li>
+<p>
+git - version control
+</p>
+</li>
+<li>
+<p>
+libevent-dev - needed by tmux
+</p>
+</li>
+<li>
+<p>
+libncurses5-dev - needed by tmux
+</p>
+</li>
+<li>
+<p>
+nodejs - JavaScript programming enviroment
+</p>
+</li>
+<li>
+<p>
+python-gobject - needed by pygame?
+</p>
+</li>
+<li>
+<p>
+ruby - programming language
+</p>
+</li>
+<li>
+<p>
+tightvncserver - to use VNC from Mac
+</p>
+</li>
+<li>
+<p>
+tmux - terminal multiplexor
+</p>
+</li>
+<li>
+<p>
+vim - editor
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_books">Books</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+"Raspberry Pi User Guide", Eben Upton &amp; Gareth Halfacre, Wiley, 2012
+</p>
+</li>
+<li>
+<p>
+"Make: Electronics (Learning by Discovery)", Charles Platt, O&#8217;Reilly, 2009
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_websites">Websites</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+main site - <a href="http://www.raspberrypi.org">http://www.raspberrypi.org</a> (quick start, downloads, forum, FAQs, blog and more)
+</p>
+</li>
+<li>
+<p>
+The MagPi magazine - <a href="http://www.themagpi.com">http://www.themagpi.com</a>
+</p>
+</li>
+<li>
+<p>
+Make magazine - <a href="http://blog.makezine.com/category/electronics/raspberry-pi/">http://blog.makezine.com/category/electronics/raspberry-pi/</a>
+</p>
+</li>
+<li>
+<p>
+element14 retailer - <a href="http://www.element14.com/community/groups/raspberry-pi">http://www.element14.com/community/groups/raspberry-pi</a>
+</p>
+</li>
+<li>
+<p>
+AdaFruit retailer - <a href="http://www.adafruit.com/category/105">http://www.adafruit.com/category/105</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2013-05-26 18:08:01 CDT
+</div>
+</div>
+</body>
+</html>

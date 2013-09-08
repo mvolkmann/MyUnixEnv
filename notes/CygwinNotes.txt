@@ -17,8 +17,8 @@ things to add that aren't installed by default
 - Games: gnugo
 - Interpreters: ruby
 - Net: inetutils (contains ftp), ncftp, openssh (contains ssh and scp)
-
-- Utils: diffutils
+- Text: enscript
+- Utils: cygutils-extra (contains (lpr), diffutils
 - Web: tidy
 
 ncftp

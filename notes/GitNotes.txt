@@ -286,8 +286,9 @@ Conflicts
       * can configure which tool is used by setting merge.tool
     - commit changes
   * third approach
-    - delete the local file and
-      run "git checkout {file-name}" to get remote version
+    - keep their version with "git checkout --theirs {file-name}"
+    - keep our version with "git checkout --ours {file-name}"
+    - commit changes
 
 Tags
 - tags mark all the files in the repo at an instant in time

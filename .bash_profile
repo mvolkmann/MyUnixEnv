@@ -17,6 +17,7 @@ export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 export DOCUMENTS_DIR=$HOME/Documents
 
 export BMX_DIR=$DOCUMENTS_DIR/OCI/clients/bioMerieux
+export DROPBOX_DIR=$HOME/Dropbox
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
 export LANGUAGES_DIR=$PROGRAMMING_DIR/languages
@@ -26,6 +27,8 @@ export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/Java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
+export MARITZ_DIR=$DOCUMENTS_DIR/OCI/clients/Maritz
+#export MONGODB_DIR=$DATABASES_DIR/MongoDB
 export TB_DIR=$CSS_DIR/TwitterBootstrap
 export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
 
@@ -72,6 +75,13 @@ export JS_DIR=$LANGUAGES_DIR/JavaScript
 # JBoss settings
 export JBOSS_HOME=$JAVA_DIR/JBoss/jboss-as-7.1.1.Final
 
+# Maven settings
+export MAVEN_HOME=$JAVA_DIR/Maven/apache-maven-3.1.0-alpha-1
+export PATH=$PATH:$MAVEN_HOME/bin
+
+# MongoDB settings
+#export PATH=$PATH:$MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
+
 # MySQL settings
 #export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
 
@@ -98,7 +108,7 @@ export SCALA_HOME=/opt/scala-2.10.1 # for RPi
 export PATH=$PATH:$SCALA_HOME/bin
 
 # Tomcat settings
-export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.19
+export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.41
 export BASEDIR=$TOMCAT_HOME
 export CATALINA_HOME=$TOMCAT_HOME
 

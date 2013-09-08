@@ -389,6 +389,9 @@ Paste
     - cmd-v (without being in insert mode)
     - :set paste!
 
+Reflow text in a paragraph
+- position cursor anywhere in a paragraph and enter gqap
+
 Registers
   A register is like a named clipboard.
   It holds deleted text that can be pasted.
@@ -531,10 +534,23 @@ Snippets
   * depending on other Vim configuration,
     tabs can expand to spaces when a snippet is used
 - enter snippet name and press tab to expand
+- press tab to advance to next placeholder in snippet
+  if there is one
 
 Tools that use vi
 - To cause tools that launch vi (such as cleartool edcs)
   to launch vim instead, set the VISUAL environment variable to "vim".
+
+Unicode
+- To find the code for the character under the cursor,
+  press ga
+  * the decimal, hex and octal values will be
+    displayed in the status line
+- To find a unicode character by its code,
+  f/\%d{decimal-value}
+- To substitute all occurences of a unicode character
+  with another character,
+  s/\%d{decimal-value}/{new-char}/g
 
 Windows
   :win {width} {height} - to set default window size (put in .vimrc)

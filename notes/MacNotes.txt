@@ -239,6 +239,7 @@ MacNotes.txt
 * Terminal
   - to open a document using the associated application,
     enter "open {file-name}"
+  - to clear screen and buffer, press cmd-k
   - reasonable fonts include "Andale Mono", Courier, Monaco and SimSun
 * Trash
   - when emptying trash can, if it says files are in use

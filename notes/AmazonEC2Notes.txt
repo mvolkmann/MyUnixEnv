@@ -187,4 +187,4 @@ Web hosting
   * browse runsoft.com
 
 Billing alerts
-- send an email when certain limits are passed
+- sends an email when certain limits are passed

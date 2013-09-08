@@ -1,0 +1,262 @@
+AngularJS Notes
+
+Download
+- from http://angularjs.org
+- will get angular.min.js
+- include script tag for that or include with RequireJS
+  * using RequireJS with AngularJS seems problematic and not common
+
+Documentation
+- the primary documentation is on the main site, http://angularjs.org
+  under Develop ... API Reference
+  * contains documentation on directives, filters, services, types,
+  angular functions (global APIs), and more
+
+Applications
+- represented by a module object
+  * see the "Module" section for how to create
+- add ng-app attribute to html tag of main page
+  to make it an AngularJS application
+  * ex. <html ng-app="module-name">
+    - assigning an module name is optional
+    - it is useful for sharing data between controllers
+- include script tag for angular.min.js
+  * this includes jqLite, a lite version of jQuery
+- considering including link and script tags for Twitter Bootstrap
+  * depends on jQuery
+
+Directives
+- encapsulate logic for custom HTML tags, attributes, classes and comments
+- there are many provided directives
+  * most of their names begin with "ng-"
+- when using as attributes, can precede name with "data-"
+  to satisfy HTML validators
+- adding the ng-model attribute to an input element
+  adds its value as a property on $scope
+  * $scope is like the data model for the current controller and view
+- can iterate over scope array values to create multiple elements
+  * ex. <li ng-repeat="person in team">{{person.name}}</li>
+- to define a custom directive,
+  myApp.directive('name', function () {
+    return {
+      // properties such as restrict, replace and template go here
+    };
+  });
+- to execute a directive in JavaScript code,
+  var element = $compile('custom-tag-goes-here');
+  * $compile renders custom tags defined by directives
+  * does the $compile service have to be injected?
+- ng-animation is a new directive that supports view swap animations
+- ng-click directive specifies JavaScript code to execute
+  when the element is clicked, not just a function name
+  * can add functions to $scope in controller and call those
+
+Models
+- hold data
+- can have methods
+- can bind to an input
+  * ex. <input type="text" ng-model="address.city"/>
+  * this sets the "address" property of $scope
+- can set to a literal value on any element
+  * ex. <div ng-init="names=['Mark', 'Tami']">
+  * value can be an JavaScript literal value including primitives,
+    arrays, objects and nested arrays and objects
+- model references should always contain a dot
+  * part before dot maps to model object ($scope in controller functions)
+  * part after dot is the name of the property
+    that will be set on the model object
+- scopes can be nested by using the same name before the dot
+  in the ng-model attribute of nested elements
+
+Bindings
+- expressions inside {{ }}
+  * ex. {{address.city}}
+  * this gets the "address" property of $scope
+- can appear anywhere in HTML anywhere text can appear,
+  including in attribute values
+- can access scope properties
+- can invoke scope methods
+- can invoke an JavaScript functions
+- cannot contain conditional logic
+- updates whenever referenced model properties change
+- TODO: How does it know to call model methods again?
+
+Modules
+- to create a module
+  * var myApp = angular.module('MyApp', []);
+    - the empty array is for module dependencies, similar to RequireJS
+- jqLite functions are on the angular.element object
+- to use a module, specify its name in the ng-app directive
+  * ex. <html ng-app="MyApp">
+
+Controllers
+- include script tag for JavaScript file that defines a controller function
+- write a constructor function with the same name as the controller
+  * ex.
+  function MyCtrl($scope) { // parameter name must be $scope
+    // Set properties on $scope.
+    $scope.foo = 1; // can set to any value including objects and arrays
+
+    // Add methods to $scope.
+    // These can access scope properites and can have parameters.
+    // Consider not accessing scope properties and
+    // passing them as parameters when called from bindings instead
+    // to make them easier to test.
+    $scope.bar = function () { return 2; }
+  }
+- controllers can also be associated with a module
+  * ex. myApp.controller('MyCtrl', function ($scope) { ... });
+- associate controller with an element
+  * scopes it to that element and its descendants
+  * ex. <div ng-controller="MyCtrl"> ... </div>
+  * inside binding expressions, access properties and call functions
+    assigned to the scope
+    - ex. {{$scope.foo + $scope.bar()}}
+- properties of $scope are set in controllers and accessed in views
+  * controllers and views communicate through a shared $scope value
+
+Views
+- views can be defined by script templates or template URLs
+- view HTML gains access to the $scope of a controller
+  through the ng-controller attribute directive
+- ex. <div ng-controller="MyCtrl">
+- this association can be made less direct with routes
+- to add a view to a page
+  <div ng-view="name">...</div>
+  * can also use ng-view element
+- to create a link that displays the view for a specific route
+  <a href="#/route-path">Go To Other View</a>
+
+Config
+- a module can have a config function that defines routes
+- routes are associated with a view and a controller
+
+Routes
+- defined by the module config method
+- use browser history to enable use of back and forward buttons
+- ex.
+  myApp.config(fucntion ($routeProvider) { // injected parameter
+    $routeProvider
+      .when('/', {
+        controller: 'ctrl-name',
+        templateUrl: 'name.html'
+      })
+      .when('/path/:name', { // :name matches a path part
+        controller: 'ctrl-name',
+        templateUrl: 'name.html'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  });
+
+
+Sharing data between controllers
+* get the app object
+  var myApp = angular.module('myApp', []); // array is for dependencies
+* create a service
+  - it is convention for service names to start uppercase
+  myApp.factory('ServiceName', function () {
+    return {
+      // define service properties and methods here
+    };
+  });
+* change controller constructor functions to accept service object
+  as second argument
+  function MyCtrl($scope, ServiceName) {
+    // Make service available in the scope of this controller.
+    $scope.serviceName = ServiceName;
+  }
+* more than one controller can use the same service object to share data
+
+Filters
+- functions that transform data
+- several are provided
+- factor out formatting from application logic
+- can pipe data to filters inside binding expressions
+  * ex. {{address.city | toUpper}}
+- there is a filter named "filter"
+  * ex. <li np-repeat="person in team | filter:myFilter | orderBy: 'age'">{{ person.name }}</li>
+  * this filters on the value of all properties in the person objects
+    using a case-insensitive comparison
+  * myFilter is the ng-model value of an input
+    where the user can type to filter the data
+  * myFilter can be replaced by an object to filter on multiple, specific properties
+  * myFilter can be the name of a function that returns true for objects that pass the filter
+- can access in JavaScript code with
+  var toUpper = $filter('toUpper');
+- to define a custom filter
+  myApp.filter('toUpper', function () {
+    return function (input) {
+      return input.toUpperCase();
+    };
+  });
+  * the function passed to filter can take a service
+    and access the properties and call methods defined on it
+
+Data Access
+- typically performed in factories, services and providers
+- these differ in the way they create the object that retrieves the data
+- to define a factory
+  myApp.factory('factory-name', function ($http) {
+    var factory = {};
+    factory.getPlayers = function () {
+      // Can use $http to make Ajax calls.
+      return customers; // return a promise if async
+    };
+    return factory;
+  });
+- to use a factory
+  * add 2nd parameter to controller function (after $scope)
+    with name that matches factory name
+  * call methods on factory object to get data
+- to define a service
+  myApp.service('service-name', function ($http) {
+    this.getPlayers = function () {
+      // Can use $http to make Ajax calls.
+      return customers; // return a promise if async
+    };
+  });
+- to use a service
+  * not sure if the following is correct
+  * add 2nd parameter to controller function (after $scope)
+    with name that matches factory name
+  * call methods on service object to get data
+
+Hierarchy
+- modules call their config method to define routes
+- each route has a path, controller and view (templateUrl)
+- controllers use factories, services, providers and values
+  to get data
+- views are specified as HTML templates
+  that use direcives, bindings and filters
+- $scope is the glue between a controller and a view
+
+Unit Tests
+- can test filters, services, ...
+- seems to come with some BDD testing framework
+  * Is it Jasmine?
+- uses inject function to make the thing being tested
+  accessible to the test
+- avoid mixing application logic with DOM manipulation
+  so the application logic is easier to test
+
+Iterating in HTML
+- use ng-repeat attribute
+- ex.
+  <ul ng-repeat="player in team.players">
+    <li>{{player.name}}</li>
+  </ul>
+- can apply a filter
+  ex.
+  <ul ng-repeat="player in team.players | filter:search">
+  where search is the model object for some input
+  * filters on the text of all properties in player objects
+  * to filter on a specific property, change the input model to be search.prop-name
+  * search.$ searches all properties (same as just search?)
+
+Resources
+- main site: http://angularjs.org
+- video "AngularJS Fundamentals in 60-ish Minutes" by Dan Wahlin
+  http://www.youtube.com/watch?v=i9MHigUZKEM
+- examples: http://builtwith.angularjs.org

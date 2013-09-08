@@ -37,7 +37,7 @@ JBoss Notes
     and click the "Execute SQL" button
 
 - Deploying a web app.
-  * copy a WAR file to $JBOSS_HOME/server/default/deploy
+  * copy a WAR file to $JBOSS_HOME/standalone/deployments
   * to deploy in exploded form, unzip the WAR to a directory
     with the same name as the WAR file, including the .war extension
   * other kinds of files can also be copied here (see p. 531)
@@ -84,6 +84,7 @@ JBoss Notes
 - Adding users
   * ./bin/add-user.sh
   * created management user mvolkmann/jboss19
+  * also admin/password
 
 - Web console
   * browse http://localhost:9990/console
