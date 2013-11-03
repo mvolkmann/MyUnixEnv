@@ -67,6 +67,11 @@ colorscheme solarized
 set guifont=Inconsolata:h18
 set antialias
 
+"Command-T plugin setup
+let g:CommandTCancelMap=['<ESC>', '<C-c>']
+let g:CommandTSelectNextMap=['<C-n>', 'j', '<DOWN>']
+let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
+
 "Slimux setup - http://github.com/epeli/slimux
 map <Leader>s :SlimuxREPLSendLine<CR> " sends current line to another pane
 vmap <Leader>s :SlimuxREPLSendSelection<CR> " sends selected text to another pane
@@ -85,6 +90,9 @@ autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
         \ textwidth=70 wrap formatoptions=tcqn
         \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
         \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
+
+" For LESS files
+au BufNewFile,BufRead *.less set filetype=less
 
 " Resize panes to be equal width when window is resized.
 augroup resizeWindow

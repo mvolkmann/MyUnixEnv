@@ -85,6 +85,9 @@ Diffs
     - use git log {file-path} to determine commits
 - to see diffs between the previous commit and a given commit
   * git diff {commit}^ {commit}
+- to see diffs between the last local commit and
+  what you have now as a result of a pull
+  * git diff HEAD^ HEAD {file-path}
 - added lines are preceded with a "+"
 - deleted lines are preceded with a "-"
 - options for "git log" can also be used with "git diff"

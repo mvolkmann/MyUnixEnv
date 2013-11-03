@@ -8,6 +8,12 @@ clearing screen
 - move clear.exe to a directory in PATH
 - enter "clear" to clear a Cygwin window
 
+colors
+- to use solarized color scheme, see
+  https://github.com/mavnn/mintty-colors-solarized
+- to manually adjust colors, fonts, cursor shape, and more
+  right-click title bar and select "Options..."
+
 things to add that aren't installed by default
 - Archive: unzip, zip
 - Devel: gcc, gcc-core, gcc-g++,

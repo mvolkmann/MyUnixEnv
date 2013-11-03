@@ -189,7 +189,11 @@ MacNotes.txt
       - restart Mail
     * you may be able to do the same thing from within Mail
       by selecting the Inbox and them selecting Mailbox...Rebuild
-
+* mdfind
+  - to find files quickly from a Terminal,
+    enter "mdfind {substring}"
+  - this probably uses the same indexing as Spotlight
+  - for more options, enter "man mdfind"
 * Memory
   - to determine how much you have
     Apple menu...About This Mac

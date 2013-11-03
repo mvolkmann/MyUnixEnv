@@ -3,6 +3,8 @@ Vim Notes
 Installing Plugins
 - see instructions under "Ruby Support" that describe using Pathogen
   * definitely the way to manage plugins!
+- to see list of plugins that were successfully installed,
+  :scriptnames
 - see "Submodules" section in GitNotes.txt
   * describes how you want to add Vim plugin Git repos
   * example
@@ -27,6 +29,12 @@ Configuration is specified in
   .vimrc under Unix (in ~)
 
 ---
+
+Installing Vim from source
+- download and unzip source
+- ./configure --enable-rubyinterp
+  * Ruby is needed by some plugins such as Command-T
+- make install
 
 Installing Vim 7 under Windows
 - download gvim70d.exe from ftp://ftp.vim.org/pub/vim/unstable/pc
@@ -528,14 +536,23 @@ Slime and Screen
   * test the function by enter a call to it in the REPL
 
 Snippets
-- using SnipMate plugin
-- see snippet definitions in ~/.vim/bundle/snipmate.vim/snippets directory
-- indentation in snippets must be done with tabs, not spaces
-  * depending on other Vim configuration,
-    tabs can expand to spaces when a snippet is used
-- enter snippet name and press tab to expand
-- press tab to advance to next placeholder in snippet
-  if there is one
+- to install
+  * cd ~/.vim/bundle
+  * git clone https://github.com/tomtom/tlib_vim.git
+  * git clone https://github.com/MarcWeber/vim-addon-mw-utils.git
+  * git clone https://github.com/garbas/vim-snipmate.git
+  * git clone https://github.com/honza/vim-snippets
+  * cd vim-snipmate
+- to use
+  * enter a snippet name in insert mode and press tab key to expand
+  * won't work if tab key has been mapped to do something else!
+  * press tab to advance to next placeholder in snippet if there is one
+- to modify and add snippets
+  * edit the .snippet files in bundles/vim-snippets/snippets
+    - for example, javascript.snippets
+  * indentation in snippets must be done with tabs, not spaces
+    - depending on other Vim configuration,
+      tabs can expand to spaces when a snippet is used
 
 Tools that use vi
 - To cause tools that launch vi (such as cleartool edcs)
@@ -640,7 +657,7 @@ BufExplorer plugin
 Command-T plugin
 - see https://github.com/wincent/Command-T
 - works with MacVim
-- Ruby version must be 1.8.7
+- Ruby version must be 1.8.7 or higher
 - installing using Pathogen
   * cd .vim/bundle
   * git clone https://github.com/wincent/Command-T.git
@@ -661,6 +678,10 @@ Command-T plugin
     - press ctrl-return or ctrl-s to open in new horizontal split 
     - press ctrl-v to open in new vertical split 
   * to exit without selecting a file, press esc
+  * to toggle between search prompt area and file listing,
+    press tab key
+  * to enable finding files that were created after Vim was started
+    or were renamed, enter :CommandTFlush
 
 Notes from Bill Odom's talk on 2/16/12
 

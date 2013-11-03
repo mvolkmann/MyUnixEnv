@@ -17,6 +17,8 @@ Apache Bench
   * Time per request (mean)
 
 ASCII characters
+- To see a list of all the ASCII characters and their codes,
+  enter "man ascii"
 - To dump the ASCII characters in a text file
   od -cx {file-path}
   The -c option causes it to print ASCII characters
@@ -160,10 +162,10 @@ Find
   find -name 'whatever' 2> /dev/null
 - To find all directories that contain files
   that have been modified today,
-  find -ctime -1 -type d
+  find . -ctime -1 -type d
 - To find all files in and below the current directory
   whose contents have been modified in the last n days,
-  find -type f -mtime -n
+  find . -type f -mtime -n
 - To edit all the files that contain a given string,
   vim $(find -name '*.filetype' | xargs grep -l "string")
 - To find all files that contain text that matches a regular expression,
@@ -571,9 +573,12 @@ Tar
   * the last two steps can be compbined into one with
 - To untar a gzipped tar file f.tgz
   tar zxf f.tgz
+  * tar now infers the z option.
   * The above is shorthand for the following:
     gunzip f.tgz # or gzip -d f.tgz
     tar xf f.tar
+- To untar a bz2 tar file f.bz2
+  tar xvjpf f.bz2
 - To tar only files found using the find command:
   tar xf myfiles.tar `find ...`
 - See your pkg and unpkg scripts that make it easier to
