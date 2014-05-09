@@ -277,6 +277,60 @@ Fonts
 - example
   :set guifont=Monaco:h14
 
+Fugitive
+- for issuing Git commands from inside Vim
+- :help fugitive
+- all commands start with "G"
+- can run any Git command with ":Git {command}
+- provides auto-completion of repository paths
+- % refers to the current file
+  * ex. :Git add % and :Git mv % {new-path}
+- many shorthand commands for common operations
+  that also interact with the current Vim buffer
+  * :Git checkout % to revert a file
+    can be performed with :Gread
+  * :Git add % to stage a file
+    can be performed with :Gwrite
+  * :Git mv % {new-path} to move a file
+    can be performed with :Gmove {new-path}
+  * :Git rm % to remove a file
+    can be performed with :Gremove
+  * :Git commit -av to commit modified files
+    can be performed with :Gcommit -av
+    and commit comments can be entered in a split window
+  * :Git blame to see who last modified each line in a file
+    can be performed with :Gblame
+  * :Git status to see files that have been added or modified
+    can be performed with :Gstatus
+    - use ctrl-n and ctrl-p to move to next and previous file
+    - to stage or unstage file on current line, press "-"
+    - to view file on current line, press enter key
+  * :Git diff to see differences in current file
+    can be performed with :Gdiff
+    - committed version is on left and uncommitted version is on right
+    - added lines are green
+    - removed lines are red
+    - when run on a file containing merge conflict markers,
+      a three-way merge with three vertical splits is presented
+    - the target file (2) is on the left
+    - the merge file (3) is on the right
+    - the file with conflict markers (1) is in the center
+    - position cursone on a conflict in center split
+    - to keep changes from target (left) enter :diffget //2 | diffup
+    - to keep changes from merge (right) enter :diffget //3 | diffup
+    - the diffup command in the previous two lines
+      updates diff highlighting of the buffers
+      and can be run separately with :diffupdate
+    - to jump to next changeset, press ]c
+    - to jump to previous changeset, press [c
+    - when finished resolving conflicts
+      * make sure cursor is in center window
+      * enter ":only" to close the target and merge windows
+      * :Gcommit -av
+- relative paths passed to commands
+  * paths that start with / are relative to the repository root directory
+  * other paths are relative to the current file directory
+
 HTML Output
 - To write a source file out as HTML,
   including color-coded syntax highlighting,
@@ -459,6 +513,15 @@ Select
   V - begin visual selection in line mode
   ctrl-V - begin visual selection in block mode
   o - changes end of selection being moved
+
+Spell check
+- to start, enter
+  :setlocal spell spelllang=en_us
+- to jump to the next error, ]s
+- to get a list of suggested replacements, z=
+- to repeat the replacement made by z= throughout the document, :spellr
+- to add word under cursor to list of good works, zg
+- for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
 
 Tab Pages
 - to open a new, empty tab, :tabe

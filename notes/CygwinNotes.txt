@@ -16,9 +16,9 @@ colors
 
 things to add that aren't installed by default
 - Archive: unzip, zip
-- Devel: gcc, gcc-core, gcc-g++,
+- Devel: gcc-core, gcc-g++,
     git, git-completion, git-gui, gitk,
-    mercurial, ruby, subversion
+    make, mercurial, ruby, subversion
 - Editors: gvim, vim
 - Games: gnugo
 - Interpreters: ruby

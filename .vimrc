@@ -32,11 +32,6 @@ set ruler
 " Automatically fold C-style comments in .java files.
 "autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
 
-"map <F5> :CoffeeRun<CR>
-
-" Allow insert mode completion with tab key in addition to ctrl-n.
-imap <TAB> <C-n>
-
 "set t_AB=^[[48;5;%dm
 "set t_AF=^[[38;5;%dm
 
@@ -46,6 +41,7 @@ imap <TAB> <C-n>
 "colorscheme Tomorrow
 "set background=light
 "let g:solarized_termcolors=256
+set background=dark
 colorscheme solarized
 
 "call togglebg#map("<F5>")
@@ -72,24 +68,51 @@ let g:CommandTCancelMap=['<ESC>', '<C-c>']
 let g:CommandTSelectNextMap=['<C-n>', 'j', '<DOWN>']
 let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
 
-"Slimux setup - http://github.com/epeli/slimux
-map <Leader>s :SlimuxREPLSendLine<CR> " sends current line to another pane
-vmap <Leader>s :SlimuxREPLSendSelection<CR> " sends selected text to another pane
-map <Leader>a :SlimuxShellLast<CR> " reruns last shell command
-
 set clipboard=unnamed
+
+augroup filetype_vim
+  autocmd!
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" Key mappings --- {{{
+
+let mapleader = ","
+
+" edit .vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" source .vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" save buffer (requires stty -ixon in .bashrc)
+inoremap <c-s> <c-o>:update<cr>
+nnoremap <c-s> :update<cr>
+
+" allow insert mode completion with tab key in addition to ctrl-n.
+imap <TAB> <C-n>
 
 " Switching buffers
 " Use C-^ to toggle to last buffer
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
+" }}}
+
+" Status line --- {{{
+set statusline=%t " file name (omits path)
+set statusline+=%M " modified flag
+set statusline+=%R " read-only flag
+set statusline+=%= " left/right separator
+set statusline+=line\ %l\ of\ %L " total lines
+set statusline+=,\ col\ %c, " cursor line number and column
+set statusline+=\ %P " percent through file
+" }}}
 
 " For AsciiDoc files
 autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
-        \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
-        \ textwidth=70 wrap formatoptions=tcqn
-        \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
-        \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
+  \ setlocal noautoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
+  \ textwidth=70 wrap formatoptions=tcqn
+  \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
+  \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
 
 " For LESS files
 au BufNewFile,BufRead *.less set filetype=less

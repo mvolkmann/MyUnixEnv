@@ -1,0 +1,30 @@
+QuickTime notes
+
+- To record a screencast without audio
+  * start "QuickTime Player" app
+  * select File ... New Screen Recording
+  * click the red circle to start recording
+  * to record the full screen, click anywhere
+  * to record only part of the screen,
+    drag out a rectangle to record only that part of the screen
+    and click the "Start Recording" button
+  * when finshed, click the square button in the QuickTime Player
+  * select File ... Export
+  * enter a name
+  * press "Export" button
+
+- To record with audio
+  * download Soundflower from http://cycling74.com/soundflower-landing-page/
+  * install
+  * open System Preferences
+  * select Sound ... Output
+  * select "Soundflower (2ch)"
+  * start "QuickTime Player" app
+  * select File ... New Screen Recording
+  * click the downward triangle
+  * select "Soundflower (2ch)"
+  * record as described above
+  * after exporting video, return to System Preferences
+  * select Sound ... Output
+  * select "Headphones" so the audio is heard
+    when playing the exported video

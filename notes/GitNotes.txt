@@ -74,6 +74,10 @@ Diffs
   * git diff --name-only {branch-or-sha-1} {branch-or-sha-2}
 - to see diffs between working tree and local repo
   * git diff {file-path}
+- to ignore line ending differences
+  * add --ignore-space-at-eol after "git diff"
+- to all whitespace differences
+  * add --ignore-all-space after "git diff"
 - to see diffs between local repo and origin repo
   * git diff origin -- {file-path}
 - to see diffs between files committed to local repo and origin repo
@@ -170,8 +174,10 @@ Branches
     - if not, you can stash changes and reapply them to the current branch later
       * to temporarily save uncommitted changes: git stash save "{comment"}
       * to reapply saved changes to the current branch: git stash apply
-  * the commit number can be obtained from "git log" or "git reflog"
+  * the commit number can be obtained from the first entry in "git log" or "git reflog"
   * HEAD always points the current branch
+    * git rev-parse HEAD outputs the SHA of the current commit
+  * to checkout the latest local commit, git checkout master
 - to combine creating a new branch and switching to it
   * git checkout -b {new-branch-name} [{from-branch-name}]
     - if {from-branch-name} is omitted, a new branch
@@ -503,7 +509,7 @@ To reset the repo to an earlier state
 - git checkout -- {file-name|dir-name}
   * restores the given file directory to its last committed state
 - git reset
-  * deletes unwanted revisions
+  * deletes unwanted, uncommitted revisions
   * defaults to resetting the current branch to match HEAD
   * add --hard to delete them from both the repository and the working tree
     (How does omitting this differ?)
@@ -578,13 +584,25 @@ To make changes to files that were checked out from a tag
 - useful for making changes to a release
 
 To find a commit where a bug was introduced
-- git bisect run {test-script-path}
-- mark one commit older commit as bad and one newer commit as good
-- runs tests on each commit between those 
-  and automatically marks them as good or bad
-- the test script should exit with a zero status if the tests pass
-  and a non-zero status otherwise
-- seems overkil
+- manual approach
+  * git bisect start
+  * git checkout {commit} for a commit that has the bug
+  * git bisect bad
+  * git checkout {commit} for a commit that doesn't have the bug
+  * git bisect good
+  * this will checkout a commit midway between them
+  * run code to determine if the bug is present
+  * git bisect {good|bad} depending on whether the bug was present
+  * continue the previous two steps until the commit that
+    introduced the bug is found
+- automated approach
+  * git bisect run {test-script-path}
+  * mark one commit older commit as bad and one newer commit as good
+  * runs tests on each commit between those 
+    and automatically marks them as good or bad
+  * the test script should exit with a zero status if the tests pass
+    and a non-zero status otherwise
+  * seems overkil
 
 Recommended release procedure
 - when the code is feature complete, but not finished with testing,

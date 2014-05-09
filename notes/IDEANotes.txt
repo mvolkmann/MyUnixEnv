@@ -134,16 +134,11 @@ More key mappings
 - cmd-click or cmd-opt-b - go to implementation of class or method under cursor
 
 IdeaVIM plugin
-- in Preferences ... Plugins, select the "Available" tab,
-  right-click "IdeaVim", and select "Download and Install"
-- download IdeaVIM from a browser to get the keymap file
-  * click the "Download" link at http://ideavim.sourceforge.net/
-  * unzip and untar it
-  * copy Vim.xml to ~/Library/Preferences/IntellijIDEA60/keymaps
-  * restart IDEA
-  * Preferences ... Keymap
-  * select "Vim" from the Keymaps dropdown
-  * there is currently a conflict that prevents this from working on Ruby files
+- select File ... Settings ... Plugins
+- press "Install JetBrains plugin..."
+- search for "IdeaVIM"
+- press "Install plugin"
+- restart IDEA
 
 GWT-specific tips
 - After changing methods in synchronous interface,

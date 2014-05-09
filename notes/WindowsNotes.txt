@@ -1,5 +1,11 @@
 Windows Notes
 
+DOS commands
+- to delete a directory and everything inside it without prompting
+  * rmdir /s /q {dir}
+- to copy a directory recursively
+  * xcopy /s {src} {dest}
+
 Keyboard Layout
 - to make Caps Lock key to be a Ctrl and keep existing Ctrl keys
 - run regedit

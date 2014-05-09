@@ -18,6 +18,7 @@ export DOCUMENTS_DIR=$HOME/Documents
 
 export BMX_DIR=$DOCUMENTS_DIR/OCI/clients/bioMerieux
 export DROPBOX_DIR=$HOME/Dropbox
+export OCI_DIR=$DOCUMENTS_DIR/oci
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
 export LANGUAGES_DIR=$PROGRAMMING_DIR/languages
@@ -29,6 +30,7 @@ export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export MARITZ_DIR=$DOCUMENTS_DIR/OCI/clients/Maritz
 #export MONGODB_DIR=$DATABASES_DIR/MongoDB
+export SETT_DIR=$OCI_DIR/SETT
 export TB_DIR=$CSS_DIR/TwitterBootstrap
 export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
 
@@ -94,7 +96,7 @@ export PATH=$PATH:$NODE_DIR/deps/v8/tools
 
 # Ruby settings
 export RUBY_DIR=$LANGUAGES_DIR/Ruby
-export RUBY_HOME=$RUBY_DIR/ruby-1.8.7-p22
+export RUBY_HOME=$HOME/.rbenv/versions/1.9.1-p430/bin
 export PATH=$RUBY_HOME:$PATH
 #export RUBY_HOME=/usr/local/lib/ruby
 #export PATH=/usr/local/bin:$PATH
@@ -103,14 +105,16 @@ export RUBYOPT=-rubygems
 # Tell less not to complain about ANSI escape codes, and run ri.
 alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
 
-# Scala settings
-export SCALA_HOME=/opt/scala-2.10.1 # for RPi
-export PATH=$PATH:$SCALA_HOME/bin
+# Subversion settings
+export SVN_PREFIX=svn+ssh://oci-svn/education/training/tracks
 
 # Tomcat settings
 export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.41
 export BASEDIR=$TOMCAT_HOME
 export CATALINA_HOME=$TOMCAT_HOME
+
+# Google Traceur settings
+export PATH=$PATH:$JAVASCRIPT_DIR/traceur-compiler-master
 
 # Vim settings
 set -o vi # for vi-mode command-line editing

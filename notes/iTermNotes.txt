@@ -3,3 +3,6 @@ iTerm Notes
 - to split horizontally, cmd-D
 - to split vertically, cmd-d
 - to navigate to a different split, cmd-option-arrow
+
+- to change color scheme
+  * iTerm ... Preferences ... Profiles ... Colors ... Load Presets...

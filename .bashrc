@@ -9,6 +9,10 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
+# Disable start/stop output control so
+# ctrl-s can be used in Vim.
+stty -ixon
+
 # Sets the bash shell prompt.
 # This overrides the setting in /etc/bashrc.
 # \h outputs the host name.
@@ -28,6 +32,7 @@ export PS1='\W\$ ' # sets bash shell prompt
 alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
 alias bigdirs="du -sk * | sort -nr | head"
 
+alias cdangular='cd $JAVASCRIPT_DIR/AngularJS'
 alias cdbmx='cd $BMX_DIR'
 alias cdclojure='cd $CLOJURE_DIR'
 alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
@@ -42,8 +47,10 @@ alias cdlanguages='cd $LANGUAGES_DIR'
 alias cdmaritz='cd $MARITZ_DIR'
 alias cdmyoci='cd $MYOCI_DIR'
 alias cdnode='cd $JAVASCRIPT_DIR/Node.js'
+alias cdoci='cd $OCI_DIR'
 alias cdprogramming='cd $PROGRAMMING_DIR'
 alias cdruby='cd $RUBY_DIR'
+alias cdsett='cd $SETT_DIR'
 alias cdtb='cd $TB_DIR'
 
 alias cdtraining='cd $TRAINING_DIR'
@@ -67,6 +74,9 @@ alias ls='ls -G'
 # See MySQLNotes.txt for steps to start mysqld, the daemon.
 alias mysql=/usr/local/mysql/bin/mysql
 alias mysqladmin=/usr/local/mysql/bin/mysqladmin
+
+# Traceur for ES6
+alias es6='traceur --experimental'
 
 # For a nicely formatted dump of any path delimited with colons ...
 # To use this enter "echo $PATH | nicepath".

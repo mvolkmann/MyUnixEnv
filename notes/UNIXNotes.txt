@@ -377,7 +377,7 @@ Modify the testing framework based on feedback from NSIT.
 
 Ports
 - to find the process listening on a given port, use "list open files"
-  lsof {port-number}
+  lsof -i :{port-number}
 
 Printing
 - To get name of default printer,

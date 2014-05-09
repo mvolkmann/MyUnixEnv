@@ -176,6 +176,10 @@ Using Tortoise from Windows
 Training-specific notes
 -----------------------
 
+- To connect through tunnel
+  * in a new terminal window, enter "ssh ssh.ociweb.com"
+  * now in another terminal window, cdtraining and start using svn commands
+
 - You created several scripts in /Users/Mark/bin for doing common things.
   They use the environment variable SVN_PREFIX which is set to
   svn+ssh://oci-svn/education/training/tracks

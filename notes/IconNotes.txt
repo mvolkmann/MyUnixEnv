@@ -1,6 +1,6 @@
 Icon Notes
 
-- icons are stored in Mark/pictures/icons
+- icons are stored in Programming/Icons
 
 - some are from http://www.fasticon.com/
 
