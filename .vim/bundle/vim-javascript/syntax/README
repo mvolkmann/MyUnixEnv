@@ -1,0 +1,3 @@
+The version of javascript.vim here is a modified version created by
+Bill Odom to fix the problem where continuation lines of functions
+were being indented to after the opening paren on the previous line.

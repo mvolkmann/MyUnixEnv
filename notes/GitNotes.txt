@@ -586,7 +586,7 @@ To make changes to files that were checked out from a tag
 To find a commit where a bug was introduced
 - manual approach
   * git bisect start
-  * git checkout {commit} for a commit that has the bug
+  * git checkout {commit} for a commit that has the bug (usually master)
   * git bisect bad
   * git checkout {commit} for a commit that doesn't have the bug
   * git bisect good

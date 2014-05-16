@@ -88,8 +88,9 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
-" allow insert mode completion with tab key in addition to ctrl-n.
-imap <TAB> <C-n>
+" Allow insert mode completion with tab key in addition to ctrl-n.
+" Can't do this because it conflicts with Snipmate!
+"imap <TAB> <C-n>
 
 " Switching buffers
 " Use C-^ to toggle to last buffer

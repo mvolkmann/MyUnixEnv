@@ -10,7 +10,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Disable start/stop output control so
-# ctrl-s can be used in Vim.
+# ctrl-s can be used in Vim to save.
 stty -ixon
 
 # Sets the bash shell prompt.
