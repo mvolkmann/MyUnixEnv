@@ -18,6 +18,7 @@ Starting
   vim --remote {filename} - to edit file in existing vim session
 
 Help
+- for help on any topic, :help {topic} or :h {topic}
 - for general help, :help user-manual
 - for help on version 7 features, :help version7
 - to navigate a link in the help, position the cursor over the link
@@ -263,8 +264,10 @@ Folding
   autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
 - Commands to control folding include
   zfap - create a new fold
-  zr - open all folds
-  zm - close all folds
+  zr - reduce/open all folds one level deep
+  zR - recursive version of zr (all levels)
+  zm - fold more; close all folds
+  zM - recursive version of zm (all levels)
   zo - open fold under cursor
   zc - close fold under cursor
   zf - fold selected lines

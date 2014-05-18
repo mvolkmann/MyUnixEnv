@@ -1,11 +1,32 @@
-set t_Co=256
+call pathogen#infect() " installs plugins found in ~/.vim/bundle
 
-call pathogen#infect()
+" Generate documentation from files in each directory in runtimepath.
+" To see a list of these directories, enter :set runtimepath
 call pathogen#helptags()
+
+" Miscellaneous options {{{
+" Enable syntax highlighting and overrule color settings made before this.
 syntax on
-filetype plugin indent on
 
 set nocompatible " running vim, not vi, so don't force vi compatibility
+
+set incsearch " use incremental searching
+set hlsearch " highlight all search matches, not just the first
+
+set mouse=a " enable use of mouse in all modes
+
+set clipboard=unnamed " yank (copy) and delete (cut) also go to system clipboard
+
+"set guifont=Monaco:h14
+set guifont=Inconsolata:h18 " font used in GUI-version of Vim
+set antialias
+
+" Don't need this since it is specified in status line config.
+"set ruler " show line and column number of cursor position
+" }}}
+
+" Indentation and Tabs --- {{{
+filetype plugin indent on " enable language-dependent indentation
 
 set cindent " enable source code indentation
 set cinoptions=(0s " indent continuations lines by one extra indent - working?
@@ -14,26 +35,14 @@ set shiftwidth=2 " indent code with two spaces
 set tabstop=2 " tabs take two spaces
 set softtabstop=2 " tabs take two spaces
 set expandtab " replace tabs with spaces
-set smarttab
-set shiftround
+set smarttab " pressing tab key in insert mode insert spaces
+set shiftround " round indent to multiples of shiftwidth
+" }}}
 
-set incsearch " use incremental searching
-set hlsearch " highlight all search matches, not just the first
-
-set mouse=a
-
-set ruler
-
-" Automatically fold javadoc-style comments in .java, .h and .cpp files.
-"autocmd FileType cpp :set fmr=/**,*/ fdm=marker fdc=1
-"autocmd FileType h :set fmr=/**,*/ fdm=marker fdc=1
-"autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
-
-" Automatically fold C-style comments in .java files.
-"autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
-
-"set t_AB=^[[48;5;%dm
-"set t_AF=^[[38;5;%dm
+" Colors --- {{{
+set t_Co=256 " number of colors " number of colors
+"set t_AB=^[[48;5;%dm " set background color
+"set t_AF=^[[38;5;%dm " set foreground color
 
 "colorscheme torte
 "colorscheme desert
@@ -58,24 +67,17 @@ colorscheme solarized
 "hi Search ctermfg=red ctermbg=white
 "hi Todo ctermfg=yellow ctermbg=gray
 "hi Type ctermfg=blue 
+" }}}
 
-"set guifont=Monaco:h14
-set guifont=Inconsolata:h18
-set antialias
-
-"Command-T plugin setup
+" Command-T plugin setup for fast file navigation {{{
 let g:CommandTCancelMap=['<ESC>', '<C-c>']
 let g:CommandTSelectNextMap=['<C-n>', 'j', '<DOWN>']
 let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
-
-set clipboard=unnamed
-
-augroup filetype_vim
-  autocmd!
-  autocmd FileType vim setlocal foldmethod=marker
-augroup END
+" }}}
 
 " Key mappings --- {{{
+" To see all normal mode mappings, :map
+" To see all insert mode mappings, :imap
 
 let mapleader = ","
 
@@ -83,6 +85,8 @@ let mapleader = ","
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " source .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
+" toggle line numbers
+nnoremap <leader>n :setlocal number!<cr>
 
 " save buffer (requires stty -ixon in .bashrc)
 inoremap <c-s> <c-o>:update<cr>
@@ -108,16 +112,67 @@ set statusline+=,\ col\ %c, " cursor line number and column
 set statusline+=\ %P " percent through file
 " }}}
 
-" For AsciiDoc files
+" Folding --- {{{
+" za - toggles folding on section containing cursor
+" zr - reduce/open all folds one level deep
+" zR - recursive version of zr (all levels)
+" zm - fold more; close all folds
+" zM - recursive version of zm (all levels)
+
+augroup javascript
+  autocmd!
+  let javaScript_fold=1
+  autocmd FileType javascript set foldmethod=syntax
+augroup END
+
+augroup filetype_vim
+  autocmd!
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+nnoremap <leader>f :call FoldColumnToggle()<cr>
+function! FoldColumnToggle()
+  if &foldcolumn
+    setlocal foldcolumn=0
+  else
+    setlocal foldcolumn=2
+  endif
+endfunction
+
+" Automatically fold javadoc-style comments in .java, .h and .cpp files.
+"autocmd FileType cpp :set fmr=/**,*/ fdm=marker fdc=1
+"autocmd FileType h :set fmr=/**,*/ fdm=marker fdc=1
+"autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
+
+" Automatically fold C-style comments in .java files.
+"autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
+" }}}
+
+" Quickfix window --- {{{
+nnoremap <leader>q :call QuickfixToggle()<cr>
+let g:quickfixOpen = 0
+function! QuickfixToggle()
+  if g:quickfixOpen
+    cclose
+    let g:quickfixOpen = 0
+    execute g:quickfixReturnToWindow . "wincmd w"
+  else
+    let g:quickfixReturnToWindow = winnr()
+    copen
+    let g:quickfixOpen = 1
+  endif
+endfunction
+" }}}
+
+" Asciidoc --- {{{
 autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
   \ setlocal noautoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
   \ textwidth=70 wrap formatoptions=tcqn
   \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
   \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
+" }}}
 
-" For LESS files
-au BufNewFile,BufRead *.less set filetype=less
-
+" Pane resize --- {{{
 " Resize panes to be equal width when window is resized.
 augroup resizeWindow
   if has("autocmd")
@@ -125,3 +180,7 @@ augroup resizeWindow
     autocmd VimResized * exe "normal \<C-W>="
   endif
 augroup end
+" }}}
+
+" LESS files setup - does this do anything?
+autocmd BufNewFile,BufRead *.less set filetype=less
