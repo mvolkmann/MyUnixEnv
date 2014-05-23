@@ -100,7 +100,24 @@ nnoremap <c-s> :update<cr>
 " Use C-^ to toggle to last buffer
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
+
+" CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 " }}}
+
+" The Silver Searcher
+"let g:ackprg = 'ag --nogroup --nocolor --column'
+"if executable('ag')
+  " Use ag instead of grep.
+"  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+"  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache.
+"  let g:ctrlp_use_caching = 0
+"endif
 
 " Status line --- {{{
 set statusline=%t " file name (omits path)

@@ -62,9 +62,6 @@ export GITHUB_PASS=github19
 # This setting may interfere with fink scripts!
 #export GREP_OPTIONS="--color=ALWAYS"
 
-# Homebrew settings.
-# See addition of /opt/local/bin to PATH later.
-
 # Java settings
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
 #export JAVA_HOME=/opt/jdk1.8.0 # for RPi
@@ -133,7 +130,7 @@ export HISTCONTROL=ignoredups
 # See https://github.com/matthewmccullough/MatthewsShellConfig
 #source ~/.bash_gitprompt
 
-export PATH=$HOME/bin:/opt/local/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 export TERM=xterm-256color
 
