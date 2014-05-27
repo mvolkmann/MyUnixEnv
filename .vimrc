@@ -21,6 +21,10 @@ set clipboard=unnamed " yank (copy) and delete (cut) also go to system clipboard
 set guifont=Inconsolata:h18 " font used in GUI-version of Vim
 set antialias
 
+" To get word completion using dictionary while in insert mode,
+" type some letters and press c-x c-k.
+set dictionary=/usr/share/dict/words
+
 " Don't need this since it is specified in status line config.
 "set ruler " show line and column number of cursor position
 " }}}
@@ -166,6 +170,16 @@ endfunction
 " }}}
 
 " Quickfix window --- {{{
+" You have the vim-impaired plugin installed, so you can use
+" ]q and [q to navigate the current quickfix list.
+" To search all JavaScript files in and below the starting directory,
+" :grep pattern **/*.js
+" To exclude a directory from being searched,
+" :grep --exclude build pattern **/*.js
+" When using grep on .js files, jshint also runs and creates another
+" quickfix list.  To get back to the one created by grep, run :colder.
+
+" Toggle viewing quickfix list with ,q.
 nnoremap <leader>q :call QuickfixToggle()<cr>
 let g:quickfixOpen = 0
 function! QuickfixToggle()
