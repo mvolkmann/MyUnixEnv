@@ -54,8 +54,8 @@ set t_Co=256 " number of colors " number of colors
 "colorscheme Tomorrow
 "set background=light
 "let g:solarized_termcolors=256
-set background=dark
-colorscheme solarized
+"set background=dark
+"colorscheme solarized
 
 "call togglebg#map("<F5>")
 
@@ -87,10 +87,15 @@ let mapleader = ","
 
 " edit .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
 " source .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
 " toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
+
+" replace all occurences of the complete word under the cursor
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
 " save buffer (requires stty -ixon in .bashrc)
 inoremap <c-s> <c-o>:update<cr>
