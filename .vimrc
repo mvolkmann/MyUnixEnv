@@ -169,6 +169,10 @@ endfunction
 "autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
 " }}}
 
+" NERDTree --- {{{
+nnoremap <leader>n :NERDTreeToggle<cr>
+"}}}
+
 " Quickfix window --- {{{
 " You have the vim-impaired plugin installed, so you can use
 " ]q and [q to navigate the current quickfix list.
