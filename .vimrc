@@ -101,6 +101,9 @@ nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
+" NERDTree toggle
+nnoremap <leader>t :NERDTreeToggle<cr>
+
 " Allow insert mode completion with tab key in addition to ctrl-n.
 " Can't do this because it conflicts with Snipmate!
 "imap <TAB> <C-n>
@@ -173,10 +176,6 @@ endfunction
 " Automatically fold C-style comments in .java files.
 "autocmd FileType java :set fmr=/*,*/ fdm=marker fdc=1
 " }}}
-
-" NERDTree --- {{{
-nnoremap <leader>n :NERDTreeToggle<cr>
-"}}}
 
 " Quickfix window --- {{{
 " You have the vim-impaired plugin installed, so you can use
