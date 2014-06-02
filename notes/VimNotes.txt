@@ -738,6 +738,7 @@ YouCompleteMe and TernJS
 - provides autocompletion while typing
   * to accept first option, press tab and just keep typing
   * press tab more times to cycle through other options
+- Does the use of the tab key in YouCompleteMe conflict with SnipMate?
 
 Other
   :help [topic] - get help
