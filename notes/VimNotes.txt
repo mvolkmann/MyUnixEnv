@@ -1,4 +1,5 @@
 Vim Notes
+- in HTML, can use after an element name to see possible attribute
 
 Installing Plugins
 - see instructions under "Ruby Support" that describe using Pathogen
@@ -196,10 +197,44 @@ Completion after :
   ctrl-d - display list of all possible matches
 
 Completion in insert mode
-  ctrl-n - cycle to next matching word
-  ctrl-p - cycle to previous matching word
-  To enable this with tab key,
+  ctrl-n - cycle to next matching word and substitute it
+  ctrl-p - cycle to previous matching word and substitute it
+  These consider all words in all open buffers.
+
+  To select word under cursor in list,
+  just continue typing (ex. space).
+
+  Can also use up and down arrow keys to navigate list,
+  but must press return key to substitute a word.
+
+  Can enable this with tab key using the following line,
+  but this conflicts with the snipmate plugin, so don't do it!
   imap <TAB> <C-n>
+
+  To allow filtering of word list while typing,
+  begin a particular form of completion (ex. ctrl-x ctrl-k),
+  immediately press ctrl-p, then type.
+
+  To cancel completion without selecting a word, ctrl-e.
+
+  To only consider words in the current buffer, ctrl-x ctrl-n.
+
+  For dictionary lookup, ctrl-x ctrl-k.
+  Configure location of dictionary file in .vimrc
+  with set dictionary={file-path}.
+
+  For thesaurus lookup, ctrl-x ctrl-t.
+  Configure location of thesaurus file in .vimrc
+  with set thesaurus={file-path}.
+
+  For filename completion of files in current working directory,
+  ctrl-x ctrl-f.
+  It's not necessary to type anything before invoking this.
+  See "Working Directory" section to commands to see and change it.
+  Use ctrl-n and ctrl-p to navigate the list.
+  If on a directory, press ctrl-x ctrl-f again to navigate into it.
+
+  Also see section on Omni-completion.
 
 Copy (yank)
   y  - yank (copy) selection
@@ -250,7 +285,6 @@ Exploring
   i         - toggles display of file sizes and modification dates
   D         - delete file
   R         - rename file
-  :pwd to see directory of current file
 
 Filtering Lines
 - To pass a range of lines to a shell command,
@@ -411,11 +445,16 @@ Moving Around
   t{char}  - forward to just before next occurrence of {char}
   T{char}  - backward to just before previous occurrence of {char}
 
-Omni Completion
+Omni-completion
+- similar to intellisense in some IDEs
+- Vim ships with support for several languages
+  including HTML, CSS, JavaScript, PHP, Ruby, and SQL.
 - to get a list of possible completions, press ctrl-x ctrl-o
-- to navigate the list of possible completions,
-  use ctrl-n for next and ctrl-p for previous
-- once the desired completion is under the cursor, just continue typing
+- like other kinds of completion,
+  navigate the list with ctrl-n and ctrl-p
+- when the desired completion is under the cursor, just continue typing
+- in HTML, can use after an element name to see possible attribute
+- in CSS, can use after a property name to see possible values
 
 Opening, Saving and Quiting
   :e {name} - edit file {name}; file is created if it doesn't exist
@@ -520,8 +559,11 @@ Select
 Spell check
 - to start, enter
   :setlocal spell spelllang=en_us
+  * you have <leader>s mapped to toggle this in normal and insert modes
 - to jump to the next error, ]s
 - to get a list of suggested replacements, z=
+  * enter number of replacement and press <cr>
+    or just press <cr> to make no change
 - to repeat the replacement made by z= throughout the document, :spellr
 - to add word under cursor to list of good works, zg
 - for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
@@ -664,6 +706,39 @@ Windows
   ctrl-w =           - make all windows the same size
   ctrl-w r           - rotate windows
 
+Working Directory
+- To see, :pwd
+- To change, :cd {path}
+  * :cd .. to go up to parent directory
+  * :cd - to return to previousl working directory
+  * enter :cd and press tab key to cycle through subdirectory names
+- This affects filename completion.
+
+YouCompleteMe and TernJS
+- YouCompleteMe is a fuzzy-search code completion engine for Vim.
+  * see https://github.com/Valloric/YouCompleteMe
+- Tern for Vim provides Tern-based JavaScript editing support in Vim.
+- Tern is a code-analysis engine for JavaScript.
+  * see http://ternjs.net
+  * commands include TernDef (ctrl-o to return to previous location),
+    TernDefPreview, TernDefSplit, TernDefTab, TernDoc,
+    TernDocBrowse, TernType, TernRefs, and TernRename
+  * for help on Tern, :h Tern
+- to install YouCompleteMe
+  * cd .vim/bundle
+  * git clone https://github.com/Valloric/YouCompleteMe.git
+  * cd YouCompleteMe
+  * git submodule update --init --recursive
+  * ./install.sh --clang-completer
+- to install Tern for Vim
+  * cd .vim/bundle
+  * git clone https://github.com/marijnh/tern_for_vim.git
+  * cd tern_for_vim
+  * npm install
+- provides autocompletion while typing
+  * to accept first option, press tab and just keep typing
+  * press tab more times to cycle through other options
+
 Other
   :help [topic] - get help
     To navigate to topics surrounded by vertical bars
@@ -719,35 +794,6 @@ BufExplorer plugin
   * use j and k keys to move up and down to highlight a buffer
   * press return to open highlighted buffer
   * press F1 for help on other command keys used in this mode
-
-Command-T plugin
-- see https://github.com/wincent/Command-T
-- works with MacVim
-- Ruby version must be 1.8.7 or higher
-- installing using Pathogen
-  * cd .vim/bundle
-  * git clone https://github.com/wincent/Command-T.git
-    - alternative you use: see "Installing Plugins" at top of this file
-  * cd Command-T
-  * rake make
-  * restart Vim
-  * :call pathogen#helptags()
-- using
-  * start MacVim
-  * :cd {path-to-project}
-  * can verify with :pwd
-  * press \t
-  * enter letters in path and filename to narrow list
-  * use up and down arrow keys to highlight desired file
-  * to open highlighted file
-    - press return key to open in current pane
-    - press ctrl-return or ctrl-s to open in new horizontal split 
-    - press ctrl-v to open in new vertical split 
-  * to exit without selecting a file, press esc
-  * to toggle between search prompt area and file listing,
-    press tab key
-  * to enable finding files that were created after Vim was started
-    or were renamed, enter :CommandTFlush
 
 Notes from Bill Odom's talk on 2/16/12
 

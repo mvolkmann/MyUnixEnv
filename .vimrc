@@ -23,7 +23,7 @@ set antialias
 
 " To get word completion using dictionary while in insert mode,
 " type some letters and press c-x c-k.
-set dictionary=/usr/share/dict/words
+"set dictionary=/usr/share/dict/words
 
 " Don't need this since it is specified in status line config.
 "set ruler " show line and column number of cursor position
@@ -85,24 +85,30 @@ let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
 
 let mapleader = ","
 
+" dictionary word completion
+inoremap <leader>d foo<cr>
+
 " edit .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " source .vimrc
-nnoremap <leader>sv :source $MYVIMRC<cr>
+"nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
 
 " replace all occurences of the complete word under the cursor
-nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 
 " save buffer (requires stty -ixon in .bashrc)
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
+" JSHint update - see https://github.com/wookiehangover/jshint.vim
+nnoremap <leader>j :JSHintUpdate<cr>
+
 " NERDTree toggle
-nnoremap <leader>t :NERDTreeToggle<cr>
+"nnoremap <leader>t :NERDTreeToggle<cr>
 
 " Allow insert mode completion with tab key in addition to ctrl-n.
 " Can't do this because it conflicts with Snipmate!
@@ -131,6 +137,18 @@ let g:ctrlp_cmd = 'CtrlP'
 "  let g:ctrlp_use_caching = 0
 "endif
 
+" Spell checking
+"set nospell " start with spell checking off
+"setlocal nospell " start with spell checking off
+" Use dictionary of Vim's spell checker.
+" It takes a couple of seconds for these to take effect.
+" insert-mode toggle only for current buffer
+inoremap <leader>s <c-o>:setlocal spell! spelllang=en_us<cr>
+" normal-mode toggle only for current buffer
+nnoremap <leader>s :setlocal spell! spelllang=en_us<cr>
+
+set thesaurus=~/.vim/mthesaur.txt
+
 " Status line --- {{{
 set statusline=%t " file name (omits path)
 set statusline+=%M " modified flag
@@ -150,8 +168,8 @@ set statusline+=\ %P " percent through file
 
 augroup javascript
   autocmd!
-  let javaScript_fold=1
-  autocmd FileType javascript set foldmethod=syntax
+  "let javaScript_fold=1 " fold on open
+  "autocmd FileType javascript set foldmethod=syntax
 augroup END
 
 augroup filetype_vim
