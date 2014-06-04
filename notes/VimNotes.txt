@@ -565,7 +565,8 @@ Spell check
   * enter number of replacement and press <cr>
     or just press <cr> to make no change
 - to repeat the replacement made by z= throughout the document, :spellr
-- to add word under cursor to list of good works, zg
+- to add word under cursor to list of good words, zg
+  * adds to ~/.vim/spell/en.utf-8.add
 - for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
 
 Tab Pages
@@ -729,7 +730,11 @@ YouCompleteMe and TernJS
   * git clone https://github.com/Valloric/YouCompleteMe.git
   * cd YouCompleteMe
   * git submodule update --init --recursive
+  * install CMake
+    - on Mac OS X, brew install cmake
+    - in Cygwin, isntall through setup-x86.exe
   * ./install.sh --clang-completer
+    - this failed in Cygwin!
 - to install Tern for Vim
   * cd .vim/bundle
   * git clone https://github.com/marijnh/tern_for_vim.git

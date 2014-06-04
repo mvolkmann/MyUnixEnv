@@ -23,7 +23,8 @@ set antialias
 
 " To get word completion using dictionary while in insert mode,
 " type some letters and press c-x c-k.
-"set dictionary=/usr/share/dict/words
+set dictionary=/usr/share/dict/words
+set dictionary+=~/.vim/computer-words
 
 " Don't need this since it is specified in status line config.
 "set ruler " show line and column number of cursor position
@@ -122,6 +123,7 @@ nnoremap <right> :bnext<cr>
 " CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode='c'
 " }}}
 
 " The Silver Searcher
