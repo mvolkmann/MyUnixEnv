@@ -122,8 +122,8 @@ nnoremap <right> :bnext<cr>
 
 " CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode='c'
+let g:ctrlp_cmd = 'CtrlP .'
+"let g:ctrlp_working_path_mode='c'
 " }}}
 
 " The Silver Searcher
