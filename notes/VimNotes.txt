@@ -247,6 +247,30 @@ Counts
   Most commands can be preceded by a number that indicates
   how many times the command should be executed.
 
+CtrlP plugin
+- fuzzy search for file paths, filenames, and
+  most recently used (mru) files
+- similar to Command-T plugin, but faster
+  and doesn't depend on Ruby support
+- :h ctrlp-commands
+- :h ctrlp-mappings
+- you mapped ctrl-p to this
+  * let g:ctrlp_map = '<c-p>'
+  * let g:ctrlp_cmd = 'CtrlP .' " note dot to start in current directory
+- first time ctrl-p is pressed, will index files (takes a few seconds)
+- after pressing ctrl-p
+  * press ctrl-f to cycle through modes (files, buffers, mru files)
+  * press ctrl-d to toggle between full path and filename-only search
+    - stays in selected mode until you change it
+  * press ctrl-r to toggle between string and regex mode
+  * type characters to match in file paths or names depending on mode
+  * use ctrl-j and ctrl-k to navigate list
+  * to open file under cursor
+    - press enter to open in current window
+    - press ctrl-v to open in new vertical split
+    - press ctrl-s to open in new horizontal split
+  * to close without selecting a file, press esc or ctrl-c
+
 Delete
   d  - delete selection
   dd - delete current line
