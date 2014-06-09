@@ -105,7 +105,8 @@ nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
-" JSHint update - see https://github.com/wookiehangover/jshint.vim
+" JSHint - see https://github.com/wookiehangover/jshint.vim
+"let JSHintUpdateWriteOnly = 1
 nnoremap <leader>j :JSHintUpdate<cr>
 
 " NERDTree toggle
@@ -127,17 +128,18 @@ let g:ctrlp_cmd = 'CtrlP .'
 " }}}
 
 " The Silver Searcher
-"let g:ackprg = 'ag --nogroup --nocolor --column'
-"if executable('ag')
+if executable('ag')
   " Use ag instead of grep.
-"  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepformat=%f:%l:%c:\ %m
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-"  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Use ag in CtrlP for listing files.
+  " It is lightning fast and respects .gitignore.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
   " ag is fast enough that CtrlP doesn't need to cache.
-"  let g:ctrlp_use_caching = 0
-"endif
+  let g:ctrlp_use_caching = 0
+endif
 
 " Spell checking
 "set nospell " start with spell checking off
@@ -172,6 +174,7 @@ augroup javascript
   autocmd!
   "let javaScript_fold=1 " fold on open
   "autocmd FileType javascript set foldmethod=syntax
+  " jshint plugin runs jshint on JavaScript files
 augroup END
 
 augroup filetype_vim

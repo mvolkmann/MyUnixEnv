@@ -13,10 +13,10 @@ Installing Plugins
     - git submodule add https://github.com/wincent/Command-T.git .vim/bundle/command-t
 
 Starting
-  vim [filename]          - to start in a specified file
-  vim +E                  - to start in file explorer
-  vim .                   - same as vim +E
-  vim --remote {filename} - to edit file in existing vim session
+- vim [filename]          - to start in a specified file
+- vim +E                  - to start in file explorer
+- vim .                   - same as vim +E
+- vim --remote {filename} - to edit file in existing vim session
 
 Help
 - for help on any topic, :help {topic} or :h {topic}
@@ -27,8 +27,8 @@ Help
 - to return to the previous page, press ctrl-t
 
 Configuration is specified in
-  _vimrc under Windows (in your C:\VIM directory)
-  .vimrc under Unix (in ~)
+- _vimrc under Windows (in your C:\VIM directory)
+- .vimrc under Unix (in ~)
 
 ---
 
@@ -51,7 +51,19 @@ Installing Vim 7 under Windows
     vim-7-ruby-omni-completion.html
     into C:\Vim\vim70d\autoload
 
----
+--- Alphabetized topics start here
+
+Argument List
+- initially set to expanded list of files passed to vim from command-line
+  * ex. vim **/*.js **/*.css
+- repopulate with :args {list}
+  where list is space-separated and can contain wildcards
+  and ** to recurse into subdiretories
+  * ex. :args **/*.js **/*.css
+- to run an ex command on each file, :argdo {command}
+  * can specify multiple commands separated by |
+- :next or :previous to jump to next or previous file
+- :last or :first/:rewind to jump to last or first file
 
 Bash
 - To use vi keystrokes for bash command-line editing,
@@ -91,6 +103,22 @@ Buffers
   :bw[{buffer-number}] - to wipeout the indicated buffer
     Unlike :bd, this completely deletes the buffer.
  
+BufExplorer plugin
+- see https://github.com/vim-scripts/bufexplorer.zip
+- works with MacVim
+- installing using Pathogen
+  * cd .vim/bundle
+  * git clone https://github.com/vim-scripts/bufexplorer.zip.git
+    - alternative you use: see "Installing Plugins" at top of this file
+  * restart Vim
+- using
+  * \be for open in current pane
+  * \bs for horizontal split open
+  * \bv for vertical split open
+  * use j and k keys to move up and down to highlight a buffer
+  * press return to open highlighted buffer
+  * press F1 for help on other command keys used in this mode
+
 Change (delete and enter insert mode)
   c  - change selection (deletes selected text)
   cc - change line (deletes current line)
@@ -102,12 +130,13 @@ Change (delete and enter insert mode)
   c/{text}Enter - change all characters from cursor to given text
 
 Code Indenting
-  Put "filetype indent plugin on" in .vimrc to use filetype-dependent
-  settings specified in files in the .vim/ftplugin directory.
-  The settings in these files will override settings in your .vimrc.
-  For example, create .vim/ftplugin/java.vim containing
-    set shiftwidth=4
-    set tabstop=4
+- put "filetype indent plugin on" in .vimrc to use filetype-dependent
+  settings specified in files in the .vim/ftplugin directory
+- settings in these files will override settings in your .vimrc
+- for example, create .vim/ftplugin/java.vim containing
+  set shiftwidth=4
+  set tabstop=4
+- options
   :set cindent        - for indenting source code
                         (requires "filetype indent on" in .vimrc)
   :set shiftwidth={#} - sets number of spaces used for indentation
@@ -116,6 +145,7 @@ Code Indenting
                         by one shiftwidth
                         (see :help cinoptions-values for more options
                          and a list of the defaults)
+- commands
   ==                  - fixes indentation of current line or selected lines
   =                   - fixes indentation of selected lines
   >                   - indents selected lines
@@ -125,9 +155,9 @@ Code Indenting
   gg=G                - goes to first line then reindents entire file
 
 Color Schemes
-- Now using Solarized color theme
-- See Syntax...Highlight Test in GVim
-- Put "syntax enable" in .vimrc to enable colors.
+- now using Solarized color theme
+- see Syntax...Highlight Test in GVim
+- put "syntax enable" in .vimrc to enable colors.
 - :hi - to see all the current syntax colors
 - color numbers (Are these standard?)
   0 = gray
@@ -138,17 +168,17 @@ Color Schemes
   5 = magenta
   6 = cyan
   7 = white
-- Standard color names (case insensitive)
+- standard color names (case insensitive)
     white, lightgray, gray, darkgray, black,
     red, green, yellow, blue, magenta, cyan
     above preceded by "light" or "dark"
     lightpink, pink, orange, darkorange, purple
-- Save color scheme .vim files in
+- save color scheme .vim files in
     ~/.vim/colors for Unix
     $VIM_HOME/vimfiles/colors for Windows
     Also look in /usr/share/vim/vim72/colors.
-- Find valid color names in /usr/X11R6/lib/X11/rgb.txt.
-- To change to a named color scheme defined in a .vim file
+- find valid color names in /usr/X11R6/lib/X11/rgb.txt.
+- to change to a named color scheme defined in a .vim file
   stored in the appropriate colors directory ...
   :colo[rscheme] {name} - use color scheme from file {name}.vim
   For example, :colo evening
@@ -156,20 +186,20 @@ Color Schemes
   enter ":colorscheme " and then continually press Tab.
   To see all the installed color schemes,
   enter ":colo " and press ctrl-d.
-- Font styles
+- font styles
     bold, italic, underline, reverse, standout, NONE (to reset)
-- Font names
+- font names
     default is FixedSys
     set with font attribute
     ex. hi Comment font=Courier
-- To change an individual color, here are some exxamples.
+- examples of changing individual colors
   :hi Normal guifg=black guibg=white
   :hi comment ctermfg=blue - when using a terminal window
   :hi comment guifg=blue - when using a GUI
   :hi Search ctermfg=white ctermbg=red
   :hi LineNr ctermfg=0 - to display line numbers in gray
-- Can also set ctermbg and guibg
-- Recommendations
+- can also set ctermbg and guibg
+- recommendations
   hi Normal font=Fixedsys ctermfg=black ctermbg=white guifg=black guibg=white
   hi Comment ctermfg=darkgray guifg=darkgray
   hi Constant ctermfg=darkgreen guifg=darkgreen
@@ -189,7 +219,7 @@ Comments in .vimrc file
 - precede with " character
 
 Compiling code
-- See :help quickfix.txt
+- see :help quickfix.txt
 
 Completion after :
   tab - to complete a command name, file path, ...
@@ -244,7 +274,7 @@ Copy (yank)
   Y  - same as yy
 
 Counts
-  Most commands can be preceded by a number that indicates
+- most commands can be preceded by a number that indicates
   how many times the command should be executed.
 
 CtrlP plugin
@@ -311,16 +341,17 @@ Exploring
   R         - rename file
 
 Filtering Lines
-- To pass a range of lines to a shell command,
-  select the lines using V, type ! and then a shell command.
-- The selected lines will be replaced by the command output.
-- For example, to sort imports at the top of a Java source file,
-  elect them and enter "!sort".
+- to pass a range of lines to a shell command,
+  select the lines using V, type ! and then a shell command
+- selected lines will be replaced by the command output
+- for example, to sort imports at the top of a Java source file,
+  select them and enter "!sort"
+  * requires shell sort command (not in Windows)
 
 Folding
-- To configure folding of javadoc comments, add this to .vimrc.
+- to configure folding of javadoc comments, add this to .vimrc.
   autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
-- Commands to control folding include
+- commands to control folding include
   zfap - create a new fold
   zr - reduce/open all folds one level deep
   zR - recursive version of zr (all levels)
@@ -392,13 +423,30 @@ Fugitive
   * paths that start with / are relative to the repository root directory
   * other paths are relative to the current file directory
 
+grep (also see vimgrep)
+- searches files in and below current directory (faster than vimgrep)
+- uses an external shell command
+  * grep by default which doesn't include column numbers in output
+    so cursor can't move to the column of the match
+  * can configure to use another command like ack or "The Silver Searcher"
+    - see "Silver Searcher" section
+- :gr[ep] [options] {pattern} {files}
+  * -i option makes case-insensitive
+  * pattern can be a regex surrounded by /'s
+  * files can use * wildcard to match zero or more characters
+  * files can use ** to recursively search subdirectories
+  * populates quickfix list
+    - use :lgr[ep] to populate location list instead
+    - can use unimpaired plugin key mappings to navigate
+  * ex. gr parseInt **/*.js
+
 HTML Output
-- To write a source file out as HTML,
+- to write a source file out as HTML,
   including color-coded syntax highlighting,
   run :TOhtml.
 
-Key Definitions
-- To show current key mappings,
+Key Definitions - FINISH THIS!  SEE KEYNOTE FILE!
+- to show current key mappings,
 
 - To define a key for insert mode,
   imap 
@@ -408,7 +456,7 @@ Key Definitions
   * ex. map <F5> :CoffeeRun<CR>
 
 Keyboard Macros
-  Macros are saved across editing sessions.
+- macros are saved across editing sessions
   q{letter} - to start recording macro {letter}
   q         - to stop recording
   @{letter} - to call macro {letter}
@@ -418,9 +466,14 @@ Leader Key
 - first key pressed to invoke many plugin commands
 - defaults to \
 
+Location List (also see Quickfix List)
+- like quickfix list, but is associated with the current window
+  and each window can have its own
+- uses same commands, but prefixed with "l" instead of "c"
+
 Marks
-  To set, :ma[rk] {letter}
-  To visit, `{letter}
+- to set, :ma[rk] {letter}
+- to visit, `{letter}
 
 Modes
   a      - enter insert mode after cursor
@@ -469,13 +522,16 @@ Moving Around
   t{char}  - forward to just before next occurrence of {char}
   T{char}  - backward to just before previous occurrence of {char}
 
+NERD_Tree plugin
+- tried it, but like using built-in netrw better
+
 Omni-completion
 - similar to intellisense in some IDEs
 - Vim ships with support for several languages
   including HTML, CSS, JavaScript, PHP, Ruby, and SQL.
 - to get a list of possible completions, press ctrl-x ctrl-o
 - like other kinds of completion,
-  navigate the list with ctrl-n and ctrl-p
+  navigate the ist with ctrl-n and ctrl-p
 - when the desired completion is under the cursor, just continue typing
 - in HTML, can use after an element name to see possible attribute
 - in CSS, can use after a property name to see possible values
@@ -503,9 +559,9 @@ Opening, Saving and Quiting
     Press ctrl-Q to resume.
 
 Options
-  One way to view and set options is to enter ":options:".
-  This opens a window that displays all the options,
-  provides a description of each, and shows the current value.
+- one way to view and set options is to enter ":options:"
+  * opens a window that displays all the options,
+    provides a description of each, and shows the current value
 
 Paste
   p  - paste after cursor
@@ -517,15 +573,41 @@ Paste
     - cmd-v (without being in insert mode)
     - :set paste!
 
+Pathogen
+- better way to install Vim plugins
+- also consider Vundle
+
+Quickfix List (also see Location List)
+- list of records containing filename, line number, and optional column number
+- typically produced by a compiler or linter
+  * ex. :!jshint
+  * automatically updated as issues are fixed (at least with jshint)
+- many tools that populate the quickfix list do not open it
+  and automatically jump to location of first record
+- to skip to the next or previous record location, :cn[ext] or :cp[revious]
+- to skip to the first or last record location, :cfir[st] or :cla[st]
+- when list contains references to more than one file,
+  it can be useful to skip to those for the next or previous file
+  * to skip to first record in next file, :cnfile
+  * to skip to last record in previous file, :cnprev
+- to view all records, :cope[n]
+- to close quickfix list, :ccl[ose]
+- you configured <leader>q to toggle viewing quickfix list
+- to jump to record reference under cursor, press <cr>
+- only one current quickfix list, but others are saved in a stack
+  * to switch to the previous one, :colder
+  * to switch to the newer one, :cnewer
+- recommended plugin: unimpaired (see separate section)
+
 Reflow text in a paragraph
 - position cursor anywhere in a paragraph and enter gqap
 
 Registers
-  A register is like a named clipboard.
-  It holds deleted text that can be pasted.
-  To place deleted text in a register,
+- like named clipboards
+- hold deleted text that can be pasted
+- to place deleted text in a register,
   precede delete or change command with "{register-name} (a-z).
-  To paste text from a register,
+- to paste text from a register,
   precede paste command with "{register-name} (a-z).
 
 Reverse order of all lines
@@ -580,55 +662,6 @@ Select
   ctrl-V - begin visual selection in block mode
   o - changes end of selection being moved
 
-Spell check
-- to start, enter
-  :setlocal spell spelllang=en_us
-  * you have <leader>s mapped to toggle this in normal and insert modes
-- to jump to the next error, ]s
-- to get a list of suggested replacements, z=
-  * enter number of replacement and press <cr>
-    or just press <cr> to make no change
-- to repeat the replacement made by z= throughout the document, :spellr
-- to add word under cursor to list of good words, zg
-  * adds to ~/.vim/spell/en.utf-8.add
-- for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
-
-Tab Pages
-- to open a new, empty tab, :tabe
-- to close the current tab, :tabc
-- to close all other tabs, :tabo
-- to open a file in a new tab, 
-  ???
-- to navigate to a different tab,
-  click the tab with the mouse
-  or type "gt" for goto tab
-  or press ctrl-PgDn or ctrl-PgUp
-- to have tabs always show even when there is only one window,
-  add the following to _vimrc
-  set showtabline=2
-- to use a tab to edit a file opened using "Edit with Vim"
-  from the Windows Explorer context-sensitive menu,
-  add " -p" to the Windows registry under
-  HKEY_LOCAL_MACHINE\SOFTWARE\Vim\Gvim\path using regedit
-
-Tags
-- For better tagging, brew install ctags-exuberant
-- To generate a "tags" file for the current directory and all subdirectories,
-  enter "ctags -R".
-  This works for 41 languages!
-- To visit a tag in Vim, do one of the following:
-  1) :ta[g] {tag}
-  2) position cursor over tag-string and press ctrl-]
-     This is the default telnet escape character.
-     To avoid escaping to a telnet prompt,
-     include the -E option when starting telnet to disable escaping.
-- To return to the previous location, press ctrl-t.
-- To start vi and immediately visit a given tag,
-  vi -t {tag}
-- When there is more than one match,
-  vi displays all matches and allows one to be selected by number.
-- For more info, enter ":help tags" in vi
-
 Shell commands
 - see Conque at http://code.google.com/p/conque/
 - may need to install newer version of python (works with 3.2.1)
@@ -641,6 +674,21 @@ Shell commands
 - when running Vim from a terminal window,
   can press ctrl-z to put Vim in the background
   and enter fg to return to Vim in the foreground
+
+Silver Searcher, The
+- configuring to be used by grep, lgrep, and ctrlp plugin
+  if executable('ag')
+    " Use ag instead of grep.
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+    set grepformat=%f:%l:%c:\ %m
+
+    " Use ag in CtrlP for listing files.
+    " It is lightning fast and respects .gitignore.
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache.
+    let g:ctrlp_use_caching = 0
+  endif
 
 Slime and Screen
 - to install vim-slime
@@ -686,21 +734,133 @@ Snippets
   * indentation in snippets must be done with tabs, not spaces
     - depending on other Vim configuration,
       tabs can expand to spaces when a snippet is used
+- Drew Neil recommends a different plugin for snippets ... what is it?
+
+Spell check
+- to start, enter
+  :setlocal spell spelllang=en_us
+  * you have <leader>s mapped to toggle this in normal and insert modes
+- to jump to the next error, ]s
+- to get a list of suggested replacements, z=
+  * enter number of replacement and press <cr>
+    or just press <cr> to make no change
+- to repeat the replacement made by z= throughout the document, :spellr
+- to add word under cursor to list of good words, zg
+  * adds to ~/.vim/spell/en.utf-8.add
+- for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
+
+Tab Pages
+- to open a new, empty tab, :tabe
+- to close the current tab, :tabc
+- to close all other tabs, :tabo
+- to open a file in a new tab, 
+  ???
+- to navigate to a different tab,
+  click the tab with the mouse
+  or type "gt" for goto tab
+  or press ctrl-PgDn or ctrl-PgUp
+- to have tabs always show even when there is only one window,
+  add the following to _vimrc
+  set showtabline=2
+- to use a tab to edit a file opened using "Edit with Vim"
+  from the Windows Explorer context-sensitive menu,
+  add " -p" to the Windows registry under
+  HKEY_LOCAL_MACHINE\SOFTWARE\Vim\Gvim\path using regedit
+
+Tags
+- to install Exuberant Ctags on Mac OS X, brew install ctags
+  * understands 41 language syntaxes including
+    C, C++, C#, HTML, Java, JavaScript, Lisp, Lua, Perl, Python,
+    Ruby, shell scripts, and VimScript
+    - not CSS
+- to generate a "tags" file for the current directory and all subdirectories,
+  enter "ctags -R"
+  * works for 41 languages!
+- helping Vim locate "tags" file
+  * by default, will look in directory where Vim was started
+  * can add other directories with :set tags={path-list},
+    but it's easiest to just start in the right directory
+- to visit a tag in Vim, do one of the following:
+  1) :ta[g] {tag}
+     * visits highest priority (closest) match
+  2) position cursor over tag-string and press ctrl-]
+     * visits highest priority (closest) match
+     * This is the default telnet escape character.
+       To avoid escaping to a telnet prompt,
+       include the -E option when starting telnet to disable escaping.
+  3) if there might be more than one match, press g-ctrl-]
+     to get a menu of matches to pick from
+- maintains a history of visited tags (stack)
+- to return to the previous location, press ctrl-t
+- to start vim and immediately visit a given tag,
+  vim -t {tag}
+- when there is more than one match,
+  vim displays all matches and allows one to be selected by number.
+- for more info, enter ":help tags" in vim
 
 Tools that use vi
-- To cause tools that launch vi (such as cleartool edcs)
-  to launch vim instead, set the VISUAL environment variable to "vim".
+- to cause tools that launch vi (such as cleartool edcs)
+  to launch vim instead, set the VISUAL environment variable to "vim"
 
 Unicode
-- To find the code for the character under the cursor,
-  press ga
+- to find the code for the character under the cursor, press ga
   * the decimal, hex and octal values will be
     displayed in the status line
-- To find a unicode character by its code,
+- to find a unicode character by its code,
   f/\%d{decimal-value}
 - To substitute all occurences of a unicode character
   with another character,
   s/\%d{decimal-value}/{new-char}/g
+
+Unimpaired Plugin
+- https://github.com/tpope/vim-unimpaired
+- provides 20 key mappings in four categories
+- for a full list, :h unimpaired
+- all take a count
+- highlights
+  * files
+    - ]f and [f open next and previous file in
+      directory of current file in alphabetical order
+  * buffers
+    - ]b, [b, ]B, and [B for bnext, bprevious, blast, and bfirst
+  * quickfix list
+    - first need to run a command that populates the quickfix list 
+    - ]q, [q, ]Q, and [Q for cnext, cprevious, clast, and cfirst
+    - ]ctrl-q and [ctrl-q for cnfile, cpfile
+      * must disable control flow in terminal with stty -ixon
+  * location list
+    - ]l, [l, ]L, and [L for lnext, lprevious, llast, and lfirst
+    - ]ctrl-l and [ctrl-l for lnfile, lpfile
+  * argument list
+    - ]a, [a, ]A, and [A for next, previous, last, and first
+  * ctags
+    - first need to navigate to a definition with ctrl-]
+    - ]t, [t, ]T, and [T for tnext, tprevious, tlast, and tfirst
+
+vimgrep (also see grep)
+- searches files in and below current directory (slow!)
+- doesn't use an external shell command
+- :vim[grep] {pattern} {files}
+  * pattern can be a regex surrounded by /'s
+  * files can use * wildcard to match zero or more characters
+  * files can use ** to recursively search subdirectories
+  * populates quickfix list
+    - use :lvim[grep] to populate location list instead
+    - can use unimpaired plugin key mappings to navigate
+  * ex. vim parseInt **/*.js
+  * first matching file is opened
+    - based on file type, that could trigger another command that
+      creates a new quickfix list (such as jshint)
+      * best way to avoid this issue is probably to use lvimgrep instead
+        which populates a location list instead of the quickfix list
+      * to stop jshint from running on each .js file when it is opened,
+        add this to .vimrc:
+        let JSHintUpdateWriteOnly = 1
+      * to toggle use of jshint, run :JSHintToggle
+        - only a known command after first .js file is opened
+    - to return to the quickfix list created by vimgrep, :colder
+    - to avoid opening first matching file,
+      use vimgrep! instead of vimgrep
 
 Windows
   :win {width} {height} - to set default window size (put in .vimrc)
@@ -732,12 +892,12 @@ Windows
   ctrl-w r           - rotate windows
 
 Working Directory
-- To see, :pwd
-- To change, :cd {path}
+- to see, :pwd
+- to change, :cd {path}
   * :cd .. to go up to parent directory
   * :cd - to return to previousl working directory
   * enter :cd and press tab key to cycle through subdirectory names
-- This affects filename completion.
+- affects filename completion
 
 YouCompleteMe and TernJS
 - YouCompleteMe is a fuzzy-search code completion engine for Vim.
@@ -809,30 +969,12 @@ Other
     and run the current buffer.
     :wall<CR>:!ruby %<CR>
 
-BufExplorer plugin
-- see https://github.com/vim-scripts/bufexplorer.zip
-- works with MacVim
-- installing using Pathogen
-  * cd .vim/bundle
-  * git clone https://github.com/vim-scripts/bufexplorer.zip.git
-    - alternative you use: see "Installing Plugins" at top of this file
-  * restart Vim
-- using
-  * \be for open in current pane
-  * \bs for horizontal split open
-  * \bv for vertical split open
-  * use j and k keys to move up and down to highlight a buffer
-  * press return to open highlighted buffer
-  * press F1 for help on other command keys used in this mode
-
 Notes from Bill Odom's talk on 2/16/12
 
-NERD_Tree plugin
 Google "recommended vim plugins for javascript coding"
 #1 JavaScript indenter - by Preston Koprivica
 #2 Vastly improved javascript indentation - by Darrick Wiebe
 default syntax highlighting for JavaScript just uses highlighting for C?
-Pathogen
 JSLint - see link from crypticswarm blog to Jonathan Palardy page
 JSHint - manalang jshint.vim - is this what you are using?
 Conque - a shell that runs in Vim
