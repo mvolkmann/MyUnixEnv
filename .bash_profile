@@ -63,9 +63,7 @@ export GITHUB_PASS=github19
 #export GREP_OPTIONS="--color=ALWAYS"
 
 # Java settings
-#export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
-#export JAVA_HOME=/opt/jdk1.8.0 # for RPi
-#export PATH=$PATH:$JAVA_HOME/bin # for RPi
+export JAVA_HOME=$(/usr/libexec/java_home)
 
 # JavaScript settings
 export JS_CMD=node

@@ -22,6 +22,9 @@ Help
 - for help on any topic, :help {topic} or :h {topic}
 - for general help, :help user-manual
 - for help on version 7 features, :help version7
+- if topic name isn't known, :helpgrep {guess}
+  then open quickfix list with :copen
+  which you mapped to <leader>q
 - to navigate a link in the help, position the cursor over the link
   and press ctrl-]
 - to return to the previous page, press ctrl-t
@@ -585,6 +588,9 @@ Quickfix List (also see Location List)
 - many tools that populate the quickfix list do not open it
   and automatically jump to location of first record
 - to skip to the next or previous record location, :cn[ext] or :cp[revious]
+  * can repeat last ex command with @:
+  * can repeat last macro with @@
+  * so :cn @: @@ @@ @@ visits next five
 - to skip to the first or last record location, :cfir[st] or :cla[st]
 - when list contains references to more than one file,
   it can be useful to skip to those for the next or previous file
@@ -748,6 +754,25 @@ Spell check
 - to add word under cursor to list of good words, zg
   * adds to ~/.vim/spell/en.utf-8.add
 - for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
+
+Status Line
+- can configure contents
+- my preferences are:
+  set statusline=%t " file name (omits path)
+  set statusline+=%M " modified flag
+  set statusline+=%R " read-only flag
+  set statusline+=%= " left/right separator
+  set statusline+=line\ %l\ of\ %L " total lines
+  set statusline+=,\ col\ %c, " cursor line number and column
+  set statusline+=\ %P " percent through file
+
+  " always display status line
+  set laststatus=2
+
+  " change status line background color based on mode
+  highlight StatusLine ctermfg=red ctermbg=white
+  autocmd InsertLeave * highlight StatusLine ctermfg=red ctermbg=white
+  autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 
 Tab Pages
 - to open a new, empty tab, :tabe

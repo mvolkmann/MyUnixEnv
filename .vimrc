@@ -93,7 +93,7 @@ inoremap <leader>d foo<cr>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " source .vimrc
-"nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
@@ -115,6 +115,8 @@ nnoremap <leader>j :JSHintUpdate<cr>
 " Allow insert mode completion with tab key in addition to ctrl-n.
 " Can't do this because it conflicts with Snipmate!
 "imap <TAB> <C-n>
+ino <c-j> <c-r>=TriggerSnippet()<cr>
+snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
 
 " Switching buffers
 " Use C-^ to toggle to last buffer
@@ -161,6 +163,15 @@ set statusline+=%= " left/right separator
 set statusline+=line\ %l\ of\ %L " total lines
 set statusline+=,\ col\ %c, " cursor line number and column
 set statusline+=\ %P " percent through file
+
+" Always display status line.
+set laststatus=2
+
+" Change status line background color based on mode.
+" Note that green and yellow appear as gray.
+highlight StatusLine ctermfg=lightyellow ctermbg=black
+autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
+autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 " }}}
 
 " Folding --- {{{
