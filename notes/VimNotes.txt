@@ -17,6 +17,7 @@ Starting
 - vim +E                  - to start in file explorer
 - vim .                   - same as vim +E
 - vim --remote {filename} - to edit file in existing vim session
+- vim -u NONE -U NONE     - start without .vimrc or plugins
 
 Help
 - for help on any topic, :help {topic} or :h {topic}
@@ -37,8 +38,9 @@ Configuration is specified in
 
 Installing Vim from source
 - download and unzip source
-- ./configure --enable-rubyinterp
+- ./configure --enable-rubyinterp --enable-pythoninterp
   * Ruby is needed by some plugins such as Command-T
+  * Python is needed by some plugins such as YouCompleteMe
 - make install
 
 Installing Vim 7 under Windows
@@ -508,8 +510,9 @@ Moving Around
   l        - move right one char
   j        - move down one line
   k        - move up one line
-  f{char}  - forward to next occurrence of {char}
-  F{char}  - backward to previous occurrence of {char}
+  f{char}  - forward to next occurrence of {char} on same line
+           - repeat forward with ; and backward with ,
+  F{char}  - backward to previous occurrence of {char} on same line
   t{char}  - forward to just before next occurrence of {char}
   T{char}  - backward to just before previous occurrence of {char}
 
@@ -580,6 +583,17 @@ Pathogen
 - better way to install Vim plugins
 - also consider Vundle
 
+Python
+- some plugins required Vim to be built with Python support
+  * Cygwin Vim doesn't have this by default
+- steps to build
+  hg clone https://vim.googlecode.com/hg/ vim
+  cd vim/src
+  ./configure --enable-multibyte --without-x --enable-gui=no --enable-pythoninterp
+  make
+  make install
+  ln -sf /usr/local/bin/vim.exe /usr/bin/vim
+
 Quickfix List (also see Location List)
 - list of records containing filename, line number, and optional column number
 - typically produced by a compiler or linter
@@ -597,10 +611,11 @@ Quickfix List (also see Location List)
   * to skip to first record in next file, :cnfile
   * to skip to last record in previous file, :cnprev
 - to view all records, :cope[n]
-- to close quickfix list, :ccl[ose]
 - you configured <leader>q to toggle viewing quickfix list
 - to jump to record reference under cursor, press <cr>
-- only one current quickfix list, but others are saved in a stack
+- to close quickfix list, :ccl[ose]
+- there is only one current quickfix list,
+  but others are saved in a stack
   * to switch to the previous one, :colder
   * to switch to the newer one, :cnewer
 - recommended plugin: unimpaired (see separate section)
@@ -682,12 +697,15 @@ Shell commands
   and enter fg to return to Vim in the foreground
 
 Silver Searcher, The
-- for steps to install in Cygwin, see
-  https://gist.github.com/k-takata/5124445
-  * in addition
-    - make install (copies ag.ex to /usr/local/bin)
+- to install
+  * for Cygwin-specific steps, see https://gist.github.com/k-takata/5124445
     - copy the following file to /usr/local/bin:
       /usr/i686-pc-mingw32/sys-root/mingw/bin/pthreadGC2.dll
+  * git clone https://github.com/ggreer/the_silver_searcher.git
+  * cd the_silver_searcher/
+  * ./build.sh
+  * strip ag
+  * make install (copies ag.exe to /usr/local/bin)
 - to use from shell, outside of Vim
   * ag search-term file-path
     - search-term can be a string or regular expression surrounded by / /
@@ -851,6 +869,22 @@ Tags
   vim displays all matches and allows one to be selected by number.
 - for more info, enter ":help tags" in vim
 
+Tern for Vim plugin
+- provides Tern-based JavaScript editing support in Vim
+- built on Node.js which isn't currently supported in Cygwin
+- Tern is a code-analysis engine for JavaScript
+  * see http://ternjs.net
+  * commands include TernDef (ctrl-o to return to previous location),
+    TernDefPreview, TernDefSplit, TernDefTab, TernDoc,
+    TernDocBrowse, TernType, TernRefs, and TernRename
+  * for help on Tern, :h Tern
+- to install with Pathogen
+  * cd .vim/bundle
+  * git clone https://github.com/marijnh/tern_for_vim.git
+  * install Node.js if npm command isn't available
+  * cd tern_for_vim
+  * npm install
+
 Tools that use vi
 - to cause tools that launch vi (such as cleartool edcs)
   to launch vim instead, set the VISUAL environment variable to "vim"
@@ -952,35 +986,25 @@ Working Directory
   * enter :cd and press tab key to cycle through subdirectory names
 - affects filename completion
 
-YouCompleteMe and TernJS
-- YouCompleteMe is a fuzzy-search code completion engine for Vim.
+YouCompleteMe
+- a fuzzy-search code completion engine for Vim.
   * see https://github.com/Valloric/YouCompleteMe
-- Tern for Vim provides Tern-based JavaScript editing support in Vim.
-- Tern is a code-analysis engine for JavaScript.
-  * see http://ternjs.net
-  * commands include TernDef (ctrl-o to return to previous location),
-    TernDefPreview, TernDefSplit, TernDefTab, TernDoc,
-    TernDocBrowse, TernType, TernRefs, and TernRename
-  * for help on Tern, :h Tern
-- to install YouCompleteMe
+- to install
   * cd .vim/bundle
   * git clone https://github.com/Valloric/YouCompleteMe.git
   * cd YouCompleteMe
   * git submodule update --init --recursive
   * install CMake
     - on Mac OS X, brew install cmake
-    - in Cygwin, isntall through setup-x86.exe
-  * ./install.sh --clang-completer
-    - this failed in Cygwin!
-- to install Tern for Vim
-  * cd .vim/bundle
-  * git clone https://github.com/marijnh/tern_for_vim.git
-  * cd tern_for_vim
-  * npm install
+    - in Cygwin, is install through setup-x86.exe
+  * this plugin has a compiled component
+    - cd ~/.vim/bundle/YouCompleteMe
+    - ./install.sh
+    - this option fails in Cygwin: --clang-completer
 - provides autocompletion while typing
   * to accept first option, press tab and just keep typing
   * press tab more times to cycle through other options
-- Does the use of the tab key in YouCompleteMe conflict with SnipMate?
+- use of the tab key in YouCompleteMe conflicts with SnipMate!
 
 Other
   :help [topic] - get help
