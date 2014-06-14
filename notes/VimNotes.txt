@@ -331,18 +331,6 @@ Diffs
   There must be an easier way to turn this off!
   Supposedly it's much better in Vim 7 which isn't stable yet.
   
-Exploring
-  :E[xplore] [start-path]  - open explorer in current window
-  :S[explore] [start-path] - open explorer in split window
-  Once in explorer window,
-  ?         - toggles display of help on keys to use in explorer
-  Enter key - opens file/directory under cursor in explorer 
-  o         - opens file/directory in new window, leaving explorer displayed
-  -         - goes up to parent directory
-  i         - toggles display of file sizes and modification dates
-  D         - delete file
-  R         - rename file
-
 Filtering Lines
 - to pass a range of lines to a shell command,
   select the lines using V, type ! and then a shell command
@@ -528,6 +516,18 @@ Moving Around
 NERD_Tree plugin
 - tried it, but like using built-in netrw better
 
+Netrw (network-oriented reading, writing, and browsing)
+  :E[xplore] [start-path]  - open explorer in current window
+  :S[explore] [start-path] - open explorer in split window
+  Once in explorer window,
+  ?         - toggles display of help on keys to use in explorer
+  Enter key - opens file/directory under cursor in explorer 
+  o         - opens file/directory in new window, leaving explorer displayed
+  -         - goes up to parent directory
+  i         - toggles display of file sizes and modification dates
+  D         - delete file
+  R         - rename file
+
 Omni-completion
 - similar to intellisense in some IDEs
 - Vim ships with support for several languages
@@ -682,7 +682,18 @@ Shell commands
   and enter fg to return to Vim in the foreground
 
 Silver Searcher, The
-- configuring to be used by grep, lgrep, and ctrlp plugin
+- for steps to install in Cygwin, see
+  https://gist.github.com/k-takata/5124445
+  * in addition
+    - make install (copies ag.ex to /usr/local/bin)
+    - copy the following file to /usr/local/bin:
+      /usr/i686-pc-mingw32/sys-root/mingw/bin/pthreadGC2.dll
+- to use from shell, outside of Vim
+  * ag search-term file-path
+    - search-term can be a string or regular expression surrounded by / /
+    - file-path can contain ** to recursively search subdiretories
+      and * for wildcard
+- configure to be used by grep, lgrep, and ctrlp plugin
   if executable('ag')
     " Use ag instead of grep.
     set grepprg=ag\ --nogroup\ --nocolor\ --column
@@ -747,12 +758,29 @@ Spell check
   :setlocal spell spelllang=en_us
   * you have <leader>s mapped to toggle this in normal and insert modes
 - to jump to the next error, ]s
+- to jump to the previous error, [s
 - to get a list of suggested replacements, z=
   * enter number of replacement and press <cr>
     or just press <cr> to make no change
+  * window of replacements hides document which seems bad
 - to repeat the replacement made by z= throughout the document, :spellr
+- to correct mispelled words while in insert mode, press ctrl-x s
+  * get a dropdown list of suggestions rather than
+    a window that hides the document which seems better
+  * searches backward for a mispelled word
+  * press ctrl-n and ctrl-p to select the next and previous suggestions
+  * press ctrl-y to accept the selected suggestion
+  * press ctrl-e to exit without changing the word
+  * you mapped <leader>S to switch to insert mode and press ctrl-x s,
+    but you really want it to automatically press ctrl-x s again
+    after a word is corrected
+  * it would also be nice to correct words going forward
+    instead of backward
 - to add word under cursor to list of good words, zg
   * adds to ~/.vim/spell/en.utf-8.add
+- to remove word under cursor from list of good words, zw
+- to add a word file for specialized jargon like computer terms,
+  setlocal spellfile+=~/.vim/spell/{name}.utf-8.add
 - for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
 
 Status Line

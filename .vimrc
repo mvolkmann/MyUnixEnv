@@ -152,6 +152,7 @@ endif
 inoremap <leader>s <c-o>:setlocal spell! spelllang=en_us<cr>
 " normal-mode toggle only for current buffer
 nnoremap <leader>s :setlocal spell! spelllang=en_us<cr>
+nnoremap <leader>S i<c-x>s
 
 set thesaurus=~/.vim/mthesaur.txt
 
