@@ -1,4 +1,6 @@
 Vim Notes
+* this is why most autocommands should be in groups
+  that start with autocmd!
 - in HTML, can use after an element name to see possible attribute
 
 Installing Plugins
@@ -57,6 +59,50 @@ Installing Vim 7 under Windows
     into C:\Vim\vim70d\autoload
 
 --- Alphabetized topics start here
+
+AutoCommands
+- for grouping commands in a namespace that are
+  executed when specified events occur
+- syntax:
+  au[tocmd] [group] {event} {pattern} [nested] {cmd}
+- usually want these to be in a group
+- examples
+  - set tabstop for HTML files
+    autocmd FileType html setlocal tabstop=2 (verify this from Perrin's notes)
+    * could use filetype support (different file for each type) instead
+  - if no file specified when Vim is started, start netrw Explore
+    autocmd VimEnter * :if argc() is 0 | Explore | endif
+  - if an image file is opened in Vim, open it in a web browser
+    * ex. when opening from netrw Explore
+    autocmd FileType image call system('git web--browse ' .  shellescape(expand($.p')))
+    * could use "open" instead of "git web--browse" on a Mac
+- groups
+  * syntax:
+    augroup [name]
+      autocmd! " removes all autocommands previously in this group
+      [autocommands]
+    augroup end
+  * example: source .vimrc every time it is saved
+    augroup vimrc
+      autocmd!
+      autocmd BufWritePost .vimrc source $MYVIMRC
+    augroup end
+    - see VimResized example in your .vimrc
+- events
+  * help autocmd-events
+  * examples
+    - FileType - when a filetype is set for a file
+    - BufRead(Pre|Post)
+    - FileRead(Pre|Post)
+    - BufWrite(Pre|Post)
+    - VimResized
+    - Win(Enter|Leave)
+    - Tab(Enter|Leave)
+    - Insert(Enter|Leave)
+- warning
+  * sourcing .vimrc runs autocommands again, duplicating listeners
+  * this is why most autocommands should be in groups
+    that start with autocmd!
 
 Argument List
 - initially set to expanded list of files passed to vim from command-line
@@ -160,24 +206,19 @@ Code Indenting
   gg=G                - goes to first line then reindents entire file
 
 Color Schemes
-- now using Solarized color theme
+- language-specific syntax highlighting definition files are in
+  ~/.vim/syntax (ex. javascript.vim)
+  * to reload changes to these files, can just source .vimrc
+- can use Solarized color theme
+  * but using this in iTerm changes the values of the standard colors!
+  * try setting iTerm color presets to "Light Background" or "Dark Background"    instead of a Solarized variant
 - see Syntax...Highlight Test in GVim
-- put "syntax enable" in .vimrc to enable colors.
+- put "syntax on" in .vimrc to enable colors.
 - :hi - to see all the current syntax colors
-- color numbers (Are these standard?)
-  0 = gray
-  1 = red
-  2 = green
-  3 = yellow
-  4 = blue
-  5 = magenta
-  6 = cyan
-  7 = white
 - standard color names (case insensitive)
-    white, lightgray, gray, darkgray, black,
-    red, green, yellow, blue, magenta, cyan
-    above preceded by "light" or "dark"
-    lightpink, pink, orange, darkorange, purple
+  * white, black, brown (looks like orange),
+  * gray, red, green, yellow, blue, magenta, cyan
+    (above can be preceded by "light" or "dark")
 - save color scheme .vim files in
     ~/.vim/colors for Unix
     $VIM_HOME/vimfiles/colors for Windows
@@ -440,6 +481,8 @@ HTML Output
 
 Key Definitions - FINISH THIS!  SEE KEYNOTE FILE!
 - to show current key mappings,
+  * map command doesn't show builtin mappings
+  * probably just have to use help command
 
 - To define a key for insert mode,
   imap 
@@ -458,6 +501,9 @@ Keyboard Macros
 Leader Key
 - first key pressed to invoke many plugin commands
 - defaults to \
+- local leader
+  * a prefix for mappings that only take effect for certain types of files,
+    like JavaScript or HTML files
 
 Location List (also see Quickfix List)
 - like quickfix list, but is associated with the current window
@@ -751,7 +797,9 @@ Slime and Screen
   * press ctrl-c ctrl-c to copy the function definition into the REPL
   * test the function by enter a call to it in the REPL
 
-Snippets
+Snipmate
+- also see UltiSnips which is probably better
+  * recommended by Drew Neil
 - to install
   * cd ~/.vim/bundle
   * git clone https://github.com/tomtom/tlib_vim.git
@@ -769,7 +817,6 @@ Snippets
   * indentation in snippets must be done with tabs, not spaces
     - depending on other Vim configuration,
       tabs can expand to spaces when a snippet is used
-- Drew Neil recommends a different plugin for snippets ... what is it?
 
 Spell check
 - to start, enter
@@ -838,7 +885,21 @@ Tab Pages
   add " -p" to the Windows registry under
   HKEY_LOCAL_MACHINE\SOFTWARE\Vim\Gvim\path using regedit
 
+Tabs
+- to automatically add spaces when a tab is typed,
+  * set expandtab
+- to insert a real tab character even when the expandtab option is set
+  * ctrl-v tab
+- to make it easy to see where tab characters are in a file
+  * set lcs=tab:»·,trail:·
+  * This renders tab characters with a right-pointing double angle
+    followed by middle dots to show where the tab stop ends.
+  * It also renders trailing spaces with middle dots.
+
 Tags
+- to determine whether Exhuberant Ctags is installed,
+  as opposed to plain ctags
+  * ctags --version
 - to install Exuberant Ctags on Mac OS X, brew install ctags
   * understands 41 language syntaxes including
     C, C++, C#, HTML, Java, JavaScript, Lisp, Lua, Perl, Python,
@@ -847,6 +908,9 @@ Tags
 - to generate a "tags" file for the current directory and all subdirectories,
   enter "ctags -R"
   * works for 41 languages!
+  * to use with YouCompleteMe, "ctags -R --fields=+l" (lowercase L)
+  * will get lots of warnings that say "ignoring null tag in ..."
+    for JavaScript files
 - helping Vim locate "tags" file
   * by default, will look in directory where Vim was started
   * can add other directories with :set tags={path-list},
@@ -888,6 +952,48 @@ Tern for Vim plugin
 Tools that use vi
 - to cause tools that launch vi (such as cleartool edcs)
   to launch vim instead, set the VISUAL environment variable to "vim"
+
+UltiSnips
+- to install
+  * cd ~/.vim/bundle
+  * git clone https://github.com/SirVer/ultisnips
+  * git clone https://github.com/honza/vim-snippets
+- to configure, add these lines to .vimrc
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  nnoremap <leader>es :UltiSnipsEdit<cr>
+  * previous line edits private snippet file for current filetype
+  * these mappings conflict with the YouCompleteMe plugin
+    - consider using <c-j> instead of <tab>
+      and <c-k> instead of <s-tab>
+- to use
+  * enter a snippet name in insert mode and press tab key to expand
+  * won't work if tab key has been mapped to do something else!
+  * press tab to advance to next placeholder in snippet if there is one
+- to modify and add snippets
+  * default snippet files are in bundles/vim-snippets/UltiSnips
+    - for example, javascript.snippets
+  * to edit a private snippet file for the current filetype
+    - :UltiSnipsEdit
+    - if the file doesn't exist, it is created
+    - these files are saved in .vim/UltiSnips/{filetype}.snippets
+- snippet definitions
+  * can contain shell commands in backticks
+    snippet today
+    Today is `date "+%B %d %Y"`
+    endsnippet
+  * can contain VimScript commands in backticks with !v at beginning
+  * can contain Python code in backticks with !p at beginning
+    - can reference preset variables including:
+      * path - path to current file
+      * fn - current filename
+      * t - placeholder value array (ex. t[1])
+      * cur - current text in placeholder
+    - example (setting snip.rv sets the return value for the current snippet)
+      snippet log
+      console.log('`!p snip.rv = fn` ${1:function}: ${2:expression} =', $2);
+      endsnippet
 
 Unicode
 - to find the code for the character under the cursor, press ga
@@ -949,6 +1055,9 @@ vimgrep (also see grep)
     - to avoid opening first matching file,
       use vimgrep! instead of vimgrep
 
+Vundle
+- alternative to Pathogen
+
 Windows
   :win {width} {height} - to set default window size (put in .vimrc)
   :sp[lit] [{name}]  - horizontal split screen into two windows
@@ -986,9 +1095,41 @@ Working Directory
   * enter :cd and press tab key to cycle through subdirectory names
 - affects filename completion
 
-YouCompleteMe
+YouCompleteMe (YCM)
 - a fuzzy-search code completion engine for Vim.
-  * see https://github.com/Valloric/YouCompleteMe
+- see https://github.com/Valloric/YouCompleteMe
+- makes Vim startup very slow!
+  * probably due to time required to start the Python-based YCM server
+  * starts a new Python process for each Vim session
+- uses several completion engines
+  * integrates with Vim's omnicomplete and Exhuberant Ctags
+  * determines which to use based on the context
+- keys
+  * don't have to press any key to get suggestion list; appears automatically
+  * to further filter the suggestion list, continue typing
+  * press tab or down arrow to select first suggestion
+  * press tab or down arrow repeatedly to move to next suggestion
+  * press shift-tab or up arrow to move to previous suggestions
+  * to accept selected suggestion, just continue typing
+  * press ctrl-space to get context-specific suggestions
+    even if no characters have been entered
+- suggestions are based on typed characters appearing in order in them
+  * ex. typing "cm" could suggest YouCompleteMe
+  * typed lowercase letters match any case, but
+    typed uppercase letters only match uppercase letters
+  * matches at word boundaries appear higher in suggestion list
+    - first letter of each word (my word boundaries)
+    - uppercase letters in camel-cased words (myWordBoundaries)
+    - match the examples above by typing "mwb" or "wb"
+- provides programming language-specific semantic completions
+  * ex. type ., ->, or :: to get possible property/method names
+  * more support for C-family langauges and Python than others
+    - uses omnifunc for languages without a semantic completion engin
+  * JavaScript example
+    - enter "document." to get a list of all methods on the document object
+- file-name completion
+  * type ./ or ../ to begin
+  * not used for all file types (ex. not in .txt files)
 - to install
   * cd .vim/bundle
   * git clone https://github.com/Valloric/YouCompleteMe.git
@@ -1001,10 +1142,22 @@ YouCompleteMe
     - cd ~/.vim/bundle/YouCompleteMe
     - ./install.sh
     - this option fails in Cygwin: --clang-completer
-- provides autocompletion while typing
-  * to accept first option, press tab and just keep typing
-  * press tab more times to cycle through other options
-- use of the tab key in YouCompleteMe conflicts with SnipMate!
+- integrates with UltiSnips
+  * but use of tab key conflicts
+    - see key mapping suggestions in UltiSnips section
+- to enable completion inside comments,
+  let g:ycm_complete_in_comments = 1
+- to enable completion inside strings,
+  let g:ycm_complete_in_strings = 1
+- to collect identifiers (possible completions) from comments and strings
+  let g:ycm_collect_identifiers_from_comments_and_strings =  1
+- to collect identifiers from tags files
+  let g:ycm_collect_identifiers_from_tags_files =  1
+  * requires use of Exhuberant Ctags, not plain Ctags
+  * must generate tags file with  "ctags -R --fields=+l" (lowercase L)
+  * makes Vim unusably slow and causes an error on all completions!
+    - error is "-- User defined completion (^U^N^P) Pattern not found"
+- mailing list: Google Groups ycm-users
 
 Other
   :help [topic] - get help

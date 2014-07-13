@@ -1,429 +1,150 @@
-" Vim indent file
-" Language: Javascript
-" Acknowledgement: Based off of vim-ruby maintained by Nikolai Weibull http://vim-ruby.rubyforge.org
+" Language:  JavaScript
+" Maintainer:  Mark Volkmann <r.mark.volkmann@gmail.com>
+" URL: https://www.github.com/mvolkmann/vim/syntax/javascript.vim
 
-" 0. Initialization {{{1
-" =================
-
-" Only load this indent file when no other was loaded.
-if exists("b:did_indent")
-  finish
-endif
-let b:did_indent = 1
-
-setlocal nosmartindent
-
-" Now, set up our indentation expression and keys that trigger it.
-setlocal indentexpr=GetJavascriptIndent()
-setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
-
-" Only define the function once.
-if exists("*GetJavascriptIndent")
+if !exists("main_syntax")
+  if version < 600
+    syntax clear
+  elseif exists("b:current_syntax")
+    finish
+  endif
+  let main_syntax = 'javascript'
+elseif exists("b:current_syntax") && b:current_syntax == "javascript"
   finish
 endif
 
 let s:cpo_save = &cpo
 set cpo&vim
 
-" 1. Variables {{{1
-" ============
-
-let s:js_keywords = '^\s*\(break\|case\|catch\|continue\|debugger\|default\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
-
-" Regex of syntax group names that are or delimit string or are comments.
-let s:syng_strcom = 'string\|regex\|comment\c'
-
-" Regex of syntax group names that are strings.
-let s:syng_string = 'regex\c'
-
-" Regex of syntax group names that are strings or documentation.
-let s:syng_multiline = 'comment\c'
-
-" Regex of syntax group names that are line comment.
-let s:syng_linecom = 'linecomment\c'
-
-" Expression used to check whether we should skip a match with searchpair().
-let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_strcom."'"
-
-let s:line_term = '\s*\%(\%(\/\/\).*\)\=$'
-
-" Regex that defines continuation lines, not including (, {, or [.
-let s:continuation_regex = '\%([\\*+/.:]\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)' . s:line_term
-
-" Regex that defines continuation lines.
-" TODO: this needs to deal with if ...: and so on
-let s:msl_regex = '\%([\\*+/.:([]\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)' . s:line_term
-
-let s:one_line_scope_regex = '\<\%(if\|else\|for\|while\)\>[^{;]*' . s:line_term
-
-" Regex that defines blocks.
-let s:block_regex = '\%([{[]\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
-
-let s:var_stmt = '^\s*var'
-
-let s:comma_first = '^\s*,'
-let s:comma_last = ',\s*$'
-
-let s:ternary = '^\s\+[?|:]'
-let s:ternary_q = '^\s\+?'
-
-" 2. Auxiliary Functions {{{1
-" ======================
-
-" Check if the character at lnum:col is inside a string, comment, or is ascii.
-function s:IsInStringOrComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_strcom
-endfunction
-
-" Check if the character at lnum:col is inside a string.
-function s:IsInString(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_string
-endfunction
-
-" Check if the character at lnum:col is inside a multi-line comment.
-function s:IsInMultilineComment(lnum, col)
-  return !s:IsLineComment(a:lnum, a:col) && synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
-endfunction
-
-" Check if the character at lnum:col is a line comment.
-function s:IsLineComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_linecom
-endfunction
-
-" Find line above 'lnum' that isn't empty, in a comment, or in a string.
-function s:PrevNonBlankNonString(lnum)
-  let in_block = 0
-  let lnum = prevnonblank(a:lnum)
-  while lnum > 0
-    " Go in and out of blocks comments as necessary.
-    " If the line isn't empty (with opt. comment) or in a string, end search.
-    let line = getline(lnum)
-    if line =~ '/\*'
-      if in_block
-        let in_block = 0
-      else
-        break
-      endif
-    elseif !in_block && line =~ '\*/'
-      let in_block = 1
-    elseif !in_block && line !~ '^\s*\%(//\).*$' && !(s:IsInStringOrComment(lnum, 1) && s:IsInStringOrComment(lnum, strlen(line)))
-      break
-    endif
-    let lnum = prevnonblank(lnum - 1)
-  endwhile
-  return lnum
-endfunction
-
-" Find line above 'lnum' that started the continuation 'lnum' may be part of.
-function s:GetMSL(lnum, in_one_line_scope)
-  " Start on the line we're at and use its indent.
-  let msl = a:lnum
-  let lnum = s:PrevNonBlankNonString(a:lnum - 1)
-  while lnum > 0
-    " If we have a continuation line, or we're in a string, use line as MSL.
-    " Otherwise, terminate search as we have found our MSL already.
-    let line = getline(lnum)
-    let col = match(line, s:msl_regex) + 1
-    if (col > 0 && !s:IsInStringOrComment(lnum, col)) || s:IsInString(lnum, strlen(line))
-      let msl = lnum
-    else
-      " Don't use lines that are part of a one line scope as msl unless the
-      " flag in_one_line_scope is set to 1
-      "
-      if a:in_one_line_scope
-        break
-      end
-      let msl_one_line = s:Match(lnum, s:one_line_scope_regex)
-      if msl_one_line == 0
-        break
-      endif
-    endif
-    let lnum = s:PrevNonBlankNonString(lnum - 1)
-  endwhile
-  return msl
-endfunction
-
-function s:RemoveTrailingComments(content)
-  let single = '\/\/\(.*\)\s*$'
-  let multi = '\/\*\(.*\)\*\/\s*$'
-  return substitute(substitute(a:content, single, '', ''), multi, '', '')
-endfunction
-
-" Find if the string is inside var statement (but not the first string)
-function s:InMultiVarStatement(lnum)
-  let lnum = s:PrevNonBlankNonString(a:lnum - 1)
-
-"  let type = synIDattr(synID(lnum, indent(lnum) + 1, 0), 'name')
-
-  " loop through previous expressions to find a var statement
-  while lnum > 0
-    let line = getline(lnum)
-
-    " if the line is a js keyword
-    if (line =~ s:js_keywords)
-      " check if the line is a var stmt
-      " if the line has a comma first or comma last then we can assume that we
-      " are in a multiple var statement
-      if (line =~ s:var_stmt)
-        return lnum
-      endif
-
-      " other js keywords, not a var
-      return 0
-    endif
-
-    let lnum = s:PrevNonBlankNonString(lnum - 1)
-  endwhile
-
-  " beginning of program, not a var
-  return 0
-endfunction
-
-" Find line above with beginning of the var statement or returns 0 if it's not
-" this statement
-function s:GetVarIndent(lnum)
-  let lvar = s:InMultiVarStatement(a:lnum)
-  let prev_lnum = s:PrevNonBlankNonString(a:lnum - 1)
-
-  if lvar
-    let line = s:RemoveTrailingComments(getline(prev_lnum))
-
-    " if the previous line doesn't end in a comma, return to regular indent
-    if (line !~ s:comma_last)
-      return indent(prev_lnum) - &sw
-    else
-      return indent(lvar) + &sw
-    endif
-  endif
-
-  return -1
-endfunction
-
-
-" Check if line 'lnum' has more opening brackets than closing ones.
-function s:LineHasOpeningBrackets(lnum)
-  let open_0 = 0
-  let open_2 = 0
-  let open_4 = 0
-  let line = getline(a:lnum)
-  let pos = match(line, '[][(){}]', 0)
-  while pos != -1
-    if !s:IsInStringOrComment(a:lnum, pos + 1)
-      let idx = stridx('(){}[]', line[pos])
-      if idx % 2 == 0
-        let open_{idx} = open_{idx} + 1
-      else
-        let open_{idx - 1} = open_{idx - 1} - 1
-      endif
-    endif
-    let pos = match(line, '[][(){}]', pos + 1)
-  endwhile
-  return (open_0 > 0) . (open_2 > 0) . (open_4 > 0)
-endfunction
-
-function s:Match(lnum, regex)
-  let col = match(getline(a:lnum), a:regex) + 1
-  return col > 0 && !s:IsInStringOrComment(a:lnum, col) ? col : 0
-endfunction
-
-function s:IndentWithContinuation(lnum, ind, width)
-  " Set up variables to use and search for MSL to the previous line.
-  let p_lnum = a:lnum
-  let lnum = s:GetMSL(a:lnum, 1)
-  let line = getline(lnum)
-
-  " If the previous line wasn't a MSL and is continuation return its indent.
-  " TODO: the || s:IsInString() thing worries me a bit.
-  if p_lnum != lnum
-    if s:Match(p_lnum,s:continuation_regex)||s:IsInString(p_lnum,strlen(line))
-      return a:ind
-    endif
-  endif
-
-  " Set up more variables now that we know we aren't continuation bound.
-  let msl_ind = indent(lnum)
-
-  " If the previous line ended with [*+/.-=], start a continuation that
-  " indents an extra level.
-  if s:Match(lnum, s:continuation_regex)
-    if lnum == p_lnum
-      return msl_ind + a:width
-    else
-      return msl_ind
-    endif
-  endif
-
-  return a:ind
-endfunction
-
-function s:InOneLineScope(lnum)
-  let msl = s:GetMSL(a:lnum, 1)
-  if msl > 0 && s:Match(msl, s:one_line_scope_regex)
-    return msl
-  endif
-  return 0
-endfunction
-
-function s:ExitingOneLineScope(lnum)
-  let msl = s:GetMSL(a:lnum, 1)
-  if msl > 0
-    " if the current line is in a one line scope ..
-    if s:Match(msl, s:one_line_scope_regex)
-      return 0
-    else
-      let prev_msl = s:GetMSL(msl - 1, 1)
-      if s:Match(prev_msl, s:one_line_scope_regex)
-        return prev_msl
-      endif
-    endif
-  endif
-  return 0
-endfunction
-
-" 3. GetJavascriptIndent Function {{{1
-" =========================
-
-function GetJavascriptIndent()
-  " 3.1. Setup {{{2
-  " ----------
-
-  " Set up variables for restoring position in file.  Could use v:lnum here.
-  let vcol = col('.')
-
-  " 3.2. Work on the current line {{{2
-  " -----------------------------
-
-  let ind = -1
-  " Get the current line.
-  let line = getline(v:lnum)
-  " previous nonblank line number
-  let prevline = prevnonblank(v:lnum - 1)
-
-  " If we got a closing bracket on an empty line, find its match and indent
-  " according to it.  For parentheses we indent to its column - 1, for the
-  " others we indent to the containing line's MSL's level.  Return -1 if fail.
-  let col = matchend(line, '^\s*[],})]')
-  if col > 0 && !s:IsInStringOrComment(v:lnum, col)
-    call cursor(v:lnum, col)
-
-    let lvar = s:InMultiVarStatement(v:lnum)
-    if lvar
-      let prevline_contents = s:RemoveTrailingComments(getline(prevline))
-
-      " check for comma first
-      if (line[col - 1] =~ ',')
-        " if the previous line ends in comma or semicolon don't indent
-        if (prevline_contents =~ '[;,]\s*$')
-          return indent(s:GetMSL(line('.'), 0))
-        " get previous line indent, if it's comma first return prevline indent
-        elseif (prevline_contents =~ s:comma_first)
-          return indent(prevline)
-        " otherwise we indent 1 level
-        else
-          return indent(lvar) + &sw
-        endif
-      endif
-    endif
-
-
-    let bs = strpart('(){}[]', stridx(')}]', line[col - 1]) * 2, 2)
-    if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0
-      let ind = indent(s:GetMSL(line('.'), 0))
-    endif
-    return ind
-  endif
-
-  " If the line is comma first, dedent 1 level
-  if (getline(prevline) =~ s:comma_first)
-    return indent(prevline) - &sw
-  endif
-
-  if (line =~ s:ternary)
-    if (getline(prevline) =~ s:ternary_q)
-      return indent(prevline)
-    else
-      return indent(prevline) + &sw
-    endif
-  endif
-
-  " If we are in a multi-line comment, cindent does the right thing.
-  if s:IsInMultilineComment(v:lnum, 1) && !s:IsLineComment(v:lnum, 1)
-    return cindent(v:lnum)
-  endif
-
-  " Check for multiple var assignments
-"  let var_indent = s:GetVarIndent(v:lnum)
-"  if var_indent >= 0
-"    return var_indent
-"  endif
-
-  " 3.3. Work on the previous line. {{{2
-  " -------------------------------
-
-  " If the line is empty and the previous nonblank line was a multi-line
-  " comment, use that comment's indent. Deduct one char to account for the
-  " space in ' */'.
-  if line =~ '^\s*$' && s:IsInMultilineComment(prevline, 1)
-    return indent(prevline) - 1
-  endif
-
-  " Find a non-blank, non-multi-line string line above the current line.
-  let lnum = s:PrevNonBlankNonString(v:lnum - 1)
-
-  " If the line is empty and inside a string, use the previous line.
-  if line =~ '^\s*$' && lnum != prevline
-    return indent(prevnonblank(v:lnum))
-  endif
-
-  " At the start of the file use zero indent.
-  if lnum == 0
-    return 0
-  endif
-
-  " Set up variables for current line.
-  let line = getline(lnum)
-  let ind = indent(lnum)
-
-  " If the previous line ended with a block opening, add a level of indent.
-  if s:Match(lnum, s:block_regex)
-    return indent(s:GetMSL(lnum, 0)) + &sw
-  endif
-
-  " If the previous line contained an opening bracket, and we are still in it,
-  " add indent depending on the bracket type.
-  if line =~ '[[({]'
-    let counts = s:LineHasOpeningBrackets(lnum)
-    if counts[0] == '1' && searchpair('(', '', ')', 'bW', s:skip_expr) > 0
-      return ind + &sw
-    else
-      call cursor(v:lnum, vcol)
-    end
-  endif
-
-  " 3.4. Work on the MSL line. {{{2
-  " --------------------------
-
-  let ind_con = ind
-  let ind = s:IndentWithContinuation(lnum, ind_con, &sw)
-
-  " }}}2
-  "
-  "
-  let ols = s:InOneLineScope(lnum)
-  if ols > 0
-    let ind = ind + &sw
+" Drop fold if it set but vim doesn't support it.
+if version < 600 && exists("javaScript_fold")
+  unlet javaScript_fold
+endif
+
+syntax case match
+
+syntax keyword javaScriptBoolean true false
+syntax keyword javaScriptBranch break continue
+syntax keyword javaScriptCommentTodo TODO FIXME XXX TBD contained
+syntax keyword javaScriptConditional if else switch
+" Adding contained at the end means the keywords
+" are ONLY valid when contained by another syntax element.
+syntax keyword javaScriptDeclaration let var
+syntax keyword javaScriptDeprecated  escape unescape
+syntax keyword javaScriptException try catch finally throw
+"syntax keyword javaScriptFunction function
+syntax keyword javaScriptGlobal self window top parent
+syntax keyword javaScriptIdentifier arguments this
+syntax keyword javaScriptLabel case default
+"syntax keyword javaScriptMember document event location 
+syntax keyword javaScriptMessage alert confirm prompt status
+syntax keyword javaScriptNull null undefined
+syntax keyword javaScriptOperator new delete instanceof typeof
+syntax keyword javaScriptRepeat while for do in
+syntax keyword javaScriptReserved abstract boolean byte char class const debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile 
+syntax keyword javaScriptStatement return with
+syntax keyword javaScriptType Array Boolean Date Function JSON Number Object Promise String RegExp
+syntax match   javaScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
+syntax match   javaScriptLineComment "\/\/.*" contains=@Spell,javaScriptCommentTodo
+syntax match   javaScriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+syntax match   javaScriptSemicolon ";"
+syntax match   javaScriptSpecial "\\\d\d\d\|\\."
+syntax match   javaScriptSpecialCharacter "'\\.'"
+syntax region  javaScriptComment start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
+syntax region  javaScriptRegexpString start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gim]\{0,2\}\s*$+ end=+/[gim]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
+syntax region  javaScriptStringD start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=javaScriptSpecial,@htmlPreproc
+syntax region  javaScriptStringS start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=javaScriptSpecial,@htmlPreproc
+
+" When multiple rules match, the last one takes precedence.
+" Assignment of anonymous function
+" Why does text after "function" turn red if I use "contains" below?
+" I want to use that so "function" will look like other keywords!
+"syntax region javaScriptFnName start=/\v[$_A-Za-z]\w*/ end=" = function"he=s-1 contains=javaScriptFunction oneline
+syntax region javaScriptFnName start=/\v[$_A-Za-z]\w*/ end=" = function"he=s-1 oneline
+" JavaScript name before a left paren
+syntax match javaScriptFnName /\v[$_A-Za-z]\w*\(/he=e-1 oneline contains=javaScriptParens
+" JavaScript name after "new "
+syntax region javaScriptType start=/^new \| new /hs=s+4 end=/[$_A-Za-z]\w*/ oneline contains=javaScriptParens
+" ES6 arrow function name
+syntax region javaScriptFnName start=/[$_A-Za-z]\w*/ end=/ = [^=]\+ =>/me=s-1,re=s-1 oneline
+
+if exists("javaScript_fold")
+  syntax match javaScriptFunction "\<function\>"
+  syntax region javaScriptFunctionFold start="\<function\>.*[^};]$" end="^\z1}.*$" transparent fold keepend
+
+  syntax sync match javaScriptSync grouphere javaScriptFunctionFold "\<function\>"
+  syntax sync match javaScriptSync grouphere NONE "^}"
+
+  setlocal foldmethod=syntax
+  setlocal foldtext=getline(v:foldstart)
+else
+  "syntax keyword javaScriptFunction function
+  " WHAT DOES THE REGEX SYNTAX ON THE NEXT LINE MEAN?
+  syntax match javaScriptFunction /\<function\>/
+  syntax match javaScriptBraces "[{}\[\]]"
+  syntax match javaScriptParens "[()]"
+endif
+
+syntax sync fromstart
+syntax sync maxlines=100
+
+if main_syntax == "javascript"
+  syntax sync ccomment javaScriptComment
+endif
+
+" Define the default highlighting.
+" For version 5.7 and earlier: only when not done already
+" For version 5.8 and later: only when an item doesn't have highlighting yet
+if version >= 508 || !exists("did_javascript_syn_inits")
+  if version < 508
+    let did_javascript_syn_inits = 1
+    command -nargs=+ HiLink hi link <args>
   else
-    let ols = s:ExitingOneLineScope(lnum)
-    while ols > 0 && ind > 0
-      let ind = ind - &sw
-      let ols = s:InOneLineScope(ols - 1)
-    endwhile
+    command -nargs=+ HiLink hi def link <args>
   endif
 
-  return ind
-endfunction
+  HiLink javaScrParenError javaScriptError
+  HiLink javaScriptBoolean Boolean
+  "HiLink javaScriptBraces Function
+  HiLink javaScriptBranch Conditional
+  HiLink javaScriptCharacter Character
+  HiLink javaScriptComment Comment
+  HiLink javaScriptCommentTodo Todo
+  HiLink javaScriptConditional Conditional
+  HiLink javaScriptConstant Label
+  HiLink javaScriptDebug Debug
+  HiLink javaScriptDeclaration Keyword
+  HiLink javaScriptDeprecated Exception 
+  HiLink javaScriptError Error
+  HiLink javaScriptException Exception
+  HiLink javaScriptFunction Keyword
+  HiLink javaScriptGlobal Keyword
+  HiLink javaScriptIdentifier Identifier
+  HiLink javaScriptLabel Label
+  HiLink javaScriptLineComment Comment
+  "HiLink javaScriptMember Keyword
+  HiLink javaScriptMessage Keyword
+  HiLink javaScriptNull Keyword
+  HiLink javaScriptNumber javaScriptValue
+  HiLink javaScriptOperator Operator
+  HiLink javaScriptRegexpString String
+  HiLink javaScriptRepeat Repeat
+  HiLink javaScriptReserved Keyword
+  HiLink javaScriptSpecial Special
+  HiLink javaScriptSpecialCharacter javaScriptSpecial
+  HiLink javaScriptStatement Statement
+  HiLink javaScriptStringD String
+  HiLink javaScriptStringS String
+  HiLink javaScriptType Type
 
-" }}}1
+  delcommand HiLink
+endif
 
+let b:current_syntax = "javascript"
+if main_syntax == 'javascript'
+  unlet main_syntax
+endif
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+" vim: ts=8
