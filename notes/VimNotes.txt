@@ -891,10 +891,14 @@ Tabs
 - to insert a real tab character even when the expandtab option is set
   * ctrl-v tab
 - to make it easy to see where tab characters are in a file
-  * set lcs=tab:»·,trail:·
-  * This renders tab characters with a right-pointing double angle
-    followed by middle dots to show where the tab stop ends.
-  * It also renders trailing spaces with middle dots.
+  * set listchars=tab:»·,trail:·
+  * uses unicode characters which requires support for
+    multi-byte characters to be compiled into Vim
+    - seems to be the default now
+    - to verify, enter "vim --version" and look for "+multi-byte"
+  * renders tab characters with a right-pointing double angle
+    followed by middle dots to show where the tab stop ends
+  * also renders trailing spaces with middle dots
 
 Tags
 - to determine whether Exhuberant Ctags is installed,
@@ -1029,6 +1033,12 @@ Unimpaired Plugin
   * ctags
     - first need to navigate to a definition with ctrl-]
     - ]t, [t, ]T, and [T for tnext, tprevious, tlast, and tfirst
+
+vim-airline plugin
+- a rewrite of the powerline plugin that is
+  implemented in VimScript instead of python
+  and is easier to install
+- to install, git clone https://github.com/bling/vim-airline.git
 
 vimgrep (also see grep)
 - searches files in and below current directory (slow!)

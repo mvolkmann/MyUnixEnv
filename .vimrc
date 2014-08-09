@@ -44,7 +44,7 @@ set encoding=utf-8
 " Render tab characters with a right-pointing double angle
 " followed by middle dots to show where the tab stop ends.
 " Render trailing spaces with middle dots.
-set lcs=tab:»·,trail:·
+set listchars=tab:»·,trail:·
 
 " Indentation and Tabs --- {{{
 filetype plugin indent on " enable language-dependent indentation
@@ -79,6 +79,7 @@ set t_Co=256 " number of colors " number of colors
 hi Comment ctermfg=darkgray cterm=italic
 hi Conditional ctermfg=brown
 "hi Constant ctermfg=darkmagenta
+"hi CursorLine cterm=underline
 "hi Folded ctermfg=black ctermbg=blue
 hi Function ctermfg=brown
 "hi Identifier ctermfg=green 
@@ -211,21 +212,27 @@ set thesaurus=~/.vim/mthesaur.txt
 " }}}
 
 " Status line --- {{{
-set statusline=%t " file name (omits path)
-set statusline+=%M " modified flag
-set statusline+=%R " read-only flag
-set statusline+=%= " left/right separator
-set statusline+=line\ %l\ of\ %L " total lines
-set statusline+=,\ col\ %c, " cursor line number and column
-set statusline+=\ %P " percent through file
-
 " Always display status line.
 set laststatus=2
 
+" The customizations below are commented out because I am
+" using vim-airline to control the status line for now.
+"set statusline=%t " file name (omits path)
+"set statusline+=%M " modified flag
+"set statusline+=%R " read-only flag
+"set statusline+=%= " left/right separator
+"set statusline+=line\ %l\ of\ %L " total lines
+"set statusline+=,\ col\ %c, " cursor line number and column
+"set statusline+=\ %P " percent through file
+
 " Change status line background color based on mode.
-highlight StatusLine ctermfg=lightyellow ctermbg=black
-autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
-autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
+"highlight StatusLine ctermfg=lightyellow ctermbg=black
+"autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
+"autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
+
+" Display list of buffer names at top when only one is visible.
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1
 " }}}
 
 " Folding --- {{{
