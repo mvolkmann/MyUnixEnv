@@ -80,12 +80,13 @@ hi Comment ctermfg=darkgray cterm=italic
 hi Conditional ctermfg=brown
 "hi Constant ctermfg=darkmagenta
 "hi CursorLine cterm=underline
+hi Error ctermfg=red ctermbg=yellow
 "hi Folded ctermfg=black ctermbg=blue
 hi Function ctermfg=brown
 "hi Identifier ctermfg=green 
 "hi IncSearch ctermfg=white ctermbg=gray
-"hi LineNr ctermfg=gray
-"hi Function ctermfg=red 
+hi LineNr ctermfg=gray
+hi Function ctermfg=red 
 hi Keyword ctermfg=brown 
 "hi Number ctermfg=blue
 hi Operator ctermfg=brown 
@@ -206,7 +207,10 @@ inoremap <leader>s <c-o>:setlocal spell! spelllang=en_us<cr>
 " normal-mode toggle only for current buffer
 nnoremap <leader>s :setlocal spell! spelllang=en_us<cr>
 nnoremap <leader>S i<c-x>s
-highlight SpellBad term=reverse ctermbg=7
+"highlight SpellBad term=reverse ctermbg=7
+highlight clear SpellBad
+" This is also used for lines that JSHint marks as containing errors.
+highlight SpellBad ctermfg=black ctermbg=red
 
 set thesaurus=~/.vim/mthesaur.txt
 " }}}
