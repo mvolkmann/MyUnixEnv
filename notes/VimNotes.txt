@@ -151,6 +151,7 @@ Buffers
     Multiple buffer numbers can be specified, separated by spaces.
     This really just marks the buffer as unlisted.
     To see it, use :ls!.
+  :bufdo bd - to delete all buffers
   :bw[{buffer-number}] - to wipeout the indicated buffer
     Unlike :bd, this completely deletes the buffer.
  
