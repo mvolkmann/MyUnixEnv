@@ -1059,8 +1059,42 @@ Status Line
   * currently using vim-airline
 
 Surround plugin
-- ADD DOCUMENTATION ON THIS!
+- adds, deletes, and changes surroundings (delimeters)
+- delimeters can be single quotes '', double quotes "",
+  parentheses (), braces {}, square brackets [],
+  and HTML/XML tags (not angle brackets <>)
+- in descriptions below
+  * when {new} is (, {, or [, a space will be added inside them
+  * when {new} is ), }, or ], no space will be added inside them
+- to add surroundings to text selected in visual mode (V or v)
+  * select text and press S{new}
+  * ex. to surround selected text with double quotes,
+    select it and press S"
+  * ex. to surround selected text with a div tag,
+    select it, press S<div, and press return
+  * ex. to surround selected text with a p tag that has attributes,
+    select it, press S<p id="foo" class="bar", and press return
+- to add surroundings to text specified with a text object
+  ys{text-object}{new}
+  * text-object selects the text to be surrounded
+  * ex. to add double quotes, ysiw" (for inner word)
+    - can also use is for inner sentence and ip for inner paragraph
+  * seems easier to select text in visual mode
+- to change surroundings, cs{current}{new}
+  * ex. to change double quotes to single quotes, cs"'
+  * ex. to change double quotes to a div tag, cs"<div and press return
+  * ex. to change current surrounding tag to a div tag,
+    cst<div and press return (t is for tag)
+  * ex. to change current surrounding tag to braces,
+    - cst{ and press return (includes a space inside { and })
+    - cst} and press return (no space inside { and })
+- to delete surroundings, ds{current}
+  * ex. to delete double quotes, ds"
+  * ex. to delete the surrounding tag, dst
+    - even deletes attributes in start tag
 - see https://github.com/tpope/vim-surround
+- if the repeat plugin is installed, the dot (.) command
+  will repeat these commands in another location
 
 Tab Pages
 - to open a new, empty tab, :tabe[dit]
