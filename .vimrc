@@ -22,7 +22,6 @@ set cursorline " underlines current line so it is easy to see
 set dictionary=/usr/share/dict/words
 set dictionary+=~/.vim/computer-words
 
-
 "set guifont=Monaco:h14
 set guifont=Inconsolata:h18 " font used in GUI-version of Vim
 set hlsearch " highlight all search matches, not just the first
@@ -41,10 +40,16 @@ call matchadd('ColorColumn', '\%81v', 100)
 
 set list
 set encoding=utf-8
+set foldlevelstart=0
 " Render tab characters with a right-pointing double angle
 " followed by middle dots to show where the tab stop ends.
 " Render trailing spaces with middle dots.
 set listchars=tab:»·,trail:·
+
+" Abbreviations --- {{{
+iabbrev @@ r.mark.volkmann@gmail.com
+iabbrev rmv R. Mark Volkmann
+" }}}
 
 " Indentation and Tabs --- {{{
 filetype plugin indent on " enable language-dependent indentation
@@ -137,7 +142,8 @@ let mapleader = ","
 noremap ; :
 
 " dictionary word completion
-inoremap <leader>d foo<cr>
+" Press ctrl-n and ctrl-p to traverse list of matching words.
+inoremap <leader>d <c-x><c-k>
 
 " edit .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -155,6 +161,8 @@ nnoremap <leader>n :setlocal number!<cr>
 nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 
 " save buffer (requires stty -ixon in .bashrc)
+" In insert mode, <c-o> escapes to normal mode for one command
+" and then switches back to insert mode.
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
@@ -225,7 +233,8 @@ set laststatus=2
 "set statusline+=%M " modified flag
 "set statusline+=%R " read-only flag
 "set statusline+=%= " left/right separator
-"set statusline+=line\ %l\ of\ %L " total lines
+"set statusline+=line\ %l " line number
+"set statusline+=\ of\ %L " total lines
 "set statusline+=,\ col\ %c, " cursor line number and column
 "set statusline+=\ %P " percent through file
 
