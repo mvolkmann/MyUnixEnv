@@ -171,6 +171,10 @@ Find
 - To find all files that contain text that matches a regular expression,
   for example, .h files that define a class that inherits from another (:),
   find . -name '*.h' -exec grep -E 'class \w+ :' {} \;
+- To find all files with a given extension that are executable
+  and make them not executable
+  find . -name '*.{ext}' -perm 001 -exec chmod a-x {} \;
+  * the 001 is mask that specifies the x bit
 
 FTP
 - See notes on ncftp in CygwinNotes.txt

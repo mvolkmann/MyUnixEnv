@@ -857,11 +857,14 @@ Registers
 - to paste text from a register,
   precede paste command with "{register-name} (a-z)
 
-Reverse order of all lines
+Reverse order of lines
+- all lines in file
   :g/.*/m0 - for all lines, move it to line zero
-- can also do this from bash with
-  tac {filename} > {new-filename}
-  * tac is the reverse of cat
+  * can also do this from bash with
+    tac {filename} > {new-filename}
+    - tac is the reverse of cat
+- selected lines
+  * select lines and enter !tac
 
 Ruby Support
 - some plugins require Vim to be built with Ruby support
