@@ -240,11 +240,16 @@ MacNotes.txt
 * Spotlight - cmd-spacebar
 * SSH
   - see Documents/SSH/ssh_setup.txt
+* tac command
+  - brew install coreutils
+  - ln -s /usr/local/bin/gtac /usr/local/bin/tac
 * Terminal
   - to open a document using the associated application,
     enter "open {file-name}"
   - to clear screen and buffer, press cmd-k
   - reasonable fonts include "Andale Mono", Courier, Monaco and SimSun
+* tree command
+  - brew install tree
 * Trash
   - when emptying trash can, if it says files are in use
     and you know they are not, open Terminal and

@@ -68,6 +68,10 @@ alias eld="echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/
 alias ens="enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 # --printer='LaserJet 1300n'"
 
+alias findhtml="find3 html"
+alias findjs="find3 js"
+alias findless="find3 less"
+
 # Display directories and executables in different colors.
 #alias ls='ls --color=tty'
 alias ls='ls -G'
