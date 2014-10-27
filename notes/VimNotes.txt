@@ -391,6 +391,7 @@ Diffs
   - "[c" to move to previous difference
   - ":set nodiff" to turn off diff in the current buffer
   - for diffs of Git versions, use Gdiff command in Fugitve plugin
+    or git-gutter plugin
 
 Echo
 - :ec[ho] expr ...
@@ -501,6 +502,11 @@ Fugitive
 - relative paths passed to commands
   * paths that start with / are relative to the repository root directory
   * other paths are relative to the current file directory
+
+git-gutter
+- shows diff symbols in gutter while editing any file that is in a git repo
+- ~ mean changed, + means added, - means deleted
+- see https://github.com/airblade/vim-gitgutter
 
 grep (also see vimgrep)
 - searches files in and below current directory (faster than vimgrep)
