@@ -813,7 +813,7 @@ Python
   install Mercurial if not already installed ("brew install hg" on Mac OS X)
   hg clone https://vim.googlecode.com/hg/ vim
   cd vim/src
-  ./configure --enable-multibyte --without-x --enable-gui=no --enable-pythoninterp
+  ./configure --enable-multibyte --without-x --enable-gui=no --enable-pythoninterp=yes
   make
   make install
   ln -sf /usr/local/bin/vim.exe /usr/bin/vim

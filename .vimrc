@@ -9,7 +9,7 @@ call pathogen#helptags()
 " Miscellaneous options {{{
 " Enable syntax highlighting.
 " background must be set before "syntax on"!
-"set background=light
+set background=light
 "set background=dark
 syntax on
 
@@ -80,48 +80,48 @@ set t_Co=256 " number of colors " number of colors
 
 " To enable italics, see
 " https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
-"hi Comment ctermfg=green cterm=italic
-hi Comment ctermfg=darkgray cterm=italic
-hi Conditional ctermfg=brown
-"hi Constant ctermfg=darkmagenta
-"hi CursorLine cterm=underline
-hi Error ctermfg=red ctermbg=yellow
-"hi Folded ctermfg=black ctermbg=blue
-hi Function ctermfg=brown
-"hi Identifier ctermfg=green 
-"hi IncSearch ctermfg=white ctermbg=gray
-hi LineNr ctermfg=gray
-hi Function ctermfg=red 
-hi Keyword ctermfg=brown 
-"hi Number ctermfg=blue
-hi Operator ctermfg=brown 
-"hi Search ctermfg=red ctermbg=white
-hi Statement ctermfg=brown
-hi String ctermfg=lightgreen
-"hi Todo ctermfg=yellow ctermbg=gray
-hi Type ctermfg=darkblue 
+""hi Comment ctermfg=green cterm=italic
+"hi Comment ctermfg=darkgray cterm=italic
+"hi Conditional ctermfg=brown
+""hi Constant ctermfg=darkmagenta
+""hi CursorLine cterm=underline
+"hi Error ctermfg=red ctermbg=yellow
+""hi Folded ctermfg=black ctermbg=blue
+"hi Function ctermfg=brown
+""hi Identifier ctermfg=green 
+""hi IncSearch ctermfg=white ctermbg=gray
+"hi LineNr ctermfg=gray
+"hi Function ctermfg=red 
+"hi Keyword ctermfg=brown 
+""hi Number ctermfg=blue
+"hi Operator ctermfg=brown 
+""hi Search ctermfg=red ctermbg=white
+"hi Statement ctermfg=brown
+"hi String ctermfg=lightgreen
+""hi Todo ctermfg=yellow ctermbg=gray
+"hi Type ctermfg=darkblue 
 
 " These work with .vim/syntax/javascript.vim.
-"hi javaScriptAjaxMethods ctermfg=red
-"hi javaScriptArrow ctermfg=red
-hi javaScriptBraces ctermfg=darkgray
-"hi javaScriptComment ctermfg=lightgreen
-"hi javaScriptCommentTodo ctermbg=red ctermfg=white
-hi javaScriptDeclaration ctermfg=brown 
-"hi javaScriptDocComment ctermfg=lightgreen
-"hi javaScriptDomMethods ctermfg=red
-"hi javaScriptEventListenerMethods ctermfg=red
-hi javaScriptFnName ctermfg=red
-"hi javaScriptFuncDef ctermfg=red
-"hi javaScriptFuncExp ctermfg=red
-hi javaScriptFunction ctermfg=brown
-hi javaScriptGlobal ctermfg=lightgray
-"hi javaScriptLineComment ctermfg=lightgreen
-hi javaScriptMessage ctermfg=red
-"hi javaScriptNumber ctermfg=blue
-hi javaScriptParens ctermfg=darkgray
-"hi javaScriptProprietaryMethods ctermfg=red
-hi javaScriptSemicolon ctermfg=darkgray
+""hi javaScriptAjaxMethods ctermfg=red
+""hi javaScriptArrow ctermfg=red
+"hi javaScriptBraces ctermfg=darkgray
+""hi javaScriptComment ctermfg=lightgreen
+""hi javaScriptCommentTodo ctermbg=red ctermfg=white
+"hi javaScriptDeclaration ctermfg=brown 
+""hi javaScriptDocComment ctermfg=lightgreen
+""hi javaScriptDomMethods ctermfg=red
+""hi javaScriptEventListenerMethods ctermfg=red
+"hi javaScriptFnName ctermfg=red
+""hi javaScriptFuncDef ctermfg=red
+""hi javaScriptFuncExp ctermfg=red
+"hi javaScriptFunction ctermfg=brown
+"hi javaScriptGlobal ctermfg=lightgray
+""hi javaScriptLineComment ctermfg=lightgreen
+"hi javaScriptMessage ctermfg=red
+""hi javaScriptNumber ctermfg=blue
+"hi javaScriptParens ctermfg=darkgray
+""hi javaScriptProprietaryMethods ctermfg=red
+"hi javaScriptSemicolon ctermfg=darkgray
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{

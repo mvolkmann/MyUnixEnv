@@ -35,9 +35,6 @@ alias bigdirs="du -sk * | sort -nr | head"
 
 alias cdangular='cd $JAVASCRIPT_DIR/AngularJS'
 alias cdbmx='cd $BMX_DIR'
-alias cdclojure='cd $CLOJURE_DIR'
-alias cdcoffeescript='cd $COFFEESCRIPT_DIR'
-alias cdcss='cd $CSS_DIR'
 alias cddropbox='cd $DROPBOX_DIR'
 alias cdjava='cd $JAVA_DIR'
 alias cdjavascript='cd $JAVASCRIPT_DIR'
@@ -92,7 +89,13 @@ alias nicepathspaces="sed 's/ /\n   /g'"
 
 alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 
-complete -C complete-ant-cmd.pl ant build.sh
+#complete -C complete-ant-cmd.pl ant build.sh
+
+# For Maritz earnPOWER
+alias cdclient='cd $EP_DIR'
+alias cdfeature='cd $EP_DIR/content/common/feature'
+alias rs='mvn tomcat7:run'
+alias rrs='mvn clean tomcat7:run'
 
 #----------------------------------------------------------------------------
 
