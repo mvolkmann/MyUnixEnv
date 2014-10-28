@@ -66,6 +66,7 @@ alias ens="enscript --borders --columns=2 --fancy-header --landscape --line-numb
 # --printer='LaserJet 1300n'"
 
 alias findhtml="find3 html"
+alias findjava="find3 java"
 alias findjs="find3 js"
 alias findless="find3 less"
 
