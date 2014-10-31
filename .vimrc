@@ -28,6 +28,7 @@ set hlsearch " highlight all search matches, not just the first
 set incsearch " use incremental searching
 set mouse=a " enable use of mouse in all modes
 set nocompatible " running vim, not vi, so don't force vi compatibility
+set updatetime=750
 
 " Don't need this since it is specified in status line config.
 "set ruler " show line and column number of cursor position
@@ -36,15 +37,16 @@ set nocompatible " running vim, not vi, so don't force vi compatibility
 " 100 is a priority.
 highlight ColorColumn ctermbg=red
 call matchadd('ColorColumn', '\%81v', 100)
-" }}}
 
-set list
 set encoding=utf-8
 set foldlevelstart=0
+"set lazyredraw
+set list
 " Render tab characters with a right-pointing double angle
 " followed by middle dots to show where the tab stop ends.
 " Render trailing spaces with middle dots.
 set listchars=tab:»·,trail:·
+" }}}
 
 " Abbreviations --- {{{
 iabbrev @@ r.mark.volkmann@gmail.com
@@ -183,6 +185,9 @@ nnoremap <leader>j :JSHintUpdate<cr>
 " Use C-^ to toggle to last buffer
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
+
+" Stop Syntastic from taking over :E from netrw.
+command! E :execute ":Explore"
 
 " CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
 let g:ctrlp_map = '<c-p>'

@@ -126,7 +126,7 @@ Reporting (log, blame and status)
 - to list commits showing author, date and message
   * git log
   * sends output through less if more than one screen
-  * add -p to see diffs between revisions
+  * add -p {filepath} to see diffs between revisions of single file
   * add -n{number} to see only the last {number} commits
   * add --before="{date-time-desc}"
     to see only commits before that date/time
