@@ -186,9 +186,6 @@ nnoremap <leader>j :JSHintUpdate<cr>
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
 
-" Stop Syntastic from taking over :E from netrw.
-command! E :execute ":Explore"
-
 " CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP .'
@@ -333,6 +330,21 @@ augroup resizeWindow
     autocmd VimResized * exe "normal \<C-W>="
   endif
 augroup end
+" }}}
+
+" Syntastic --- {{{
+
+" Stop Syntastic from taking over :E from netrw.
+command! E :execute ":Explore"
+
+" Run Syntastic error checking.
+nnoremap <leader>sy :SyntasticCheck<cr>
+
+" Don't check HTML files because it considers
+" AngularJS directives to be " invalid.
+"let g:syntastic_disabled_filetypes=['html']
+let g:syntastic_html_checkers=['']
+
 " }}}
 
 " Ultisnips plugin {{{

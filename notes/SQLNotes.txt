@@ -30,6 +30,8 @@ Modify rows
   update {table-name}
   set {column-name}={value}, ...
   where {condition}
+  ex. for SQL Server
+    update some_table set end_date = cast('10/31/2014' as datetime) where id = 19
 
 Delete rows
   delete from {table-name}
