@@ -369,12 +369,12 @@ autocmd BufNewFile,BufRead *.less set filetype=less
 "let g:ycm_collect_identifiers_from_tags_files = 1
 
 " Toggle g:ycm_auto_trigger option
-nnoremap <leader>y :call YcmToggle()<cr>
-function! YcmToggle()
-  if g:ycm_auto_trigger
-    let g:ycm_auto_trigger = 0
-  else
-    let g:ycm_auto_trigger = 1
-  endif
-endfunction
+"nnoremap <leader>y :call YcmToggle()<cr>
+"function! YcmToggle()
+"  if g:ycm_auto_trigger
+"    let g:ycm_auto_trigger = 0
+"  else
+"    let g:ycm_auto_trigger = 1
+"  endif
+"endfunction
 " }}}

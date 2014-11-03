@@ -199,6 +199,12 @@ MacNotes.txt
     Apple menu...About This Mac
   - to determine how much each application is using
     Applications/Utilities/Activity Monitor
+* PDF files
+  - to combine multiple files,
+    open the first in Preview
+    select Edit ... Insert ... Page From File...
+    select all the files to append
+    select File ... Export as PDF...
 * Printer setup
   - Samsung CLP-510
     * download driver from http://www.samsung.com/support/
