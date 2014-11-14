@@ -174,8 +174,7 @@ Branches
   * git checkout {branch-name} or @{commit-number}
   * typically you will want to commit any changes before doing this
     - if not, you can stash changes and reapply them to the current branch later
-      * to temporarily save uncommitted changes: git stash save "{comment"}
-      * to reapply saved changes to the current branch: git stash apply
+      * see "Stash" section
   * the commit number can be obtained from the first entry in "git log" or "git reflog"
   * HEAD always points the current branch
     * git rev-parse HEAD outputs the SHA of the current commit
@@ -300,6 +299,21 @@ Conflicts
     - keep their version with "git checkout --theirs {file-name}"
     - keep our version with "git checkout --ours {file-name}"
     - commit changes
+
+Stash
+- to temporarily save uncommitted changes
+  git stash
+  * adds a new stash to the queue of stashes
+- to list all stashes in the queue
+  * git stash list
+- to reapply saved changes to the current branch
+  (can differ from the branch where the stash was created)
+  git stash apply
+  * this doesn't delete the stash from the queue
+- to delete the most recent stash
+  git stash drop
+- to delete all stashes
+  git stash clear
 
 Tags
 - tags mark all the files in the repo at an instant in time

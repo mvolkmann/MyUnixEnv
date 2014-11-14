@@ -71,6 +71,9 @@ alias findjava="find3 java"
 alias findjs="find3 js"
 alias findless="find3 less"
 
+# Goes to root directory of current git repo.
+alias git-root='cd `git rev-parse --git-dir`; cd ..'
+
 # Display directories and executables in different colors.
 #alias ls='ls --color=tty'
 alias ls='ls -G'
