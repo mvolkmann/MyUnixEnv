@@ -57,7 +57,7 @@ iabbrev rmv R. Mark Volkmann
 filetype plugin indent on " enable language-dependent indentation
 
 set cindent " enable source code indentation
-set cinoptions=(0s " indent continuations lines by one extra indent - working?
+set cinoptions=(0
 
 set shiftwidth=2 " indent code with two spaces
 set tabstop=2 " tabs take two spaces
@@ -325,6 +325,9 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 " airline --- {{{
 " Fix colors so status bar is readable in non-active windows.
 " See https://github.com/bling/vim-airline/issues/506.
+let g:airline_enable_branch = 0
+" To hide vim-gutter stats on added, modified, and delete lines ...
+"let g:airline#extensions#hunks#enabled=0
 let g:airline_theme_patch_func = 'AirlineThemePatch'
 function! AirlineThemePatch(palette)
   "if g:airline_theme == 'badwolf'
