@@ -57,7 +57,7 @@ iabbrev rmv R. Mark Volkmann
 filetype plugin indent on " enable language-dependent indentation
 
 set cindent " enable source code indentation
-set cinoptions=(0s " indent continuations lines by one extra indent - working?
+set cinoptions=(0
 
 set shiftwidth=2 " indent code with two spaces
 set tabstop=2 " tabs take two spaces
@@ -90,18 +90,18 @@ set t_Co=256 " number of colors " number of colors
 "hi Error ctermfg=red ctermbg=yellow
 ""hi Folded ctermfg=black ctermbg=blue
 "hi Function ctermfg=brown
-""hi Identifier ctermfg=green 
+""hi Identifier ctermfg=green
 ""hi IncSearch ctermfg=white ctermbg=gray
 "hi LineNr ctermfg=gray
-"hi Function ctermfg=red 
-"hi Keyword ctermfg=brown 
+"hi Function ctermfg=red
+"hi Keyword ctermfg=brown
 ""hi Number ctermfg=blue
-"hi Operator ctermfg=brown 
+"hi Operator ctermfg=brown
 ""hi Search ctermfg=red ctermbg=white
 "hi Statement ctermfg=brown
 "hi String ctermfg=lightgreen
 ""hi Todo ctermfg=yellow ctermbg=gray
-"hi Type ctermfg=darkblue 
+"hi Type ctermfg=darkblue
 
 " These work with .vim/syntax/javascript.vim.
 ""hi javaScriptAjaxMethods ctermfg=red
@@ -109,7 +109,7 @@ set t_Co=256 " number of colors " number of colors
 "hi javaScriptBraces ctermfg=darkgray
 ""hi javaScriptComment ctermfg=lightgreen
 ""hi javaScriptCommentTodo ctermbg=red ctermfg=white
-"hi javaScriptDeclaration ctermfg=brown 
+"hi javaScriptDeclaration ctermfg=brown
 ""hi javaScriptDocComment ctermfg=lightgreen
 ""hi javaScriptDomMethods ctermfg=red
 ""hi javaScriptEventListenerMethods ctermfg=red
@@ -320,6 +320,22 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
   \ textwidth=70 wrap formatoptions=tcqn
   \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
   \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
+" }}}
+
+" airline --- {{{
+" Fix colors so status bar is readable in non-active windows.
+" See https://github.com/bling/vim-airline/issues/506.
+let g:airline_enable_branch = 0
+" To hide vim-gutter stats on added, modified, and delete lines ...
+"let g:airline#extensions#hunks#enabled=0
+let g:airline_theme_patch_func = 'AirlineThemePatch'
+function! AirlineThemePatch(palette)
+  "if g:airline_theme == 'badwolf'
+    for colors in values(a:palette.inactive)
+      let colors[3] = 245
+    endfor
+  "endif
+endfunction
 " }}}
 
 " Pane resize --- {{{

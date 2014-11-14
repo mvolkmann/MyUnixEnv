@@ -65,6 +65,7 @@ alias eld="echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/
 alias ens="enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 # --printer='LaserJet 1300n'"
 
+alias findcss="find3 css"
 alias findhtml="find3 html"
 alias findjava="find3 java"
 alias findjs="find3 js"

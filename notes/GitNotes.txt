@@ -143,6 +143,8 @@ Reporting (log, blame and status)
   * for help on other git log options, enter "git log --help"
 - to list commits only for a single file
   * git log -- {file-name}
+- to show commit tree
+  * git log --graph --oneline [--all]
 - blame is similar to log
   * but it prefixes output lines with
     the commit name, committer and timestamp
