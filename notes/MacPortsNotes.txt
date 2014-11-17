@@ -1,0 +1,9 @@
+MacPorts Notes
+
+To update
+- port selfupdate
+
+To install something
+- port install {name}
+
+

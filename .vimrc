@@ -57,7 +57,8 @@ iabbrev rmv R. Mark Volkmann
 filetype plugin indent on " enable language-dependent indentation
 
 set cindent " enable source code indentation
-set cinoptions=(0
+" (1s means indent lines after an open paren by 1 shiftwidth. Default is " (2s.
+set cinoptions=(1s
 
 set shiftwidth=2 " indent code with two spaces
 set tabstop=2 " tabs take two spaces
