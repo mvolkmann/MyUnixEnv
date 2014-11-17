@@ -56,7 +56,7 @@ MacNotes.txt
         * goto - means it will replace the current page
         * open in a new tab
         * open in a new window
-    * hold cmd key when clicking a link to open in a new tab  
+    * hold cmd key when clicking a link to open in a new tab
   - Spotlight
     * can quickly finding documents whose name or contents
       contain given words
@@ -106,7 +106,7 @@ MacNotes.txt
     select the card and press the option key
     * the groups will be highlighted
   - to find cards not in any group, create a Smart Group using
-    "Card" "is not member of" "any group"   
+    "Card" "is not member of" "any group"
   - to move contacts from Palm Desktop under Windows
     * in Palm Desktop, select "Addresses" in the left nav.
     * press Ctrl-A to select all
@@ -163,13 +163,6 @@ MacNotes.txt
     you will get the message "The disc burner is busy."
   - to move music from iTunes under Windows
     * ???
-* Java
-  - Java 6 isn't currently supported on 32-bit Macs and may never be
-  - one solution is to use "Soy Latte" 
-    at http://landonf.bikemonkey.org/static/soylatte/
-    * download and unzip it
-    * set JAVA_HOME to point to it
-    * add $JAVA_HOME/bin to PATH if it's not there already
 * Mail
   - distribution lists
     * to create one, create a group in Address Book and
