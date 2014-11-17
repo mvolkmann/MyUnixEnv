@@ -63,7 +63,7 @@ alias eld="echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/
 
 # Code printing (fancy two columns)
 alias ens="enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
-# --printer='LaserJet 1300n'"
+alias ens1="enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"
 
 alias findcss="find3 css"
 alias findhtml="find3 html"
