@@ -38,11 +38,14 @@ Configuration is specified in
 
 Installing Vim
 - from source
-  * download and unzip source
-  * ./configure --enable-rubyinterp --enable-pythoninterp
-    - Ruby is needed by some plugins such as Command-T
-    - Python is needed by some plugins such as YouCompleteMe
-  * make install
+  * download source
+    - hg clone https://vim.googlecode.com/hq/ vim
+  * build
+    - cd vim/src
+    - ./configure --enable-rubyinterp --enable-pythoninterp
+      * Ruby is needed by some plugins such as Command-T
+      * Python is needed by some plugins such as YouCompleteMe
+    - make; make install
 
 - under Windows
   * download gvim74.exe from http://www.vim.org "Download" link
