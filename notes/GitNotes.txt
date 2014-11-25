@@ -45,6 +45,8 @@ Configuring
 - git config --global user.email "mark@ociweb.com"
 - git config --global color.ui auto
   * for color-coded output
+- to use the https protocol instead of the git protocol
+  * git config --global url."https://".insteadOf git://
 - git config --list
   * to list configuration settings
 - to ignore files with certain extensions from status reports
@@ -708,6 +710,12 @@ Rebasing
   * git rebase --abort
 - for interactive selection of which commits to squash
   * git rebase -i
+
+SSL
+- if attempting to clone a repo gives the error
+  "SSL certificate problem: self signed certificate in certificate chain"
+  and you trust the site, you can bypass SSL certificate verification
+  * env GIT_SSL_NO_VERIFY=tre git clone {the-url}
 
 Submodules
 - allow one repo to store others but keep independent histories
