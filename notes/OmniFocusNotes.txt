@@ -1,0 +1,8 @@
+OmniFocus Notes
+
+Project types
+- Single Action projects are collections of actions that fit together
+  in a category but don’t necessarily result in an outcome
+- Parallel projects contain tasks which are directly related to each other
+- Sequential projects are ones that have to be done in a certain order
+
