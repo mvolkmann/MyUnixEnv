@@ -715,7 +715,7 @@ SSL
 - if attempting to clone a repo gives the error
   "SSL certificate problem: self signed certificate in certificate chain"
   and you trust the site, you can bypass SSL certificate verification
-  * env GIT_SSL_NO_VERIFY=tre git clone {the-url}
+  * env GIT_SSL_NO_VERIFY=true git clone {the-url}
 
 Submodules
 - allow one repo to store others but keep independent histories
