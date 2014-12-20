@@ -175,6 +175,8 @@ Find
   and make them not executable
   find . -name '*.{ext}' -perm 001 -exec chmod a-x {} \;
   * the 001 is mask that specifies the x bit
+- To limit the depth of the search (# of directories deep),
+  add -maxdepth n
 
 FTP
 - See notes on ncftp in CygwinNotes.txt
