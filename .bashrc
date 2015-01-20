@@ -50,8 +50,11 @@ alias cdprogramming='cd $PROGRAMMING_DIR'
 alias cdruby='cd $RUBY_DIR'
 alias cdsett='cd $SETT_DIR'
 alias cdtb='cd $TB_DIR'
-
 alias cdtraining='cd $TRAINING_DIR'
+
+alias cav='git commit -av'
+alias pullo='git pull origin'
+alias pusho='git push origin'
 
 # Ask for confirmation before overwriting or deleting files.
 alias cp="cp -i"
