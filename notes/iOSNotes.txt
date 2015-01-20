@@ -1,5 +1,13 @@
 iOS Notes (for iPad and iPhone)
 
+Deleting all downloaded music
+- may need to do this first and reverse it when finished
+  * Settings...iTunes & App Store
+  * turn off "SHOW ALL"..Music and "iTunes Match"
+- Settings...General...Usage...Manage Storage...Music
+- press "Edit"
+- press red delete circle in front of "All Songs"
+
 Find My iPhone/iPad
 - browse icloud.com
 - press "Find My iPhone" button

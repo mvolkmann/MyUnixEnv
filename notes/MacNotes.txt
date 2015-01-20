@@ -130,6 +130,12 @@ MacNotes.txt
     * open a Terminal window
     * enter "defaults write com.apple.dock showhidden -bool true"
     * enter "killall Dock"
+* Dropbox
+  - To sync a folder with Dropbox,
+    ln -s /path/to/folder/foo/ ~/Dropbox/foo/
+    * now when files in and below the foo directory
+      are added, removed, or modified
+      they will be synced with Dropbox
 * Finder
   - cmd-O to open selected document with the associated application
   - To change the application used to open all files of a given type,

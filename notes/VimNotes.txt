@@ -1461,6 +1461,11 @@ Other
   u - undo last change
   U - undo all changes on current line
   ctrl-r - redo last undo
+  :earlier 15m
+  - reverts the document back to how it was 15 minutes ago
+  - can take various arguments for the amount of time you
+    want to roll back, and is dependent on undolevels
+  - can be reversed with the opposite command :later
   ctrl-l - refreshes display (useful if it gets scrambled)
   . - repeat last non-colon (ex) command
   :hardcopy - sends to printer

@@ -105,6 +105,9 @@ Disk Space
   head defaults to showing only first 10
   (really slow!)
 
+- To list the files in the current directory from largest to smallest,
+  ls -lS
+
 - To find the largest files in and below the current directory,
   find . -type f -size +1M -exec ls -lk {} \; | sort -nr -k 5 | head
   The "-size +1M" limits processing to files that are at least one megabyte.
