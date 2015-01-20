@@ -724,7 +724,8 @@ Netrw (network-oriented reading, writing, and browsing)
   Enter key - opens file/directory under cursor in explorer 
   o         - opens file/directory in new window, leaving explorer displayed
   -         - goes up to parent directory
-  i         - toggles display of file sizes and modification dates
+  i         - toggles display of file sizes, modification dates,
+              and the layout (including tree view!)
   D         - deletes file
   R         - renames file
 
