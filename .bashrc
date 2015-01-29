@@ -52,9 +52,10 @@ alias cdsett='cd $SETT_DIR'
 alias cdtb='cd $TB_DIR'
 alias cdtraining='cd $TRAINING_DIR'
 
-alias cav='git commit -av'
-alias pullo='git pull origin'
-alias pusho='git push origin'
+alias ci='git commit -av'
+alias co='git checkout'
+alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
+alias push='git push origin `git rev-parse --abbrev-ref HEAD`'
 
 # Ask for confirmation before overwriting or deleting files.
 alias cp="cp -i"
