@@ -1,0 +1,1 @@
+node $EP_DIR/node_modules/eslint/bin/eslint.js $*
