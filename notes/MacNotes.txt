@@ -200,10 +200,11 @@ MacNotes.txt
     Applications/Utilities/Activity Monitor
 * PDF files
   - to combine multiple files,
-    open the first in Preview
+    make a copy of the first PDF file
+    open the copy in Preview
     select Edit ... Insert ... Page From File...
     select all the files to append
-    select File ... Export as PDF...
+    save
 * Printer setup
   - Samsung CLP-510
     * download driver from http://www.samsung.com/support/
