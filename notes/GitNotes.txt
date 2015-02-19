@@ -613,6 +613,8 @@ To find a commit where a bug was introduced
   * git bisect {good|bad} depending on whether the bug was present
   * continue the previous two steps until the commit that
     introduced the bug is found
+  * git bisect reset
+    to end it
 - automated approach
   * git bisect run {test-script-path}
   * mark one commit older commit as bad and one newer commit as good

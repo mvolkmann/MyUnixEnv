@@ -114,3 +114,5 @@ function setTitle {
 }
 typeset -fx setTitle
 alias st=setTitle
+
+source ~/.nvm/nvm.sh
