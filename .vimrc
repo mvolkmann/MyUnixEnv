@@ -70,6 +70,11 @@ set shiftround " round indent to multiples of shiftwidth
 
 " Colors --- {{{
 set t_Co=256 " number of colors " number of colors
+hi! DiffAdd    ctermbg=22 " green for lines added
+hi! DiffChange ctermbg=54 " purple for lines that were changed
+hi! DiffDelete ctermbg=88 " red for lines removed
+hi! DiffText   ctermbg=18 " blue for parts of lines that were changed
+
 "set t_AB=^[[48;5;%dm " set background color
 "set t_AF=^[[38;5;%dm " set foreground color
 
