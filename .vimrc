@@ -96,12 +96,15 @@ hi Class ctermfg=12 " blue
 hi Comment ctermfg=2 " green cterm=italic
 hi Function ctermfg=9 " red
 hi Keyword ctermfg=191
+hi Normal ctermfg=7 " light gray
 hi Number ctermfg=166 " orange
 hi Operator ctermfg=53 " purple
 hi Reserved ctermfg=1 ctermbg=8 " red on gray
 hi Search cterm=underline ctermfg=15 ctermbg=0 " white on black
 hi Semicolon ctermfg=8 " gray
 hi String ctermfg=166 " orange
+hi Tag ctermfg=90 " purple
+hi This ctermfg=87 " light blue
 hi Todo ctermbg=1 ctermfg=15 " white on red
 " }}}
 
@@ -131,6 +134,9 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " source .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" show syntax groups for token under cursor
+nnoremap <leader>sg :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')<cr>
 
 " toggle search highlighting
 nnoremap <leader>h :set hlsearch! hlsearch?<cr>

@@ -22,14 +22,13 @@ syntax keyword javaScriptClass Array ArrayBuffer Boolean Date Error Function JSO
 " are ONLY valid when contained by another syntax element.
 syntax keyword javaScriptCommentTodo TODO FIXME TBD contained
 syntax keyword javaScriptGlobal alert confirm document location parseFloat parseInt prompt window
-syntax keyword javaScriptIdentifier arguments this
-syntax keyword javaScriptKeyword break case catch class const continue default delete do else export extends finally for function if import in let module null of return static super switch throw try undefined var while with yield
+syntax keyword javaScriptThis this
+"TODO: Temporarily removed "class" and "extends" from javaScriptKeyword list because
+"TODO: that interferes with the javaScriptClassName and "javaScriptExtendsName regions.
+syntax keyword javaScriptKeyword break case catch const continue default delete do else export finally for function if import in let module null of return static super switch throw try undefined var while with yield
 "syntax keyword javaScriptOperator instanceof typeof == === != !== = + - * / % ++ -- += -= *= /= %= < <= > >= && || ! new delete in of ?
-syntax keyword javaScriptReserved abstract boolean byte char debugger double enum export extends final float goto implements import int interface long native package private protected public short synchronized throws transient volatile
+syntax keyword javaScriptReserved abstract arguments boolean byte char debugger double enum export final float goto implements import int interface long native package private protected public short synchronized throws transient volatile
 syntax match javaScriptSemicolon ";"
-"syntax region  javaScriptClassName start=/class / end=/ /
-"syntax match   javaScriptClassName "\vclass .+ "
-"syntax region javaScriptClassName start=/\v[$_A-Za-z]\w*/ end=" = function"he=s-1 contains="class " oneline
 syntax match javaScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
 syntax match javaScriptLineComment "\/\/.*" contains=@Spell,javaScriptCommentTodo
 syntax match javaScriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
@@ -42,6 +41,8 @@ syntax region javaScriptStringD start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contain
 syntax region javaScriptStringS start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=javaScriptSpecial,@htmlPreproc
 
 " When multiple rules match, the last one takes precedence.
+
+syntax match javaScriptFnName /\v[$_A-Za-z]\w*\(/he=e-1 oneline contains=javaScriptParens
 " Assignment of anonymous function
 " Why does text after "function" turn red if I use "contains" below?
 " I want to use that so "function" will look like other keywords!
@@ -53,6 +54,10 @@ syntax match javaScriptFnName /\v[$_A-Za-z]\w*\(/he=e-1 oneline contains=javaScr
 syntax region javaScriptType start=/^new \| new /hs=s+4 end=/[$_A-Za-z]\w*/ oneline contains=javaScriptParens
 " ES6 arrow function name
 syntax region javaScriptFnName start=/[$_A-Za-z]\w*/ end=/ = [^=]\+ =>/me=s-1,re=s-1 oneline
+
+syntax region javaScriptClassName start=/^class \| class /hs=e+1 end=/ /he=s-1 oneline
+" Can't start the start pattern with a space because javaScriptClassName already consumed it.
+syntax region javaScriptExtendsName start=/extends /hs=e+1 end=/ /he=s-1 oneline
 
 if exists("javaScript_fold")
   syntax match javaScriptFunction "\<function\>"
@@ -82,9 +87,9 @@ if !exists("did_javascript_syn_inits")
   hi def link javaScriptClassName Class
   hi def link javaScriptComment Comment
   hi def link javaScriptCommentTodo Todo
+  hi def link javaScriptExtendsName Class
   hi def link javaScriptFnName Function
   hi def link javaScriptGlobal Keyword
-  hi def link javaScriptIdentifier Identifier
   hi def link javaScriptKeyword Keyword
   hi def link javaScriptLineComment Comment
   hi def link javaScriptNumber Number
@@ -94,6 +99,7 @@ if !exists("did_javascript_syn_inits")
   hi def link javaScriptSemicolon Semicolon
   hi def link javaScriptStringD String
   hi def link javaScriptStringS String
+  hi def link javaScriptThis This
   hi def link javaScriptType Class
 endif
 
