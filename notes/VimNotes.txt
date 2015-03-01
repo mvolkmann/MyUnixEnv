@@ -248,6 +248,7 @@ Color Schemes
 - :hi - to see all the current syntax colors
 - to see the syntax groups that are applied to the text under the cursor
   * :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  * you mapped this to <leader>sg
 - standard color names (case insensitive)
   * white, black, brown (looks like orange),
   * gray, red, green, yellow, blue, magenta, cyan
