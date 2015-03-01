@@ -1353,6 +1353,16 @@ Vimscript
 - to set a block local variable
   let b:{name} = {value}
 
+vim-vinegar
+- enhances use of netrw plugin
+- hides informational lines at top of directory listing
+  * press I to toggle them on and off
+- improves file sorting
+- press - to go up to parent directory
+- press ~ to go to home directory
+- press . to populate end of : command line with file name under cursor
+- press ! to populate end of : command line with file name under cursor and start with !
+
 Vundle
 - alternative to Pathogen
 

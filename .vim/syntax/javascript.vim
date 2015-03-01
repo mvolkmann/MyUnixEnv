@@ -55,9 +55,10 @@ syntax region javaScriptType start=/^new \| new /hs=s+4 end=/[$_A-Za-z]\w*/ onel
 " ES6 arrow function name
 syntax region javaScriptFnName start=/[$_A-Za-z]\w*/ end=/ = [^=]\+ =>/me=s-1,re=s-1 oneline
 
-syntax region javaScriptClassName start=/^class \| class /hs=e+1 end=/ /he=s-1 oneline
+syntax keyword jsClassKeywords class extends contained
+syntax region javaScriptClassName start=/^class \| class /hs=e+1 end=/ /he=s-1 "contains=jsClassKeywords
 " Can't start the start pattern with a space because javaScriptClassName already consumed it.
-syntax region javaScriptExtendsName start=/extends /hs=e+1 end=/ /he=s-1 oneline
+syntax region javaScriptExtendsName start=/extends /hs=e+1 end=/ /he=s-1 "contains=jsClassKeywords
 
 if exists("javaScript_fold")
   syntax match javaScriptFunction "\<function\>"
