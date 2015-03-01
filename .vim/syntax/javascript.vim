@@ -25,25 +25,28 @@ syntax case match
 
 syntax keyword javaScriptBoolean true false
 syntax keyword javaScriptBranch break continue
-syntax keyword javaScriptCommentTodo TODO FIXME XXX TBD contained
+syntax keyword javaScriptClass Array ArrayBuffer Boolean Date Error Function JSON Map Math Number Object Promise Proxy RangeError ReferenceError Reflect RegExp Set String Symbol SyntaxError TypeError WeakMap WeakSet
+syntax keyword javaScriptCommentTodo TODO FIXME TBD contained
 syntax keyword javaScriptConditional if else switch
 " Adding contained at the end means the keywords
 " are ONLY valid when contained by another syntax element.
-syntax keyword javaScriptDeclaration let var
-syntax keyword javaScriptDeprecated  escape unescape
+syntax keyword javaScriptDeclaration const let var
+syntax keyword javaScriptDeprecated escape unescape
 syntax keyword javaScriptException try catch finally throw
 "syntax keyword javaScriptFunction function
 syntax keyword javaScriptGlobal self window top parent
 syntax keyword javaScriptIdentifier arguments this
 syntax keyword javaScriptLabel case default
-"syntax keyword javaScriptMember document event location 
+"syntax keyword javaScriptMember document event location
 syntax keyword javaScriptMessage alert confirm prompt status
 syntax keyword javaScriptNull null undefined
 syntax keyword javaScriptOperator new delete instanceof typeof
 syntax keyword javaScriptRepeat while for do in
-syntax keyword javaScriptReserved abstract boolean byte char class const debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile 
+syntax keyword javaScriptReserved abstract boolean byte char class debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile
 syntax keyword javaScriptStatement return with
 syntax keyword javaScriptType Array Boolean Date Function JSON Number Object Promise String RegExp
+syntax region  javaScriptClassName start=/class / end=/ /
+"syntax match   javaScriptClassName "\vclass .+ "
 syntax match   javaScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
 syntax match   javaScriptLineComment "\/\/.*" contains=@Spell,javaScriptCommentTodo
 syntax match   javaScriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
@@ -114,7 +117,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptConstant Label
   HiLink javaScriptDebug Debug
   HiLink javaScriptDeclaration Keyword
-  HiLink javaScriptDeprecated Exception 
+  HiLink javaScriptDeprecated Exception
   HiLink javaScriptError Error
   HiLink javaScriptException Exception
   HiLink javaScriptFunction Keyword

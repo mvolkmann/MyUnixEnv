@@ -246,10 +246,14 @@ Color Schemes
 - in GVim, see Syntax...Highlight Test
 - add "syntax on" in .vimrc to enable colors
 - :hi - to see all the current syntax colors
+- to see the syntax groups that are applied to the text under the cursor
+  * :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 - standard color names (case insensitive)
   * white, black, brown (looks like orange),
   * gray, red, green, yellow, blue, magenta, cyan
     (above can be preceded by "light" or "dark")
+- cterm color codes
+  * see vim-cterm-colors.png in this directory
 - save color scheme .vim files in
     ~/.vim/colors for Unix
     $VIM_HOME/vimfiles/colors for Windows

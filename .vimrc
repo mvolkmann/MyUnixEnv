@@ -28,6 +28,7 @@ set hlsearch " highlight all search matches, not just the first
 set incsearch " use incremental searching
 set mouse=a " enable use of mouse in all modes
 set nocompatible " running vim, not vi, so don't force vi compatibility
+set term=screen-256color
 set updatetime=750
 
 " Don't need this since it is specified in status line config.
@@ -70,6 +71,7 @@ set shiftround " round indent to multiples of shiftwidth
 
 " Colors --- {{{
 set t_Co=256 " number of colors " number of colors
+" See color codes in MyUnixEnv/notes/vim-cterm-colors.png.
 hi! DiffAdd    ctermbg=22 " green for lines added
 hi! DiffChange ctermbg=54 " purple for lines that were changed
 hi! DiffDelete ctermbg=88 " red for lines removed
@@ -110,26 +112,32 @@ hi! DiffText   ctermbg=18 " blue for parts of lines that were changed
 "hi Type ctermfg=darkblue
 
 " These work with .vim/syntax/javascript.vim.
-""hi javaScriptAjaxMethods ctermfg=red
-""hi javaScriptArrow ctermfg=red
-"hi javaScriptBraces ctermfg=darkgray
-""hi javaScriptComment ctermfg=lightgreen
-""hi javaScriptCommentTodo ctermbg=red ctermfg=white
-"hi javaScriptDeclaration ctermfg=brown
-""hi javaScriptDocComment ctermfg=lightgreen
-""hi javaScriptDomMethods ctermfg=red
-""hi javaScriptEventListenerMethods ctermfg=red
-"hi javaScriptFnName ctermfg=red
-""hi javaScriptFuncDef ctermfg=red
-""hi javaScriptFuncExp ctermfg=red
-"hi javaScriptFunction ctermfg=brown
-"hi javaScriptGlobal ctermfg=lightgray
-""hi javaScriptLineComment ctermfg=lightgreen
-"hi javaScriptMessage ctermfg=red
-""hi javaScriptNumber ctermfg=blue
-"hi javaScriptParens ctermfg=darkgray
-""hi javaScriptProprietaryMethods ctermfg=red
-"hi javaScriptSemicolon ctermfg=darkgray
+hi javaScriptAjaxMethods ctermfg=red
+hi javaScriptArrow ctermfg=red
+hi javaScriptBoolean ctermfg=yellow
+hi javaScriptBraces ctermfg=darkgray
+hi javaScriptClass ctermfg=blue
+hi javaScriptClassName ctermfg=blue
+hi javaScriptComment ctermfg=lightgreen
+hi javaScriptCommentTodo ctermbg=red ctermfg=white
+hi javaScriptDeclaration ctermfg=brown
+hi javaScriptDocComment ctermfg=lightgreen
+hi javaScriptDomMethods ctermfg=red
+hi javaScriptEventListenerMethods ctermfg=red
+hi javaScriptFnName ctermfg=red
+hi javaScriptFuncDef ctermfg=red
+hi javaScriptFuncExp ctermfg=red
+hi javaScriptFunction ctermfg=brown
+hi javaScriptGlobal ctermfg=lightgray
+hi javaScriptKeyword ctermfg=brown
+hi javaScriptLineComment ctermfg=lightgreen
+hi javaScriptMessage ctermfg=red
+hi javaScriptNumber ctermfg=yellow
+hi javaScriptOperator ctermfg=brown
+hi javaScriptParens ctermfg=darkgray
+hi javaScriptProprietaryMethods ctermfg=red
+hi javaScriptSemicolon ctermfg=darkgray
+hi String ctermfg=yellow
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{
@@ -168,6 +176,22 @@ nnoremap <leader>n :setlocal number!<cr>
 " replace all occurences of the complete word under the cursor
 nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 
+" Switching buffers
+" Use C-^ to toggle to last buffer
+nnoremap <left> :bprev<cr>
+nnoremap <right> :bnext<cr>
+
+" Quick pairs
+inoremap <leader>' ''<esc>i
+inoremap <leader>" ""<esc>i
+inoremap <leader>( ()<esc>i
+inoremap <leader>[ []<esc>i
+inoremap <leader>{ {}<esc>i
+
+" Add semicolon to end of line
+nnoremap <leader>; A;<esc>
+inoremap <leader>; <esc>A;
+
 " save buffer (requires stty -ixon in .bashrc)
 " In insert mode, <c-o> escapes to normal mode for one command
 " and then switches back to insert mode.
@@ -186,11 +210,6 @@ nnoremap <leader>j :JSHintUpdate<cr>
 "imap <TAB> <C-n>
 "ino <c-j> <c-r>=TriggerSnippet()<cr>
 "snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
-
-" Switching buffers
-" Use C-^ to toggle to last buffer
-nnoremap <left> :bprev<cr>
-nnoremap <right> :bnext<cr>
 
 " CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
 let g:ctrlp_map = '<c-p>'
