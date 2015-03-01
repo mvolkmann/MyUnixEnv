@@ -3,9 +3,7 @@
 " URL: https://www.github.com/mvolkmann/vim/syntax/javascript.vim
 
 if !exists("main_syntax")
-  if version < 600
-    syntax clear
-  elseif exists("b:current_syntax")
+  if exists("b:current_syntax")
     finish
   endif
   let main_syntax = 'javascript'
@@ -16,47 +14,32 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-" Drop fold if it set but vim doesn't support it.
-if version < 600 && exists("javaScript_fold")
-  unlet javaScript_fold
-endif
-
 syntax case match
 
 syntax keyword javaScriptBoolean true false
-syntax keyword javaScriptBranch break continue
 syntax keyword javaScriptClass Array ArrayBuffer Boolean Date Error Function JSON Map Math Number Object Promise Proxy RangeError ReferenceError Reflect RegExp Set String Symbol SyntaxError TypeError WeakMap WeakSet
-syntax keyword javaScriptCommentTodo TODO FIXME TBD contained
-syntax keyword javaScriptConditional if else switch
 " Adding contained at the end means the keywords
 " are ONLY valid when contained by another syntax element.
-syntax keyword javaScriptDeclaration const let var
-syntax keyword javaScriptDeprecated escape unescape
-syntax keyword javaScriptException try catch finally throw
-"syntax keyword javaScriptFunction function
-syntax keyword javaScriptGlobal self window top parent
+syntax keyword javaScriptCommentTodo TODO FIXME TBD contained
+syntax keyword javaScriptGlobal alert confirm document location parseFloat parseInt prompt window
 syntax keyword javaScriptIdentifier arguments this
-syntax keyword javaScriptLabel case default
-"syntax keyword javaScriptMember document event location
-syntax keyword javaScriptMessage alert confirm prompt status
-syntax keyword javaScriptNull null undefined
-syntax keyword javaScriptOperator new delete instanceof typeof
-syntax keyword javaScriptRepeat while for do in
-syntax keyword javaScriptReserved abstract boolean byte char class debugger double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile
-syntax keyword javaScriptStatement return with
-syntax keyword javaScriptType Array Boolean Date Function JSON Number Object Promise String RegExp
-syntax region  javaScriptClassName start=/class / end=/ /
+syntax keyword javaScriptKeyword break case catch class const continue default delete do else export extends finally for function if import in let module null of return static super switch throw try undefined var while with yield
+"syntax keyword javaScriptOperator instanceof typeof == === != !== = + - * / % ++ -- += -= *= /= %= < <= > >= && || ! new delete in of ?
+syntax keyword javaScriptReserved abstract boolean byte char debugger double enum export extends final float goto implements import int interface long native package private protected public short synchronized throws transient volatile
+syntax match javaScriptSemicolon ";"
+"syntax region  javaScriptClassName start=/class / end=/ /
 "syntax match   javaScriptClassName "\vclass .+ "
-syntax match   javaScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
-syntax match   javaScriptLineComment "\/\/.*" contains=@Spell,javaScriptCommentTodo
-syntax match   javaScriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
-syntax match   javaScriptSemicolon ";"
-syntax match   javaScriptSpecial "\\\d\d\d\|\\."
-syntax match   javaScriptSpecialCharacter "'\\.'"
-syntax region  javaScriptComment start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
-syntax region  javaScriptRegexpString start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gim]\{0,2\}\s*$+ end=+/[gim]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
-syntax region  javaScriptStringD start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=javaScriptSpecial,@htmlPreproc
-syntax region  javaScriptStringS start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=javaScriptSpecial,@htmlPreproc
+"syntax region javaScriptClassName start=/\v[$_A-Za-z]\w*/ end=" = function"he=s-1 contains="class " oneline
+syntax match javaScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
+syntax match javaScriptLineComment "\/\/.*" contains=@Spell,javaScriptCommentTodo
+syntax match javaScriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+syntax region javaScriptComment start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
+
+syntax match javaScriptSpecial "\\\d\d\d\|\\."
+syntax match javaScriptSpecialCharacter "'\\.'"
+syntax region javaScriptRegexpString start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gim]\{0,2\}\s*$+ end=+/[gim]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
+syntax region javaScriptStringD start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=javaScriptSpecial,@htmlPreproc
+syntax region javaScriptStringS start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=javaScriptSpecial,@htmlPreproc
 
 " When multiple rules match, the last one takes precedence.
 " Assignment of anonymous function
@@ -81,9 +64,6 @@ if exists("javaScript_fold")
   setlocal foldmethod=syntax
   setlocal foldtext=getline(v:foldstart)
 else
-  "syntax keyword javaScriptFunction function
-  " WHAT DOES THE REGEX SYNTAX ON THE NEXT LINE MEAN?
-  syntax match javaScriptFunction /\<function\>/
   syntax match javaScriptBraces "[{}\[\]]"
   syntax match javaScriptParens "[()]"
 endif
@@ -96,51 +76,25 @@ if main_syntax == "javascript"
 endif
 
 " Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_javascript_syn_inits")
-  if version < 508
-    let did_javascript_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
-
-  HiLink javaScrParenError javaScriptError
-  HiLink javaScriptBoolean Boolean
-  "HiLink javaScriptBraces Function
-  HiLink javaScriptBranch Conditional
-  HiLink javaScriptCharacter Character
-  HiLink javaScriptComment Comment
-  HiLink javaScriptCommentTodo Todo
-  HiLink javaScriptConditional Conditional
-  HiLink javaScriptConstant Label
-  HiLink javaScriptDebug Debug
-  HiLink javaScriptDeclaration Keyword
-  HiLink javaScriptDeprecated Exception
-  HiLink javaScriptError Error
-  HiLink javaScriptException Exception
-  HiLink javaScriptFunction Keyword
-  HiLink javaScriptGlobal Keyword
-  HiLink javaScriptIdentifier Identifier
-  HiLink javaScriptLabel Label
-  HiLink javaScriptLineComment Comment
-  "HiLink javaScriptMember Keyword
-  HiLink javaScriptMessage Keyword
-  HiLink javaScriptNull Keyword
-  HiLink javaScriptNumber javaScriptValue
-  HiLink javaScriptOperator Operator
-  HiLink javaScriptRegexpString String
-  HiLink javaScriptRepeat Repeat
-  HiLink javaScriptReserved Keyword
-  HiLink javaScriptSpecial Special
-  HiLink javaScriptSpecialCharacter javaScriptSpecial
-  HiLink javaScriptStatement Statement
-  HiLink javaScriptStringD String
-  HiLink javaScriptStringS String
-  HiLink javaScriptType Type
-
-  delcommand HiLink
+if !exists("did_javascript_syn_inits")
+  hi def link javaScriptBoolean Boolean
+  hi def link javaScriptClass Class
+  hi def link javaScriptClassName Class
+  hi def link javaScriptComment Comment
+  hi def link javaScriptCommentTodo Todo
+  hi def link javaScriptFnName Function
+  hi def link javaScriptGlobal Keyword
+  hi def link javaScriptIdentifier Identifier
+  hi def link javaScriptKeyword Keyword
+  hi def link javaScriptLineComment Comment
+  hi def link javaScriptNumber Number
+  hi def link javaScriptOperator Operator
+  hi def link javaScriptRegexpString String
+  hi def link javaScriptReserved Reserved
+  hi def link javaScriptSemicolon Semicolon
+  hi def link javaScriptStringD String
+  hi def link javaScriptStringS String
+  hi def link javaScriptType Class
 endif
 
 let b:current_syntax = "javascript"
@@ -149,5 +103,3 @@ if main_syntax == 'javascript'
 endif
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-" vim: ts=8
