@@ -95,7 +95,7 @@ hi Boolean ctermfg=166 " orange
 hi Class ctermfg=12 " blue
 hi Comment ctermfg=2 " green cterm=italic
 hi Function ctermfg=9 " red
-hi Keyword ctermfg=191
+hi Keyword ctermfg=191 " yellow
 hi Normal ctermfg=7 " light gray
 hi Number ctermfg=166 " orange
 hi Operator ctermfg=53 " purple
@@ -106,6 +106,14 @@ hi String ctermfg=166 " orange
 hi Tag ctermfg=90 " purple
 hi This ctermfg=87 " light blue
 hi Todo ctermbg=1 ctermfg=15 " white on red
+
+hi htmlArg ctermfg=8 " dark gray; attribute names
+hi htmlEndTag ctermfg=1 " red
+hi htmlHead ctermfg=191 " yellow
+hi htmlString ctermfg=15 " white
+hi htmlTag ctermfg=2 " green; start tag
+hi htmlTagName ctermfg=191 " yellow
+hi htmlTitle ctermfg=15 " white
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{
