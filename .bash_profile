@@ -18,6 +18,7 @@ export DOCUMENTS_DIR=$HOME/Documents
 
 export BMX_DIR=$DOCUMENTS_DIR/OCI/clients/bioMerieux
 export DROPBOX_DIR=$HOME/Dropbox
+export EP_DIR=$HOME/gm-earnpower-client
 export OCI_DIR=$DOCUMENTS_DIR/oci
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
