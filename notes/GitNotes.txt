@@ -651,9 +651,10 @@ Project to repo mapping
   only if they will be released at the same time
 
 To clone a repo and its submodules
-- yikes!  too complicated!
-- probably shouldn't use submodules
-  * but see notes on submodules below
+- git clone {url}
+- cd {repo-dir}
+- git submodule init
+- git submodule update
 
 To optimize history storage, occassionally run
 - git gc --aggressive
@@ -725,9 +726,11 @@ Submodules
 - to list submodules, git submodule
 - to add a submodule, from top project directory
   * git submodule add {git-url} {dir-path-below-current}
+  * can omit dir if adding to current directory
 - to populate the files in submodules, from top project directory
   * git submodule init
   * git submodule update
+  * need to run both commands every time a new submodule is added
 - to remove a submodule, from top project directory
   1) delete relevant lines from the .gitmodules file
   2) delete the relevant section from the .git/config file
