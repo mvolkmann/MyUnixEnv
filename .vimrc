@@ -251,10 +251,6 @@ set laststatus=2
 "highlight StatusLine ctermfg=lightyellow ctermbg=black
 "autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
 "autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
-
-" Display list of buffer names at top when only one is visible.
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1
 " }}}
 
 " Folding --- {{{
@@ -330,9 +326,12 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 " }}}
 
 " airline --- {{{
+" Display list of buffer names at top when only one is visible.
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1
 " Fix colors so status bar is readable in non-active windows.
 " See https://github.com/bling/vim-airline/issues/506.
-let g:airline_enable_branch = 0
+let g:airline#extensions#branch#enabled = 1 " show git branch
 " To hide vim-gutter stats on added, modified, and delete lines ...
 "let g:airline#extensions#hunks#enabled=0
 let g:airline_theme_patch_func = 'AirlineThemePatch'
