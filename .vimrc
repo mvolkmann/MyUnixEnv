@@ -39,6 +39,9 @@ set updatetime=750
 highlight ColorColumn ctermbg=red
 call matchadd('ColorColumn', '\%81v', 100)
 
+" netrw list style (toggle by pressing i)
+let g:netrw_liststyle=3 " use tree mode as default view
+
 set encoding=utf-8
 set foldlevelstart=0
 "set lazyredraw

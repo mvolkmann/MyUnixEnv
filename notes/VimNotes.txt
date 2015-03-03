@@ -161,7 +161,7 @@ Buffers
   :bp[rev]             - switch to previous buffer (you mapped <- to this)
   :bn[ext]             - switch to next buffer (you mapped -> to this)
   :ls                  - list buffers (same as :buffers)
-    buffer characteristic indicators include: 
+    buffer characteristic indicators include:
     % - buffer in current window
     # - alternate buffer for ":e #" and CTRL-^
     a - active buffer: it is loaded and visible
@@ -401,6 +401,22 @@ Diffs
   - for diffs of Git versions, use Gdiff command in Fugitve plugin
     or git-gutter plugin
 
+EasyMotion
+- makes it faster to jump to a spot in a file
+- to jump forward to a given word
+  * enter <leader><leader>w
+  * the first letter of the next 26 words are temporarily replaced by
+    the letters a-z in red and the first two letters of the remaining
+    words are replaced by other character combinations in yellow
+  * press the letter or letter combination to jump to
+- to jump forward to a given letter
+  * enter <leader><leader>f{letter}
+  * works the same as "w", but only supports
+    jumping to the specified letter
+- to jump forward or backward to a given letter
+  * enter <leader><leader>s{letter}
+- ADD MORE DOCUMENTATION!
+  
 Echo
 - :ec[ho] expr ...
   * starts a new line and outputs each expression with a space
@@ -721,12 +737,18 @@ Moving Around
 NERD_Tree plugin
 - tried it, but like using built-in netrw better
 
+NERD Commenter
+- <leader>ci toggles commenting of current line
+- <leader>cc comments lines selected in visual mode with single line comments
+- <leader>cm comments lines selected in visual mode with one multiline comment
+- <leader>cu uncomments lines selected in visual mode
+
 Netrw (network-oriented reading, writing, and browsing)
   :E[xplore] [start-path]  - open explorer in current window
   :S[explore] [start-path] - open explorer in split window
   Once in explorer window,
   ?         - toggles display of help on keys to use in explorer
-  Enter key - opens file/directory under cursor in explorer 
+  Enter key - opens file/directory under cursor in explorer
   o         - opens file/directory in new window, leaving explorer displayed
   -         - goes up to parent directory
   i         - toggles display of file sizes, modification dates,
@@ -911,7 +933,7 @@ Search and Replace
   * - search forward for next occurrence of word under cursor
   # - search backward for next occurrence of word under cursor
   :%s/{pattern}/{string} - replace first occurrence of {pattern} with {string}
-  :%s/{pattern}/{string}/g  - all occurrences 
+  :%s/{pattern}/{string}/g  - all occurrences
   :%s/{pattern}/{string}/gc - all occurences with confirmation prompts
   :%s/\t/  /g - replace all tabs with two spaces
   :set ff=unix - removes Windows carriage returns from all lines
@@ -1283,7 +1305,7 @@ Unimpaired Plugin
   * buffers
     - ]b, [b, ]B, and [B for bnext, bprevious, blast, and bfirst
   * quickfix list
-    - first need to run a command that populates the quickfix list 
+    - first need to run a command that populates the quickfix list
     - ]q, [q, ]Q, and [Q for cnext, cprevious, clast, and cfirst
     - ]ctrl-q and [ctrl-q for cnfile (next file), cpfile (previous file)
       * must disable control flow in terminal with stty -ixon

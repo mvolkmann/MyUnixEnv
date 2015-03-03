@@ -17,10 +17,6 @@ ln -s MyUnixEnv/mytmux mytmux
 mkdir -p bin
 cp MyUnixEnv/bin/* bin
 
-#pushd MyUnixEnv/.vim/bundle/jshint.vim
-#git checkout 3c393147
-#popd
-
-cp -f MyUnixEnv/javascript.snippets .vim/bundle/snipmate.vim/snippets
+#cp -f MyUnixEnv/javascript.snippets .vim/bundle/snipmate.vim/snippets
 
 echo success!
