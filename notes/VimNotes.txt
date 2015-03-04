@@ -566,7 +566,7 @@ Installing Plugins
     - cd ~/MyUnixEnv
     - git submodule add https://github.com/wincent/Command-T.git .vim/bundle/command-t
 
-Key Definitions
+Key Mapping
 - to show current key mappings,
   * map - shows normal mode mappings
   * imap - shows insert mode mappings
