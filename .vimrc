@@ -199,6 +199,10 @@ let g:ctrlp_cmd = 'CtrlP .'
 "let g:ctrlp_working_path_mode='c'
 " }}}
 
+" EasyMotion mappings
+"nmap s <Plug>(easymotion-s) " conflicts with toggle of spell check
+nmap <leader>w <Plug>(easymotion-bd-w)
+
 " The Silver Searcher (ag) --- {{{
 if executable('ag')
   " Use ag instead of grep.
