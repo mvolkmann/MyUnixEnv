@@ -94,18 +94,18 @@ hi! DiffText   ctermbg=18 " blue for parts of lines that were changed
 " These work with .vim/syntax/javascript.vim.
 " To enable italics, see
 " https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
-hi Boolean ctermfg=166 " orange
+hi Boolean ctermfg=172 " orange
 hi Class ctermfg=12 " blue
-hi Comment ctermfg=2 " green cterm=italic
+hi Comment ctermfg=22 " green cterm=italic
 hi Function ctermfg=9 " red
 hi Keyword ctermfg=191 " yellow
 hi Normal ctermfg=7 " light gray
-hi Number ctermfg=166 " orange
+hi Number ctermfg=172 " orange
 hi Operator ctermfg=53 " purple
 hi Reserved ctermfg=1 ctermbg=8 " red on gray
 hi Search cterm=underline ctermfg=15 ctermbg=0 " white on black
 hi Semicolon ctermfg=8 " gray
-hi String ctermfg=166 " orange
+hi String ctermfg=172 " orange
 hi Tag ctermfg=90 " purple
 hi This ctermfg=87 " light blue
 hi Todo ctermbg=1 ctermfg=15 " white on red
@@ -117,6 +117,8 @@ hi htmlString ctermfg=15 " white
 hi htmlTag ctermfg=2 " green; start tag
 hi htmlTagName ctermfg=191 " yellow
 hi htmlTitle ctermfg=15 " white
+
+hi lineNr ctermfg=DarkGray
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{
