@@ -49,6 +49,10 @@ Configuring
   * git config --global url."https://".insteadOf git://
 - git config --list
   * to list configuration settings
+- to ignore line ending differences
+  git config --local core.autocrlf false
+- to ignore file mode differences
+  git config --local core.fileMode false
 - to ignore files with certain extensions from status reports
   * option 1: create a .gitignore file in the top repo directory
     and add a line for each extension to be ignored (ex. .*.swp)
@@ -618,7 +622,7 @@ To find a commit where a bug was introduced
 - automated approach
   * git bisect run {test-script-path}
   * mark one commit older commit as bad and one newer commit as good
-  * runs tests on each commit between those 
+  * runs tests on each commit between those
     and automatically marks them as good or bad
   * the test script should exit with a zero status if the tests pass
     and a non-zero status otherwise

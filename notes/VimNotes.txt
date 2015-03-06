@@ -416,7 +416,7 @@ EasyMotion
 - to jump forward or backward to a given letter
   * enter <leader><leader>s{letter}
 - ADD MORE DOCUMENTATION!
-  
+
 Echo
 - :ec[ho] expr ...
   * starts a new line and outputs each expression with a space
