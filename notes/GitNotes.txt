@@ -117,6 +117,9 @@ Diffs
     and graphically indicates the amount of each
     - + for insertions and - for deletions
 - for a graphical diff, change "git diff" to "git difftool"
+- can configure to use an external diff tool like meld
+  * for notes on installing meld, see https://gist.github.com/p1nox/6102015
+  * git config --global merge.tool meld
 
 Aliases
 - can create aliases for git commands with
