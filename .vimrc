@@ -110,6 +110,33 @@ hi Tag ctermfg=90 " purple
 hi This ctermfg=87 " light blue
 hi Todo ctermbg=1 ctermfg=15 " white on red
 
+hi cssAuralAttr ctermfg=15 " white
+hi cssBoxAttr ctermfg=15 " white
+hi cssBoxProp ctermfg=191 " yellow
+hi cssClassName ctermfg=12 " blue
+hi cssColor ctermfg=15 " white
+hi cssColorProp ctermfg=191 " yellow
+hi cssCommonAttr ctermfg=15 " white
+hi cssBoxProp ctermfg=191 " yellow
+hi cssDefinition ctermfg=191 " yellow
+hi cssFontAttr ctermfg=15 " white
+hi cssIdentifier ctermfg=172 " orange
+hi cssPagingProp ctermfg=15 " white
+hi cssRenderAttr ctermfg=15 " white
+hi cssRenderProp ctermfg=191 " yellow
+hi cssTableAttr ctermfg=15 " white
+hi cssTableProp ctermfg=191 " yellow
+hi cssTagName ctermfg=9 " red
+hi cssTextAttr ctermfg=15 " white
+hi cssTextProp ctermfg=191 " yellow
+hi cssValueLength ctermfg=15 " white
+hi cssValueNumber ctermfg=15 " white
+hi cssUIAttr ctermfg=15 " white
+hi cssUIProp ctermfg=191 " yellow
+
+hi lessComment ctermfg=22 " green cterm=italic
+hi lessVariable ctermfg=13 " magenta
+
 hi htmlArg ctermfg=8 " dark gray; attribute names
 hi htmlEndTag ctermfg=1 " red
 hi htmlHead ctermfg=191 " yellow
@@ -118,7 +145,8 @@ hi htmlTag ctermfg=2 " green; start tag
 hi htmlTagName ctermfg=191 " yellow
 hi htmlTitle ctermfg=15 " white
 
-hi lineNr ctermfg=DarkGray
+hi lineNr ctermfg=18 " dark blue
+hi cursorLineNr ctermfg=12 " blue
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{
