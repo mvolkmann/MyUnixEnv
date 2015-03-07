@@ -1325,6 +1325,8 @@ vim-airline plugin
   implemented in VimScript instead of python
   and is easier to install
 - to install, git clone https://github.com/bling/vim-airline.git
+- to setup Powerline fonts, see
+  https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
 
 vimgrep (also see grep)
 - searches files in and below current directory (slow!)

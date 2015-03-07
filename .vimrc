@@ -23,7 +23,8 @@ set dictionary=/usr/share/dict/words
 set dictionary+=~/.vim/computer-words
 
 "set guifont=Monaco:h14
-set guifont=Inconsolata:h18 " font used in GUI-version of Vim
+"set guifont=Inconsolata:h18 " font used in GUI-version of Vim
+set guifont=Inconsolata\ for\ Powerline:h15
 set hlsearch " highlight all search matches, not just the first
 set incsearch " use incremental searching
 set mouse=a " enable use of mouse in all modes
@@ -362,20 +363,23 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 " airline --- {{{
 " Display list of buffer names at top when only one is visible.
 "let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 " Fix colors so status bar is readable in non-active windows.
 " See https://github.com/bling/vim-airline/issues/506.
 let g:airline#extensions#branch#enabled = 1 " show git branch
 " To hide vim-gutter stats on added, modified, and delete lines ...
 "let g:airline#extensions#hunks#enabled=0
-let g:airline_theme_patch_func = 'AirlineThemePatch'
-function! AirlineThemePatch(palette)
-  "if g:airline_theme == 'badwolf'
-    for colors in values(a:palette.inactive)
-      let colors[3] = 245
-    endfor
-  "endif
-endfunction
+
+let g:Powerline_symbols = 'fancy'
+set fillchars+=stl:\ ,stlnc:\
+set termencoding=utf-8
+
+"let g:airline_theme_patch_func = 'AirlineThemePatch'
+"function! AirlineThemePatch(palette)
+  "for colors in values(a:palette.inactive)
+    "let colors[3] = 245
+  "endfor
+"endfunction
 " }}}
 
 " Pane resize --- {{{
