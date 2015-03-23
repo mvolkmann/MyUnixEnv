@@ -28,6 +28,11 @@ set guifont=Inconsolata\ for\ Powerline:h15
 set hlsearch " highlight all search matches, not just the first
 set incsearch " use incremental searching
 set mouse=a " enable use of mouse in all modes
+
+" Prevent files from being modified twice on save which is a problem for gulp watch.
+" See http://stackoverflow.com/questions/21608480/gulp-js-watch-task-runs-twice-when-saving-files.
+set nobackup
+
 set nocompatible " running vim, not vi, so don't force vi compatibility
 set term=screen-256color
 set updatetime=750

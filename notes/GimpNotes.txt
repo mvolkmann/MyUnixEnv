@@ -10,9 +10,7 @@ To make parts of an image transparent
 - right-click image and select Select ... By Color
 - click the background to select all the pixels that are that color
 - select Edit ... Clear
-- select File ... Save As ...
-- change the file extension to .gif
-- press "Save", "Export" and "Save" buttons
+- select File ... Export As {filename.gif}
 
 To get white text
 - you may have to select Image ... Mode ... RGB

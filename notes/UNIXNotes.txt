@@ -482,6 +482,26 @@ Redhat Package Manager (RPM)
 - Often a package depends on other packages that need to be installed first.
   The rpm command will provide a list of missing dependencies.
 
+rsync
+- Copies new and modified files to a remote server
+- example
+  * cd ~/Documents/VolkmannWebSite
+  * rsync -a --delete --progress --stats volkmanm@ftp.ociweb.com:/
+    - this doesn't work! need to figure out how to supply password
+    - -a archive mode which implies these options: rlptgoD
+      * r is recursive
+      * l copies symlinks as symlinks
+      * p preserves permissions
+      * t preserves create and modify times
+      * g preserves groups
+      * o preserves owners
+      * D implies --devices and --specials
+      * --devices preserves devices?
+      * --specials preserves special files?
+    - --delete deletes files from remote server that are not present locally
+    - --progress shows progress during transfer
+    - --states shows file transfer statistics
+
 Script Command Echoing
 - To see each command that is executed in a script named foo,
   sh -x foo
