@@ -2,15 +2,18 @@ function! OpenMpc()
   let bufName = 'mpc.mpdv'
 
   if (bufexists(bufName))
-    let mpcWin = bufwinnr(bufName)
-    if (mpcWin != -1) " window exists
-      execute mpcWin . 'wincmd w' " switch to existing window
+    let winNum = bufwinnr(bufName)
+    if (winNum != -1) " window exists
+      " switch to existing window by number
+      execute winNum . 'wincmd w'
       return
     endif
 
+    " open new split window and display given buffer number
     execute 'sbuffer ' . bufnr(bufName)
   else
-    execute 'new ' . bufName " open new window with existing buffer
+    " open new window with existing buffer
+    execute 'new ' . bufName
   endif
 
   call mpc#DisplayPlaylist()

@@ -16,6 +16,61 @@ Miscellaneous
 - to get help on a given builtin function,
   :help fn-name()
 
+Autocommands
+- execute specified commands when a given event occurs in specific files
+- syntax: autocmd {event} {file-pattern} {commands}
+  * separate multiple commands with |
+  * define on multiple lines using \ continuation line prefix
+- autocommand groups
+  - all autocommands belong to an autocommand group
+    * either the default group of the most recently specified group
+  - to start a new group, augroup {name}
+    * immediately after this, typically want to
+      clear all autocommands previously added to this group
+      with autocmd!
+    * prevents collisions (duplicate definitions)
+      if the source file is reloaded
+  - to return to the default autocommand group,
+    augroup END
+    * the name "END" refers to the default group
+
+- for a list of events and descriptions, :help autocommand-events
+- reading events
+  BufNewFile, BufReadPre, BufRead, BufReadPost, BufReadCmd
+  FileReadPre, FileReadPost, FileReadCmd
+  StdinReadPre, StdinReadPost
+- writing events
+  BufWrite, BufWritePre, BufWritePost, BufWriteCmd
+  FileWritePre, FileWritePost, FileWriteCmd
+  FileAppendPre, FileAppendPost, FileAppendCmd
+  FilterWritePre, FilterWritePost
+- buffer events
+  BufAdd, BufCreate, BufDelete, BufWipeout
+  BufFilePre, BufFilePost
+  BufEnter, BufLeave, BufWinEnter, BufWinLeave
+  BufUnload, BufHidden, BufNew
+  SwapExists
+- option events
+  FileType, Syntax, EncodingChanged, TermChanged
+- startup and exit events
+  VimEnter, GUIEnter, GUIFailed, TermResponse
+  QuitPre, VimLeavePre, VimLeave
+- miscellaneous events
+  FileChangedShell, FileChangedShellPost, FileChangesRO
+  ShellCmdPost, ShellFilterPost
+  CmdUndefined, FuncUndefine, SpellFileMissing, SourcePre, SourceCmd
+  VimResized, FocusGained, FocusLost
+  CursorHold, CursorHoldI, CursorMoved, CursorMovedI
+  WinEnter, WinLeave, TabEnter, TabLeave, CmdwinEnter, CmdwinLeave
+  InsertEnter, InsertChange, InsertLeave, InsertCharPre
+  TextChanged, TextChangedI
+  ColorScheme
+  RemoteReply
+  QuickFixCmdPre, QuickFixCmdPost
+  SessionLoadPost
+  MenuPopup, CompleteDone
+  User
+
 Buffers
 - to append text after a given line in current buffer,
   call append(line-number, text)
@@ -35,6 +90,8 @@ Buffers
   * returns -1 if not current displayed in a window
 - to open a new split window and display a given buffer number,
   execute 'sbuffer ' . buf-num
+- to get the line at a given index within the current buffer,
+  getline(line-num)
 
 Echo
 - echo(string) outputs a message in Vim's message area
@@ -229,13 +286,16 @@ Operators
 Options
 - to see value, echo &{name}
   * when & is omitted it looks for a variable
-- to set value
+- to set a global value
   * set {name}={value}
     - value must be a literal
   or
   * let &{name} = {value}
     - value can be a variable or function call
-- to set local value instead of global
+- to set a local value (only for current window)
+  * setlocal {name}={value}
+    - value must be a literal
+  or
   * let &l:{name} = {value}
 
 Registers

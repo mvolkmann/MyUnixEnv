@@ -33,3 +33,4 @@ Music Player Client (MPC)
   * mpc play will start where it left off
 - to stop playing, mpc stop
   * mpc play will start at beginning of track
+- to play a given track number, mpc play {track-num}
