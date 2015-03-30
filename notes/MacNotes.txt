@@ -1,5 +1,22 @@
 MacNotes.txt
 
+* New Mac setup
+  - git
+  - git clone MyUnixEnv and run ./setup
+  - iTerm 2
+  - homebrew
+  - reattach-to-user-namespace
+    * for copy to/from clipboard in tmux
+  - tmux
+  - install Inconsolata Powerline font for use in Vim airline
+  - DropBox
+  - newest Chrome
+  - newest Firefox
+  - IDEA Community Edition
+  - in System Preferences, Keyboard,
+    set caps lock to be ctrl key
+  - enter Apple ID in iTunes to get access to iTunes Match
+
 * Why I Like Macs
   - Address Book
     * simple, effective UI

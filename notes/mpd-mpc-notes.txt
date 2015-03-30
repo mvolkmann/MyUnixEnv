@@ -1,0 +1,35 @@
+MPD/MPC Notes
+
+Music Player Daemon (MPD)
+- a music playing server
+- to start, mpd
+- uses a flat-file database of tracks
+- on Mac OS X, can install with "brew install mpd"
+- create configuration file .mpdconf
+  * example content
+    bind_to_address "127.0.0.1"
+    music_directory "/Users/Mark/mpd-music"
+    db_file "/Users/Mark/mpd.db"
+    audio_output {
+      name "audio"
+      type "osx"
+    }
+- create and populate database file
+  * touch /Users/Mark/mpd.db
+  * mpc update
+  * mpc ls | mpc add
+  * this adds files in music_directory to the database file
+  * mpd.db is a binary file (don't cat it)
+
+Music Player Client (MPC)
+- one of many clients for MPD
+- on Mac OS X, can install with "brew install mpc"
+- to see currently playing track, mpc current
+  * can use --format option to customize output
+  * refer to variables with %name%
+- to start playing at first track, mpc play
+- to skip to next track, mpc next
+- to pause playing, mpc pause
+  * mpc play will start where it left off
+- to stop playing, mpc stop
+  * mpc play will start at beginning of track
