@@ -26,7 +26,7 @@ export LANGUAGES_DIR=$PROGRAMMING_DIR/languages
 export COFFEESCRIPT_DIR=$LANGUAGES_DIR/coffeescript
 export CSS_DIR=$LANGUAGES_DIR/CSS
 export HTML_DIR=$LANGUAGES_DIR/html
-export JAVA_DIR=$LANGUAGES_DIR/Java
+export JAVA_DIR=$LANGUAGES_DIR/java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export MARITZ_DIR=$DOCUMENTS_DIR/OCI/clients/Maritz
@@ -42,8 +42,8 @@ export PATH=$ANT_HOME/bin:$PATH
 # AsciiDoc settings
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
-# CoffeeScript settings
-export PATH=$PATH:$COFFEESCRIPT_DIR/jashkenas-coffee-script-79492aa/bin
+# coreutils settings
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 # Clojure settings
 export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
@@ -68,13 +68,15 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 
 # JavaScript settings
 export JS_CMD=node
-export JS_DIR=$LANGUAGES_DIR/JavaScript
+export JS_DIR=$LANGUAGES_DIR/javascript
 
 # JBoss settings
 export JBOSS_HOME=$JAVA_DIR/JBoss/jboss-as-7.1.1.Final
 
 # Maven settings
-export MAVEN_HOME=$JAVA_DIR/Maven/apache-maven-3.1.0-alpha-1
+#export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.1.0
+export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.3.1
+export M2_HOME=$MAVEN_HOME
 export PATH=$PATH:$MAVEN_HOME/bin
 
 # MongoDB settings
