@@ -1353,30 +1353,6 @@ vimgrep (also see grep)
     - to avoid opening first matching file,
       use vimgrep! instead of vimgrep
 
-Vimscript
-- variables
-  let foo = "bar"
-  echo foo
-- to get value of an option
-  echo &{name}
-  * when & is omitted it looks for a variable
-- to set value of an option
-  set {name}={value}
-  * value must be a literal
-  or
-  let &{name} = {value}
-  * value can be a variable or function call
-- to set local value instead of global
-  let &l:{name} = {value}
-- to set a register
-  let @{letter} = {value}
-- to get a register
-  echo @{name}
-- when tewxt is yanked without specifying a register,
-  it goes to the unnamed register "
-- to set a block local variable
-  let b:{name} = {value}
-
 vim-vinegar
 - enhances use of netrw plugin
 - hides informational lines at top of directory listing

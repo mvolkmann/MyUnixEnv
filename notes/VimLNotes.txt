@@ -1,0 +1,329 @@
+VimL Notes
+
+Miscellaneous
+- a.k.a. Vimscript
+- many VimL commands come from Ex
+- syntastic plugin has builtin vimlint support
+- to load code in current buffer, source %
+- long lines can be split into multiple lines by
+  preceding each continuation line with \
+- statements are NOT terminated with semicolons
+- blocks of code are NOT delimited by curly braces
+- most keywords and commands can be abbreviated
+  to the shortest, non-ambiguous form
+  * ex. function can be shorted to fun
+    and endfunction can be shorted to endf
+- to get help on a given builtin function,
+  :help fn-name()
+
+Autocommands
+- execute specified commands when a given event occurs in specific files
+- syntax: autocmd {event} {file-pattern} {commands}
+  * separate multiple commands with |
+  * define on multiple lines using \ continuation line prefix
+- autocommand groups
+  - all autocommands belong to an autocommand group
+    * either the default group of the most recently specified group
+  - to start a new group, augroup {name}
+    * immediately after this, typically want to
+      clear all autocommands previously added to this group
+      with autocmd!
+    * prevents collisions (duplicate definitions)
+      if the source file is reloaded
+  - to return to the default autocommand group,
+    augroup END
+    * the name "END" refers to the default group
+
+- for a list of events and descriptions, :help autocommand-events
+- reading events
+  BufNewFile, BufReadPre, BufRead, BufReadPost, BufReadCmd
+  FileReadPre, FileReadPost, FileReadCmd
+  StdinReadPre, StdinReadPost
+- writing events
+  BufWrite, BufWritePre, BufWritePost, BufWriteCmd
+  FileWritePre, FileWritePost, FileWriteCmd
+  FileAppendPre, FileAppendPost, FileAppendCmd
+  FilterWritePre, FilterWritePost
+- buffer events
+  BufAdd, BufCreate, BufDelete, BufWipeout
+  BufFilePre, BufFilePost
+  BufEnter, BufLeave, BufWinEnter, BufWinLeave
+  BufUnload, BufHidden, BufNew
+  SwapExists
+- option events
+  FileType, Syntax, EncodingChanged, TermChanged
+- startup and exit events
+  VimEnter, GUIEnter, GUIFailed, TermResponse
+  QuitPre, VimLeavePre, VimLeave
+- miscellaneous events
+  FileChangedShell, FileChangedShellPost, FileChangesRO
+  ShellCmdPost, ShellFilterPost
+  CmdUndefined, FuncUndefine, SpellFileMissing, SourcePre, SourceCmd
+  VimResized, FocusGained, FocusLost
+  CursorHold, CursorHoldI, CursorMoved, CursorMovedI
+  WinEnter, WinLeave, TabEnter, TabLeave, CmdwinEnter, CmdwinLeave
+  InsertEnter, InsertChange, InsertLeave, InsertCharPre
+  TextChanged, TextChangedI
+  ColorScheme
+  RemoteReply
+  QuickFixCmdPre, QuickFixCmdPost
+  SessionLoadPost
+  MenuPopup, CompleteDone
+  User
+
+Buffers
+- to append text after a given line in current buffer,
+  call append(line-number, text)
+  * using 0 for line-number prepends
+- to append a List of text lines after a given line in current buffer,
+  call append(line-number, list)
+- to get a specific line number
+  * first visible line - line('w0')
+  * last visible line - line('w$')
+  * current line - line('.')
+  * last line in buffer - line('$')
+  * first line selected in visual mode - line('v')
+- to test whether a buffer exists, bufexists(buf-name)
+- to get the buffer number that contains a given file, bufnr(file-name)
+- to get the window number where a buffer is displayed,
+  bufwinnr(buf-name)
+  * returns -1 if not current displayed in a window
+- to open a new split window and display a given buffer number,
+  execute 'sbuffer ' . buf-num
+- to get the line at a given index within the current buffer,
+  getline(line-num)
+
+Echo
+- echo(string) outputs a message in Vim's message area
+- echomsg(string) does the same AND saves it in message history
+- to convert a non-String value to a String, string(value)
+- to see messages in history, :messages
+- to clear message history, ???
+
+Ex commands
+- to execute one, execute {ex-string}
+- to execute a string of normal-mode commands, execute "normal! {cmds}"
+  * the ! causes default versions of commands to be executed,
+    in case the user has remapped them
+
+Flow control
+- if condition
+    ...
+  elseif condition
+    ...
+  else
+    ...
+  endif
+  - condition is NOT surrounded by parens
+- ternary expression
+  condition ? true-value : false-value
+- while condition
+    ...
+  endwhile
+- for variable in someList
+    ...
+  endfor
+
+Functions
+- has many builtin functions and more can be defined
+- to define
+  * function! Name()
+    endfunction
+  * ! lets is override previously defined functions with same name
+  * the name must start uppercase
+- to call
+  * call Name(args)
+    - call keyword is not needed when function call is part of an expression
+  * can call from command mode (:)
+  * another option is to use the call function
+    - call(Name, argList)
+    - argList can be a literal list
+- to refer to a named parameter inside a function,
+  prefix name with "a:" to indicate argument scope
+- to allow optional arguments, specify ... as last parameter
+  * inside a function,
+    all arguments are in a List accessed with a:index and
+    optional arguments are in a List accessed with a:000[index]
+  * List indexes are zero-based
+
+Plugins
+- a plugin is defined by files in subdirectories of .vim
+  * autoload
+    - holds files that are loaded on demand
+    - provides a way to "namespace" functions
+      * if the file autoload/foo.vim defines a bar function, call it with 
+        call foo#bar(args)
+      * if the file autoload/foo/bar.vim defines a baz function, call it with 
+        call foo#bar#baz(args)
+    - a file isn't loaded until one of its functions is called
+      * important for large plugins to reduce
+        Vim startup time and memory used initially
+  * doc
+    - holds plugin documentation files
+  * ftdetect
+    - holds files that detect the type of a file being edited
+  * ftplugin
+    - holds files used to process files with a specific type
+  * plugin
+    - holds plugin files that are loaded when Vim is started
+  * syntax
+    - holds files that identify syntax elements in files with a specific type
+    - used for syntax highlighting
+- a plugin doesn't have to have a file in each of these directories
+- to install a plugin
+  * place files in the appropriate subdirectories of .vim
+    or use a plugin manager like Pathogen or Vundle
+- runtimepath option holds a list of directories Vim searches for plugin files
+  * by default, only contains .vim
+  * can add more
+    - set runtimepath+=directory
+    - restart Vim for change to take effect
+  * Pathogen modifies this to include directories under .vim/bundle
+
+Types (6)
+- Dictionary (map)
+  * unordered collection of key/value pairs
+  * literal syntax: {key: value, ...}
+  * keys must be Strings or Numbers (automatically converted to Strings)
+  * values can be any type including Dictionary
+  * to add a pair of modify an existing value for a key
+      myDict[key] = value
+  * to get a value for a given key
+    myDict[key] or myDict.key
+  * to get a value for a given nested key (when value is a Dictionary)
+    myDict[key1][key2]
+  * to remove a pair, ???
+  * to iterate over the keys, ???
+- Float
+  * to convert a String to a Float, str2float(string)
+  * to convert a Float to a Number, float2nr(float)
+  * the result of using an arithmetic operator
+    on a Float and a Number is a Float
+- Funcref
+  * reference to a function
+  * variable name must start uppercase just like function names
+  * can set to a previously defined function with
+    let MyRef = function('Name')
+  * can call with call MyRef(args)
+  * to get name, string(MyRef)
+    * returns "function('Name')", so have to parse out name
+- List
+  * literal syntax: [item0, item1, ...]
+  * uses zero-based indexes
+  * to get item at given index, myList[index]
+  * to add item to end, call add(list, item)
+  * to remove item at given index, call remove(list, index)
+  * to insert item at given index,
+    moving current item at that index to next highest index,
+    call inser(list, item, index)
+  * to sort a list, call sort(list)
+    - properly sorts numbers and strings in ascending order
+    - if list contains both numbers and strings,
+      strings move to beginning and numbers to end
+  * to make a shallow copy of a list,
+    let shallow = copy(myList)
+  * to make a deep copy of a list,
+    let deep = deepcopy(myList)
+  * to get a slice of a list,
+    let slice = myList[startIndex:endIndex]
+    - both indexes are inclusive
+    - if startIndex is omitted, it is 0
+    - if endIndex is omitted, it is the last index
+    - can specify negative values to count from end
+      * -1 is index of last item
+- Number
+  * precede octal literals with zero (0)
+  * precede hexadecimal literals zero and x or X (0x)
+  * all other numbers are assumed to be decimal
+  * preceding a String variable with + converts it to a Number
+- String
+  * surround with single or double quotes
+  * special characters like \n need to be
+    escaped in single quoted strings (\\n),
+    but not in double quoted strings
+  * concatenated with dot (.) operator
+  * to convert to all uppercase, toupper(string)
+  * to convert to all lowercase, tolower(string)
+  * to convert any kind of value to string, string(value)
+  * to get a slice of a String,
+    let slice = myString[startIndex:endIndex]
+    - both indexes are inclusive
+    - if startIndex is omitted, it is 0
+    - if endIndex is omitted, it is the last index
+    - can specify negative values to count from end
+      * -1 is index of last item
+  * to get a substring without the last character,
+    for example, to remove a newline character,
+    myString[:-2]
+  * to split a String into a List of Strings based on a delimiter,
+    split(string, delimiter)
+- no boolean type
+  * use 0 for false and non-zero for true (typically 1)
+- to get the type of a variable, type(var)
+  * returns a number from 0 to 5
+  * 0=Number, 1=String, 2=FuncRef, 3=List, 4=Dictionay, 5=Float
+- to test the type of a variable
+  * if type(var) == number-above
+  or
+  * if type(var) == type(example)
+    - ex. if type(var) == type(1.0) " if Number
+
+Operators
+- arithmetic
+  * +, -, *, /, % (mod)
+- assignment
+  * =, +=, -=, .= (string concatenate and assign)
+  * no *=, /=, or %= ?
+- logical
+  * && (and), || (or), ! (not)
+- relational
+  * ==, !=, <, <=, =>, >
+  * when comparing strings,
+    == depends on user setting of ignorecase option
+    - to force case-sensitive comparison, use ==#
+    - to force case-insensitive comparison, use ==?
+
+Options
+- to see value, echo &{name}
+  * when & is omitted it looks for a variable
+- to set a global value
+  * set {name}={value}
+    - value must be a literal
+  or
+  * let &{name} = {value}
+    - value can be a variable or function call
+- to set a local value (only for current window)
+  * setlocal {name}={value}
+    - value must be a literal
+  or
+  * let &l:{name} = {value}
+
+Registers
+- to set, let @{letter} = {value}
+- to see value, echo @{name}
+- when text is yanked without specifying a register,
+  it goes to the unnamed register "
+
+System commands
+- a.k.a. shell commands
+- to run, shell(cmd)
+  * returns output as a String
+
+Variables
+- to declare, let foo = 'bar'
+  * initializing is optional
+- to set a buffer local variable
+  let b:{name} = {value}
+
+Variable scopes
+  a: argument
+  g: global
+  l: local
+  s: script
+  b: buffer
+  w: window
+
+Windows
+- to open a new window and move to it, execute 'new'
+- to open a new window that displays a given file,
+  and move to it, execute 'new file-path'
