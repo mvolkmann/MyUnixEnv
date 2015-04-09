@@ -5,9 +5,9 @@ MacNotes.txt
   - git clone MyUnixEnv and run ./setup
   - iTerm 2
   - homebrew
-  - reattach-to-user-namespace
+  - reattach-to-user-namespace (brew install reattach-to-user-namespace)
     * for copy to/from clipboard in tmux
-  - tmux
+  - tmux (brew install tmux)
   - install Inconsolata Powerline font for use in Vim airline
   - DropBox
   - newest Chrome
