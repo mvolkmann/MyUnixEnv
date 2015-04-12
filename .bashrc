@@ -73,6 +73,7 @@ alias findcss="find3 css"
 alias findhtml="find3 html"
 alias findjava="find3 java"
 alias findjs="find3 js"
+alias findjson="find3 json"
 alias findless="find3 less"
 
 # Goes to root directory of current git repo.
@@ -115,4 +116,4 @@ function setTitle {
 typeset -fx setTitle
 alias st=setTitle
 
-source ~/.nvm/nvm.sh
+#source ~/.nvm/nvm.sh
