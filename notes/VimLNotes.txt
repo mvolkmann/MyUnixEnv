@@ -93,6 +93,12 @@ Buffers
 - to get the line at a given index within the current buffer,
   getline(line-num)
 
+Comments
+- single-line comments begin with "
+  * can't have another " on the same line
+    because that would be a string literal
+- no multi-line comment delimiters
+
 Echo
 - echo(string) outputs a message in Vim's message area
 - echomsg(string) does the same AND saves it in message history
@@ -105,6 +111,23 @@ Ex commands
 - to execute a string of normal-mode commands, execute "normal! {cmds}"
   * the ! causes default versions of commands to be executed,
     in case the user has remapped them
+
+File Type Detection
+- determined by .vim files in .vim/ftdetect
+- to detect via file extension
+  * example line to define "foo" file type
+    autocmd BufRead,BufNewFile *.foo set filetype=foo
+- to detect via file content
+  * ex. HTML
+  if getline(1) =~ '\<html\>'
+    set filetype=html
+  endif
+- to see the file type of the current buffer
+  :set filetype?
+- to set a buffer so it isn't associated with a file
+  and doesn't need to be saved
+  :set buftype=nofile
+  * useful for buffers that a populated by plugins for display-only purposes
 
 Flow control
 - if condition
@@ -180,6 +203,83 @@ Plugins
     - restart Vim for change to take effect
   * Pathogen modifies this to include directories under .vim/bundle
 
+Statusline
+- to customize
+  set statusline={content}
+  * does it need to begin with %?
+- can contain special character sequences starting with %
+  that are replaced by certain values
+  - - left-justify the next item
+  < - truncate next item if it's too long (how is this determined?)
+  \  - literal space
+  b - decimal value of character under cursor
+  B - hex value of character under cursor
+  c - current cursor column number
+  f - path to file being edited
+  F - full path to file being edited
+  h - [Help] when viewing a Vim help file
+  H - ,HLP when viewing a Vim help file
+  l - current cursor line number
+  m - [+] if current file has been modified and not saved; [-] otherwise
+  M - ,+ if current file has been modified and not saved, ,- otherwise
+  n - buffer number
+  p - percentage of the last visible line number (100 if last line is visible)
+  P - not sure how this differs from %p
+  q - [Quickfix List] or [Location List] if either of those is being displayed
+  r - [RO] if current file is read-only
+  R - ,RO if current file is read-only
+  t - file name (tail) of file being edited
+  y - file type in buffer, ex. [vim]
+  Y - file type in buffer, ex. ,VIM
+  = - ends left-justified items and begins right-justified items
+  -n. - sets next group to occupy n characters
+  ( - begins a new group
+  ) - ends current group
+  #name - starts highlight group with given name
+- can contain function calls that are replaced by returned string
+  * ex. %!FnName()
+- can contain VimL expressions
+  * ex. %{some-expr}
+  * evaluated every time status line is displayed
+
+Syntax Highlighting
+- defined by files in .vim/syntax directory
+- defined using "syntax" and "highlight" commands
+  * syntax commands
+    - identify text to highlight and the syntax group to which it belongs
+    - in the following examples, JavaScriptKeyword and JavaScriptComment
+      are syntax groups
+    - ex. syntax keyword JavaScriptKeyword yield
+    - ex. syntax match JavaScriptComment singleLineComment /\/\/.*/
+    - ex. syntax match JavaScriptComment multiLineComment start=/\/\*/ end=/\*\//
+      * can also specify text to skip with skip=/pattern/
+  * highlight commands
+    - map a syntax element to the highlighting to be applied
+    - can specify highlighting for three types of terminals
+      * term - terminal Vim with no color support
+      * cterm - terminal Vim with color support
+      * gui - for GUI/non-terminal Vim implementations (ex. MacVim)
+      * value for each is an attribute list
+    - can specify styles in a term, cterm, or gui attribute list
+      * bold, italic, underline, reverse, inverse, standout, and NONE (to reset)
+    - can specify colors
+      * using ctermfg, ctermbg, guifg, and guibg
+      * using Vim color names, color numbers, or RGB hex values
+        - see :help cterm-colors for color numbers and names
+          * the asterisk after color numbers means add 8
+        - see :help gui-colors
+        - color names are case-insensitive
+    - ex. highlight JavaScriptComment ctermfg=green guifg=#00ff00
+- several element types are supported
+  * keyword - specified by name
+    - ex. 
+  * match - specified by a regex
+  * region - specified by starting and ending regexes
+
+System Commands
+- to execute a shell command and get its output as a string
+  let result = system(command)
+
 Types (6)
 - Dictionary (map)
   * unordered collection of key/value pairs
@@ -242,6 +342,7 @@ Types (6)
     escaped in single quoted strings (\\n),
     but not in double quoted strings
   * concatenated with dot (.) operator
+  * to get length, len(string)
   * to convert to all uppercase, toupper(string)
   * to convert to all lowercase, tolower(string)
   * to convert any kind of value to string, string(value)
@@ -310,12 +411,14 @@ System commands
   * returns output as a String
 
 Variables
-- to declare, let foo = 'bar'
-  * initializing is optional
+- to declare, let foo
+- to declare and set, let foo = 'bar'
+- to declare and set multiple variables,
+  let [var1, var2, ...] = [val1, val2, ...]
+  * must have same number of variables and values
 - to set a buffer local variable
   let b:{name} = {value}
-
-Variable scopes
+- scopes
   a: argument
   g: global
   l: local
