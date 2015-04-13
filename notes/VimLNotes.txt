@@ -418,13 +418,16 @@ Variables
   * must have same number of variables and values
 - to set a buffer local variable
   let b:{name} = {value}
-- scopes
+- scope prefixess
   a: argument
   g: global
   l: local
   s: script
   b: buffer
   w: window
+- if no scope prefix is used,
+  the default scope is local inside functions
+  and global otherwise
 
 Windows
 - to open a new window and move to it, execute 'new'

@@ -1,6 +1,9 @@
 function! mpc#DisplayPlaylist()
+  " Get lines describing each track in the playlist in a custom format.
   let cmd = "mpc --format '%position% %artist% / %album% / %title%' playlist"
   let playlist = split(system(cmd), '\n')
+
+  " Append all the lines to the beginning of the current buffer.
   call append(0, playlist)
 endfunction
 
