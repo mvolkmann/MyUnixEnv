@@ -18,3 +18,9 @@ function! OpenMpc()
 
   call mpc#DisplayPlaylist()
 endfunction
+
+" Define a command that displays the playlist.
+command! MpcBrowser call OpenMpc()
+
+" Define a command to toggle the play/pause state.
+command! TogglePlayback call mpc#TogglePlayback()

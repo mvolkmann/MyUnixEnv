@@ -245,16 +245,43 @@ Statusline
 Syntax Highlighting
 - defined by files in .vim/syntax directory
 - defined using "syntax" and "highlight" commands
-  * syntax commands
-    - identify text to highlight and the syntax group to which it belongs
-    - in the following examples, JavaScriptKeyword and JavaScriptComment
-      are syntax groups
-    - ex. syntax keyword JavaScriptKeyword yield
-    - ex. syntax match JavaScriptComment singleLineComment /\/\/.*/
-    - ex. syntax match JavaScriptComment multiLineComment start=/\/\*/ end=/\*\//
-      * can also specify text to skip with skip=/pattern/
-  * highlight commands
-    - map a syntax element to the highlighting to be applied
+  * syntax command
+    - identifies text that should be associated with a specific syntax group
+    - several styles of identifying text are supported
+      * in the following examples, JavaScriptKeyword and JavaScriptComment
+        are syntax groups
+      * keyword - specified by name
+        - ex. syntax keyword JavaScriptKeyword yield
+      * match - specified by a regex
+        - ex. syntax match JavaScriptComment singleLineComment /\/\/.*/
+      * region - specified by starting and ending regexes
+        - ex. syntax region JavaScriptComment multiLineComment start=/\/\*/ end=/\*\//
+          * can also specify text to skip with skip=/pattern/
+    - concealing matched text
+      * use syntax "conceal" argument to hide matching text
+      * use syntax "concealends" argument to hide the start and end text of a region
+      * must set conceallevel and concealcursor options
+      * conceallevel
+        - conceallevel=0 means show
+        - conceallevel=1 means display replacement character in its place
+          * defaults to space; change with "listchars conceal:c" where c is the replacement character
+          * to see current replacement characters, :syn-cchar
+        - conceallevel=2 means hide unless a replacement character was specified
+          * to see current replacement characters, :syn-cchar
+        - conceallevel=3 means hide
+        - ex. setlocal conceallevel=3
+      * concealcursor
+        - concealcursor sets the modes in which the cursor line text can be concealed
+          * n for normal
+          * i for insert
+          * v for visual (applies to all lines in visual area)
+          * c for command
+        - setting is local to the current window
+        - ex. setlocal concealcursor=nivc
+  * highlight command
+    - map a syntax group to highlighting to be applied
+    - to see all current highlight mappings
+      * :highlight
     - can specify highlighting for three types of terminals
       * term - terminal Vim with no color support
       * cterm - terminal Vim with color support
@@ -269,12 +296,14 @@ Syntax Highlighting
           * the asterisk after color numbers means add 8
         - see :help gui-colors
         - color names are case-insensitive
+    - in the following example, JavaScriptComment is a syntax group
     - ex. highlight JavaScriptComment ctermfg=green guifg=#00ff00
-- several element types are supported
-  * keyword - specified by name
-    - ex. 
-  * match - specified by a regex
-  * region - specified by starting and ending regexes
+    - this approach doesn't honor user specified color schemes
+      that assign highlighting to language-independent syntax groups
+      * ex. Comment instead of JavaScriptComment
+      * to link the styling from one syntax group to another
+        - higlight link JavaScriptComment Comment
+
 
 System Commands
 - to execute a shell command and get its output as a string
@@ -285,6 +314,7 @@ Types (6)
   * unordered collection of key/value pairs
   * literal syntax: {key: value, ...}
   * keys must be Strings or Numbers (automatically converted to Strings)
+    - String keys must be surrounded by quotes
   * values can be any type including Dictionary
   * to add a pair of modify an existing value for a key
       myDict[key] = value
@@ -311,6 +341,9 @@ Types (6)
   * literal syntax: [item0, item1, ...]
   * uses zero-based indexes
   * to get item at given index, myList[index]
+  * to assign all items in a List to different variables,
+    [v1, v2, v3] = myList
+    - # of variables must match # of elements in List!
   * to add item to end, call add(list, item)
   * to remove item at given index, call remove(list, index)
   * to insert item at given index,
@@ -373,6 +406,8 @@ Operators
 - arithmetic
   * +, -, *, /, % (mod)
 - assignment
+  * must start with "let" keyword!
+    - let foo = 'bar', not foo = 'bar'
   * =, +=, -=, .= (string concatenate and assign)
   * no *=, /=, or %= ?
 - logical
@@ -410,18 +445,43 @@ System commands
 - to run, shell(cmd)
   * returns output as a String
 
+User commands
+- must start with uppercase letter
+- they call built-in commands
+- to define a command that calls a function
+  command CmdName call FnName()
+  * to invoke the command
+    :CmdName
+- if command needs to pass n arguments to a function
+  command -nargs=n CmdName call FnName(<args>)
+  * to invoke the command
+    :CmdName arg1 arg2 ...
+  * <args> is replaced by the arguments
+  * to replace all command-line arguments (space-separated)
+    with a single, quoted string containing all the values,
+    use <q-args> instead of <args>
+- to overwrite a previously defined command,
+  use command! instead of command
+- to determine if a given command Foo exists,
+  if (exists(':Foo')) ...
+- to make a command local to buffers with a specific file type,
+  define the command in an ftplugin file for the file type
+  and include the -buffer option
+  * ex. command -buffer ...
+
 Variables
 - to declare, let foo
 - to declare and set, let foo = 'bar'
 - to declare and set multiple variables,
   let [var1, var2, ...] = [val1, val2, ...]
   * must have same number of variables and values
+  * RHS can be a List
 - to set a buffer local variable
   let b:{name} = {value}
 - scope prefixess
   a: argument
   g: global
-  l: local
+  l: local to a function
   s: script
   b: buffer
   w: window
