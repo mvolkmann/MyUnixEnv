@@ -56,6 +56,8 @@ alias ci='git commit -av'
 alias co='git checkout'
 alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
 alias push='git push origin `git rev-parse --abbrev-ref HEAD`'
+# status report from git commits
+alias sr='git log --author="Volkmann" --branches --no-merges --since="one week ago" --pretty=format:"%cd %s" | tac'
 
 # Ask for confirmation before overwriting or deleting files.
 alias cp="cp -i"
@@ -104,8 +106,8 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 # For Maritz earnPOWER
 alias cdclient='cd $EP_DIR'
 alias cdfeature='cd $EP_DIR/content/common/feature'
-alias rs='mvn tomcat7:run'
-alias rrs='mvn clean tomcat7:run'
+alias rs='mvn tomcat7:run -P local'
+alias rrs='mvn clean tomcat7:run -P local'
 
 #----------------------------------------------------------------------------
 
