@@ -1,3 +1,24 @@
+let g:mpcStatusline = 'not set yet'
+
+function! mpc#UpdateStatusline()
+  " Get the last line of output from the "mpc status" command.
+  let result = system('mpc status')
+  let lines = split(result, '\n')
+  let lastLine = lines[len(lines) - 1]
+
+  " Get the current settings for the "repeat" and "random" options.
+  let settings = split(lastLine, '   ')
+  let [repeat, random] = [settings[1], settings[2]]
+
+  " Get the number of tracks using the "mpc playlist" command.
+  let trackCount = len(split(system('mpc playlist'), '\n'))
+
+  " Form the status line.
+  let g:mpcStatusline = ' ' . repeat . ' --- ' . random . ' ---%=' . trackCount . ' songs '
+  setlocal statusline=%{g:mpcStatusline}
+  redraw!
+endfunction
+
 function! CompareNumbers(n1, n2)
   return a:n1 - a:n2
 endfunction
@@ -10,10 +31,10 @@ function! mpc#EncodeSong(item)
   endif
 
   return {
-    \ 'position': pieces[0],
-    \ 'artist': '@ar' . pieces[1] . 'ar@',
-    \ 'album': '@al' . pieces[2] . 'al@',
-    \ 'title': '@ti' . pieces[3] . 'ti@'
+  \ 'position': pieces[0],
+  \ 'artist': '@ar' . pieces[1] . 'ar@',
+  \ 'album': '@al' . pieces[2] . 'al@',
+  \ 'title': '@ti' . pieces[3] . 'ti@'
   \ }
 endfunction
 
@@ -27,10 +48,10 @@ function! mpc#DecodeSong(item)
   " 2 in [2:-4] removes rest of leading delimiter.
   " -4 in [2:-4] removes trailing delimiter.
   return {
-    \ 'position': items[0],
-    \ 'artist': items[1][2:-4],
-    \ 'album': items[2][2:-4],
-    \ 'title': items[3][2:-4]
+  \ 'position': items[0],
+  \ 'artist': items[1][2:-4],
+  \ 'album': items[2][2:-4],
+  \ 'title': items[3][2:-4]
   \ }
 endfunction
 
@@ -87,7 +108,7 @@ function! mpc#DisplayPlaylist()
 
   for track in playlist
     let line = track.position . ' ' .
-      \ track.artist . track.album . track.title
+    \ track.artist . track.album . track.title
     if (track.position == firstTrackPosition)
       " Go to first line,
       " delete all lines to bottom of buffer,
@@ -124,21 +145,11 @@ function! mpc#TogglePlayback()
 endfunction
 
 function! mpc#ToggleRandom()
-  let lines = split(system('mpc random'), '\n')
-  let lastLine = lines[len(lines) - 1]
-  let state = split(lastLine, '   ')[2]
-
-  " If state starts with a space, remove it.
-  if (state[0:0] == ' ')
-    let state = state[1:]
-  endif
-
-  "echomsg '[mpc] ' . (state == 'random: off' ? 'RANDOM: OFF' : 'RANDOM: ON')
+  call system('mpc random')
+  call mpc#UpdateStatusline()
 endfunction
 
 function! mpc#ToggleRepeat()
-  let lines = split(system('mpc repeat'), '\n')
-  let lastLine = lines[len(lines) - 1]
-  let state = split(lastLine, '   ')[1]
-  "echomsg '[mpc] ' . (state == 'repeat: off' ? 'REPEAT: OFF' : 'REPEAT: ON')
+  call system('mpc repeat')
+  call mpc#UpdateStatusline()
 endfunction

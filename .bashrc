@@ -79,6 +79,8 @@ alias findless="find3 less"
 # Goes to root directory of current git repo.
 alias git-root='cd `git rev-parse --git-dir`; cd ..'
 
+alias gulp6='node --harmony `which gulp`'
+
 # Display directories and executables in different colors.
 #alias ls='ls --color=tty'
 alias ls='ls -G'
@@ -116,4 +118,4 @@ function setTitle {
 typeset -fx setTitle
 alias st=setTitle
 
-#source ~/.nvm/nvm.sh
+source ~/.nvm/nvm.sh

@@ -156,7 +156,7 @@ Functions
   * the name must start uppercase
 - to call
   * call Name(args)
-    - call keyword is not needed when function call is part of an expression
+    - the "call" keyword is not needed when function call is part of an expression
   * can call from command mode (:)
   * another option is to use the call function
     - call(Name, argList)
@@ -202,45 +202,6 @@ Plugins
     - set runtimepath+=directory
     - restart Vim for change to take effect
   * Pathogen modifies this to include directories under .vim/bundle
-
-Statusline
-- to customize
-  set statusline={content}
-  * does it need to begin with %?
-- can contain special character sequences starting with %
-  that are replaced by certain values
-  - - left-justify the next item
-  < - truncate next item if it's too long (how is this determined?)
-  \  - literal space
-  b - decimal value of character under cursor
-  B - hex value of character under cursor
-  c - current cursor column number
-  f - path to file being edited
-  F - full path to file being edited
-  h - [Help] when viewing a Vim help file
-  H - ,HLP when viewing a Vim help file
-  l - current cursor line number
-  m - [+] if current file has been modified and not saved; [-] otherwise
-  M - ,+ if current file has been modified and not saved, ,- otherwise
-  n - buffer number
-  p - percentage of the last visible line number (100 if last line is visible)
-  P - not sure how this differs from %p
-  q - [Quickfix List] or [Location List] if either of those is being displayed
-  r - [RO] if current file is read-only
-  R - ,RO if current file is read-only
-  t - file name (tail) of file being edited
-  y - file type in buffer, ex. [vim]
-  Y - file type in buffer, ex. ,VIM
-  = - ends left-justified items and begins right-justified items
-  -n. - sets next group to occupy n characters
-  ( - begins a new group
-  ) - ends current group
-  #name - starts highlight group with given name
-- can contain function calls that are replaced by returned string
-  * ex. %!FnName()
-- can contain VimL expressions
-  * ex. %{some-expr}
-  * evaluated every time status line is displayed
 
 Syntax Highlighting
 - defined by files in .vim/syntax directory
@@ -304,6 +265,45 @@ Syntax Highlighting
       * to link the styling from one syntax group to another
         - higlight link JavaScriptComment Comment
 
+Statusline
+- to customize
+  set statusline={content}
+  * does it need to begin with %?
+- can contain special character sequences starting with %
+  that are replaced by certain values
+  - - left-justify the next item
+  < - truncate next item if it's too long (how is this determined?)
+  \  - literal space
+  b - decimal value of character under cursor
+  B - hex value of character under cursor
+  c - current cursor column number
+  f - path to file being edited
+  F - full path to file being edited
+  h - [Help] when viewing a Vim help file
+  H - ,HLP when viewing a Vim help file
+  l - current cursor line number
+  m - [+] if current file has been modified and not saved; [-] otherwise
+  M - ,+ if current file has been modified and not saved, ,- otherwise
+  n - buffer number
+  p - percentage of the last visible line number (100 if last line is visible)
+  P - not sure how this differs from %p
+  q - [Quickfix List] or [Location List] if either of those is being displayed
+  r - [RO] if current file is read-only
+  R - ,RO if current file is read-only
+  t - file name (tail) of file being edited
+  y - file type in buffer, ex. [vim]
+  Y - file type in buffer, ex. ,VIM
+  = - ends left-justified items and begins right-justified items
+  -n. - sets next group to occupy n characters
+  ( - begins a new group
+  ) - ends current group
+  #name - starts highlight group with given name
+- can contain function calls that are replaced by returned string
+  * ex. %!FnName()
+  * called every time status line is displayed
+- can contain VimL expressions
+  * ex. %{some-expr}
+  * evaluated every time status line is displayed
 
 System Commands
 - to execute a shell command and get its output as a string
@@ -478,7 +478,7 @@ Variables
   * RHS can be a List
 - to set a buffer local variable
   let b:{name} = {value}
-- scope prefixess
+- scope prefixes
   a: argument
   g: global
   l: local to a function
