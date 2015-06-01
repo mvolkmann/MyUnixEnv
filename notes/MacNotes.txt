@@ -222,6 +222,7 @@ MacNotes.txt
   - to combine multiple files,
     make a copy of the first PDF file
     open the copy in Preview
+    scroll to the last slide
     select Edit ... Insert ... Page From File...
     select all the files to append
     save

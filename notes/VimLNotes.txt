@@ -34,6 +34,81 @@ Autocommands
     augroup END
     * the name "END" refers to the default group
 
+Buffers
+- to append text after a given line in current buffer,
+  call append(line-number, text)
+  * using 0 for line-number prepends
+- to append a List of text lines after a given line in current buffer,
+  call append(line-number, list)
+- to get a specific line number
+  * first visible line - line('w0')
+  * last visible line - line('w$')
+  * current line - line('.')
+  * last line in buffer - line('$')
+  * first line selected in visual mode - line('v')
+- to test whether a buffer exists, bufexists(buf-name)
+- to get the buffer number that contains a given file, bufnr(file-name)
+- to get the window number where a buffer is displayed,
+  bufwinnr(buf-name)
+  * returns -1 if not current displayed in a window
+- to open a new split window and display a given buffer number,
+  execute 'sbuffer ' . buf-num
+- to get the line at a given index within the current buffer,
+  getline(line-num)
+- to get the character under the cursor,
+  let char = getline('.')[col('.') - 1]
+  * only works with single-byte characters
+  * for multi-byte, yank into a register (ex. z)
+    execute 'normal "zyl'
+    let char = getreg('z')
+
+Builtin Functions
+- for a list of all builtin functions, :help function-list
+- for lists of functions in specific groups, use the help commands below
+- :help string-functions
+- :help list-functions
+- :help dict-functions
+- :help float-functions
+- :help bitwise-functions
+- :help var-functions
+- :help cursor-functions or :help mark-functions
+- :help text-functions
+- :help file-functions or :help system-functions
+- :help date-functions or :help time-functions
+- :help buffer-functions or :help window-functions or :help arg-functions
+- :help command-line-functions
+- :help quickfix-functions
+- :help completion-functions
+- :help folding-functions
+- :help syntax-functions or :help highlighting-functions
+- :help spell-functions
+- :help history-functions
+- :help interactive-functions
+- :help gui-functions
+- :help server-functions
+- :help window-size-functions
+- :help mapping-functions
+- :help various-functions
+- one way to move the cursor: cursor(line, column)
+  * also see getpos() which returns a list
+- to prompt the user, echo confirm("is this ok?", "&Yes\n&No")
+  * to make "No" the default choice,
+    echo confirm("is this ok?", "&Yes\n&No\n&Don't know", 2)
+
+Comments
+- single-line comments begin with "
+  * can't have another " on the same line
+    because that would be a string literal
+- no multi-line comment delimiters
+
+Echo
+- echo(string) outputs a message in Vim's message area
+- echomsg(string) does the same AND saves it in message history
+- to convert a non-String value to a String, string(value)
+- to see messages in history, :messages
+- to clear message history, ???
+
+Events
 - for a list of events and descriptions, :help autocommand-events
 - reading events
   BufNewFile, BufReadPre, BufRead, BufReadPost, BufReadCmd
@@ -71,41 +146,6 @@ Autocommands
   MenuPopup, CompleteDone
   User
 
-Buffers
-- to append text after a given line in current buffer,
-  call append(line-number, text)
-  * using 0 for line-number prepends
-- to append a List of text lines after a given line in current buffer,
-  call append(line-number, list)
-- to get a specific line number
-  * first visible line - line('w0')
-  * last visible line - line('w$')
-  * current line - line('.')
-  * last line in buffer - line('$')
-  * first line selected in visual mode - line('v')
-- to test whether a buffer exists, bufexists(buf-name)
-- to get the buffer number that contains a given file, bufnr(file-name)
-- to get the window number where a buffer is displayed,
-  bufwinnr(buf-name)
-  * returns -1 if not current displayed in a window
-- to open a new split window and display a given buffer number,
-  execute 'sbuffer ' . buf-num
-- to get the line at a given index within the current buffer,
-  getline(line-num)
-
-Comments
-- single-line comments begin with "
-  * can't have another " on the same line
-    because that would be a string literal
-- no multi-line comment delimiters
-
-Echo
-- echo(string) outputs a message in Vim's message area
-- echomsg(string) does the same AND saves it in message history
-- to convert a non-String value to a String, string(value)
-- to see messages in history, :messages
-- to clear message history, ???
-
 Ex commands
 - to execute one, execute {ex-string}
 - to execute a string of normal-mode commands, execute "normal! {cmds}"
@@ -129,7 +169,7 @@ File Type Detection
   :set buftype=nofile
   * useful for buffers that a populated by plugins for display-only purposes
 
-Flow control
+Flow control and loops
 - if condition
     ...
   elseif condition
@@ -146,6 +186,7 @@ Flow control
 - for variable in someList
     ...
   endfor
+- there is no loop like for i = 0; i < 10; i++
 
 Functions
 - has many builtin functions and more can be defined
@@ -154,6 +195,7 @@ Functions
     endfunction
   * ! lets is override previously defined functions with same name
   * the name must start uppercase
+  * to return a value, "return value"
 - to call
   * call Name(args)
     - the "call" keyword is not needed when function call is part of an expression
@@ -171,12 +213,14 @@ Functions
 
 Plugins
 - a plugin is defined by files in subdirectories of .vim
-  * autoload
+  * autoload directory
     - holds files that are loaded on demand
     - provides a way to "namespace" functions
-      * if the file autoload/foo.vim defines a bar function, call it with 
+      * if the file autoload/foo.vim defines a foo#bar function,
+        call it with
         call foo#bar(args)
-      * if the file autoload/foo/bar.vim defines a baz function, call it with 
+      * if the file autoload/foo/bar.vim defines a foo#bar#baz function,
+        call it with
         call foo#bar#baz(args)
     - a file isn't loaded until one of its functions is called
       * important for large plugins to reduce
@@ -369,12 +413,16 @@ Types (6)
   * precede hexadecimal literals zero and x or X (0x)
   * all other numbers are assumed to be decimal
   * preceding a String variable with + converts it to a Number
+  * to increment a number variable, let n += 1
+  * to decrement a number variable, let n -= 1
 - String
   * surround with single or double quotes
   * special characters like \n need to be
     escaped in single quoted strings (\\n),
     but not in double quoted strings
   * concatenated with dot (.) operator
+  * to concatenate to a string variable v,
+    let v .= someString
   * to get length, len(string)
   * to convert to all uppercase, toupper(string)
   * to convert to all lowercase, tolower(string)

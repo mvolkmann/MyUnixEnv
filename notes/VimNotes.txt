@@ -210,6 +210,12 @@ Change (delete and enter insert mode)
        and enter insert mode
   c/{text}Enter - change all characters from cursor to given text
 
+Change Case
+- to change the case of the letter under the cursor, press ~
+- to change the word under the cursor
+  * to uppercase, gUiw
+  * to lowercase, guiw
+
 Code Indenting
 - add "filetype indent plugin on" in .vimrc to use filetype-dependent
   settings specified in files in the .vim/ftplugin directory

@@ -233,11 +233,16 @@ nnoremap <leader>j :JSHintUpdate<cr>
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP .'
 "let g:ctrlp_working_path_mode='c'
-" }}}
 
 " EasyMotion mappings
 "nmap s <Plug>(easymotion-s) " conflicts with toggle of spell check
 nmap <leader>w <Plug>(easymotion-bd-w)
+
+" My XML comment/uncomment plugin
+nnoremap <leader>xc :XmlComment<cr>
+nnoremap <leader>xu :XmlUncomment<cr>
+
+" }}}
 
 " The Silver Searcher (ag) --- {{{
 if executable('ag')
