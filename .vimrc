@@ -239,8 +239,8 @@ let g:ctrlp_cmd = 'CtrlP .'
 nmap <leader>w <Plug>(easymotion-bd-w)
 
 " My XML comment/uncomment plugin
-nnoremap <leader>xc :XmlComment<cr>
-nnoremap <leader>xu :XmlUncomment<cr>
+nnoremap <leader>tc :TagComment<cr>
+nnoremap <leader>tu :TagUncomment<cr>
 
 " }}}
 
