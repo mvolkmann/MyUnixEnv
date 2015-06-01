@@ -210,6 +210,12 @@ Change (delete and enter insert mode)
        and enter insert mode
   c/{text}Enter - change all characters from cursor to given text
 
+Change Case
+- to change the case of the letter under the cursor, press ~
+- to change the word under the cursor
+  * to uppercase, gUiw
+  * to lowercase, guiw
+
 Code Indenting
 - add "filetype indent plugin on" in .vimrc to use filetype-dependent
   settings specified in files in the .vim/ftplugin directory
@@ -568,12 +574,17 @@ Installing Plugins
 
 Key Mapping
 - to show current key mappings,
-  * map - shows normal mode mappings
+  * map - shows all mappings?
+  * nmap - shows normal mode mappings
   * imap - shows insert mode mappings
-  * these do not show builtin mappinkgs
+  * these do not show builtin mappings
     - probably just have to use help command
       (see email from Bill Odom on 5/31/14)
 - to define a key
+  * "nore" variants avoid recursive mappings where
+    key mappings in the command are interpreted again
+    - it is recommended to use these variants
+      unless recursive evaluation is explicitly needed
   * for normal mode, nmap or nnoremap
     - nnoremap {key} {command}
   * for insert mode, imap or inoremap
@@ -591,10 +602,24 @@ Key Mapping
   omit {command} from the commands above that define them
 - special keys are specified inside angle brackets
   - "c-" stands for ctrl key
-  - examples: <esc>, <space>, <c-d>
+  - examples: <cr>, <esc>, <space>, <c-d>
+  - can use these inside command string
+- can include special unicode characters in command string
+  with &#9999; where 9999 is the decimal unicode value
 - "ex" commands start with :
   - ex. map <F5> :CoffeeRun
+- to avoid displaying the command when the key is pressed,
+  preceded the key with <silent>
+  * ex. nnoremap v <silent> :vsplit<cr>
+- to define a mapping that is only active buffers of a specific file type
+  * define mapping in .vim/ftplugin/{file-type}.vim like this:
+    nnoremap <buffer> v :vsplit<cr>
+- can use both <buffer> and <silent>, but must be in that order
 - in .vimrc, can't put comments at end of a mapping
+- to call a function defined in script scope (with s:)
+  from a key mapping
+  nnoremap {key} :call <SID>{fn-name}()
+  * must define mapping in the same file that defines the function
 - to map <c-s> or <c-q>, disable start/stop output control
   in .bashrc with "stty -ixon"
 - to undefine a key
@@ -1327,6 +1352,12 @@ vim-airline plugin
 - to install, git clone https://github.com/bling/vim-airline.git
 - to setup Powerline fonts, see
   https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
+- to enable other plugins to customize the statusline
+  for specific file types (ex. mpdv),
+  tell airline to exclude those file types
+  * create ~/.vim/plugin/airline.vim
+  * add the following line:
+    let g:airline_exclude_filetypes = ['mpdv']
 
 vimgrep (also see grep)
 - searches files in and below current directory (slow!)

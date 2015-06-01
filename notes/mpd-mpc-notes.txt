@@ -2,7 +2,6 @@ MPD/MPC Notes
 
 Music Player Daemon (MPD)
 - a music playing server
-- to start, mpd
 - uses a flat-file database of tracks
 - on Mac OS X, can install with "brew install mpd"
 - create configuration file .mpdconf
@@ -14,10 +13,12 @@ Music Player Daemon (MPD)
       name "audio"
       type "osx"
     }
+- to start, mpd
 - create and populate database file
   * touch /Users/Mark/mpd.db
   * mpc update
   * mpc ls | mpc add
+    - Do these steps need to be repeated after each restart?
   * this adds files in music_directory to the database file
   * mpd.db is a binary file (don't cat it)
 

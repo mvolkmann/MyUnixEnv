@@ -5,8 +5,11 @@ MacNotes.txt
   - git clone MyUnixEnv and run ./setup
   - iTerm 2
   - homebrew
-  - reattach-to-user-namespace
-    * for copy to/from clipboard in tmux
+  - brew install these
+    * reattach-to-user-namespace (for copy to/from clipboard in tmux)
+    * enscript
+    * tree
+    * coreutils (to get tac command)
   - tmux
   - install Inconsolata Powerline font for use in Vim airline
   - DropBox
@@ -219,6 +222,7 @@ MacNotes.txt
   - to combine multiple files,
     make a copy of the first PDF file
     open the copy in Preview
+    scroll to the last slide
     select Edit ... Insert ... Page From File...
     select all the files to append
     save
