@@ -238,10 +238,6 @@ let g:ctrlp_cmd = 'CtrlP .'
 "nmap s <Plug>(easymotion-s) " conflicts with toggle of spell check
 nmap <leader>w <Plug>(easymotion-bd-w)
 
-" My XML comment/uncomment plugin
-nnoremap <leader>tc :TagComment<cr>
-nnoremap <leader>tu :TagUncomment<cr>
-
 " }}}
 
 " The Silver Searcher (ag) --- {{{
