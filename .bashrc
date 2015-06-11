@@ -52,6 +52,7 @@ alias cdsett='cd $SETT_DIR'
 alias cdtb='cd $TB_DIR'
 alias cdtraining='cd $TRAINING_DIR'
 
+alias br='git branch'
 alias ci='git commit -av'
 alias co='git checkout'
 alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
