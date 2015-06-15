@@ -238,6 +238,9 @@ let g:ctrlp_cmd = 'CtrlP .'
 "nmap s <Plug>(easymotion-s) " conflicts with toggle of spell check
 nmap <leader>w <Plug>(easymotion-bd-w)
 
+" Printing using enscript (these aren't working yet)
+noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"
+noremap <leader>e2 execute "normal! '<,'>:w !enscript --borders --columns-2 --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 " }}}
 
 " The Silver Searcher (ag) --- {{{
