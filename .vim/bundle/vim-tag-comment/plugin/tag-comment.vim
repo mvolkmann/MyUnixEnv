@@ -1,5 +1,6 @@
 " See the accompanying README for details.
 
+" mt - mark the current location as "t"
 " vat - visually select all text with the current tag
 " \<esc> - exit visual selection mode
 " `< - jump to beginning of visual selection
@@ -14,8 +15,10 @@
 " `< - jump to beginning of previous visual selection
 " a!-- - append beginning comment delimiter !--
 " esc - insert mode
-command! ElementComment execute "normal! vat\<esc>`<:'<,'>s/<!--/<!__/ge\<cr>:'<,'>s/-->/__>/ge\<cr>:nohlsearch\<cr>`>i--\<esc>`<a!--\<esc>"
+" `t - return to the starting location that marked as "t"
+command! ElementComment execute "normal! mtvat\<esc>`<:'<,'>s/<!--/<!__/ge\<cr>:'<,'>s/-->/__>/ge\<cr>:nohlsearch\<cr>`>i--\<esc>`<a!--\<esc>`t"
 
+" mt - mark the current location as "t"
 " ?!--\<cr> - search backward for beginning comment delimiter
 " mb - mark beginning of comment
 " 3x - delete the beginning comment delimiter
@@ -24,10 +27,11 @@ command! ElementComment execute "normal! vat\<esc>`<:'<,'>s/<!--/<!__/ge\<cr>:'<
 " 2x - delete the ending comment delimiter
 " :'b,'es/<!__/<!--/g\<cr> - fix nested beginning comment delimiters
 " :'b,'es/__>/-->/g\<cr> - fix nested ending comment delimters
-command! ElementUncomment execute "normal! ?!--\<cr>mb3x/--\<cr>me2x:'b,'es/<!__/<!--/ge\<cr>:'b,'es/__>/-->/ge\<cr>"
+" `t - return to the starting location that marked as "t"
+command! ElementUncomment execute "normal! mt?!--\<cr>mb3x/--\<cr>me2x:'b,'es/<!__/<!--/ge\<cr>:'b,'es/__>/-->/ge\<cr>`t"
 
-command! TagComment execute "normal! vi<\<esc>a--\<esc>`<i!--\<esc>"
-command! TagUncomment execute "normal! vi<\<esc>hxx`<xxxh"
+command! TagComment execute "normal! mtvi<\<esc>a--\<esc>`<i!--\<esc>`t"
+command! TagUncomment execute "normal! mtvi<\<esc>hxx`<xxxh`t"
 
 nnoremap <leader>tc :ElementComment<cr>
 nnoremap <leader>tu :ElementUncomment<cr>

@@ -114,7 +114,7 @@ AutoCommands
     autocmd VimEnter * :if argc() is 0 | Explore | endif
   * if an image file is opened in Vim, open it in a web browser
     - ex. when opening from netrw Explore
-    autocmd FileType image call system('git web--browse ' .  shellescape(expand($.p')))
+    autocmd FileType image call system('git web--browse ' . shellescape(expand($.p')))
     - could use "open" instead of "git web--browse" on a Mac
   * add an abbreviation for a specific filetype
     - alternative to using SnipMate or UltiSnips
@@ -1144,7 +1144,7 @@ Surround plugin
   * text-object selects the text to be surrounded
   * ex. to add double quotes, ysiw" (for inner word)
     - can also use is for inner sentence and ip for inner paragraph
-  * seems easier to select text in visual mode
+  * ex. to add double quotes around the next three words, ys3w"
 - to change surroundings, cs{current}{new}
   * ex. to change double quotes to single quotes, cs"'
   * ex. to change double quotes to a div tag, cs"<div and press return
@@ -1158,7 +1158,7 @@ Surround plugin
   * ex. to delete the surrounding tag, dst
     - even deletes attributes in start tag
 - see https://github.com/tpope/vim-surround
-- if the repeat plugin is installed, the dot (.) command
+- if the repeat.vim plugin is installed, the dot (.) command
   will repeat these commands in another location
 
 Tab Pages
@@ -1256,9 +1256,59 @@ Tern for Vim plugin
   * cd tern_for_vim
   * npm install
 
+Text Objects in editing commands
+- operate on text as units other than individual characters
+  * words, lines, sentences, paragraphs
+- can be undone with the dot command
+- two or three parts
+  1) command
+     d - delete (cut)
+     c - change (same as d, but enters insert mode)
+     y - yank (copy)
+     v - visually select
+     < - indent
+     > - outdent
+  2) motion (optional)
+     - if omitted, starts from cursor position
+     a - all (includes delimiters)
+     i - inner (excludes delimiters);
+     t - 'til a character forward
+     T - 'til a character backward
+     f - find character forward
+     F - find character backward
+     /{text} - search forward for text
+     ?{text} - search backward for text
+     {n}j - current line plus n lines after (n + 1 lines)
+     - using :set relativenumber makes these easier
+     - ex. to change current line plus two more, c2j
+     {n}k - current line plus n lines before (n + 1 lines)
+     - using :set relativenumber makes these easier
+  3) object
+     b - current location to beginning of word
+     e - current location to end of word
+     w - word
+     W - big word (delmited by whitespace)
+     s - sentence
+     p - paragraph
+     t - tag (HTML/XML)
+     { } ( ) [ ] < > " ' - by delimiter
+- examples
+  * diw - delete inner word
+  * caw - change all word
+  * yi( - yank text inside parens
+
 Tools that use vi
 - to cause tools that launch vi (such as cleartool edcs)
   to launch Vim instead, set VISUAL environment variable to "vim"
+
+Regular expressions
+- slightly different than other regular expressions
+- see "very magic" regex parsing mode
+- quantifiers
+  * \= means zero or one of preceding
+  * * means zero or more of preceding
+  * \+ means one or more of preceding
+- see http://vimregex.com for more details
 
 UltiSnips
 - to install
@@ -1518,6 +1568,9 @@ Other
   :hardcopy - sends to printer
   :set nu[mber] - displays line numbers (you mapped <leader>n to toggle this)
   :set nonu[mber] - undisplays line numbers
+  :set relative - displays relative line numbers (from current line)
+  - current line gets absolute line number
+  :set norelative - undisplays relative line numbers
   :set et or expandtab - future tabs are expanded to spaces
   :retab - expands all tabs currently in file to spaces
            if the previous option is set
