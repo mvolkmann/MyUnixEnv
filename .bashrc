@@ -51,6 +51,7 @@ alias cdruby='cd $RUBY_DIR'
 alias cdsett='cd $SETT_DIR'
 alias cdtb='cd $TB_DIR'
 alias cdtraining='cd $TRAINING_DIR'
+alias cdvim='cd $PROGRAMMING_DIR/Tools/Vim'
 
 alias br='git branch'
 alias ci='git commit -av'

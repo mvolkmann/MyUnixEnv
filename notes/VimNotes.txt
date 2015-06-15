@@ -1308,7 +1308,8 @@ Regular expressions
   * \= means zero or one of preceding
   * * means zero or more of preceding
   * \+ means one or more of preceding
-- see http://vimregex.com for more details
+- for more, see http://vimregex.com and
+  http://vim.wikia.com/wiki/Search_across_multiple_lines
 
 UltiSnips
 - to install
