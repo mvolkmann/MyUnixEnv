@@ -33,10 +33,20 @@ command! ElementUncomment execute "normal! mt?!--\<cr>mb3x/--\<cr>me2x:'b,'es/<!
 command! TagComment execute "normal! mtvi<\<esc>a--\<esc>`<i!--\<esc>`t"
 command! TagUncomment execute "normal! mtvi<\<esc>hxx`<xxxh`t"
 
-if !exists('g:tab_comment_map_keys')
+" If keys are not already mapped ...
+"if !exists('g:tab_comment_map_keys')
+if mapcheck("\<leader>tc", "N") == ""
   nnoremap <leader>tc :ElementComment<cr>
-  nnoremap <leader>tu :ElementUncomment<cr>
+endif
 
+if mapcheck("\<leader>tu", "N") == ""
+  nnoremap <leader>tu :ElementUncomment<cr>
+endif
+
+if mapcheck("\<leader>tC", "N") == ""
   nnoremap <leader>tC :TagComment<cr>
+endif
+
+if mapcheck("\<leader>tU", "N") == ""
   nnoremap <leader>tU :TagUncomment<cr>
 endif
