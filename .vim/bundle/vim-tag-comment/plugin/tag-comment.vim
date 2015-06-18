@@ -33,8 +33,10 @@ command! ElementUncomment execute "normal! mt?!--\<cr>mb3x/--\<cr>me2x:'b,'es/<!
 command! TagComment execute "normal! mtvi<\<esc>a--\<esc>`<i!--\<esc>`t"
 command! TagUncomment execute "normal! mtvi<\<esc>hxx`<xxxh`t"
 
-nnoremap <leader>tc :ElementComment<cr>
-nnoremap <leader>tu :ElementUncomment<cr>
+if !exists('g:tab_comment_map_keys')
+  nnoremap <leader>tc :ElementComment<cr>
+  nnoremap <leader>tu :ElementUncomment<cr>
 
-nnoremap <leader>tC :TagComment<cr>
-nnoremap <leader>tU :TagUncomment<cr>
+  nnoremap <leader>tC :TagComment<cr>
+  nnoremap <leader>tU :TagUncomment<cr>
+endif

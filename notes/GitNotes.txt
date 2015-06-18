@@ -561,6 +561,13 @@ To list local branches
 To list remote branches
 - git branch -r
 
+To update list of remote branches that can be checked out
+- git fetch
+- to prune names of remote branches that no longer exists
+  * git fetch -p
+- to make this happen automatically
+  * git config remote.origin.prune true
+
 To merge remote, committed changes with the local repo
 - git pull [remote-repo [branch]]
   * remote-repo can be a keyword (like origin)
