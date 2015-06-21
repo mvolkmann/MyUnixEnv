@@ -1125,8 +1125,7 @@ Status Line
 
 Surround plugin
 - adds, deletes, and changes surroundings (delimeters)
-- delimeters can be single quotes '', double quotes "",
-  parentheses (), braces {}, square brackets [],
+- delimeters can be ' " ` ( ) { } [ ]
   and HTML/XML tags (not angle brackets <>)
 - in descriptions below
   * when {new} is (, {, or [, a space will be added inside them
@@ -1136,20 +1135,20 @@ Surround plugin
   * ex. to surround selected text with double quotes,
     select it and press S"
   * ex. to surround selected text with a div tag,
-    select it, press S<div, and press return
+    select it, enter S<div>
+    - can also press return instead of typing closing >
   * ex. to surround selected text with a p tag that has attributes,
-    select it, press S<p id="foo" class="bar", and press return
+    select it, enter S<p id="foo" class="bar">
 - to add surroundings to text specified with a text object
   ys{text-object}{new}
   * text-object selects the text to be surrounded
-  * ex. to add double quotes, ysiw" (for inner word)
-    - can also use is for inner sentence and ip for inner paragraph
+  * ex. to add double quotes, ysiw"
   * ex. to add double quotes around the next three words, ys3w"
+  * ex. to add a div tag around the current paragraph, ysip<div>
 - to change surroundings, cs{current}{new}
   * ex. to change double quotes to single quotes, cs"'
-  * ex. to change double quotes to a div tag, cs"<div and press return
-  * ex. to change current surrounding tag to a div tag,
-    cst<div and press return (t is for tag)
+  * ex. to change double quotes to a div tag, cs"<div>
+  * ex. to change current surrounding tag to a div tag, cst<div>
   * ex. to change current surrounding tag to braces,
     - cst{ and press return (includes a space inside { and })
     - cst} and press return (no space inside { and })
@@ -1260,42 +1259,78 @@ Text Objects in editing commands
 - operate on text as units other than individual characters
   * words, lines, sentences, paragraphs
 - can be undone with the dot command
-- two or three parts
-  1) command
+- new text objects can be defined
+- text objects are not available in shell
+  * to edit current shell command in Vim,
+    press <esc>v, edit, and enter :wq
+    to exit Vim and execute the edited command
+    - can't seem to avoid executing the command on exit!
+- editing commands have two to four parts
+  1) count (optional)
+     can follow command, but not usually entered that way
+  2) command
      d - delete (cut)
      c - change (same as d, but enters insert mode)
      y - yank (copy)
      v - visually select
      < - indent
      > - outdent
-  2) motion (optional)
-     - if omitted, starts from cursor position
+  3) motion
+     - optional for some text objects to start from cursor
      a - all (includes delimiters)
-     i - inner (excludes delimiters);
-     t - 'til a character forward
-     T - 'til a character backward
-     f - find character forward
-     F - find character backward
-     /{text} - search forward for text
-     ?{text} - search backward for text
+     i - inner (excludes delimiters)
+     t - 'til a character forward (excludes character)
+     T - 'til a character backward (excludes character)
+     f - find character forward (includes character)
+     F - find character backward (includes character)
+     /{text} - search forward for text (excludes text)
+     ?{text} - search backward for text (includes text)
      {n}j - current line plus n lines after (n + 1 lines)
-     - using :set relativenumber makes these easier
-     - ex. to change current line plus two more, c2j
      {n}k - current line plus n lines before (n + 1 lines)
+     - n defaults to one, so at least two lines are affected
+     - ex. to change current line plus two more, c2j
      - using :set relativenumber makes these easier
-  3) object
-     b - current location to beginning of word
-     e - current location to end of word
-     w - word
-     W - big word (delmited by whitespace)
-     s - sentence
-     p - paragraph
-     t - tag (HTML/XML)
-     { } ( ) [ ] < > " ' - by delimiter
+       by displaying relative line numbers
+  4) text object
+     b - current location to beginning of word (can omit motion)
+     e - current location to end of word (can omit motion)
+     w - word (can omit motion)
+     W - big word (delmited by whitespace) (can omit motion)
+     s - sentence (requires motion)
+     p - paragraph (requires motion)
+     t - tag (HTML/XML) (requires motion)
+     ( ) { } [ ] < > ' " ` - by delimiter
+     * ( and ) mean sentence when motion is omitted
+     * { and } mean paragraph when motion is omitted
+     * [ ] < > ' " require motion
+     * can use < and > to operate on start and end tags
+     % - delimited text including delimiters
+     * cursor must be on a delimiter
+     * cannot specify motion
+     * acts weird if a count is specified
+- also see Surround plugin documented here
 - examples
   * diw - delete inner word
   * caw - change all word
   * yi( - yank text inside parens
+  * d} - delete to end of paragraph
+  * d{ - delete to beginning of paragraph
+  * d/^$<cr> - delete to next blank line
+- moving cursor
+  w - moves to beginning of next word
+  W - moves to beginning of next big word
+  b - moves to beginning of previous word
+  e - moves to end of current or next word
+  ( - moves to beginning of previous sentence
+  ) - moves to beginning of next sentence
+  { - moves to line before previous paragraph
+  } - moves to line before next paragraph
+  % - moves to matching delimter
+  * if not on a delimeter, moves forward to next delimiter
+
+foo bar
+baz qux
+whatever
 
 Tools that use vi
 - to cause tools that launch vi (such as cleartool edcs)
