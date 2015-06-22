@@ -14,6 +14,7 @@ Starting
 
 Help
 - for help on any topic, :h[elp] {topic}
+- a good place to start is :help index
 - for general help, :help user-manual
 - for help on version 7 features, :help version7
 - if topic name isn't known, :helpgrep {guess}
@@ -212,9 +213,11 @@ Change (delete and enter insert mode)
 
 Change Case
 - to change the case of the letter under the cursor, press ~
-- to change the word under the cursor
-  * to uppercase, gUiw
-  * to lowercase, guiw
+- to change the case of multiple characters,
+  * to lowercase, gu{motion}
+  * to uppercase, gU{motion}
+  * ex. to uppercase word under cursor, gUiw
+  * ex. to uppercase the next three words, 3gUw
 
 Code Indenting
 - add "filetype indent plugin on" in .vimrc to use filetype-dependent
@@ -537,6 +540,13 @@ git-gutter
 - shows diff symbols in gutter while editing any file that is in a git repo
 - ~ mean changed, + means added, _ means deleted
 - see https://github.com/airblade/vim-gitgutter
+
+global
+- :[range]g[lobal]/{pattern}/[cmd]
+  executes cmd on all lines in [range] that match {pattern}
+  * ex. :g/^$/d deletes all empty lines
+  * ex. :g/^\s*$/d deletes all lines that are empty or only contain whitespace
+  * if [range] is omitted, all lines in file are considered
 
 grep (also see vimgrep)
 - searches files in and below current directory (faster than vimgrep)
@@ -907,7 +917,11 @@ Quickfix List (also see Location List)
 - recommended plugin: unimpaired (see separate section)
 
 Reflow text in a paragraph
-- position cursor anywhere in a paragraph and enter gqap
+- position cursor anywhere in a paragraph and
+  enter gqap (leaves cursor on first line of next paragraph)
+  or gqip (leaves cursor on blank line after paragraph)
+- in code this puts all lines in a function on one line
+  if it fits within line length
 
 Registers
 - like named clipboards
@@ -1124,6 +1138,8 @@ Status Line
   * currently using vim-airline
 
 Surround plugin
+- operates on the things (delimiters) that surround text,
+  not on the text inside them
 - adds, deletes, and changes surroundings (delimeters)
 - delimeters can be ' " ` ( ) { } [ ]
   and HTML/XML tags (not angle brackets <>)
@@ -1157,7 +1173,7 @@ Surround plugin
   * ex. to delete the surrounding tag, dst
     - even deletes attributes in start tag
 - see https://github.com/tpope/vim-surround
-- if the repeat.vim plugin is installed, the dot (.) command
+- install repeat.vim plugin so the dot (.) command
   will repeat these commands in another location
 
 Tab Pages
@@ -1265,6 +1281,8 @@ Text Objects in editing commands
     press <esc>v, edit, and enter :wq
     to exit Vim and execute the edited command
     - can't seem to avoid executing the command on exit!
+  * can simulate in shell with vi-command keymap at
+    https://github.com/minos-org/bash-minos-settings/blob/master/etc.inputrc
 - editing commands have two to four parts
   1) count (optional)
      can follow command, but not usually entered that way
@@ -1327,10 +1345,6 @@ Text Objects in editing commands
   } - moves to line before next paragraph
   % - moves to matching delimter
   * if not on a delimeter, moves forward to next delimiter
-
-foo bar
-baz qux
-whatever
 
 Tools that use vi
 - to cause tools that launch vi (such as cleartool edcs)
