@@ -24,7 +24,7 @@ things to add that aren't installed by default
 - Interpreters: ruby
 - Net: inetutils (contains ftp), ncftp, openssh (contains ssh and scp)
 - Text: enscript
-- Utils: cygutils-extra (contains (lpr), diffutils
+- Utils: cygutils-extra (contains lpr), diffutils, tmux
 - Web: tidy
 
 ncftp
