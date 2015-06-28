@@ -1445,6 +1445,9 @@ Unimpaired Plugin
     - first need to navigate to a definition with ctrl-]
     - ]t, [t, ]T, and [T for tnext, tprevious, tlast, and tfirst
 
+URL
+- in normal mode with cursor over a URL,
+  press gx to open URL in default web browser
 vim-airline plugin
 - a rewrite of the powerline plugin that is
   implemented in VimScript instead of python
