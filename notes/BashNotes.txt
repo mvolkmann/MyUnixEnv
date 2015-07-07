@@ -71,8 +71,8 @@ if statements
   fi
 - to negate a condition,
   if [ ! condition ] ...
-- to test whether a variable isn't set
-  if [ -z "$name"]; then
+- to test whether a variable is NOT set
+  if [ -z "$name" ]; then
     {statements}
   fi
 - to test more than one thing in a condition
