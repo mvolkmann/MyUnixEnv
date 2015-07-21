@@ -81,7 +81,7 @@ alias findjson="find3 json"
 alias findless="find3 less"
 
 # Goes to root directory of current git repo.
-alias git-root='cd `git rev-parse --git-dir`; cd ..'
+alias cdgitroot='cd `git rev-parse --git-dir`; cd ..'
 
 alias gulp6='node --harmony `which gulp`'
 
