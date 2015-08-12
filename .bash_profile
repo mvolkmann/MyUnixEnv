@@ -16,14 +16,12 @@ export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 
 export DOCUMENTS_DIR=$HOME/Documents
 
-export BMX_DIR=$DOCUMENTS_DIR/OCI/clients/bioMerieux
 export DROPBOX_DIR=$HOME/Dropbox
 export EP_DIR=$HOME/gm-earnpower-client
 export OCI_DIR=$DOCUMENTS_DIR/oci
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
 export LANGUAGES_DIR=$PROGRAMMING_DIR/languages
-export COFFEESCRIPT_DIR=$LANGUAGES_DIR/coffeescript
 export CSS_DIR=$LANGUAGES_DIR/CSS
 export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/java
@@ -32,7 +30,6 @@ export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export MARITZ_DIR=$DOCUMENTS_DIR/OCI/clients/Maritz
 #export MONGODB_DIR=$DATABASES_DIR/MongoDB
 export SETT_DIR=$OCI_DIR/SETT
-export TB_DIR=$CSS_DIR/TwitterBootstrap
 export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
 
 # Ant settings
@@ -46,9 +43,9 @@ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 # Clojure settings
-export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
-export CLOJURE_HOME=/opt/clojure-1.5.1 # for RPi
-alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
+#export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
+#export CLOJURE_HOME=/opt/clojure-1.5.1 # for RPi
+#alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
 
 # FindBugs settings
 export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
@@ -57,7 +54,7 @@ export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
 . ~/bin/git-completion.bash
 #export PATH=$PATH:/usr/local/git/bin
 export GITHUB_USER=mvolkmann
-export GITHUB_PASS=github19
+#export GITHUB_PASS=
 
 # grep settings
 # This setting may interfere with fink scripts!
@@ -78,6 +75,7 @@ export JBOSS_HOME=$JAVA_DIR/JBoss/jboss-as-7.1.1.Final
 export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.3.1
 export M2_HOME=$MAVEN_HOME
 export PATH=$PATH:$MAVEN_HOME/bin
+export MAVEN_OPTS="-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m"
 
 # MongoDB settings
 #export PATH=$PATH:$MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
@@ -107,9 +105,12 @@ alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
 export SVN_PREFIX=svn+ssh://oci-svn/education/training/tracks
 
 # Tomcat settings
-export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.41
-export BASEDIR=$TOMCAT_HOME
-export CATALINA_HOME=$TOMCAT_HOME
+#export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.41
+#export BASEDIR=$TOMCAT_HOME
+#export CATALINA_HOME=$TOMCAT_HOME
+
+# TypeScript settings
+export PATH=$PATH:~/programming/typescript/TypeScript/bin
 
 # TypeScript settings
 export PATH=$PATH:$LANGUAGES_DIR/TypeScript/ts1.5/bin
