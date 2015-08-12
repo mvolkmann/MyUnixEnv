@@ -111,6 +111,9 @@ export TOMCAT_HOME=$JAVA_DIR/Tomcat/apache-tomcat-7.0.41
 export BASEDIR=$TOMCAT_HOME
 export CATALINA_HOME=$TOMCAT_HOME
 
+# TypeScript settings
+export PATH=$PATH:$LANGUAGES_DIR/TypeScript/ts1.5/bin
+
 # Google Traceur settings
 export PATH=$PATH:$JAVASCRIPT_DIR/traceur-compiler-master
 

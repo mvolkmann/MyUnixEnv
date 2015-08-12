@@ -36,6 +36,7 @@ set nobackup
 set nocompatible " running vim, not vi, so don't force vi compatibility
 set term=screen-256color
 set updatetime=750
+set wildmode=list:longest,full " gives tab completion lists in ex command area
 
 " Don't need this since it is specified in status line config.
 "set ruler " show line and column number of cursor position
@@ -192,12 +193,17 @@ nnoremap <leader>h :set hlsearch! hlsearch?<cr>
 nnoremap <leader>n :setlocal number!<cr>
 
 " replace all occurences of the complete word under the cursor
-nnoremap <leader>r :%s/\<<C-r><C-w>\>/
+"nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 
 " Switching buffers
 " Use C-^ to toggle to last buffer
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
+
+" Move up or down by a screen line, not a physical line.
+" These differ when text wraps.
+nnoremap <down> gj
+nnoremap <up> gk
 
 " Quick pairs
 inoremap <leader>' ''<esc>i
@@ -414,6 +420,12 @@ nnoremap <leader>sy :SyntasticCheck<cr>
 "let g:syntastic_disabled_filetypes=['html']
 let g:syntastic_html_checkers=['']
 
+" }}}
+
+" Tsuquyomi - plugin for TypeScript --- {{{
+autocmd FileType typescript setlocal completeopt+=menu,preview
+autocmd FileType typescript nmap <buffer> <leader>r <Plug>(TsuquyomiRenameSymbol)
+autocmd FileType typescript nmap <buffer> <leader>t : <c-u>echo tsuquyomi#hint()<cr>
 " }}}
 
 " Ultisnips plugin {{{

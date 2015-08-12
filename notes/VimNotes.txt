@@ -161,6 +161,7 @@ Buffers
   ctrl-^               - switch to previous buffer
   :bp[rev]             - switch to previous buffer (you mapped <- to this)
   :bn[ext]             - switch to next buffer (you mapped -> to this)
+  ctrl-^               - toggle to previous buffer
   :ls                  - list buffers (same as :buffers)
     buffer characteristic indicators include:
     % - buffer in current window
@@ -741,8 +742,9 @@ Moving Around
   ctrl-b   - backward one page
   ctrl-d   - forward half page
   ctrl-u   - backward half page
-  H        - highest (top) line in window
-  L        - lowest (bottom) in window
+  H        - highest (top) line in window; doesn't scroll
+  L        - lowest (bottom) in window; doesn't scroll
+  M        - middle line in window; doesn't scroll
   zt       - move current line to top of window (z Enter also)
   zb       - move current line to bottom of window
   zz       - move current line to center of window
@@ -925,13 +927,39 @@ Reflow text in a paragraph
 
 Registers
 - like named clipboards
-- hold yanked or deleted text that can be pasted
+- hold text that can be pasted
 - to place text in a specific register,
-  precede yank or delete command with "{register-name} (a-z)
-  * if an uppercase register name is used, the text is appended
-    to the text in the register with the corresponding lowercase name
-- to paste text from a register,
-  precede paste command with "{register-name} (a-z)
+  precede yank or delete command with "{register-name}
+  where register name is a-z (note the double-quote!)
+  * if an uppercase register name is used, the text is appended to the
+    text already in the register with the corresponding lowercase name
+- when yank or delete command is used without a register name,
+  the "unnamed register" is used
+- to paste text from a register
+  * in normal mode, "{register-name}p
+  * in insert mode, ctrl-r{register-name}
+- register 0 holds the text from the last yank
+- registers 1 to 9 hold the most recent deletes
+- register % holds the current filename
+- register # holds the previous filename that was being edited
+- register / holds the last search text
+- register - holds the last "small" delete text (less than a line)
+- register . holds the last inserted text
+- register : holds the last ex command entered
+- :reg to see contents of all registers
+- :reg {names} to see contents of all registers
+- register contents are stored in ~/.viminfo
+  and restored when Vim is restarted
+
+Regular expressions
+- slightly different than other regular expressions
+- see "very magic" regex parsing mode
+- quantifiers
+  * \= means zero or one of preceding
+  * * means zero or more of preceding
+  * \+ means one or more of preceding
+- for more, see http://vimregex.com and
+  http://vim.wikia.com/wiki/Search_across_multiple_lines
 
 Reverse order of lines
 - all lines in file
@@ -1179,6 +1207,7 @@ Surround plugin
 Tab Pages
 - to open a new, empty tab, :tabe[dit]
   * can then select a file with :E
+- :Te - open new tab and explore in it
 - to open a new tab for a specified file, :tabe[dit] {filepath}
   * can be just the name of a file in current directory
 - to open all buffers in separate tabs (up to tabpagemax), :tab ball
@@ -1350,15 +1379,34 @@ Tools that use vi
 - to cause tools that launch vi (such as cleartool edcs)
   to launch Vim instead, set VISUAL environment variable to "vim"
 
-Regular expressions
-- slightly different than other regular expressions
-- see "very magic" regex parsing mode
-- quantifiers
-  * \= means zero or one of preceding
-  * * means zero or more of preceding
-  * \+ means one or more of preceding
-- for more, see http://vimregex.com and
-  http://vim.wikia.com/wiki/Search_across_multiple_lines
+TypeScript
+- compiler options are described at
+  https://github.com/Microsoft/TypeScript/wiki/Compiler-Options
+- Tsuquymoi plugin
+  * https://github.com/Quramy/tsuquyomi
+  * works as a client for TSServer, an editor service bundled into TypeScript
+  * must have tsserver running (in TypeScript bin directory which is in PATH)
+  * create tsconfig.json in project root directory
+    - see https://github.com/Microsoft/TypeScript/wiki/tsconfig.json
+    - also see http://json.schemastore.org/tsconfig
+  * when a buffer is saved and there are errors
+    - only checks for errors on save
+    - lines with errors have red >> in gutter
+      * more cursor to line to see error message in status area
+    - errors are written to quickfix list
+      * you configured <leader>q to toggle display
+  * ctrl-x ctrl-o - in insert mode, show completions
+  * ctrl-] - go to definition of symbol under cursor
+  * ctrl-t - return to location where ctrl-] was pressed
+  * ctrl-^ - show list of locations where symbol under cursor is referenced
+    - navigate list with up and down arrows
+      and press return to navigate to reference
+  * <leader>r - renames symbol under cursor and
+    all references, even in files that aren't
+    currently opened in Vim (it opens them)
+  * <leader>t - gives hints about symbol under cursor in status area
+- syntax highlighting plugin
+  * https://github.com/leafgarland/typescript-vim
 
 UltiSnips
 - to install
@@ -1504,8 +1552,10 @@ Windows
   :win {width} {height} - to set default gvim window size (put in .vimrc);
   :sp[lit] [{name}]  - horizontal split screen into two windows
                        and optionally open file {name}
+  :Se                - horizontal split screen and explore
   ctrl-w s           - same as :split
   :vs[plit] [{name}] - vertical split screen
+  :Ve                - vertical split screen and explore
   ctrl-w v           - same as :vsplit
   :new               - split screen and start new file
   ctrl-w n           - same as :new
