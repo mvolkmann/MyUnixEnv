@@ -1322,7 +1322,7 @@ Text Objects in editing commands
      v - visually select
      < - indent
      > - outdent
-  3) motion
+  3) motion (also see "Moving Around" section)
      - optional for some text objects to start from cursor
      a - all (includes delimiters)
      i - inner (excludes delimiters)
@@ -1330,8 +1330,8 @@ Text Objects in editing commands
      T - 'til a character backward (excludes character)
      f - find character forward (includes character)
      F - find character backward (includes character)
-     /{text} - search forward for text (excludes text)
-     ?{text} - search backward for text (includes text)
+     /{text}<cr> - search forward for text (excludes text)
+     ?{text}<cr> - search backward for text (includes text)
      {n}j - current line plus n lines after (n + 1 lines)
      {n}k - current line plus n lines before (n + 1 lines)
      - n defaults to one, so at least two lines are affected

@@ -34,6 +34,7 @@ set mouse=a " enable use of mouse in all modes
 set nobackup
 
 set nocompatible " running vim, not vi, so don't force vi compatibility
+set relativenumber
 set term=screen-256color
 set updatetime=750
 set wildmode=list:longest,full " gives tab completion lists in ex command area
@@ -168,11 +169,6 @@ let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
 
 let mapleader = ","
 
-" Allow using ; in place of : in normal mode so shift key isn't needed.
-" This means ; no longer finds next match of a character
-" after using the f command.
-noremap ; :
-
 " dictionary word completion
 " Press ctrl-n and ctrl-p to traverse list of matching words.
 inoremap <leader>d <c-x><c-k>
@@ -189,8 +185,21 @@ nnoremap <leader>sg :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "
 " toggle search highlighting
 nnoremap <leader>h :set hlsearch! hlsearch?<cr>
 
-" toggle line numbers
-nnoremap <leader>n :setlocal number!<cr>
+" toggle line numbering between relative, absolute, and none
+function! NumberToggle()
+  if (&relativenumber == 1)
+    set number
+    set norelativenumber
+  elseif (&number == 1)
+    set nonumber
+    set norelativenumber
+  else
+    set nonumber
+    set relativenumber
+  endif
+endfunc
+"nnoremap <leader>n :setlocal number!<cr>
+nnoremap <leader>n :call NumberToggle()<cr>
 
 " replace all occurences of the complete word under the cursor
 "nnoremap <leader>r :%s/\<<C-r><C-w>\>/
