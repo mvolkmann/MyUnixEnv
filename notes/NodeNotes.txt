@@ -95,6 +95,9 @@ npm commands include:
 To get help on an npm command
 - enter "npm help {command}"
 
+To run a custom script defined in package.json
+- enter "npm run {script-name}"
+
 NODE_PATH
 - this environment variable is used to locate Node modules
 - a good value for this is .:/usr/local/lib/node_modules
