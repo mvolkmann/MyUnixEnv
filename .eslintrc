@@ -19,7 +19,7 @@
 
     "comma-dangle": 0,
     "no-cond-assign": 2,
-    "no-constant-condition": 1,
+    "no-constant-condition": 0,
     "no-control-regex": 1,
     "no-debugger": 1,
     "no-dupe-args": 0,
@@ -110,7 +110,7 @@
     "no-shadow": 0,
     "no-undef-init": 2,
     "no-undef": 2,
-    "no-undefined": 2,
+    "no-undefined": 0,
     "no-unused-vars": 2,
     "no-use-before-define": 2,
 
