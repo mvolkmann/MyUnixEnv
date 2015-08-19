@@ -539,7 +539,7 @@ Fugitive
 
 git-gutter
 - shows diff symbols in gutter while editing any file that is in a git repo
-- ~ mean changed, + means added, _ means deleted
+- ~ means changed, + means added, _ means deleted
 - see https://github.com/airblade/vim-gitgutter
 
 global
