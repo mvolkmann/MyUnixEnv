@@ -210,11 +210,13 @@ Branches
   git branch -m {old-name} {new-name}
   * only works if no branch named {new-name} exists
   * to force overwrite, use -M instead of -m
-- to delete a branch
+- to delete a local branch
   * often done after a successful merge to another branch
   * git branch -d {branch-name}
     - only works if the branch has already been merged to the current one
     - to force the delete, use -D instead of -d
+- to delete a remote branch
+  * git push origin :{branch-name}
 - to tag a branch
   * git tag {tag-name} [{branch-name}]
     - defaults to tagging the current branch

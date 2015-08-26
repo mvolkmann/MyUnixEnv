@@ -207,8 +207,8 @@ FTP
   * To run a macro from the command line,
     "echo "\${macro-name}" | ftp {name-or-IP-address}
   * To see all the commands that a macro executes
-    - if running macro from ftp prompt, start ftp with -d 
-    - if running macro from command line, start ftp with -v 
+    - if running macro from ftp prompt, start ftp with -d
+    - if running macro from command line, start ftp with -v
 
 Functions
 - to see the definition of a function defined in some script
@@ -303,7 +303,7 @@ Mail
 
 Make
 - To see commands that make would execute without executing them,
-  make -n 
+  make -n
 - Use MPC to generate makefiles for various platforms
 
 Man Pages
@@ -396,6 +396,11 @@ Printing
              --landscape --line-numbers=1 --mark-wrapped-lines=arrow \
              --pretty-print=cpp --printer=bstl0860"
   ens {filename}.cpp
+- Your "ens" alias is configured to print in two columns
+  and "ens1" prints in one column.
+- To print selected lines from a file,
+  sed -n '{start-line},{end-line}p' {file-path} | ens
+  * "p" is for print
 
 Processes
 - $! holds the process id (PID) of the last process that was spawned using &
@@ -467,7 +472,7 @@ Modify the testing framework based on feedback from NSIT.
 
 Redhat Package Manager (RPM)
 - To determine the packages that have been installed,
-    
+
 - To determine the proper RPM versions to download,
   run the whichrpm script in /home/mvolkmann.
 - To determine the version of Red Hat you have,
@@ -478,7 +483,7 @@ Redhat Package Manager (RPM)
 - To install an RPM from the command-line,
   rpm -i {pkg-name}.rpm
 - To uninstall (erase) a package,
-  rpm -e {pkg-name}  
+  rpm -e {pkg-name}
 - Often a package depends on other packages that need to be installed first.
   The rpm command will provide a list of missing dependencies.
 
