@@ -153,7 +153,7 @@ hi htmlTag ctermfg=2 " green; start tag
 hi htmlTagName ctermfg=191 " yellow
 hi htmlTitle ctermfg=15 " white
 
-hi lineNr ctermfg=18 " dark blue
+hi lineNr ctermfg=21 " blue
 hi cursorLineNr ctermfg=12 " blue
 " }}}
 
