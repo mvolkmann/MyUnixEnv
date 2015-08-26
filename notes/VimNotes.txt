@@ -1000,7 +1000,8 @@ Search and Replace
   * - search forward for next occurrence of word under cursor
   # - search backward for next occurrence of word under cursor
   :%s/{pattern}/{string} - replace first occurrence of {pattern} with {string}
-  :%s/{pattern}/{string}/g  - all occurrences
+  * to remove trailing whitespace from all lines, %s/\s\+$//
+  :%s/{pattern}/{string}/g - all occurrences
   :%s/{pattern}/{string}/gc - all occurences with confirmation prompts
   :%s/\t/  /g - replace all tabs with two spaces
   :set ff=unix - removes Windows carriage returns from all lines
