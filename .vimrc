@@ -34,6 +34,7 @@ set mouse=a " enable use of mouse in all modes
 set nobackup
 
 set nocompatible " running vim, not vi, so don't force vi compatibility
+set noshowmode " since it is already being displayed in the status bar by airline
 set relativenumber
 set term=screen-256color
 set updatetime=750
