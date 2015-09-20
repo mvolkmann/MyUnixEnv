@@ -2,13 +2,42 @@ PostgreSQL Notes
 
 There is a DZone Refcard for this!
 
+Installation
+- on Mac
+  * brew install postgresql
+    or
+    brew upgrade postgresql
+- from source
+  * download and unzip
+  * cd to unzip directory
+  * ./configure
+  * make
+  * sudo make install
+- from a prebuilt binary
+  * the installer creates a default user named "postgres" and
+    prompts for a password to assign to the user during the install
+    - you set the password to "postgres"
+  * by default this installs in /Library/PostgreSQL/8.3
+  * includes pgAdmin3 which is a GUI tool
+    for working with Postgres databases
+    (definitely use this!)
+  * all the commands are in the bin directory below that directory
+  * add "-Upostgres" to all commands to run as that user
+  * it seems that the server is always running when installed this way
+
+Initialize database
+- need? sudo sysctl -w kern.sysv.shmmax=12582912
+- need? sudo sysctl -w kern.sysv.shmall=12582912
+- sudo mkdir /usr/local/pgsql
+- sudo mkdir /usr/local/pgsql/data
+- sudo chown Mark /usr/local/pgsql
+- sudo chown Mark /usr/local/pgsql/data
+- all the commands are in /user/local/pqsel/bin
+- initdb -D /usr/local/pgsql/data
+
 Version 9.2.1 notes
-- to create a database
-  * sudo sysctl -w kern.sysv.shmmax=12582912
-  * sudo sysctl -w kern.sysv.shmall=12582912
-  * initdb /usr/local/var/postgres -E utf8
 - to start server
-  * postgres -D /usr/local/var/postgres
+  * postgres -D /usr/local/pgsql/data
     - will continue running
 - to stop server
   * pg_ctl -D /usr/local/var/postgres stop -s -m fast
@@ -31,31 +60,6 @@ Version 9.2.1 notes
 - to execute a single SQL statement
   * psql -d {db-name} -c '{stmt}'
     - ex. psql -d bmx-demo -c 'select * from states'
-
-Installation
-- from source
-  * download and unzip
-  * cd to unzip directory
-  * ./configure
-  * make
-  * sudo make install
-  * sudo mkdir /usr/local/pgsql
-  * sudo mkdir /usr/local/pgsql/data
-  * sudo chown Mark /usr/local/pgsql
-  * sudo chown Mark /usr/local/pgsql/data
-  * all the commands are in /user/local/pqsel/bin
-  * initdb -D /usr/local/pgsql/data
-- from a prebuilt binary
-  * the installer creates a default user named "postgres" and
-    prompts for a password to assign to the user during the install
-    - you set the password to "postgres"
-  * by default this installs in /Library/PostgreSQL/8.3
-  * includes pgAdmin3 which is a GUI tool
-    for working with Postgres databases
-    (definitely use this!)
-  * all the commands are in the bin directory below that directory
-  * add "-Upostgres" to all commands to run as that user
-  * it seems that the server is always running when installed this way
 
 To start interactive mode
 - psql -U{username} {database-name}
