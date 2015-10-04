@@ -234,7 +234,7 @@ nnoremap <c-s> :update<cr>
 
 " JSHint - see https://github.com/wookiehangover/jshint.vim
 "let JSHintUpdateWriteOnly = 1
-nnoremap <leader>j :JSHintUpdate<cr>
+"nnoremap <leader>j :JSHintUpdate<cr>
 
 " NERDTree plugin toggle
 "nnoremap <leader>t :NERDTreeToggle<cr>
@@ -429,6 +429,7 @@ nnoremap <leader>sy :SyntasticCheck<cr>
 " AngularJS directives to be " invalid.
 "let g:syntastic_disabled_filetypes=['html']
 let g:syntastic_html_checkers=['']
+let g:syntastic_javascript_checkers=['eslint']
 
 " }}}
 

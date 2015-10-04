@@ -1205,6 +1205,14 @@ Surround plugin
 - install repeat.vim plugin so the dot (.) command
   will repeat these commands in another location
 
+Syntastic
+- to see the checkers being used for the filetype of the current buffer
+  * :SyntasticInfo
+- to configure to only use eslint for JavaScript files
+  * let g:syntastic_javascript_checkers=['eslint']
+  * this is currently the best option for React JSX support
+  * need to configure jsx support in .eslintrc
+
 Tab Pages
 - to open a new, empty tab, :tabe[dit]
   * can then select a file with :E
