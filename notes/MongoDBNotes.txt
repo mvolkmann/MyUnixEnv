@@ -7,13 +7,18 @@ To install
   * browse http://www.mongodb.org/downloads
   * download the appropriate file
   * unzip the file
-  * mkdir -p /data/db (default database directory)
   * ???
+
+To create directory where data will be stored
+- cd /
+- mkdir -p /data/db (default database directory)
+- sudo chown -R {you} /data
 
 To get detailed documentation
 - browse http://www.mongodb.org/display/DOCS/Manual
 
 To start server
+- ulimit -n 1024 (to avoid warning about soft rlimits to low)
 - enter mongod
 
 Mongo Shell
@@ -26,8 +31,17 @@ Mongo Shell
 - to delete a database, db.dropDatabase()
 - to get the names of the collections in a database, show collections
 - to create a collection, db.createCollection('{name}')
+- to add an object to a collection,
+  db.{coll}.insert(obj)
+- to update an object in a collection,
+  db.{coll}.update(searchObj, updateObj)
+  * ex. db.tjs.update({lastName: 'Volkmann'},
+      {$set: {firstName: 'Mark'}});
 - to delete a collection, db.{coll}.drop()
-- to see the first 20 documents in a collection, db.{coll}.find()
+- to get the first 20 documents in a collection, db.{coll}.find()
+- to get all the objects that match given criteria,
+  db.{coll}.find(criteria)
+  * ex. db.tjs.find({lastName: {$gt: 'H'}})
 - to get the number of documents in a collection,
   db.{coll}.find().count() or db.{coll}.find().length()
 - to find a document in a collection, db.{coll}.findOne(query)
@@ -35,7 +49,8 @@ Mongo Shell
     the keys are document property names and
     the values are documentproperty values
 - to delete a document from a collection, db.{coll}.remove(query)
-- to add an index to a collection, db.{coll}.ensureIndex({key: 1});
+- to add an index to a collection, db.{coll}.createIndex({{prop-name}: 1});
+  * 1 means ascending order, -1 means descending
 - to exit the shell, enter "exit"
 
 Node modules

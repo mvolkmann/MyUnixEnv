@@ -8,4 +8,8 @@
   editor = /usr/bin/vim
 [user]
   name = R. Mark Volkmann
-	email = mark.volkmann@maritz.com
+	email = r.mark.volkmann@gmail.com
+[color]
+	ui = auto
+[credential]
+	helper = osxkeychain

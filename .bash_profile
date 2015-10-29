@@ -30,7 +30,7 @@ export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export MARITZ_DIR=$DOCUMENTS_DIR/OCI/clients/Maritz
 #export MONGODB_DIR=$DATABASES_DIR/MongoDB
 export SETT_DIR=$OCI_DIR/SETT
-export TRAINING_DIR=$DOCUMENTS_DIR/OCI/SVN/training
+export TRAINING_DIR=$DOCUMENTS_DIR/training
 
 # Ant settings
 export ANT_HOME=$JAVA_DIR/Ant/apache-ant-1.8.2
