@@ -9,18 +9,16 @@ if [ $# -ne 2 ]; then
 fi
 
 # Get path to the .git directory for the current repo.
-gitDir=`git rev-parse --git-dir`
+gitDir=$(git rev-parse --git-dir)
 
 # Get path to top repo directory (parent of .git)
-gitDirLen=${#gitDir}
-topDir=${gitDir:0:$gitDirLen - 4}
+topDir=${gitDir%.git} # removes ".git" from end of gitDir
 
 # Get the full path to the current directory.
-pwd=`pwd`
+pwd=$(pwd)
 
 # Remove path prefix before top repo directory.
-topDirLen=${#topDir}
-path=${pwd:topDirLen}
+path=${pwd#$topDir} # removes topDir from front of pwd
 
 # Output version of filename at specified commit.
 git show $1:$path/$2
