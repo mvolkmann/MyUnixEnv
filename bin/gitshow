@@ -1,0 +1,26 @@
+#!/bin/bash
+# This outputs the version of a given filename in a specified commit.
+# It assumes you have already cd'ed to the directory containing the file.
+
+# Verify number of arguments.
+if [ $# -ne 2 ]; then
+  echo usage: gitshow {commit} {filename}
+  exit 1
+fi
+
+# Get path to the .git directory for the current repo.
+gitDir=`git rev-parse --git-dir`
+
+# Get path to top repo directory (parent of .git)
+gitDirLen=${#gitDir}
+topDir=${gitDir:0:$gitDirLen - 4}
+
+# Get the full path to the current directory.
+pwd=`pwd`
+
+# Remove path prefix before top repo directory.
+topDirLen=${#topDir}
+path=${pwd:topDirLen}
+
+# Output version of filename at specified commit.
+git show $1:$path/$2

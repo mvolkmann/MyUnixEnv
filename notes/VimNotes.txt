@@ -793,6 +793,10 @@ Netrw (network-oriented reading, writing, and browsing)
   D         - deletes file
   R         - renames file
 
+Numbers
+- ctrl-a increments number under cursor
+- ctrl-x decrements number under cursor
+
 Omni-completion
 - similar to intellisense in some IDEs
 - Vim ships with support for several languages
