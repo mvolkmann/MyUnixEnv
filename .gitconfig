@@ -1,0 +1,15 @@
+[url "https://"]
+  insteadOf = git://
+[alias]
+  br = branch
+  ci = commit
+  co = checkout
+[core]
+  editor = /usr/bin/vim
+[user]
+  name = R. Mark Volkmann
+  email = r.mark.volkmann@gmail.com
+[color]
+  ui = auto
+[credential]
+  helper = osxkeychain
