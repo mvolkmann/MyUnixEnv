@@ -1,0 +1,16 @@
+Maritz Notes
+
+To connect remotely from your OCI Mac laptop
+- launch Citrix Receiver
+- double-click VNC-Remote Control
+- wait for phone call from Maritz PhoneFactor
+- press # and hang up
+- this part doesn’t happen every time
+  * wait several minutes for a dialog to appear
+  * enter 156.45.40.207 in VNS Server input to use your Maritz iMac
+  * select "AUTO" from first set of radio buttons
+  * press “Connect” button
+  * enter "remoteME" in dialog
+- quit the "Desktop - Office 2013" app
+- can quit the "Citrix Receiver" app now
+- use the remaining "Citrix Viewer" app
