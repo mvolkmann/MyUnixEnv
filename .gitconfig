@@ -13,3 +13,5 @@
 	ui = auto
 [credential]
 	helper = osxkeychain
+[push]
+	default = simple
