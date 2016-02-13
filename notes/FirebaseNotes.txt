@@ -4,8 +4,19 @@ Firebase Notes
   * provides data storage
     - store & sync data with a NoSQL cloud database
     - data is stored as JSON
+      * maximum depth is 32
     - data is synced to all connected clients in realtime
     - data remains available when app goes offline
+  * basic idea
+    - data is stored in a tree of nodes
+    - can get a "ref" to any node
+    - can search and ref for specific children,
+      but cannot search deeper descendant nodes
+    - can listen for child nodes being added,
+      moved (order within parent), removed, and changed
+    - listeners a live and learn about future changes
+    - search listeners are live and learn about future nodes
+      that match the criteria
   * provides user authentication
     - using email/password, Facebook, Twitter, GitHub, Google,
       anonymous auth, or your own auth system
@@ -15,7 +26,7 @@ Firebase Notes
     - provides a global CDN
   * can access from web apps, Android apps, and iOS apps
   * has a REST API
-  * cost
+  * cost (as of 2/13/16)
     - free for small amounts of data and accesses
       * 100 connections, 1 GB storage, 10 GB transfer, no custom domain
     - monthly fee for larger amounts of data and accesses
@@ -77,3 +88,58 @@ ASK HOW LARGE THE eP3 DATABASE IS.
     - firebase deploy
     - to use the app, browse https://scorching-fire-8631.firebaseapp.com
     - to configure the app, browse https://scorching-fire-8631.firebaseio.com
+  * to open a web app in the default browser
+    - firebase open
+  * reading data
+    - when a node is read, all of it's children (descendants?) are read
+  * events
+    - to listen for a value change to a ref,
+      ref.on('value', snapshot => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being added,
+      ref.on('child_added', (snapshot, prevChildKey) => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being modified,
+      ref.on('child_changed', snapshot => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being removed,
+      ref.on('child_removed', snapshot => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being moved
+      to a different position in list of children,
+      ref.on('child_moved', snapshot => {
+        const value = snapshot.val();
+      });
+    - to only listen for the first event of a given kind,
+      call ref.once instead of ref.on
+    - to remove a listener (a.k.a. detach a callback)
+      ref.off(event, callback);
+    - to remove all listeners for a given event,
+      ref.off(event);
+    - to remove all listeners for all events,
+      ref.off();
+  * querying
+    - to construct a query from a given ref,
+      * first, specify how results should be ordered by calling one of these:
+        - orderByChild(child-name) - when values are objects
+          that should be ordered on a given child value
+          * this also specifies the property being searched
+            by startAt (prefix search)
+        - orderByKey() - key value must be a number or string
+        - orderByValue()
+        - orderByPriority() - priorities are numbers or strings assigned to nodes
+        - Is there a default order?
+      * second, specify the query by calling
+        limitToFirst(), limitToLast(),
+        startAt(), endAt(), and/or equalTo()
+      * third, register a listener to get results
+        using "on" or "once" method
+- see example in programming/Firebase/demo-app
+  * query capabilities are quite limited
+  * this may rule out use of Firebase for many apps
+  * cannot search on multiple properties
+  * cannot perform joins across collections
