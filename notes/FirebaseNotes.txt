@@ -139,6 +139,9 @@ ASK HOW LARGE THE eP3 DATABASE IS.
       * third, register a listener to get results
         using "on" or "once" method
 - see example in programming/Firebase/demo-app
+  * to run
+    - node server.js
+    - browse localhost:1919
   * query capabilities are quite limited
   * this may rule out use of Firebase for many apps
   * cannot search on multiple properties
