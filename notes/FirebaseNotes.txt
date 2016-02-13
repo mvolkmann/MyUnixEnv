@@ -17,6 +17,8 @@ Firebase Notes
     - listeners a live and learn about future changes
     - search listeners are live and learn about future nodes
       that match the criteria
+    - each Firebase app has a web console
+      that can be used to view and modify the data
   * provides user authentication
     - using email/password, Facebook, Twitter, GitHub, Google,
       anonymous auth, or your own auth system
