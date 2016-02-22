@@ -1,0 +1,150 @@
+Firebase Notes
+
+- overview
+  * provides data storage
+    - store & sync data with a NoSQL cloud database
+    - data is stored as JSON
+      * maximum depth is 32
+    - data is synced to all connected clients in realtime
+    - data remains available when app goes offline
+  * basic idea
+    - data is stored in a tree of nodes
+    - can get a "ref" to any node
+    - can search and ref for specific children,
+      but cannot search deeper descendant nodes
+    - can listen for child nodes being added,
+      moved (order within parent), removed, and changed
+    - listeners a live and learn about future changes
+    - search listeners are live and learn about future nodes
+      that match the criteria
+    - each Firebase app has a web console
+      that can be used to view and modify the data
+  * provides user authentication
+    - using email/password, Facebook, Twitter, GitHub, Google,
+      anonymous auth, or your own auth system
+  * provides static file hosting
+    - deploy to a Google server
+    - works with SSL certs
+    - provides a global CDN
+  * can access from web apps, Android apps, and iOS apps
+  * has a REST API
+  * cost (as of 2/13/16)
+    - free for small amounts of data and accesses
+      * 100 connections, 1 GB storage, 10 GB transfer, no custom domain
+    - monthly fee for larger amounts of data and accesses
+      * $5 per month to add a custom domain
+      * $49 per month for unlimited connections, 10 GB storage, 50 GB transfer
+      * $149 per month for 30 GB storage, 150 GB transfer
+      * $449 per month for 100 GB storage, 500 GB transfer
+      * $1499 per month for 300 GB storage, 1.5 TB transfer
+ASK HOW LARGE THE eP3 DATABASE IS.
+    - scales to accomodate the app
+      * "Our servers manage millions of concurrent connections
+        and billions of operations per month."
+  * security
+    - "All of your data is transferred over a secure SSL connection
+      with a 2048-bit certificate."
+    - "Database access and validation is controlled at a granular level
+      using our flexible security rules language."
+    - "We take care of provisioning the SSL cert for you.:"
+  * offline support
+    - "Your Firebase app will remain responsive regardless of network latency
+      or Internet connectivity.  All writes to a Firebase database will trigger
+      local events immediately, before any data has been written to the server.
+      Once connectivity is re-established, the client will receive any changes
+      it missed, synchronizing it with the current server state."
+  * deployment
+    - "Deploy using the Firebase command line tools and
+      roll back to previous versions with one click."
+    - "Every app gets its own firebaseapp.com domain,
+      and paid apps can deploy to a custom domain."
+- to create an account
+  * https://www.firebase.com/login/
+
+- using from JavaScript
+  * to load library
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+  * also load your JavaScript code
+    <script src="my-file.js"></script>
+  * to obtain a reference
+    const fbRef = new Firebase('https://{some-code}.firebaseIO.com/');
+  * to set the db to an object
+    fbRef.set(obj);
+  * to add an object to a list
+    fbRef.push(obj);
+  * to listen for objects being added to a list
+    fbRef.on('child_added', snapshot => {
+      const obj = snapshot.val();
+      // Do something with obj.
+    });
+  * to deploy a web app
+    - npm install -g firebase-tools
+    - firebase login
+      * if you set up the account with Google,
+        press the Sign in with Google" button
+        instead of entering a username and password in the text fields
+    - firebase init
+      * prompts for Firebase to use and
+        directory for public root (defaults to "public")
+      * creates firebase.json
+    - firebase deploy
+    - to use the app, browse https://scorching-fire-8631.firebaseapp.com
+    - to configure the app, browse https://scorching-fire-8631.firebaseio.com
+  * to open a web app in the default browser
+    - firebase open
+  * reading data
+    - when a node is read, all of it's children (descendants?) are read
+  * events
+    - to listen for a value change to a ref,
+      ref.on('value', snapshot => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being added,
+      ref.on('child_added', (snapshot, prevChildKey) => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being modified,
+      ref.on('child_changed', snapshot => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being removed,
+      ref.on('child_removed', snapshot => {
+        const value = snapshot.val();
+      });
+    - to listen for a child of a ref being moved
+      to a different position in list of children,
+      ref.on('child_moved', snapshot => {
+        const value = snapshot.val();
+      });
+    - to only listen for the first event of a given kind,
+      call ref.once instead of ref.on
+    - to remove a listener (a.k.a. detach a callback)
+      ref.off(event, callback);
+    - to remove all listeners for a given event,
+      ref.off(event);
+    - to remove all listeners for all events,
+      ref.off();
+  * querying
+    - to construct a query from a given ref,
+      * first, specify how results should be ordered by calling one of these:
+        - orderByChild(child-name) - when values are objects
+          that should be ordered on a given child value
+          * this also specifies the property being searched
+            by startAt (prefix search)
+        - orderByKey() - key value must be a number or string
+        - orderByValue()
+        - orderByPriority() - priorities are numbers or strings assigned to nodes
+        - Is there a default order?
+      * second, specify the query by calling
+        limitToFirst(), limitToLast(),
+        startAt(), endAt(), and/or equalTo()
+      * third, register a listener to get results
+        using "on" or "once" method
+- see example in programming/Firebase/demo-app
+  * to run
+    - node server.js
+    - browse localhost:1919
+  * query capabilities are quite limited
+  * this may rule out use of Firebase for many apps
+  * cannot search on multiple properties
+  * cannot perform joins across collections

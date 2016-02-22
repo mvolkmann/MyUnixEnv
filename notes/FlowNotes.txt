@@ -1,0 +1,33 @@
+Flow Notes
+
+- overview
+  * typechecker for JavaScript from Facebook
+- to install
+  * download
+  * for use in Babel to strip type information
+    - npm install babel-plugin-transform-flow-strip-types
+    - add this line to .babelrc
+      "plugins": ["transform-flow-strip-types"],
+- to get help, run "flow --help"
+- to get version of flow that is installed, run "flow version"
+- to setup for a project
+  * cd to project directory
+  * run "flow init"
+    - creates .flowconfig file
+    - configure to ignore files under node_modules directory
+      by adding this to [ignore] section
+      .*/node_modules
+      * why is the "*" needed?
+- to enable checking in a file
+  * add comment // @flow or /* @flow */ at top
+- to run
+  * run "flow" to start the flow server (optional)
+    - makes it faster to check files because it only checks
+      those that have been modified since the last check
+  * run "flow check" everytime you want to check files again
+  * run "flow stop" to stop the flow server (optional)
+- to configure ESLint to strip type annotations before linting
+  * npm install -g eslint-plugin-flowtype
+    - from https://github.com/gcazaciuc/eslint-plugin-flowtype
+  * modify .eslintrc (perhaps one in home directory) to include
+    plugins: ["flowtype"]
