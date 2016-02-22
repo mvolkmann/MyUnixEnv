@@ -926,6 +926,7 @@ Reflow text in a paragraph
 - position cursor anywhere in a paragraph and
   enter gqap (leaves cursor on first line of next paragraph)
   or gqip (leaves cursor on blank line after paragraph)
+  * seems to default to a max line width of 80 characters
 - in code this puts all lines in a function on one line
   if it fits within line length
 
