@@ -2,6 +2,9 @@ Flow Notes
 
 - overview
   * open-source typechecker for JavaScript from Facebook
+  * can add types gradually and still derive benefit
+  * imported functions must have parameter and return types defined
+    - includes libraries
   * supports type inference
     - can catch type errors without having to declare
       the types of all variables, parameters, and functions
@@ -39,17 +42,17 @@ Flow Notes
     - creates .flowconfig file
     - configure to ignore files under node_modules directory
       by adding this to [ignore] section
-      .*/node_modules
-      * why is the "*" needed?
+      node_modules
 - to enable checking in a file
   * add comment // @flow or /* @flow */ at top
+  * files without this are not type checked
 - to run
   * run "flow" to start the flow server (optional)
     - a.k.a. "code intelligence server"
     - maintains knowledge about files it has already checked
     - makes it faster to check files because it only checks
       those that have been modified since the last check
-    - performs parallel evaulation of multiple files
+    - performs parallel evaluation of multiple files
   * run "flow check" everytime you want to check files again
   * run "flow stop" to stop the flow server (optional)
 - to configure ESLint to strip type annotations before linting
@@ -147,6 +150,26 @@ Flow Notes
     - http://definitelytyped.org/
   * enum types
 
+- workaround to enable importing CSS files
+  * add the following to .flowconfig
+    [libs]
+    interfaces
+
+    [options]
+    module.name_mapper='.+\.css$' -> 'CSSModule'
+    module.system=haste
+  * add the file global.js in the interfaces directory containing:
+      declare module CSSModule {
+        declare var exports: { [key: string]: string };
+      }
+  * now can import CSS files in a JavaScript file like this:
+      import './todo.css';
+  * see https://gist.github.com/lambdahands/d19e0da96285b749f0ef
+
+- workaround for interface functions whose names are JavaScript keywords
+  * see training/React/react-examples/todo-reducer-rest/interfaces/axios.js
+
 - questions
   * Is there an "interface" keyword in Flow? If so, what does it do?
   * Is there a "mixin" keyword in Flow? If so, what does it do?
+
