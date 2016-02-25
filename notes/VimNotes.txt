@@ -1169,7 +1169,7 @@ Status Line
   autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 - %f shows the file name of the current file
 - there are also plugins that give a nice status line
-  * currently using vim-airline
+  * consider using vim-airline
 
 Surround plugin
 - operates on the things (delimiters) that surround text,
@@ -1510,7 +1510,10 @@ Unimpaired Plugin
 URL
 - in normal mode with cursor over a URL,
   press gx to open URL in default web browser
+
 vim-airline plugin
+- stopped using because excess content to left of file name
+  causes file name to be obscured in narrow, vertical splits
 - a rewrite of the powerline plugin that is
   implemented in VimScript instead of python
   and is easier to install
