@@ -300,19 +300,19 @@ set laststatus=2
 
 " The customizations below are commented out because I am
 " using vim-airline to control the status line for now.
-"set statusline=%t " file name (omits path)
-"set statusline+=%M " modified flag
-"set statusline+=%R " read-only flag
-"set statusline+=%= " left/right separator
-"set statusline+=line\ %l " line number
-"set statusline+=\ of\ %L " total lines
-"set statusline+=,\ col\ %c, " cursor line number and column
-"set statusline+=\ %P " percent through file
+set statusline=%t " file name (omits path)
+set statusline+=%M " modified flag
+set statusline+=%R " read-only flag
+set statusline+=%= " left/right separator
+set statusline+=line\ %l " line number
+set statusline+=\ of\ %L " total lines
+set statusline+=,\ col\ %c, " cursor line number and column
+set statusline+=\ %P " percent through file
 
 " Change status line background color based on mode.
-"highlight StatusLine ctermfg=lightyellow ctermbg=black
-"autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
-"autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
+highlight StatusLine ctermfg=lightyellow ctermbg=black
+autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
+autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 " }}}
 
 " Folding --- {{{
@@ -390,16 +390,16 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 " airline --- {{{
 " Display list of buffer names at top when only one is visible.
 "let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 1
 " Fix colors so status bar is readable in non-active windows.
 " See https://github.com/bling/vim-airline/issues/506.
-let g:airline#extensions#branch#enabled = 1 " show git branch
+"let g:airline#extensions#branch#enabled = 1 " show git branch
 " To hide vim-gutter stats on added, modified, and delete lines ...
 "let g:airline#extensions#hunks#enabled=0
 
-let g:Powerline_symbols = 'fancy'
-set fillchars+=stl:\ ,stlnc:\
-set termencoding=utf-8
+"let g:Powerline_symbols = 'fancy'
+"set fillchars+=stl:\ ,stlnc:\
+"set termencoding=utf-8
 
 "let g:airline_theme_patch_func = 'AirlineThemePatch'
 "function! AirlineThemePatch(palette)

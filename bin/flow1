@@ -1,0 +1,9 @@
+#!/bin/bash
+# Runs the Flow JavaScript type checker on a specified file.
+
+if [ $# -ne 1 ]; then
+  echo usage: flow1 {file-name}
+  exit 1
+fi
+
+flow check-contents < $1
