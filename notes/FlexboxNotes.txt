@@ -1,0 +1,121 @@
+Flexbox Notes
+
+- a CSS layout standard
+  * the spec changed significantly through three major revisions
+  * to determine whether articles and tutorials are covering
+    the "Candidate Recommendation", look for "display: flex",
+    not "display: box" or "display: flexbox"
+- browser support
+  * Chrome 21+
+  * Safari 6.1+
+  * Firefox 22+
+  * IE 11+
+  * use a polyfill to support older browsers
+    including IE 10, but not IE 9 or below
+    - Flexibility: https://github.com/10up/flexibility
+    - don't use Flexie, an outdated polyfill
+- resources for learning
+  * http://flexboxfroggy.com/
+- key idea
+  * nest containers in containers and use flexbox
+    at multiple levels to specify any kind of layout
+- Flexbox makes it SO much easier to center things horizontally and vertically,
+  even groups of things!
+
+- to make a container element use flexbox, set
+  display: flex
+  * when parent display is flex, block level children act like inline-block
+
+- item alignment
+  * justify-content is for horizontal
+  * align-items is for vertical
+
+- justify-content: aligns items horizontally within container
+  * flex-start: aligns items to start
+    which is the left side unless flex-direction is row-reverse
+  * flex-end: aligns items to end
+    which is the right side unless flex-direction is row-reverse
+  * center: aligns at center
+  * space-between: aligns items with equal spacing between each
+    (no space before first or after last)
+  * space-around: aligns items with equal spacing around each
+    (half space before first and after last)
+
+- align-items: aligns items vertically within container
+  * flex-start: aligns items at top
+  * flex-end: aligns items at bottom
+  * center: aligns items at center
+  * baseline: aligns items at baseline of container
+  * stretch: stretches items to height of container
+    - only works for items with no specified height
+
+- align-self: does the same for a specific item
+  * set to one of the align-items values
+
+- flex-direction: sets order of items within container
+  * row: left to right starting from left edge (default)
+  * row-reverse: right to left starting from right edge
+  * column: each item on its own row, top to bottom
+  * column-reverse: each item on its own row, bottom to top
+
+- order: changes order of elements
+  * set to a positive or negative number
+  * items with higher numbers appear after those with lower numbers
+  * default value is 0
+
+- flex-wrap: allows items to wrap onto new rows when they don't fit,
+  and avoids having them be scaled horizontally
+  * nowrap: all items on one row, scaling horizontally if necessary (default)
+    - when items don't fit, they are scaled unless flex-wrap is not nowrap
+  * wrap: items wrap to new rows if necessary
+  * wrap-reverse: items wrap to new rows in reverse if necessary
+  * set flex-direction to column to flip meaning of flex-wrap
+    so items are in columns instead of rows
+
+- flex-flow: combines flex-wrap and flex-direction into one property
+  * ex. flex-flow: wrap column;
+
+- row heights and column widths are stretched to fill container by default
+
+- align-content: controls row heights and column widths
+  * flex-start: rows/columns packed at start
+  * flex-end: rows/columns packed at end
+  * center: rows/columns packed in center
+  * space-between: rows/columns have equal spacing between them
+  * space-around: rows/columns have equal spacing around them
+    (half space before first and after last)
+  * stretch: rows/columns are stretched to fill container
+    and each is the same height/width (default)
+    - elements inside will stretch also
+      unless they have a specified height/width
+  * this has no effect when there is only one row/column
+
+- flex-grow
+  * causes elements to grow to fill available space
+  * default is 0 which prevents growing
+  * if all are 1, all grow the same amount
+  * the percentage by which each element grows is
+    its flex-grow value divided by the sum of
+    the all the flex-grow values in the same parent
+  * ex. for nav on left with fixed with and
+    main on right with variable width,
+    set main flex-grow to 1 and let nav flex-grow default to 0
+
+- flex-shrink
+  * allows elements to shrink if necessary to remain in available space
+  * default is 0 which prevents shrinking
+
+- flex-basis
+  * specifies the starting size
+    (width for row direction and height for column direction)
+    before grow or shrink are applied
+
+- the previous three properties, flex-grow, flex-shrink, and flex-basis,
+  can be combined in one "flex" property
+  * ex. flex: 2 3 100px;
+
+- for responsive UIs, consider using media queries to apply
+  different flexbox properties for different display widths
+  * ex. using different "order" property values
+
+Try your flexbox example code without using the "flexibility" polyfill.

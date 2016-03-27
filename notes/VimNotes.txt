@@ -1578,6 +1578,8 @@ Windows
   ctrl-w n           - same as :new
   ctrl-w {h|j|k|l}   - move to window in direction of key
   ctrl-w {H|J|K|L}   - swap windows in direction of key
+                       * H and L switch from horizontal to vertical splits
+                       * J and K switch from vertical to horizontal splits
   ctrl-w r           - rotate windows
   ctrl-w down-arrow  - move to window below
   ctrl-w up-arrow    - move to window above
