@@ -35,6 +35,7 @@ set nobackup
 
 set nocompatible " running vim, not vi, so don't force vi compatibility
 set noshowmode " since it is already being displayed in the status bar by airline
+set number
 set relativenumber
 set term=screen-256color
 set updatetime=750
@@ -188,14 +189,14 @@ nnoremap <leader>h :set hlsearch! hlsearch?<cr>
 
 " toggle line numbering between relative, absolute, and none
 function! NumberToggle()
-  if (&relativenumber == 1)
+  if (&relativenumber == 1) " turn number on and relative off
     set number
     set norelativenumber
-  elseif (&number == 1)
+  elseif (&number == 1) " turn both off
     set nonumber
     set norelativenumber
-  else
-    set nonumber
+  else " turn both on
+    set number
     set relativenumber
   endif
 endfunc
