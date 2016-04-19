@@ -287,7 +287,7 @@ Ejecting CDs and DVDs
 - sometimes an inserted disk isn't recognized, stays in the drive,
   and doesn't appear in the Finder or on the desktop
 - one way to eject the disk is to
-  * select Apple menu ... About This Mac ... More Info...
+  * select Apple menu ... About This Mac ... System Report...
   * select ATA or Serial-ATA under Hardware
   * select the device
     - on your laptop the device is "HL-DT-ST DVDRW GS23N"

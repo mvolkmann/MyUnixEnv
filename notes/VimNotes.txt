@@ -1101,6 +1101,7 @@ Slime and Screen
 Snipmate
 - also see "UltiSnips" section which is probably better
   * recommended by Drew Neil
+  * you are using UltiSnips now instead of this!
 - to install
   * cd ~/.vim/bundle
   * git clone https://github.com/tomtom/tlib_vim.git
@@ -1113,7 +1114,7 @@ Snipmate
   * won't work if tab key has been mapped to do something else!
   * press tab to advance to next placeholder in snippet if there is one
 - to modify and add snippets
-  * edit the .snippet files in bundles/vim-snippets/snippets
+  * edit the .snippet files in .vim./bundle/vim-snippets/snippets
     - for example, javascript.snippets
   * indentation in snippets must be done with tabs, not spaces
     - depending on other Vim configuration,
@@ -1444,8 +1445,9 @@ UltiSnips
   * won't work if tab key has been mapped to do something else!
   * press tab to advance to next placeholder in snippet if there is one
 - to modify and add snippets
-  * default snippet files are in bundles/vim-snippets/UltiSnips
+  * default snippet files are in .vim/bundle/vim-snippets/UltiSnips
     - for example, javascript.snippets
+  * my snippet files are in MyUnixEnv/UltiSnips
   * to edit a private snippet file for the current filetype
     - :UltiSnipsEdit
     - if the file doesn't exist, it is created

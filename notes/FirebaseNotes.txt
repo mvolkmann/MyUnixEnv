@@ -38,7 +38,7 @@ Firebase Notes
       * $449 per month for 100 GB storage, 500 GB transfer
       * $1499 per month for 300 GB storage, 1.5 TB transfer
 ASK HOW LARGE THE eP3 DATABASE IS.
-    - scales to accomodate the app
+    - scales to accommodate the app
       * "Our servers manage millions of concurrent connections
         and billions of operations per month."
   * security

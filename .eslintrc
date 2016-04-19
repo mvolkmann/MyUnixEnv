@@ -21,6 +21,12 @@
     }
   },
 
+  {
+    "plugins": [
+      "html"
+    ]
+  },
+
   "rules": {
     "accessor-pairs": 2,
     "array-bracket-spacing": [2, "never"],
