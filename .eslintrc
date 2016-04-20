@@ -8,6 +8,7 @@
   "globals": {
     "angular": false,
     "mtzEnv": false,
+    "Polymer": false,
     "$": false
   },
 
@@ -21,11 +22,9 @@
     }
   },
 
-  {
-    "plugins": [
-      "html"
-    ]
-  },
+  "plugins": [
+    "html"
+  ],
 
   "rules": {
     "accessor-pairs": 2,
