@@ -107,6 +107,9 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 
 #complete -C complete-ant-cmd.pl ant build.sh
 
+# For Web Components and Polymer
+alias po="polyserve -o"
+
 # For Maritz earnPOWER
 alias cdclient='cd $EP_DIR'
 alias cdep='cd $EP_DIR/src/main/java/com/maritz/ep'

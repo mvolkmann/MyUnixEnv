@@ -1,0 +1,133 @@
+ScreenFlow Notes
+
+To create a new screencast
+- method #1: select File ... New ... New Recording and select input sources
+  * computer screen
+  * attached iOS device
+  * video from a camera (including one in laptop)
+  * audio from computer or USB microphone
+- press red circle
+- method #2: select Record from Screenflow menu bar icon or press cmd-@
+  * uses previously selected input sources
+- wait for five second countdown to begin
+  * can adjust this delay in preferences
+- to stop recording
+  * select "Stop Recording" from Screenflow menu bar icon
+    or press cmd-@ (cmd-shift-2)
+  * select "Create New Document" or
+    "Add to Document" to add clips to an existing screencast
+- don't forgot to save it!
+
+To capture video from an iOS device
+- attached device to Mac with USB cable
+- ...
+
+To add a media clip to timeline area
+- select the media icon in the inspector (music note and play button)
+- press the "Add Media ..." button to add content from a video file
+- press the "Add Recording ..." button to record new media from
+  desktop, camera, and/or microphone
+  * can select any number of sources to record from simultaneously
+
+To move or delete part of a media clip
+- move scrubber to a location to split it
+- from the gear dropdown on the clip, select "Split Clip"
+- repeat until parts to be moved or deleted are isolated
+- delete and/or move the remaining pieces
+
+To modify how cursor is shown in video
+- select the video clip to alter in the timeline
+- select the screen recording icon in the inspector (monitor)
+- adjust pointer zoom
+- optionally adjust click effect (None, Radar, or Invert),
+  pointer style (Default, Circle - Light, Circle Dark, Square, or Choose Image...),
+  pointer opacity and "Sound on Click"
+  * disclosure triangle controls volume and sound played
+
+To display keystrokes pressed in video
+- select the video clip to alter in the timeline
+- select the screen recording icon in the inspector (monitor)
+- select "Show Keystrokes" checkbox
+- specify height and position of keystroke display
+- optionally change font characteristics
+
+To add an annotation
+- move timeline scrubber to where annotation should begin
+- select the annotations icon in the inspector (pencil)
+- click "+" button in inspector
+- drag right edge of callout rectangle to adjust duration
+- select annotation type using buttons near top of inspector
+  * arrow, line, filled rectangle, hollow rectangle, or ellipse
+- drag out annotation over video
+- drag handles to adjust size or start/end
+- optionally adjust color, opacity, thickness, shadow, outline, and endpoint styles
+
+To add a text annotation
+- move timeline scrubber to where annotation should begin
+- select the annotations icon in the inspector ("T")
+- click "+" button in inspector
+- drag right edge of callout rectangle to adjust duration
+- drag text box over video to position
+- double-click text box over video to edit the text
+- in inspector, optionally change font, size, alignment,
+  style (bold and italic), fill, outline, backdrop,
+  and margin (to overlap more video content)
+
+To add a callout
+- click "Screen Recording" element in timeline to select it
+- move timeline scrubber to where callout should begin
+- select the callout icon in the inspector (circle w/ arrow inside)
+- drag right edge of callout rectangle to adjust duration
+- select a highlight option radio button
+  * "Mouse Cursor" highlights mouse cursor movement with a circle
+    throughout the callout duration
+    - optionally adjust opacity, blur, zoom (circle size and content zoom factor),
+      border, outline thickness and color, shadow, and build in/out durations
+  * "Foreground Window" doesn't seem useful (What does it do?)
+  * "Freehand" highlights an area of the video by zooming in on it
+    - select "Blur Background" checkbox to deemphasize it
+    - set build in/out durations to gradually zoom in an out (0.5s works well)
+
+To add a "touch callout"
+- note that these are primarily for screencasts of iOS devices
+- click "Screen Recording" element in timeline to select it
+- move timeline scrubber to where callout should begin
+- select the touch callout icon in the inspector (two overlapping circles)
+- select a kind of callout from gear dropdown
+- drag right edge of callout rectangle to adjust duration
+- for animated callouts, check "Callout Has End State"
+  and "Show Interpolated State" (in separate dialog)
+  * "+' marks the starting location and
+    "o" marks the ending location
+
+To edit a callout
+- select it in the timeline (its color will change)
+- change settings in inspector
+
+To delete a callout
+- select it in the timeline (its color will change)
+- press delete key
+
+To edit an audio clip
+- select it in the timeline (it will gain a yellow border)
+- select the audio icon in the inspector (speaker button)
+- consider checking the "Remove Background Noise" filter and select an amount
+- can apply audio filters
+- Ducking
+  * check only for topmost audio clip in timeline and select volume percentage
+    to use for lower audio clips when topmost clip is playing something
+  * useful when topmost clip is narration and other clips are background music
+  * not sure this really works
+
+To edit a video clip
+- select it in the timeline (it will gain a yellow border)
+- select the video icon in the inspector (film strip button)
+- can scale, position, and rotate (x, y, and z)
+- can adjust opacity, cropping, reflection (when scaled below 100%),
+  and color (saturation, brightness, and contract)
+- can apply video filters
+
+To save a frame of the screencast as a PNG
+- move the timeline scrubber to the frame to be saved
+- File ... Save Frame...
+- specify file name and destination directory

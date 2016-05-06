@@ -1,0 +1,17 @@
+Polymer Notes
+
+Issues
+- Polymer properties declarations are just for documentation.
+  * when violated, no error messages are generated
+- lack of error messages when components are used incorrectly
+- extra tags needed to embed CSS, HTML, and JavaScript
+  in a single file make it verbose
+- being a web standard doesn't guarantee success/adoption
+  * for example, XHTML (replaced by HTML5),
+    SOAP (typically replaced by REST),
+    WSDL, XQuery, XForms, XLink, XPointer,
+    many "Web Services" specs, ...
+- no provided pattern for state management
+- How can a Polymer component use functions defined in a
+  separate .js file?  Can it use ES6 imports?
+  Can webpack be used to create a bundle?
