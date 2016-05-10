@@ -322,3 +322,7 @@ Internet Sharing
 
 Disable Caps Lock
 - System Preferences ... Keyboard ... Modifier Keys ... Caps Lock Key ... No Action
+
+Kill what is listening on a given port
+- to get process id, sudo lsof -i :{port}
+- to kill process, sudo kill {pid}

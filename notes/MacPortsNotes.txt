@@ -5,5 +5,3 @@ To update
 
 To install something
 - port install {name}
-
-
