@@ -1,0 +1,317 @@
+OmniOutliner Notes
+
+To create a new outline
+- in Documents view, press "+" in upper-right
+- choose a template
+- name defaults to "My Outline"; change it
+
+To open an outline from Documents view
+- if inside a folder, tap the folder to open it
+- tap the outline
+
+To return to Documents view
+- tap "Documents" in upper-left
+
+To copy an existing outline
+- in Documents view, tap Select in upper-right
+- tap the outline to copy
+- press copy button (2 pages w/ a +) in upper-left
+- see "To rename" below to rename the copy
+
+To delete an outline
+- in Documents view, tap Select in upper-right
+- tap the outlines to delete
+- tap trash can in upper-left
+- deleted outlines will be in trash
+- to permanently delete them, tap Locations in upper-left,
+  tap "Trash" and tap "Empty Trash"
+  * can also delete just some of the documents in the trash
+- "Trash" will only appear in list of locations
+  when there are documents in the trash
+
+To move an outline to a different folder
+- in Documents view, tap Select in upper-right
+- tap the outline to move
+- tap folder icon in upper-left
+- tap "New Folder" to create a new one
+- folders can be nested
+- tap "Move to ..."
+- tap a location (ex. Local Documents or Omni Sync Server)
+- tap a folder in that location
+- when all outlines are moved out of a folder or deleted from it,
+  the folder is automatically deleted
+
+To rename the currently opened outline
+- tap current name at top center
+- optionally tap circled x in upper-right to clear current name
+- edit the name
+- press return key
+
+To insert a row
+- tap row to insert after
+  * if no row is selected, a new last row will be inserted
+  * tap "+" in lower-right
+  * enter data
+  * press return key to insert another sibling row
+  * when finished, press "Done" in upper-right
+- to insert a row in a location other than after
+  - tap and hold "+" in lower-right
+  * a fly out with four buttons will appear for inserting a
+    parent row, sibling above, child, or aunt (sibling of parent)
+
+To insert a row from a microphone recording
+- tap microphone button in bottom center
+- start talking
+- to pause, tap pause button on left
+- to stop and save, tap checkmark on right
+
+To indent/outdent a row
+- tap the row
+- tap |<- or ->| in lower-left
+
+To sort rows
+- tap heading of column to sort on
+  * if column headings aren't visible,
+    tap wrench icon in upper-right and
+    tap eyeball icon to left of "Column Header"
+    to toggle their display
+- tap "Sort"
+- tap "A-Z" or "Z-A"
+
+To add a note to a row
+- tap the row
+- tap note button (page icon with 4 lines) in lower-right
+- enter note text
+- tap "Done" in upper-right
+
+To delete a note
+- follow same steps as adding a note, but delete text
+- tap "Done" in upper-right
+- Is there an easier way?
+
+To toggle display of a row note
+- tap the row
+- tap note button (page icon with 4 lines) in lower-right
+- when hidden, a note icon will appear to the left of the row
+
+To toggle display of all notes
+- tap and hold note button (page icon with 4 lines) in lower-right
+- two buttons fly out,
+  one to hide all notes and one to show all notes
+- tap one of them
+
+To cut, copy, delete, group, or move rows
+- tap edit button in upper-right (3 horizontal lines with circles at ends)
+- tap rows on which to operate
+- tap "Cut", "Copy", "Delete", "Group", or "Move" at bottom
+  * Group moves selected rows under a new, common parent row
+  * after tapping "Move", tap the target row where selected rows will be moved
+    and select "Above", "Below", or "Inside"
+    - "Inside" moves selected rows to become children of the target
+- another way to move a row when not in edit mode
+  * tap and hold circle on left side of row
+    until row gets a drop shadow and black underline
+  * dray row up or down
+
+To ungroup a row
+- move child rows to become siblings of their parent
+- delete their former parent row
+
+To undo most recent actions
+- tap "Undo" in upper-left
+
+To edit columns in current outline
+- tap wrench icon in upper-right
+- tap Columns tab
+- tap "New Column" at bottom to add one
+  * enter a name
+  * select a style
+  * select a type
+    - Rich Text (default)
+    - Number
+      * tap circled "i" to right of type
+      * select format
+      * options include comma separators, decimal places,
+        percent sign, and currency
+    - Date
+      * tap circled "i" to right of type
+      * select date and time formats
+        - can choose "None" for "TIME" to hide
+      * can enter dates in m/d/y format
+        - y defaults to current when just m/d is entered
+        - m defaults to current when just d is entered
+      * can enter time in h:m:s[p] format
+        - defaults to AM when p is omitted
+        - time defaults to midnight
+        - minutes and seconds default to zero
+        - follow hour value with a colon
+        - ex. 13: -> 1:00:00 PM
+        - if only h: is entered, date defaults to today
+      * values in other formats are ignored
+    - Duration
+      * tap circled "i" to right of type
+      * select either "Work Time" (8 hours per day)
+        or "Calendar Time" (24 hours per day)
+      * enter integer or float values;
+        other values are ignored
+      * values greater than hours in selected Time
+        are converted to days and hours
+        - ex. w/ Work Time, 10.75 -> 1d 2.75h
+    - Pop-up List
+      * tap circled "i" to right of type to add and edit values
+    - Checkbox
+
+Column headings
+- hidden by default when there is only one column
+
+To rename a column
+- tap wrench icon in upper-right
+- tap Columns tab
+- tap column name
+- popup changes
+- tap column name again
+- edit it
+- tap off the popup to close it
+
+To delete a column
+- tap wrench icon in upper-right
+- tap Columns tab
+- tap edit in lower-right of popup
+- tap red circles with dashes and Delete button that appears
+- alternatively, can swipe column name left and tap Delete button that appears
+- tap "Done" in lower-right of popup
+
+To move a column left or right
+- tap wrench icon in upper-right
+- tap Columns tab
+- tap "Edit" in lower-right of popup
+- drag a column name up or down using handle on right
+- tap "Done" in lower-right of popup
+
+To resize a column
+- drag right end left or right using handle
+
+To hide/unhide a column
+- tap wrench icon in upper-right
+- tap eyeball icon to left of column name to toggle hiding
+
+To enter a value in a column of a row
+- tap the row
+- tap the column
+- enter a value
+- to edit another column in the same row, tap it
+- when finished, tap "Done" in upper-right or tap another row
+- don't tap return key because that will insert a new row
+
+To copy a cell and paste the value into another
+- tap a row
+- double-tap one of its columns
+- tap "Select", tap "Select All", or drag selection handles
+- tap "Cut" or "Copy"
+- double-tap the cell where it should be pasted
+- tap "Paste" or "Paste Plain" (to omit styling)
+- can paste in multiple cells one at a time
+- when finished, tap "Done" in upper-right
+
+To set styles for whole document, specific row levels, and notes
+- tap wrench icon in upper-right
+- tap Styles tab
+- optionally select a template to apply
+- optionally tap a structural style (Whole Document, Level 1 Rows, or Notes)
+- select styles (Size, Font, Text Color, Background Color, and Numbering)
+- can also create new, named styles that can be used for items above
+
+To style a specific row
+- tap the row
+- tap the circled "i" in upper-right (disabled unless a row is selected)
+- select one or more styles from popup
+  * tapping a style toggles it on and off
+
+To set document zoom %, background color, and alternate row color
+- tap wrench icon in upper-right
+- tap Document tab
+- select Zoom, Background Color, and Alternate Row Color
+
+To expand or collapse an item in outline
+- tap disclosure triangle to left of a parent row
+
+To expand or collapse all items in outline
+- tap wrench icon in upper-right
+- tap Document tab
+- tap "Expand All" or "Collapse All" at bottom of popup
+
+To create a new template
+- either create a new outline with the desired styling
+  or in Documents view, tap Select in upper-right
+  and tap an existing outline
+- tap the share icon (square with arrow pointing up) in upper-right
+- tap "Create Template from Outline"
+
+Cloud Providers
+- can store documents in cloud
+- options include Omni Sync Server (using OmniPresence software; my choice),
+  iCloud Drive, Dropbox, Google Drive, One Drive, and more
+- can restore documents from cloud if device is lost or damaged
+- also backup files to iCloud
+
+OmniPresence icons
+- at top center
+- cloud w/ opposing arrows means active and ready to sync
+- cloud with horizontal line means sync in progress
+- dim cloud w/ opposing arrows means no access to Wi-Fi or cellular network
+- dim cloud w/ ! means error syncing; tap to try again
+
+To export a local outline to cloud
+- go to Documents view of Local Documents
+- tap "Select" in upper-right
+- tap documents to export
+- tap the share icon (square with arrow pointing up) in upper-right
+- tap "Send to App"
+- tap the desired format
+  * see list of options elsewhere in this document
+- select a cloud provider app
+  * examples include "Copy to Dropbox" and "Copy to Drive"
+
+Outline Locations
+- Local Documents
+  * not synced to cloud
+- Omni Sync Server
+  * synced to cloud and between devices
+  * files have .oo3 extension
+  * need to create a cloud account
+  * when not connnected to internet, changes are saved locally
+    and synced when connected later
+- Trash
+
+Document Organizer
+- in Documents view, swipe down to expose the Document Organizer
+  that has controls to sort based on date/time modified or title
+  and switch between showing outlines or templates
+- the document types currently displayed is show at the top center
+- swipe up to hide the controls
+
+To delete templates
+- in Documents view, swipe down to expose the Document Organizer
+- tap "Show templates"
+- tap "Select" in upper-right
+- tap the templates to delete
+- top the trash can icon in upper-left
+
+To email an outline
+- in Documents view, tap Select in upper-right
+  * skip if currently viewing the outline
+- tap the outlines to email
+- tap the share icon (square with arrow pointing up) in upper-right
+- tap "Send via Mail"
+- tap the desired format
+  * options include OmniOutliner, OmniOutliner Template, OPML,
+    Dynamic HTML, Simple HTML, Plain Text, CSV,
+    DOCX (Word), DOCX (indented), and PPTX (PowerPoint)
+  * OPML stands for Outline Processor Markup Language
+    - it is an XML-based format
+    - it does not support styles or attachments
+  * PDF is not an option
+- enter email addresses
+- optionally change the subject; defaults to outline title
+- tap "Send" in upper-right
+
