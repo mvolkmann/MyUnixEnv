@@ -74,6 +74,7 @@ alias ens1="enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-li
 
 alias findcss="find3 css"
 alias findhtml="find3 html"
+alias findhtml1="find-depth-1 html"
 alias findjava="find3 java"
 alias findjs="find3 js"
 alias findjs2="find4 js"
