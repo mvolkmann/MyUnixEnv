@@ -14,3 +14,13 @@ To connect remotely from your OCI Mac laptop
 - quit the "Desktop - Office 2013" app
 - can quit the "Citrix Receiver" app now
 - use the remaining "Citrix Viewer" app
+
+To create a Bitbucket repo
+- browse https://bitbucket.org/maritzmotivation/profile/repositories
+- select Repositories ... Create Repository
+- enter a name that starts with "mtz-"
+- press "Create Repository" button
+- under "Command line", click "I'm starting from scratch"
+- follow the instructions
+- if this is for a new Polymer component,
+  copy files from the maritz-seed-element
