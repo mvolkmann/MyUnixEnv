@@ -78,18 +78,24 @@ To sort rows
 - tap "Sort"
 - tap "A-Z" or "Z-A"
 
+To search for rows containing given text
+- tap magnifying glass in upper-right or press cmd-f
+- enter search text
+- tap ^ and v in popup lower-right to navigate between matches
+- tap "Select All Results" in popup lower-left to select all
+
 To add a note to a row
 - tap the row
 - tap note button (page icon with 4 lines) in lower-right
 - enter note text
 - tap "Done" in upper-right
 
-To delete a note
+To delete a row note
 - follow same steps as adding a note, but delete text
 - tap "Done" in upper-right
 - Is there an easier way?
 
-To toggle display of a row note
+To toggle display of a single row note
 - tap the row
 - tap note button (page icon with 4 lines) in lower-right
 - when hidden, a note icon will appear to the left of the row
@@ -117,7 +123,7 @@ To ungroup a row
 - move child rows to become siblings of their parent
 - delete their former parent row
 
-To undo most recent actions
+To undo the most recent actions
 - tap "Undo" in upper-left
 
 To edit columns in current outline
@@ -213,19 +219,71 @@ To copy a cell and paste the value into another
 - can paste in multiple cells one at a time
 - when finished, tap "Done" in upper-right
 
+Styles
+- there are three levels whose styles cascade like in CSS
+  * whole document - lowest priority
+  * level rows
+  * specific rows - highest priority
+- there are two kinds of styles
+  * structural
+    - whole document
+    - level rows
+    - column titles
+    - notes
+    - main topic column?
+  * named
+    - groups of styling details that can be applied to anything
+      * bold, italic, underline
+      * size, font
+      * text color, background color
+      * numbering (of rows)
+      * alignment (left, center, right, or justify)
+
 To set styles for whole document, specific row levels, and notes
 - tap wrench icon in upper-right
-- tap Styles tab
+- tap "Styles" tab
 - optionally select a template to apply
 - optionally tap a structural style (Whole Document, Level 1 Rows, or Notes)
-- select styles (Size, Font, Text Color, Background Color, and Numbering)
-- can also create new, named styles that can be used for items above
+- select styles
+- can create new, named styles that can be used for items above
+  * tap "New Style"
+  * tap style name and edit it
+  * specify styling
+  * tap "< Styles" or tap off of popup
+- can select a named style
+  * tap "Included Styles"
+  * scroll to desired styles and tap them (all are applied)
+  * tap a named style again to toggle it off
+
+To delete a named style
+- tap wrench icon in upper-right
+- tap "Styles" tab
+- approach #1
+  * scroll to find named style
+  * swipe named style left
+  * tap "Delete" button
+- approach #2
+  * tap "Edit" in popup lower-right
+  * tap red circle with "-" to left of named styles
+
+To reorder named styles
+- tap wrench icon in upper-right
+- tap "Styles" tab
+- tap "Edit" in popup lower-right
+- drag named styles up and down using handles on right
+- tap "Done" in popup lower-right
 
 To style a specific row
 - tap the row
 - tap the circled "i" in upper-right (disabled unless a row is selected)
 - select one or more styles from popup
   * tapping a style toggles it on and off
+
+Styling gotcha
+- text color and background color from a named style
+  are not applied to structural styles (ex. "Level 1 Rows")
+  unless "0" is selected for those in the structural style
+  (selections in structural style take precedence)
 
 To set document zoom %, background color, and alternate row color
 - tap wrench icon in upper-right
@@ -239,13 +297,6 @@ To expand or collapse all items in outline
 - tap wrench icon in upper-right
 - tap Document tab
 - tap "Expand All" or "Collapse All" at bottom of popup
-
-To create a new template
-- either create a new outline with the desired styling
-  or in Documents view, tap Select in upper-right
-  and tap an existing outline
-- tap the share icon (square with arrow pointing up) in upper-right
-- tap "Create Template from Outline"
 
 Cloud Providers
 - can store documents in cloud
@@ -290,6 +341,13 @@ Document Organizer
 - the document types currently displayed is show at the top center
 - swipe up to hide the controls
 
+To create a new template
+- either create a new outline with the desired columns and styling
+  or in Documents view, tap Select in upper-right
+  and tap an existing outline
+- tap the share icon (square with arrow pointing up) in upper-right
+- tap "Create Template from Outline"
+
 To delete templates
 - in Documents view, swipe down to expose the Document Organizer
 - tap "Show templates"
@@ -315,3 +373,32 @@ To email an outline
 - optionally change the subject; defaults to outline title
 - tap "Send" in upper-right
 
+Keyboard shortcuts
+- useful with a wireless keyboard
+- find: cmd-f
+- copy style: opt-cmd-c
+- paste style: opt-cmd-v
+- increase font size: cmd-+
+- decrease font size: cmd--
+- insert line break: opt-return
+- move row up: ctrl-cmd-up arrow or u
+- move row down: ctrl-cmd-down arrow or d
+- move row left: ctrl-cmd-left arrow or l
+- move row right: ctrl-cmd-right arrow or r
+  * I couldn't get any of these move keys to work!
+- indent row: tab
+- unindent row: shift-tab
+- move to next cell when editing a cell: tab
+- expand all rows: ctrl-cmd-9
+- collapse all rows: ctrl-cmd-0
+- select row above: up arrow
+- select row below: down arrow
+- expand selected row: right arrow
+- collapse selected row: left arrow
+- see more on pages 260=267 in
+ "OmniOutliner 2.5 for iOS User Manual" in iBooks
+
+Questions
+- Is it necessary to return to the Documents view to save changes?
+- Can row handles be hidden?
+- Is it possible to import a CSV file into OmniOutliner?
