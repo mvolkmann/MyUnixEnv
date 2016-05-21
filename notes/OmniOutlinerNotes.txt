@@ -67,7 +67,8 @@ To insert a row from a microphone recording
 
 To indent/outdent a row
 - tap the row
-- tap |<- or ->| in lower-left
+- to indent, tap ->| in lower-left or press tab
+- to unindent, tap |<- lower-left or press shift-tab
 
 To sort rows
 - tap heading of column to sort on
@@ -292,11 +293,14 @@ To set document zoom %, background color, and alternate row color
 
 To expand or collapse an item in outline
 - tap disclosure triangle to left of a parent row
+- alternatively, tap row to select it and
+  press right arrow to expand or left arrow to collapse
 
 To expand or collapse all items in outline
 - tap wrench icon in upper-right
 - tap Document tab
-- tap "Expand All" or "Collapse All" at bottom of popup
+- tap "Expand All" at bottom of popup or press ctrl-cmd-9
+- tap "Collapse All" at bottom of popup or press ctrl-cmd-0
 
 Cloud Providers
 - can store documents in cloud
@@ -375,6 +379,8 @@ To email an outline
 
 Keyboard shortcuts
 - useful with a wireless keyboard
+- to see help on shortcuts, hold down cmd key
+  * three pages to scroll between
 - find: cmd-f
 - copy style: opt-cmd-c
 - paste style: opt-cmd-v
