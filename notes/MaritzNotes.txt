@@ -1,5 +1,19 @@
 Maritz Notes
 
+To use Time Entry from Maritz Mac
+- browse connect.maritz.com
+- enter username and password
+- complete authentication with PhoneFactor
+- double-click downloaded .ica file
+- open Start menu
+- click Internet Explorer
+- click start for bookmarks
+- click "Maritz Time Entry"
+- enter username and password again
+- enter time as usual
+- open Start menu
+- click "Log off"
+
 To connect remotely from your OCI Mac laptop
 - launch Citrix Receiver
 - double-click VNC-Remote Control
