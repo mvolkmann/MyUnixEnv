@@ -34,7 +34,11 @@ To create a new app
   * .gitignore - ignore node_modules directory
   * Procfile
   * index.html
-  * server.js - use Express and set port from process.env.PORT
+  * server.js
+    - use Express
+    - set port to either
+      process.env.PORT (for running on Heroku server)
+      or some default like 3000 (for running locally)
 
 To create local git repo
 - git init
