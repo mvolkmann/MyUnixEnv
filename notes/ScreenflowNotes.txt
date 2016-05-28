@@ -180,7 +180,7 @@ To export a screencast
 - select a preset for the target format (ex. "Web - High")
 - press "Export" button
 
-To add screencast to YouTube
+To add to YouTube
 - browse YouTube site
 - create account if not done yet
 - login to account

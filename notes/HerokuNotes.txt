@@ -1,0 +1,66 @@
+Heroku Notes
+
+To create an account
+- browse https://www.heroku.com
+- click "Sign Up" link
+
+To install the Heroku Toolkit
+- browse https://toolbelt.heroku.com/
+- select a platform (Mac OS X, Windows, Debian/Ubuntu, or Standalone)
+- press button to download
+- double-click the installer
+- follow the instructions
+- open a terminal window
+- enter "heroku login" to install heroku-cli
+  * will prompt for email address and password
+
+To login
+- enter "heroku login"
+- enter email address and password
+
+To logout
+- enter "heroku logout"
+
+To create a new app
+- create a directory for it
+- from a terminal window, cd to that directory
+- enter "heroku create"
+- create package.json
+  * enter "npm init" and answer questions
+- install dependencies such as:
+  * npm install --save express
+  * npm install --save body-parser
+- create files similar to example in programming/heroku/running-pace
+  * .gitignore - ignore node_modules directory
+  * Procfile
+  * index.html
+  * server.js - use Express and set port from process.env.PORT
+
+To create local git repo
+- git init
+- git add .
+- git commit -av
+
+To create remote git repo
+- heroku create
+  * creates a Heroku hosted git repo, not on Github
+- note the URL assigned to the app
+- heroku config:set NODE_ENV=production
+- git push heroku master
+
+To set git origin
+- note the git URL in .git/config
+  * ex. https://git.heroku.com/aqueous-shelf-59732.git
+  * can also get this by entering "git remote -v"
+- git remote add origin {git-url-here}
+- git push --set-upstream origin master
+- now can use "git push" or your "push" alias
+  instead of "git push heroku master"
+
+To run app from Heroku server
+- browse URL output by "heroku create" above
+
+To deploy changes to local files
+- git commit -av
+- "git push origin" or use "push" alias
+- pushing redeploys the app and restarts the server
