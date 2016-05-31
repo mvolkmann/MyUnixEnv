@@ -27,18 +27,32 @@ To create a new app
 - enter "heroku create"
 - create package.json
   * enter "npm init" and answer questions
+  * add "engines" key similar to the following:
+    "engines": {
+      "node": "^6.2.0"
+    }
 - install dependencies such as:
   * npm install --save express
   * npm install --save body-parser
 - create files similar to example in programming/heroku/running-pace
   * .gitignore - ignore node_modules directory
   * Procfile
+    - describes the app type and the command to start the server
+      * ex. "web: npm start"
+        where package.json contains a start script that runs "node server"
   * index.html
   * server.js
     - use Express
     - set port to either
       process.env.PORT (for running on Heroku server)
       or some default like 3000 (for running locally)
+  * app.json (optional)
+    - describes many properties of a web app
+    - see https://devcenter.heroku.com/articles/setting-up-apps-using-the-heroku-platform-api
+      and https://devcenter.heroku.com/articles/app-json-schema
+    - enter the repo name and click the "Search" button
+    - click the "Connect" button
+    - click the "Enable Automatic Deploys" button
 
 To create local git repo
 - git init
@@ -46,11 +60,22 @@ To create local git repo
 - git commit -av
 
 To create remote git repo
-- heroku create
-  * creates a Heroku hosted git repo, not on Github
-- note the URL assigned to the app
-- heroku config:set NODE_ENV=production
-- git push heroku master
+- for a Heroku Git repo
+  * heroku create
+    - creates a Heroku hosted git repo, not on GitHub
+  * note the URL assigned to the app
+  * heroku config:set NODE_ENV=production
+  * git push heroku master
+- for a GitHub repo
+  * downside: pushing changes doesn't output messages about server startup
+    - but can see messages if "heroku logs -t" is running
+    - messages don't start for about 30 seconds; wait for it
+  * browse the Heroku Dashboard for the app
+  * click the "Deploy" tab
+  * in the "Deployment method" section, click "GitHub"
+  * click the "Connect to Github" button at the bottom
+  * a dialog will open
+  * scroll the bottom and click the "Authorize application" button
 
 To set git origin
 - note the git URL in .git/config
@@ -61,10 +86,46 @@ To set git origin
 - now can use "git push" or your "push" alias
   instead of "git push heroku master"
 
+To use local server
+- heroku local
+  * alternative to running "node server.js" or
+    "npm start" assuming package.json has a
+    "start" script that runs "node server.js"
+- browse localhost:5000
+
 To run app from Heroku server
 - browse URL output by "heroku create" above
+- your example is at https://aqueous-shelf-59732.herokuapp.com/
+- sometimes you get errors,
+  but about 30 seconds later the app works fine
 
 To deploy changes to local files
 - git commit -av
 - "git push origin" or use "push" alias
 - pushing redeploys the app and restarts the server
+
+To monitor server activity
+- heroku logs -t
+  * tails server output
+
+For help on using Node.js with Heroku
+- browse https://devcenter.heroku.com/categories/nodejs
+
+Databases
+- Heroku only directly supports Postgres
+- other databases (ex. MongoDB) require using an add-on
+  * browse https://elements.heroku.com/addons/mongolab
+
+To use a Postgres database
+- TRY THIS!
+- browse https://elements.heroku.com/addons/heroku-postgresql
+- "Hobby Dev" plan limits (free)
+  * 10,000 rows
+  * 20 concurrent connections
+- "Hobby Basic" plan limits ($9/month)
+  * 10,000,000 rows
+  * 20 concurrent connections
+- "Standard 0" plan limits ($50/month)
+  * no row limit
+  * 120 concurrent connections
+  * storage capacity 64 GB
