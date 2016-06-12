@@ -29,15 +29,50 @@ To connect remotely from your OCI Mac laptop
 - can quit the "Citrix Receiver" app now
 - use the remaining "Citrix Viewer" app
 
+To add SSH key to Bitbucket
+- click avatar (your picture) in upper-right
+- select "Bitbucket settings"
+- click "SSH keys" in left nav
+- press "Add key"
+- enter a title
+- on Mac OS X, to copy SSH key to clipboard
+  enter "pbcopy < cat ~/.ssh/id_rsa.pub"
+
 To create a Bitbucket repo
 - browse https://bitbucket.org/maritzmotivation/profile/repositories
 - select Repositories ... Create Repository
 - enter a name that starts with "mtz-"
 - press "Create Repository" button
 - under "Command line", click "I'm starting from scratch"
-- follow the instructions
-- if this is for a new Polymer component,
-  copy files from the maritz-seed-element
+- follow the instructions on the Bitbucket webpage
+- if "polymer-cli" isn't installed yet,
+  run "npm install -g polymer-cli"
+- run "polymer init element"
+  * press return to accept the suggested element name
+    (same as repo name)
+  * enter a description of the element
+- copy a .gitignore file from another repo
+  * must at least exclude bower_components
+- populate the repo
+  * git add .
+  * git commit -v
+  * git push
+- create a develop branch
+  * git checkout -b develop
+  * git push
+- do work on develop branch
+- configure use of demo
+  * edit custom element .html file and
+    add the following to an HTML comment above <dom-module>:
+    @demo demo/index.html
+
+After changes to develop branch have been approved
+- git checkout master
+- git merge develop
+- git push
+- git tag -a v{major}.{minor}.{patch}
+- git push --follow-tags -m 'added tag'
+- git checkout develop (to prepare for future changes)
 
 To move a Polymer component its own git repo
 - create the new git repo
@@ -60,16 +95,18 @@ To move a Polymer component its own git repo
     (same as repo name)
   * enter a description of the element
 - move files from the directory of the current repo to this new one
+  * can overwrite {repo-name}.html
 - install any third-party things needed
   * ex. bower install --save PolymerElements/iron-label
 - configure use of demo
   * edit custom element .html file and
-    add the following to the comment above <dom-module>:
+    add the following to an HTML comment above <dom-module>:
     @demo demo/index.html
+- lint the code
+  * eslint *.html
+  * polylint
 - verify that the documentation page displays correctly
   * run "polymer serve -o"
-  * Can index.html be modified to include multiple custom elements
-    in the drop-down at the top-left?
 - verify that the demo works
   * click "DEMO" in the upper-right
   * it may be necessary to modify demo/index.html and
@@ -89,15 +126,15 @@ To move a Polymer component its own git repo
   * git add .
   * git commit -av
   * git push
-- create a bower link to this git repo
+- (needed?) create a bower link to this git repo
   * enter "bower link"
 - change original repo to use this one
   * cd to the directory of the original repo
   * remove the files that were moved to the new repo
-  * enter "bower link {new-repo-name}" to install them
+  * (needed?) enter "bower link {new-repo-name}" to install them
     under the bower_components directory
-    - PROBLEM!
-      This doesn't update bower.json to record the new dependency!
-      What changes are needed there?
+  * manually add dependency to bower.json like this:
+    "mtz-some-name": "git@bitbucket.org:maritzmotivation/mtz-some-name.git",
+  * enter "bower install" to install this new dependency
   * change imports of those files from "./" to "../{new-repo-name}/"
   * test to verify that everything still works
