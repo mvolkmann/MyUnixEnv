@@ -6,7 +6,7 @@ To create a new outline
 - name defaults to "My Outline"; change it
 
 To open an outline from Documents view
-- if inside a folder, tap the folder to open it
+- if document is inside a folder, tap the folder to open it
 - tap the outline
 
 To return to Documents view
@@ -18,13 +18,19 @@ To copy an existing outline
 - press copy button (2 pages w/ a +) in upper-left
 - see "To rename" below to rename the copy
 
+To rename the currently opened outline
+- tap current name at top center
+- optionally tap circled x in upper-right to clear current name
+- edit the name
+- press return key
+
 To delete an outline
 - in Documents view, tap Select in upper-right
 - tap the outlines to delete
 - tap trash can in upper-left
 - deleted outlines will be in trash
 - to permanently delete them, tap Locations in upper-left,
-  tap "Trash" and tap "Empty Trash"
+  tap "Trash", and tap "Empty Trash"
   * can also delete just some of the documents in the trash
 - "Trash" will only appear in list of locations
   when there are documents in the trash
@@ -33,28 +39,22 @@ To move an outline to a different folder
 - in Documents view, tap Select in upper-right
 - tap the outline to move
 - tap folder icon in upper-left
-- tap "New Folder" to create a new one
-- folders can be nested
+- optionally tap "New Folder" to create a new one
+  * folders can be nested
 - tap "Move to ..."
 - tap a location (ex. Local Documents or Omni Sync Server)
 - tap a folder in that location
 - when all outlines are moved out of a folder or deleted from it,
   the folder is automatically deleted
 
-To rename the currently opened outline
-- tap current name at top center
-- optionally tap circled x in upper-right to clear current name
-- edit the name
-- press return key
-
 To insert a row
 - tap row to insert after
-  * if no row is selected, a new last row will be inserted
   * tap "+" in lower-right
+    - if no row is selected, a new last row will be inserted
   * enter data
   * press return key to insert another sibling row
   * when finished, press "Done" in upper-right
-- to insert a row in a location other than after
+- to insert a row in a location other than after selected row
   - tap and hold "+" in lower-right
   * a fly out with four buttons will appear for inserting a
     parent row, sibling above, child, or aunt (sibling of parent)
@@ -67,7 +67,19 @@ To insert a row from a microphone recording
 
 To indent/outdent a row
 - tap the row
-- tap |<- or ->| in lower-left
+- to indent, tap ->| in lower-left or press tab
+- to unindent, tap |<- lower-left or press shift-tab
+
+To expand or collapse a parent row
+- tap disclosure triangle to left of a parent row
+- alternatively, tap row to select it and
+  press right arrow to expand or left arrow to collapse
+
+To expand or collapse all items in outline
+- tap wrench icon in upper-right
+- tap Document tab
+- tap "Expand All" at bottom of popup or press ctrl-cmd-9
+- tap "Collapse All" at bottom of popup or press ctrl-cmd-0
 
 To sort rows
 - tap heading of column to sort on
@@ -78,18 +90,25 @@ To sort rows
 - tap "Sort"
 - tap "A-Z" or "Z-A"
 
+To search for rows containing given text
+- tap magnifying glass in upper-right or press cmd-f
+- enter search text
+- tap ^ and v in popup lower-right to navigate between matches
+- tap "Select All Results" in popup lower-left
+  to select all matching rows
+
 To add a note to a row
 - tap the row
 - tap note button (page icon with 4 lines) in lower-right
 - enter note text
 - tap "Done" in upper-right
 
-To delete a note
+To delete a row note
 - follow same steps as adding a note, but delete text
 - tap "Done" in upper-right
 - Is there an easier way?
 
-To toggle display of a row note
+To toggle display of a single row note
 - tap the row
 - tap note button (page icon with 4 lines) in lower-right
 - when hidden, a note icon will appear to the left of the row
@@ -101,23 +120,25 @@ To toggle display of all notes
 - tap one of them
 
 To cut, copy, delete, group, or move rows
-- tap edit button in upper-right (3 horizontal lines with circles at ends)
+- tap edit button in upper-right
+  (3 horizontal lines with circles at ends)
 - tap rows on which to operate
 - tap "Cut", "Copy", "Delete", "Group", or "Move" at bottom
   * Group moves selected rows under a new, common parent row
-  * after tapping "Move", tap the target row where selected rows will be moved
+  * after tapping "Move",
+    tap the target row where selected rows will be moved
     and select "Above", "Below", or "Inside"
     - "Inside" moves selected rows to become children of the target
 - another way to move a row when not in edit mode
   * tap and hold circle on left side of row
     until row gets a drop shadow and black underline
-  * dray row up or down
+  * drag row up or down
 
 To ungroup a row
 - move child rows to become siblings of their parent
 - delete their former parent row
 
-To undo most recent actions
+To undo the most recent actions
 - tap "Undo" in upper-left
 
 To edit columns in current outline
@@ -178,7 +199,8 @@ To delete a column
 - tap Columns tab
 - tap edit in lower-right of popup
 - tap red circles with dashes and Delete button that appears
-- alternatively, can swipe column name left and tap Delete button that appears
+- alternatively, can swipe column name left
+  and tap Delete button that appears
 - tap "Done" in lower-right of popup
 
 To move a column left or right
@@ -213,13 +235,65 @@ To copy a cell and paste the value into another
 - can paste in multiple cells one at a time
 - when finished, tap "Done" in upper-right
 
+To set document zoom %, background color, and alternate row color
+- tap wrench icon in upper-right
+- tap Document tab
+- select Zoom, Background Color, and Alternate Row Color
+
+Styles
+- there are three levels whose styles cascade like in CSS
+  * specific rows - highest priority
+  * level rows
+  * whole document - lowest priority
+- there are two kinds of styles
+  * structural
+    - whole document
+    - level rows
+    - column titles
+    - notes
+    - main topic column?
+  * named
+    - groups of styling details that can be applied to anything
+      * bold, italic, underline
+      * size, font
+      * text color, background color
+      * numbering (of rows)
+      * alignment (left, center, right, or justify)
+
 To set styles for whole document, specific row levels, and notes
 - tap wrench icon in upper-right
-- tap Styles tab
+- tap "Styles" tab
 - optionally select a template to apply
 - optionally tap a structural style (Whole Document, Level 1 Rows, or Notes)
-- select styles (Size, Font, Text Color, Background Color, and Numbering)
-- can also create new, named styles that can be used for items above
+- select styles
+- can create new, named styles that can be used for items above
+  * tap "New Style"
+  * tap style name and edit it
+  * specify styling
+  * tap "< Styles" or tap off of popup
+- can select a named style
+  * tap "Included Styles"
+  * scroll to desired styles and tap them (all are applied)
+  * tap a named style again to toggle it off
+
+To delete a named style
+- tap wrench icon in upper-right
+- tap "Styles" tab
+- approach #1
+  * scroll to find named style
+  * swipe named style left
+  * tap "Delete" button
+- approach #2
+  * tap "Edit" in popup lower-right
+  * tap red circle with "-" to left of named styles
+    and Delete button that appears
+
+To reorder named styles
+- tap wrench icon in upper-right
+- tap "Styles" tab
+- tap "Edit" in popup lower-right
+- drag named styles up and down using handles on right
+- tap "Done" in popup lower-right
 
 To style a specific row
 - tap the row
@@ -227,29 +301,16 @@ To style a specific row
 - select one or more styles from popup
   * tapping a style toggles it on and off
 
-To set document zoom %, background color, and alternate row color
-- tap wrench icon in upper-right
-- tap Document tab
-- select Zoom, Background Color, and Alternate Row Color
-
-To expand or collapse an item in outline
-- tap disclosure triangle to left of a parent row
-
-To expand or collapse all items in outline
-- tap wrench icon in upper-right
-- tap Document tab
-- tap "Expand All" or "Collapse All" at bottom of popup
-
-To create a new template
-- either create a new outline with the desired styling
-  or in Documents view, tap Select in upper-right
-  and tap an existing outline
-- tap the share icon (square with arrow pointing up) in upper-right
-- tap "Create Template from Outline"
+Styling gotcha
+- text color and background color from a named style
+  are not applied to structural styles (ex. "Level 1 Rows")
+  unless "0" is selected for those in the structural style
+  (selections in structural style take precedence)
 
 Cloud Providers
 - can store documents in cloud
-- options include Omni Sync Server (using OmniPresence software; my choice),
+- options include
+  Omni Sync Server (using OmniPresence software; my choice),
   iCloud Drive, Dropbox, Google Drive, One Drive, and more
 - can restore documents from cloud if device is lost or damaged
 - also backup files to iCloud
@@ -268,7 +329,7 @@ To export a local outline to cloud
 - tap the share icon (square with arrow pointing up) in upper-right
 - tap "Send to App"
 - tap the desired format
-  * see list of options elsewhere in this document
+  * see list of options under "To email an outline"
 - select a cloud provider app
   * examples include "Copy to Dropbox" and "Copy to Drive"
 
@@ -287,15 +348,22 @@ Document Organizer
 - in Documents view, swipe down to expose the Document Organizer
   that has controls to sort based on date/time modified or title
   and switch between showing outlines or templates
-- the document types currently displayed is show at the top center
+- the document types currently displayed is shown at the top center
 - swipe up to hide the controls
+
+To create a new template
+- either create a new outline with the desired columns and styling
+  or in Documents view, tap Select in upper-right and
+  tap an existing outline
+- tap the share icon (square with arrow pointing up) in upper-right
+- tap "Create Template from Outline"
 
 To delete templates
 - in Documents view, swipe down to expose the Document Organizer
 - tap "Show templates"
 - tap "Select" in upper-right
 - tap the templates to delete
-- top the trash can icon in upper-left
+- tap the trash can icon in upper-left
 
 To email an outline
 - in Documents view, tap Select in upper-right
@@ -315,3 +383,34 @@ To email an outline
 - optionally change the subject; defaults to outline title
 - tap "Send" in upper-right
 
+Keyboard shortcuts
+- useful with a wireless keyboard
+- to see help on shortcuts, hold down cmd key
+  * there are three help pages to scroll between
+- find: cmd-f
+- copy style: opt-cmd-c
+- paste style: opt-cmd-v
+- increase font size: cmd-+
+- decrease font size: cmd--
+- insert line break: opt-return
+- move row up: ctrl-cmd-up arrow or u
+- move row down: ctrl-cmd-down arrow or d
+- move row left: ctrl-cmd-left arrow or l
+- move row right: ctrl-cmd-right arrow or r
+  * I couldn't get any of these move keys to work!
+- indent row: tab
+- unindent row: shift-tab
+- move to next cell when editing a cell: tab
+- expand all rows: ctrl-cmd-9
+- collapse all rows: ctrl-cmd-0
+- select row above: up arrow
+- select row below: down arrow
+- expand selected row: right arrow
+- collapse selected row: left arrow
+- see more on pages 260-267 in
+  "OmniOutliner 2.5 for iOS User Manual" in iBooks
+
+Questions
+- Is it necessary to return to the Documents view to save changes?
+- Is it possible to import a CSV file into OmniOutliner?
+- Can row handles be hidden?

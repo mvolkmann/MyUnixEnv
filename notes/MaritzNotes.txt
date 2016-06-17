@@ -1,5 +1,19 @@
 Maritz Notes
 
+To use Time Entry from Maritz Mac
+- browse connect.maritz.com
+- enter username and password
+- complete authentication with PhoneFactor
+- double-click downloaded .ica file
+- open Start menu
+- click Internet Explorer
+- click start for bookmarks
+- click "Maritz Time Entry"
+- enter username and password again
+- enter time as usual
+- open Start menu
+- click "Log off"
+
 To connect remotely from your OCI Mac laptop
 - launch Citrix Receiver
 - double-click VNC-Remote Control
@@ -15,12 +29,112 @@ To connect remotely from your OCI Mac laptop
 - can quit the "Citrix Receiver" app now
 - use the remaining "Citrix Viewer" app
 
+To add SSH key to Bitbucket
+- click avatar (your picture) in upper-right
+- select "Bitbucket settings"
+- click "SSH keys" in left nav
+- press "Add key"
+- enter a title
+- on Mac OS X, to copy SSH key to clipboard
+  enter "pbcopy < cat ~/.ssh/id_rsa.pub"
+
 To create a Bitbucket repo
 - browse https://bitbucket.org/maritzmotivation/profile/repositories
 - select Repositories ... Create Repository
 - enter a name that starts with "mtz-"
 - press "Create Repository" button
 - under "Command line", click "I'm starting from scratch"
-- follow the instructions
-- if this is for a new Polymer component,
-  copy files from the maritz-seed-element
+- follow the instructions on the Bitbucket webpage
+- if "polymer-cli" isn't installed yet,
+  run "npm install -g polymer-cli"
+- run "polymer init element"
+  * press return to accept the suggested element name
+    (same as repo name)
+  * enter a description of the element
+- copy a .gitignore file from another repo
+  * must at least exclude bower_components
+- populate the repo
+  * git add .
+  * git commit -v
+  * git push
+- create a develop branch
+  * git checkout -b develop
+  * git push
+- do work on develop branch
+- configure use of demo
+  * edit custom element .html file and
+    add the following to an HTML comment above <dom-module>:
+    @demo demo/index.html
+
+After changes to develop branch have been approved
+- git checkout master
+- git merge develop
+- git push
+- git tag -a v{major}.{minor}.{patch}
+- git push --follow-tags -m 'added tag'
+- git checkout develop (to prepare for future changes)
+
+To move a Polymer component its own git repo
+- create the new git repo
+  * browse the Maritz Bitbucket page
+  * select Projects ... SalesNext
+  * click "Create Repository"
+  * for "Repository name", enter name of component
+  * press "Create repository"
+  * click "I'm starting from scratch"
+  * create a directory for the repo
+  * cd to it
+  * enter "git init"
+  * copy the "git remote add origin" command and run it
+- add recommended Polymer element files
+  * if "polymer-cli" isn't installed yet,
+    run "npm install -g polymer-cli"
+  * run "polymer init"
+  * press return to select the "element" template
+  * press return to accept the suggested element name
+    (same as repo name)
+  * enter a description of the element
+- move files from the directory of the current repo to this new one
+  * can overwrite {repo-name}.html
+- install any third-party things needed
+  * ex. bower install --save PolymerElements/iron-label
+- configure use of demo
+  * edit custom element .html file and
+    add the following to an HTML comment above <dom-module>:
+    @demo demo/index.html
+- lint the code
+  * eslint *.html
+  * polylint
+- verify that the documentation page displays correctly
+  * run "polymer serve -o"
+- verify that the demo works
+  * click "DEMO" in the upper-right
+  * it may be necessary to modify demo/index.html and
+    - add attributes to the custom element to get it to work
+    - copy css variables and/or mixins to the style tag
+- configure tests
+  * copy test/index.html from another component
+  * edit the list of tests inside that file
+    * note the file naming convention where
+      parts of custom element name are separated by dashes,
+      followed by an underscore, and "test"
+  * add "/test/" to the end of the documentation URL
+  * verify that the test passes
+  * add more tests
+- copy .gitignore from the directory of the current repo to this new one
+- add files to the git repo
+  * git add .
+  * git commit -av
+  * git push
+- (needed?) create a bower link to this git repo
+  * enter "bower link"
+- change original repo to use this one
+  * cd to the directory of the original repo
+  * remove the files that were moved to the new repo
+  * (needed?) enter "bower link {new-repo-name}" to install them
+    under the bower_components directory
+  * manually add dependency to bower.json like this:
+    "mtz-some-name": "git@bitbucket.org:maritzmotivation/mtz-some-name.git",
+  * enter "bower install" to install this new dependency
+  * change imports of those files from "./" to "../{new-repo-name}/"
+  * test to verify that everything still works

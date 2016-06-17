@@ -1,8 +1,18 @@
 Slide Rule Notes
 
-Models
-- Think Geek
+Models I Have
+- Concise Circular Slide Rule No. 28 N
+- Fisher Controls - Universal Valve Sizing Rule
+- Picket
+  * N200-ES - Trig (6")
+  * N902-ES - Simplex Trig
+  * N904-ES - Trig and Decimal Keeper Speed Rule
+- Post
+  * Versalog 1460
+- Think Geek Nanoline 1337
   * patterned after a Pickett model
+
+Models I Don't Have
 - Sans & Streiffe No. 312
   * Rich Seibel has this
 
