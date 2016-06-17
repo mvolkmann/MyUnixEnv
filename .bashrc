@@ -52,11 +52,13 @@ alias cdsett='cd $SETT_DIR'
 alias cdtraining='cd $TRAINING_DIR'
 alias cdvim='cd $PROGRAMMING_DIR/Tools/Vim'
 
+# Git aliases
 alias br='git branch'
 alias ci='git commit -av'
 alias co='git checkout'
 alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
 alias push='git push origin `git rev-parse --abbrev-ref HEAD`'
+alias sha='git rev-parse HEAD'
 # status report from git commits
 alias sr='git log --author="Volkmann" --branches --no-merges --since="8 days ago" --pretty=format:"%cd %s" | tac'
 
@@ -109,7 +111,9 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 #complete -C complete-ant-cmd.pl ant build.sh
 
 # For Web Components and Polymer
-alias po="polyserve -o"
+alias pso="polymer serve -o"
+alias ple="eslint *.html demo/*.html test/*.html"
+alias pl="polylint demo/index.html"
 
 # For Maritz earnPOWER
 alias cdclient='cd $EP_DIR'
