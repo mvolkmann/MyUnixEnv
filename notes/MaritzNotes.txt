@@ -69,9 +69,9 @@ To create a Bitbucket repo
 After changes to develop branch have been approved
 - git checkout master
 - git merge develop
-- git push
-- git tag -a v{major}.{minor}.{patch}
-- git push --follow-tags -m 'added tag'
+- git push origin master
+- git tag -a v{major}.{minor}.{patch} -m 'added tag'
+- git push origin master --follow-tags
 - git checkout develop (to prepare for future changes)
 
 To move a Polymer component its own git repo
@@ -107,6 +107,11 @@ To move a Polymer component its own git repo
   * polylint
 - verify that the documentation page displays correctly
   * run "polymer serve -o"
+- copy .gitignore from the directory of the current repo to this new one
+- add files to the git repo
+  * git add .
+  * git commit -av
+  * git push
 - verify that the demo works
   * click "DEMO" in the upper-right
   * it may be necessary to modify demo/index.html and
@@ -121,11 +126,6 @@ To move a Polymer component its own git repo
   * add "/test/" to the end of the documentation URL
   * verify that the test passes
   * add more tests
-- copy .gitignore from the directory of the current repo to this new one
-- add files to the git repo
-  * git add .
-  * git commit -av
-  * git push
 - (needed?) create a bower link to this git repo
   * enter "bower link"
 - change original repo to use this one
