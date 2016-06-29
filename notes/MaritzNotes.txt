@@ -38,7 +38,7 @@ To add SSH key to Bitbucket
 - on Mac OS X, to copy SSH key to clipboard
   enter "pbcopy < cat ~/.ssh/id_rsa.pub"
 
-To create a Bitbucket repo
+To create a new Polymer component
 - browse https://bitbucket.org/maritzmotivation/profile/repositories
 - select Repositories ... Create Repository
 - enter a name that starts with "mtz-"
