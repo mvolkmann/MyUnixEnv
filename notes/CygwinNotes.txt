@@ -18,14 +18,13 @@ things to add that aren't installed by default
 - Archive: unzip, zip
 - Devel: gcc-core, gcc-g++,
     git, git-completion, git-gui, gitk,
-    make, mercurial, ruby, subversion
+    make, mercurial, subversion
 - Editors: gvim, vim
 - Games: gnugo
 - Interpreters: ruby
 - Net: inetutils (contains ftp), ncftp, openssh (contains ssh and scp)
 - Text: enscript
 - Utils: cygutils-extra (contains lpr), diffutils, tmux
-- Web: tidy
 
 ncftp
 - you don't get the ncftp* commands by default,

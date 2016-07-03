@@ -113,7 +113,7 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 # For Web Components and Polymer
 alias pso="polymer serve -o"
 alias ple="eslint *.html demo/*.html test/*.html"
-alias pl="polylint demo/index.html test/index.html"
+alias pl="polylint demo/index.html"
 
 # For Maritz earnPOWER
 alias cdclient='cd $EP_DIR'
