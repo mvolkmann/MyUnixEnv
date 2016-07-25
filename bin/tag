@@ -1,0 +1,11 @@
+#!/bin/bash
+# Tags the current git commit.
+
+if [ $# -ne 1 ]; then
+  echo usage: tag {tag}
+  exit 1
+fi
+
+git tag -a "$1" -m "added $1 tag"
+git push origin master --follow-tags
+echo tagged
