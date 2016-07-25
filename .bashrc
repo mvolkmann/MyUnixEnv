@@ -114,6 +114,7 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 alias pso="polymer serve -o"
 alias ple="eslint *.html demo/*.html test/*.html"
 alias pl="polylint demo/index.html"
+alias pwatch='livereload "*.html, demo/*.html, test/*.html"'
 
 # For Maritz earnPOWER
 alias cdclient='cd $EP_DIR'
