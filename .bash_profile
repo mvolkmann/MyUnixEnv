@@ -67,9 +67,6 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export JS_CMD=node
 export JS_DIR=$LANGUAGES_DIR/javascript
 
-# JBoss settings
-export JBOSS_HOME=$JAVA_DIR/JBoss/jboss-as-7.1.1.Final
-
 # Maven settings
 #export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.1.0
 export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.3.1
@@ -89,6 +86,10 @@ export PATH=$PATH:$NODE_DIR/deps/v8/tools
 
 # Postgres settings
 #export PATH=$PATH:$POSTGRES_DIR/bin
+
+# React Native settings
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export GRADLE_OPTS="-Dorg.gradle.daemon=true"
 
 # Ruby settings
 export RUBY_DIR=$LANGUAGES_DIR/Ruby

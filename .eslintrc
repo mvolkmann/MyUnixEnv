@@ -34,7 +34,7 @@
     "block-spacing": [2, "always"],
     "block-scoped-var": 2,
     "brace-style": [2, "1tbs"],
-    "callback-return": 2,
+    "callback-return": 0,
     "camelcase": 2,
     "comma-dangle": 0,
     "comma-spacing": [2, {"before": false, "after": true}],

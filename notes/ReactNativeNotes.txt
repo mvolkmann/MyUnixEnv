@@ -1,0 +1,120 @@
+React Native Notes
+
+Setup on Mac
+- install Homebrew from http://brew.sh/
+- brew update
+- brew upgrade
+- install Node.js
+  * one way is with "brew install node"
+- brew install watchman
+- brew install flow
+- npm install -g react-native-cli
+- get an Apple Developer account
+  * browse https://developer.apple.com/programs/
+  * don't need to start paid account until you are
+    ready to release an app to the store
+- for iOS
+  * install Xcode from https://developer.apple.com/download/
+- for Android
+  * install latest Java Development Kit (JDK)
+  * brew install android-sdk
+  * modify .bash_profile to include
+    export ANDROID_HOME=/usr/local/opt/android-sdk
+    export GRADLE_OPTS="-Dorg.gradle.daemon=true"
+  * install Intel Hardware Accelerated eXecution Manager (HAXM)
+    - browse https://software.intel.com/en-us/android/articles/intel-hardware-accelerated-execution-manager/
+    - download haxm-macosx_v6_0_3.zip
+    - unzip
+    - double-click IntelHAXM_6.0.3.dmg
+    - double-click IntelHAXM_6.0.3.mpkg
+  * from a terminal window, run "android"
+  * select these
+    - Android SDK Build-tools version 24
+    - Android SDK Build-tools version 23.0.1
+      * required by some examples
+      * specified in build.gradle buildToolsVersion
+    - Android 6.0 (API 23)
+      * Intel x86 Atom 64 System Image
+      * Intel x86 Atom System Image
+    - Extras ... Android Support Repository
+    - Extras ... Intel x86 Emulator Accelerator (HAXM installer)
+  * delete unused processor emulations to save space!
+  * press "Install Packages"
+  * one at a time, select each license on the left
+    and select the "Accept" radio button
+  * press "Install"
+    - takes hours to finish!
+  * to create "Android Virtual Devices"
+    - open another terminal window
+    - start the "Android Virtual Device (AVD) Manager" app
+      * enter "android avd"
+    - create one AVD for each device type to be tested (at least one)
+    - to define a device from scratch
+      * press "Create..." and fill out the emulator creation form
+    - to choose from existing device definitions
+      * click "Device Definitions" at top
+      * select a device from the list on the left (ex. Galaxy Nexus)
+      * press "Create AVD..."
+      * consider renaming
+        - ex. AVD Name = Galaxy_Nexus_AVD
+    - name cannot contain spaces
+    - check "Use Host GPU"
+    - supply any missing information
+      * ex. CPU/ABI = Google APIs Intel Atom (x86)
+      * ex. Skin = No skin
+    - press "OK"
+    - quit the "Android Virtual Device (AVD) Manager" app
+
+To run examples
+- git clone https://github.com/facebook/react-native.git
+- cd react-native
+- npm install
+- cd Examples
+- UIExplorer is a great showcase of UI components!
+  * hold down on trackpad and drag vertically to scroll through them
+- for each example
+  * cd to example directory
+  * enter "open {project-name}.xcodeproj"
+  * press the run button (right pointing triangle) in upper-left of Xcode
+  * if this fails, may need to stop "React Package Manager"
+    running from a previous app
+
+To create an application
+- cd to parent directory of project
+- react-native init {project-name}
+  * make project name camel-case (ex. FirstProject)
+
+To run an app on iOS
+- cd to project directory
+- react-native run-ios
+  or open ios/{project=name}.xcodeproj in Xcode
+  * takes about two minutes the first time,
+    but is much faster after that
+- to reload after making changes to code, type cmd-r
+- to access the dev menu, type cmd-d
+- alternatively, can run app by opening the .xcodeproj file in Xcode
+  and clicking the run button (right pointing triangle in upper-left)
+
+To run an app on Android
+- cd to project directory
+- list created AVDs
+  * emulator -list-avds
+- start an AVD
+  * emulator @{avd-name}
+    - will get a dialog that says "Running an x86 based Android Virtual Device
+      is 10x faster", but it doesn't seem that those CPU options work
+      when running on a Mac
+  * wait until "Android" disappears from emulator screen
+    and the time is displayed
+    - takes several minutes!
+- open another terminal
+- need to cd to android directory
+  and run "./gradlew :app:installDebug"?
+- react-native run-android
+  * takes a couple of minutes
+- unlock by holding down trackpad with one finger
+  and swiping up with another
+- app should appear
+- to reload after making code changes
+  * press cmd-m and press "Reload"
+  * UI will flash as new content becomes visible
