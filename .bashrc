@@ -111,10 +111,11 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 #complete -C complete-ant-cmd.pl ant build.sh
 
 # For Web Components and Polymer
-alias pso="polymer serve -o"
-alias ple="eslint *.html demo/*.html test/*.html"
+alias pe="eslint *.html demo/*.html test/*.html"
+alias pew="esw -w --ext .html"
 alias pl="polylint demo/index.html"
-alias pwatch='livereload "*.html, demo/*.html, test/*.html"'
+alias plr='livereload "*.html, demo/*.html, test/*.html"'
+alias pso="polymer serve -o"
 
 # For Maritz earnPOWER
 alias cdclient='cd $EP_DIR'
