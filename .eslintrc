@@ -7,6 +7,11 @@
 
   "globals": {
     "angular": false,
+    "describe": false,
+    "it": false,
+    "fixture": false,
+    "flush": false,
+    "assert": false,
     "mtzEnv": false,
     "Polymer": false,
     "$": false
@@ -65,7 +70,7 @@
     "lines-around-comment": 0,
     "max-depth": [1, 5],
     "max-len": [1, 80, 4],
-    "max-nested-callbacks": [2, 3],
+    "max-nested-callbacks": [2, 4],
     "max-params": 0,
     "max-statements": [1, 50],
     "new-cap": 0,

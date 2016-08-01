@@ -65,6 +65,9 @@ Setup on Mac
     - press "OK"
     - quit the "Android Virtual Device (AVD) Manager" app
 
+To see the version of react-native that is installed
+- react-native -v
+
 To run examples
 - git clone https://github.com/facebook/react-native.git
 - cd react-native
@@ -86,6 +89,7 @@ To create an application
 
 To run an app on iOS
 - cd to project directory
+- if a package.json file is present, run "npm install"
 - react-native run-ios
   or open ios/{project=name}.xcodeproj in Xcode
   * takes about two minutes the first time,
@@ -118,3 +122,17 @@ To run an app on Android
 - to reload after making code changes
   * press cmd-m and press "Reload"
   * UI will flash as new content becomes visible
+
+To see output from console.log statements
+- approach #1
+  * only works in react-native 0.29 and above
+  * open a terminal window
+  * run "react-native log-ios"
+  * run app
+- approach #2
+  * run the app by opening the .xcodeproj file in XCode
+  * select View...Debug Area...Activate Console
+  * run app
+
+To change version of react-native being used
+- the simulator must be restarted
