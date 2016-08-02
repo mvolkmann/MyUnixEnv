@@ -110,6 +110,9 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 
 #complete -C complete-ant-cmd.pl ant build.sh
 
+# Kill the process listening on a given port.
+alias klp="kill-listening-process"
+
 # For Web Components and Polymer
 alias pe="clear; eslint *.html demo/*.html test/*.html"
 alias pew="clear; esw -w --ext .html"
