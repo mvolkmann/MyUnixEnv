@@ -262,6 +262,12 @@ noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header -
 noremap <leader>e2 execute "normal! '<,'>:w !enscript --borders --columns-2 --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 " }}}
 
+" JavaScript and JSX syntax highlighting
+" Enable syntax highlighting for Flow.
+let g:javascript_plugin_flow = 1
+" Enable JSX syntax highlighting in files with a .js extension instead of .jsx.
+let g:jsx_ext_required = 0
+
 " The Silver Searcher (ag) --- {{{
 if executable('ag')
   " Use ag instead of grep.

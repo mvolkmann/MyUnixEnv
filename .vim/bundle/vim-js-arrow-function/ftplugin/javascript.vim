@@ -31,9 +31,23 @@
 
 command! JsAnonFnToArrowFn execute "normal! $?function\\s*(\<cr>dwf)a =>\<esc>F)va(\<esc>:'<,'>s/(\\(\\w\\+\\))/\\1/e\<cr>/{\<cr>va{\<esc>:'<,'>s/{\\_s*return \\(\\_[^;]\\+\\);\\_s*}/\\1/e\<cr>"
 
+function! JsArrowFnBraceToggle()
+  " move to beginning of line
+  :normal '^'
+
+  " find arrow (last character was added w/ ctrl-v ctrl-m
+  :normal /=/
+  " if followed by an open brace,
+  "   remove the next open and close brace
+  "   remove the return keyward
+  " else
+  "   add open brace
+  "   find return keyword
+  "   find next semicolon
+  "   add close brace
+endfunction
+
 " If <leader>af is not already mapped ...
-"if !exists('g:js_arrow_function_map_keys')
 if mapcheck("\<leader>af", "N") == ""
   nnoremap <leader>af :JsAnonFnToArrowFn<cr>
 endif
-

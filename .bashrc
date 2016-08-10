@@ -56,9 +56,11 @@ alias cdvim='cd $PROGRAMMING_DIR/Tools/Vim'
 alias br='git branch'
 alias ci='git commit -av'
 alias co='git checkout'
+alias log='git log'
 alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
 alias push='git push origin `git rev-parse --abbrev-ref HEAD`'
 alias sha='git rev-parse HEAD'
+alias status='git status'
 # status report from git commits
 alias sr='git log --author="Volkmann" --branches --no-merges --since="8 days ago" --pretty=format:"%cd %s" | tac'
 
