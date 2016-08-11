@@ -85,12 +85,12 @@ alias findjs2="find4 js"
 alias findjson="find3 json"
 alias findless="find3 less"
 
-# Add semicolons to a given JavaScript file.
-# ex. scyes some-name.js
-alias scyes="eslint --fix --rule 'semi: [2, always]'"
-# Remove semicolons from a given JavaScript file.
-# ex. scno some-name.js
-alias scno="eslint --fix --rule 'semi: [2, never]'"
+# Fix ESLint issues in a JavaScript file, including adding missing semicolons.
+# ex. fixsemi some-name.js
+alias fixsemi="eslint --fix --rule 'semi: [2, always]'"
+# Fix ESLint issues in a JavaScript file, including removing unnecessary semicolons.
+# ex. fixnosemi some-name.js
+alias fixnosemi="eslint --fix --rule 'semi: [2, never]'"
 
 # Goes to root directory of current git repo.
 alias cdgitroot='cd `git rev-parse --git-dir`; cd ..'
