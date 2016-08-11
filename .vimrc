@@ -233,6 +233,9 @@ inoremap <leader>; <esc>A;
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
+" Source the current buffer
+nnoremap <leader>sb :source %<cr>
+
 " JSHint - see https://github.com/wookiehangover/jshint.vim
 "let JSHintUpdateWriteOnly = 1
 "nnoremap <leader>j :JSHintUpdate<cr>
