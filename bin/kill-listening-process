@@ -6,4 +6,12 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-kill `lsof -n -iTCP:$1 -sTCP:LISTEN -t`
+port=$1
+pid=`lsof -n -iTCP:$port -sTCP:LISTEN -t`
+
+if [ $pid ]; then
+  kill $pid
+  echo killed process $pid
+else
+  echo no process is listening on port $port
+fi
