@@ -56,9 +56,11 @@ alias cdvim='cd $PROGRAMMING_DIR/Tools/Vim'
 alias br='git branch'
 alias ci='git commit -av'
 alias co='git checkout'
+alias log='git log'
 alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
 alias push='git push origin `git rev-parse --abbrev-ref HEAD`'
 alias sha='git rev-parse HEAD'
+alias status='git status'
 # status report from git commits
 alias sr='git log --author="Volkmann" --branches --no-merges --since="8 days ago" --pretty=format:"%cd %s" | tac'
 
@@ -82,6 +84,13 @@ alias findjs="find3 js"
 alias findjs2="find4 js"
 alias findjson="find3 json"
 alias findless="find3 less"
+
+# Fix ESLint issues in a JavaScript file, including adding missing semicolons.
+# ex. fixsemi some-name.js
+alias fixsemi="eslint --fix --rule 'semi: [2, always]'"
+# Fix ESLint issues in a JavaScript file, including removing unnecessary semicolons.
+# ex. fixnosemi some-name.js
+alias fixnosemi="eslint --fix --rule 'semi: [2, never]'"
 
 # Goes to root directory of current git repo.
 alias cdgitroot='cd `git rev-parse --git-dir`; cd ..'

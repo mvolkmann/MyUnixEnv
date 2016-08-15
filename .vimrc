@@ -233,6 +233,9 @@ inoremap <leader>; <esc>A;
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 
+" Source the current buffer
+nnoremap <leader>sb :source %<cr>
+
 " JSHint - see https://github.com/wookiehangover/jshint.vim
 "let JSHintUpdateWriteOnly = 1
 "nnoremap <leader>j :JSHintUpdate<cr>
@@ -261,6 +264,12 @@ nmap <leader>w <Plug>(easymotion-overwin-w) " searches for beginning of a word i
 noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"
 noremap <leader>e2 execute "normal! '<,'>:w !enscript --borders --columns-2 --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 " }}}
+
+" JavaScript and JSX syntax highlighting
+" Enable syntax highlighting for Flow.
+let g:javascript_plugin_flow = 1
+" Enable JSX syntax highlighting in files with a .js extension instead of .jsx.
+let g:jsx_ext_required = 0
 
 " The Silver Searcher (ag) --- {{{
 if executable('ag')
