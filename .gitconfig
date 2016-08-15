@@ -15,3 +15,5 @@
   helper = osxkeychain
 [push]
   default = simple
+[http]
+	sslVerify = false
