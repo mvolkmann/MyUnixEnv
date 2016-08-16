@@ -419,6 +419,10 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 "endfunction
 " }}}
 
+" git --- {{{
+let g:gitgutter_max_signs=1200
+" }}}
+
 " Pane resize --- {{{
 " Resize panes to be equal width when window is resized.
 augroup resizeWindow
