@@ -124,7 +124,7 @@ alias klp="kill-listening-process"
 
 # For Web Components and Polymer
 alias pe="clear; eslint *.html demo/*.html test/*.html"
-alias pew="clear; esw -w --ext .html"
+alias pew="clear; esw -w *.html demo/*.html test/*.html"
 alias pl="clear; polylint demo/index.html"
 alias plr='clear; livereload "*.html, demo/*.html, test/*.html"'
 alias pso="clear; polymer serve -o"
