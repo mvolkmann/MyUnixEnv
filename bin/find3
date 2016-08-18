@@ -1,6 +1,8 @@
 #!/bin/bash
 # Finds all files with a given file extension in and below the current directory
 # that contain a given string.
+# It does not consider files in the subdirectories named
+# bower_components and node_modules.
 # For example, find3 java "implements Foo"
 
 if [ $# -ne 2 ]; then
@@ -8,4 +10,8 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-find . -name "*.$1" | xargs grep "$2"
+find . \
+  -not \( -path ./bower_components -prune \) \
+  -not \( -path ./node_modules -prune \) \
+  -name "*.$1" | \
+  xargs grep "$2"
