@@ -1702,6 +1702,7 @@ Other
   :retab - expands all tabs currently in file to spaces
            if the previous option is set
   :!{os-cmd} - executes an OS command from within Vim (ex. :!ls)
+  @: repeats the last ex command
   :so[urce] {file} - executes a file containing Ex commands such as .vimrc
   - you have <leader>ev mapped to edit .vimrc
     and <leader>sv mapped to source .vimrc
