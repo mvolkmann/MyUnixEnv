@@ -123,6 +123,7 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 alias klp="kill-listening-process"
 
 # For React Native
+alias rna="react-native run-android"
 alias rni="react-native run-ios"
 
 # For Web Components and Polymer
