@@ -122,6 +122,9 @@ alias sortedpath="ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 # Kill the process listening on a given port.
 alias klp="kill-listening-process"
 
+# For React Native
+alias rni="react-native run-ios"
+
 # For Web Components and Polymer
 alias pe="clear; eslint *.html demo/*.html test/*.html"
 alias pew="clear; esw -w *.html demo/*.html test/*.html"
