@@ -1,0 +1,48 @@
+Notes on using Artifactory private npm repo
+
+Many of the details documented here came from
+https://www.jfrog.com/confluence/display/RTF/Npm+Repositories#NpmRepositories-LocalRepositories
+
+To configure npm to use this repo instead of the default repo
+- npm config set registry \
+https://components-build.maritz.com/artifactory/api/npm/npm-maritz-local
+
+To configure authentication details
+- curl -udeployer:deployer "https://components-build.maritz.com/artifactory/api/npm/auth"
+  * may need to run this on a Linux or Mac
+    and copy the output over to a Windows machine
+- add the lines that outputs to .npmrc in home directory
+  * for me in Windows this is C:\Users\volkmam
+
+Example Node module
+- create a directory for the module
+- create the file index.js in this directory with the following content:
+  module.exports = function (name) {
+    console.log('Hello, ' + name + '!');
+  };
+
+To publish a Node module to the repo
+- create a package.json file for the module
+  * run "npm init" which will prompt for data it needs and create package.json
+- add the following to package.json for the module:
+  "publishConfig": {
+    "registry": "https://components-build.maritz.com/artifactory/api/npm/npm-maritz-local"
+  },
+- npm publish
+
+To publish a new version of a Node module to the repo
+- bump the version number in package.json
+- npm publish
+
+To see all the modules in the repo
+- browse https://components-build.maritz.com/artifactory/simple/npm-maritz-local
+
+Example app
+- create a directory for the app
+- create the file app.js in this directory with the following content:
+  var greet = require('greet');
+  greet('World');
+- install the Node module from the repo
+  * npm install {module-name}
+- run the app
+  * node app.js
