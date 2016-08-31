@@ -535,13 +535,13 @@ To undo commits
 To reset the repo to an earlier state
 - git checkout -- {file-name|dir-name}
   * restores the given file directory to its last committed state
-- git reset
+- git reset --hard {commit-sha}
   * deletes unwanted, uncommitted revisions
   * defaults to resetting the current branch to match HEAD
-  * add --hard to delete them from both the repository and the working tree
-    (How does omitting this differ?)
+  * only resets local repo
+  * to reset remote repo, git push -f
 - git clean -fd
-  * deletes finds that git isn't tracking
+  * deletes files that git isn't tracking
 
 To host a git server
 - the easiest way is to use Gitosis
