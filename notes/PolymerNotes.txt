@@ -1,9 +1,30 @@
 Polymer Notes
 
 Issues
-- Polymer properties declarations are just for documentation.
-  * when violated, no error messages are generated
 - lack of error messages when components are used incorrectly
+  * tooling is sometimes painted as a bad thing,
+    but it also identifies lots of bugs
+- shadow DOM makes CSS much more difficult
+- weak binding system leads to lots of trivial, private methods
+- firing events is a less direct mechanism for communicating
+  with a parent than callback functions
+  * with events, you don't know if a parent is listening
+  * will callbacks, it was supplied by the parent
+- placing each component in its own git repository
+  really slows development
+- each component holds state in its props
+  * runs counter to the React pattern of holding
+    all app state in a single object
+- two-way data binding results in apps that are harder
+  to understand and maintain
+- iron-ajax causes logic to be split into four pieces
+  that are not co-located, making it harder to follow
+  * declarative setup in HTML
+  * invocation (ex. this.$.ajax.generateRequest())
+  * success handling
+  * error handling
+- Polymer property declarations are just for documentation.
+  * when violated, no error messages are generated
 - extra tags needed to embed CSS, HTML, and JavaScript
   in a single file make it verbose
 - being a web standard doesn't guarantee success/adoption
@@ -13,5 +34,5 @@ Issues
     many "Web Services" specs, ...
 - no provided pattern for state management
 - How can a Polymer component use functions defined in a
-  separate .js file?  Can it use ES6 imports?
-  Can webpack be used to create a bundle?
+  separate .js file?  It seems it cannot use ES6 imports.
+- have to use bower instead of npm
