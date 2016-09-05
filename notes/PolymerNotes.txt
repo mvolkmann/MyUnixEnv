@@ -6,6 +6,10 @@ Issues
     but it also identifies lots of bugs
 - shadow DOM makes CSS much more difficult
 - weak binding system leads to lots of trivial, private methods
+  * very restricted syntax inside [[ ]] and {{ }}
+- very verbose conditional logic and iteration in HTML
+  * <template is="dom-if" if="condition"> ... </template>
+  * <template is="dom-repeat" items="array-ref"> ... </template>
 - firing events is a less direct mechanism for communicating
   with a parent than callback functions
   * with events, you don't know if a parent is listening
