@@ -216,7 +216,8 @@ Branches
     - only works if the branch has already been merged to the current one
     - to force the delete, use -D instead of -d
 - to delete a remote branch
-  * git push origin :{branch-name}
+  * approach #1: git branch -rd origin/{branch-name}
+  * approach #2: git push origin :{branch-name}
 - to tag a branch
   * git tag {tag-name} [{branch-name}]
     - defaults to tagging the current branch

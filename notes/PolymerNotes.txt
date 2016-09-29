@@ -40,3 +40,8 @@ Issues
 - How can a Polymer component use functions defined in a
   separate .js file?  It seems it cannot use ES6 imports.
 - have to use bower instead of npm
+- "!someBoolean" works but "! someBoolean" doesn't
+- _config is a reserved property name; are there others
+- dom-repeat doesn't work inside table elements in IE
+- can't access properties with "this." inside observer methods
+- other IE issues?
