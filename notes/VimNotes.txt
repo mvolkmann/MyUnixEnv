@@ -995,6 +995,7 @@ Search and Replace
   :set ic - case-insensitive searches
   :set noic - case-sensitive searches
   /{pattern} - search forward for next occurrence, cursor placed at match start
+  /\c{pattern} - same as previous, but case-insensitive
   /{pattern}/e - same as previous, but cursor placed at match end
   ?{pattern} - search backward for previous occurence
   * - search forward for next occurence of word under cursor
