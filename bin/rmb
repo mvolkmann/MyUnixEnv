@@ -1,0 +1,10 @@
+#!/bin/bash
+# Removes a given git branch, both local and remote.
+
+if [ $# -ne 1 ]; then
+  echo usage: rmb {branch-name}
+  exit 1
+fi
+
+git branch -d $1
+git branch -rd origin/$1
