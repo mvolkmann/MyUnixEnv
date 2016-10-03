@@ -11,7 +11,7 @@ if [ $# -ne 2 ]; then
 fi
 
 find . \
-  -not \( -path ./bower_components -prune \) \
-  -not \( -path ./node_modules -prune \) \
+  -not \( -regex .*bower_components.* -prune \) \
+  -not \( -regex .*node_modules.* -prune \) \
   -name "*.$1" | \
   xargs grep "$2"
