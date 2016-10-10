@@ -27,8 +27,9 @@ export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
 export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
-export MARITZ_DIR=$DOCUMENTS_DIR/OCI/clients/Maritz
+export MARITZ_DIR=$OCI_DIR/clients/Maritz
 #export MONGODB_DIR=$DATABASES_DIR/MongoDB
+export RGA_DIR=$OCI_DIR/clients/RGA
 export SETT_DIR=$OCI_DIR/SETT
 export TRAINING_DIR=$DOCUMENTS_DIR/training
 
