@@ -50,6 +50,8 @@ MacNotes.txt
     * Cover Flow to quickly flip through images
     * Quick Look (select a file and press spacebar
       to quickly view file contents)
+      * for plugins to support special file types, see
+        https://github.com/sindresorhus/quick-look-plugins
     * Sidebar shortcuts to commonly visited directories
       - these also appear in file dialog boxes
     * View as Columns
