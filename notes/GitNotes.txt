@@ -188,6 +188,8 @@ Branches
   * HEAD always points the current branch
     * git rev-parse HEAD outputs the SHA of the current commit
   * to checkout the latest local commit, git checkout master
+- to switch to previous branch
+  * git checkout -
 - to combine creating a new branch and switching to it
   * git checkout -b {new-branch-name} [{from-branch-name}]
     - if {from-branch-name} is omitted, a new branch
