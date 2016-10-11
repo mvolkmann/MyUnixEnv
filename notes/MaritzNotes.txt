@@ -51,7 +51,6 @@ To create a new Polymer component
   * press return to accept the suggested element name
     (same as repo name)
   * enter a description of the element
-- bower install
 - copy a .gitignore file from another repo
   * must at least exclude bower_components
 - populate the repo
