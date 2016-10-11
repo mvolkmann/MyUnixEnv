@@ -1,0 +1,10 @@
+Gmail Notes
+
+- to get Gmail to be used for mailto links
+  * open a browser tab to Gmail
+  * open dev tools console
+  * enter this:
+    navigator.registerProtocolHandler("mailto",
+      "https://mail.google.com/mail/?extsrc=mailto&url=%s",
+      "Gmail");
+  * press "Allow" in the confirmation dialog
