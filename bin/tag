@@ -1,11 +1,15 @@
 #!/bin/bash
-# Tags the current git commit.
+# This works with git repository tags.
+# With no arguments, it shows the current tags.
+# With one argument, it adds the specified tag.
 
-if [ $# -ne 1 ]; then
-  echo usage: tag {tag}
+if [ $# -eq 0 ]; then
+  git tag
+elif [ $# -eq 1 ]; then
+  git tag -a "$1" -m "added $1 tag"
+  git push origin master --follow-tags
+  echo tagged
+else
+  echo usage: tag [tag]
   exit 1
 fi
-
-git tag -a "$1" -m "added $1 tag"
-git push origin master --follow-tags
-echo tagged
