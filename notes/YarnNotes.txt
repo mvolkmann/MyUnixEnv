@@ -1,0 +1,60 @@
+Yarn Notes
+
+- a third party, open source npm client created at Facebook
+  * initially developed by Sebastian McKenzie,
+    James Kyle, Christoph Pojer, and Konstantin Raev
+  * not the first npm client, but probably the best
+
+- things yarn adds above npm
+  * lots of emojis in output
+  * can reinstall previously installed versions of packages
+    without downloading again and without a network connection
+    because it caches them in ~/.yarn-cache
+    - referred to later as "local cache"
+    - what is the purpose of ~/.yarn/.roadrunner.json?
+  * speed
+    - by installing packages in parallel and
+      installing from local cache if present
+  * automatic version shrinkwrap using generated lockfile
+    - yarn.lock is created/updated during each "add"
+    - records the version of each package
+      and each of its dependencies
+    - add yarn.lock to version control
+    - other developers can install
+      the same versions in the same order
+      by running "yarn"
+
+- the npm team is okay with yarn
+  * see http://blog.npmjs.org/post/151660845210/hello-yarn
+
+- to install
+  * npm install -g yarn
+
+- npm commands => yarn commands
+  * these commands are the same
+    - init, link, outdated, publish, run,
+      "cache clean", login, logout, test
+  * npm install -> yarn
+    - yarn creates package.json if doesn't exist
+  * npm install --save {name} -> yarn add {name}
+    - saving to package.json is the default in yarn
+  * npm uninstall --save {name} -> yarn remove {name}
+  * npm install --save-dev {name} -> yarn add --dev {name}
+  * npm update --save -> yarn upgrade
+  * npm install -g {name} -> yarn add global {name}
+
+- commands unique to yarn
+  * yarn licences ls
+    - lists licenses and urls of all dependencies
+  * yarn why {name}
+    - tells why {name} is installed
+      by listing packages that depend on it
+
+- alternate install sources
+  * can install packages from multiple registries
+  * can install from a remote gzipped tar file
+    - yarn add <url> - include angle brackets?
+  * can install from a local directory
+    - yarn add file://{path-to-folder}
+  * can install from a remote git repository
+    - yarn add <git {remote-url}> - include angle brackets?
