@@ -3,6 +3,8 @@ Yarn Notes
 - a third party, open source npm client created at Facebook
   * initially developed by Sebastian McKenzie,
     James Kyle, Christoph Pojer, and Konstantin Raev
+    - all worked at Facebook when Yarn was created
+    - also received help from Google, Tilde and Exponent
   * not the first npm client, but probably the best
 
 - things yarn adds above npm
@@ -11,6 +13,9 @@ Yarn Notes
     without downloading again and without a network connection
     because it caches them in ~/.yarn-cache
     - referred to later as "local cache"
+    - does not create symbolic links from
+      node_modules subdirectories to local cache directories;
+      why not?
     - what is the purpose of ~/.yarn/.roadrunner.json?
   * speed
     - by installing packages in parallel and
