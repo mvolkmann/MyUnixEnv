@@ -762,4 +762,5 @@ Submodules
 Vim
 - if git complains about an error in Vim after entering a commit message,
   do this
-  * git config --global core.editor /usr/bin/vim
+  * git config --global core.editor /usr/local/bin/vim
+  * /usr/local/bin is where Homebrew installs Vim

@@ -4,7 +4,7 @@ Yarn Notes
   * initially developed by Sebastian McKenzie,
     James Kyle, Christoph Pojer, and Konstantin Raev
     - all worked at Facebook when Yarn was created
-    - also received help from Google, Tilde and Exponent
+    - also received help from Google, Tilde, and Exponent
   * not the first npm client, but probably the best
 
 - things yarn adds above npm
@@ -15,7 +15,7 @@ Yarn Notes
     - referred to later as "local cache"
     - does not create symbolic links from
       node_modules subdirectories to local cache directories;
-      why not?
+      why not?  See https://github.com/yarnpkg/yarn/issues/1064
     - what is the purpose of ~/.yarn/.roadrunner.json?
   * speed
     - by installing packages in parallel and

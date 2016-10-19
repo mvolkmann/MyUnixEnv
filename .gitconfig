@@ -5,7 +5,7 @@
   ci = commit
   co = checkout
 [core]
-  editor = /usr/bin/vim
+	editor = /usr/local/bin/vim
 [user]
   name = R. Mark Volkmann
   email = r.mark.volkmann@gmail.com
