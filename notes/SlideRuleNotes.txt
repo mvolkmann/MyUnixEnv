@@ -1,6 +1,9 @@
 Slide Rule Notes
 
 Models I Have
+- ACU-MATH 1311
+  * made in Mount Olive, Illinois
+  * includes book from Washington University
 - Concise Circular Slide Rule No. 28 N
 - Fisher Controls - Universal Valve Sizing Rule
 - Picket
@@ -103,6 +106,7 @@ Decimal Places
 
 Direct Read vs. Slide
 - the slide is only used for multiplication and division
+  * after sliding, pinch top and bottom to hold in place
 - all other operations are performed by
   directly reading from one scale to another
 
@@ -160,7 +164,7 @@ Operations
 - multiplication
   * move left or right 1 on C to x on D
     - using the right 1 on C is like determining where you'd be to the right
-      if another slide rule where placed there
+      if another slide rule were placed there
       * ex. 9 + 8 = 17; 9 - (10 - 8) = 7 where the next slide rule length = 10
   * move cursor to y on C
   * read x*y from cursor on D
@@ -184,22 +188,26 @@ Operations
     3) characteristics - sum of characteristics + 1 if result >= 10
        from preliminary result location
        - gives the number of places to move decimal point (see example on p. 11)
-       - also so similar method in "Slide Rule: How To Use It" by Bishop
+       - also see similar method in "Slide Rule: How To Use It" by Bishop
     4) "Decimal Keeper" scales on some Pickett models
 - division
-  * approach 1
+  * approach 1 (seems best, especially for chained calculations)
+    - move left or right 1 on C to top number (dividend) on D
+    - move cursor to bottom number (divisor) on CI
+    - read quotient from D
+  * approach 2
     - move top number (dividend) on C over bottom number (divisor) on D
     - move cursor to left 1 on D
     - read quotient from C
-  * approach 2
+  * approach 3
     - move left or right 1 on C to top number (dividend) on D
     - move cursor to bottom number (divisor) on CI
     - read quotient from cursor on D
-  * approach 3
+  * approach 4
     - move left or right 1 on C to bottom number (divisor) on D
     - move cursor to top number (dividend) on D
     - read quotient from cursor on C
-  * approach 4 - seems best!
+  * approach 5 - seems best!
     - move bottom number on C over top number on D
     - read quotient on D under left or right 1 on C
   * shortcut for dividing many numbers by the same number
@@ -213,20 +221,23 @@ Operations
     - move cursor to c on D
     - read x from C under cursor
     - can swap C and D in the steps above
-- sines
+- sines (consider table lookup)
   * for angles >= 5.73 degrees
     - move cursor to angle in degrees on S
+      * goes from 5.73 to 90,
+        increasing slowly on left an rapidly on right
     - read sin x from C
     - ex. sin 67
       * move cursor to 67 on S
       * read result from C (9.2 -> 0.92)
   * for angles < 5.73 degrees
     - move cursor to angle in degrees on ST
+      * some slide rules don't have ST scale
     - read sin x from C
     - ex. sin 3
       * move cursor to 3 on ST
       * read result from C (5.23 -> 0.0523)
-- cosines
+- cosines (consider table lookup)
   * mentally calculate 90 - angle
   * determine sine of that angle
     - ex. cos 67
@@ -241,7 +252,8 @@ Operations
 - tangents
   * for angles >= 5.73 degrees
     - move cursor to angle in degrees on T1
-    - read tan x from C
+    - read tan x from C if x <= 45
+    - read tan x from CI if x > 45
   * for angles < 5.73 degrees
     - sine of the angle is nearly the same as its tangent,
       so use that
@@ -269,13 +281,17 @@ Operations
     2 for 100 <= x < 1000
     and so on
 - natural logs (base e)
-  * some slides rules have Ln and or LL scales that are used for this
-  * the Think Geek slide rule doesn't
+  * some slides rules have Ln (or just L) and or LL scales
+    that are used for this
   * move cursor to x on C or D
   * read result from Ln
-  * ex. ln 3
+    - you are expected to know the characteristic (integer part)
+  * ex. ln 2
     - move cursor to 2 on C or D
-    - read result from Ln (0.693)
+    - read mantissa (decimal part) from Ln (0.693)
+- other logs
+  * solve with a combination of natural logs?
+  * example: 2**3 = 8; log base 2 of 8 = 3 = ln 8 / ln 2
 - chained calculations (a.k.a. continuous)
   * a sequences of multiplications and divisions can be performed
   * ex. 2 x 6 x 3
