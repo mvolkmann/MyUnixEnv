@@ -168,7 +168,7 @@ let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
 " Key mappings --- {{{
 " To see all normal mode mappings, :map
 " To see all insert mode mappings, :imap
-
+ " toggles
 let mapleader = ","
 
 " dictionary word completion
@@ -435,6 +435,13 @@ augroup resizeWindow
     autocmd VimResized * exe "normal \<C-W>="
   endif
 augroup end
+" }}}
+
+" Rainbow (), [], and {} --- {{{
+" Toggle rainbow plugin.
+nnoremap <leader>r :RainbowParentheses!!<cr>
+let g:rainbow#max_level = 16
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " }}}
 
 " Syntastic --- {{{
