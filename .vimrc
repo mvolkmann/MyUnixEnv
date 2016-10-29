@@ -438,6 +438,7 @@ augroup end
 " }}}
 
 " Rainbow (), [], and {} --- {{{
+" This doesn't always work correctly inside JSX code.
 " Toggle rainbow plugin.
 nnoremap <leader>r :RainbowParentheses!!<cr>
 let g:rainbow#max_level = 16
