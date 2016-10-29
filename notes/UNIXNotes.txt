@@ -142,6 +142,9 @@ Find
   then the search begins in the current directory
   * in other words "find . -name 'foo.bar'"
     is the same as "find -name 'foo.bar'"
+- To delete all matching files below the current directory,
+  * find . -name 'name-pattern' -delete
+    - -delete is much shorter than -exec rm {} \;
 - grep
   - stands for Global Regular Expression Print
   - It came from the ed editor command g/RE/p

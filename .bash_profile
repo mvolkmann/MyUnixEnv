@@ -70,7 +70,7 @@ export JS_DIR=$LANGUAGES_DIR/javascript
 
 # Maven settings
 #export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.1.0
-export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.3.1
+export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.3.9
 export M2_HOME=$MAVEN_HOME
 export PATH=$PATH:$MAVEN_HOME/bin
 export MAVEN_OPTS="-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m"
