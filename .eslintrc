@@ -224,7 +224,7 @@
     "no-warning-comments": "off",
     "no-whitespace-before-property": "error",
     "no-with": "error",
-    "object-curly-newline": ["error", {"ObjectPattern": {"multiline": true}}],
+    "object-curly-newline": ["error", {"multiline": true}],
     "object-curly-spacing": ["error", "never"],
     "object-property-newline": "off",
     "object-shorthand": ["error", "always"],
