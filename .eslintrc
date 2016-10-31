@@ -87,7 +87,7 @@
     "max-nested-callbacks": ["error", 4],
     "max-params": "off",
     "max-statements": ["warn", 50],
-    "max-statements-per-line": ["error"],
+    "max-statements-per-line": ["error"], // doesn't work
     "multiline-ternary": "off",
     "new-cap": "off",
     "new-parens": "error",
@@ -270,7 +270,6 @@
     "react/jsx-uses-vars": "error",
     "react/jsx-wrap-multilines": "off",
     "react/no-children-prop": "error",
-    "react/no-comment-textnodes": "error",
     "react/no-danger": "off",
     "react/no-danger-with-children": "error",
     "react/no-deprecated": "error",
