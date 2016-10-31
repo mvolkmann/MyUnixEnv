@@ -270,7 +270,6 @@
     "react/jsx-uses-vars": "error",
     "react/jsx-wrap-multilines": "off",
     "react/no-children-prop": "error",
-    "react/no-comment-textnodes": "error",
     "react/no-danger": "off",
     "react/no-danger-with-children": "error",
     "react/no-deprecated": "error",
