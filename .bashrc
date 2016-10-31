@@ -87,6 +87,8 @@ alias findjs2="find4 js"
 alias findjson="find3 json"
 alias findless="find3 less"
 
+# ESLint aliases
+alias esl="clear; eslint -f codestyle **/*.js"
 # Fix ESLint issues in a JavaScript file, including adding missing semicolons.
 # ex. fixsemi some-name.js
 alias fixsemi="eslint --fix --rule 'semi: [2, always]'"
@@ -129,7 +131,7 @@ alias rna="react-native run-android"
 alias rni="react-native run-ios"
 
 # For Web Components and Polymer
-alias pe="clear; eslint *.html demo/*.html test/*.html"
+alias pe="clear; eslint -f codestyle *.html demo/*.html test/*.html"
 alias pew="clear; esw -w *.html demo/*.html test/*.html"
 alias pl="clear; polylint demo/index.html"
 alias plr='clear; livereload "*.html, demo/*.html, test/*.html"'
