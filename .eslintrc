@@ -149,7 +149,7 @@
     "no-lonely-if": "error",
     "no-loop-func": "error",
     "no-magic-numbers": "off",
-    "no-mixed-operators": "error",
+    "no-mixed-operators": "off",
     "no-mixed-requires": ["warn", true],
     "no-mixed-spaces-and-tabs": "error",
     "no-multi-spaces": "error",
