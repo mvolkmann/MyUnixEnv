@@ -31,7 +31,8 @@
 
   "plugins": [
     "html",
-    "react"
+    "react",
+    "volkmann"
   ],
 
   "rules": {
@@ -322,6 +323,7 @@
     "wrap-iife": "error",
     "wrap-regex": "off",
     "yield-star-spacing": ["error", "after"],
-    "yoda": "off"
+    "yoda": "off",
+    "volkmann/embrace-booleans": "error"
   }
 }
