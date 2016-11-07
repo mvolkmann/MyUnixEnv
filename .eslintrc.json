@@ -22,7 +22,7 @@
   "parser": "babel-eslint",
 
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 7,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -324,6 +324,7 @@
     "wrap-regex": "off",
     "yield-star-spacing": ["error", "after"],
     "yoda": "off",
-    "volkmann/embrace-booleans": "error"
+    "volkmann/embrace-booleans": "error",
+    "volkmann/exponentiation-operator": "error"
   }
 }
