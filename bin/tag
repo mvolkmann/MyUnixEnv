@@ -4,6 +4,7 @@
 # With one argument, it adds the specified tag.
 
 if [ $# -eq 0 ]; then
+  git fetch
   git tag
 elif [ $# -eq 1 ]; then
   git tag -a "$1" -m "added $1 tag"

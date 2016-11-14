@@ -14,6 +14,12 @@ Assignment
   eval v$n=19
   # The shell variable v5 is now set to 19.
 
+Command recall
+- to recall a past command based on any text in it,
+  press ctrl-r and type some of the text
+- press return to excute it
+- press ctrl-c to abort it
+
 Command-line arguments
 - number of them is in $#
 - array of them is in $*
