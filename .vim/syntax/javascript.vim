@@ -26,7 +26,11 @@ syntax keyword javaScriptThis this
 "TODO: Temporarily removed "class" and "extends" from javaScriptKeyword list because
 "TODO: that interferes with the javaScriptClassName and "javaScriptExtendsName regions.
 syntax keyword javaScriptKeyword break case catch const continue default delete do else export finally for function if import in let module null of return static super switch throw try undefined var while with yield
+
 "syntax keyword javaScriptOperator instanceof typeof == === != !== = + - * / % ++ -- += -= *= /= %= < <= > >= && || ! new delete in of ?
+syntax keyword javaScriptOperator delete instanceof typeof void new in of
+syntax match   javaScriptOperator /[\!\|\&\+\-\<\>\=\%\/\*\~\^]\{1}/
+
 syntax keyword javaScriptReserved abstract arguments boolean byte char debugger double enum final float goto implements int interface long native package private protected public short synchronized throws transient volatile
 syntax match javaScriptSemicolon ";"
 syntax match javaScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"

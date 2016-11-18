@@ -106,12 +106,12 @@ hi! DiffText   ctermbg=18 " blue for parts of lines that were changed
 " https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
 hi Boolean ctermfg=172 " orange
 hi Class ctermfg=12 " blue
-hi Comment ctermfg=22 " green cterm=italic
+hi Comment ctermfg=42 " green cterm=italic
 hi Function ctermfg=9 " red
 hi Keyword ctermfg=191 " yellow
 hi Normal ctermfg=7 " light gray
 hi Number ctermfg=172 " orange
-hi Operator ctermfg=53 " purple
+hi Operator ctermfg=163 " purple
 hi Reserved ctermfg=1 ctermbg=8 " red on gray
 hi Search cterm=underline ctermfg=15 ctermbg=0 " white on black
 hi Semicolon ctermfg=8 " gray
