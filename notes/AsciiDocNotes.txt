@@ -1,5 +1,14 @@
 AsciiDoc Notes
 
+AsciiDoctor
+- Continuation of the AsciiDoc language and tools is happening
+  in the Asciidoctor project.
+- Asciidoctor is a modern implementation of AsciiDoc in Ruby
+  that adheres as closely as possible to the syntax in AsciiDoc Python
+  while offering numerous modern enhancements.
+- Asciidoctor also offers a much broader ecosystem of
+  extensions, tools, and integrations.
+
 Overview
 - alternative to Markdown
 - homepage is http://www.methods.co.nz/asciidoc/
@@ -10,12 +19,8 @@ Character Escaping
 
 To install
 - option #1
-  * brew install asciidoc
-- option #2
-  * download tarball from http://sourceforge.net/projects/asciidoc/
-  * to install, ./configure; sudo make install
-- add to .bash_profile
-  export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
+  * brew install ruby
+  * gem install asciidoctor
 
 To install dblatex
 - download source from http://sourceforge.net/projects/dblatex/?source=dlp
@@ -23,11 +28,11 @@ To install dblatex
 - sudo python setup.py install
 
 To generate HTML
-- asciidoc {name}.txt
+- asciidoctor {name}.txt
   * generates {name}.html
 
 To generate slidy slides
-- asciidoc -b slidy {input-file}
+- asciidoctor -b slidy {input-file}
   * generates {name}.html, but it's in slidy format
 - new slides
   * level 1 & 2 headers start new slides
