@@ -26,7 +26,6 @@ export CSS_DIR=$LANGUAGES_DIR/CSS
 export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
-export JQUERY_DIR=$JAVASCRIPT_DIR/jquery
 export MARITZ_DIR=$OCI_DIR/clients/Maritz
 #export MONGODB_DIR=$DATABASES_DIR/MongoDB
 export RGA_DIR=$OCI_DIR/clients/RGA
@@ -47,9 +46,6 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 #export CLOJURE_HOME=$LANGUAGES_DIR/clojure/clojure-1.2.1
 #export CLOJURE_HOME=/opt/clojure-1.5.1 # for RPi
 #alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
-
-# FindBugs settings
-export FINDBUGS_HOME=${JAVA_DIR}/FindBugs/findbugs-1.3.5
 
 # Git settings
 . ~/bin/git-completion.bash
