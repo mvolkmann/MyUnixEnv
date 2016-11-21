@@ -309,11 +309,7 @@
     "space-before-blocks": ["error", "always"],
     "space-before-function-paren": ["error", {"anonymous": "always", "named": "never"}],
     "space-in-parens": ["error", "never"],
-    //"space-infix-ops": ["error", {"noExpSpace": true}],
-    "space-infix-ops": ["error", {"exceptions": {
-      "**": "never",
-      "*": "always"
-    }}],
+    "space-infix-ops": ["error", {"**": "never"}],
     "space-unary-ops": ["error", { "words": true, "nonwords": false }],
     "spaced-comment": "off",
     "strict": "off",
