@@ -445,6 +445,12 @@ let g:rainbow#max_level = 16
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " }}}
 
+" fixmyjs - runs "eslint --fix" on current buffer without saving it --- {{{
+let g:fixmyjs_engine = 'eslint'
+let g:fixmyjs_rc_path = '/Users/Mark/.eslintrc.json'
+noremap <leader>f :Fixmyjs<cr>
+" }}}
+
 " Syntastic --- {{{
 
 " Stop Syntastic from taking over :E from netrw.
@@ -462,9 +468,9 @@ let g:syntastic_javascript_checkers=['eslint']
 " }}}
 
 " Tsuquyomi - plugin for TypeScript --- {{{
-autocmd FileType typescript setlocal completeopt+=menu,preview
-autocmd FileType typescript nmap <buffer> <leader>r <Plug>(TsuquyomiRenameSymbol)
-autocmd FileType typescript nmap <buffer> <leader>t : <c-u>echo tsuquyomi#hint()<cr>
+"autocmd FileType typescript setlocal completeopt+=menu,preview
+"autocmd FileType typescript nmap <buffer> <leader>r <Plug>(TsuquyomiRenameSymbol)
+"autocmd FileType typescript nmap <buffer> <leader>t : <c-u>echo tsuquyomi#hint()<cr>
 " }}}
 
 " Ultisnips plugin {{{

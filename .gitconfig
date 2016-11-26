@@ -4,9 +4,9 @@
   br = branch
   ci = commit
   co = checkout
-	lastchange = log -p --follow -n 1
+  lastchange = log -p --follow -n 1
 [core]
-	editor = /usr/local/bin/vim
+  editor = /usr/local/bin/vim
 [user]
   name = R. Mark Volkmann
   email = r.mark.volkmann@gmail.com
