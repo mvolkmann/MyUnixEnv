@@ -80,6 +80,16 @@ Diffs
   * git diff --name-only {branch-or-sha-1} {branch-or-sha-2}
 - to see diffs between working tree and local repo
   * git diff {file-path}
+- to see the diffs for a single file
+  * between last commit and the previous commit that changed it
+    - git log -p --follow -n 1 {file-path}
+    - "git log -p" is typically used to generate a patch file,
+      but that is also a useful way to see diffs
+      - create an alias for this with
+        "git config --global alias.lastchange 'log -p --follow -n 1'"
+        and use it with "git lastchange {file-path}" <-- THIS!
+  * between last commit and the previous n commits that changed it
+    - git log -p --follow -n {n} {file-path}
 - to ignore line ending differences
   * add --ignore-space-at-eol after "git diff"
 - to all whitespace differences
