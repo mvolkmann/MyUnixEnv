@@ -445,7 +445,9 @@ let g:rainbow#max_level = 16
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " }}}
 
-" fixmyjs - runs "eslint --fix" on current buffer without saving it --- {{{
+" fixmyjs --- {{{
+" This runs "eslint --fix" on current buffer without saving it.
+" It requires running "npm install -g fixmyjs eslint eslint-plugin-babel".
 let g:fixmyjs_engine = 'eslint'
 let g:fixmyjs_rc_path = '~/.eslintrc.json'
 noremap <leader>f :Fixmyjs<cr>
