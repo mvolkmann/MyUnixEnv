@@ -450,6 +450,10 @@ Filtering Lines
   select them and enter "!sort"
   * requires shell sort command (not in Windows, but in Cygwin)
 
+FixMyJs
+- runs "eslint --fix" on current buffer without saving it
+- you configured <leader>f to run this
+
 Folding
 - commands to control folding include
   zfap - create a new fold
@@ -1570,6 +1574,18 @@ vim-vinegar
 
 Vundle
 - alternative to Pathogen
+
+vim-js-arrow-function
+- press <leader>af to convert a JavaScript non-arrow function to an arrow function
+- press <leader>tb to toggle use of braces in an arrow function
+  which is useful when changing a function from having one statement to many
+  or vice versa
+
+vim-tag-comment
+- press <leader>tc to comment the entire elment (start to end tag) under the cursor
+- press <leader>tu to uncomment the entire element (start to end tag) under the cursor
+- press <leader>tC to comment the tag (start or end) under the cursor
+- press <leader>tU to uncomment the tag (start or end) under the cursor
 
 Windows
   :win {width} {height} - to set default gvim window size (put in .vimrc);
