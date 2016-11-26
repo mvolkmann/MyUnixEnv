@@ -4,6 +4,7 @@
   br = branch
   ci = commit
   co = checkout
+	lastchange = log -p --follow -n 1
 [core]
 	editor = /usr/local/bin/vim
 [user]

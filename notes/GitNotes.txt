@@ -81,13 +81,15 @@ Diffs
 - to see diffs between working tree and local repo
   * git diff {file-path}
 - to see the diffs for a single file
-  between the current version and the previous commit that changed it
-  * git log -p -n 1 {file-path}
-  * "git log -p" is typically used to generate a patch file,
-    but that is also a useful way to see diffs
-- to see the diffs for a single file
-  between the current version and the previous n commits that changed it
-  * git log -p -n {n} {file-path}
+  * between the current version and the previous commit that changed it
+    - git log -p --follow -n 1 {file-path}
+    - "git log -p" is typically used to generate a patch file,
+      but that is also a useful way to see diffs
+      - create an alias for this with
+        "git config --global alias.lastchange 'log -p --follow -n 1'"
+        and use it with "git lastchange {file-path}"
+  * between the current version and the previous n commits that changed it
+    - git log -p --follow -n {n} {file-path}
 - to ignore line ending differences
   * add --ignore-space-at-eol after "git diff"
 - to all whitespace differences
