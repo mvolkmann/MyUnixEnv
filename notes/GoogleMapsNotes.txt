@@ -1,0 +1,24 @@
+Google Maps Notes
+
+Latitude is north/south from -90 to 90 where 0 is at the equator.
+Longitude is east/west from -180 to 180 where 0 is at Greenwich.
+
+To get an API key
+- browse https://developers.google.com/maps/documentation/static-maps/
+- click "GET A KEY"
+- select "API Project" from "Select or create project" dropdown
+- select "Yes" radio button to accept terms
+- press "Enable API"
+- copy the key (AIzaSyB_tEAj0spbk8sKd9RaECbzi2KQ0dEAO28)
+
+To create a project
+- browse https://console.developers.google.com/apis/
+
+To enable an API
+- select a project
+- click "Library" in left nav.
+- click "Google Maps JavaScript API" and press "ENABLE" (needed to add layers?)
+- click "Google Maps Embed API" and press "ENABLE"
+- press "Go to Credentials"
+- press "What credentials do I need?"
+- capture the API key
