@@ -70,24 +70,21 @@
 [submodule ".vim/bundle/vim-easymotion"]
 	path = .vim/bundle/vim-easymotion
 	url = https://github.com/Lokaltog/vim-easymotion
-[submodule "rainbow_parentheses.vim"]
-	path = rainbow_parentheses.vim
-	url = https://github.com/junegunn/rainbow_parentheses.vim
 [submodule "vim-fixmyjs"]
-	path = vim-fixmyjs
+	path = .vim/bundle/vim-fixmyjs
 	url = https://github.com/ruanyl/vim-fixmyjs.git
 [submodule "vim-javascript"]
-	path = vim-javascript
+	path = .vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
 [submodule "vim-js-arrow-function"]
-	path = vim-js-arrow-function
+	path = .vim/bundle/vim-js-arrow-function
 	url = https://github.com/mvolkmann/vim-js-arrow-function.git
 [submodule "vim-jsx"]
-	path = vim-jsx
+	path = .vim/bundle/vim-jsx
 	url = https://github.com/mxw/vim-jsx.git
 [submodule "vim-repeat"]
-	path = vim-repeat
+	path = .vim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
 [submodule "vim-tag-comment"]
-	path = vim-tag-comment
+	path = .vim/bundle/vim-tag-comment
 	url = https://github.com/mvolkmann/vim-tag-comment.git
