@@ -447,7 +447,7 @@ let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 
 " fixmyjs - runs "eslint --fix" on current buffer without saving it --- {{{
 let g:fixmyjs_engine = 'eslint'
-let g:fixmyjs_rc_path = '/Users/Mark/.eslintrc.json'
+let g:fixmyjs_rc_path = '~/.eslintrc.json'
 noremap <leader>f :Fixmyjs<cr>
 " }}}
 
