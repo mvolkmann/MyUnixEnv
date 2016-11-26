@@ -475,6 +475,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <leader>es :UltiSnipsEdit<cr>
 " }}}
 
+" vim-flow {{{
+" Automatically close the quickfix window that
+" is opened when Flow detects a type error
+let g:flow#autoclose=1
+" }}}
+
 " LESS files setup - does this do anything?
 autocmd BufNewFile,BufRead *.less set filetype=less
 

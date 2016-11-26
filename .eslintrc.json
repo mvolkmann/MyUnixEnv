@@ -30,6 +30,7 @@
   },
 
   "plugins": [
+    "flowtype",
     "html",
     "react",
     "volkmann"
@@ -62,6 +63,11 @@
     "dot-notation": "error",
     "eol-last": "off",
     "eqeqeq": "error",
+    "flowtype/require-parameter-type": "off",
+    "flowtype/require-return-type": "off",
+    "flowtype/space-after-type-colon": ["error", "always"],
+    "flowtype/space-before-type-colon": ["error", "never"],
+    //TODO: There are more flowtype rules now. Add them!
     "func-call-spacing": ["error", "never"],
     "func-names": "off",
     "func-name-matching": "error",
@@ -294,7 +300,7 @@
     "react/require-optimization": "off",
     "react/require-render-return": "error",
     "react/self-closing-comp": "error",
-    "react/sort-comp": "error",
+    "react/sort-comp": "off",
     "react/sort-prop-types": "error",
     "react/style-prop-object": "error",
     "react/wrap-multilines": "off",
