@@ -327,11 +327,18 @@ Operations
 
 Math Behind Slide Rules
 - multiplication
-  log(a * b) = log a + log b
-  so a * b = 10^(log a + log b)
+  * the result of adding numbers on a linear scale is their sum
+  * the result of adding numbers on a logarithmic scale is their product,
+    regardless of the base
+  * for exmaple, if base is 10
+  log a + log b = log(a * b)
+  so 10^(log a + log b) = a * b
 - division
-  log(a / b) = log a - log b
-  so a / b = 10(log a - log b)
+  * the result of subtracting numbers on a logarithmic scale is their quotient,
+    regardless of the base
+  * for exmaple, if base is 10
+  log a - log b = log(a / b)
+  so 10^(log a - log b) = a / b
 
 Example Calculations
 - http://www.antiquark.com/sliderule/sim/sr-calcs-by-example.html
