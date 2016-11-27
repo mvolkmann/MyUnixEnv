@@ -268,10 +268,10 @@ nnoremap <leader>fu :CtrlPFunky<cr>
 nnoremap <leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<cr>
 
 " EasyMotion mappings
-"nmap s <Plug>(easymotion-s) " conflicts with toggle of spell check
-map <leader>w <Plug>(easymotion-bd-w) " searches for beginning of a word
-"TODO: Why doesn't the next line work?
-nmap <leader>w <Plug>(easymotion-overwin-w) " searches for beginning of a word in all windows
+" Search for beginning of a word in both directions.
+map <leader>w <Plug>(easymotion-bd-w)
+" Search for beginning of a word in all windows.  Why doesn't this work?
+"nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " Printing using enscript (these aren't working yet)
 noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"

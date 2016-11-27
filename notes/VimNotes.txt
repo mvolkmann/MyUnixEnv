@@ -413,19 +413,32 @@ Diffs
 
 EasyMotion
 - makes it faster to jump to a spot in a file
+- for detailed help, :help easymotion.txt
+- all keyboard shortcuts start with <leader><leader>
 - to jump forward to a given word
   * enter <leader><leader>w
   * the first letter of the next 26 words are temporarily replaced by
     the letters a-z in red and the first two letters of the remaining
     words are replaced by other character combinations in yellow
   * press the letter or letter combination to jump to
-- to jump forward to a given letter
-  * enter <leader><leader>f{letter}
-  * works the same as "w", but only supports
-    jumping to the specified letter
-- to jump forward or backward to a given letter
-  * enter <leader><leader>s{letter}
-- ADD MORE DOCUMENTATION!
+- word commands
+  * w | beginning of word forward (you changed to go in both directions)
+  * W | beginning of WORD forward
+  * b | beginning of word backward
+  * B | beginning of WORD backward
+  * e | end of word forward
+  * E | end of WORD forward
+  * ge | end of word backward
+  * gE | end of WORD backward
+- line commands
+  * j | line forward
+  * k | line backward
+- character commands
+  * s | find (search) {char} forward and backward
+  * f{char} | find {char} forward
+  * F{char} | find {char} backward
+  * t{char} | till before {char} forward
+  * T{char} | till after {char} backward
 
 Echo
 - :ec[ho] expr ...
