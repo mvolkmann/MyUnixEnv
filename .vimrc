@@ -258,6 +258,15 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP .'
 "let g:ctrlp_working_path_mode='c'
 
+" ctrlp-funky mappings
+" To get a list of all functions in current file,
+" select one in quickfix list using arrow keys,
+" and press return to go to it ...
+nnoremap <leader>fu :CtrlPFunky<cr>
+" To go to the definition of the function name under the cursor ...
+" (still have to press return in quickfix list)
+nnoremap <leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<cr>
+
 " EasyMotion mappings
 "nmap s <Plug>(easymotion-s) " conflicts with toggle of spell check
 map <leader>w <Plug>(easymotion-bd-w) " searches for beginning of a word
