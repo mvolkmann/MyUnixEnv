@@ -12,6 +12,7 @@ fi
 
 find . \
   -not \( -regex .*bower_components.* -prune \) \
+  -not \( -regex .*flow-typed.* -prune \) \
   -not \( -regex .*node_modules.* -prune \) \
   -name "*.$1" | \
   xargs grep "$2"
