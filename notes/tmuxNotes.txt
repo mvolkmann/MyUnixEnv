@@ -2,6 +2,13 @@ tmux Notes
 
 See your article!
 
+Setup
+- prevent Mac default keyboard shortcuts from interfering
+  * open System Preferences
+  * select Keyboard...Shortcuts
+  * uncheck "Mission Control", "Application windows",
+    and all checkboxes under "Mission Control
+
 Configure status bar
 * set -g status-left-length 30
 * set -g status-left "session #S window #I pane #P"
