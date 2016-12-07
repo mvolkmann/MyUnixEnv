@@ -134,6 +134,16 @@ alias cdfeature='cd $EP_DIR/content/common/feature'
 alias rs='mvn tomcat7:run -P local'
 alias rrs='mvn clean tomcat7:run -P local'
 
+# For Monsanto Capacity Planning
+# Run "mvn install" before running "apiserver".
+alias apiserver='java -jar target/capacity-ontap-api.war -Dspring.profiles.active=local,seed'
+alias dockup='cd ~/Monsanto/capacity-ontap-api; docker-compose up -d'
+alias dockdown='cd ~/Monsanto/capacity-ontap-api; docker-compose down'
+alias dockin='docker exec -it capacity-api /bin/bash'
+alias psqlin='psql -Ucapacity-ontap-api-admin -dpostgres'
+alias swagger='open http://localhost:8080/swagger-ui.html'
+alias uiserver='cd ~/Monsanto/capacity-ontap-ui; npm run local'
+
 #----------------------------------------------------------------------------
 
 function setTitle {
