@@ -313,6 +313,18 @@ Enabling Root User
   the Password and Verify fields, then click OK
 - quit Directory Utility
 
+File Sharing
+- open System Preferences
+  * select "Users & Groups"
+  * click the lock to make changes
+  * click "Guest User"
+  * check "Allow guest users to connect to shared folders
+  * click the lock to save changes
+  * return to grid of System Preferences
+  * select Sharing
+  * check "File Sharing"
+  * add files and folders to Public directory in home directory
+
 Safari
 - to enable the Develop menu for debugging JavaScript
   * open a Terminal window
