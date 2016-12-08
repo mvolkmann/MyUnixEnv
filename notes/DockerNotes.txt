@@ -1,0 +1,94 @@
+Docker Notes
+
+Terminology
+- image: a filesystem and parameters to use at runtime
+  that doesn’t have state and never changes
+  * images can run a set of commands and exit
+  * images can continue running until stopped
+    - examples include REST servers, web servers, and databases
+- container: a running instance of an image
+- Docker Engine: supports sharing Docker images
+- Docker Hub: a repository of Docker images at https://hub.docker.com/
+  * ex. docker/whalesay
+
+To install on Mac OS X
+- browse https://docs.docker.com/docker-for-mac/
+- download a .dmg file
+- double-click it
+- in the install dialog, drag Docker.app to the Applications folder
+
+To verify the installation
+- docker run hello-world
+
+To set Docker preferences
+- click the whale icon in the status bar
+- select "Preferences"
+- General options include:
+  * "Automatically start Docker when you log in" (on by default)
+  * "Automatically check for updates" (on by default)
+  * "Exclude VM from Time Machine backups" (off by default)
+  * number of CPUs
+  * amount of memory allocated
+- can configure proxies
+- can configure file sharing with the host machine
+- can initiate uninstall
+
+To determine if Docker is running and see other info
+- docker info
+
+To start Docker on Mac OS X
+- if there is no whale icon in the status bar at the top of the screen
+  * open Launchpad
+  * click Docker icon (whale)
+  * should see Docker icon in status bar at top
+- if there is a whale icon
+  * click it a verify that the dropdown says "Docker is running"
+
+To load an image into a container and run it
+- docker run {image-name}
+  * if the image isn't found locally,
+    this attempts to download it from "Docker Hub"
+
+To create a Docker image
+- ...
+
+To start a Docker image
+- cd to a directory containing docker-compose.yml
+- docker-compose up -d
+  * -d (daemon) avoids taking over the current process
+
+To stop a Docker image
+- cd to a directory containing docker-compose.yml
+- docker-compose down
+
+To get information about Docker images that are running
+- docker ps [-l] [-q]
+
+To get information about all Docker images,
+including those that have been stopped
+- docker ps -a
+
+To get information about all locally installed Docker images
+- docker images
+
+To remove a Docker image
+- docker rm {container-id}
+
+To get lots of imformation about a running image
+- docker inspect {container-name}
+- container-name is capacity-api
+
+To output logs from a running image
+- docker logs {container-name}
+
+To show processes running inside a running image
+- docker top {container-name}
+
+To run commands inside a Docker image
+- docker exec {container-name} {command}
+
+To copy a file into a Docker image
+- docker cp {file-path} {container-name}:/{new-file-name}
+
+To open a bash shell running inside a Docker image
+- docker exec -it {container-name} /bin/bash
