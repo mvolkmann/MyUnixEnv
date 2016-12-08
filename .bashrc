@@ -77,8 +77,8 @@ alias findcss="find3 css"
 alias findhtml="find3 html"
 alias findhtml1="find-depth-1 html"
 alias findjava="find3 java"
-alias findjs="find3 js"
-alias findjs2="find4 js"
+alias findjs="find3 js*"
+alias findjs2="find4 js*"
 alias findjson="find3 json"
 alias findless="find3 less"
 
@@ -140,7 +140,8 @@ alias apiserver='java -jar target/capacity-ontap-api.war -Dspring.profiles.activ
 alias dockup='cd ~/Monsanto/capacity-ontap-api; docker-compose up -d'
 alias dockdown='cd ~/Monsanto/capacity-ontap-api; docker-compose down'
 alias dockin='docker exec -it capacity-api /bin/bash'
-alias psqlin='psql -Ucapacity-ontap-api-admin -dpostgres'
+#alias psqlin='psql -Ucapacity_ontap_api_admin -dpostgres'
+alias psqlin='docker exec -it capacity-api psql -Ucapacity_ontap_api_admin -dcapacity_ontap'
 alias swagger='open http://localhost:8080/swagger-ui.html'
 alias uiserver='cd ~/Monsanto/capacity-ontap-ui; npm run local'
 

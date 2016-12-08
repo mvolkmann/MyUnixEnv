@@ -267,7 +267,7 @@
     "react/forbid-component-props": "off",
     "react/forbid-prop-types": "error",
     "react/jsx-boolean-value": "error",
-    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-closing-bracket-location": "off",
     "react/jsx-curly-spacing": "error",
     "react/jsx-equals-spacing": "error",
     "react/jsx-filename-extension": "off",
