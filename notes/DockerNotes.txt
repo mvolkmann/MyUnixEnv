@@ -8,7 +8,8 @@ Terminology
     - examples include REST servers, web servers, and databases
 - container: a running instance of an image
 - Docker Engine: supports sharing Docker images
-- Docker Hub: a repository of Docker images at https://hub.docker.com/
+- Docker Hub: a repository of Docker images
+  * browse https://hub.docker.com/ to search for them
   * ex. docker/whalesay
 
 To install on Mac OS X
@@ -19,6 +20,15 @@ To install on Mac OS X
 
 To verify the installation
 - docker run hello-world
+- docker run docker/whalesay
+
+To start Docker on Mac OS X
+- if there is no whale icon in the status bar at the top of the screen
+  * open Launchpad
+  * click Docker icon (whale)
+  * should see Docker icon in status bar at top
+- if there is a whale icon
+  * click it a verify that the dropdown says "Docker is running"
 
 To set Docker preferences
 - click the whale icon in the status bar
@@ -36,21 +46,13 @@ To set Docker preferences
 To determine if Docker is running and see other info
 - docker info
 
-To start Docker on Mac OS X
-- if there is no whale icon in the status bar at the top of the screen
-  * open Launchpad
-  * click Docker icon (whale)
-  * should see Docker icon in status bar at top
-- if there is a whale icon
-  * click it a verify that the dropdown says "Docker is running"
-
 To load an image into a container and run it
 - docker run {image-name}
   * if the image isn't found locally,
     this attempts to download it from "Docker Hub"
-
-To create a Docker image
-- ...
+- how is "docker run -it {image-name}" different?
+  * -i is for interactive (can read from stdin)
+  * -t allocates a pseudo TTY
 
 To start a Docker image
 - cd to a directory containing docker-compose.yml
@@ -72,7 +74,8 @@ To get information about all locally installed Docker images
 - docker images
 
 To remove a Docker image
-- docker rm {container-id}
+- docker rmi {image-id}
+- THIS DOESN'T WORK!
 
 To get lots of imformation about a running image
 - docker inspect {container-name}
@@ -92,3 +95,34 @@ To copy a file into a Docker image
 
 To open a bash shell running inside a Docker image
 - docker exec -it {container-name} /bin/bash
+
+To create a Docker image
+- create a new directory and cd to it
+- create a file name "Dockerfile"
+- comments in this file begin with #
+- the first instruction must be FROM to specify the base image
+- specify the base image with "FROM {image-name}:{tag}"
+  * tag defaults to "latest"
+  * the smallest, simplest base image is "scratch",
+    but that doesn't seem to be able to do anything
+  * another good option is "bash"
+- RUN executes command(s) in a new layer and creates a new image
+  * often used to install software packages
+  * to install software in the image, add lines like this:
+    RUN apt-get -y update && apt-get install -y {software-name}
+- CMD sets the default command and/or parameters
+  * can be overwritten from command line when running
+  * only the last CMD command is used,
+    so there is no point in having more than one
+  * typically used to start a server
+  * to run a command, add the line "CMD {command}"
+- ENTRYPOINT configures a container that will run as an executable
+- RUN, CMD, and ENTRYPOINT can be used in "shell" or "exec" form
+  * in shell form the command is executed with "/bin/sh -c {command}"
+    - ex. CMD echo "Hello, World!"
+  * in exec form an executable is executed directly with no shell processing
+    - ex. CMD ["/bin/echo", "Hello, World!"]
+    - exec form is preferred for the CMD and ENTRYPOINT commands
+- save the file
+- to build the image, enter "docker build -t {image-name} ."
+  * how does this differ from running "docker build ."?
