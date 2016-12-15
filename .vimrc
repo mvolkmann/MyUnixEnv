@@ -240,10 +240,6 @@ nnoremap <c-s> :update<cr>
 " Source the current buffer
 nnoremap <leader>sb :source %<cr>
 
-" JSHint - see https://github.com/wookiehangover/jshint.vim
-"let JSHintUpdateWriteOnly = 1
-"nnoremap <leader>j :JSHintUpdate<cr>
-
 " NERDTree plugin toggle
 "nnoremap <leader>t :NERDTreeToggle<cr>
 
@@ -311,7 +307,7 @@ nnoremap <leader>s :setlocal spell! spelllang=en_us<cr>
 nnoremap <leader>S i<c-x>s
 "highlight SpellBad term=reverse ctermbg=7
 highlight clear SpellBad
-" This is also used for lines that JSHint marks as containing errors.
+" This is also used for lines that ESLint marks as containing errors.
 highlight SpellBad ctermfg=black ctermbg=red
 
 set thesaurus=~/.vim/mthesaur.txt
@@ -348,8 +344,7 @@ autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 augroup javascript
   autocmd!
   "let javaScript_fold=1 " fold on open
-  "autocmd FileType javascript set foldmethod=syntax
-  " jshint plugin runs jshint on JavaScript files
+  autocmd FileType javascript set foldmethod=syntax
 augroup END
 
 augroup filetype_vim
@@ -382,7 +377,7 @@ endfunction
 " :grep pattern **/*.js
 " To exclude a directory from being searched,
 " :grep --exclude build pattern **/*.js
-" When using grep on .js files, jshint also runs and creates another
+" When using grep on .js files, ESLint also runs and creates another
 " quickfix list.  To get back to the one created by grep, run :colder.
 
 " Toggle viewing quickfix list with ,q.
@@ -459,7 +454,7 @@ let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " It requires running "npm install -g fixmyjs eslint eslint-plugin-babel".
 let g:fixmyjs_engine = 'eslint'
 let g:fixmyjs_rc_path = '~/.eslintrc.json'
-noremap <leader>f :Fixmyjs<cr>
+noremap <leader>fj :Fixmyjs<cr>
 " }}}
 
 " Syntastic --- {{{

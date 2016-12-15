@@ -1,0 +1,22 @@
+#!/bin/sh
+
+default_message="Command completed."
+message="${*}"
+
+set_message() {
+  if [ ${1} -eq 0 ]
+  then
+    message="${default_message}"
+  fi
+}
+
+display_ui_dialog() {
+  osascript -e 'on run args
+    try
+      tell application (path to frontmost application as text) to display dialog (item 1 of args)
+    end
+  end' "${1}" > /dev/null
+}
+
+set_message ${#}
+display_ui_dialog "${message}"
