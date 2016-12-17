@@ -489,6 +489,7 @@ Folding
   when a file is opened, see :help foldlevelstart
   * value is negative (not used; default), 0 (all folds closed),
     1 (some folds closed), or 99 (no folds closed)
+- JavaScript folding is configured in .vim/ftplugins/javascript.vim
 
 Fonts
 - example
