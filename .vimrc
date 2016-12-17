@@ -343,8 +343,8 @@ autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 
 augroup javascript
   autocmd!
-  "let javaScript_fold=1 " fold on open
-  autocmd FileType javascript set foldmethod=syntax
+  "autocmd FileType javascript set foldmethod=syntax
+  " JavaScript folding is now configured in .vim/ftplugins/javascript.vim.
 augroup END
 
 augroup filetype_vim
