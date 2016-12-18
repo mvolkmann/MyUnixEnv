@@ -1,0 +1,8 @@
+#!/bin/bash
+# Runs "git pull origin master" in all child directories.
+# This is useful in ~/.vim/bundle.
+# The parens around the commands create a subshell
+# so the cd command only affects that (no need to cd ..).
+for i in *; do
+  (echo $i; cd $i; git pull origin master)
+done
