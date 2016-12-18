@@ -1,7 +1,9 @@
 " See the accompanying README for details.
 
+" normal! - run following sequence of commands in normal mode;
+"   ! means don’t use remapped commands
 " mt - mark the current location as "t"
-" vat - visually select all text with the current tag
+" vat - visually select all text within the current tag, including tags
 " \<esc> - exit visual selection mode
 " `< - jump to beginning of visual selection
 " The substitute "e" flag in the following two commands tells Vim
@@ -33,8 +35,7 @@ command! ElementUncomment execute "normal! mt?!--\<cr>mb3x/--\<cr>me2x:'b,'es/<!
 command! TagComment execute "normal! mtvi<\<esc>a--\<esc>`<i!--\<esc>`t"
 command! TagUncomment execute "normal! mtvi<\<esc>hxx`<xxxh`t"
 
-" If keys are not already mapped ...
-"if !exists('g:tab_comment_map_keys')
+" If keys are not already mapped in normal mode ("N") ...
 if mapcheck("\<leader>tc", "N") == ""
   nnoremap <leader>tc :ElementComment<cr>
 endif

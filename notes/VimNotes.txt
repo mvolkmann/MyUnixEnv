@@ -470,15 +470,17 @@ FixMyJs
 Folding
 - commands to control folding include
   zfap - create a new fold
+  zo - open fold under cursor
+  zc - close fold under cursor
+  za - toggles fold under cursor (alternative to zo and zc)
+  zO, zC, and zA - recursive versions of above
+  zf - fold selected lines
+  zj - move to next fold
+  zk - move to previous fold
   zr - reduce/open all folds one level deep
   zR - recursive version of zr (all levels)
   zm - fold more; close all folds
   zM - recursive version of zm (all levels)
-  zo - open fold under cursor
-  zc - close fold under cursor
-  zf - fold selected lines
-  zj - move to next fold
-  zk - move to previous fold
   zd - delete fold, not content of it
   zE - delete all folds, not their content
 - to configure folding of javadoc-style comments, add this to .vimrc.
@@ -486,7 +488,7 @@ Folding
 - can use triple braces in comments to manually define fold regions
   * see your .vimrc file
 - to cause files of certain types to start with all folds closed
-  when a file is opened, see :help foldlevelstart
+  when a file is opened, see :help foldlevel and :help foldlevelstart
   * value is negative (not used; default), 0 (all folds closed),
     1 (some folds closed), or 99 (no folds closed)
 - JavaScript folding is configured in .vim/ftplugins/javascript.vim

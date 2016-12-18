@@ -1,11 +1,16 @@
 #!/bin/bash
-# Finds all files with a given file extension in and below the current directory
-# that contain a given string, but doesn't search under node_modules directories.
-# For example, find4 js "console\.log"
+# Finds all files with a given file extension in and below the current directory.
+# It does not consider files in the subdirectories named
+# bower_components and node_modules.
+# For example, find4 css
 
-if [ $# -ne 2 ]; then
-  echo usage: find4 {file-extension} {search-string}
+if [ $# -ne 1 ]; then
+  echo usage: find4 {file-extension}
   exit 1
 fi
 
-find . -not \( -name node_modules -prune \) -name "*.$1" | xargs grep "$2"
+find . \
+  -not \( -regex .*bower_components.* -prune \) \
+  -not \( -regex .*flow-typed.* -prune \) \
+  -not \( -regex .*node_modules.* -prune \) \
+  -name "*.$1"

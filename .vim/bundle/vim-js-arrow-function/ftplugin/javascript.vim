@@ -22,7 +22,8 @@
 " F) - find the preceding right paren (end of parameter list)
 " va( - visually select the content of the containing parens (parameter list)
 " \<esc> - exit visual selection mode
-" :'<,'>s/(\\(\\w\\+\\))/\\1/e\<cr>" - remove parens around parameter list with only one
+" :'<,'>s/(\\(\\w\\+\\))/\\1/e\<cr>" - remove parens around parameter list
+"   with only one (a word, but no commas)
 " The substitute "e" flag in the following two commands tells Vim
 " that not finding a match should not be treated as an error.
 " /{\<cr> - move to end of current line
@@ -91,9 +92,11 @@ function! JsArrowFnBraceToggle()
       endif
 
       " Add " { return " after arrow.
-      :normal a { return
+      :normal a {
+ return
       " Add { on next line.
-      :normal $a};
+      :normal $a
+};
     endif
   else
     " Move cursor back to start.

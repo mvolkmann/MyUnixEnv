@@ -53,7 +53,6 @@ call matchadd('ColorColumn', '\%81v', 100)
 let g:netrw_liststyle=3 " use tree mode as default view
 
 set encoding=utf-8
-set foldlevelstart=0
 "set lazyredraw
 set list
 " Render tab characters with a right-pointing double angle
@@ -277,7 +276,9 @@ noremap <leader>e2 execute "normal! '<,'>:w !enscript --borders --columns-2 --fa
 " JavaScript and JSX syntax highlighting
 " Enable syntax highlighting for Flow.
 let g:javascript_plugin_flow = 1
-" Enable JSX syntax highlighting in files with a .js extension instead of .jsx.
+" Enable syntax highlighting in jsdoc comments.
+let g:javascript_plugin_jsdoc = 1
+" Enable JSX syntax highlighting in files with a .jsx extension instead of .js.
 let g:jsx_ext_required = 0
 
 " The Silver Searcher (ag) --- {{{
@@ -335,16 +336,17 @@ autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
 " }}}
 
 " Folding --- {{{
-" za - toggles folding on section containing cursor
-" zr - reduce/open all folds one level deep
-" zR - recursive version of zr (all levels)
-" zm - fold more; close all folds
-" zM - recursive version of zm (all levels)
+" See VimNotes.txt for fold-related key commands.
 
-augroup javascript
+augroup javaScript
   autocmd!
   "autocmd FileType javascript set foldmethod=syntax
   " JavaScript folding is now configured in .vim/ftplugins/javascript.vim.
+  "autocmd FileType javaScript :set fmr=/**,*/ fdm=marker fdc=1
+  "set syntax=javaScript
+  set foldmethod=syntax
+  set foldlevel=1
+  "let javaScript_fold=1
 augroup END
 
 augroup filetype_vim
@@ -491,6 +493,10 @@ nnoremap <leader>es :UltiSnipsEdit<cr>
 " Automatically close the quickfix window that
 " is opened when Flow detects a type error
 let g:flow#autoclose=1
+" Don't automatically perform type checking when a file is saved with :w.
+let g:flow#enable=0
+" Jump to first line with a type error.
+let g:flow#errjmp=1
 " }}}
 
 " LESS files setup - does this do anything?

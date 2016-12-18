@@ -41,10 +41,10 @@ to handle commenting and uncommenting those.
 Unless already mapped to something else,
 the following key mappings are configured:
 
-* <leader>tc :ElementComment<cr>
-* <leader>tu :ElementUncomment<cr>
-* <leader>tC :TagComment<cr>
-* <leader>tU :TagUncomment<cr>
+* `<leader>tc :ElementComment<cr>`
+* `<leader>tu :ElementUncomment<cr>`
+* `<leader>tC :TagComment<cr>`
+* `<leader>tU :TagUncomment<cr>`
 
 The easiest way to install this is to use Pathogen and
 "git clone" this repository into the .vim/bundle directory.
