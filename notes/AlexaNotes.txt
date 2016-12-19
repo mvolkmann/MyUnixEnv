@@ -1,0 +1,18 @@
+Alexa Notes
+
+Alexa ...
+* calendar - reads items on calendar for today and tomorrow
+* Do you have a dog/cat?
+* flash - reads flash briefings from selected sources in settings
+  like Weather, NPR, BBC, and Tech News
+* how many {units} in a {unit}
+* Jeopardy
+* stop/pause/resume
+* play {song} by {artist}
+* play {station} station on Pandora
+* Seinfeld Trivia
+* set alarm for {time}
+* set timer for {n} minutes/hours
+* time remaining
+* traffic
+* volume {0-10}
