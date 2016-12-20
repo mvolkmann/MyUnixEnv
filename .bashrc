@@ -136,7 +136,7 @@ alias rrs='mvn clean tomcat7:run -P local'
 
 # For Monsanto Capacity Planning
 # Run "mvn install" before running "apiserver".
-alias apiserver='java -jar target/capacity-ontap-api.war -Dspring.profiles.active=local,seed'
+alias apiserver='java -jar target/capacity-ontap-api.war -Dspring.profiles.active=local,sample'
 alias dockup='cd ~/Monsanto/capacity-ontap-api; docker-compose up -d'
 alias dockdown='cd ~/Monsanto/capacity-ontap-api; docker-compose down'
 alias dockin='docker exec -it capacity-api /bin/bash'
