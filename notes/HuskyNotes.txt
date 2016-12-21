@@ -17,3 +17,8 @@ Example hook
 - now every time "git commit" is run (or your "ci" alias)
   the lint and test scripts are run first
 - if either fail, the commit is not allowed
+
+To skip running hooks
+- git commit --no-verify
+  or just
+  git commit -n
