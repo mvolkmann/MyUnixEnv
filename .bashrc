@@ -28,6 +28,7 @@ stty -ixon
 # Purple=0;35      Light Purple=1;35
 # Cyan=0;36        Light Cyan=1;36
 # Light Gray=0;37  White=1;37
+# 0 resets to default
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /.bashrc too?
 export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[0m\]\n🏃  '
