@@ -52,6 +52,7 @@ MacNotes.txt
       to quickly view file contents)
       * for plugins to support special file types, see
         https://github.com/sindresorhus/quick-look-plugins
+      * brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json quicklook-csv
     * Sidebar shortcuts to commonly visited directories
       - these also appear in file dialog boxes
     * View as Columns
