@@ -30,7 +30,7 @@ stty -ixon
 # Light Gray=0;37  White=1;37
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /.bashrc too?
-export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[1;37m\]\n🏃  '
+export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[0m\]\n🏃  '
 
 #---------------------------------------------------------------------------
 # Aliases
