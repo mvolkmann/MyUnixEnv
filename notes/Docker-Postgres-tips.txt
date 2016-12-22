@@ -6,6 +6,9 @@ To see what's in the database from the command line:
   psql -U$POSTGRES_USER -d$POSTGRES_DB
 - To list the tables in the database, enter \d
 - To list the columns in a table, enter \d {table-name}
-- Enter a SQL query. For example, select * from asset_type;
+- Enter a SQL query. For example, enter
+  select * from asset_type;
+- To execute a shell command from inside psql interactive mode, enter
+  \! {command}
 - Exit psql interactive mode by pressing ctrl-d.
 - Exit the container shell by entering "exit" or pressing ctrl-d.
