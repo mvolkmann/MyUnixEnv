@@ -1,0 +1,26 @@
+Husky Notes
+
+Overview
+- Husky supports specifying git hooks in a project package.json.
+- https://github.com/typicode/husky
+
+To install in a project
+- npm install --save-dev husky cross-env
+
+Example hook
+- add this line to scripts section in package.json
+  "precommit": "npm run lint && cross-env CI=true npm test"
+  * cross-env is needed to set environment variables
+    in a way that works in *nix and Windows environments
+  * "CI=true" is specific to the Jest test framework
+    - it tells Jest to run all the tests,
+      as opposed to only those that changed since the last run
+    - it prevents Jest from running the tests in watch mode
+- now every time "git commit" is run (or your "ci" alias)
+  the lint and test scripts are run first
+- if either fail, the commit is not allowed
+
+To skip running hooks
+- git commit --no-verify
+  or just
+  git commit -n
