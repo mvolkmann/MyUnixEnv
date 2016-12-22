@@ -5,6 +5,7 @@
   ci = commit
   co = checkout
   lastchange = log -p --follow -n 1
+  dsf = "!f() { [ -z \"$GIT_PREFIX\" ] || cd \"$GIT_PREFIX\" && git diff --color \"$@\" | diff-so-fancy  | less --tab=2 -RFX; }; f"
 [core]
   editor = /usr/local/bin/vim
 [user]

@@ -76,6 +76,11 @@ GUIs
   * http://code.google.com/p/gitextensions/
 
 Diffs
+- to get fancier diff output
+  * npm install -g diff-so-fancy
+  * git config --global alias.dsf \
+    '!f() { [ -z "$GIT_PREFIX" ] || cd "$GIT_PREFIX" ''&& git diff --color "$@" | diff-so-fancy  | less --tab=2 -RFX; }; f'
+  * use "git dsf" instead of "git diff"
 - to see list of files changed between two branches
   * git diff --name-only {branch-or-sha-1} {branch-or-sha-2}
 - to see diffs between working tree and local repo
