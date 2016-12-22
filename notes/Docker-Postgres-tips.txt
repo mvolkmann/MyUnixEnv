@@ -1,0 +1,11 @@
+To see what's in the database from the command line:
+
+- Open a bash shell inside the running Docker container with
+  docker exec -it capacity-api-postgres /bin/bash
+- Start Postgres interactive mode with
+  psql -U$POSTGRES_USER -d$POSTGRES_DB
+- To list the tables in the database, enter \d
+- To list the columns in a table, enter \d {table-name}
+- Enter a SQL query. For example, select * from asset_type;
+- Exit psql interactive mode by pressing ctrl-d.
+- Exit the container shell by entering "exit" or pressing ctrl-d.
