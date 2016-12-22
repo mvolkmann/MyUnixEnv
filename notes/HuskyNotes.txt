@@ -5,11 +5,13 @@ Overview
 - https://github.com/typicode/husky
 
 To install in a project
-- npm install --save-dev husky
+- npm install --save-dev husky cross-env
 
 Example hook
 - add this line to scripts section in package.json
-  "precommit": "npm run lint && CI=true npm test"
+  "precommit": "npm run lint && cross-env CI=true npm test"
+  * cross-env is needed to set environment variables
+    in a way that works in *nix and Windows environments
   * "CI=true" is specific to the Jest test framework
     - it tells Jest to run all the tests,
       as opposed to only those that changed since the last run
