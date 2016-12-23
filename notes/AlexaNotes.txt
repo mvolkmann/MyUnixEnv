@@ -165,6 +165,7 @@ Funny
 - Do you have a dog?
 
 Games
+- chess trivia
 - Jeopardy
 - Seinfeld Trivia
 
