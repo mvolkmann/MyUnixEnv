@@ -1,18 +1,260 @@
 Alexa Notes
 
+Alexa App setup
+- in "Settings"
+- select "Voice Training" to improve voice recognition
+- select "Calendar" to link to Google account
+- select "Flash Briefing" to configure news sources
+- select "History" to view past requests made to Alexa
+- select "Household Profile" to configure
+  different settings for additional users
+  * use "Alexa, switch to {name} profile" to switch
+- select "Lists" to configure shopping/todo lists
+  * very limited
+- select "Music" to configure streaming services
+- select "Sports Update" to configure teams of interest
+- select "Traffic" to enter home and work addresses
+- select "Voice Purchasing" to configure
+  confirmation code, credit card, shipping address
+
+Amazon Music App
+- download from music.amazon.com
+- can upload 250 songs for free
+
+Home automation
+- Logitech Harmony Hub
+  * $99
+  * can control with smart phones and Alexa
+  * controls TVs
+    - compatible with ours which is Panasonic TC-P50G20
+  * controls Apple TV, Hue lights, Nest, Roku, Sonos, and more
+- SmartThings from Samsung
+  * hub is $99
+- Wink
+  * hub is $69
+  * works with GE Link Connected Home bulbs (at Home Depot)
+- smart plugs
+  * consider TP-Link and Wemo
+- thermostat controls
+  * consider Nest and Ecobee3
+- custom integrations
+  * consider IFTT and Yonomi (supports Sonos)
+
+Light meaning
+- spinning cyan - starting up
+- cyan in one direction - points to person speaking
+- spinning orange - connecting to WiFi
+- solid red - muted (not listening)
+- white - adjusting volume
+
+Music services supported
+- Amazon Music
+  * several plans are available
+    - Amazon Prime (partial catalog; > 2 million songs)
+      * has many non-music benefits
+      * can play on any device
+      * $11.99/month
+    - Amazon Music Unlimited Echo (full catalog; > 10 million songs)
+      * can only play on one device
+      * $3.99/month
+    - Amazon Music Unlimited
+      * same as Echo plan, but can play on any devices
+      * $7.99/month for Prime members
+      * $9.99/month for non-Prime members
+    - Amazon Music Unlimited Family Plan
+      * can share between six family members
+      * $14.99/month
+- iHeartRadio
+- Pandora
+- Spotify (requires a premium membership which is $10/month)
+- TuneIn
+
+Reset
+- press small button on bottom with paperclip
+
+Skill stores
+- offical: built into the Alexa app
+- unoffical: https://www.alexaskillstore.com/
+
+Skill types
+- template-based
+  * Adventure, Fact, Flash Briefing, Smart Home, Trivia
+- custom
+
+Skills recommended
+- Big Sky for better weather reporting
+- Chess Trivia (game)
+- Fitbit
+  * can ask
+    - how am I doing today?
+    - how did I sleep last night?
+    - how many steps have I taken?
+- Jeopardy (game)
+- The Magic Door (adventure game)
+- Seinfeld Trivia (game)
+- 20 Questions (game)
+
+Trying/testing skills
+- reverb.ai iOS/Android app
+  * press and hold to speak
+  * don't need to start with "Alexa"
+- website echosim.io
+  * press and hold to speak
+  * don't need to start with "Alexa"
+
+Implementing custom skills
+- https://developer.amazon.com/alexa
+- can implement AWS Lambda functions in Java, Node.js, and Python
+
 Alexa ...
-* calendar - reads items on calendar for today and tomorrow
-* Do you have a dog/cat?
-* flash - reads flash briefings from selected sources in settings
+
+General
+- help
+- stop
+- mute / unmute
+- pause / resume
+- go forward / back (by how much?)
+- repeat (repeats last think Alexa said)
+- cancel (stops current activity; same as "stop"?)
+- What are the best skills?
+- Do you have any new features?
+
+Alarms
+- cancel alarms?
+- set alarm for {time}
+- wake me at {time}
+- when is my alarm set?
+- snooze (Can you pick a duration?)
+- cancel alarm
+- what alarms are set?
+- Can you have more than one alarm?
+
+Businesses
+- find address for {business}
+- find phone number for {business}
+- find hours for {business}
+
+Calendar
+- calendar (reads items for today and tomorrow)
+- add event to calendar (then it asks for details?)
+- add {event} to calendar for {date} {time}
+
+Conversions
+- how many {units} in a {unit}
+
+Date
+- what is the date?
+
+Dictionary
+- what is the definition of {word}?
+
+Easter Eggs (Alexa, ...)
+- How much is that doggie in the window?
+- I'll be back.
+- Rock, paper, scissors.
+- Self-destruct
+- Up up down down left right left right B A start.
+- Use the force. (Star Wars)
+- What is love?
+- Who lives in a pineapple under the sea?
+- Who shot first? (Star Wars)
+- Will you marry me?
+
+Funny
+- Do you have a cat?
+- Do you have a dog?
+
+Games
+- Jeopardy
+- Seinfeld Trivia
+
+Math
+- what is {formula}?
+
+Movies
+- what movies are playing [tomorrow | on {date}]?
+- when is {title} playing?
+- tell me about the movie {title}
+
+Music
+- play music (random?)
+- play {genre} (ex. jazz)
+- play the song of the day
+- play the latest {artist} album
+- play {song} by {artist}
+- play the song with the lyrics {lyrics}
+- play {artist} station [on {iHeartRadio|Pandora}]
+- repeat this song
+- loop
+- what is playing?
+- stop playing music in {number} minutes
+- to play music from another device such as a tablet or smartphone,
+  say "Alexa, pair bluetooth", connect to Alexa on the device,
+  and start music on the device or use commands like
+  "play", "stop", "pause", "resume", "next", "previous",
+  "disconnect my {phone|tablet}", and "connect my {phone|tablet}"
+
+News
+- flash - reads flash briefings from selected sources in settings
   like Weather, NPR, BBC, and Tech News
-* how many {units} in a {unit}
-* Jeopardy
-* stop/pause/resume
-* play {song} by {artist}
-* play {station} station on Pandora
-* Seinfeld Trivia
-* set alarm for {time}
-* set timer for {n} minutes/hours
-* time remaining
-* traffic
-* volume {0-10}
+
+Podcasts
+- play {name} podcast (just current episode?)
+
+Read
+- read {kindle book title}
+
+Restaurants
+- what {cuisine} restaurants are nearby?
+- what are some top-rated restaurants?
+
+Shopping
+- add {item} to my shopping list (where does it go?)
+- what are your deals? (current Amazon deals)
+- track my order
+- where is my order?
+
+Skills
+- enable {skill name}
+  * some also require configuration in the Alexa app
+- open {skill name}
+- ask {skill name} to {task}
+
+Smart Home Devices
+- {turn|switch} {on|off} {device name|group name}
+- set {device name|group name} device to {percentage} percent
+- {brighten|dim} {device name|group name}
+
+Sports
+- give me my sports update (configure teams in Alexa app)
+- how are {team} doing?
+- what was the score of the {team|event} game?
+
+Time
+- what time is it?
+
+Timers
+- set timer for {n} [minutes|hours]
+- how much time is left on timer?
+- time remaining
+- cancel timer
+- what timers are set?
+- Can you have more than one timer?
+
+Todos
+- remind me to {todo} - adds to OmniFocus using IFTT
+
+Traffic
+- traffic (uses home and work addresses entered in app)
+
+Volume
+- volume {0-10}
+- louder / softer
+- turn it up / down
+
+Weather
+- weather
+- what is the extended forecast [for {city}]?
+
+Wikipedia
+- wikipedia {phrase}
