@@ -83,27 +83,28 @@ Music services supported
 Reset
 - Press the small button on the top center with paperclip.
 
-Skill stores
-- offical: built into the Alexa app
-- unoffical: https://www.alexaskillstore.com/
-
-Skill types
-- template-based
-  * Adventure, Fact, Flash Briefing, Smart Home, Trivia
-- custom
-
-Skills recommended
-- Big Sky for better weather reporting
-- Chess Trivia (game)
-- Fitbit
-  * can ask
-    - how am I doing today?
-    - how did I sleep last night?
-    - how many steps have I taken?
-- Jeopardy (game)
-- The Magic Door (adventure game)
-- Seinfeld Trivia (game)
-- 20 Questions (game)
+Skills
+- new capabilities that can be added
+- find in these locations:
+  * official skill store: built into the Alexa app
+  * unoffical skill store: https://www.alexaskillstore.com/
+- enable/disable with "Alexa, {enable|disable} {skill name}
+- types of skills
+  * template-based
+    - Adventure, Fact, Flash Briefing, Smart Home, Trivia
+  * custom
+- recommended skills
+  * Big Sky for better weather reporting
+  * Chess Trivia (game)
+  * Fitbit
+    - can ask
+      * how am I doing today?
+      * how did I sleep last night?
+      * how many steps have I taken?
+  * Jeopardy (game)
+  * The Magic Door (adventure game)
+  * Seinfeld Trivia (game)
+  * 20 Questions (game)
 
 Trying/testing skills without a device
 - reverb.ai iOS/Android app
@@ -157,7 +158,10 @@ Calendar
 Conversions
 - How many {units} in a {unit}
 
-Date
+Dates
+- How many days until {date|holiday}?
+- What day is {date|holiday} on?
+- When is {holiday}?
 - What is the date?
 
 Dictionary
@@ -188,6 +192,7 @@ Easter Eggs
 - I'm sick.
 - Is this the real life?
 - More cowbell.
+- Open the pod bay doors. (2001 Space Odyssey)
 - Party on Wayne.
 - Rap for me.
 - Read me a bedtime story.
@@ -197,6 +202,7 @@ Easter Eggs
 - Self-destruct
 - Sing Happy Birthday.
 - Sing me a song.
+- Surely you can't be serious.
 - Tell me a holiday story.
 - Tell me a palindrome.
 - Up up down down left right left right B A start.
@@ -206,7 +212,7 @@ Easter Eggs
 - What does RTFM stand for? (beeps F)
 - What does WTF stand for? (beeps F)
 - What does the fox say? (multiple answers)
-- What is love?
+- What is love? (multiple answers)
 - What is the loneliest number?
 - What is your favorite Pokemon?
 - What is your favorite food?
@@ -228,12 +234,7 @@ Easter Eggs
 - Will you marry me?
 - You complete me.
 
-Dates
-- How many days until {date|holiday}?
-- What day is {date|holiday} on?
-- When is {holiday}?
-
-Games
+Games (must enable these skills first)
 - Chess Trivia
 - Jeopardy
 - Seinfeld Trivia
@@ -306,8 +307,12 @@ Podcasts
 - Play {name} podcast. (just current episode?)
 
 Princess Bride
+- Are there rocks ahead?
+- Are you friends with Glados?
 - Inconceivable!
 - My name is Inigo Montoya.
+- No more rhyming now, I mean it.
+- You mock my pain.
 
 Profiles
 - Multiple user profiles can be configured in the Alexa app.
@@ -351,6 +356,7 @@ Smart Home Devices
 Sports
 - Give me my sports update (configure teams in Alexa app)
 - How are {team} doing?
+- What {MLB|NBA|NFL|NHL| games are today?
 - What was the score of the {team|event} game?
 - What team does {athlete} play for?
 - What teams has {athlete} played for?
@@ -359,9 +365,22 @@ Sports
 
 Star Wars
 - Aren't you a little short for a stormtrooper?
+- Do or do not.
+- He can go about his business.
+- I am your father.
+- It's a trap.
+- May the force be with you.
 - Speak like Yoda.
+- Tell me a Star Wars fact.
+- Tell me a Star Wars joke.
+- That's no moon.
+- These aren’t the droids you’re looking for.
 - Use the force.
+- What are the odds of successfully navigating an asteroid field?
+- What is the Millenium Falcon?
+- Who is Darth Vader?
 - Who shot first?
+- You don’t need to see his identification. (multiple responses)
 
 Time
 - What time is it?
