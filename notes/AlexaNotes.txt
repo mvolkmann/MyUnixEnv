@@ -142,8 +142,7 @@ Alarms
 - "List alarms" or "When is my alarm set?" or "What alarms are set?"
 - Cancel alarm (will ask which one if multiple)
 - cannot say "Cancel all alarms."
-- Snooze (for 10 minutes)
-  * it seems you cannot specify a duration
+- Snooze (for 9 minutes; not configurable)
 
 Businesses
 - Find address for {business}.
