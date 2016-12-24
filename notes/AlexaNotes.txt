@@ -1,7 +1,11 @@
 Alexa Notes
 
-Alexa App setup
-- in "Settings"
+Key
+- {description} means insert a value like description.
+- {v1|v2} means insert a value like desc1 or desc2.
+- [value] means value is optional.
+
+Alexa App setup ... in "Settings"
 - select "Voice Training" to improve voice recognition
 - select "Calendar" to link to Google account
 - select "Flash Briefing" to configure news sources
@@ -10,12 +14,17 @@ Alexa App setup
   different settings for additional users
   * use "Alexa, switch to {name} profile" to switch
 - select "Lists" to configure shopping/todo lists
-  * very limited
+  * very limited support for third-party apps
+  * has builtin shopping and todo lists
 - select "Music" to configure streaming services
 - select "Sports Update" to configure teams of interest
 - select "Traffic" to enter home and work addresses
 - select "Voice Purchasing" to configure
   confirmation code, credit card, shipping address
+
+General Tips
+- If you unplug the device and plug it in again,
+  it will say "Hello" when it is ready.
 
 Amazon Music App
 - download from music.amazon.com
@@ -39,6 +48,8 @@ Home automation
   * consider Nest and Ecobee3
 - custom integrations
   * consider IFTT and Yonomi (supports Sonos)
+- appliance setup
+  * say "Alexa, discover my appliances."
 
 Light meaning
 - spinning cyan - starting up
@@ -70,7 +81,7 @@ Music services supported
 - TuneIn
 
 Reset
-- press small button on bottom with paperclip
+- Press the small button on the top center with paperclip.
 
 Skill stores
 - offical: built into the Alexa app
@@ -94,7 +105,7 @@ Skills recommended
 - Seinfeld Trivia (game)
 - 20 Questions (game)
 
-Trying/testing skills
+Trying/testing skills without a device
 - reverb.ai iOS/Android app
   * press and hold to speak
   * don't need to start with "Alexa"
@@ -106,7 +117,10 @@ Implementing custom skills
 - https://developer.amazon.com/alexa
 - can implement AWS Lambda functions in Java, Node.js, and Python
 
-Alexa ...
+-------------------------------------------------------------------------------
+
+The rest of this document lists things to say to the device,
+starting with "Alexa".
 
 General
 - help
@@ -120,14 +134,16 @@ General
 - Do you have any new features?
 
 Alarms
-- cancel alarms?
-- set alarm for {time}
-- wake me at {time}
-- when is my alarm set?
-- snooze (Can you pick a duration?)
-- cancel alarm
-- what alarms are set?
-- Can you have more than one alarm?
+- Note: You can have more than one alarm set.
+- Note: You can select from many alarm sounds,
+  including celebrity voices, in the Alexa app.
+- Note: You cannot configure alarms to play music. :-(
+- "Set [repeating] alarm for {time}" or "Wake me at {time}"
+- "List alarms" or "When is my alarm set?" or "What alarms are set?"
+- Cancel alarm (will ask which one if multiple)
+- cannot say "Cancel all alarms."
+- Snooze (for 10 minutes)
+  * it seems you cannot specify a duration
 
 Businesses
 - find address for {business}
@@ -148,51 +164,139 @@ Date
 Dictionary
 - what is the definition of {word}?
 
-Easter Eggs (Alexa, ...)
-- How much is that doggie in the window?
-- I'll be back.
-- Rock, paper, scissors.
-- Self-destruct
-- Up up down down left right left right B A start.
-- Use the force. (Star Wars)
-- What is love?
-- Who lives in a pineapple under the sea?
-- Who shot first? (Star Wars)
-- Will you marry me?
+Dr. Seuss
+- Do you like green eggs and ham?
+- One fish, two fish.
+- What was the Lorax?
 
-Funny
+Easter Eggs
+- Are you a robot?
+- Are you lying?
+- Can you sing in autotune?
+- Cheer me up.
+- Define rock, paper, scissors, lizard, spock.
 - Do you have a cat?
 - Do you have a dog?
+- Do you really want to hurt me?
+- Do you want to build a snowman?
+- Hello, it's me.
+- How do you survive a zombie attach? (multiple answers)
+- How much do you weigh?
+- How much is that doggie in the window?
+- How much wood can a woodchuck chuck?
+- How old are you?
+- I'll be back.
+- I'm sick.
+- Is this the real life?
+- More cowbell.
+- Party on Wayne.
+- Rap for me.
+- Read me a bedtime story.
+- Rock, paper, scissors, lizard, spock.
+- Rock, paper, scissors.
+- Say cheese.
+- Self-destruct
+- Sing Happy Birthday.
+- Sing me a song.
+- Tell me a palindrome.
+- Up up down down left right left right B A start.
+- What are the laws of robotics?
+- What are you made of?
+- What do you want for Christmas?
+- What does RTFM stand for? (beeps F)
+- What does WTF stand for? (beeps F)
+- What does the fox say? (multiple answers)
+- What is love?
+- What is the loneliest number?
+- What is your favorite Pokemon?
+- What is your favorite food?
+- What is your quest?
+- What should I wear today?
+- What's cooler than being cool?
+- What's the truth behind King Tut?
+- When am I going to die?
+- When is the end of the world?
+- Where do babies come from? (multiple answers)
+- Where have all the flowers gone?
+- Where is Chuck Norris?
+- Who am I?
+- Who created C++?
+- Who lives in a pineapple under the sea?
+- Who you gonna call?
+- Why do birds suddenly appear?
+- Why is 6 afraid of 7?
+- Will you marry me?
+- You complete me.
+
+Dates
+- How many days until {date|holiday}?
+- What day is {date|holiday} on?
+- When is {holiday}?
 
 Games
+- Chess Trivia
 - Jeopardy
 - Seinfeld Trivia
 
+General Queries
+- Is {person} alive?
+- Who created {thing}?
+- Who invented the {thing}?
+- Who is {person}?
+- Who is the author of the book {title}?
+- Who wrote the book {title}?
+
+Geography
+- What is the capital of {state}?
+- What is the distance from {city1} to {city2}?
+- Where is {city}?
+
+Jokes
+- Knock, knock. (multiple answers)
+- Say something funny. (multiple answers)
+- Tell me a Dad joke. (multiple answers)
+- Tell me a dirty joke. (jokes about dirt)
+- Tell me a joke. (multiple answers)
+- Tell me a riddle. (multiple answers)
+
 Math
-- what is {formula}?
+- Divide by zero.
+- What is {formula}?
+- What is the value of pi?
+
+Monty Python
+- How do you know she's a witch?
+- I fart in your general direction.
+- I wasn't expecting the Spanish Inquisition.
+- This is a dead parrot.
+- Your mother was a hamster.
 
 Movies
-- what movies are playing [tomorrow | on {date}]?
-- when is {title} playing?
-- tell me about the movie {title}
+- Tell me about the movie {title}.
+- What movies are playing [tomorrow | on {date}]?
+- When is {title} playing?
+- Who stars in the movie {title}?
 
 Music
-- play music (random?)
-- play {genre} (ex. jazz)
-- play the song of the day
-- play the latest {artist} album
-- play {song} by {artist}
-- play the song with the lyrics {lyrics}
-- play {artist} station [on {iHeartRadio|Pandora}]
-- repeat this song
-- loop
-- what is playing?
-- stop playing music in {number} minutes
 - to play music from another device such as a tablet or smartphone,
   say "Alexa, pair bluetooth", connect to Alexa on the device,
   and start music on the device or use commands like
   "play", "stop", "pause", "resume", "next", "previous",
   "disconnect my {phone|tablet}", and "connect my {phone|tablet}"
+- Loop
+- Play music (random?)
+- Play the latest {artist} album
+- Play the song of the day
+- Play the song with the lyrics {lyrics}
+- Play {artist} station [on {iHeartRadio|Pandora}]
+- Play {genre} (ex. jazz)
+- Play {song} by {artist}
+- Repeat this song
+- Stop playing music in {number} minutes
+- What are the albums by {artist}?
+- What is playing?
+- What is popular from {artist}? (plays song samples)
+- Who is the {lead singer|drummer|guitarist|...} for {band name}?
 
 News
 - flash - reads flash briefings from selected sources in settings
@@ -200,6 +304,24 @@ News
 
 Podcasts
 - play {name} podcast (just current episode?)
+
+Princess Bride
+- Inconceivable!
+- My name is Inigo Montoya.
+
+Profiles
+- multiple user profiles can be configured in the Alexa app
+- to get a list of all configured profiles, "Alexa, profiles?"
+- to get the current profile in use, "Alexa, which profile?"
+- to change the profile in use, "Alexa, switch profile"
+  * will ask which one to use
+
+Random Selctions
+- Flip a coin.
+- Heads or tails?
+- Pick a card.
+- Pick a random number between {number1} and {number2}.
+- Roll a dice.
 
 Read
 - read {kindle book title}
@@ -209,7 +331,8 @@ Restaurants
 - what are some top-rated restaurants?
 
 Shopping
-- add {item} to my shopping list (where does it go?)
+- add {item} to my shopping list
+  * goes in Alexa app shopping list on all devices
 - what are your deals? (current Amazon deals)
 - track my order
 - where is my order?
@@ -226,23 +349,46 @@ Smart Home Devices
 - {brighten|dim} {device name|group name}
 
 Sports
-- give me my sports update (configure teams in Alexa app)
-- how are {team} doing?
-- what was the score of the {team|event} game?
+- Give me my sports update (configure teams in Alexa app)
+- How are {team} doing?
+- What was the score of the {team|event} game?
+- What team does {athlete} play for?
+- What teams has {athlete} played for?
+- When do the {city} {team}'s play?
+- Who plays {position} for the {city} {team}?
+
+Star Wars
+- Aren't you a little short for a stormtrooper?
+- Speak like Yoda.
+- Use the force.
+- Who shot first?
 
 Time
 - what time is it?
 
 Timers
-- set timer for {n} [minutes|hours]
-- how much time is left on timer?
-- time remaining
-- cancel timer
-- what timers are set?
-- Can you have more than one timer?
+- cannot configure the sound played when a timer ends
+- can have multiple timers set concurrently
+- to set a timer,
+  "Alexa, set timer for {number} [minutes|hours]."
+- to determine remaining time,
+  "Alexa, time remaining" or
+  "Alexa, how much time is left on timer?"
+- to cancel a timer before it goes off,
+  "Alexa, cancel timer"
+  * will prompt for which one if multiple
+- to list the currently set timers,
+  "Alexa, list timers." or
+  "Alexa, what timers are set?"
+- to stop timer notification when it is going off,
+  "Alexa, cancel." or "Alexa, stop."
 
 Todos
-- remind me to {todo} - adds to OmniFocus using IFTT
+- Add {item} to my todo list.
+  * goes in Alexa app todo list on all devices
+- Create a todo. (will prompt for details)
+- Remind me to {todo}.
+  * You configured this to go to OmniFocus using IFTT.
 
 Traffic
 - traffic (uses home and work addresses entered in app)
@@ -253,8 +399,9 @@ Volume
 - turn it up / down
 
 Weather
-- weather
-- what is the extended forecast [for {city}]?
+- Do I need an umbrealla?
+- Weather
+- What is the extended forecast [for {city}]?
 
 Wikipedia
 - wikipedia {phrase}
