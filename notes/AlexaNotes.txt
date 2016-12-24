@@ -146,23 +146,23 @@ Alarms
   * it seems you cannot specify a duration
 
 Businesses
-- find address for {business}
-- find phone number for {business}
-- find hours for {business}
+- Find address for {business}.
+- Find phone number for {business}.
+- Find hours for {business}.
 
 Calendar
-- calendar (reads items for today and tomorrow)
-- add event to calendar (then it asks for details?)
-- add {event} to calendar for {date} {time}
+- Calendar (reads items for today and tomorrow)
+- Add event to calendar. (then it asks for details?)
+- Add {event} to calendar for {date} {time}.
 
 Conversions
-- how many {units} in a {unit}
+- How many {units} in a {unit}
 
 Date
-- what is the date?
+- What is the date?
 
 Dictionary
-- what is the definition of {word}?
+- What is the definition of {word}?
 
 Dr. Seuss
 - Do you like green eggs and ham?
@@ -300,21 +300,21 @@ Music
 - Who is the {lead singer|drummer|guitarist|...} for {band name}?
 
 News
-- flash - reads flash briefings from selected sources in settings
+- Flash - reads flash briefings from selected sources in settings
   like Weather, NPR, BBC, and Tech News
 
 Podcasts
-- play {name} podcast (just current episode?)
+- Play {name} podcast. (just current episode?)
 
 Princess Bride
 - Inconceivable!
 - My name is Inigo Montoya.
 
 Profiles
-- multiple user profiles can be configured in the Alexa app
-- to get a list of all configured profiles, "Alexa, profiles?"
-- to get the current profile in use, "Alexa, which profile?"
-- to change the profile in use, "Alexa, switch profile"
+- Multiple user profiles can be configured in the Alexa app.
+- To get a list of all configured profiles, "Alexa, profiles?"
+- To get the current profile in use, "Alexa, which profile?"
+- To change the profile in use, "Alexa, switch profile"
   * will ask which one to use
 
 Random Selctions
@@ -325,29 +325,29 @@ Random Selctions
 - Roll a dice.
 
 Read
-- read {kindle book title}
+- Read {kindle book title}.
 
 Restaurants
-- what {cuisine} restaurants are nearby?
-- what are some top-rated restaurants?
+- What {cuisine} restaurants are nearby?
+- What are some top-rated restaurants?
 
 Shopping
-- add {item} to my shopping list
+- Add {item} to my shopping list
   * goes in Alexa app shopping list on all devices
-- what are your deals? (current Amazon deals)
-- track my order
-- where is my order?
+- What are your deals? (current Amazon deals)
+- Track my order.
+- Where is my order?
 
 Skills
-- enable {skill name}
+- Enable {skill name}.
   * some also require configuration in the Alexa app
-- open {skill name}
-- ask {skill name} to {task}
+- Open {skill name}.
+- Ask {skill name} to {task}.
 
 Smart Home Devices
-- {turn|switch} {on|off} {device name|group name}
-- set {device name|group name} device to {percentage} percent
-- {brighten|dim} {device name|group name}
+- {turn|switch} {on|off} {device name|group name}.
+- Set {device name|group name} device to {percentage} percent.
+- {brighten|dim} {device name|group name}.
 
 Sports
 - Give me my sports update (configure teams in Alexa app)
@@ -365,7 +365,7 @@ Star Wars
 - Who shot first?
 
 Time
-- what time is it?
+- What time is it?
 
 Timers
 - cannot configure the sound played when a timer ends
@@ -392,12 +392,14 @@ Todos
   * You configured this to go to OmniFocus using IFTT.
 
 Traffic
+- Note: Cannot currently tell you how long it will take
+  to drive from one location to another.
 - traffic (uses home and work addresses entered in app)
 
 Volume
 - volume {0-10}
-- louder / softer
-- turn it up / down
+- {louder|softer}
+- turn it {up|down}
 
 Weather
 - Do I need an umbrealla?
