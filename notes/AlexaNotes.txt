@@ -198,6 +198,7 @@ Easter Eggs
 - Self-destruct
 - Sing Happy Birthday.
 - Sing me a song.
+- Tell me a holiday story.
 - Tell me a palindrome.
 - Up up down down left right left right B A start.
 - What are the laws of robotics?
