@@ -159,6 +159,7 @@ Easter Eggs (Alexa, ...)
 - Who lives in a pineapple under the sea?
 - Who shot first? (Star Wars)
 - Will you marry me?
+- Tell me a holiday story.
 
 Funny
 - Do you have a cat?
