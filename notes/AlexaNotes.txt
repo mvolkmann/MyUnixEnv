@@ -94,8 +94,13 @@ Skills
     - Adventure, Fact, Flash Briefing, Smart Home, Trivia
   * custom
 - recommended skills
+  * Abra
+    - like "20 Questions", but only guesses people
+    - think of a person and say "Alexa, start Akinator"
   * Big Sky for better weather reporting
   * Chess Trivia (game)
+  * Deep Thoughts
+    - gives a quote from Deep Thoughts by Jack Handey (from SNL)
   * Fitbit
     - can ask
       * how am I doing today?
@@ -105,6 +110,8 @@ Skills
   * The Magic Door (adventure game)
   * Seinfeld Trivia (game)
   * 20 Questions (game)
+    - think of any person, place, or thing and
+      it will attempt to guess it in 20 questions
 
 Trying/testing skills without a device
 - reverb.ai iOS/Android app
@@ -226,7 +233,6 @@ Easter Eggs
 - Where have all the flowers gone?
 - Where is Chuck Norris?
 - Who am I?
-- Who created C++?
 - Who lives in a pineapple under the sea?
 - Who you gonna call?
 - Why do birds suddenly appear?
@@ -352,6 +358,14 @@ Smart Home Devices
 - {turn|switch} {on|off} {device name|group name}.
 - Set {device name|group name} device to {percentage} percent.
 - {brighten|dim} {device name|group name}.
+
+Software Development/Programming
+- "Alexa, who created C++?" - crazy answer!
+- skills
+  * JavaScript Master
+  * JavaScript Quiz
+  * Web Dev Facts
+  * Personal Recruiter
 
 Sports
 - Give me my sports update (configure teams in Alexa app)
