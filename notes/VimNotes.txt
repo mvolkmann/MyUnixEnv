@@ -481,8 +481,6 @@ Folding
   zR - recursive version of zr (all levels)
   zm - fold more; close all folds
   zM - recursive version of zm (all levels)
-  zd - delete fold, not content of it
-  zE - delete all folds, not their content
 - to configure folding of javadoc-style comments, add this to .vimrc.
   autocmd FileType java :set fmr=/**,*/ fdm=marker fdc=1
 - can use triple braces in comments to manually define fold regions
