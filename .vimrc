@@ -379,12 +379,18 @@ endfunction
 
 " Asynchronous Lint Engine (ALE)
 highlight clear ALEErrorSign " otherwise uses error bg color of red
+highlight clear ALEOKSign " otherwise uses error bg color of red
+highlight clear ALEWarningSign " otherwise uses error bg color of red
 let g:ale_linters = {
 \  'javascript': ['eslint', 'flow'],
 \}
-let g:ale_sign_error = '💣'
-let g:ale_sign_warning = '⚠️'
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+"let g:ale_sign_error = '💣'
+let g:ale_sign_error = '👎'
+"let g:ale_sign_warning = '🚩'
+"let g:ale_sign_warning = '🚫'
+"let g:ale_sign_warning = '💩'
+let g:ale_sign_warning = '❓'
+let g:ale_statusline_format = ['👎 %d', '❓ %d', '']
 
 " Asciidoc --- {{{
 "autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
