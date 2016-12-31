@@ -15,6 +15,9 @@ ALE Notes
   eslint, jscs, jshint, and flow
   * npm install -g eslint
   * npm install -g flow-bin
+    - only checks files with // @flow comment at top
+    - may take about 30 seconds for the first Flow check
+      if the flow server isn't already running
 - HTML supported linters include
   tidy and HTMLHint
   * npm install -g tidy-html5

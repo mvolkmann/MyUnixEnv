@@ -264,9 +264,9 @@ nnoremap <leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<cr>
 
 " EasyMotion mappings
 " Search for beginning of a word in both directions.
-map <leader>w <Plug>(easymotion-bd-w)
+map <leader>w <plug>(easymotion-bd-w)
 " Search for beginning of a word in all windows.  Why doesn't this work?
-"nmap <leader>w <Plug>(easymotion-overwin-w)
+"nmap <leader>w <plug>(easymotion-overwin-w)
 
 " Printing using enscript (these aren't working yet)
 noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"
@@ -395,9 +395,10 @@ let g:ale_statusline_format = ['👎 %d', '❓ %d', '']
 " $s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says %s'
 " Map keys to navigate between lines with errors and warnings.
-" <C-j> works, but <C-k> doesn't!  Is this due to a key mapping conflict?
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" <C-j> works, but <C-k> doesn't because that is mapped to
+" clear the screen in iTerm!  How can you remove that mapping?
+nnoremap <C-j> :ALENextWrap<cr>
+nnoremap <C-k> :ALEPreviousWrap<cr>
 
 " Asciidoc --- {{{
 "autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
@@ -501,7 +502,7 @@ let g:syntastic_javascript_checkers=['eslint']
 
 " Tsuquyomi - plugin for TypeScript --- {{{
 "autocmd FileType typescript setlocal completeopt+=menu,preview
-"autocmd FileType typescript nmap <buffer> <leader>r <Plug>(TsuquyomiRenameSymbol)
+"autocmd FileType typescript nmap <buffer> <leader>r <plug>(TsuquyomiRenameSymbol)
 "autocmd FileType typescript nmap <buffer> <leader>t : <c-u>echo tsuquyomi#hint()<cr>
 " }}}
 
