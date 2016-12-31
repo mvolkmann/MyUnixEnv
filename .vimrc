@@ -314,27 +314,6 @@ highlight SpellBad ctermfg=black ctermbg=red
 set thesaurus=~/.vim/mthesaur.txt
 " }}}
 
-" Status line --- {{{
-" Always display status line.
-set laststatus=2
-
-" The customizations below are commented out because I am
-" using vim-airline to control the status line for now.
-set statusline=%t " file name (omits path)
-set statusline+=%M " modified flag
-set statusline+=%R " read-only flag
-set statusline+=%= " left/right separator
-set statusline+=line\ %l " line number
-set statusline+=\ of\ %L " total lines
-set statusline+=,\ col\ %c, " cursor line number and column
-set statusline+=\ %P " percent through file
-
-" Change status line background color based on mode.
-highlight StatusLine ctermfg=lightyellow ctermbg=black
-autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
-autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
-" }}}
-
 " Folding --- {{{
 " See VimNotes.txt for fold-related key commands.
 
@@ -398,6 +377,15 @@ function! QuickfixToggle()
 endfunction
 " }}}
 
+" Asynchronous Lint Engine (ALE)
+highlight clear ALEErrorSign " otherwise uses error bg color of red
+let g:ale_linters = {
+\  'javascript': ['eslint', 'flow'],
+\}
+let g:ale_sign_error = '💣'
+let g:ale_sign_warning = '⚠️'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+
 " Asciidoc --- {{{
 "autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
@@ -459,7 +447,30 @@ let g:fixmyjs_rc_path = '~/.eslintrc.json'
 noremap <leader>fj :Fixmyjs<cr>
 " }}}
 
+" Status line --- {{{
+" Always display status line.
+set laststatus=2
+
+" Comment out these customizations if using vim-airline
+" to control the status line.
+set statusline=%t " file name (omits path)
+set statusline+=%M " modified flag
+set statusline+=%R " read-only flag
+set statusline+=\ %{ALEGetStatusLine()} " Asynchronous Lint Engine
+set statusline+=%= " left/right separator
+set statusline+=line\ %l " line number
+set statusline+=\ of\ %L " total lines
+set statusline+=,\ col\ %c, " cursor line number and column
+set statusline+=\ %P " percent through file
+
+" Change status line background color based on mode.
+highlight StatusLine ctermfg=lightyellow ctermbg=black
+autocmd InsertLeave * highlight StatusLine ctermfg=lightyellow ctermbg=black
+autocmd InsertEnter * highlight StatusLine ctermfg=darkgreen ctermbg=white
+" }}}
+
 " Syntastic --- {{{
+" Current this is not being used because ALE is being used instead.
 
 " Stop Syntastic from taking over :E from netrw.
 command! E :execute ":Explore"

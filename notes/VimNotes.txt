@@ -1179,6 +1179,7 @@ Status Line
   set statusline=%t " file name (omits path)
   set statusline+=%M " modified flag
   set statusline+=%R " read-only flag
+  set statusline+=%{ALEGetStatusLine()} " Asynchronous Lint Engine
   set statusline+=%= " left/right side separator
   (right aligns all the content that follows)
   set statusline+=line\ %l " current line number

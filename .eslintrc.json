@@ -32,7 +32,7 @@
   "plugins": [
     "flowtype",
     "html",
-    "import",
+    //"import",
     "react"
     //"volkmann"
   ],
@@ -95,6 +95,7 @@
     "id-blacklist": ["error"],
     "id-length": "off",
     "id-match": "off",
+    /*
     "import/default": "error",
     "import/export": "error",
     "import/extensions": [".js", ".json"],
@@ -124,6 +125,7 @@
     "import/order": "error",
     "import/prefer-default-export": "error",
     "import/unambiguous": "error",
+    */
     "indent": ["error", 2, {"SwitchCase": 1}],
     "init-declarations": "off",
     "jsx-quotes": ["error", "prefer-double"],
@@ -331,7 +333,6 @@
     "react/jsx-wrap-multilines": "off",
     "react/no-array-index-key": "error",
     "react/no-children-prop": "error",
-    "react/no-comment-textnodes": "error",
     "react/no-danger": "off",
     "react/no-danger-with-children": "error",
     "react/no-deprecated": "error",
