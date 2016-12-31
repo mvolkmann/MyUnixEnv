@@ -11,6 +11,9 @@ ALE Notes
   * provides a list of supported syntaxes and linters
 - supports many linting tools for many syntaxes/languages
   * by default uses all supported linting tools that are installed
+- tool configuration files
+  * it seems that if tool configuration files are modified,
+    Vim must be restarted in order to load the changes
 - JavaScript supported linters include
   eslint, jscs, jshint, and flow
   * npm install -g eslint
@@ -18,6 +21,12 @@ ALE Notes
     - only checks files with // @flow comment at top
     - may take about 30 seconds for the first Flow check
       if the flow server isn't already running
+  * potential eslint issue
+    - if eslint is installed locally in the current project,
+      that version of eslint will be used instead of the global one
+    - if the versions differ, the eslint configuration file may not
+      be compatiable because it may configure rules that aren't known
+    - the best way to resolve this is to update both to the latest version
 - HTML supported linters include
   tidy and HTMLHint
   * npm install -g tidy-html5
