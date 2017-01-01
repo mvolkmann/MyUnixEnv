@@ -1,0 +1,28 @@
+#!/bin/bash
+# Finds the directory with a node_modules directory
+# that contains a given Node module.
+
+if [ $# -ne 1 ]; then
+  echo usage: findnm {module-name}
+  exit 1
+fi
+
+while [[ $(pwd) != ${HOME} ]];
+do
+  if [ -e "node_modules/$1" ];
+  then
+    echo "found in $(pwd)"
+    exit 1
+  fi
+  pushd .. > /dev/null
+done
+
+if [ -e "node_modules/$1" ];
+then
+  echo "found in $(pwd)"
+elif [ -e "$(npm -g root)/$1" ];
+then
+  echo "found as a global module"
+else
+  echo "not found"
+fi

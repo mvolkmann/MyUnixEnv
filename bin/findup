@@ -1,0 +1,25 @@
+#!/bin/bash
+# Finds the closest directory searching upward
+# that contains a given file or directory.
+
+if [ $# -ne 1 ]; then
+  echo usage: findup {file-name}
+  exit 1
+fi
+
+while [[ $(pwd) != ${HOME} ]];
+do
+  if [ -e $1 ];
+  then
+    echo "found in $(pwd)"
+    exit 1
+  fi
+  pushd .. > /dev/null
+done
+
+if [ -e $1 ];
+then
+  echo "found in $(pwd)"
+else
+  echo "not found"
+fi
