@@ -80,6 +80,8 @@ export PATH=$PATH:$MAVEN_HOME/bin
 # Node.js settings
 export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
+export NVM_DIR="/Users/rmvolk/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Postgres settings
 #export PATH=$PATH:$POSTGRES_DIR/bin

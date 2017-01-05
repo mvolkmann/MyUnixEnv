@@ -23,7 +23,7 @@ Flexbox Notes
   even groups of things!
 
 - to make a container element use flexbox, set
-  display: flex
+  display: flex (for block) or display: inline-flex (for inline)
   * when parent display is flex, block level children act like inline-block
 
 - item alignment
