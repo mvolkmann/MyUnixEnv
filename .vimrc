@@ -382,7 +382,7 @@ highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 " Limit linters used for JavaScript.
 let g:ale_linters = {
-\  'javascript': ['eslint', 'flow'],
+\  'javascript': ['eslint'],
 \}
 "let g:ale_sign_error = '💣'
 let g:ale_sign_error = '👎'

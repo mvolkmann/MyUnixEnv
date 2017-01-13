@@ -37,14 +37,16 @@ Initialize database
 
 Version 9.2.1 notes
 - to start server
-  * postgres -D /usr/local/pgsql/data
+  * pg_ctl -D /usr/local/var/postgres start
     - will continue running
 - to stop server
-  * pg_ctl -D /usr/local/var/postgres stop -s -m fast
+  * pg_ctl -D /usr/local/var/postgres stop -m fast
 - to create a database
   * createdb {db-name}
 - to delete a database
   * dropdb {db-name}
+- to list existing databases
+  * psql -l
 - interactive mode
   - to start for a given database
     * psql -d {db-name}
@@ -116,7 +118,7 @@ Run a single command
 - psql {db-name} {username} -c {query}
 
 Run commands in a file
-- psql  {db-name} {username} -f {file}
+- psql {db-name} {username} -f {file}
 
 Auto-incrementing keys
 - approach #1

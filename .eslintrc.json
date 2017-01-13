@@ -56,7 +56,7 @@
     "comma-style": ["error", "last"],
     "complexity": "error",
     "computed-property-spacing": ["error", "never"],
-    "consistent-return": "error",
+    "consistent-return": "off",
     "consistent-this": ["off", "that"],
     "constructor-super": "error",
     "curly": "off",
