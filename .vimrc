@@ -405,8 +405,9 @@ let g:ale_echo_msg_format = '%linter% says %s'
 " Map keys to navigate between lines with errors and warnings.
 " <c-j> works, but <c-k> doesn't because that is mapped to
 " clear the screen in iTerm!  How can you remove that mapping?
-nnoremap <c-f> :ALENextWrap<cr>
-nnoremap <c-b> :ALEPreviousWrap<cr>
+"TODO: Find non-conflicting keys for these!
+nnoremap <c-down> :ALENextWrap<cr>
+nnoremap <c-up> :ALEPreviousWrap<cr>
 
 " Asciidoc --- {{{
 "autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT

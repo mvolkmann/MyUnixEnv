@@ -1173,6 +1173,9 @@ Spell check
   setlocal spellfile+=~/.vim/spell/{name}.utf-8.add
 - for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
 
+Splits
+- see "Windows" below
+
 Status Line
 - can configure contents
 - spaces must be escaped with a backslash
@@ -1603,7 +1606,7 @@ vim-tag-comment
 - press <leader>tC to comment the tag (start or end) under the cursor
 - press <leader>tU to uncomment the tag (start or end) under the cursor
 
-Windows
+Windows (created by splits)
   :win {width} {height} - to set default gvim window size (put in .vimrc);
   :sp[lit] [{name}]  - horizontal split screen into two windows
                        and optionally open file {name}
