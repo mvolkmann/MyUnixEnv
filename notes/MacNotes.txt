@@ -3,6 +3,9 @@ MacNotes.txt
 * New Mac setup
   - git
   - git clone MyUnixEnv and run ./setup
+  - Xcode from App Store
+  - command-line tools
+    * after installing Xcode, run "xcode-select --install"
   - iTerm 2
   - homebrew
   - brew install these
@@ -120,7 +123,6 @@ MacNotes.txt
     * http://www.versiontracker.com/dyn/moreinfo/macosx/10005
   - Vim 7
   - MPEG Streamclip and VLC for playing MPEG-2 videos
-  - Xcode
   - You Control: Tunes
     * allows control of iTunes from menu bar
     * http://www.yousoftware.com/itunes/itunes.php
@@ -270,7 +272,8 @@ MacNotes.txt
 * Spotlight - cmd-spacebar
 * SSH
   - see Documents/SSH/ssh_setup.txt
-* tac command
+* tac command (cat backwards)
+  - outputs lines in a file in reverse order
   - brew install coreutils
   - ln -s /usr/local/bin/gtac /usr/local/bin/tac
 * Terminal
