@@ -406,8 +406,8 @@ let g:ale_echo_msg_format = '%linter% says %s'
 " <c-j> works, but <c-k> doesn't because that is mapped to
 " clear the screen in iTerm!  How can you remove that mapping?
 "TODO: Find non-conflicting keys for these!
-nnoremap <c-down> :ALENextWrap<cr>
-nnoremap <c-up> :ALEPreviousWrap<cr>
+nnoremap <leader>an :ALENextWrap<cr>
+nnoremap <leader>ap :ALEPreviousWrap<cr>
 
 " Asciidoc --- {{{
 "autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT

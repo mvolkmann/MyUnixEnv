@@ -87,6 +87,10 @@ Abbreviations
   * :iabbrev @@ r.mark.volkmann@gmail.com
   * :iabbrev rmv R. Mark Volkmann
 
+ALE
+- Asynchronous Linting Environment
+- see ALENotes.txt
+
 Argument List
 - initially set to expanded list of files passed to vim from command-line
   * ex. vim **/*.js **/*.css
