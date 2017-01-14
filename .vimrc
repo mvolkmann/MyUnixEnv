@@ -159,9 +159,9 @@ hi cursorLineNr ctermfg=12 " blue
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{
-let g:CommandTCancelMap=['<ESC>', '<C-c>']
-let g:CommandTSelectNextMap=['<C-n>', 'j', '<DOWN>']
-let g:CommandTSelectPrevMap=['<C-p>', 'k', '<UP>']
+let g:CommandTCancelMap=['<ESC>', '<c-c>']
+let g:CommandTSelectNextMap=['<c-n>', 'j', '<DOWN>']
+let g:CommandTSelectPrevMap=['<c-p>', 'k', '<UP>']
 " }}}
 
 " Key mappings --- {{{
@@ -180,6 +180,14 @@ inoremap kj <esc>
 
 " edit .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" configure use of splits
+set splitbelow
+set splitright
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-l> <c-w><c-l>
+nnoremap <c-h> <c-w><c-h>
 
 " source .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -207,7 +215,7 @@ endfunc
 nnoremap <leader>n :call NumberToggle()<cr>
 
 " replace all occurences of the complete word under the cursor
-"nnoremap <leader>r :%s/\<<C-r><C-w>\>/
+"nnoremap <leader>r :%s/\<<c-r><c-w>\>/
 
 " Switching buffers
 " Use C-^ to toggle to last buffer
@@ -244,7 +252,7 @@ nnoremap <leader>sb :source %<cr>
 
 " Allow insert mode completion with tab key in addition to ctrl-n.
 " Can't do this because it conflicts with Snipmate!
-"imap <TAB> <C-n>
+"imap <tab> <c-n>
 "ino <c-j> <c-r>=TriggerSnippet()<cr>
 "snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
 
@@ -395,10 +403,10 @@ let g:ale_statusline_format = ['👎 %d', '❓ %d', '']
 " $s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says %s'
 " Map keys to navigate between lines with errors and warnings.
-" <C-j> works, but <C-k> doesn't because that is mapped to
+" <c-j> works, but <c-k> doesn't because that is mapped to
 " clear the screen in iTerm!  How can you remove that mapping?
-nnoremap <C-j> :ALENextWrap<cr>
-nnoremap <C-k> :ALEPreviousWrap<cr>
+nnoremap <c-f> :ALENextWrap<cr>
+nnoremap <c-b> :ALEPreviousWrap<cr>
 
 " Asciidoc --- {{{
 "autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
@@ -440,7 +448,7 @@ let g:gitgutter_max_signs=1200
 augroup resizeWindow
   if has("autocmd")
     autocmd!
-    autocmd VimResized * exe "normal \<C-W>="
+    autocmd VimResized * exe "normal \<c-w>="
   endif
 augroup end
 " }}}

@@ -12,6 +12,7 @@ ln -s MyUnixEnv/.eslintrc.json .eslintrc.json
 ln -s MyUnixEnv/.gitconfig .gitconfig
 ln -s MyUnixEnv/.gvimrc .gvimrc
 ln -s MyUnixEnv/.jshintrc .jshintrc
+ln -s MyUnixEnv/.tmux .tmux
 ln -s MyUnixEnv/.tmux.conf .tmux.conf
 ln -s MyUnixEnv/.vim .vim
 ln -s MyUnixEnv/.vimrc .vimrc
