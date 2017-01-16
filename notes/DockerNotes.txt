@@ -6,6 +6,7 @@ Terminology
   * images can run a set of commands and exit
   * images can continue running until stopped
     - examples include REST servers, web servers, and databases
+  * an image runs inside a container
 - container: a running instance of an image
 - Docker Engine: supports sharing Docker images
 - Docker Hub: a repository of Docker images
