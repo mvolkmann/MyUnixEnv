@@ -16,6 +16,14 @@ Miscellaneous
 - to get help on a given builtin function,
   :help fn-name()
 
+Variables
+- to assign a value to a variable, let name = value
+- to change the value of a variable, do the same
+  * using "let" does not create a variable in a new scope
+- to test whether a variable was assigned a value,
+  if exists('name')
+  * don't forget the quotes!
+
 Autocommands
 - execute specified commands when a given event occurs in specific files
 - syntax: autocmd {event} {file-pattern} {commands}
@@ -101,6 +109,17 @@ Comments
     because that would be a string literal
 - no multi-line comment delimiters
 
+Debugging
+- to load a script being edited, press <leader>sb (,sb)
+  for "source buffer"
+- to bail out of code early for debugging, insert "return"
+- the equivalent of JavaScript console.log('foo =', foo)
+  is echomsg('foo = ' . foo)
+- to output the content of a List
+  for item in list
+    echomsg(item)
+  endfor
+
 Echo
 - echo(string) outputs a message in Vim's message area
 - echomsg(string) does the same AND saves it in message history
@@ -178,6 +197,10 @@ Flow control and loops
     ...
   endif
   - condition is NOT surrounded by parens
+  - strings that start with digits are coerced to a number
+  - strings that do not start with digits are coerced to zero
+  - zero is false; all other number values are true
+  - to test if a variable is set, if exists('variableName')
 - ternary expression
   condition ? true-value : false-value
 - while condition
@@ -193,7 +216,7 @@ Functions
 - to define
   * function! Name()
     endfunction
-  * ! lets is override previously defined functions with same name
+  * ! lets it override previously defined functions with same name
   * the name must start uppercase
   * to return a value, "return value"
 - to call
@@ -246,6 +269,11 @@ Plugins
     - set runtimepath+=directory
     - restart Vim for change to take effect
   * Pathogen modifies this to include directories under .vim/bundle
+
+Regular Expressions
+- pass pattern as a string; ex. '/^foo$/'
+- test whether a string matches with match(text, pattern)
+  * returns index of match or -1 if it doesn't match
 
 Syntax Highlighting
 - defined by files in .vim/syntax directory
@@ -384,15 +412,21 @@ Types (6)
 - List
   * literal syntax: [item0, item1, ...]
   * uses zero-based indexes
+  * to get length, len(list)
   * to get item at given index, myList[index]
+  * to output all the items in a List
+    for item in myList
+      echomsg('item = ' . item)
+    endfor
   * to assign all items in a List to different variables,
     [v1, v2, v3] = myList
     - # of variables must match # of elements in List!
   * to add item to end, call add(list, item)
+  * to set the value at a given index, let list[index] = value
   * to remove item at given index, call remove(list, index)
   * to insert item at given index,
     moving current item at that index to next highest index,
-    call inser(list, item, index)
+    call insert(list, item, index)
   * to sort a list, call sort(list)
     - properly sorts numbers and strings in ascending order
     - if list contains both numbers and strings,
@@ -434,6 +468,8 @@ Types (6)
     - if endIndex is omitted, it is the last index
     - can specify negative values to count from end
       * -1 is index of last item
+  * to get the last character,
+    myString[-1:-1]
   * to get a substring without the last character,
     for example, to remove a newline character,
     myString[:-2]
