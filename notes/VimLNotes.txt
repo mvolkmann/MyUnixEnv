@@ -1,7 +1,40 @@
 VimL Notes
 
+Intro
+- The programming language used to implemenent Vim plugins
+  is called "Vim script", "Vimscript", and "VimL".
+  * Having multiple names can make it challenging to
+    google for help.
+  * It may be helpful to include both "VimL" and "Vimscript" in searches.
+  * These notes refer to is as VimL.
+- VimL is neither good nor bad, just different than
+  the other programming languages you know.
+- One of the best sources of information is the
+  free, online book "Learn Vimscript the Hard Way"
+  at http://learnvimscriptthehardway.stevelosh.com/.
+- Builtin help inside Vim is available by entering :help {topic}.
+- To get started, create a file named hello.vim.
+- Edit this file in Vim and enter the following:
+  echo 'Hello, World!'
+- To load and execute VimL code in the current buffer,
+  enter :source %
+- This will display "Hello, World!" in the message area
+  below the status line.
+- echomsg is similar to echo, but also saves in message history.
+- To see the last n messages in message history,
+  press :messages or :mes
+
+Style
+- see "Google Vimscript Style Guide" at
+  https://google.github.io/styleguide/vimscriptguide.xml
+- use vint for linting
+  * see https://github.com/Kuniwak/vint
+  * install with "pip install vim-vint"
+  * configure by creating a .vintrc.yaml file in home directory
+  * ALE plugin will run vint on .vim files if it is installed
+  * can use to lint .vimrc and plugin .vim files
+
 Miscellaneous
-- a.k.a. Vimscript
 - many VimL commands come from Ex
 - syntastic plugin has builtin vimlint support
 - to load code in current buffer, source %
@@ -17,12 +50,32 @@ Miscellaneous
   :help fn-name()
 
 Variables
-- to assign a value to a variable, let name = value
-- to change the value of a variable, do the same
-  * using "let" does not create a variable in a new scope
-- to test whether a variable was assigned a value,
+- names include letters, digits, and _; cannot start with a digit
+- create and modify with
+  let {name} = {value}
+- destroy with
+  unlet {name}
+- test for existence with
   if exists('name')
-  * don't forget the quotes!
+  * note the quotes!
+- prefixes affect scope
+  none - if inside a function, local to it; otherwise global
+  a: - current function argument
+  b: - current buffer
+  g: - global
+  l: - function
+  s: - :source'ed Vim script
+  t: - current tab page
+  v: - global; predefined by Vim
+  w: - current window
+  &  - option variables
+       * set with :set {name} = {value}
+  @ - for registers
+- to iterate over all the variables in a given scope,
+  for example, buffer scope:
+  for key in keys(b:)
+    echo b:[key]
+  endfor
 
 Autocommands
 - execute specified commands when a given event occurs in specific files
@@ -121,8 +174,8 @@ Debugging
   endfor
 
 Echo
-- echo(string) outputs a message in Vim's message area
-- echomsg(string) does the same AND saves it in message history
+- echo {string} outputs a message in Vim's message area
+- echomsg {string} does the same AND saves it in message history
 - to convert a non-String value to a String, string(value)
 - to see messages in history, :messages
 - to clear message history, ???
@@ -450,10 +503,24 @@ Types (6)
   * to increment a number variable, let n += 1
   * to decrement a number variable, let n -= 1
 - String
-  * surround with single or double quotes
+  * surround with single (preferred) or double quotes
+    - single keeps all characters as-is
+      without honoring escape sequences like \n for a newline
+    - double honors escape sequences
+    - to see the difference, enter these:
+      echo 'foo\nbar'
+      echo "foo\nbar"
   * special characters like \n need to be
     escaped in single quoted strings (\\n),
     but not in double quoted strings
+  * to compare strings
+    - case-sensitive: s1 ==# s2
+    - case-insensitive: s1 ==? s2
+  * in a boolean context, a string are first coerced to number
+    - strings that do not start with digits are coerced to zero
+    - zero is treated as false and all other numbers are treated as true
+    - so code inside "if text" where text does not begin with digits
+      will not execute
   * concatenated with dot (.) operator
   * to concatenate to a string variable v,
     let v .= someString

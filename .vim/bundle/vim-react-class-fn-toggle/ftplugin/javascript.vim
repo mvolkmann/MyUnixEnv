@@ -60,7 +60,7 @@ endf
 function! LogList(label, list)
   echomsg(a:label)
   for item in a:list
-    echomsg('  ' . item)
+    echomsg('  ' . len(item) . ': ' . item)
   endfor
 endf
 
@@ -71,8 +71,19 @@ function! NthToken(n, string)
   return tokens[a:n - 1]
 endf
 
+function! PopList(list)
+  let index = len(a:list) - 1
+  let last = a:list[index]
+  call remove(a:list, index)
+  return last
+endf
+
 function! Trim(string)
   return substitute(a:string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endf
+
+function! TrimTrailing(string)
+  return substitute(a:string, '^(\s*\.\{-}\)\s*$', '\1', '')
 endf
 
 " Converts a React component definition from a class to an arrow function.
@@ -106,10 +117,14 @@ function! ReactClassToFn()
     let displayName = result[1] " first capture group
   endif
 
-  let propTypesLineNum = FindLine(startLineNum, 'static propTypes = {')
+  let propTypesLineNum = FindLine(startLineNum, 'static propTypes = {$')
+  let propTypesInsideClass = propTypesLineNum ? 1 : 0
+  if !propTypesLineNum
+    let propTypesLineNum = FindLine(startLineNum, className . '.propTypes = {$')
+  endif
   if propTypesLineNum
     let propTypesLines = GetLinesTo(propTypesLineNum + 1, '};$')
-    call remove(propTypesLines, len(propTypesLines) - 1)
+    call PopList(propTypesLines)
     let propNames = []
     for line in propTypesLines
       call add(propNames, split(Trim(line), ':')[0])
@@ -121,10 +136,10 @@ function! ReactClassToFn()
 
   let renderLineNum = FindLine(startLineNum, ' render() {')
   if renderLineNum
-    let renderLines = GetLinesTo(renderLineNum + 1, '}$')
+    let renderLines = GetLinesTo(renderLineNum + 1, '^\s*}$')
 
     " Remove last line that closes the render method.
-    call remove(renderLines, len(renderLines) - 1)
+    call PopList(renderLines)
 
     " Remove any lines that destructure this.props since
     " all are destructured in the arrow function parameter list.
@@ -161,7 +176,7 @@ function! ReactClassToFn()
   \ ]
   endif
 
-  if exists('propTypesLines')
+  if exists('propTypesLines') && propTypesInsideClass
     let lines += ['', className . '.propTypes = {']
     for line in propTypesLines
       call add(lines, '  ' . Trim(line))
@@ -205,21 +220,6 @@ function! ReactFnToClass()
   endif
 
   let className = tokens[1]
-  let lineNum = line('.')
-
-  if lastToken == '{'
-    " Find next line that only contains "};".
-    if !FindLine(lineNum, '^\w*};\w*$')
-      echomsg('ReactFnToClass: arrow function end not found')
-      return -1
-    endif
-  else
-    " Find next line that ends with ";".
-    if !FindLine(lineNum, ';\w*$')
-      echomsg('ReactFnToClass: arrow function end not found')
-      return
-    endif
-  endif
 
   let lineNum = line('.')
 
@@ -227,18 +227,19 @@ function! ReactFnToClass()
   if hasBlock
     " Find next line that only contains "};".
     if !FindLine(lineNum, '^\w*};\w*$')
-      echomsg('ReactFnToClass: arrow function end not found')
+      echomsg('arrow function end not found')
       return
     endif
   else
     " Find next line that ends with ";".
     if !FindLine(lineNum, ';\w*$')
-      echomsg('ReactFnToClass: arrow function end not found')
+      echomsg('arrow function end not found')
       return
     endif
   endif
 
-  let renderLines = GetLinesTo(lineNum + 1, ';$')
+  let renderLines = GetLinesTo(lineNum + 1, '^};$')
+  call PopList(renderLines)
 
   call DeleteLines(lineNum,
   \ lineNum + len(renderLines) + (hasBlock ? 1 : 0))
@@ -303,7 +304,8 @@ function! ReactFnToClass()
   let indent = hasBlock ? '' : '  '
 
   for line in renderLines
-    call add(lines, indent . '  ' . line)
+    let output = len(line) ? indent . '  ' . line : line
+    call add(lines, output)
   endfor
 
   if !hasBlock

@@ -16,6 +16,7 @@ ln -s MyUnixEnv/.tmux .tmux
 ln -s MyUnixEnv/.tmux.conf .tmux.conf
 ln -s MyUnixEnv/.vim .vim
 ln -s MyUnixEnv/.vimrc .vimrc
+ln -s MyUnixEnv/.vintrc.yaml .vintrc.yaml
 ln -s MyUnixEnv/mytmux mytmux
 
 mkdir -p bin
