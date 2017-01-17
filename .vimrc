@@ -1,3 +1,6 @@
+set encoding=utf-8
+scriptencoding utf-8
+
 " Pathogen --- {{{
 call pathogen#infect() " installs plugins found in ~/.vim/bundle
 
@@ -52,7 +55,6 @@ call matchadd('ColorColumn', '\%81v', 100)
 " netrw list style (toggle by pressing i)
 let g:netrw_liststyle=3 " use tree mode as default view
 
-set encoding=utf-8
 "set lazyredraw
 set list
 " Render tab characters with a right-pointing double angle
@@ -168,7 +170,7 @@ let g:CommandTSelectPrevMap=['<c-p>', 'k', '<UP>']
 " To see all normal mode mappings, :map
 " To see all insert mode mappings, :imap
  " toggles
-let mapleader = ","
+let mapleader = ','
 
 " dictionary word completion
 " Press ctrl-n and ctrl-p to traverse list of matching words.
@@ -376,7 +378,7 @@ function! QuickfixToggle()
   if g:quickfixOpen
     cclose
     let g:quickfixOpen = 0
-    execute g:quickfixReturnToWindow . "wincmd w"
+    execute g:quickfixReturnToWindow . 'wincmd w'
   else
     let g:quickfixReturnToWindow = winnr()
     copen
@@ -447,7 +449,7 @@ let g:gitgutter_max_signs=1200
 " Pane resize --- {{{
 " Resize panes to be equal width when window is resized.
 augroup resizeWindow
-  if has("autocmd")
+  if has('autocmd')
     autocmd!
     autocmd VimResized * exe "normal \<c-w>="
   endif
@@ -516,10 +518,10 @@ let g:syntastic_javascript_checkers=['eslint']
 " }}}
 
 " Ultisnips plugin {{{
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<leader>snips"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger='<c-j>'
+let g:UltiSnipsListSnippets='<leader>snips'
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 nnoremap <leader>es :UltiSnipsEdit<cr>
 " }}}
 
