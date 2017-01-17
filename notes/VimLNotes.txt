@@ -167,10 +167,10 @@ Debugging
   for "source buffer"
 - to bail out of code early for debugging, insert "return"
 - the equivalent of JavaScript console.log('foo =', foo)
-  is echomsg('foo = ' . foo)
+  is echomsg 'foo = ' . foo
 - to output the content of a List
   for item in list
-    echomsg(item)
+    echomsg item
   endfor
 
 Echo
@@ -469,7 +469,7 @@ Types (6)
   * to get item at given index, myList[index]
   * to output all the items in a List
     for item in myList
-      echomsg('item = ' . item)
+      echomsg 'item = ' . item
     endfor
   * to assign all items in a List to different variables,
     [v1, v2, v3] = myList
