@@ -1,15 +1,19 @@
+# Logs the value of an expression with function name.
 snippet log
 console.log('`!p snip.rv = fn` ${1:function}: ${2:expression} =', $2);
 endsnippet
 
+# Logs entry into a function.
 snippet loge
 console.log('`!p snip.rv = fn` ${1:function}: ENTERED');
 endsnippet
 
+# Logs the value of an expression without function name.
 snippet logs
 console.log('`!p snip.rv = fn`: ${1:expression} =', $1);
 endsnippet
 
+# Boilerplate for a stateless, functional React component.
 snippet rca
 import React from 'react';
 
@@ -27,6 +31,7 @@ $1.propTypes = {
 export default $1;
 endsnippet
 
+# Boilerplate for a React class-based, connected component.
 snippet rcc
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
@@ -61,6 +66,7 @@ const mapStateToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)($1);
 endsnippet
 
+# Boilerplate for a React class-based, unconnected component.
 snippet rcu
 import React, {Component} from 'react';
 
