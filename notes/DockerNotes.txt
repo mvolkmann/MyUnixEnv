@@ -1,31 +1,14 @@
 Docker Notes
 
-Terminology
-- image: a filesystem and parameters to use at runtime
-  that doesn’t have state and never changes
-  * images can run a set of commands and exit
-  * images can continue running until stopped
-    - examples include REST servers, web servers, and databases
-  * an image runs inside a container
-- container: a running instance of an image
+See your SETT article at ...
+
 - Docker Engine: supports sharing Docker images
-- Docker Hub: a repository of Docker images
-  * browse https://hub.docker.com/ to search for them
-  * ex. docker/whalesay
-
-To install on Mac OS X
-- browse https://docs.docker.com/docker-for-mac/
-- download a .dmg file
-- double-click it
-- in the install dialog, drag Docker.app to the Applications folder
-
-To verify the installation
-- docker run hello-world
-- docker run docker/whalesay
+- docker run docker/whalesay cowsay Hello from the whale!
 
 To start Docker on Mac OS X
-- if there is no whale icon in the status bar at the top of the screen
-  * open Launchpad
+- if there is no whale icon in the
+  status bar at the top of the screen
+  * open Launchpad or Finder/Applications
   * click Docker icon (whale)
   * should see Docker icon in status bar at top
 - if there is a whale icon
@@ -44,86 +27,149 @@ To set Docker preferences
 - can configure file sharing with the host machine
 - can initiate uninstall
 
+Kitematic
+- a graphical UI for Docker
+- can be installed from the Docker whale menu
+
 To determine if Docker is running and see other info
 - docker info
 
-To load an image into a container and run it
-- docker run {image-name}
+Images
+- to define
+  * create a new directory and cd to it
+  * create a file name "Dockerfile"
+  * comments in this file begin with #
+  * first instruction must be "FROM {image-name}[:tag]"
+    to specify the base image
+    - tag defaults to "latest",
+      but can specify a different version
+    - the smallest, simplest base image is "scratch",
+      but that doesn't seem to be able to do anything
+    - another good option is "bash"
+    - official Node base images are described at
+      https://hub.docker.com/_/node/
+      * specify npm packages to be installed in package.json
+      * run a command to install PostgreSQL?
+IMPORTANT!
+      * SEE https://hub.docker.com/r/spittet/node-postgresql/
+    - official PostgreSQL base images are described at
+      https://hub.docker.com/_/postgres/
+    - there doesn't seem to be an offical base image
+      that includes Express
+  * RUN command
+    - executes command(s) in a new layer
+      and creates a new image
+    - often used to install software packages
+    - to install software in the image, add lines like this:
+      RUN apt-get -y update && apt-get install -y {software-name}
+  * CMD command
+    - sets the default command and/or parameters
+    - can be overwritten from command line when running
+    - only the last CMD command is used,
+      so there is no point in having more than one
+    - typically used to start a server
+    - to run a command, add the line "CMD {command}"
+  * ENTRYPOINT command
+    - configures a container that will run as an executable
+  * RUN, CMD, and ENTRYPOINT can be used in "shell" or "exec" form
+    - in shell form the command is
+      executed with "/bin/sh -c {command}"
+      * ex. CMD echo "Hello, World!"
+    - in exec form an executable is
+      executed directly with no shell processing
+      * ex. CMD ["/bin/echo", "Hello, World!"]
+      * exec form is preferred for the CMD and ENTRYPOINT commands
+  * save the file
+- to build an image
+ * docker build [-t {name[:tag]}] {Dockerfile-path}
+   - if -t option is omitted,
+     the image will have no name (a.k.a. repository)
+     or tag, just an id
+   - Dockerfile-path can be . for the current directory
+   - also downloads and builds image for the base image
+     if it doesn't already exist
+     * ex. bash and node
+     * can take a long time, but subsequent builds are
+       much faster because the base image
+       is already downloaded and built
+   - if you build an image with the same name
+     as an existing image, it will not be replaced,
+     but it will lose its name so
+     the name can be assigned to the new image
+     * referred to as a "dangling image"
+     * can delete it by its id or with this command:
+       docker rmi $(docker images -qa -f "dangling=true")
+     * why isn't there a build option to do this automatically?
+- to list existing images
+  * docker images
+- to remove an image
+  * docker rmi {image-name-or-id}
+    - can use shortest length of image id that is unique
+  * not allowed if image is currently running in a container
+
+Containers
+- to list
+  * only running: docker ps
+  * all: docker ps -a
+  * only latest created: docker ps -l
+- to create, but not start: docker create
+- to create and start: docker run {image-name}
+  * docker run {image-name}
+    - options
+      -i : is for interactive (can read from stdin)
+      -t : allocates a pseudo TTY
+      --rm : removes container after image exits
+      --name {container-name} : gives name to container
   * if the image isn't found locally,
     this attempts to download it from "Docker Hub"
-- how is "docker run -it {image-name}" different?
-  * -i is for interactive (can read from stdin)
-  * -t allocates a pseudo TTY
+    - download images are saved locally for future use
+    - can remove when no longer needed
+  * every time this is run, a new container is created
+  * after this completes, the new container remains
+    unless the --rm option is used
+    - I think you want this for non-server images
+- to stop and restart a running container:
+  docker restart {container-id}
+- to rename: docker rename {container-id} {new-name}
+- to delete: docker rm {container-id}
+  * can use shortest length of container id
+    that is unique
+- containers are process-centric
+  * once the image inside it exits, the container is done
+  * so why does it still exist?
+    - may to allow view its logs
 
-To start a Docker image
-- cd to a directory containing docker-compose.yml
-- docker-compose up -d
-  * -d (daemon) avoids taking over the current process
-
-To stop a Docker image
-- cd to a directory containing docker-compose.yml
-- docker-compose down
-
-To get information about Docker images that are running
-- docker ps [-l] [-q]
-
-To get information about all Docker images,
-including those that have been stopped
-- docker ps -a
-
-To get information about all locally installed Docker images
-- docker images
-
-To remove a Docker image
-- docker rmi {image-id}
-- THIS DOESN'T WORK!
-
-To get lots of imformation about a running image
-- docker inspect {container-name}
-- container-name is capacity-api
-
-To output logs from a running image
-- docker logs {container-name}
-
-To show processes running inside a running image
-- docker top {container-name}
-
-To run commands inside a Docker image
-- docker exec {container-name} {command}
-
-To copy a file into a Docker image
+- to stop a running container
+  * docker stop {container-id}
+- to output logs from a running container
+  * docker logs {container-name}
+- to show processes running inside a running container
+  * docker top {container-name}
+- to run a command inside a running container
+  * docker exec {container-name} {command}
+  * one use is to inspect the contents of a database
+- to copy a file into a running container
 - docker cp {file-path} {container-name}:/{new-file-name}
+- to open a bash shell running inside a running container
+  * docker exec -it {container-name} /bin/bash
+  * useful to poke around at the state
 
-To open a bash shell running inside a Docker image
-- docker exec -it {container-name} /bin/bash
+- to get information about an image or container
+  * docker inspect {name-or-id}
+    - Monsanto container-name is "capacity-api"
 
-To create a Docker image
-- create a new directory and cd to it
-- create a file name "Dockerfile"
-- comments in this file begin with #
-- the first instruction must be FROM to specify the base image
-- specify the base image with "FROM {image-name}:{tag}"
-  * tag defaults to "latest"
-  * the smallest, simplest base image is "scratch",
-    but that doesn't seem to be able to do anything
-  * another good option is "bash"
-- RUN executes command(s) in a new layer and creates a new image
-  * often used to install software packages
-  * to install software in the image, add lines like this:
-    RUN apt-get -y update && apt-get install -y {software-name}
-- CMD sets the default command and/or parameters
-  * can be overwritten from command line when running
-  * only the last CMD command is used,
-    so there is no point in having more than one
-  * typically used to start a server
-  * to run a command, add the line "CMD {command}"
-- ENTRYPOINT configures a container that will run as an executable
-- RUN, CMD, and ENTRYPOINT can be used in "shell" or "exec" form
-  * in shell form the command is executed with "/bin/sh -c {command}"
-    - ex. CMD echo "Hello, World!"
-  * in exec form an executable is executed directly with no shell processing
-    - ex. CMD ["/bin/echo", "Hello, World!"]
-    - exec form is preferred for the CMD and ENTRYPOINT commands
-- save the file
-- to build the image, enter "docker build -t {image-name} ."
-  * how does this differ from running "docker build ."?
+Docker Compose
+- a toole for defining multi-container applications
+- Does Monsanto use this?
+- to start an image
+  * How is this different than loading into a container?
+  * cd to a directory containing docker-compose.yml
+  * docker-compose up -d
+    * -d (daemon) avoids taking over the current process
+- to stop an image
+  * cd to a directory containing docker-compose.yml
+  * docker-compose down
+
+Command Summary
+Action      Containers        Images
+

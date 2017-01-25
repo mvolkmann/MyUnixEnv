@@ -34,6 +34,18 @@ Style
   * ALE plugin will run vint on .vim files if it is installed
   * can use to lint .vimrc and plugin .vim files
 
+Syntax Overview
+- doesn't use statement terminators like ;
+- doesn't use block delimiters like { }
+  * every statement that supports a block has a corresponding end keyword
+  * if ... endif
+  * for ... endfor
+  * while ... endwhile
+  * function ... endfunction
+  * can abbreviate end keywords to "end" and the single, next letter
+- doesn't use condition delimiters for "if", "for", and "while"
+  * ex. if count > 7 ... endif
+
 Miscellaneous
 - many VimL commands come from Ex
 - syntastic plugin has builtin vimlint support
@@ -96,17 +108,29 @@ Autocommands
     * the name "END" refers to the default group
 
 Buffers
-- to append text after a given line in current buffer,
-  call append(line-number, text)
-  * using 0 for line-number prepends
-- to append a List of text lines after a given line in current buffer,
-  call append(line-number, list)
-- to get a specific line number
-  * first visible line - line('w0')
-  * last visible line - line('w$')
-  * current line - line('.')
-  * last line in buffer - line('$')
-  * first line selected in visual mode - line('v')
+- to get text from current buffer
+  * line under cursor: getline('.')
+  * line number (1-based) of cursor: line('.')
+  * line at a given line number: getline(lineNum)
+  * column number (1-based) under cursor: col('.')
+  * character under cursor: getline('.')[col('.') - 1]
+  * word under cursor: expand('<cword>')
+  * first visible line number: line('w0')
+  * first visible line number: getline('w0')
+  * last visible line number: line('w$')
+  * last visible line: getline('w$')
+  * last line number in buffer: line('$')
+  * last line in buffer: getline('$')
+  * first line number selected in visual mode: line('v')
+  * only works with single-byte characters
+  * for multi-byte, yank into a register (ex. z)
+    execute 'normal "zyl'
+    let char = getreg('z')
+- to append lines (String for 1, List for multiple)
+  * after a given line in current buffer,
+    call append(line-number, text-or-list)
+  * before first line,
+    call append(0, text-or-list)
 - to test whether a buffer exists, bufexists(buf-name)
 - to get the buffer number that contains a given file, bufnr(file-name)
 - to get the window number where a buffer is displayed,
@@ -114,14 +138,6 @@ Buffers
   * returns -1 if not current displayed in a window
 - to open a new split window and display a given buffer number,
   execute 'sbuffer ' . buf-num
-- to get the line at a given index within the current buffer,
-  getline(line-num)
-- to get the character under the cursor,
-  let char = getline('.')[col('.') - 1]
-  * only works with single-byte characters
-  * for multi-byte, yank into a register (ex. z)
-    execute 'normal "zyl'
-    let char = getreg('z')
 
 Builtin Functions
 - for a list of all builtin functions, :help function-list
@@ -309,6 +325,7 @@ Plugins
     - holds files used to process files with a specific type
   * plugin
     - holds plugin files that are loaded when Vim is started
+    - great place for utility functions that other plugin files need?
   * syntax
     - holds files that identify syntax elements in files with a specific type
     - used for syntax highlighting
@@ -324,9 +341,23 @@ Plugins
   * Pathogen modifies this to include directories under .vim/bundle
 
 Regular Expressions
-- pass pattern as a string; ex. '/^foo$/'
-- test whether a string matches with match(text, pattern)
-  * returns index of match or -1 if it doesn't match
+- pass pattern as a string without slashes; ex. '^foo$/'
+- to test whether a string matches
+  * can use operators with string to test before and pattern after
+    =~  match where case sensitivity depends on user setting
+    =~# match case sensitive
+    =~? match case insensitive
+    !~  match where case sensitivity depends on user setting
+    !~# doesn't match case sensitive
+    !~? doesn't match case insensitive
+  * can  use match(text, pattern)
+    - returns index of match or -1 if it doesn't match
+- very magic mode \v
+- capture groups
+  * example
+    let pattern = '\vstatic displayName \= ''(.+)'';'
+    let result = matchlist(line, pattern)
+    let displayName = result[1] " first capture group
 
 Syntax Highlighting
 - defined by files in .vim/syntax directory

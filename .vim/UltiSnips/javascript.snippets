@@ -3,11 +3,89 @@ console.log('`!p snip.rv = fn` ${1:function}: ${2:expression} =', $2);
 endsnippet
 
 snippet loge
-console.log('`!p snip.rv = fn` ${1:function}: entered');
+console.log('`!p snip.rv = fn` ${1:function}: ENTERED');
 endsnippet
 
 snippet logs
 console.log('`!p snip.rv = fn`: ${1:expression} =', $1);
+endsnippet
+
+snippet rca
+import React from 'react';
+
+const ${1:component-name} = ({}) => {
+  return (
+  );
+};
+
+$1.displayName = '$1';
+
+const {} = React.PropTypes;
+$1.propTypes = {
+};
+
+export default $1;
+endsnippet
+
+snippet rcc
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
+
+const {} = React.PropTypes;
+
+class ${1:component-name} extends Component {
+  static displayName = '$1';
+  static propTypes = {
+  };
+
+  constructor() {
+    super();
+
+  }
+
+  onSomeEvent = event => {
+  };
+
+  render() {
+    return (
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+});
+
+const mapStateToProps = dispatch => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)($1);
+endsnippet
+
+snippet rcu
+import React, {Component} from 'react';
+
+const {} = React.PropTypes;
+
+class ${1:component-name} extends Component {
+  static displayName = '$1';
+  static propTypes = {
+  };
+
+  onSomeEvent = event => {
+  };
+
+  constructor() {
+    super();
+
+  }
+
+  render() {
+    return (
+    );
+  }
+}
+
+export default $1;
 endsnippet
 
 snippet ife
