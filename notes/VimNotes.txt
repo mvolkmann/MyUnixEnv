@@ -1478,7 +1478,7 @@ UltiSnips
 - to modify and add snippets
   * default snippet files are in .vim/bundle/vim-snippets/UltiSnips
     - for example, javascript.snippets
-  * my snippet files are in .vim/UltiSnips
+  * my snippet files are in MyUnixEnv/.vim/UltiSnips
     - used from here; not just copies of the files
     - these add to defintions inside the UltiSnips plugin
   * to edit a private snippet file for the current filetype
