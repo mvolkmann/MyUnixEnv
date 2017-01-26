@@ -13,8 +13,8 @@ snippet logs
 console.log('`!p snip.rv = fn`: ${1:expression} =', $1);
 endsnippet
 
-# Boilerplate for a stateless, functional React component.
-snippet rca
+# Boilerplate for a React functional component.
+snippet rfc
 import React from 'react';
 
 const ${1:component-name} = ({}) => {
@@ -67,7 +67,7 @@ export default connect(mapStateToProps, mapDispatchToProps)($1);
 endsnippet
 
 # Boilerplate for a React class-based, unconnected component.
-snippet rcu
+snippet rc
 import React, {Component} from 'react';
 
 const {} = React.PropTypes;
