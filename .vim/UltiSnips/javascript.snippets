@@ -17,7 +17,7 @@ endsnippet
 
 # Boilerplate for a React functional component.
 snippet rfc
-import React from 'react';
+import React, {PropTypes as t} from 'react';
 
 const ${1:component-name} = ({}) => {
   return (
@@ -26,7 +26,6 @@ const ${1:component-name} = ({}) => {
 
 $1.displayName = '$1';
 
-const {} = React.PropTypes;
 $1.propTypes = {
 };
 
@@ -36,9 +35,7 @@ endsnippet
 # Boilerplate for a React class-based, connected component.
 snippet rcc
 import {connect} from 'react-redux';
-import React, {Component} from 'react';
-
-const {} = React.PropTypes;
+import React, {Component, PropTypes as t} from 'react';
 
 class ${1:component-name} extends Component {
   static displayName = '$1';
@@ -70,9 +67,7 @@ endsnippet
 
 # Boilerplate for a React class-based, unconnected component.
 snippet rc
-import React, {Component} from 'react';
-
-const {} = React.PropTypes;
+import React, {Component, PropTypes as t} from 'react';
 
 class ${1:component-name} extends Component {
   static displayName = '$1';
