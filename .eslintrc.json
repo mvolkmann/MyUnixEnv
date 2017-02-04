@@ -195,7 +195,7 @@
     "no-inline-comments": "off",
     "no-inner-declarations": "off",
     "no-invalid-regexp": "error",
-    "no-invalid-this": "warn",
+    "no-invalid-this": "off",
     "no-irregular-whitespace": "error",
     "no-iterator": "error",
     "no-label-var": "off",
