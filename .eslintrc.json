@@ -301,7 +301,7 @@
     "radix": "error",
     "react/display-name": "off",
     "react/forbid-component-props": "off",
-    "react/forbid-prop-types": "error",
+    "react/forbid-prop-types": "off",
     "react/jsx-boolean-value": "error",
     "react/jsx-closing-bracket-location": "off",
     "react/jsx-curly-spacing": "error",
