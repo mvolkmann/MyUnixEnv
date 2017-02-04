@@ -46,7 +46,7 @@ Yarn Notes
   * npm uninstall --save {name} -> yarn remove {name}
   * npm install --save-dev {name} -> yarn add --dev {name}
   * npm update --save -> yarn upgrade
-  * npm install -g {name} -> yarn add global {name}
+  * npm install -g {name} -> yarn global add {name}
 
 - commands unique to yarn
   * yarn licences ls
