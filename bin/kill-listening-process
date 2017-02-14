@@ -1,15 +1,15 @@
 #!/bin/bash
 # Kills the process listening on a given port.
 
-if [ $# -ne 1 ]; then
+if [[ $# -ne 1 ]]; then
   echo usage: kill-listening-port {port}
   exit 1
 fi
 
 port=$1
-pid=`lsof -n -iTCP:$port -sTCP:LISTEN -t`
+pid=$(lsof -n -iTCP:$port -sTCP:LISTEN -t)
 
-if [ $pid ]; then
+if [[ $pid ]]; then
   kill $pid
   echo killed process $pid
 else
