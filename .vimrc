@@ -336,6 +336,11 @@ augroup javaScript
   set foldmethod=syntax
   set foldlevel=1
   "let javaScript_fold=1
+
+  " Prettier JavaScript formatting
+  autocmd FileType javascript set formatprg="prettier --single-quote --no-bracket-spacing"\ --stdin
+  " Automatically format JavaScriopt code before it is saved.
+  autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 augroup END
 
 augroup filetype_vim

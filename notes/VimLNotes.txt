@@ -300,7 +300,7 @@ Functions
 - to allow optional arguments, specify ... as last parameter
   * inside a function,
     all arguments are in a List accessed with a:index and
-    optional arguments are in a List accessed with a:000[index]
+    optional arguments are in a List accessed with a:name[index]
   * List indexes are zero-based
 
 Plugins

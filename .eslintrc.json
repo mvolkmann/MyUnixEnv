@@ -141,7 +141,7 @@
     "max-nested-callbacks": ["error", 4],
     "max-params": "off",
     "max-statements": ["warn", 50],
-    "max-statements-per-line": ["error"], // doesn't work
+    "max-statements-per-line": "off", // doesn't work
     "multiline-ternary": "off",
     "new-cap": "off",
     "new-parens": "error",
