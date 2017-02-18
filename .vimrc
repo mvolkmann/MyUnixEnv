@@ -338,7 +338,7 @@ augroup javaScript
   "let javaScript_fold=1
 
   " Prettier JavaScript formatting
-  autocmd FileType javascript set formatprg="prettier --single-quote --no-bracket-spacing"\ --stdin
+  autocmd FileType javascript setlocal formatprg=prettier\ --stdin
   " Automatically format JavaScriopt code before it is saved.
   autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 augroup END
