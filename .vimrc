@@ -339,8 +339,9 @@ augroup javaScript
 
   " Prettier JavaScript formatting
   autocmd FileType javascript setlocal formatprg=prettier-config\ --stdin
-  " Automatically format JavaScriopt code before it is saved.
-  autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+  " Automatically format JavaScript code before it is saved.
+  " silent! is needed to avoid message "No write since last change".
+  autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
 augroup END
 
 augroup filetype_vim
