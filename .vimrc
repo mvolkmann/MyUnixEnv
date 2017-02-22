@@ -338,10 +338,11 @@ augroup javaScript
   "let javaScript_fold=1
 
   " Prettier JavaScript formatting
-  autocmd FileType javascript setlocal formatprg=prettier-config\ --stdin
+  "autocmd FileType javascript setlocal formatprg=prettier-config\ --stdin \
+  "--single-quote \ --no-bracket-spacing
   " Automatically format JavaScript code before it is saved.
   " silent! is needed to avoid message "No write since last change".
-  autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
+  "autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
 augroup END
 
 augroup filetype_vim
