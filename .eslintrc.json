@@ -6,16 +6,9 @@
   },
 
   "globals": {
-    "angular": false,
     "beforeEach": false,
     "describe": false,
     "it": false,
-    "fixture": false,
-    "flush": false,
-    "assert": false,
-    "mtzEnv": false,
-    "Polymer": false,
-    "WCT": false,
     "$": false
   },
 
@@ -32,9 +25,8 @@
   "plugins": [
     "flowtype",
     "html",
-    //"import",
-    "react"
-    //"volkmann"
+    "react",
+    "volkmann"
   ],
 
   "rules": {
@@ -322,7 +314,7 @@
     "react/jsx-no-undef": "error",
     "react/jsx-pascal-case": "error",
     "react/jsx-sort-props": "off",
-    "react/jsx-space-before-closing": ["warning", "always"],
+    "react/jsx-space-before-closing": ["warn", "always"],
     "react/jsx-tag-spacing": ["error", {
       "afterOpening": "never",
       "beforeSelfClosing": "never",
