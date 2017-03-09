@@ -338,9 +338,12 @@ augroup javaScript
   "let javaScript_fold=1
 
   " Prettier JavaScript formatting
-  "autocmd FileType javascript set formatprg="prettier --single-quote --no-bracket-spacing"\ --stdin
-  " Automatically format JavaScriopt code before it is saved.
-  "autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+  "autocmd FileType javascript setlocal formatprg=prettier-config\ --stdin \
+  "--single-quote \ --no-bracket-spacing
+  " Automatically format JavaScript code before it is saved.
+  " silent! is needed to avoid message "No write since last change".
+  "autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
+  "autocmd BufWritePre *.js? :normal gggqG
 augroup END
 
 augroup filetype_vim
@@ -397,7 +400,8 @@ highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 " Limit linters used for JavaScript.
 let g:ale_linters = {
-\  'javascript': ['eslint'],
+\  'javascript': ['eslint', 'flow'],
+\  'scss': ['stylelint']
 \}
 "let g:ale_sign_error = '💣'
 let g:ale_sign_error = '👎'

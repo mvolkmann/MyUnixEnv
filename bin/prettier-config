@@ -1,0 +1,17 @@
+#!/bin/sh
+opts=""
+
+while true; do
+  if [ -f .prettieropts ]; then
+    opts=$(cat .prettieropts)
+    break
+  fi
+
+  if [ "$(pwd)" = "/" ]; then
+    break
+  fi
+
+  cd ..
+done
+
+exec prettier $opts $@
