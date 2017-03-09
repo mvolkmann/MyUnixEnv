@@ -343,6 +343,7 @@ augroup javaScript
   " Automatically format JavaScript code before it is saved.
   " silent! is needed to avoid message "No write since last change".
   "autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
+  "autocmd BufWritePre *.js? :normal gggqG
 augroup END
 
 augroup filetype_vim
@@ -399,7 +400,8 @@ highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 " Limit linters used for JavaScript.
 let g:ale_linters = {
-\  'javascript': ['eslint'],
+\  'javascript': ['eslint', 'flow'],
+\  'scss': ['stylelint']
 \}
 "let g:ale_sign_error = '💣'
 let g:ale_sign_error = '👎'
