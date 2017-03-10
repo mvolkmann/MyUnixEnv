@@ -240,6 +240,9 @@ inoremap <leader>{ {}<esc>i
 nnoremap <leader>; A;<esc>
 inoremap <leader>; <esc>A;
 
+" Reformat entire file using formatprg for the file type.
+nnoremap <leader>f ggVGgq
+
 " save buffer (requires stty -ixon in .bashrc)
 " In insert mode, <c-o> escapes to normal mode for one command
 " and then switches back to insert mode.
@@ -351,7 +354,7 @@ augroup filetype_vim
   autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
-nnoremap <leader>f :call FoldColumnToggle()<cr>
+nnoremap <leader>fc :call FoldColumnToggle()<cr>
 function! FoldColumnToggle()
   if &foldcolumn
     setlocal foldcolumn=0
