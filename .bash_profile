@@ -85,6 +85,9 @@ export NVM_DIR="/Users/rmvolk/.nvm"
 
 # Postgres settings
 #export PATH=$PATH:$POSTGRES_DIR/bin
+export POSTGRES_HOST=localhost
+export POSTGRES_USER=launchpad
+export POSTGRES_PASSWORD=launchpad
 
 # React Native settings
 export ANDROID_HOME=/usr/local/opt/android-sdk

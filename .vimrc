@@ -334,12 +334,12 @@ augroup javaScript
   "autocmd FileType javaScript :set fmr=/**,*/ fdm=marker fdc=1
   "set syntax=javaScript
   set foldmethod=syntax
-  set foldlevel=1
+  "set foldlevel=1
   "let javaScript_fold=1
+  set nofoldenable
 
   " Prettier JavaScript formatting
-  "autocmd FileType javascript setlocal formatprg=prettier-config\ --stdin \
-  "--single-quote \ --no-bracket-spacing
+  autocmd FileType javascript setlocal formatprg=prettier-eslint\ --stdin
   " Automatically format JavaScript code before it is saved.
   " silent! is needed to avoid message "No write since last change".
   "autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
