@@ -412,6 +412,9 @@ Processes
     pid=$!
     # do some work
     kill -9 $pid
+- to kill all processes with a given name
+  * killall {name}
+    - useful with flow!
 - best way to kill
   * Unless a program was written to catch a specific signal, the best way
     to try to kill it is the Software Termination signal (SIGTERM - 15).
