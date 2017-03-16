@@ -134,13 +134,6 @@ alias pl="clear; polylint demo/index.html"
 alias plr='clear; livereload "*.html, demo/*.html, test/*.html"'
 alias pso="clear; polymer serve -o"
 
-# For Maritz earnPOWER
-alias cdclient='cd $EP_DIR'
-alias cdep='cd $EP_DIR/src/main/java/com/maritz/ep'
-alias cdfeature='cd $EP_DIR/content/common/feature'
-alias rs='mvn tomcat7:run -P local'
-alias rrs='mvn clean tomcat7:run -P local'
-
 # For Monsanto Capacity Planning
 # Run "mvn install" before running "apiserver".
 alias apiserver='java -jar target/capacity-ontap-api.war --spring.profiles.active=local,sample'
@@ -150,6 +143,8 @@ alias cos='~/Monsanto/bin/capacity-ontap-server'
 alias dockup='cd ~/Monsanto/capacity-ontap-api; docker-compose up -d'
 alias dockdown='cd ~/Monsanto/capacity-ontap-api; docker-compose down'
 alias dockin='docker exec -it capacity-api /bin/bash'
+alias pgstart='pg_ctl -D /usr/local/var/postgres start'
+alias pgstop='pg_ctl -D /usr/local/var/postgres stop -m fast'
 #alias psqlin='psql -Ucapacity_ontap_api_admin -dpostgres'
 alias psqlin='docker exec -it capacity-api psql -Ucapacity_ontap_api_admin -dcapacity_ontap'
 alias swagger='open http://localhost:8080/swagger-ui.html'
