@@ -71,6 +71,9 @@ export M2_HOME=$MAVEN_HOME
 export PATH=$PATH:$MAVEN_HOME/bin
 #export MAVEN_OPTS="-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m"
 
+# Monsanto settings
+export NODE_ENV=local
+
 # MongoDB settings
 #export PATH=$PATH:$MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
 
@@ -85,9 +88,10 @@ export NVM_DIR="/Users/rmvolk/.nvm"
 
 # Postgres settings
 #export PATH=$PATH:$POSTGRES_DIR/bin
-export POSTGRES_HOST=localhost
-export POSTGRES_USER=launchpad
-export POSTGRES_PASSWORD=launchpad
+#export POSTGRES_DB=launchpad
+#export POSTGRES_HOST=localhost
+#export POSTGRES_USER=launchpad
+#export POSTGRES_PASSWORD=launchpad
 
 # React Native settings
 export ANDROID_HOME=/usr/local/opt/android-sdk
