@@ -72,6 +72,9 @@ export PATH=$PATH:$MAVEN_HOME/bin
 #export MAVEN_OPTS="-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m"
 
 # Monsanto settings
+export POSTGRES_DB=launchpad
+export POSTGRES_USER=launchpad
+export POSTGRES_PASSWORD=launchpad
 export NODE_ENV=local
 
 # MongoDB settings
@@ -85,6 +88,7 @@ export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
 export NVM_DIR="/Users/rmvolk/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
 # Postgres settings
 #export PATH=$PATH:$POSTGRES_DIR/bin
