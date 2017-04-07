@@ -76,6 +76,7 @@ export POSTGRES_DB=launchpad
 export POSTGRES_USER=launchpad
 export POSTGRES_PASSWORD=launchpad
 export NODE_ENV=local
+alias pgl='psql -d launchpad'
 
 # MongoDB settings
 #export PATH=$PATH:$MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin

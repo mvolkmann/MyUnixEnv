@@ -252,8 +252,8 @@ nnoremap <c-s> :update<cr>
 " Source the current buffer
 nnoremap <leader>sb :source %<cr>
 
-" NERDTree plugin toggle
-"nnoremap <leader>t :NERDTreeToggle<cr>
+" Simplify key mapping for omnifunc completion.
+inoremap <leader>c <c-x><c-o>
 
 " Allow insert mode completion with tab key in addition to ctrl-n.
 " Can't do this because it conflicts with Snipmate!
@@ -526,7 +526,7 @@ let g:syntastic_javascript_checkers=['eslint']
 " Tsuquyomi - plugin for TypeScript --- {{{
 "autocmd FileType typescript setlocal completeopt+=menu,preview
 "autocmd FileType typescript nmap <buffer> <leader>r <plug>(TsuquyomiRenameSymbol)
-"autocmd FileType typescript nmap <buffer> <leader>t : <c-u>echo tsuquyomi#hint()<cr>
+"autocmd FileType typescript nmap <buffer> <leader>ts : <c-u>echo tsuquyomi#hint()<cr>
 " }}}
 
 " Ultisnips plugin {{{
@@ -545,6 +545,7 @@ let g:flow#autoclose=1
 let g:flow#enable=0
 " Jump to first line with a type error.
 let g:flow#errjmp=1
+nnoremap <leader>t :FlowType<cr>
 " }}}
 
 " LESS files setup - does this do anything?

@@ -38,7 +38,7 @@ export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[0m\]\n🏃  '
 #---------------------------------------------------------------------------
 
 alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
-alias bigdirs="du -sk * | sort -nr | head"
+alias bigdirs='du -sk * | sort -nr | head'
 
 alias cddropbox='cd $DROPBOX_DIR'
 alias cdjava='cd $JAVA_DIR'
@@ -63,6 +63,7 @@ alias co='git checkout'
 alias log='git log'
 alias pull='git pull origin `git rev-parse --abbrev-ref HEAD`'
 alias push='git push origin `git rev-parse --abbrev-ref HEAD`'
+alias pushn='git push --no-verify origin `git rev-parse --abbrev-ref HEAD`'
 alias sha='git rev-parse HEAD'
 alias status='git status'
 # status report from git commits
@@ -80,17 +81,17 @@ alias eld="echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/
 alias ens="enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
 alias ens1="enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"
 
-alias findcss="find3 css"
-alias findhtml="find3 html"
-alias findhtml1="find-depth-1 html"
-alias findjava="find3 java"
-alias findjs="find3 js*"
-alias findjs2="find4 js*"
-alias findjson="find3 json"
-alias findless="find3 less"
+alias findcss='find3 css'
+alias findhtml='find3 html'
+alias findhtml1='find-depth-1 html'
+alias findjava='find3 java'
+alias findjs='find3 js*'
+alias findjs2='find4 js*'
+alias findjson='find3 json'
+alias findless='find3 less'
 
 # ESLint aliases
-alias esl="clear; eslint -f codeframe **/*.js"
+alias esl='clear; eslint -f codeframe **/*.js'
 # Fix ESLint issues in a JavaScript file, including adding missing semicolons.
 # ex. fixsemi some-name.js
 alias fixsemi="eslint --fix --rule 'semi: [2, always]'"
@@ -128,11 +129,11 @@ alias rna="react-native run-android"
 alias rni="react-native run-ios"
 
 # For Web Components and Polymer
-alias pe="clear; eslint -f codeframe *.html demo/*.html test/*.html"
-alias pew="clear; esw -w *.html demo/*.html test/*.html"
-alias pl="clear; polylint demo/index.html"
+alias pe='clear; eslint -f codeframe *.html demo/*.html test/*.html'
+alias pew='clear; esw -w *.html demo/*.html test/*.html'
+alias pl='clear; polylint demo/index.html'
 alias plr='clear; livereload "*.html, demo/*.html, test/*.html"'
-alias pso="clear; polymer serve -o"
+alias pso='clear; polymer serve -o'
 
 # For Monsanto Capacity Planning
 # Run "mvn install" before running "apiserver".
@@ -160,3 +161,5 @@ typeset -fx setTitle
 alias st=setTitle
 
 #source ~/.nvm/nvm.sh
+
+export PATH="$HOME/.yarn/bin:$PATH"
