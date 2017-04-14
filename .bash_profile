@@ -76,6 +76,7 @@ export POSTGRES_DB=launchpad
 export POSTGRES_USER=launchpad
 export POSTGRES_PASSWORD=launchpad
 export NODE_ENV=local
+alias pgl='psql -d launchpad'
 
 # MongoDB settings
 #export PATH=$PATH:$MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
@@ -86,8 +87,6 @@ export NODE_ENV=local
 # Node.js settings
 export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
-export NVM_DIR="/Users/rmvolk/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
 # Postgres settings
