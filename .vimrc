@@ -545,7 +545,8 @@ let g:flow#autoclose=1
 let g:flow#enable=0
 " Jump to first line with a type error.
 let g:flow#errjmp=1
-nnoremap <leader>t :FlowType<cr>
+nnoremap <leader>ft :FlowType<cr>
+nnoremap <leader>fj :FlowJumpToDef<cr>
 " }}}
 
 " LESS files setup - does this do anything?

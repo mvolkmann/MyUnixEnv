@@ -87,8 +87,6 @@ alias pgl='psql -d launchpad'
 # Node.js settings
 export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
-export NVM_DIR="/Users/rmvolk/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
 # Postgres settings
