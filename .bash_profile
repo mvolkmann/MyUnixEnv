@@ -151,3 +151,6 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export TERM=xterm-256color
 
 . ~/.bashrc
+if [ -f "secret.sh" ]; then
+  . ~/secret.sh
+fi
