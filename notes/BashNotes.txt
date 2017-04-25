@@ -107,6 +107,12 @@ Status
 Strings
 - surrounded by double quotes
 
+Tests
+- to test if a file exists
+  if [ -f "file-path" ]; then
+    ...
+  fi
+
 Variables
 - to assign a value to a variable
   name=value (note no spaces)

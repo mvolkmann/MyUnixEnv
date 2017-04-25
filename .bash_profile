@@ -89,13 +89,6 @@ export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
 export PATH=$PATH:$NODE_DIR/deps/v8/tools
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
-# Postgres settings
-#export PATH=$PATH:$POSTGRES_DIR/bin
-#export POSTGRES_DB=launchpad
-#export POSTGRES_HOST=localhost
-#export POSTGRES_USER=launchpad
-#export POSTGRES_PASSWORD=launchpad
-
 # React Native settings
 export ANDROID_HOME=/usr/local/opt/android-sdk
 export GRADLE_OPTS="-Dorg.gradle.daemon=true"
@@ -151,3 +144,10 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export TERM=xterm-256color
 
 . ~/.bashrc
+
+if [[ -f $HOME/secret.sh ]]; then
+  source $HOME/secret.sh
+fi
+if [[ -f $HOME/secrets/local.env ]]; then
+  source $HOME/secrets/local.env
+fi
