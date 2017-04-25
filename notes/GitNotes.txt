@@ -570,7 +570,7 @@ To fetch changes made in a remote repo, but not merge them
   but doesn't merge them with local changes
 - git fetch + git merge = git pull
 
-To view a specific revision of a file
+To dump/output/view a specific revision of a file
 - git show {revision}:{file-path}
   * ex. git show 1234567:src/com/ociweb/foo/Bar.java
   * note how path is relative to top of repo
