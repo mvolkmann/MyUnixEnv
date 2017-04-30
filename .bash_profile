@@ -144,10 +144,3 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export TERM=xterm-256color
 
 . ~/.bashrc
-
-if [[ -f $HOME/secret.sh ]]; then
-  source $HOME/secret.sh
-fi
-if [[ -f $HOME/secrets/local.env ]]; then
-  source $HOME/secrets/local.env
-fi

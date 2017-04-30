@@ -163,3 +163,10 @@ alias st=setTitle
 #source ~/.nvm/nvm.sh
 
 export PATH="$HOME/.yarn/bin:$PATH"
+
+if [[ -f $HOME/secret.sh ]]; then
+  source $HOME/secret.sh
+fi
+if [[ -f $HOME/secrets/local.env ]]; then
+  source $HOME/secrets/local.env
+fi
