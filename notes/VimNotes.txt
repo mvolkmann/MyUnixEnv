@@ -1656,8 +1656,8 @@ Working Directory
 YouCompleteMe (YCM)
 - a fuzzy-search code completion engine for Vim.
 - see https://github.com/Valloric/YouCompleteMe
-- makes Vim startup very slow!
-  * probably due to time required to start the Python-based YCM server
+- can make Vim startup very slow!
+  * maybe due to time required to start the Python-based YCM server
   * starts a new Python process for each Vim session
 - uses several completion engines
   * integrates with Vim's Omnicomplete and Exhuberant Ctags
@@ -1681,6 +1681,7 @@ YouCompleteMe (YCM)
     - match the examples above by typing "mwb" or "wb"
 - provides programming language-specific semantic completions
   * ex. type ., ->, or :: to get possible property/method names
+    - only for class/static methods?
   * more support for C-family langauges and Python than others
     - uses omnifunc for languages without a semantic completion engine
   * JavaScript example
@@ -1698,8 +1699,11 @@ YouCompleteMe (YCM)
     - in Cygwin, is install through setup-x86.exe
   * this plugin has a compiled component
     - cd ~/.vim/bundle/YouCompleteMe
-    - ./install.sh
-    - this option fails in Cygwin: --clang-completer
+    - for JavaScript support, ./install.py --tern-completer
+    - cd
+    - mkdir ycm_build
+    - cd ycm_build
+    - cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
 - integrates with UltiSnips
   * but use of tab key conflicts
     - see key mapping suggestions in UltiSnips section
