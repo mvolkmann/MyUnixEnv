@@ -57,6 +57,9 @@ export GITHUB_USER=mvolkmann
 # This setting may interfere with fink scripts!
 #export GREP_OPTIONS="--color=ALWAYS"
 
+# HTTP server to serve files in current directory
+alias serve="python -m SimpleHTTPServer 8080"
+
 # Java settings
 export JAVA_HOME=$(/usr/libexec/java_home)
 

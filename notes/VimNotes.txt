@@ -1700,6 +1700,7 @@ YouCompleteMe (YCM)
   * this plugin has a compiled component
     - cd ~/.vim/bundle/YouCompleteMe
     - for JavaScript support, ./install.py --tern-completer
+    - Are the rest of these steps really needed?
     - cd
     - mkdir ycm_build
     - cd ycm_build

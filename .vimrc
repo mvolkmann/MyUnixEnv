@@ -399,18 +399,14 @@ endfunction
 " }}}
 
 " Asynchronous Lint Engine (ALE)
-highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
-highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 " Limit linters used for JavaScript.
 let g:ale_linters = {
 \  'javascript': ['eslint', 'flow'],
 \  'scss': ['stylelint']
 \}
-"let g:ale_sign_error = '💣'
+highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
+highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 let g:ale_sign_error = '👎'
-"let g:ale_sign_warning = '🚩'
-"let g:ale_sign_warning = '🚫'
-"let g:ale_sign_warning = '💩'
 let g:ale_sign_warning = '❓'
 let g:ale_statusline_format = ['👎 %d', '❓ %d', '']
 " %linter% is the name of the linter that provided the message
