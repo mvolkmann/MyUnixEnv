@@ -89,6 +89,7 @@ alias findjs='find3 js*'
 alias findjs2='find4 js*'
 alias findjson='find3 json'
 alias findless='find3 less'
+alias findscss='find3 scss'
 
 # ESLint aliases
 alias esl='clear; eslint -f codeframe **/*.js'
