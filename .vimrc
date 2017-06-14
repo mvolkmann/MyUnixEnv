@@ -454,6 +454,18 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 "endfunction
 " }}}
 
+" Elm --- {{{
+let g:elm_jump_to_error = 0
+let g:elm_make_output_file = "elm.js"
+let g:elm_make_show_warnings = 0
+let g:elm_syntastic_show_warnings = 0
+let g:elm_browser_command = ""
+let g:elm_detailed_complete = 0
+let g:elm_format_autosave = 0
+let g:elm_format_fail_silently = 0
+let g:elm_setup_keybindings = 1
+" }}}
+
 " git --- {{{
 let g:gitgutter_max_signs=1200
 " }}}
@@ -553,6 +565,9 @@ nnoremap <leader>fj :FlowJumpToDef<cr>
 autocmd BufNewFile,BufRead *.less set filetype=less
 
 " YouCompleteMe plugin --- {{{
+let g:ycm_semantic_triggers = {
+  \ 'elm' : ['.'],
+  \}
 
 " Allow use of YCM for all file types.
 "let g:ycm_filetype_blacklist = {}

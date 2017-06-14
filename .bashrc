@@ -41,6 +41,7 @@ alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5
 alias bigdirs='du -sk * | sort -nr | head'
 
 alias cddropbox='cd $DROPBOX_DIR'
+alias cdelm='cd $PROGRAMMING_DIR/languages/Elm'
 alias cdjava='cd $JAVA_DIR'
 alias cdjavascript='cd $JAVASCRIPT_DIR'
 alias cdjs='cd $JAVASCRIPT_DIR'

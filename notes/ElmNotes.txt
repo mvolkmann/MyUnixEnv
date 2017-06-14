@@ -1,0 +1,510 @@
+Elm notes
+
+Overview
+- a functional language for building web applications
+  that compiles to HTML and JavaScript
+- implemented in Haskell
+- focuses on reusable functions, not reusable components
+  * React components can also be defined using functions
+- input event handling attributes like "onClick" take a message
+  that is sent to the update function when the event occurs
+  * this is like dispatching actions in Redux
+
+Tools to install
+- Installer installs several tools.
+- elm-repl
+  * to start the repl, enter "elm repl"
+  * requires a network connection in order to get the core modules
+  * enter Elm expressions to evaluate them
+    - in the repl, multiline expressions require a
+      backslash at the end of each line except the last
+  * can import modules into repl
+    - see example module FnAppl.elm in ~/Documents/programming/languages/Elm/playground
+    - start repl
+    - enter "import FnAppl"
+    - enter FnAppl.total1 and FnAppl.total2 (should get 46.2: for both)
+
+  * to exit, enter ":exit"
+- elm-reactor
+  * provides an HTTP server, watches files, automatically compiles, and reloads
+  * to use, cd to a project directory and enter "elm reactor"
+  * supports time-travel debugging (How is it used?)
+- elm-make
+  * compiles Elm code to HTML and JavaScript
+  * enter "elm make {name}.elm"
+- elm-package
+  * like npm for Elm, see install, publish, bump, and diff commands
+  * libraries are installed in elm-stuff/packages
+  * to create a basic application with no optional libraries
+    - create a new directory
+    - cd to it
+    - enter "elm package install"
+      * installs elm-lang/html, elm-lang/virtual-dom, and elm-lang/core
+      * creates elm-package.json
+  * to install a library, enter "elm package {owner}/{name}"
+- elm-format
+  * formats code
+- editor plugins
+  * including Vim
+    - see https://github.com/ElmCast/elm-vim
+    - to run unit tests from within Vim,
+      npm install -g elm-test
+    - for code completion and doc lookups,
+      npm install -g elm-oracle
+
+Issues
+- can only be used to develop web applications
+- needs ability to read from stdin and write to stdout
+- needs ability to read and write files
+- needs ability to run as a script
+- not very popular yet, so limited opportunities to use in consulting
+- mainly supported by one company, NoRedInk, Evan and Richard
+- elm-format causes many statements to use multiple lines unnecessarily
+  * ex. variable and function Declarations, case expressions, ...
+- elm-format inserts too many blank lines
+  which results in less code being visible
+- elm-format uses 4-space indentation which is ugly
+- defining custom infix operators seems like a bad idea
+  from a readability standpoint for readers of your code
+  that are unaware of your custom infix operators
+- "elm-stuff" is a silly directory name
+  * What ends up here besides the "packages" directory?
+- why is the ternary operator not supported?
+- the official Elm documentation
+  * pretends that ES6 either doesn't exist or isn't commonly available
+  * ignores the availability of Flow and TypeScript
+- using the repl requires a network connection
+
+Core Library Default Imports
+- the following are imported by default into every .elm file
+  * Basics - everything
+  * List - only List and (::)
+  * Maybe - Maybe, Just, and Nothing
+  * Result - Result, Ok, and Error
+  * String - only the String module, not individual functions
+  * Tuple - only the Tuple module, not individual functions
+  * Debug - only the Debug module, not individual functions
+  * Platform - only Program
+  * Platform.Cmd - only Cmd and (!)
+  * Platform.Sub - only Sub
+
+Comments
+- single-line: -- comment
+- multi-line: {- comment -}
+  * can nest
+
+Bool type
+- values are True and False
+
+Char type
+- represents a single character
+- delimit with single quotes
+- ex. 'a'
+
+Number types
+- Int, Float
+
+Math
+- use standard operators and parentheses
+- ex. 5 / 2 -- 2.5 : Float
+- ex. 5 // 2 -- 2 : Int -- integer division
+
+Operators
+- can use a functions by surrounding with parens
+- ex. (+) 2 3 -- 5
+- ex. ((+) 2) 3 -- 5
+
+String type
+- delimit with double quotes
+- for multi-line, delimit with triple double quotes
+  * ex. """ This can span many lines. """
+- concatenate with ++
+  * "foo" ++ "bar" is the same as (++) "foo" "bar"
+    - parens around operator are required
+- to use library functions, import String (really required?)
+  * ex. String.length "abc"
+- functions include contains, endsWith, isEmpty, join, length,
+  pad, padLeft, padRight, repeat, reverse, slice, split,
+  startsWith, toLower, toUpper, trim, trimLeft, and trimRight
+- higher-order functions that operate on Chars in a String include
+  any, all, filter, foldl, foldr, and map
+- append is an alternative to ++ for concatenating two strings
+- concat is an alternative to ++ for concatenating any number of strings
+- cons adds a character to the beginning
+- dropLeft takes an Int and a String and drops characters from the left
+- dropRight takes an Int and a String and drops characters from the right
+- fromChar takes a char and returns a string containing it
+- fromList returns a String created from a List of Chars
+- indexes returns a List of indexes of a given substring
+- indices is an alias for indexes
+- left takes an Int and a String and returns characters from the left
+- lines returns a List of lines in a string, splitting on newlines
+- right takes an Int and a String and returns characters from the right
+- toList returns a List of Chars in a String
+- uncons returns a tuple containing the first character
+  and a string of the remaining characters
+- words returns a List of words in a string, splitting on whitespace
+
+Type Conversions
+- no automatic type coercions
+- must be done explicitly
+- anything to String: toString
+- String to Bool: ?
+- String to Int: String.toInt
+- String to Float: String.toFloat
+
+List type
+- comma-separated list of values surrounded by square brackets
+  * ex. [1, 2, 3]
+  * alternate syntax
+    1 :: [2, 3]
+    1 :: 2 :: [3]
+    1 :: 2 :: 3 :: []
+- all values must have the same type
+- immutable so many functions create a new List
+  that shares memory with previous versions
+- List functions include all, any, append, concat, drop, filter,
+  foldl, foldr, head, intersperse, isEmpty, length, map, maximum,
+  member, minimum, partition, product, range, repeat, reverse, scanl,
+  singleton, sort, sortBy, sortWith, sum, tail, take, unzip
+- (::) adds an element to the front
+- map2, map3, map4, and map5 map a number of lists instead of just one
+- concatMap, filterMap, indexMap
+- it's functions take a list and possibly other arguments
+- functions include: isEmpty, length, reverse, sort, filter, and map
+  * called with "List." prefix to qualify them
+- can specify the type of the values
+- ex. List String or List (User Int) - a List of tuples
+
+Tuples
+- comma-separated list of values surrounded by parentheses
+- like a list, but has a fixed length and values can have different types
+- functions include first, second, mapFirst, and mapSecond
+- can use pattern matching in function parameters to extract field values
+  * like JavaScript array destruturing
+  * ex.
+    distanceToOrigin (x, y) = sqrt (x^2 + y^2)
+    point = (3, 4)
+    d = distanceToOrigin point -- 5
+
+Records
+- set of key/value pairs similar to a JavaScript object
+  * Elm calls these "fields"
+- to create: { key1 = value1, key2 = value2, ... }
+  * note the use of = instead of : as JavaScript uses
+- to access a value:
+  rec.key or
+  .key rec (treats .key like a function that is passed rec)
+- can use .key function with List.map
+  * ex. supports points is a List of Point records
+    yValues = List.map .y points
+- records are immutable
+- to create a new record from an existing one
+  * where a field value is changed,
+    { rec | key = value }
+  * where multiple field values are changed
+    { rec | key1 = value1, key2 = value2, ... }
+    ex.
+    person1 = { name = "Mark", age = 56, tall = True }
+    person2 = { person1 | age = 19, tall = False }
+- new record shares memory for common fields with old one
+- can use pattern matching in function parameters to extract field values
+  * like JavaScript object destruturing
+  * ex.
+    nextAge {age} = age + 1 -- can extract more than one field
+    age = nextAge person1 -- 57
+- type aliases are often created for record types
+- Are there other differences between JavaScript objects and Elm records?
+
+Other Builtin Types
+- Array - fast, immutable, all elements must have same type
+- Basics - a collection of functions that are imported by default
+  * all the operators
+  * math functions and constants
+  * and much more
+- Bitwise
+- Char - functions for working with characters
+- Color
+- Date - for working with dates
+- Debug - for logging to browser console
+- Dict - Elm version of JavaScript Map
+- Json - for encoding and decoding JSON data
+- List - described in its own section later
+- Maybe - represents optional things like function arguments and object fields
+- Platform - 
+- Process
+  * spawn creates a light-weight process
+  * send sends a message to it
+  * kill kills it
+- Random - supports created many kinds of "generators", including random numbers
+- Regex - for working with regular expressions
+- Result - described in its own section later
+- Set - for working with sets of unique values
+- String - described in its own section later
+- Task - described in its own section later
+- Times - for working with times
+  * every function is similar to JavaScript setInterval
+- Tuple - described in its own section later
+
+Type Aliases
+- give a name to a type definition
+- useful for long type definitions that are used multiple times
+- syntax: type alias TypeName = type definition
+- can be used as a function (called a "record constructor")
+  to create an instance
+- ex. type alias Person = { name: String, age: Int, tall: Bool }
+- person = Person "Mark" 56 True
+
+Union Types
+- a.k.a. tagged unions
+- can define an enum (see below)
+- options can have associated data
+- ex. type Time = Noon | Midnight | Hour Int
+- creates a constructor for each option
+- to use:
+  meetingTime : Time
+  meetingTime = Noon
+  meetingTime = Hour 10
+- Hour is a function that takes an Int and returns a Time
+
+Enums
+- syntax to define: type EnumName = EnumVal1 | EnumVal2 | ...
+- one use is for messages passed to update
+- messages can have associated data
+- ex. type Msg = SayHello String | Multiply Int
+
+Conditonals
+- syntax: if condition then expression else expression
+- type of condition must be Boolean
+- the else expression can be another condition
+  for nested if-then-elses
+- there is no ternary operator, only this
+
+let Expressions
+- set variables that can be used in "in" expression
+- indentation sensitive
+- often used as the last or only expression in a function body
+- ex.
+  msIn : Int -> Int -- maybe can't enter this in repl
+  msIn hours =
+    let
+      minutes : Int -- optional type declaration
+      minutes = hours * 60
+      seconds : Int -- optional type declaration
+      seconds = minutes * 60
+    in
+      seconds * 1000
+  answer = msIn 2 -- 7,200,000
+- value of "let" expression is value of last expression after "in"
+
+case Expressions
+- ex.
+  case expression of
+    value1 -> result1
+    value2 -> result2
+    ...
+    _ -> defaultResult
+- must handle all possible cases
+- cases can include variables used for pattern matching
+  against union types that have data
+- after each ->, the last line evaluated
+  becomes the value of the case expression
+
+Functions
+- defining syntax: name parameters = expression
+  * ex. product x y = x * y
+- calling syntax: name arguments
+  * ex. product 2 3
+- the value of the last expression evaluated is returned
+  * there is no "return" keyword
+- calling with fewer arguments than expected results in
+  a new function that expects the remaining arguments
+  * ex. product 2 3 is the same as (product 2) 3
+
+Anonymous Functions
+- definition starts with \ because it looks a little like the lambda symbol
+- ex. \x y -> x * y
+- to assign a name: product = \x y -> x * 7
+- this is just another way to write: double x y = x * y
+
+Function Application Operators
+- copied from F#
+- useful to avoid the need for parentheses
+- someFn <| arg is the same as someFn arg
+- arg |> someFn is the same as someFn arg
+- ex.
+  double x = x * 2
+  decrement x = x - 1
+  triple x = x * 3
+  v = double (decrement (triple 2)) -- 10
+  v = double <| decrement <| triple 2 -- 10
+  v = 2 |> triple |> decrement |> double -- 10
+- more complicated example
+  * get the sum of mileage for runs of 20 miles or more
+  total = List.sum
+    (List.filter (\n -> n >= 20)
+     (List.map .distance runs))
+  or
+  total = runs
+    |> List.map .distance
+    |> List.filter (\n -> n >= 20)
+    |> List.sum
+
+Function Composition Operators
+- << applies/composes functions from right to left
+  ex.
+  recipe = double << decrement << triple
+  recipe 2 -- 10
+- >> applies/composes functions from left to right
+  ex.
+  recipe = triple >> decrement >> double
+  recipe 2 -- 10
+
+Infix Operators
+- can define custom infix operators
+- this seems like a bad idea from a readability standpoint for
+  readers of your code that are unaware of your custom infix operators
+
+Currying
+- when a function is called with fewer arguments than required,
+  it returns a new function that expects the remaining arguments
+
+Function Type Declarations
+- place on line before corresponding definition
+- ex. name : P1Type -> P2Type -> ... -> ReturnType
+
+White space
+- is syntactically significant (like Python)
+
+Importing from packages
+- syntax: import pkg-name exposing (item1, item2, ...)
+- to expose everything in a package, import pkg-name exposing (..)
+
+Variable Declarations
+- appear on line before assignment
+- ex. assuming a type def for Task
+- task : Task
+- task = { description: "buy milk", done: False }
+- new values cannot be assigned after initial assignment,
+  so they are really like constants
+
+Linked Lists
+- ex. type IntList = Empty | Node Int IntList
+- note that this type definition is recursive
+- to create an instance,
+  numbers : IntList
+  numbers = Node 1 (Node 2 (Node 3 Empty))
+  * parens are necessary in to use the result of a function call
+    as an argument another function
+    * other ways to write this include
+      numbers = Node 1 <| Node 2 <| Node 3 Empty
+      numbers = Node 3 Empty |> Node 2 |> Node 1
+- can use recursion to process all elements
+- ex.
+  product : IntList -> Int
+  product values =
+    case values of
+      Empty -> 1
+      Node value rest -> value * product rest
+- linked list that holds values of any type using type variable a:
+  type LinkedList a = Empty | Node a (LinkedList a)
+- this is how the Elm List type is implemented
+- the List library operates on List instances
+- could implement a binary tree in a similar way
+
+Runtime Errors
+- rarely or never see them because the Elm compiler finds them before runtime
+- uses type inference and tracks the flow of data in and out of all functions
+- Flow provides much of this for JavaScript.
+
+Elm Architecture
+- pattern for building web apps
+- three parts: model, update, and view
+- model is the app state
+- update updates the state; takes a message and a model and returns a new model
+- view takes a model and returns HTML
+  created using functions in the Html package
+
+Html Library
+- defines functions that take a list of attributes and a list of children
+  and render HTML
+- ex. button [ onClick Increment ] [ text "+" ]
+- Elm takes care of mutating the DOM when the model changes
+- sub-packages include Html.Attributes and Html.Events
+
+Maybe Data Structure
+- avoids errors related to null or undefined values
+- definition: type Maybe a = Nothing | Just a
+- to create a Maybe value, use the Nothing or Just constructor
+- use a case expression to evaluate Maybe values
+- often used for optional fields and
+  partial functions (only return a value in some cases)
+- optional field example: type Person = { name: String, age: Maybe Int }
+- to determine if a person can drive,
+  canDrive : Person
+  canDrive person =
+    case person.age of
+      Nothing -> False
+      Just age -> age >= 16
+- Do the types Maybe, Just, and Nothing have to be
+  imported from the Maybe module?
+
+Result Data Structure
+- indicates an error is possible and requires handling them
+- ex. parsing JSON
+- definition: type Result error value = Err error | Ok value
+- alternative to throwing which is done in many other languages
+
+Task Data Structure
+- similar to Result, but for asynchronous operations like HTTP requests
+- look for a description in the main website docs
+
+JavaScript Interop
+- allows Elm to be gradually added to an existing JS project
+- allows Elm programs to use JS libraries
+- can embed Elm code in HTML and communicate with JavaScript
+  by passing messages in both directions
+- done with "ports" and "flags".
+- send values from Elm to JS with a command (Cmd).
+- receive values from JS to Elm with a subscription (Sub).
+
+JSON Decoding
+- import Json.Decode exposing (..)
+  result = decodeString int "19"
+  result = decodeString float "3.14159"
+  result = decodeString bool "true"
+- these result a Result value
+- can combine these primitive decoders to decode various data structures
+  using the list and field functions
+- also see the NoRedInk/elm-decode-pipeline library
+- in addition to conversion, decoders can be used for validation
+
+Modules
+- organize code into separate files that can be imported by others
+- first line must be:
+  module name exposing (item1, item2, ...)
+- then define the items being exposed
+- convention is to name file the same as the module
+- ex. module Foo goes in Foo.elm
+- a file without the "module" line will get this by default:
+  module Main exposing (..)
+- Why is this a good idea for the default?
+- to use a module defined on one file in another file:
+  import ModuleName
+- to use items exposed by that module, precede their names with "ModuleName."
+- this is called a "qualified name"
+- to choose a different name, perhaps shorter, by which to refer to the module
+  import ModuleName as NewName
+- to allow use of unqualified names, add use of "exposing"
+- ex. import MyModule exposing (myItem1, MyItem2)
+
+elm-package.json
+- file in the project root directory
+- similar to Node's package.json
+- "dependencies" lists the packages on which the project depends
+- "source-directories" lists the directories elm-make will search
+  for .elm files
+- typically have "source-directories": ["src"]
+- typically compile by running "elm-make src/Main.elm"
+- module names containing dots like Foo.Bar.Baz
+  should be found in the file src/Foo/Bar/Baz.elm
