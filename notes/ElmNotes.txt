@@ -34,6 +34,9 @@ Tools to install
   * enter "elm make {name}.elm"
 - elm-package
   * like npm for Elm, see install, publish, bump, and diff commands
+    - bump enforces semantic versioning
+    - packages cannot use ports because there can be errors in JS code
+    - publish enforces that documentation exists for exposed functions
   * libraries are installed in elm-stuff/packages
   * to create a basic application with no optional libraries
     - create a new directory
@@ -51,6 +54,30 @@ Tools to install
       npm install -g elm-test
     - for code completion and doc lookups,
       npm install -g elm-oracle
+
+Learning tips
+- use Ellie
+  * like Gist for experimenting with Elm code
+  * https://ellie-app.com/
+- use the Elm Slack channel
+
+create-elm-app
+- https://github.com/halfzebra/create-elm-app
+- steps to use
+  npm install create-elm-app -g
+  create-elm-app {app-name}
+  cd {app-name}
+  elm-app start
+  edit src/App.elm
+- automatically recompiles when files are changed,
+  but doesn't automatically refresh the browser :-(
+- supports time-travel debugging
+  * click "Explore History" in browser
+- supports hot module replacement (HMR)
+- to create production build
+  elm-app build
+  * supposedly this produces more optimized production builds than "elm make"
+- What does the core Elm team think about this?
 
 Issues
 - can only be used to develop web applications
@@ -121,7 +148,7 @@ String type
 - concatenate with ++
   * "foo" ++ "bar" is the same as (++) "foo" "bar"
     - parens around operator are required
-- to use library functions, import String (really required?)
+- to use String library functions
   * ex. String.length "abc"
 - functions include contains, endsWith, isEmpty, join, length,
   pad, padLeft, padRight, repeat, reverse, slice, split,
@@ -309,6 +336,8 @@ case Expressions
   against union types that have data
 - after each ->, the last line evaluated
   becomes the value of the case expression
+- is there any way to have the same result for several values
+  without having a separate "value -> result" for each?
 
 Functions
 - defining syntax: name parameters = expression
@@ -417,8 +446,9 @@ Runtime Errors
 - uses type inference and tracks the flow of data in and out of all functions
 - Flow provides much of this for JavaScript.
 
-Elm Architecture
+The Elm Architecture (TEA)
 - pattern for building web apps
+- convention is to name main source file Main.elm
 - three parts: model, update, and view
 - model is the app state
 - update updates the state; takes a message and a model and returns a new model
@@ -436,6 +466,7 @@ Maybe Data Structure
 - avoids errors related to null or undefined values
 - definition: type Maybe a = Nothing | Just a
 - to create a Maybe value, use the Nothing or Just constructor
+  * available by default, no import necessary
 - use a case expression to evaluate Maybe values
 - often used for optional fields and
   partial functions (only return a value in some cases)
@@ -446,8 +477,6 @@ Maybe Data Structure
     case person.age of
       Nothing -> False
       Just age -> age >= 16
-- Do the types Maybe, Just, and Nothing have to be
-  imported from the Maybe module?
 
 Result Data Structure
 - indicates an error is possible and requires handling them
@@ -465,6 +494,7 @@ JavaScript Interop
 - can embed Elm code in HTML and communicate with JavaScript
   by passing messages in both directions
 - done with "ports" and "flags".
+  * ports pass strings to JS and get strings back
 - send values from Elm to JS with a command (Cmd).
 - receive values from JS to Elm with a subscription (Sub).
 
@@ -508,3 +538,24 @@ elm-package.json
 - typically compile by running "elm-make src/Main.elm"
 - module names containing dots like Foo.Bar.Baz
   should be found in the file src/Foo/Bar/Baz.elm
+
+Debugging
+- alternative to JavaScript console.log in Elm is
+  _ = Debug.log "message" expression
+  * outputs message followed by ": " followed by value of expression
+  * can't just call Debug.log without assigning its value to something
+
+Steps to Hello World
+- install Elm
+- create a directory for the project
+- cd to it
+- run "elm package install"
+  * takes about 6 seconds
+- create Main.elm
+  * ex.
+  import Html exposing (text)
+  main = text "Hello, World!"
+- run "elm reactor"
+- browse localhost:8000/Main.elm
+  * is there a way to make Main.elm the default
+    so it doesn't have to be specified in the URL?
