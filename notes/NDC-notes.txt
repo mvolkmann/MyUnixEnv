@@ -1,0 +1,231 @@
+NDC Notes
+
+Serverless: Reality or BS
+- in the US, Amazon has 16 times as much market share as any other cloud provider
+  * currently dominant
+- Amazon Lambda is a game changer
+  * supports Node.js, Python, and C#
+  * cost is about 1/100 that of running on own servers
+  * mostly, but not only, for compute-based services
+- Amazon nano VMs are $5/month
+- Amazon S3 is serverless file storage
+- speaker things Docker and containers are just distractions
+  and prefers cloud servers and serverless
+- lambda functions can access S3 buckets, DynamoDB, and API Gateway
+  * can they access a relational database through the API Gateway?
+- can implement lambda funtions in Amazon web UI, from command-line,
+  or from code using API
+- use logs to debug; can't ssh into any server
+  * there's a web UI to view logs
+- she compared Amazon Lambda, Google Cloud Platform, and Azure
+- see AWS Greengrass and "Lambda at Edge" for IOT
+- Google Cloud Functions is currently beta
+  so not yet suitable for production
+- Google BigQuery runs ANSI SQL against text files like CSV
+  * very fast! processes 85 million rows in ~30 seconds
+- Amazon Lambda offers 1 million queries per month for free
+- Compute and file storage are becoming commodoties
+  on Amazon, Google Cloud Platform, and Azure
+  * they do this to achieve vendor lock-in
+    hoping you will never put in the effort to move your data
+- one lambda function per HTTP verb of REST services
+- see "Simple Beer Service" reference architecture demo
+  * Kegerator
+- book recommendation
+  Serverless Architectures on AWS by Peter Sbarski?
+  * see command pattern which uses a "command" lambda function
+    that invokes other lambda functions
+    which acess files and databases
+- Amazon Kinesis pipes?
+- Machine Learning is coming fast
+  * not enough developers have this skill
+  * machine learning APIs
+    - AWS (Polly, Lex, Rekognition, MxNet)
+    - Azure
+    - GCP (TensorFlow)
+- AWS issues
+  * warm up time
+  * how to properly store state - need to learn patterns
+  * mystery errors
+    - fix by allocating more Lambda memory
+    - use latest Node.js versions
+    - make each operation shorter
+  * freeze/thaw errors
+- see "Lambda Tester" for AWS
+- see Amazon "Cloud Watch" alarms
+- see Amazon "CloudFormation" and SAM YAML templates
+  * code for deploying lambdas
+- see Amazon "Step Functions" currently in beta
+- Amazon Xray for monitoring
+- Amazon EC2 for servers instead of serverless
+- See IBM OpenWhisk
+
+Going Serverless with GraphQL
+- Amazon is way ahead of the competition
+- Amazon services aren't great at communicating with each other
+- Functions as a Service (FaaS) is like cloud glue that fixes this
+- Lambda + API Gateway to expose functions as API endpoints
+- Amazon Kinesis
+- Bustle is a women's publishing company
+- they implemented Node-based services
+- pay per request
+- less need for dev ops in a serverless environment
+- lambdas have a maximum execution time of 5 minutes
+- see node-lambda
+- the Bustle framework is Shep and is open source
+- they use server-side rendering with Preact
+- they use Redis as their primary data store
+- watch for account level concurrency limts in Amazon Lambda
+- metrics, security, observability, and exception reporting are still issues
+- REST doesn't enforce API contracts; GraphQL does
+- GraphQL is a spec, not an implementation
+- see graphiQL app that comes with GraphQL
+  * a web UI for monitoring GraphQL calls
+  * see an example at graphiql.bustle.com
+- data loader is an important piece of GraphQL
+  * schedules concurrent queries and batches them
+    to reduce round-trips
+- Relay is a GraphQL implementation from Facebook
+  * provides pagination, clientMutationId,
+    partial data fetching, and mutation structure
+- mutations feel bolted on to GraphQL
+- GraphQL doesn't provide an authorization solution
+- GraphQL doesn't handle complex queries out of the box
+- GraphQL works with Amazon Lambdas
+- steps
+  * build new APIs on GraphQL
+  * wrap legacy APIs
+    - approaches include read through,
+      copy on react/write,
+      dual writes,
+      and replace
+  * import data with mutations
+- speaker had no answer to how GraphQL can be a replacement
+  for REST services that perform complex SQL queries
+  * perhaps it really works best with simple, NoSQL databases
+    or relational databases where only simple queries are needed
+
+Offline Applications
+- goals
+  * degrade gracefully when internet connection drops
+  * content should be mutable even if offline (allow edits)
+  * provide clear feedback about user actions, even if offline
+  * provide constant access to content, even if offline
+  * remember recent activity, even if offline
+- revisit the request/response model
+  * view - view controller - model
+                           - application logic - network
+  * network is your enemy
+  * disk is your friend
+  * model can be in
+    - app cache - old approach, not preferred
+    - FileSystem API - not widely supported
+    - Web storage: localStorage
+    - Web SQL database: not widesupported, now deprecated
+    - IndexedDB: a NoSQL database in browser
+    - Service Worker
+      * see his slides for details about this
+      * very good slides!
+      * HOWEVER, IE, Edge, and Safari do not yet implement this
+        and may never do it!
+- myths
+  * everyone has fast internet
+  * offline scenarios are rare
+  * local data is only used for offline apps
+    - improves performance to use local data even when online
+  * current web standards are of no use
+- thought process: act locally, sync globally
+
+Elm
+- Erik Wendel
+- see his slides
+- simpler than Haskell
+- also similar to Ocaml and F#
+- focuses on safety
+- has full type inference
+
+You can do that in a web app?
+- each brower has a status page that describes their
+  support for new/upcoming browser features
+- service workers
+  * can register JS with browser that can run
+    even when users are no longer on the page
+  * can use to implement offline syncing
+  * they respond to events like "install",
+    "fetch" (can modify all HTTP requests and responses)
+  * load other .js files from ServiceWorker .js file
+    using self.importScripts
+  * only runs "install" once, unless code is changed
+  * can cache resources for offline use
+    - lots of patterns affect cached/network attempts
+    - can try network, timeout after a given amount of time,
+      then use cache
+      * but it continues to load in the background
+        so it's in the cache for the next reload
+  * after a change to service working code
+    - first reload loads new service worker code
+    - second reload actually uses it
+  * coming in Edge soon
+  * Apple said "we should do it"
+- Web Assembly (WASM)
+  * subset of JavaScript that can be optimized
+  * has a binary format (bytecode)
+  * could compile to this from any language
+    - C and C++ have support now by encripten (emcc)
+      * emcc foo.c -s WASM=1 ...
+      * supports sourcemaps so you can see original code in browser devtools
+    - work is in progress to support compiling
+      Rust, Go, and Swift to Web Assembly
+  * supported in Chrome and Firefox, behind a flag in Edge,
+    and in development for Safari
+- Credential Management
+  * supports auto-login from cached credentials
+  * supports syncing cached credentials across devices
+  * only shipped in Chrome now
+  * other browsers are considering adding it
+- Payment Requests
+  * one-click/fingerpring payments
+  * can use saved delivery addresses
+  * const paymentRequest = new PaymentRequest(...)
+  * can configure payment methods like credit cards, ...
+  * can collect shipping details
+  * can render a payment request form (provided by browser)
+
+React Native
+- div -> View
+- span -> Text
+
+JavaScript Proxies
+- slides at http://slides.com/eiriklv/javascript-metaprogramming-with-proxies#/
+- Proxies are supported in all major browsers except IE
+- target can be an object, array, function, or another Proxy
+- const proxy = new Proxy(target, handler);
+- handler is an object that contains trap methods
+  like apply, construct, defineProperty, deleteProperty, get, has, set, and more
+- Reflect API
+  * one-to-one match with proxy trap methods
+  * const p = new Proxy({}, {
+      get: Reflect.get,
+      ...
+    });
+- revocable proxies cannot be used after its revoke function is called
+- can use proxies to overload how the dot, =, and () operators work
+  * ex. validation of property sets such as age must be a number
+- can use to log property accesses
+
+- can't proxy methods of existing objects
+  * use use new proxy objects in place of existing ones
+- can it be used to implement "method missing" like Ruby?
+  * it appears you can - see his Construction / DSLs example
+- can use to make "observable" objects
+
+GraphQL
+- resolve functions are where SQL queries go
+- use loaders to batch queries
+- used Apollo in client code
+  * provides caching
+- also consider using Relay to help with caching
+- @initial_spark on Twitter - ask for his slides
+- see resources at end of slides
+- see https://github.com/stems/join-monster
+  for help for forming SQL queries used in resolve functions
