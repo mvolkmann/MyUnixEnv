@@ -1,0 +1,16 @@
+# Jira notes
+
+## To add an estimate to an issue
+- it must be in the backlog
+- click the issue in the backlog
+- in the right pane, click to the right of "Estimate"
+  and enter a number
+
+## To create a new sprint
+- scroll to the top of the backlog
+- press the "Create Sprint" button in the upper-right
+
+## To end a sprint
+- switch to the Kanban view which is the
+  second view in the vertial list on the left
+- click the "Complete Sprint" link in the upper-right
