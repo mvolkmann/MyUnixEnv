@@ -3,6 +3,7 @@ PEG.js Notes
 - stands for "Parsing Expression Grammar"
 - a parser generator for JavaScript
 - http://pegjs.majda.cz/
+- online editor at https://pegjs.org/online
 - to install
   npm install -g pegjs
 - to generate parser code
