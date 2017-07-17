@@ -1,5 +1,10 @@
 Keynote Notes
 
+cmd-tab
+- To enable switching from slideshow mode to other apps with cmd-tab,
+  select Keynote ... Preferences ... Slideshow and check
+  "Allow Mission Control, Dashboard and others to use the screen"
+
 Bullet line breaks
 - position cursor where a break is desired and press option-enter
 
