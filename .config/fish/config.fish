@@ -98,13 +98,13 @@ alias ls 'ls -G'
 alias mysql /usr/local/mysql/bin/mysql
 alias mysqladmin /usr/local/mysql/bin/mysqladmin
 
-# For a nicely formatted dump of any path delimited with spaces ...
+# For a nicely formatted dump of any path delimited with colons ...
 # To use this enter "echo $PATH | nicepath".
-alias nicepath "tr ' ' '\n'"
-alias showpath "echo $PATH | tr ' ' '\n'"
+alias nicepath "tr ':' '\n'"
 
 # This is just like nicepath, but used when the path is delimited with spaces.
-alias nicepathspaces "sed 's/ /\n   /g'"
+alias nicepathspaces "tr ' ' '\n'"
+alias showpath "echo $PATH | nicepathspaces"
 
 alias sortedpath "ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 
@@ -144,10 +144,7 @@ if test -e $HOME/secrets/local.env
 end
 
 # Commonly used directory prefixes.
-
 set DOCUMENTS_DIR $HOME/Documents
-exit 0
-
 set DROPBOX_DIR $HOME/Dropbox
 set OCI_DIR $DOCUMENTS_DIR/oci
 set PROGRAMMING_DIR $DOCUMENTS_DIR/programming
@@ -173,8 +170,6 @@ set PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
 #alias clj 'java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main'
 
 # Git settings
-. ~/bin/git-completion.bash
-#set PATH $PATH /usr/local/git/bin
 set GITHUB_USER mvolkmann
 #set GITHUB_PASS ?
 
@@ -237,7 +232,3 @@ set PATH $PATH $JAVASCRIPT_DIR/traceur-compiler-master
 
 # Vim settings
 set fish_key_bindings fish_vi_key_bindings
-#set -o vi # for vi-mode command-line editing
-#set editing-mode vi # for vi-mode command-line editing and all utilities that use readline
-#set EDITOR vim
-#set VISUAL vim
