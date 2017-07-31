@@ -1,7 +1,14 @@
 #!/usr/local/bin/fish
 # Configuration for the Friendly Interactive Shell (fish)
 
-#echo running .config/fish/config.fish
+# TODO: Why is this needed to avoid running this file twice
+# TODO: when a new terminal window is opened in tmux?
+if status --is-interactive
+  echo running .config/fish/config.fish
+  set PATH $HOME/bin $PATH
+  set PATH $HOME/.yarn/bin $PATH
+end
+
 
 # Disable start/stop output control so
 # ctrl-s can be used in Vim to save and
@@ -136,8 +143,6 @@ alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
 
 # Is this needed?
 set SHELL /usr/local/bin/fish
-
-set PATH $HOME/.yarn/bin $PATH
 
 if test -e $HOME/secret.sh
   . $HOME/secret.sh
