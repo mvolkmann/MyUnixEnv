@@ -1,0 +1,1 @@
+/Users/Mark/.config/fisherman/spin/spin.fish

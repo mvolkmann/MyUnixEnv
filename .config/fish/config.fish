@@ -134,6 +134,9 @@ alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
 # Environment Variables
 #---------------------------------------------------------------------------
 
+# Is this needed?
+set SHELL /usr/local/bin/fish
+
 set PATH $HOME/.yarn/bin $PATH
 
 if test -e $HOME/secret.sh
@@ -161,9 +164,6 @@ set TRAINING_DIR $DOCUMENTS_DIR/training
 # AsciiDoc settings
 set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
 
-# coreutils settings
-set PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
-
 # Clojure settings
 #set CLOJURE_HOME $LANGUAGES_DIR/clojure/clojure-1.2.1
 #set CLOJURE_HOME /opt/clojure-1.5.1 # for RPi
@@ -189,7 +189,7 @@ set JS_DIR $LANGUAGES_DIR/javascript
 
 # Maven settings
 #set MAVEN_HOME $JAVA_DIR/maven/apache-maven-3.1.0
-set MAVEN_HOME $HOME/programming/tools/maven/apache-maven-3.3.9
+set MAVEN_HOME $JAVA_DIR/Maven/apache-maven-3.3.9
 set M2_HOME $MAVEN_HOME
 set PATH $PATH $MAVEN_HOME/bin
 #set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
@@ -223,12 +223,6 @@ set SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
 #set TOMCAT_HOME $JAVA_DIR/Tomcat/apache-tomcat-7.0.41
 #set BASEDIR $TOMCAT_HOME
 #set CATALINA_HOME $TOMCAT_HOME
-
-# TypeScript settings
-set PATH $PATH ~/programming/typescript/TypeScript/bin
-
-# Google Traceur settings
-set PATH $PATH $JAVASCRIPT_DIR/traceur-compiler-master
 
 # Vim settings
 set fish_key_bindings fish_vi_key_bindings
