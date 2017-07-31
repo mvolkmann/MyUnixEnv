@@ -1612,6 +1612,30 @@ vim-tag-comment
 - press <leader>tC to comment the tag (start or end) under the cursor
 - press <leader>tU to uncomment the tag (start or end) under the cursor
 
+vipsql
+- for working with Postgres inside Vim
+- https://github.com/martinms/vipsql
+- to install with Pathogen, clone into .vim/bundle
+- to start a session
+  * :VipsqlOpenSession {db-name}
+  * opens a Vim buffer where all output from queries will go
+  * can delete lines from this buffer any time
+- to end a session
+  * close the buffer or :VipsqlCloseSession
+- to be prompted for SQL that is executed when return is pressed
+  :VipsqlShell
+- to execute a query from a Vim buffer
+  * for the current line,
+    :VipsqlSendCurrentLine
+  * for multiple selected lines,
+    select the lines and :VipsqlSendRange
+  * for part of a line,
+    select it and :VipsqlSendSelection
+  * for the entire buffer,
+    :VipsqlSendBuffer
+- to kill the running query,
+  :VipsqlSendInterrupt
+
 Windows (created by splits)
   :win {width} {height} - to set default gvim window size (put in .vimrc);
   :sp[lit] [{name}]  - horizontal split screen into two windows

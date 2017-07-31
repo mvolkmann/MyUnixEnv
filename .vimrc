@@ -470,6 +470,14 @@ let g:elm_setup_keybindings = 1
 let g:gitgutter_max_signs=1200
 " }}}
 
+" PostgreSQL --- {{{
+nnoremap <leader>po :VipsqlOpenSession launchpad<cr>
+nnoremap <leader>pl :VipsqlSendCurrentLine<cr>
+nnoremap <leader>pr :VipsqlSendRange<cr>
+nnoremap <leader>pb :VipsqlSendBuffer<cr>
+nnoremap <leader>pk :VipsqlSendInterrupt<cr>
+" }}}
+
 " Pane resize --- {{{
 " Resize panes to be equal width when window is resized.
 augroup resizeWindow
