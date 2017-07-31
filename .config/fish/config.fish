@@ -1,7 +1,7 @@
 #!/usr/local/bin/fish
 # Configuration for the Friendly Interactive Shell (fish)
 
-echo running .config/fish/config.fish
+#echo running .config/fish/config.fish
 
 # Disable start/stop output control so
 # ctrl-s can be used in Vim to save and
