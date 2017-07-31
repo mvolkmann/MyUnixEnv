@@ -140,10 +140,11 @@ set SHELL /usr/local/bin/fish
 set PATH $HOME/.yarn/bin $PATH
 
 if test -e $HOME/secret.sh
-  source $HOME/secret.sh
+  . $HOME/secret.sh
 end
 if test -e $HOME/secrets/local.env
-  source $HOME/secrets/local.env
+  # TODO: Why doesn't "." work in place of "bash" here?
+  bash $HOME/secrets/local.env
 end
 
 # Commonly used directory prefixes.
@@ -188,10 +189,9 @@ set JS_CMD node
 set JS_DIR $LANGUAGES_DIR/javascript
 
 # Maven settings
-#set MAVEN_HOME $JAVA_DIR/maven/apache-maven-3.1.0
-set MAVEN_HOME $JAVA_DIR/Maven/apache-maven-3.3.9
-set M2_HOME $MAVEN_HOME
-set PATH $PATH $MAVEN_HOME/bin
+#set MAVEN_HOME $JAVA_DIR/Maven/apache-maven-3.3.9
+#set M2_HOME $MAVEN_HOME
+#set PATH $PATH $MAVEN_HOME/bin
 #set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
 
 # Monsanto settings
