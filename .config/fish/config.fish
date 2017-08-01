@@ -1,12 +1,12 @@
 #!/usr/local/bin/fish
 # Configuration for the Friendly Interactive Shell (fish)
 
-# TODO: Why is this needed to avoid running this file twice
-# TODO: when a new terminal window is opened in tmux?
-if status --is-interactive
+# Avoid adding the same thing to PATH
+# each time an interactive shell is created.
+#if status --is-interactive
+if status --is-login
   echo running .config/fish/config.fish
   set PATH $HOME/bin $PATH
-  set PATH $HOME/.yarn/bin $PATH
 end
 
 
@@ -105,13 +105,8 @@ alias ls 'ls -G'
 alias mysql /usr/local/mysql/bin/mysql
 alias mysqladmin /usr/local/mysql/bin/mysqladmin
 
-# For a nicely formatted dump of any path delimited with colons ...
-# To use this enter "echo $PATH | nicepath".
-alias nicepath "tr ':' '\n'"
-
-# This is just like nicepath, but used when the path is delimited with spaces.
-alias nicepathspaces "tr ' ' '\n'"
-alias showpath "echo $PATH | nicepathspaces"
+# Shows all paths in $PATH on separate lines.
+alias showpath 'printf "%s\n" $PATH'
 
 alias sortedpath "ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
 
