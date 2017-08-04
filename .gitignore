@@ -1,3 +1,7 @@
 .*.swp
+.config/fish/fishd.*
+.config/configstore/update-notifier-npm.json
 .DS_Store
+.tmux/.tmux
 .vim/.netrwhist
+.vim/.vim
