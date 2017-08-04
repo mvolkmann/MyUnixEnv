@@ -95,7 +95,7 @@ alias fixsemi "eslint --fix --rule 'semi: [2, always]'"
 alias fixnosemi "eslint --fix --rule 'semi: [2, never]'"
 
 # Goes to root directory of current git repo.
-alias cdgitroot 'cd `git rev-parse --git-dir`; cd ..'
+alias cdgitroot 'cd (git rev-parse --git-dir); cd ..'
 
 # Display directories and executables in different colors.
 #alias ls 'ls --color=tty'
