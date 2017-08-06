@@ -1,0 +1,59 @@
+Fish Shell Notes
+
+Help
+- to get help on any fish command, man {command}
+  * ex. man function; man if, man switch
+
+Variables
+- set with: set {name} {value}
+  * by default variables are local to the block where they are defined
+    - can specify with -l (--local), but this is the default
+  * to make them global to the session, add -g option (--global)
+    - really visible to everything in the same process?
+  * to export them so they are visible in child processes,
+    add -x option (--export)
+  * to make them universal so they are
+    shared between all processes on the current computer
+    and saved across restarts, add -U option (--universal)
+- delete (erase) with: set -e {name} (--erase)
+- query (determine if set) with: set -q {name} (--query)
+  * sets status variable to 0 if defined and 1 if not
+    - to see, echo $status
+  * to see value, echo ${name}
+- list names of all defined variables: set -n (--names)
+  * this may abbreviate long names
+  * to avoid, use -L (--long)
+
+Functions
+- can define in files under .config/fish/functions
+- can use as command-line commands
+  * after changes, may need to start a new shell
+- to call a function, must specify its name
+  * no parens around arguments or commas between them
+
+If statements
+- if {condition}
+    {statements}
+  else if {condition}
+    {statements}
+  else
+    {statements}
+  end
+
+Switch statements
+- switch {expression} # ex. $color
+  case {value1}, {value2}
+    {statements}
+  case {value3}
+    {statements}
+  case '*' # like default in other languages
+    {statements}
+  end
+- each case can be followed by one or more values
+- does not fall through, no break at end of each case
+
+Loops
+
+Multiple statements on same line
+- separate by semicolons
+- ex. function foo; echo in foo; end
