@@ -1,5 +1,5 @@
 #!/bin/bash
-echo running .bash_profile
+#echo running .bash_profile
 
 unset COLUMNS # to prevent ps from truncating lines
 set noclobber
@@ -145,5 +145,9 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 #export TERM=xterm-256color-italic
 export TERM=xterm-256color
+
+# Indicate that this file has been source
+# so .bashrc knows whether it should source this.
+export SOURCED_PROFILE=1
 
 . ~/.bashrc

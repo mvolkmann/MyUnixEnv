@@ -1,5 +1,5 @@
 #!/bin/bash
-echo running .bashrc
+#echo running .bashrc
 
 # This doesn't work on Mac, but does on Raspberry Pi.
 #xmodmap ~/.xmodmap
@@ -169,6 +169,11 @@ export PATH="$HOME/.yarn/bin:$PATH"
 if [[ -f $HOME/secret.sh ]]; then
   source $HOME/secret.sh
 fi
+
 if [[ -f $HOME/secrets/local.env ]]; then
   source $HOME/secrets/local.env
+fi
+
+if [[ -z $SOURCED_PROFILE ]]; then
+  source $HOME/.bash_profile
 fi
