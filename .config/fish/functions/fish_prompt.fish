@@ -4,16 +4,15 @@ function fish_prompt
   # This will be an empty string if not in a Git repo.
   set git_branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
 
-  # If in a Git repo ...
+  # If in a Git repo (-q for quiet) ...
   if string length -q $git_branch
-    set -g branch " ($git_branch)"
+    set branch " ($git_branch)"
   else
-    set -g branch ''
+    set branch ''
   end
 
   set_color --bold brblue
-  # -n suppresses newline at end
-  echo -n $PWD
+  echo -n $PWD # -n suppresses newline at end
   set_color --bold yellow
   echo $branch
   set_color normal

@@ -1,8 +1,19 @@
 Fish Shell Notes
 
 Help
+- browse https://fishshell.com/
+- browse https://github.com/jbucaran/fish-shell-cookbook
 - to get help on any fish command, man {command}
   * ex. man function; man if, man switch
+
+Installing
+- browse https://fishshell.com/
+  and search for "Go Fish"
+- for macOS there is an installer
+  and can run "brew install fish"
+
+Making default shell
+- chsh -s /usr/local/bin/fish
 
 Variables
 - set with: set {name} {value}
@@ -57,3 +68,29 @@ Loops
 Multiple statements on same line
 - separate by semicolons
 - ex. function foo; echo in foo; end
+
+Custom Prompt
+- create ~/.config/fish/functions/fish_prompt.fish
+- if custom prompt doesn't fit in terminal width,
+  it will use just "> " instead
+- ex.
+function fish_prompt
+  # Get the current Git branch.
+  # This will be an empty string if not in a Git repo.
+  set git_branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
+
+  # If in a Git repo (-q for quiet) ...
+  if string length -q $git_branch
+    set branch " ($git_branch)"
+  else
+    set branch ''
+  end
+
+  set_color --bold brblue
+  echo -n $PWD # -n suppresses newline at end
+  set_color --bold yellow
+  echo $branch
+  set_color normal
+  echo -n '🐠  '
+end
+
