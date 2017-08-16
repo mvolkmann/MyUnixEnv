@@ -28,6 +28,7 @@ abbr --add br git branch
 abbr --add ci git commit -av
 abbr --add co git checkout
 abbr --add log git log
+abbr --add nr npm run
 abbr --add status git status
 
 #---------------------------------------------------------------------------
