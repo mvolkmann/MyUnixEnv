@@ -57,6 +57,9 @@ To install Node Package Manager (npm)
   * enter "sudo make dev"
   * enter "sudo make link"
 
+To fix permisions of directories where npm installs files
+- sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,share}
+
 To update npm itself
 - enter "npm update npm"
 
