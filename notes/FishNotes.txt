@@ -8,6 +8,10 @@ For article
   * maybe make colors configurable
 
 Help
+- help command-name
+  * opens browser to fish shell help page
+- man command-name
+  * displays help in terminal
 - browse https://fishshell.com/
 - browse https://github.com/jbucaran/fish-shell-cookbook
 - to get help on any fish command, man {command}
@@ -113,6 +117,10 @@ Strings
   * ex.
     set csv 'red,green,blue'
     set colors (string split , $csv)
+- to concatenate a literal string with the value of a variable
+  * ex.
+    set middle 'some middle'
+    set result 'some prefix'$middle'some suffix'
 
 Dates
 - date command returns current date by default
@@ -126,6 +134,14 @@ Command Substitution
   * ex.
     set dateFormat "+%A %B %d, %G" # ex. Tuesday, August 15, 2017
     set announcement "Today is "(date $dateFormat)"."
+
+Eval
+- evaluates a command in a string
+  that can be built using concatention and variable substitution
+- ex.
+  set extension '.js'
+  set command ls *.$extension
+  eval $command
 
 Lists
 - all variables in fish are lists that hold zero, one, or more string values
@@ -175,6 +191,19 @@ Lists
   * when a fish shell is started,
     if the variables PATH, CDPATH, or MANPATH exist,
     they are converted to lists by splitting on colons
+
+Hashmaps
+- not currently supported, but discussed here:
+  https://github.com/fish-shell/fish-shell/issues/390
+- can simulate with plain variables,
+  but can't iterate over the keys unless they are held in a list
+  ex. set colors red green blue
+      set items-red fire
+      set items-green grass
+      set items-blue water
+      for color in colors
+        eval echo '$'items-$color
+      end
 
 PATH environment variable
 - a universal variable that holds a list of paths
@@ -252,10 +281,23 @@ Types of commands
 - builtins
   * provided by the shell
   * examples include: contains, echo, and if
-  * How can you get a list of all of these?
+  * to get a list of builtin names
+    - builtin --names (or -n)
+    - the "builtin" command can also be used to
+      execute a specific builtin instead of a
+      command or function with the same name
 - commands
   * executables found in PATH
   * ex. chmod, ls, node, and vim
+  * to get information about a command
+    - command name
+  * to get the path to a command
+    - command --search name
+      or
+      which name
+    - the "command" command can also be used to
+      execute a specific command instead of a
+      builtin or function with the same name
 - functions
   * some are provided by fish
     ex. abbr, cd, eval
@@ -264,6 +306,9 @@ Types of commands
   * aliases are converted to functions
   * there are many fish-specific functions
     whose names begin with "fish_"
+  * to determine if a function is defined
+    - functions --query name
+      * sets status to 0 if defined or 1 if not
 - to get the type of a name
   * type name
   * for functions, this also outputs their definition
@@ -320,5 +365,50 @@ function fish_prompt
   set_color normal
   echo -n '🐠  '
 end
+
+Reading from stdin
+- read var
+  * waits for user to enter something,
+    terminated by enter key
+  * sets var to what user entered
+- options
+  * --command text or -c text
+    - sets initial text as if user had entered it
+    - users can modify this
+  * same options as "set" for choosing scope of variable
+    - includes -l (local), -g (global), -x (export), and -U (universal)
+  * --silent or -i to mask input (ex. for passwords)
+  * --prompt-str text or -P text
+    - sets prompt text
+  * --prompt-cmd text or -p text
+    - sets prompt command that outputs the prompt
+    - useful for dynamic prompts
+  * --array or -a
+    - sets variable to a list of the words entered
+  * and many more
+- can have more than one variable
+  * sets each to the word at the corresponding position
+  * last variable gets all remaining workds
+  * ex. read first second
+    - if user enters "foo bar baz",
+      first is set to "foo" and
+      second is set to "bar baz"
+
+Reading Files
+- to iterate over lines in a file
+  direct a file into a loop as follows:
+  while read line
+    # do something with the line
+  end < 'file-path'
+
+Redirecting output
+- to redirect stdout (^ or 2>) to a file
+  for the execution of a single command
+  someCommand ^ 'file-path'
+- to redirect stderr (>) to a file
+  for the execution of a single command
+  someCommand > 'file-path'
+- to redirect stderr to stdout
+  someCommand 2>&1
 
 Document how to use the "spin" function you installed.
