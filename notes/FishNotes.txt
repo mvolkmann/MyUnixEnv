@@ -11,7 +11,7 @@ Help
 - help command-name
   * opens browser to fish shell help page
 - man command-name
-  * displays help in terminal
+  * displays same help in terminal
 - browse https://fishshell.com/
 - browse https://github.com/jbucaran/fish-shell-cookbook
 - to get help on any fish command, man {command}
@@ -45,6 +45,15 @@ Configuring
     - abbreviations
 - 
 
+Colors
+- all colors are customizable
+- colors mentioned below are the defaults
+- when entering commands,
+  text is red until a valid command is entered
+  and then it changes to white
+- when typing file paths, the text is underlined
+  unless no directory or file matches what has been typed
+
 Aliases
 - to define an alias
   * alias name "{command}"
@@ -68,8 +77,20 @@ Abbreviations
   * abbr -e name
 
 Commands
-- all set the "status" environment variable to
+- command arguments are just separated by spaces
+- to include a space in an argument,
+  preceded space with a backslash or
+  enclose argument in single or double quotes
+- to execute multiple commands on one line,
+  separate with semicolons
+- all commands set the "status" environment variable to
   0 for success and another number for failure
+- to execute one command and then execute a second command
+  only if the first is successful
+  * command1; and command2
+  * note the semicolon at end of first command
+  * note the use of "and" instead of "&&" like in bash
+  * also uses "or" instead of "||" like in bash
 
 Variables
 - set with: set {name} {value}
@@ -342,7 +363,9 @@ Multiple statements on same line
 - ex. function foo; echo in foo; end
 
 Custom Prompt
-- create ~/.config/fish/functions/fish_prompt.fish
+- the default fish prompt displays whoami, hostname,
+  the abbreviated working directory, and ">"
+- to customize, create ~/.config/fish/functions/fish_prompt.fish
 - if custom prompt doesn't fit in terminal width,
   it will use just "> " instead
 - ex.
@@ -399,7 +422,7 @@ Reading Files
   direct a file into a loop as follows:
   while read line
     # do something with the line
-  end < 'file-path'
+  end < file-path
 
 Redirecting output
 - to redirect stdout (^ or 2>) to a file
