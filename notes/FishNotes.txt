@@ -54,6 +54,38 @@ Colors
 - when typing file paths, the text is underlined
   unless no directory or file matches what has been typed
 
+Autosuggestions
+- suggests commands as you type
+- suggested completion text is gray
+- gets suggestions from command history,
+  possible commands, possible options, and file paths
+- to accept completion, press right arrow
+  * still need to press enter to execute command
+- continue typing if suggestion is not desired
+
+Tab Completions
+- can complete command names, options, file paths,
+  and git branch names (including remote branches)
+- while entering a command, press tab
+- if there is only one option, it will be expanded in place
+- if there is more than one option,
+  up to four will be listed on separate lines
+- to select an option, press tab repeatedly until
+  the desired option is highlighted and press enter
+  * highlighting cycles back to first option
+    if tab is pressed while last option is highlighted
+- to filter list of options,
+  press tab until an option is highlighted,
+  then type a substring that must be contained
+- to skip selecting an option, press esc
+- if there are more than four options, the first four will be listed
+  followed by "...and n more rows"
+- to see remaining options, press tab again
+- try completing file paths for the cd command
+  * press tab once to see options,
+    again to show all options if more than four,
+    and again to highlight first option
+
 Aliases
 - to define an alias
   * alias name "{command}"
@@ -90,7 +122,29 @@ Commands
   * command1; and command2
   * note the semicolon at end of first command
   * note the use of "and" instead of "&&" like in bash
-  * also uses "or" instead of "||" like in bash
+- to execute one command and then execute a second command
+  only if the first failed
+  * command1; or command2
+  * note the use of "or" instead of "||" like in bash
+- NEED AN EXAMPLE OF USING "not"
+
+Wildcards
+- can use * like other shells
+- can also use ** to traverse any number of directories
+
+Pipes and Redirections
+- pipe with | like other shells
+- for commands that read from stdin,
+  to read from a file instead use < like other shells
+  ex. some-command < file-path
+- for commands that write to stdout,
+  to write to a file instead use > like other shells
+  ex. some-command > file-path
+- for commands that write to stderr,
+  to write to a file instead use ^ unlike other shells that use 2>
+  * ex. some-command ^ file-path
+  * but can also use 2>
+- to redirect stderr to stdout, some-command 2>&1
 
 Variables
 - set with: set {name} {value}
@@ -105,6 +159,7 @@ Variables
     and saved across restarts, add -U option (--universal)
   * already defined, the scope cannot be changed
     - erase it and then set again
+- all variable values are lists that hold zero, one, or more string values
 - How can you determine the scope of a given variable?
 - variable names are case-sensitive
   * myvar and myVar are different variables
@@ -121,6 +176,8 @@ Variables
 Strings
 - literals are delimited by single or double quotes
   * ex. set name 'Mark Volkmann'
+- variable substitution occurs in double quotes, but not in single
+  * ex. set msg "Good morning, $USER. Have a great day!"
 - to get length
   * string length $name
 - indexed starting at 1
@@ -150,11 +207,21 @@ Dates
 - ex. date "+%A %B %d, %G" # Tuesday, August 15, 2017
 
 Command Substitution
-- to use the output of a command in the value of a variable
-  * surround command with parens, not backticks like in some other shells
+- surround command with parens,
+  not backticks like in some other shells
+- to set a variable to the output of a command
+  * set name (command)
+  * ex. set today (date)
+- can concatenate command output with literal strings
+  and other command output
   * ex.
-    set dateFormat "+%A %B %d, %G" # ex. Tuesday, August 15, 2017
-    set announcement "Today is "(date $dateFormat)"."
+    set dateFormat '+%A %B %d, %G' # ex. Tuesday, August 15, 2017
+    set announcement 'Today is '(date $dateFormat)'.'
+    - note the use of string concatention by placing
+      literal strings next to the parens
+- doesn't work inside strings
+  * ex. the command is not evaluated in
+    "Today is (date $dateFormat)."
 
 Eval
 - evaluates a command in a string
@@ -165,7 +232,6 @@ Eval
   eval $command
 
 Lists
-- all variables in fish are lists that hold zero, one, or more string values
 - lists cannot contain other lists
 - to create an empty list
   * set myList
@@ -177,6 +243,7 @@ Lists
   * set myList newItem $myList
 - to get an items by index
   * myList[index]
+  * indexes start at 1, not 0
   * use negative indexes to retrieve from end
     - myList[-1] gets last item
 - get a slice which is a new list
@@ -197,7 +264,7 @@ Lists
   * count $myList
 - to iterate over all items in a list
   * for item in $myList
-      # use item here
+      # use $item here
     end
 - adjacent lists
   * result in cartesian products
@@ -335,24 +402,26 @@ Types of commands
   * for functions, this also outputs their definition
 
 If statements
-- if {condition}
-    {statements}
-  else if {condition}
-    {statements}
+- if condition
+    statements
+  else if condition
+    statements
   else
-    {statements}
+    statements
   end
+- if condition is a command its status is used
 
 Switch statements
-- switch {expression} # ex. $color
-  case {value1} {value2}
-    {statements}
-  case {value3}
-    {statements}
+- switch expression # ex. $color
+  case value1 value2
+    statements
+  case value3
+    statements
   case '*' # like default in other languages
-    {statements}
+    statements
   end
 - each case can be followed by one or more values
+  separated by spaces
 - does not fall through, no break at end of each case
 
 Loops
@@ -364,7 +433,8 @@ Multiple statements on same line
 
 Custom Prompt
 - the default fish prompt displays whoami, hostname,
-  the abbreviated working directory, and ">"
+  the abbreviated working directory (returned by prompt_pwd),
+  and ">"
 - to customize, create ~/.config/fish/functions/fish_prompt.fish
 - if custom prompt doesn't fit in terminal width,
   it will use just "> " instead
@@ -423,15 +493,5 @@ Reading Files
   while read line
     # do something with the line
   end < file-path
-
-Redirecting output
-- to redirect stdout (^ or 2>) to a file
-  for the execution of a single command
-  someCommand ^ 'file-path'
-- to redirect stderr (>) to a file
-  for the execution of a single command
-  someCommand > 'file-path'
-- to redirect stderr to stdout
-  someCommand 2>&1
 
 Document how to use the "spin" function you installed.
