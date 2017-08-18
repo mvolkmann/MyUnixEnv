@@ -80,7 +80,7 @@ Autosuggestions
 - suggests commands as you type
 - suggested completion text is gray
 - gets suggestions from command history,
-  possible commands, possible options (a.k.a. switches),
+  possible commands, possible switches (a.k.a. options),
   and file paths
 - to accept completion, press right arrow
   * still need to press enter to execute command
@@ -92,7 +92,7 @@ Command History
 - press enter to execute one or ctrl-c to exit
 
 Tab Completions
-- can complete command names, options, file paths,
+- can complete command names, switches, file paths,
   and git branch names (including remote branches)
 - while entering a command, press tab
 - if there is only one option, it will be expanded in place
@@ -117,8 +117,15 @@ Tab Completions
 Aliases
 - to define an alias
   * alias name "{command}"
-  * defines a function with the specified name that runs the command
+  * creates a function with the specified name that runs the command
     - not actually written to files under ~/.config/fish/functions
+    - can also write a function to implement an alias,
+      be see "Defining aliases" at
+      https://fishshell.com/docs/current/index.html#introduction
+      for important things to consider
+      * these functions are not autoloaded,
+        so they should either be defined in config.fish
+        or sourced from there
   * only available in the current session, unlike abbreviations
     - so abbreviations are preferred
 - to list all aliases
@@ -166,13 +173,23 @@ Commands
 - TODO: NEED AN EXAMPLE OF USING "not"
 - autoloading
   * every time a command is evaluated
-    it first checks whether there is a file in
-    ~/.config/fish/functions with the same name and a .fish extension
-    - if so, it loads that file to get
+    it first checks whether there is a file
+    in any path listed in fish_function_path
+    with the same name and a .fish extension
+    - this typically contains ~/.config/fish/functions
+      which is where user-defined functions are usually placed
+    - if found, it loads the file to get
       the current definition of the function
       and executes the function
-  * this allows a function to be used in place command or builtin
-    and executables in PATH
+    - does not search subdirectories of these paths
+    - it is recommended that these files only define
+      the function whose name matches the command
+  * functions defined here
+    - are immediately available in all fish shells
+    - changes to them are automatically reloaded in all fish shells
+      the next time they are used
+  * this allows a function to be used in place of
+    a command or builtin and executables in PATH
     - ex. function date; echo pwned date; end
       date outputs "pwned date" instead of the output of the date command
   * to run a command instead of a function with the same name
@@ -207,13 +224,13 @@ Variables
 - set with: set {name} {value}
   * by default variables are local to the block where they are defined
     - can specify with -l (--local), but this is the default
-  * to make them global to the session, add -g option (--global)
+  * to make them global to the session, add --global (-g) switch
     - TODO: really visible to everything in the same process?
   * to export them so they are visible in child processes,
-    add -x option (--export)
+    add --export (-x) switch
   * to make them universal so they are
     shared between all processes on the current computer
-    and saved across restarts, add -U option (--universal)
+    and saved across restarts, add --universal (-U) switch
   * already defined, the scope cannot be changed
     - erase it and then set again
 - all variable values are lists that hold zero, one, or more string values
@@ -437,16 +454,18 @@ PATH environment variable
 Functions
 - a fish function is a list of commmands
   that are executed when the name of the function
-  is used as a command
+  is used as a command in the shell
+- to call a function, must specify its name
+  * no parens around arguments or commas between them
 - functions can be defined interactively
   by using the "function" command
-  * this must continue reading from stdin
+  * this continues reading from stdin
     until it sees a line containing the closing "end"
 - to define a function
   * function name
       # code goes here
     end
-  * many options can follow the function name
+  * many switches can follow the function name
     - some are described later
     - to add documentation, --description "some desc"
       * or -d
@@ -509,7 +528,7 @@ Functions
 - to copy a function definition to a new name
   * functions --copy old-name new-name
     - or -c
-  * only copies body, not options
+  * only copies body, not switches
 - to delete (erase) a function: functions -e name
   * doesn't remove automatically loaded functions
   * doesn't delete files that define them
@@ -518,10 +537,6 @@ Functions
   * functions --query name
     - or -q
   * sets status
-- functions can be use as command-line commands
-  * after changes, may need to start a new shell
-- to call a function, must specify its name
-  * no parens around arguments or commas between them
 - can use "return" to exit before end
 - arguments
   * held in a list in $argv
@@ -532,8 +547,8 @@ Functions
         # Use $color and $size here.
         # $argv is also set to a list of the arguments.
       end
-- options
-  * to process command-line arguments as options
+- switches
+  * to process command-line arguments as switches (a.k.a. options)
     for option in $argv
       switch "$option"
         case -h --help
@@ -543,13 +558,11 @@ Functions
           # code here
       end
     end
-- TODO: After modifying a function, do the changes
-  only take effect after it has been called twice?
 - functions can run automatically when an event is emitted
-  * uses --on-event or -e option
+  * uses --on-event (-e) switch
   * see "Events" section
 - functions can run automatically when a variable changes
-  * uses --on-variable or -v option
+  * uses --on-variable (-v) switch
   * ex.
     function announcePath --on-variable PATH
       echo PATH is now $PATH
@@ -576,9 +589,10 @@ Functions
     TODO: TRY THIS!
 
 Types of commands
-- three types: builtins, commands, and functions
+- a command is any program the shell can run
+- there are three types of commands: builtins, commands, and functions
 - builtins
-  * provided by the shell
+  * commands that are provided by the shell
   * examples include: contains, echo, and if
   * to get a list of builtin names
     - builtin --names (or -n)
@@ -628,6 +642,13 @@ If statements
 - for a single line "if"
   * if condition; statement; end
 
+and/or
+- to conditionally execute a command only if another succeeded
+  command1; and command2
+- to conditionally execute a command only if another failed
+  command1; or command2
+- these can be used in the condition of an "if" or "while"
+
 Switch statements
 - switch expression # ex. $color
   case value1 value2
@@ -637,6 +658,7 @@ Switch statements
   case '*' # like default in other languages
     statements
   end
+- expression should evaluate to a string
 - each case can be followed by one or more values
   separated by spaces
 - does not fall through, no break at end of each case
@@ -704,11 +726,11 @@ Reading from stdin
   * waits for user to enter something,
     terminated by enter key
   * sets var to what user entered
-- options
+- switches
   * --command text or -c text
     - sets initial text as if user had entered it
     - users can modify this
-  * same options as "set" for choosing scope of variable
+  * same switches as "set" for choosing scope of variable
     - includes -l (local), -g (global), -x (export), and -U (universal)
   * --silent or -i to mask input (ex. for passwords)
   * --prompt-str text or -P text
@@ -729,10 +751,15 @@ Reading from stdin
 
 Events
 - functions can run automatically when an event is fired
-  * uses --on-event or -e option
-  * function takeShelter --on-event tornado
+  * uses --on-event or -e switch
+  * ex.
+    function takeShelter --on-event tornado
       echo Tornado warning! Take shelter!
     end
+- these functions are not auto-loaded
+  * consider defining them in config.fish or
+    sourcing files that define them from config.fish
+    - source file-path
 - can register any number of functions to run on the same event
 - events can be emitted with: emit event-name
   * event-name can be followed by any number of arguments
