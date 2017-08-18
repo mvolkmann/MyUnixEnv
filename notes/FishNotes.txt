@@ -179,6 +179,8 @@ Pipes and Redirections
 - to redirect stderr to stdout, some-command 2>&1
 
 Variables
+- Can a variable only hold a string, number, or list?
+- How can you determine the type of value in a variable?
 - set with: set {name} {value}
   * by default variables are local to the block where they are defined
     - can specify with -l (--local), but this is the default
@@ -392,6 +394,10 @@ Functions
 - a fish function is a list of commmands
   that are executed when the name of the function
   is used as a command
+- functions can be defined interactively
+  by using the "function" command
+  * this must continue reading from stdin
+    until it sees a line containing the closing "end"
 - to define a function
   * function name
       # code goes here
@@ -400,13 +406,17 @@ Functions
     - some are described later
     - to add documentation, --description "some desc"
       * or -d
-      * displayed when ???
+      * displayed by "functions --details --verbose fn-name"
+        in the fifth line
+        - see --details below
+      * TODO: WRITE A FUNCTION THAT ONLY DISPLAYS THIS!
 - all functions are public
   * use prefixes for "private" functions
     to avoid name conflicts
     * ex. _prefix_name
 - to make available in future sessions
   * define in files under .config/fish/functions
+  * no need to mark these files as executable
   * these files are loaded the first time
     the function they define is called
   * name of file must match name of function
@@ -427,6 +437,21 @@ Functions
     - fish_config functions
 - to output the code for a function
   * functions myname
+- to see where a function is defined (its path)
+  * functions --details name
+    - or -D
+  * if not saved to a file, will output "stdin"
+- to see even more detail about a function
+  * functions --details --verbose name
+    - or -Dv
+    - outputs these five lines
+      * path to definition
+      * whether it was autoloaded (outputs "autoloaded" or "n/a")
+      * line number within file where definition begins
+        or 0 if not autoloaded
+      * whether "scope shadowing" was disabled
+      * the function description specified with --description or -d
+  * if not saved to a file, will output "stdin"
 - to copy a function definition to a new name
   * functions --copy old-name new-name
     - or -c
@@ -435,10 +460,6 @@ Functions
   * doesn't remove automatically loaded functions
   * doesn't delete files that define them
   * just makes them inactive
-- to see where a function is defined
-  * functions --details name
-    - or -D
-  * if not saved to a file, will output "stdin"
 - to test if a function exists
   * functions --query name
     - or -q
@@ -568,7 +589,7 @@ Switch statements
 
 Loops
 - see "Lists" section for iterating over items in a list
-- YOU STOPPED HERE in https://fishshell.com/docs/current/tutorial.html
+- TODO: YOU STOPPED HERE in https://fishshell.com/docs/current/tutorial.html
 
 Multiple statements on same line
 - separate by semicolons
