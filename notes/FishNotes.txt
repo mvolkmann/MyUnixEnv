@@ -80,7 +80,8 @@ Autosuggestions
 - suggests commands as you type
 - suggested completion text is gray
 - gets suggestions from command history,
-  possible commands, possible options, and file paths
+  possible commands, possible options (a.k.a. switches),
+  and file paths
 - to accept completion, press right arrow
   * still need to press enter to execute command
 - continue typing if suggestion is not desired
@@ -143,12 +144,14 @@ Changing Working Directory
   * ex. .. cds to parent directory
 
 Commands
-- command arguments are just separated by spaces
+- every command is executed by entering its name
+  followed by arguments, if any, separated by spaces
+- commands are terminated by a newline or semicolon
+  * of course in a shell, pressing enter produces a newline
+  * semicolons allow multiple commands to appear on the same line
 - to include a space in an argument,
   preceded space with a backslash or
   enclose argument in single or double quotes
-- to execute multiple commands on one line,
-  separate with semicolons
 - all commands set the "status" environment variable to
   0 for success and another number for failure
 - to execute one command and then execute a second command
@@ -182,22 +185,25 @@ Wildcards
 - can also use ** to traverse any number of directories
 
 Pipes and Redirections
-- pipe with | like other shells
+- pipe stdout of one command to the stdin of another
+  with | like other shells
 - for commands that read from stdin,
   to read from a file instead use < like other shells
   ex. some-command < file-path
 - for commands that write to stdout,
   to write to a file instead use > like other shells
   ex. some-command > file-path
+  * to avoid overwriting an existing file, use >?
+  * to append, use >> instead of >
 - for commands that write to stderr,
   to write to a file instead use ^ unlike other shells that use 2>
   * ex. some-command ^ file-path
   * but can also use 2>
+  * to avoid overwriting an existing file, use ^?
+  * to append, use ^^ instead of ^
 - to redirect stderr to stdout, some-command 2>&1
 
 Variables
-- TODO: Can a variable only hold a string, number, or list?
-- TODO: How can you determine the type of value in a variable?
 - set with: set {name} {value}
   * by default variables are local to the block where they are defined
     - can specify with -l (--local), but this is the default
@@ -211,6 +217,8 @@ Variables
   * already defined, the scope cannot be changed
     - erase it and then set again
 - all variable values are lists that hold zero, one, or more string values
+- TODO: How can you determine the type of value in a list?
+  * string or number?
 - TODO: How can you determine the scope of a given variable?
 - variable names are case-sensitive
   * myvar and myVar are different variables
@@ -227,6 +235,13 @@ Variables
 Strings
 - literals are delimited by single or double quotes
   * ex. set name 'Mark Volkmann'
+  * in a single quoted string,
+    single quotes can be escaped with \'
+    and backslashes can be escaped with \\
+  * in a double quoted string,
+    double quotes can be escaped with \"
+    $ which is used for variable substitution can be escaped with \$
+    and backslashes can be escaped with \\
 - variable substitution occurs in double quotes, but not in single
   * ex. set msg "Good morning, $USER. Have a great day!"
 - to get length
@@ -446,6 +461,11 @@ Functions
 - to make available in future sessions
   * define in files under .config/fish/functions
   * no need to mark these files as executable
+  * no need to modify PATH
+    - all are defined in functions directory
+      * can they be in subdirectories to categorize them?
+  * no need to add a shebang comment
+    - all are assumed to be used only in the fish shell
   * these files are loaded the first time
     the function they define is called
   * name of file must match name of function
@@ -729,5 +749,19 @@ Events
   * fish_postexec: after executing an interactive command
     - the command line is passed as the first parameter
     - emitted even if the command is invalid
+
+Jobs
+- to run a command in background, add & to end of command
+- to suspend currently running command, press ctrl-z
+- to continue running a suspended command in background enter "bg"
+- to get a list of background jobs and their job numbers, enter "jobs"
+- to bring a background job back to the foreground,
+  enter "fg" for the job most recently placed in background
+  or "fg %job-number" for a specific job
+  or "fg process-number"
+- if you try to exit from a shell that has background jobs,
+  it will warn about this and not exit
+  * if you try to exit again,
+    it will kill all the background jobs and exit
 
 TODO: Document how to use the "spin" function you installed.
