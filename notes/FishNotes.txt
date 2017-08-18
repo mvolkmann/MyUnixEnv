@@ -162,10 +162,20 @@ Commands
   * note the use of "or" instead of "||" like in bash
 - TODO: NEED AN EXAMPLE OF USING "not"
 - autoloading
-  * when a command is evaluated (every time?),
+  * every time a command is evaluated
     it first checks whether there is a file in
     ~/.config/fish/functions with the same name and a .fish extension
-    - if so, it loads that file to get the definition of the function
+    - if so, it loads that file to get
+      the current definition of the function
+      and executes the function
+  * this allows a function to be used in place command or builtin
+    and executables in PATH
+    - ex. function date; echo pwned date; end
+      date outputs "pwned date" instead of the output of the date command
+  * to run a command instead of a function with the same name
+    - command name
+  * to run a builtin instead of a function with the same name
+    - builtin name
 
 Wildcards
 - can use * like other shells
