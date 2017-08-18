@@ -138,6 +138,7 @@ Changing Working Directory
 - can also just enter a directory path
   * ex. ~ cds to home directory
   * can enter any path that starts with ., /, or ~
+  * ex. .. cds to parent directory
 
 Commands
 - command arguments are just separated by spaces
