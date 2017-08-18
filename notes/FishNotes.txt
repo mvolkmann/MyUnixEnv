@@ -39,6 +39,8 @@ Configuring
 - can configure from shell, in a configuration file, and in the web UI
 - configuration file
   * ~/.config/fish/config.fish
+  * can define functions here, but it is
+    more efficient to use autoloading functions
 - web UI
   * to start, fish_config [starting-tab-name]
   * tabs include
@@ -47,7 +49,7 @@ Configuring
     - functions
     - variables
       * can only view values of current variables
-      * is this only universal variables?
+      * TODO: is this only universal variables?
     - history
     - bindings
     - abbreviations
@@ -158,7 +160,12 @@ Commands
   only if the first failed
   * command1; or command2
   * note the use of "or" instead of "||" like in bash
-- NEED AN EXAMPLE OF USING "not"
+- TODO: NEED AN EXAMPLE OF USING "not"
+- autoloading
+  * when a command is evaluated (every time?),
+    it first checks whether there is a file in
+    ~/.config/fish/functions with the same name and a .fish extension
+    - if so, it loads that file to get the definition of the function
 
 Wildcards
 - can use * like other shells
@@ -179,13 +186,13 @@ Pipes and Redirections
 - to redirect stderr to stdout, some-command 2>&1
 
 Variables
-- Can a variable only hold a string, number, or list?
-- How can you determine the type of value in a variable?
+- TODO: Can a variable only hold a string, number, or list?
+- TODO: How can you determine the type of value in a variable?
 - set with: set {name} {value}
   * by default variables are local to the block where they are defined
     - can specify with -l (--local), but this is the default
   * to make them global to the session, add -g option (--global)
-    - really visible to everything in the same process?
+    - TODO: really visible to everything in the same process?
   * to export them so they are visible in child processes,
     add -x option (--export)
   * to make them universal so they are
@@ -194,7 +201,7 @@ Variables
   * already defined, the scope cannot be changed
     - erase it and then set again
 - all variable values are lists that hold zero, one, or more string values
-- How can you determine the scope of a given variable?
+- TODO: How can you determine the scope of a given variable?
 - variable names are case-sensitive
   * myvar and myVar are different variables
 - delete (erase) with: set -e {name} (--erase)
@@ -379,12 +386,15 @@ Hashmaps
 
 PATH environment variable
 - a universal variable that holds a list of paths
+  * not a colon-separated string
 - to see current value
   * echo $PATH
   * paths are separated by spaces
-- the environment variable fish_user_paths
+- the universal variable fish_user_paths
   is automatically prepended to this
-  * WHY?
+  * TODO: Why?
+  * it is recommended to set fish_user_paths
+    rather than modifying PATH
 - to prepend a path to PATH
   * set -U fish_user_paths $fish_user_paths {new-path}
   * outputs a warning if new-path doesn't exist but adds it anyway
@@ -393,8 +403,11 @@ PATH environment variable
   * if set -l index (contains -i {some-path} $fish_user_paths)
       set -e fish_user_paths[$index]
     end
-  * sure this is a mess, but is it easier in bash?
   * see .config/fish/functions/rmpath.fish
+  * TODO: sure this is a mess, but is it easier in bash?
+- before modifying fish_user_profile in config.fish,
+  test that the value to be added isn't already present
+  so each shell startup doesn't modify it again
 
 Functions
 - a fish function is a list of commmands
@@ -427,6 +440,7 @@ Functions
     the function they define is called
   * name of file must match name of function
     - the autoloading mechanism for functions requires this
+      * see more in "Commands" section
     - ex. define function foo in file named foo.fish
   * can define multiple functions in the same file,
     but they will not be available until the function
@@ -434,8 +448,12 @@ Functions
     - so doing this is not recommended
 - to save a function definition that has been entered interactively
   in a file in .config/fish/functions
-  * funcsave myname
+  * funcsave name
   * uses tabs for indentation
+- to edit a previously defined function
+  * funced name
+  * uses editor in variable VISUAL that can be set in config.fish
+    - ex. set VISUAL vim
 - to list all currently defined functions
   * functions
     - add --all or -a to include functions that begin with an underscore
@@ -495,7 +513,7 @@ Functions
           # code here
       end
     end
-- after modifying a function, do the changes
+- TODO: After modifying a function, do the changes
   only take effect after it has been called twice?
 - functions can run automatically when an event is emitted
   * uses --on-event or -e option
@@ -525,7 +543,7 @@ Functions
     function handleTermSignal --on-signal term
       echo received term signal
     end
-    TRY THIS!
+    TODO: TRY THIS!
 
 Types of commands
 - three types: builtins, commands, and functions
@@ -594,8 +612,26 @@ Switch statements
 - does not fall through, no break at end of each case
 
 Loops
-- see "Lists" section for iterating over items in a list
-- TODO: YOU STOPPED HERE in https://fishshell.com/docs/current/tutorial.html
+- while condition
+    # commands go here
+  end
+  * condition can use "and" and "or"
+  * uses status of condition to determine whether to iterate again
+    0 to continue; anything else to stop
+  * for an endless loop, use true for condition
+    - use break to exit
+- for var in list
+    # use var here
+  end
+  * to iterate over a list of numbers, use seq command
+    - ex. for n in (seq 5); echo $n; end
+      * outputs 1, 2, 3, 4, 5 on separate lines
+    - seq can be followed by 1, 2 or 3 numbers
+      to specify the first, increment, and last values
+      * if only one, it is the last, first defaults to 1, and incr defaults 1
+      * if only two, they are first and last, and incr defaults to 1
+  * can iterate over relative file paths that match a pattern
+    ex. for path in b*.fish; echo $path; end
 
 Multiple statements on same line
 - separate by semicolons
@@ -606,6 +642,9 @@ Custom Prompt
   the abbreviated working directory (returned by prompt_pwd),
   and ">"
 - to customize, create ~/.config/fish/functions/fish_prompt.fish
+  that echos the desired prompt
+  * use set_color to control colors of various parts
+  * can have multiple lines
 - if custom prompt doesn't fit in terminal width,
   it will use just "> " instead
 - ex.
@@ -628,6 +667,7 @@ function fish_prompt
   set_color normal
   echo -n '🐠  '
 end
+- can define a right prompt with the function fish_right_prompt
 
 Reading from stdin
 - read var
@@ -680,4 +720,4 @@ Events
     - the command line is passed as the first parameter
     - emitted even if the command is invalid
 
-Document how to use the "spin" function you installed.
+TODO: Document how to use the "spin" function you installed.

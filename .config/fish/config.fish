@@ -230,3 +230,4 @@ set SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
 
 # Vim settings
 set fish_key_bindings fish_vi_key_bindings
+set VISUAL vim
