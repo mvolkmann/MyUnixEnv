@@ -27,6 +27,14 @@ Installing
 Making default shell
 - chsh -s /usr/local/bin/fish
 
+Uninstalling
+- change default shell to something else like bash
+- run these commands
+  rm -Rf /usr/local/etc/fish /usr/local/share/fish ~/.config/fish
+  rm /usr/local/share/man/man1/fish*.1
+  cd /usr/local/bin
+  rm -f fish fish_indent
+
 Configuring
 - can configure from shell, in a configuration file, and in the web UI
 - configuration file
@@ -45,6 +53,18 @@ Configuring
     - abbreviations
 - 
 
+Tools for fish (in alphabetical order)
+- Fisherman - https://github.com/fisherman/fisherman
+  * "The fish-shell plugin manager"
+- Fundle - https://github.com/tuvistavie/fundle
+  * "a minimalist package manager for fish inspired by Vundle"
+- Oh My Fish - https://github.com/oh-my-fish/oh-my-fish
+  * "provides core infrastructure to allow you to install packages
+    which extend or modify the look of your shell"
+- Tacklebox - https://github.com/justinmayer/tacklebox
+  * "makes it easy to organize and share collections of
+    useful shell functions, tools, and themes"
+
 Colors
 - all colors are customizable
 - colors mentioned below are the defaults
@@ -62,6 +82,11 @@ Autosuggestions
 - to accept completion, press right arrow
   * still need to press enter to execute command
 - continue typing if suggestion is not desired
+
+Command History
+- type part of a previous command and press up and down arrows
+  to navigate through all previous commands that match
+- press enter to execute one or ctrl-c to exit
 
 Tab Completions
 - can complete command names, options, file paths,
@@ -107,6 +132,12 @@ Abbreviations
   * abbr
 - to undefine (erase) an alias
   * abbr -e name
+
+Changing Working Directory
+- can use cd command like other shells
+- can also just enter a directory path
+  * ex. ~ cds to home directory
+  * can enter any path that starts with ., /, or ~
 
 Commands
 - command arguments are just separated by spaces
@@ -199,12 +230,56 @@ Strings
   * ex.
     set middle 'some middle'
     set result 'some prefix'$middle'some suffix'
+- to test whether a string ...
+  * is empty: if test -z $var
+  * is not empty: if test -n $var
+  * is identical to another: if $v1 = $v2
+  * is not identical to another: if $v1 != $v2
+
+Numbers
+- only integers are supported, not floating point
+- to test the relationship between two numbers ...
+  * equal: if $n1 -eq $n2
+  * not equal:  if $n1 -ne $n2
+  * less than:  if $n1 -lt $n2
+  * less than or equal:  if $n1 -le $n2
+  * greater than:  if $n1 -gt $n2
+  * greater than or equal:  if $n1 -ge $n2
+- both operands must be a number
 
 Dates
 - date command returns current date by default
 - format using a format string defined by strftime
   * http://man7.org/linux/man-pages/man3/strftime.3.html
 - ex. date "+%A %B %d, %G" # Tuesday, August 15, 2017
+
+Files
+- to test whether a file ...
+  * exists: if test -e $file
+  * is a file: if test -f $file
+  * is a directory: if test -d $file
+  * is a symbolic link: if test -L $file
+  * is readable: if test -r $file
+  * is writable: if test -w $file
+  * is an executable file: if test -x $file
+  * is a non-empty file (has size): if test -s $file
+  * and more (see test command for details)
+
+Tests
+- commmonly used in "if" and "while" statements
+- tests for strings, numbers, and files
+  are described in those sections
+- to negate any test, add "!" before "test"
+- two ways to combine conditions with "and" or "or"
+  * option 1: place each command on a separate line where
+    each line but the first begins with "and" or "or"
+    - ex.
+      test $color = 'yellow'
+      and test $size = 'large'
+    - "and" cannot be placed at the end of the first line
+  * option 2: place -a or -o between the conditions
+    - ex. test \( $color = 'yellow' \) -a \( $size = 'large' \)
+    - this is too ugly! prefer option 1
 
 Command Substitution
 - surround command with parens,
@@ -313,44 +388,74 @@ PATH environment variable
   * see .config/fish/functions/rmpath.fish
 
 Functions
+- a fish function is a list of commmands
+  that are executed when the name of the function
+  is used as a command
 - to define a function
-  * function myname
+  * function name
       # code goes here
     end
+  * many options can follow the function name
+    - some are described later
+    - to add documentation, --description "some desc"
+      * or -d
+      * displayed when ???
 - all functions are public
   * use prefixes for "private" functions
     to avoid name conflicts
-    * ex. _myprefix_myname
+    * ex. _prefix_name
 - to make available in future sessions
   * define in files under .config/fish/functions
-  * this files are loaded the first time the function they define is called
+  * these files are loaded the first time
+    the function they define is called
   * name of file must match name of function
     - the autoloading mechanism for functions requires this
     - ex. define function foo in file named foo.fish
-  * functions defined in these files are not loaded
-    until the first time the function is called
   * can define multiple functions in the same file,
     but they will not be available until the function
     whose name matches the file is called once
     - so doing this is not recommended
 - to save a function definition that has been entered interactively
-  under .config/fish/functions
+  in a file in .config/fish/functions
   * funcsave myname
   * uses tabs for indentation
+- to list all currently defined functions
+  * functions
+    - add --all or -a to include functions that begin with an underscore
+  * to view in web UI
+    - fish_config functions
 - to output the code for a function
   * functions myname
+- to copy a function definition to a new name
+  * functions --copy old-name new-name
+    - or -c
+  * only copies body, not options
+- to delete (erase) a function: functions -e name
+  * doesn't remove automatically loaded functions
+  * doesn't delete files that define them
+  * just makes them inactive
+- to see where a function is defined
+  * functions --details name
+    - or -D
+  * if not saved to a file, will output "stdin"
+- to test if a function exists
+  * functions --query name
+    - or -q
+  * sets status
 - functions can be use as command-line commands
   * after changes, may need to start a new shell
 - to call a function, must specify its name
   * no parens around arguments or commas between them
 - can use "return" to exit before end
-- to list all currently defined functions
-  * functions
-  * to view in web UI
-    - fish_config functions
-- accessing function arguments
-  * use $argv list
+- arguments
+  * held in a list in $argv
     - first argument is in $argv[1]
+  * iterate over arguments like iterating over any list
+  * can also use named parameters
+    - function orderShirt -a color size
+        # Use $color and $size here.
+        # $argv is also set to a list of the arguments.
+      end
 - options
   * to process command-line arguments as options
     for option in $argv
@@ -362,7 +467,37 @@ Functions
           # code here
       end
     end
-- Can a function definition be deleted?
+- after modifying a function, do the changes
+  only take effect after it has been called twice?
+- functions can run automatically when an event is emitted
+  * uses --on-event or -e option
+  * see "Events" section
+- functions can run automatically when a variable changes
+  * uses --on-variable or -v option
+  * ex.
+    function announcePath --on-variable PATH
+      echo PATH is now $PATH
+    end
+    set -U PATH /foo $PATH
+- a function can run automatically when a given process exits
+  * uses --on-process-exit or -p
+  * ex.
+    function announceProcessExit --on-process-exit 12345
+      echo an important process exited
+    end
+- a function can run automatically when signal is received
+  * uses --on-signal or -s followed by a signal name or number
+  * see https://www.tutorialspoint.com/unix/unix-signals-traps.htm
+  * to see a list of supported signals, enter "kill -l"
+  * ctrl-c sends an "int" signal
+  * to send any signal to a given process
+    - kill -sig pid
+      where sig is a signal name or number
+  * ex. to handle a kill of the current process
+    function handleTermSignal --on-signal term
+      echo received term signal
+    end
+    TRY THIS!
 
 Types of commands
 - three types: builtins, commands, and functions
@@ -409,7 +544,13 @@ If statements
   else
     statements
   end
-- if condition is a command its status is used
+- condition must be a command and its status is used
+  * 0 is success and treated as true
+  * any other value is an error and treated as false
+  * opposite from most programming languages
+- a common command to use in an "if" is "test"
+- for a single line "if"
+  * if condition; statement; end
 
 Switch statements
 - switch expression # ex. $color
@@ -425,7 +566,8 @@ Switch statements
 - does not fall through, no break at end of each case
 
 Loops
-- see "List" section for iterating over items in a list
+- see "Lists" section for iterating over items in a list
+- YOU STOPPED HERE in https://fishshell.com/docs/current/tutorial.html
 
 Multiple statements on same line
 - separate by semicolons
@@ -493,5 +635,28 @@ Reading Files
   while read line
     # do something with the line
   end < file-path
+
+Events
+- functions can run automatically when an event is fired
+  * uses --on-event or -e option
+  * function takeShelter --on-event tornado
+      echo Tornado warning! Take shelter!
+    end
+- can register any number of functions to run on the same event
+- events can be emitted with: emit event-name
+  * event-name can be followed by any number of arguments
+  * these become the value of the argv list inside functions
+  * ex. emit tornado 'category 4' 12
+- events are only handled within the current process
+- fish generates these events:
+  * fish_prompt: whenever a new fish prompt is about to be displayed
+  * fish_command_not_found: whenever a command lookup failed
+    - like Ruby's method_missing
+  * fish_preexec: before executing an interactive command
+    - the command line is passed as the first parameter
+    - emitted even if the command is invalid
+  * fish_postexec: after executing an interactive command
+    - the command line is passed as the first parameter
+    - emitted even if the command is invalid
 
 Document how to use the "spin" function you installed.

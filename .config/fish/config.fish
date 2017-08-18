@@ -6,7 +6,10 @@
 #if status --is-interactive
 if status --is-login
   echo running .config/fish/config.fish
-  set PATH $HOME/bin $PATH
+  # If not already in PATH, add $HOME/bin.
+  if not contains $HOME/bin $PATH
+    set PATH $HOME/bin $PATH
+  end
 end
 
 
