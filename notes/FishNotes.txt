@@ -267,6 +267,12 @@ Files
   * is an executable file: if test -x $file
   * is a non-empty file (has size): if test -s $file
   * and more (see test command for details)
+- to iterate over lines in a file
+  * direct a file into a loop as follows:
+    while read line
+      # do something with the line
+    end < file-path
+
 
 Tests
 - commmonly used in "if" and "while" statements
@@ -409,7 +415,7 @@ Functions
       * displayed by "functions --details --verbose fn-name"
         in the fifth line
         - see --details below
-      * TODO: WRITE A FUNCTION THAT ONLY DISPLAYS THIS!
+      * see your fndesc.fish function that only displays the description
 - all functions are public
   * use prefixes for "private" functions
     to avoid name conflicts
@@ -650,13 +656,6 @@ Reading from stdin
     - if user enters "foo bar baz",
       first is set to "foo" and
       second is set to "bar baz"
-
-Reading Files
-- to iterate over lines in a file
-  direct a file into a loop as follows:
-  while read line
-    # do something with the line
-  end < file-path
 
 Events
 - functions can run automatically when an event is fired
