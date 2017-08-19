@@ -8,7 +8,7 @@ For article
   * maybe make colors configurable
 
 Help
-- help command-name
+- help command-name or command-name -h
   * opens browser to fish shell help page
 - man command-name
   * displays same help in terminal
@@ -92,8 +92,20 @@ Command History
 - press enter to execute one or ctrl-c to exit
 
 Tab Completions
-- can complete command names, switches, file paths,
-  and git branch names (including remote branches)
+- can complete command names (all three kinds),
+  switches,
+  variable names
+  (ex. echo $re then press tab to see all variables that contain "re"),
+  file paths,
+  git branch names (including remote branches),
+  process names/ids
+  (ex. kill fs and press tab to see all processes whose names contain "fs"),
+  job names/ids,
+  man page names
+  (ex. man js and press tab to see all page names that contain "js"),
+  ssh hosts,
+  users (ex. su and press tab to see all usernames),
+  and more
 - while entering a command, press tab
 - if there is only one option, it will be expanded in place
 - if there is more than one option,
@@ -113,6 +125,11 @@ Tab Completions
   * press tab once to see options,
     again to show all options if more than four,
     and again to highlight first option
+- can implement custom completions for custom commands
+  * complete -c command-name -s short-switch -l long-switch -a 'argument words'
+  * TODO: an advanced topic
+    - see your functions/greet.fish and completions/greet.fish example
+    - see https://fishshell.com/docs/current/commands.html#complete
 
 Aliases
 - to define an alias
@@ -149,6 +166,9 @@ Changing Working Directory
   * ex. ~ cds to home directory
   * can enter any path that starts with ., /, or ~
   * ex. .. cds to parent directory
+- can use tab completion to complete the next path part
+  * can even press tab without typing anything
+    to cd to a child directory
 
 Commands
 - every command is executed by entering its name
@@ -159,6 +179,8 @@ Commands
 - to include a space in an argument,
   preceded space with a backslash or
   enclose argument in single or double quotes
+- arguments are expanded before commands are executed
+  * this includes evaluating wildcards in file paths
 - all commands set the "status" environment variable to
   0 for success and another number for failure
 - to execute one command and then execute a second command
@@ -198,8 +220,10 @@ Commands
     - builtin name
 
 Wildcards
-- can use * like other shells
-- can also use ** to traverse any number of directories
+- ? matches a single character
+- * matches any number of characters not containing /
+- ** is like *, but also matches /
+  which enables recursing into subdirectories
 
 Pipes and Redirections
 - pipe stdout of one command to the stdin of another
@@ -221,33 +245,75 @@ Pipes and Redirections
 - to redirect stderr to stdout, some-command 2>&1
 
 Variables
+- variable names consist of letters, digits, and underscores
+- there are three variable scopes
+  - local
+    * available only in the current block
+    * blocks begin with one of these keywords:
+      if, function, begin, or switch
+    * blocks end with the corresponding end keyword
+  - global
+    * available anywhere in the current session
+  - universal
+    * available in every session, even future sessions
+      because they are saved across reboots
+      - stored in ~/.config/fish/fishd.{machine-id}
 - set with: set {name} {value}
-  * by default variables are local to the block where they are defined
-    - can specify with -l (--local), but this is the default
-  * to make them global to the session, add --global (-g) switch
-    - TODO: really visible to everything in the same process?
-  * to export them so they are visible in child processes,
+  * to make it local, add --local (-l) switch
+  * to make it global, add --global (-g) switch
+  * to make it universal, add --universal (-U) switch
+  * to export it so it is visible in child processes,
     add --export (-x) switch
-  * to make them universal so they are
-    shared between all processes on the current computer
-    and saved across restarts, add --universal (-U) switch
-  * already defined, the scope cannot be changed
-    - erase it and then set again
+    - this is not a new kind of scope
+    - it is convention for exported variable names to be all uppercase
+  * if set with no scope switch
+    * if the variable has already been set in any scope,
+      this changes the value of the lowest scope already set
+    * if the variable has not already been set in any scope,
+      the new variable will be local to the function in which it is set,
+      not the block where it is set
+      - if not in a function, it will be global
+- the same variable name can be set to different values in different scopes
+  * references are resolved at the lowest scope found,
+    local then global then universal
+- get with $name
+- can use multiple $'s to treat the value of a variable as a variable name
+  * ex.
+    set pocket 'wallet'
+    set pant pocket
+    echo $$pant # wallet
+  * ex.
+    set foreground blue
+    set background green
+    set side fore
+    set name "$side"ground
+    echo $$name # blue
 - all variable values are lists that hold zero, one, or more string values
-- TODO: How can you determine the type of value in a list?
-  * string or number?
-- TODO: How can you determine the scope of a given variable?
 - variable names are case-sensitive
   * myvar and myVar are different variables
 - delete (erase) with: set -e {name} (--erase)
-- query (determine if set) with: set -q {name} (--query)
-  * sets status variable to 0 if defined and 1 if not
+  * will delete variable in the closest existing scope
+    - local then global then universal
+  * can specify the scope in which the variable should be erased
+- query (determine if set) with: set --query name (or -q)
+  * sets status variable to 0 if set and 1 if not
     - to see, echo $status
-  * to see value, echo ${name}
-- list names and values of all variables: set
-- list names of all defined variables: set -n (--names)
+    - add a scope switch to determine if set in a specific scope
+  * a variable can be set and not have a value
+    - ex. set name
+    - like setting a variable to null in JavaScript, versus undefined
+  * to determine if a variable has a value
+    - set -q name[0]
+- to list names and values of variables
+  * all: set
+  * only universal: set -U
+  * only global: set -g
+  * only local: set -l
+  * only exported: set -x
+- to list names of all defined variables
+  * set --names (-n)
   * this may abbreviate long names
-  * to avoid, use -L (--long)
+  * to avoid, add --long (-L)
 
 Strings
 - literals are delimited by single or double quotes
@@ -282,6 +348,9 @@ Strings
   * ex.
     set middle 'some middle'
     set result 'some prefix'$middle'some suffix'
+    - these are similar but result in a list with count of 3
+      set result some prefix"$middle"some suffix
+      set result some prefix{$middle}some suffix
 - to test whether a string ...
   * is empty: if test -z $var
   * is not empty: if test -n $var
@@ -289,7 +358,9 @@ Strings
   * is not identical to another: if $v1 != $v2
 
 Numbers
-- only integers are supported, not floating point
+- only integers are supported, not floating point,
+  but they are stored in variables as strings
+  * ex. set score 12345; echo (string length $score) # 5
 - to test the relationship between two numbers ...
   * equal: if $n1 -eq $n2
   * not equal:  if $n1 -ne $n2
@@ -340,8 +411,12 @@ Tests
     - this is too ugly! prefer option 1
 
 Command Substitution
-- surround command with parens,
+- to use the output of one command as an argument to another,
+  surround the command with parens,
   not backticks like in some other shells
+- if the command outputs more than one line,
+  each will be treated as a separate argument
+  to the outer command
 - to set a variable to the output of a command
   * set name (command)
   * ex. set today (date)
@@ -355,6 +430,11 @@ Command Substitution
 - doesn't work inside strings
   * ex. the command is not evaluated in
     "Today is (date $dateFormat)."
+
+Brace expansion
+- used to produce multiple arguments for a command
+- ex. ls *.{css,html.js} expands to ls *.css *.html *.js
+- also useful in the cp and mv commands
 
 Eval
 - evaluates a command in a string
@@ -370,29 +450,40 @@ Lists
   * set myList
 - to create a non-empty list
   * set myList item1 item2 ...
+  * set colors red green blue
+    is equivalent to
+    set colors 'red' 'green' 'blue'
+    which is not the same as
+    set colors 'red green blue'
+    in which the value of colors is a single string
 - to append
   * set myList $myList newItem
 - to prepend
   * set myList newItem $myList
-- to get an items by index
+- to get an item by index
   * myList[index]
   * indexes start at 1, not 0
   * use negative indexes to retrieve from end
     - myList[-1] gets last item
-- get a slice which is a new list
+- to set an item by index
+  * set myList[index] value
+- to get a slice which is a new list
   * myList[start..end]
   * start and end can be positive or negative
+- to remove an item
+  * if set -l index (contains -i someItem $myList)
+      set -e myList[$index]
+    end
+  * don't need if check if the item definitely exists
+  * see .config/fish/functions/listrm.fish
+    - TRY TO FIX ISSUE IN THIS!
+- to create a reversed list
+  * myList[-1..1]
 - to test whether an item is in a list
   * if contains someItem $myList
       # code goes here
     end
   * contains sets status to 0 if found and 1 if not
-- to remove an item
-  * if set -l index (contains -i someItem $myList)
-      set -e myList[$index]
-    end
-  * see .config/fish/functions/listrm.fish
-    - TRY TO FIX ISSUE IN THIS!
 - to get the length of a list
   * count $myList
 - to iterate over all items in a list
@@ -406,8 +497,11 @@ Lists
     set rows 1 2
     set cells $columns$rows # a1 b1 c1 a2 b2 c2
     count $cells # 6
+    set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
     set labels "Column "$columns # Column a Column b Column c
     count $labels # 3
+    set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2
+    - cannot have spaces around commas
 - conversion to lists
   * when a fish shell is started,
     if the variables PATH, CDPATH, or MANPATH exist,
@@ -452,6 +546,11 @@ PATH environment variable
   so each shell startup doesn't modify it again
 
 Functions
+- function names cannot begin with - and cannot contain /,
+  but can contain any other characters, even spaces
+  * to contain a space, prefix with \
+    - ex. function foo\ bar; echo in foo bar; end
+    - to call, foo\ bar
 - a fish function is a list of commmands
   that are executed when the name of the function
   is used as a command in the shell
@@ -558,6 +657,7 @@ Functions
           # code here
       end
     end
+- function do not have access to local variables set outside them
 - functions can run automatically when an event is emitted
   * uses --on-event (-e) switch
   * see "Events" section
@@ -776,6 +876,12 @@ Events
   * fish_postexec: after executing an interactive command
     - the command line is passed as the first parameter
     - emitted even if the command is invalid
+
+Processes
+- to get the current process id, %self
+- to get the process id of the job with number n, %n
+- to get the ids of all processes whose names begin with "prefix", $prefix
+
 
 Jobs
 - to run a command in background, add & to end of command
