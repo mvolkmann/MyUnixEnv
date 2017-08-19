@@ -12,6 +12,37 @@ For article
   * writing functions
   * advanced
 
+Goals
+- copied from https://fishshell.com/docs/current/design.html
+  * Everything that can be done in other shell languages
+    should be possible to do in fish,
+    though fish may rely on external commands in doing so.
+  * Fish should be user friendly, but not at the expense of expressiveness.
+    Most tradeoffs between power and ease of use can be avoided
+    with careful design.
+  * Whenever possible without breaking the above goals,
+    fish should follow the Posix syntax.
+  * The shell language should have a small set of orthogonal features.
+  * Everything should be tab-completable, and
+    every tab completion should have a description.
+  * Every syntax error and error in a built-in command should contain
+    an error message describing what went wrong and a relevant help page.
+    Whenever possible, errors should be flagged red by the syntax highlighter.
+  * The language should be uniform, so that once
+    the user understands the command/argument syntax,
+    they will know the whole language, and be able to
+    use tab-completion to discover new features.
+  * see the webpage above for more
+
+Licence
+- uses GNU General Public License, version 2
+  * summary:
+    You may copy, distribute and modify the software
+    as long as you track changes/dates in source files.
+    Any modifications to or software including (via compiler)
+    GPL-licensed code must also be made available under the GPL
+    along with build and install instructions.
+
 Help
 - man command-name
   * displays same help in terminal
