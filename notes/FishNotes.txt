@@ -592,7 +592,9 @@ Files
     while read line
       # do something with the line
     end < file-path
-
+- to open a file using its default application
+  * open file-path
+    - ex. open demo.html
 
 Tests
 - commmonly used in "if" and "while" statements
@@ -832,6 +834,10 @@ Functions
   * uses editor in variable VISUAL that can be set in config.fish
     - defaults to emacs
     - ex. set VISUAL vim
+  * emphasize using this and funcsave over
+    manually creating files in the proper directory
+    - after every use of funced, run funcsave to save changes
+      in .fish file under ~/.config/fish/functions
   * why does it ask if a weird file should be removed after exiting editor?
     - What are the files under /var/folders/jc/...?
     - can delete them with find /var/folders/js -name '*.fish' -delete
@@ -1036,6 +1042,9 @@ If statements
 - a common command to use in an "if" is "test"
   ex. if test $status # success
   ex. if test $status !- 0 # failure
+- can negate condition being tested
+  ex. if not test $status
+  ex. if not any-command
 - for a single line "if"
   * if condition; statement; end
 
