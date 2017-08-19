@@ -6,6 +6,11 @@ For article
   in tree form that colors file types differently
   (ex. red for .js, blue for .scss, ...)
   * maybe make colors configurable
+- separate into these sections
+  * basic usage
+  * minor customizations
+  * writing functions
+  * advanced
 
 Help
 - man command-name
@@ -13,6 +18,7 @@ Help
 - help command-name or command-name -h
   * same as man, but displays browser which looks nicer
 - browse https://fishshell.com/
+- Github: https://github.com/fish-shell/
 - use official mailing list at fish-users@lists.sourceforge.net
 - use IRC channel #fish on irc.oftc.net
 
