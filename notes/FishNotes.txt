@@ -387,7 +387,6 @@ Commands
   only if the first failed
   * command1; or command2
   * note the use of "or" instead of "||" like in bash
-- TODO: NEED AN EXAMPLE OF USING "not"
 - autoloading
   * every time a command is evaluated
     it first checks whether there is a file
@@ -927,6 +926,7 @@ Functions
     - can delete them with find /var/folders/js -name '*.fish' -delete
 - to format a .fish file
   * fish_indent < some-name.fish
+    - writes to stdout
     - to output using colors specified in fish_config, add --ansi switch
     - to output as HTML, add --html switch
       * can add colors to specific syntax items with CSS
@@ -934,7 +934,10 @@ Functions
     - fish_indent -w some-name.fish
   * uses four-space indentation and that cannot be customized,
     but can replace all occurrences for four spaces with two
-    * TODO: can do in editor, but can you do it with sed?
+    - see your fish_indent2.fish script
+    - run with fish_indent2 name
+    - creates a file with "-new" at end
+    - TODO: Fix to overwrite the input file
 - to list all currently defined functions
   * functions
     - add --all or -a to include functions that begin with an underscore
