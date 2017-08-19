@@ -103,6 +103,18 @@ Configuring
     - colors
       * displays current color settings
         and allows them to be customized
+      * select a theme, press "Set Theme!" button, and
+        wait a few seconds for it to change to "Theme Set!"
+      * doesn't change background color in iTerm2
+        - do this in Preferences...Profiles...Colors...Background
+      * can customize color for these:
+        - commands, parameters, statement terminators, quoted strings,
+          redirections, errors, comments, and autosuggestions
+        - click on the syntax example of each near the top
+          and select a color from the color grid below
+        - press "Set Theme" when finished selecting colors
+        - doesn't apply to function definitions
+          when files that define them are simply cat'ed
     - prompt
       * displays current prompt
         and allows it to be customized
