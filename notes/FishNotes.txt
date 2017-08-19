@@ -191,9 +191,32 @@ Colors
   * also see examples in your functions/fish_prompt.fish file
 
 echo Command
+- writes to stdout
 - -n switch suppresses newline that is normally output at end
   * to beep, echo -n \a (it seems -n isn't needed)
 - -s switch causes arguments to not be separated by spaces
+
+printf Command
+- writes to stdout using a format string
+- printf format-string arg1 arg2 ...
+- format specifiers
+  * %d for decimal
+  * %i for integer
+  * %f for float
+  * %s for string
+  * %% for literal %
+  * and more
+- escapes
+  * \a for bell
+  * \n for newline
+  * \t for tab
+  * and more
+- ex.
+  set format 'my name is %s and i am '(set_color red)%i(set_color normal)' years old.'
+  printf $format mark 56
+- ex.
+  set format 'my name is %s and i am %s%i%s years old.'
+  printf $format mark (set_color red) 56 (set_color normal)
 
 Autosuggestions
 - suggests commands as you type
@@ -319,6 +342,14 @@ Changing Working Directory
     press cmd-option-left (alt-left in Windows)
   * to go forward one, enter nextd or
     press cmd-option-right (alt-right in Windows)
+- using stack
+  * to push a new directory onto the stack and cd to it,
+    pushd directory
+  * to pop the current directory off the stack
+    and cd to the directory now at the top,
+    popd
+    - can't pop last directory from stack
+  * to view the directory stack, dirs
 
 Commands
 - every command is executed by entering its name
@@ -592,8 +623,8 @@ Files
     while read line
       # do something with the line
     end < file-path
-- to open a file using its default application
-  * open file-path
+- to open files using their default application
+  * open file-path1 file-path2 ...
     - ex. open demo.html
 
 Tests
