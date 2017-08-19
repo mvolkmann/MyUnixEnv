@@ -292,9 +292,12 @@ Commands
     with the same name and a .fish extension
     - this typically contains ~/.config/fish/functions
       which is where user-defined functions are usually placed
-    - if found, it loads the file to get
-      the current definition of the function
+    - if found and the file has not been loaded
+      within the "staleness interval",
+      it loads the file to get the current definition of the function
       and executes the function
+      * the staleness interval avoids thrashing the file system
+      * around 5 seconds
     - does not search subdirectories of these paths
     - it is recommended that these files only define
       the function whose name matches the command
@@ -439,7 +442,8 @@ status Command
   * status current-filename
   * status current-function
   * status current-line-number
-    - TODO: Why does this always output 2?
+    - this has issues
+    - see https://github.com/fish-shell/fish-shell/issues/4161
   * status print-stack-trace
 
 Strings
