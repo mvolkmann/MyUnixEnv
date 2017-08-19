@@ -519,6 +519,13 @@ Variables
     - like setting a variable to null in JavaScript, versus undefined
   * to determine if a variable has a value
     - set -q name[0]
+- to interactively edit the value of a variable
+  * vared name
+  * useful for values that are long strings
+  * can't edit values that are lists with more than one item,
+    but can edit a single item
+    - ex. assuming colors is a list of colors
+      vared colors[3]
 
 Special Variables
 - there are many variables whose names begin with "fish_"
@@ -1105,6 +1112,7 @@ Types of commands
 - to get the type of a name
   * type name
   * for functions, this also outputs their definition
+  * to get just the type, type -t name
 
 If statements
 - if condition
