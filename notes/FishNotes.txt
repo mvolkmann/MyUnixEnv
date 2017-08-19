@@ -206,11 +206,15 @@ Tab Completions
   * press tab once to see options,
     again to show all options if more than four,
     and again to highlight first option
+
+Custom Tab Completions
 - can implement custom completions for custom commands
   * complete -c command-name -s short-switch -l long-switch -a 'argument words'
-  * TODO: an advanced topic
-    - see your functions/greet.fish and completions/greet.fish example
-    - see https://fishshell.com/docs/current/commands.html#complete
+- an advanced topic
+  * see your functions/greet.fish and completions/greet.fish example
+    - TODO: not working!
+  * see https://fishshell.com/docs/current/commands.html#complete
+    and https://fishshell.com/docs/current/index.html#completion-own
 
 Aliases
 - to define an alias
@@ -901,7 +905,7 @@ Types of commands
   * to get information about a command
     - command name
   * to get the path to a command
-    - command --search name
+    - command --search name (-s name)
       or
       which name
     - the "command" command can also be used to
