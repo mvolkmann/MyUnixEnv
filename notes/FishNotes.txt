@@ -8,14 +8,13 @@ For article
   * maybe make colors configurable
 
 Help
-- help command-name or command-name -h
-  * opens browser to fish shell help page
 - man command-name
   * displays same help in terminal
+- help command-name or command-name -h
+  * same as man, but displays browser which looks nicer
 - browse https://fishshell.com/
-- browse https://github.com/jbucaran/fish-shell-cookbook
-- to get help on any fish command, man {command}
-  * ex. man function; man if, man switch
+- use official mailing list at fish-users@lists.sourceforge.net
+- use IRC channel #fish on irc.oftc.net
 
 Installing
 - browse https://fishshell.com/
@@ -41,6 +40,17 @@ Configuring
   * ~/.config/fish/config.fish
   * can define functions here, but it is
     more efficient to use autoloading functions
+  * to run a command only when starting a login shell
+    - determine from exit status of command "status --is-login"
+      * ex. if status --is-login; ...; end
+    - a login shell is created for every new terminal window
+      * includes creating new tmux panes
+  * to run a command only when starting an interactive shell
+    - determine from exit status of command "status --is-interactive"
+      * ex. if status --is-interactive; ...; end
+    - an interactive shell is created when a subshell is created
+      * ex. by entering "fish" inside a fish shell
+    - login shells are also interactive
 - web UI
   * to start, fish_config [starting-tab-name]
   * tabs include
@@ -53,7 +63,6 @@ Configuring
     - history
     - bindings
     - abbreviations
-- 
 
 Tools for fish (in alphabetical order)
 - Fisherman - https://github.com/fisherman/fisherman
@@ -778,9 +787,34 @@ Functions
     end
 - function do not have access to local variables set outside them
   * they are not closures
-- functions can run automatically when an event is emitted
+
+Auto-running Functions
+- functions can run automatically when an event is fired
   * uses --on-event (-e) switch
-  * see "Events" section
+  * ex.
+    function takeShelter --on-event tornado
+      echo Tornado warning! Take shelter!
+    end
+  * these functions are not auto-loaded
+    - consider defining them in config.fish or
+      sourcing files that define them from config.fish
+      - source file-path
+  * can register any number of functions to run on the same event
+  * events can be emitted with: emit event-name
+    - event-name can be followed by any number of arguments
+    - these become the value of the argv list inside functions
+    - ex. emit tornado 'category 4' 12
+  * events are only handled within the current process
+  * fish generates these events:
+    - fish_prompt: whenever a new fish prompt is about to be displayed
+    - fish_command_not_found: whenever a command lookup failed
+      * like Ruby's method_missing
+    - fish_preexec: before executing an interactive command
+      * the command line is passed as the first parameter
+      * emitted even if the command is invalid
+    - fish_postexec: after executing an interactive command
+      * the command line is passed as the first parameter
+      * emitted even if the command is invalid
 - functions can run automatically when a variable changes
   * uses --on-variable (-v) switch
   * ex.
@@ -793,6 +827,9 @@ Functions
   * ex.
     function announceProcessExit --on-process-exit 12345
       echo an important process exited
+    end
+    function announceMyExit --on-process-exit %self
+      echo I am exiting
     end
 - a function can run automatically when signal is received
   * uses --on-signal or -s followed by a signal name or number
@@ -909,6 +946,14 @@ Multiple statements on same line
 - separate by semicolons
 - ex. function foo; echo in foo; end
 
+Custom Greeting
+- by default, new fish shells display the greeting
+  "Welcome to fish, the friendly interactive shell"
+- to change this,
+  set -U fish_greeting 'You are a fish!'
+- to suppress this, erase the current setting with
+  set -e fish_greeting
+
 Custom Prompt
 - the default fish prompt displays whoami, hostname,
   the abbreviated working directory (returned by prompt_pwd),
@@ -940,7 +985,7 @@ function fish_prompt
   echo -n '🐠  '
 end
 - can define a right prompt with the function fish_right_prompt
-- can display Vim mode in prompt
+- can display Vim mode in prompt with the function fish_mode_prompt
   * ex. N for normal, I for insert, R for replace, and V for visuaul
   * see your functions/fish_mode_prompt.fish file
   * outputs a new prompt every time mode changes
@@ -975,43 +1020,18 @@ Reading from stdin
       first is set to "foo" and
       second is set to "bar baz"
 
-Events
-- functions can run automatically when an event is fired
-  * uses --on-event or -e switch
-  * ex.
-    function takeShelter --on-event tornado
-      echo Tornado warning! Take shelter!
-    end
-- these functions are not auto-loaded
-  * consider defining them in config.fish or
-    sourcing files that define them from config.fish
-    - source file-path
-- can register any number of functions to run on the same event
-- events can be emitted with: emit event-name
-  * event-name can be followed by any number of arguments
-  * these become the value of the argv list inside functions
-  * ex. emit tornado 'category 4' 12
-- events are only handled within the current process
-- fish generates these events:
-  * fish_prompt: whenever a new fish prompt is about to be displayed
-  * fish_command_not_found: whenever a command lookup failed
-    - like Ruby's method_missing
-  * fish_preexec: before executing an interactive command
-    - the command line is passed as the first parameter
-    - emitted even if the command is invalid
-  * fish_postexec: after executing an interactive command
-    - the command line is passed as the first parameter
-    - emitted even if the command is invalid
-
 Processes
 - to get the current process id, %self
 - to get the process id of the job with number n, %n
 - to get the ids of all processes whose names begin with "prefix", $prefix
 
-
 Jobs
 - to run a command in background, add & to end of command
+  * does not work for custom functions!
+  * TODO: Why?
 - to suspend currently running command, press ctrl-z
+  * does not work for custom functions!
+  * TODO: Why?
 - to continue running a suspended command in background enter "bg"
 - to get a list of background jobs and their job numbers, enter "jobs"
 - to bring a background job back to the foreground,
@@ -1022,5 +1042,17 @@ Jobs
   it will warn about this and not exit
   * if you try to exit again,
     it will kill all the background jobs and exit
+
+Debugging Functions
+- add use of "breakpoint" commands in function
+- run the function
+- when a breakpoint is reached,
+  the function will stop and control will be returned to the shell
+- can examine and modify variables in the function
+  * ex. echo $count
+  * ex. set count 7
+- to resume execution, enter "exit"
+- to stop the running function before it reaches its end,
+  enter "kill %self"
 
 TODO: Document how to use the "spin" function you installed.

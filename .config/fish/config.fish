@@ -3,7 +3,6 @@
 
 # Avoid adding the same thing to PATH
 # each time an interactive shell is created.
-#if status --is-interactive
 if status --is-login
   echo running .config/fish/config.fish
   # If not already in PATH, add $HOME/bin.
@@ -11,7 +10,6 @@ if status --is-login
     set PATH $HOME/bin $PATH
   end
 end
-
 
 # Disable start/stop output control so
 # ctrl-s can be used in Vim to save and
