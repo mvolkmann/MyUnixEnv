@@ -51,6 +51,9 @@ Help
 - help command-name or command-name -h
   * same as man, but displays browser which looks nicer
 - browse https://fishshell.com/
+  * entering just "help" opens the local copy of the documentation
+    at this URL for the version of fish that is installed
+    in the default web browser
 - Github: https://github.com/fish-shell/
 - use official mailing list at fish-users@lists.sourceforge.net
 - use IRC channel #fish on irc.oftc.net
@@ -61,6 +64,10 @@ Installing
 - for macOS there is an installer
   and can run "brew install fish"
 - for Window, can only run in Cygwin
+
+Starting a fish shell
+- enter "fish"
+- to exit, enter "exit"
 
 Making default shell
 - chsh -s /usr/local/bin/fish
@@ -94,14 +101,26 @@ Configuring
   * to start, fish_config [starting-tab-name]
   * tabs include
     - colors
+      * displays current color settings
+        and allows them to be customized
     - prompt
-    - functions
-    - variables
-      * can only view values of current variables
-      * TODO: is this only universal variables?
-    - history
-    - bindings
-    - abbreviations
+      * displays current prompt
+        and allows it to be customized
+    - functions - view-only
+    - variables - view-only
+      * lists all universal variables and their values,
+        not global or local variables
+    - history - view-only
+      * lists command history
+    - bindings - view-only
+      * lists current key bindings
+    - abbreviations - view-only
+      * lists abbreviations, typically defined in config.fish
+  * TODO: Describe what can be done on each of these tabs.
+  * pressing enter in the terminal will shutdown the server
+    that serves this help
+    - restarting it by entering fish_config again
+      will open a new browser tab
 
 Tools for fish (in alphabetical order)
 - Fisherman - https://github.com/fisherman/fisherman
@@ -251,9 +270,15 @@ Changing Working Directory
   * ex. ~ cds to home directory
   * can enter any path that starts with ., /, or ~
   * ex. .. cds to parent directory
-- can use tab completion to complete the next path part
+- use tab completion to complete the next path part
   * can even press tab without typing anything
     to cd to a child directory
+- dirh prints list of last 25 directories visited
+  * current directory will be highlighted
+  * to go back one, enter prevd or
+    press cmd-option-left (alt-left in Windows)
+  * to go forward one, enter nextd or
+    press cmd-option-right (alt-right in Windows)
 
 Commands
 - every command is executed by entering its name
@@ -275,6 +300,9 @@ Commands
   * this includes evaluating wildcards in file paths
 - all commands set the "status" environment variable to
   0 for success and another number for failure
+  * true and false are not boolean literals
+  * false is a command that sets status to 1
+  * true is a command that sets status to 0
 - to execute one command and then execute a second command
   only if the first is successful
   * command1; and command2
@@ -425,6 +453,7 @@ Special Variables
   * COLUMNS is set to # of columns in current terminal
   * FISH_VERSION is set to the version of the fish shell being used
     - the "version" variable is also set to this
+    - can also output by entering "fish -v"
   * HOME is set to the user's home directory
   * LINES is set to # of lines (or rows) in current terminal
   * PWD is set to the current (or present) working directory
@@ -850,6 +879,7 @@ Auto-running Functions
       - source file-path
   * can register any number of functions to run on the same event
   * events can be emitted with: emit event-name
+    - event-name can be any string
     - event-name can be followed by any number of arguments
     - these become the value of the argv list inside functions
     - ex. emit tornado 'category 4' 12
