@@ -3,6 +3,8 @@ Fish Shell Notes (version 2.6.0)
 LOOK FOR TODO IN THIS FILE!
 
 For article
+- Come for the colors and autocomplete,
+  stay for the sane scripting!
 - create example script in Fish, Bash, and Node
   that lists files containing given text in their name
   in tree form that colors file types differently
@@ -99,6 +101,7 @@ Configuring
     - login shells are also interactive
 - web UI
   * to start, fish_config [starting-tab-name]
+    - starts a local web server opens a tab in the default web browser
   * tabs include
     - colors
       * displays current color settings
@@ -801,6 +804,14 @@ Functions
   * uses editor in variable VISUAL that can be set in config.fish
     - defaults to emacs
     - ex. set VISUAL vim
+- to format a .fish file
+  * fish_indent < some-name.fish
+    - to output using colors specified in fish_config, add --ansi switch
+    - to output as HTML, add --html switch
+      * can add colors to specific syntax items with CSS
+  * to read from a file and rewrite it with formatted version
+    - fish_indent -w some-name.fish
+  * uses four-space indentation and that cannot be customized
 - to list all currently defined functions
   * functions
     - add --all or -a to include functions that begin with an underscore
