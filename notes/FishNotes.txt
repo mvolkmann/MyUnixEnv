@@ -117,7 +117,11 @@ Configuring
           when files that define them are simply cat'ed
     - prompt
       * displays current prompt
-        and allows it to be customized
+      * allows selection from 17 predefined prompts
+      * select one and press "Prompt Set!"
+      * DANGER: This overwrites functions/fish_prompt.fish,
+        so if you defined a custom prompt in that file,
+        don't do this!
     - functions - view-only
     - variables - view-only
       * lists all universal variables and their values,
@@ -128,7 +132,6 @@ Configuring
       * lists current key bindings
     - abbreviations - view-only
       * lists abbreviations, typically defined in config.fish
-  * TODO: Describe what can be done on each of these tabs.
   * pressing enter in the terminal will shutdown the server
     that serves this help
     - restarting it by entering fish_config again
