@@ -212,6 +212,19 @@ Command History
 - all commands entered are saved in command history
   * unless they begin with a space (like incognito commands)
   * duplicate commands are removed, retaining only the most recent
+  * to list all: history
+  * to list only those that contain a given substring
+    - history text
+    - same as history search --contains substring (-c)
+  * to list only those that begin with a given prefix
+    - history search --prefix prefix (-p)
+  * to include date/time commands were issued: history --show-time-prepends (-t)
+  * to limit number of commands output: history -n number
+  * to clear all history: history clear
+  * to delete commands from history that contain a given substring
+    - history delete --contains substring
+  * to delete commands from history that begin with a given prefix
+    - history delete --prefix prefix
 - type part of a previous command and press up and down arrows
   to navigate through all previous commands that match
 - press enter to execute one or ctrl-c to exit
@@ -744,6 +757,10 @@ Math
 - pass a string containing a mathematical expression
 - sets status to a non-zero number if expression is invalid
 - writes result to stdout
+- to limit number of decimal places in result, -sn
+  where n is the number of decimal places to show
+  - defaults to zero!
+  - doesn't round properly!
 - ex.
   set width 2
   set height 3
