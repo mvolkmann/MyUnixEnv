@@ -336,6 +336,7 @@ Changing Working Directory
 - use tab completion to complete the next path part
   * can even press tab without typing anything
     to cd to a child directory
+- to get current working directory, enter pwd
 - dirh prints list of last 25 directories visited
   * current directory will be highlighted
   * to go back one, enter prevd or
@@ -1144,6 +1145,10 @@ Custom Prompt
 - the default fish prompt displays whoami, hostname,
   the abbreviated working directory (returned by prompt_pwd),
   and ">"
+  * abbreviated working directory returned by prompt_pwd isn't very useful
+  * somewhat better if characters per path part is increased
+    - defaults to 1
+    - set fish_prompt_pwd_dir_length 3
 - to customize, create ~/.config/fish/functions/fish_prompt.fish
   that echos the desired prompt
   * use set_color to control colors of various parts
@@ -1240,5 +1245,21 @@ Debugging Functions
 - to resume execution, enter "exit"
 - to stop the running function before it reaches its end,
   enter "kill %self"
+
+Random Numbers and Options
+- random generates an integer in the range [0, 32767]
+- argument meanings depend on number given
+  * if 1, it is a seed
+  * if 2, they are start and end of the range
+    - ex. for a dice roll, random 1 6
+  * if 3, they are start, step, and end
+    - where only numbers that are increments of step from start
+      will be generated
+- to select a random item from a list of options
+  * random choice option1 option2 ...
+    - ex. random choice red green blue
+    - ex.
+      set colors red orange yellow green blue purple
+      set color (random choice $colors)
 
 TODO: Document how to use the "spin" function you installed.
