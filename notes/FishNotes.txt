@@ -597,6 +597,13 @@ Lists
 - to get a slice which is a new list
   * myList[start..end]
   * start and end can be positive or negative
+- to test whether an item is in a list
+  * if contains item $myList
+      # code goes here
+    end
+  * this contains command sets status to 0 if found and 1 if not
+- to get index of an item in a list
+  * contains --index item $myList (-i)
 - to remove an item
   * if set -l index (contains -i someItem $myList)
       set -e myList[$index]
@@ -606,11 +613,6 @@ Lists
     - TRY TO FIX ISSUE IN THIS!
 - to create a reversed list
   * myList[-1..1]
-- to test whether an item is in a list
-  * if contains someItem $myList
-      # code goes here
-    end
-  * this contains command sets status to 0 if found and 1 if not
 - to get the length of a list
   * count $myList
 - to iterate over all items in a list
@@ -975,11 +977,9 @@ Loops
   * uses status of condition to determine whether to iterate again
     0 to continue; anything else to stop
   * for an endless loop, use "true" for condition
-  * can use break to exit before condition has bad status
 - for var in list
     # use var here
   end
-  * can use break to exit early
   * to iterate over a list of numbers, use seq command
     - ex. for n in (seq 5); echo $n; end
       * outputs 1, 2, 3, 4, 5 on separate lines
@@ -989,6 +989,9 @@ Loops
       * if only two, they are first and last, and incr defaults to 1
   * can iterate over relative file paths that match a pattern
     ex. for path in b*.fish; echo $path; end
+- in both kinds of loops
+  * use "break" to exit early
+  * use "continue" to skip remainder of current iteration
 
 Multiple statements on same line
 - separate by semicolons
