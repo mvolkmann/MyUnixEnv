@@ -575,7 +575,7 @@ Eval
   set command ls *.$extension
   eval $command
 
-Lists
+Lists (a.k.a. Arrays)
 - lists cannot contain other lists
 - to create an empty list
   * set myList
