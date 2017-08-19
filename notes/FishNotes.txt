@@ -658,6 +658,7 @@ Functions
       end
     end
 - function do not have access to local variables set outside them
+  * they are not closures
 - functions can run automatically when an event is emitted
   * uses --on-event (-e) switch
   * see "Events" section
