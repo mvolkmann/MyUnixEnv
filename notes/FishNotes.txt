@@ -50,8 +50,9 @@ Licence
 Help
 - man command-name
   * displays same help in terminal
-- help command-name or command-name -h
+- help command-name
   * same as man, but displays browser which looks nicer
+  * for most commands, can also use: command-name -h
 - browse https://fishshell.com/
   * entering just "help" opens the local copy of the documentation
     at this URL for the version of fish that is installed
@@ -154,6 +155,10 @@ Tools for fish (in alphabetical order)
 
 Colors
 - all colors are customizable using the set_color command
+  * outputs sequence of characters that change terminal text color
+    for subsequently output text
+  * can capture in a variable and output later
+  * ex. set makeBlue (set_color blue); echo $makeBlue'I am blue'
 - colors mentioned below are the defaults
 - when entering commands,
   text is red until a valid command is entered
@@ -187,6 +192,7 @@ Colors
 
 echo Command
 - -n switch suppresses newline that is normally output at end
+  * to beep, echo -n \a (it seems -n isn't needed)
 - -s switch causes arguments to not be separated by spaces
 
 Autosuggestions
@@ -195,6 +201,9 @@ Autosuggestions
 - gets suggestions from command history,
   possible commands, possible switches (a.k.a. options),
   and file paths
+  * possible switches are determined by parsing man pages
+  * if new man pages are installed,
+    enter fish_update_completions to update these
 - to accept completion, press right arrow
   * still need to press enter to execute command
 - continue typing if suggestion is not desired
@@ -772,7 +781,7 @@ Functions
       * displayed by "functions --details --verbose fn-name"
         in the fifth line
         - see --details below
-      * see your fndesc.fish function that only displays the description
+      * see your fndesc.fish function that only displays description
 - all functions are public
   * use prefixes for "private" functions
     to avoid name conflicts
@@ -799,11 +808,16 @@ Functions
   in a file in .config/fish/functions
   * funcsave name
   * uses tabs for indentation
-- to edit a previously defined function
+  * allows the function to be autoloaded in all future sessions
+- to edit a function definition
   * funced name
+  * if the function is not already defined, it will be created
   * uses editor in variable VISUAL that can be set in config.fish
     - defaults to emacs
     - ex. set VISUAL vim
+  * why does it ask if a weird file should be removed after exiting editor?
+    - What are the files under /var/folders/jc/...?
+    - can delete them with find /var/folders/js -name '*.fish' -delete
 - to format a .fish file
   * fish_indent < some-name.fish
     - to output using colors specified in fish_config, add --ansi switch
@@ -819,8 +833,8 @@ Functions
     - add --all or -a to include functions that begin with an underscore
   * to view in web UI
     - fish_config functions
-- to output the code for a function
-  * functions myname
+- to output the code for one or more functions
+  * functions name1 name2 ...
 - to see where a function is defined (its path)
   * functions --details name
     - or -D
@@ -1003,6 +1017,8 @@ If statements
   * any other value is an error and treated as false
   * opposite from most programming languages
 - a common command to use in an "if" is "test"
+  ex. if test $status # success
+  ex. if test $status !- 0 # failure
 - for a single line "if"
   * if condition; statement; end
 
