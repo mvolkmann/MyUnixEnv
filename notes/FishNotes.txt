@@ -811,7 +811,9 @@ Functions
       * can add colors to specific syntax items with CSS
   * to read from a file and rewrite it with formatted version
     - fish_indent -w some-name.fish
-  * uses four-space indentation and that cannot be customized
+  * uses four-space indentation and that cannot be customized,
+    but can replace all occurrences for four spaces with two
+    * TODO: can do in editor, but can you do it with sed?
 - to list all currently defined functions
   * functions
     - add --all or -a to include functions that begin with an underscore
