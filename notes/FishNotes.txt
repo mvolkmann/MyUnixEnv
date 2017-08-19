@@ -1,5 +1,7 @@
 Fish Shell Notes (version 2.6.0)
 
+LOOK FOR TODO IN THIS FILE!
+
 For article
 - create example script in Fish, Bash, and Node
   that lists files containing given text in their name
@@ -25,7 +27,7 @@ Goals
   * The shell language should have a small set of orthogonal features.
   * Everything should be tab-completable, and
     every tab completion should have a description.
-  * Every syntax error and error in a built-in command should contain
+  * Every syntax error and error in a builtin command should contain
     an error message describing what went wrong and a relevant help page.
     Whenever possible, errors should be flagged red by the syntax highlighter.
   * The language should be uniform, so that once
@@ -955,7 +957,11 @@ Switch statements
 - expression should evaluate to a string
 - each case can be followed by one or more values
   separated by spaces
-- does not fall through, no break at end of each case
+  * values that do not contain special characters
+    do not need to be in quotes
+- does not fall through; no break at end of each case
+- to treat one case value as the default
+  case default-value '*'
 
 Loops
 - while condition
@@ -964,11 +970,12 @@ Loops
   * condition can use "and" and "or"
   * uses status of condition to determine whether to iterate again
     0 to continue; anything else to stop
-  * for an endless loop, use true for condition
-    - use break to exit
+  * for an endless loop, use "true" for condition
+  * can use break to exit before condition has bad status
 - for var in list
     # use var here
   end
+  * can use break to exit early
   * to iterate over a list of numbers, use seq command
     - ex. for n in (seq 5); echo $n; end
       * outputs 1, 2, 3, 4, 5 on separate lines
