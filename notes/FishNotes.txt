@@ -159,11 +159,10 @@ Colors
     for subsequently output text
   * can capture in a variable and output later
   * ex. set makeBlue (set_color blue); echo $makeBlue'I am blue'
-- colors mentioned below are the defaults
-- when entering commands,
+- by default when entering commands,
   text is red until a valid command is entered
   and then it changes to white
-- when typing file paths, the text is underlined
+- by default when typing file paths, the text is underlined
   unless no directory or file matches what has been typed
 - specifying a color
   * color names
@@ -178,10 +177,14 @@ Colors
   * --print-colors (-c) prints list of named colors
   * --bold (-o) sets bold mode.
   * --dim (-d) sets dim mode
+    - doesn't seem to have any effect in iTerm2
   * --italics (-i) sets italics mode
+    - doesn't work in iTerm2
+    - TODO: Is there any way to fix this?
   * --reverse (-r) sets reverse mode
   * --underline (-u) sets underlined mode
   * using set_color without these switches resets to default mode
+- to reset all colors and switches, set_color normal
 - variables that control colors
   * there are many that begin with "fish_color_"
     and "fish_pager_color_"
@@ -561,21 +564,6 @@ Strings
   * ex. set msg "Good morning, $USER. Have a great day!"
 - to get length
   * string length $name
-- indexed starting at 1
-- the "string" command has many "subcommands"
-- to get a substring
-  * string sub $name -s startIndex -l length
-  * if -s is omitted, it defaults to 1
-  * if -l is omitted, gets to end
-  * if -s is negative, it counts from end
-    - ex. to get last three characters, use -s -3
-- to set a new variable to a substring
-  * set newVar (string sub $name ...)
-- to split a string on a delimiter, resulting in a list
-  * string split delim $var
-  * ex.
-    set csv 'red,green,blue'
-    set colors (string split , $csv)
 - to concatenate a literal string with the value of a variable
   * ex.
     set middle 'some middle'
@@ -588,6 +576,63 @@ Strings
   * is not empty: if test -n $var
   * is identical to another: if $v1 = $v2
   * is not identical to another: if $v1 != $v2
+  * cannot test whether one string is less than or greater than another
+    in sorting order!
+    - < and > operators are only implemented for numbers
+    - TODO: Is there any workaround for this?
+- the "string" command has many "subcommands"
+- indexes start at 1
+- to get a substring
+  * string sub $name -s startIndex -l length
+  * if -s is omitted, it defaults to 1
+  * if -l is omitted, gets to end
+  * if -s is negative, it counts from end
+    - ex. to get last three characters, use -s -3
+  * ex. to get initials from a full name
+    - set initialList (string sub -l 1 $first $middle $last)
+    - set initials (string join '' $initialList)
+- to split a string on a delimiter, resulting in a list
+  * string split delim $var
+  * ex.
+    set csv 'red,green,blue'
+    set colors (string split , $csv)
+- to trim leading and/or trailing characters
+  * by default, trims whitespace from both sides
+  * switches
+    - --left (-l) to only trim from left
+    - --right (-r) to only trim from right
+    - --chars (-c) to specify characters to be trimmed instead of whitespace
+  * ex. set result (string trim --left --chars 0 00019) # 19
+- to create a new string by joining existing ones
+  using a delimiter between them
+  * ex. set dateStr (string join '/' $month $day $year)
+- to create a string that repeats a given string
+  * use string repeat with --count (-n) switch
+  * ex. set newText (string repeat -n3 'foo') # foofoofoo
+- to determine if a string matches a regular expression
+  * use match subcommand with --regex (-r)
+  * by default, just returns first match or none if not found
+    - to return all matches, add --all (-a)
+  * to make matching case-insenstive, add --ingore-case (-i)
+  * to get indexes and lengths of matches instead of matching text,
+    add --index (-n)
+  * can use capture groups
+    * returns list containing full match followed by each capture match
+  * to get lines that do not match instead of those that do, add --invert (-v)
+  * sets status to 0 if at least one match was found and 1 if not
+  * uses Perl regular expression syntax
+  * ex.
+    set text 'this is foolish work for a boolean'
+    set matches (string match -ar '.oo' $text) # foo boo
+    set matches (string match -anr '.oo' $text) # 9 3 28 3
+    - result is alternating list of indexes and lengths
+- to replace text in a string with other text
+  * string replace is similar to string match
+  * can match against literal text or a regex (using -r)
+  * ex. replace all occurrences of "foo" with "bar"
+    set text 'this is foolish work for a fool'
+    set newText (string replace -a 'foo' 'bar' $text)
+  * when using a regex, can use capture groups
 
 Numbers
 - only integers are supported, not floating point,
@@ -595,11 +640,11 @@ Numbers
   * ex. set score 12345; echo (string length $score) # 5
 - to test the relationship between two numbers ...
   * equal: if $n1 -eq $n2
-  * not equal:  if $n1 -ne $n2
-  * less than:  if $n1 -lt $n2
-  * less than or equal:  if $n1 -le $n2
-  * greater than:  if $n1 -gt $n2
-  * greater than or equal:  if $n1 -ge $n2
+  * not equal:  if test $n1 -ne $n2
+  * less than:  if test $n1 -lt $n2
+  * less than or equal:  if test $n1 -le $n2
+  * greater than:  if test $n1 -gt $n2
+  * greater than or equal:  if test $n1 -ge $n2
 - both operands must be a number
 
 Dates
@@ -919,7 +964,7 @@ Functions
   * sets status
 - return command
   - can use to exit before end
-  * sets status of function which defaults to 0 for success,
+  * sets exit status of function which defaults to 0 for success,
     but can be specified
     - ex. return 2
 - functions cannot return a value
@@ -974,6 +1019,8 @@ Auto-running Functions
     - consider defining them in config.fish or
       sourcing files that define them from config.fish
       - source file-path
+        * executes commands in the file without starting a new process
+        * changes to variables will affect the current shell
   * can register any number of functions to run on the same event
   * events can be emitted with: emit event-name
     - event-name can be any string
@@ -1185,31 +1232,44 @@ end
 
 Reading from stdin
 - read var
-  * waits for user to enter something,
-    terminated by enter key
+  * waits for user to enter something, terminated by enter key
+    - a single line
   * sets var to what user entered
 - switches
-  * --command text or -c text
+  * --command text (-c)
     - sets initial text as if user had entered it
     - users can modify this
   * same switches as "set" for choosing scope of variable
     - includes -l (local), -g (global), -x (export), and -U (universal)
-  * --silent or -i to mask input (ex. for passwords)
-  * --prompt-str text or -P text
+  * --silent (-i) to mask input (ex. for passwords)
+  * --prompt-str text (-P)
     - sets prompt text
-  * --prompt-cmd text or -p text
-    - sets prompt command that outputs the prompt
+  * --prompt-cmd command (-p)
+    - sets command that outputs the prompt
     - useful for dynamic prompts
-  * --array or -a
+  * --array (-a)
     - sets variable to a list of the words entered
+  * --local (-l) makes variables local
+  * --global (-g) makes variables global
+  * --universal (-U) makes variables universal
+  * --export (-x) exports variables
   * and many more
+  * ex. read -P 'Favorite color: ' -c yellow color
 - can have more than one variable
   * sets each to the word at the corresponding position
-  * last variable gets all remaining workds
+  * last variable gets all remaining words
   * ex. read first second
     - if user enters "foo bar baz",
       first is set to "foo" and
       second is set to "bar baz"
+- to read lines from user until they press enter on an empty line
+  while read line
+    if test -z $line; break; end
+    echo you entered $line
+  end
+
+Getting absolute path from a relative path
+- realpath abs-path
 
 Processes
 - to get the current process id, %self
