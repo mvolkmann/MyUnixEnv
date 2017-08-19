@@ -20,7 +20,7 @@ stty -ixon
 
 # Suppress the default greeting of
 # "Welcome to fish, the friendly interactive shell"
-set fish_greeting ''
+set -U fish_greeting ''
 
 #---------------------------------------------------------------------------
 # Abbreviations
@@ -152,6 +152,8 @@ if test -e $HOME/secrets/local.env
 end
 
 # Commonly used directory prefixes.
+# When a variable is set in config.fish with no scope switch,
+# it defaults to global.
 set DOCUMENTS_DIR $HOME/Documents
 set DROPBOX_DIR $HOME/Dropbox
 set OCI_DIR $DOCUMENTS_DIR/oci

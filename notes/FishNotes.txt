@@ -1,4 +1,4 @@
-Fish Shell Notes
+Fish Shell Notes (version 2.6.0)
 
 For article
 - create example script in Fish, Bash, and Node
@@ -68,13 +68,41 @@ Tools for fish (in alphabetical order)
     useful shell functions, tools, and themes"
 
 Colors
-- all colors are customizable
+- all colors are customizable using the set_color command
 - colors mentioned below are the defaults
 - when entering commands,
   text is red until a valid command is entered
   and then it changes to white
 - when typing file paths, the text is underlined
   unless no directory or file matches what has been typed
+- specifying a color
+  * color names
+    - black, red, green, yellow, blue, magenta, cyan, white
+    - brblack, brred, brgreen, bryellow, brblue, brmagenta, brcyan, brwhite
+    - can list these with "set_color -c"
+  * color values
+    - 3 or 6 character hex
+      * ex. f0f is full red, no green, and full blue which is purple
+- set_color switches
+  * --background (-b)
+  * --print-colors (-c) prints list of named colors
+  * --bold (-o) sets bold mode.
+  * --dim (-d) sets dim mode
+  * --italics (-i) sets italics mode
+  * --reverse (-r) sets reverse mode
+  * --underline (-u) sets underlined mode
+  * using set_color without these switches resets to default mode
+- variables that control colors
+  * there are many that begin with "fish_color_"
+    and "fish_pager_color_"
+- ex.
+  * echo Roses are (set_color red)red(set_color normal), \
+      violets are (set_color blue)blue(set_color normal).
+  * also see examples in your functions/fish_prompt.fish file
+
+echo Command
+- -n switch suppresses newline that is normally output at end
+- -s switch causes arguments to not be separated by spaces
 
 Autosuggestions
 - suggests commands as you type
@@ -87,9 +115,14 @@ Autosuggestions
 - continue typing if suggestion is not desired
 
 Command History
+- all commands entered are saved in command history
+  * unless they begin with a space (like incognito commands)
+  * duplicate commands are removed, retaining only the most recent
 - type part of a previous command and press up and down arrows
   to navigate through all previous commands that match
 - press enter to execute one or ctrl-c to exit
+- command history is stored in ~/.local/share/fish/fish_history
+  * stores each command and when it was entered
 
 Tab Completions
 - can complete command names (all three kinds),
@@ -176,6 +209,13 @@ Commands
 - commands are terminated by a newline or semicolon
   * of course in a shell, pressing enter produces a newline
   * semicolons allow multiple commands to appear on the same line
+- multi-line commands
+  * commands can split over multiple lines in two ways
+    - by typing the \ continuation character and pressing enter
+    - by pressing enter when there is an unterminated block
+      started with begin, for, function, if, switch, or while
+  * can be recalled and edited just like single-line commands
+    - use up and down arrows to navigate between lines
 - to include a space in an argument,
   preceded space with a backslash or
   enclose argument in single or double quotes
@@ -250,7 +290,7 @@ Variables
   - local
     * available only in the current block
     * blocks begin with one of these keywords:
-      if, function, begin, or switch
+      begin, if, for, function, switch, or while
     * blocks end with the corresponding end keyword
   - global
     * available anywhere in the current session
@@ -267,12 +307,14 @@ Variables
     - this is not a new kind of scope
     - it is convention for exported variable names to be all uppercase
   * if set with no scope switch
-    * if the variable has already been set in any scope,
+    - if the variable has already been set in any scope,
       this changes the value of the lowest scope already set
-    * if the variable has not already been set in any scope,
+    - if the variable has not already been set in any scope,
       the new variable will be local to the function in which it is set,
       not the block where it is set
       - if not in a function, it will be global
+    - when a variable is set in config.fish with no scope switch,
+      it defaults to global
 - the same variable name can be set to different values in different scopes
   * references are resolved at the lowest scope found,
     local then global then universal
@@ -295,25 +337,58 @@ Variables
   * will delete variable in the closest existing scope
     - local then global then universal
   * can specify the scope in which the variable should be erased
-- query (determine if set) with: set --query name (or -q)
-  * sets status variable to 0 if set and 1 if not
-    - to see, echo $status
-    - add a scope switch to determine if set in a specific scope
-  * a variable can be set and not have a value
-    - ex. set name
-    - like setting a variable to null in JavaScript, versus undefined
-  * to determine if a variable has a value
-    - set -q name[0]
 - to list names and values of variables
   * all: set
   * only universal: set -U
   * only global: set -g
   * only local: set -l
   * only exported: set -x
-- to list names of all defined variables
+- to list only the names of all defined variables
   * set --names (-n)
+  * add a scope switch to only list
+    names of variables in a given scope
   * this may abbreviate long names
   * to avoid, add --long (-L)
+- query (determine if set) with: set --query name (or -q)
+  * sets status variable to 0 if set and 1 if not
+    - to see, echo $status
+    - ex. set -q color; echo $status
+  * add a scope switch to only query in a given scope
+    - ex. to query whether color is a global variable,
+      set -qg color; echo $status
+  * a variable can be set and not have a value
+    - ex. set name
+    - like setting a variable to null in JavaScript, versus undefined
+  * to determine if a variable has a value
+    - set -q name[0]
+
+Special Variables
+- there are many variables whose names begin with "fish_"
+  that control various things
+- examples
+  * CMD_DURATION is set to the duration of the last command in milliseconds
+  * COLUMNS is set to # of columns in current terminal
+  * FISH_VERSION is set to the version of the fish shell being used
+    - the "version" variable is also set to this
+  * HOME is set to the user's home directory
+  * LINES is set to # of lines (or rows) in current terminal
+  * PWD is set to the current (or present) working directory
+  * USER is set to the current username
+  * _ holds the name of the currently executing command
+  * fish_user_paths - see "PATH" section
+  * status is set to the status of the last command
+- internal variables
+  * variables whose names begin with __FISH or __fish
+    are for internal use and should not be used or changed
+
+status Command
+- has many subcommands
+- examples that are useful inside functions defined in .fish files
+  * status current-filename
+  * status current-function
+  * status current-line-number
+    - TODO: Why does this always output 2?
+  * status print-stack-trace
 
 Strings
 - literals are delimited by single or double quotes
@@ -483,7 +558,7 @@ Lists
   * if contains someItem $myList
       # code goes here
     end
-  * contains sets status to 0 if found and 1 if not
+  * this contains command sets status to 0 if found and 1 if not
 - to get the length of a list
   * count $myList
 - to iterate over all items in a list
@@ -545,6 +620,27 @@ PATH environment variable
   test that the value to be added isn't already present
   so each shell startup doesn't modify it again
 
+Math
+- the math function is a wrapper around the bc command
+  (abbreviation for "basic calculator")
+- supports floating point numbers
+- converts strings to numbers
+  * important because when a number is assigned
+    to a variable, it is saved as a string
+- pass a string containing a mathematical expression
+- sets status to a non-zero number if expression is invalid
+- writes result to stdout
+- ex.
+  set width 2
+  set height 3
+  set area (math "$width * $height") # 6
+- some supported functions
+  * sine: s(angle)
+  * cosine: c(angle)
+  * arctangent: a(angle)
+  * natural logarithm: l(x)
+  * e raised to a power: e(power)
+
 Functions
 - function names cannot begin with - and cannot contain /,
   but can contain any other characters, even spaces
@@ -601,6 +697,7 @@ Functions
 - to edit a previously defined function
   * funced name
   * uses editor in variable VISUAL that can be set in config.fish
+    - defaults to emacs
     - ex. set VISUAL vim
 - to list all currently defined functions
   * functions
@@ -636,16 +733,38 @@ Functions
   * functions --query name
     - or -q
   * sets status
-- can use "return" to exit before end
+- return command
+  - can use to exit before end
+  * sets status of function which defaults to 0 for success,
+    but can be specified
+    - ex. return 2
+- functions cannot return a value
+  * they can only use the return command to return a status
+  * but they can write to stdout
+  * to set a variable to the stdout of a function
+    - set var (fnname args)
+    - ex.
+      set width 2
+      set height 3
+      set area (math "$width * $height") # 6
 - arguments
   * held in a list in $argv
     - first argument is in $argv[1]
   * iterate over arguments like iterating over any list
   * can also use named parameters
-    - function orderShirt -a color size
+    - ex.
+      function orderShirt -a color size
         # Use $color and $size here.
         # $argv is also set to a list of the arguments.
       end
+    - all named parameters will be "set",
+      but ones not specified will be set to an empty list
+      * seems like a bad design
+      * TODO: what's the rationale?
+    - to test whether the named parameter is set,
+      set -q name[1]
+    - to set a named parameter to a default value,
+      set -q name[1]; or set name 'default value'
 - switches
   * to process command-line arguments as switches (a.k.a. options)
     for option in $argv
@@ -821,6 +940,12 @@ function fish_prompt
   echo -n '🐠  '
 end
 - can define a right prompt with the function fish_right_prompt
+- can display Vim mode in prompt
+  * ex. N for normal, I for insert, R for replace, and V for visuaul
+  * see your functions/fish_mode_prompt.fish file
+  * outputs a new prompt every time mode changes
+    which is a bit distracting
+    - make this an empty function to disable
 
 Reading from stdin
 - read var
