@@ -2,6 +2,11 @@ Fish Shell Notes (version 2.6.0)
 
 LOOK FOR TODO IN THIS FILE!
 
+TODO: How old is fish?
+TODO: Seems to be primarily implemented in C++. Verify.
+TODO: Oldest release in Github was on 10/22/2005.
+      Were there earlier versions somewhere else?
+
 For article
 - Come for the colors and autocomplete,
   stay for the sane scripting!
@@ -15,6 +20,7 @@ For article
   * minor customizations
   * writing functions
   * advanced
+- get some ideas from the Wikipedia entry
 
 Goals
 - copied from https://fishshell.com/docs/current/design.html
@@ -58,6 +64,7 @@ Help
     at this URL for the version of fish that is installed
     in the default web browser
 - Github: https://github.com/fish-shell/
+- Wikipedia: https://en.wikipedia.org/wiki/Friendly_interactive_shell
 - use official mailing list at fish-users@lists.sourceforge.net
 - use IRC channel #fish on irc.oftc.net
 
@@ -400,6 +407,8 @@ Commands
       and executes the function
       * the staleness interval avoids thrashing the file system
       * around 5 seconds
+      * can source the file to avoid this delay
+        - funced foo; and funcsave foo; and source foo.fish
     - does not search subdirectories of these paths
     - it is recommended that these files only define
       the function whose name matches the command
