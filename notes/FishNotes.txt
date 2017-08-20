@@ -2,8 +2,6 @@ Fish Shell Notes (version 2.6.0)
 
 LOOK FOR TODO IN THIS FILE!
 
-TODO: Seems to be primarily implemented in C++. Verify.
-
 For article
 - Come for the colors and autocomplete,
   stay for the sane scripting!
@@ -62,7 +60,8 @@ History
   and released a beta of a fork called fishfish
 * this brought in a lot of the work of previous fish contributors
 * this became fish 2.0
-* fish 3.0 is targeted to be released in 2018
+* fish 3.0 is targeted to be released in Q1 2018
+* originally implemented in C, but is now primarily C++
 
 Help
 - man command-name
@@ -84,7 +83,9 @@ Installing
   and search for "Go Fish"
 - for macOS there is an installer
   and can run "brew install fish"
-- for Window, can only run in Cygwin
+- for Windows, can run in Cygwin or
+  the Windows 10 bash environment
+  known as "Windows Subsystem for Linux" (WSL)
 
 Starting a fish shell
 - enter "fish"
