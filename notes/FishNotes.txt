@@ -1054,6 +1054,11 @@ Functions
     end
 - function do not have access to local variables set outside them
   * they are not closures
+- if a function needs to output an error message, do this:
+  set_color $fish_color_error
+  echo errorMsg 1>&2
+  set_color normal
+  return some-non-zero-status
 
 Auto-running Functions
 - functions can run automatically when an event is fired
