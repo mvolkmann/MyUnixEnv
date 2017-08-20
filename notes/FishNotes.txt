@@ -2,10 +2,10 @@ Fish Shell Notes (version 2.6.0)
 
 LOOK FOR TODO IN THIS FILE!
 
-TODO: How old is fish?
+TODO: Is there any difference between these?
+      foo; bar
+      foo; and bar
 TODO: Seems to be primarily implemented in C++. Verify.
-TODO: Oldest release in Github was on 10/22/2005.
-      Were there earlier versions somewhere else?
 
 For article
 - Come for the colors and autocomplete,
@@ -32,6 +32,7 @@ Goals
     with careful design.
   * Whenever possible without breaking the above goals,
     fish should follow the Posix syntax.
+    - TODO: What are the downsides of not being 100% Posix compliant?
   * The shell language should have a small set of orthogonal features.
   * Everything should be tab-completable, and
     every tab completion should have a description.
@@ -52,6 +53,19 @@ Licence
     Any modifications to or software including (via compiler)
     GPL-licensed code must also be made available under the GPL
     along with build and install instructions.
+
+History
+* first release was on 13 Februrary 2005
+* Axel Liljencrantz was the main developer and maintainer of
+  versions 1.0 to 1.23.1 which were in SourceForge
+* the last 1.x release was in March 2009
+* various people maintained forks at Gitorious and elsewhere,
+  but it seems no releases were ever made
+* ridiculousfish got involved in about 2012
+  and released a beta of a fork called fishfish
+* this brought in a lot of the work of previous fish contributors
+* this became fish 2.0
+* fish 3.0 is targeted to be released in 2018
 
 Help
 - man command-name
