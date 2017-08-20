@@ -2,9 +2,6 @@ Fish Shell Notes (version 2.6.0)
 
 LOOK FOR TODO IN THIS FILE!
 
-TODO: Is there any difference between these?
-      foo; bar
-      foo; and bar
 TODO: Seems to be primarily implemented in C++. Verify.
 
 For article
@@ -379,6 +376,7 @@ Changing Working Directory
 Commands
 - every command is executed by entering its name
   followed by switches and arguments, if any, separated by spaces
+  * it's hard to think of a programming language with such a consistent syntax
 - commands are terminated by a newline or semicolon
   * in a shell, pressing enter produces a newline
   * semicolons allow multiple commands to appear on the same line
@@ -407,6 +405,9 @@ Commands
   * command1; and command2
   * note the semicolon at end of first command
   * note the use of "and" instead of "&&" like in bash
+  * if the following is used instead and command1 has a bad status,
+    command2 will still be executed
+    - command1; command2
 - to execute one command and then execute a second command
   only if the first failed
   * command1; or command2
@@ -884,6 +885,16 @@ Math
   * e raised to a power: e(power)
 
 Functions
+- functions cannot return a value,
+  but they can set the status variable
+  and they can write to streams like stdout and stderr
+- to capture stdout from a function in a variable
+  * set result (someFn args)
+  * ex.
+    function product -a n1 n2
+      echo (math "$n1 * $n2")
+    end
+    set result (product 3 4) # 12
 - function names cannot begin with - and cannot contain /,
   but can contain any other characters, even spaces
   * to contain a space, prefix with \
@@ -1164,10 +1175,13 @@ If statements
 - for a single line "if"
   * if condition; statement; end
 
-and/or
-- to conditionally execute a command only if another succeeded
+and & or commands
+- note that these are commands, not keywords
+- to conditionally execute a command only if $status is 0
   command1; and command2
-- to conditionally execute a command only if another failed
+  * not the same as command1; command2
+    because that will run command2 even if command1 has a bad status
+- to conditionally execute a command only if $status is not 0
   command1; or command2
 - these can be used in the condition of an "if" or "while"
 
