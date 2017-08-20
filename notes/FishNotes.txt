@@ -378,15 +378,18 @@ Changing Working Directory
 
 Commands
 - every command is executed by entering its name
-  followed by arguments, if any, separated by spaces
+  followed by switches and arguments, if any, separated by spaces
 - commands are terminated by a newline or semicolon
-  * of course in a shell, pressing enter produces a newline
+  * in a shell, pressing enter produces a newline
   * semicolons allow multiple commands to appear on the same line
 - multi-line commands
+  * a short list of commands create a block
+    - begin, for, function, if, switch, and while
+    - these can span any number of lines and
+      are terminated when the "end" keyword is reached
   * commands can split over multiple lines in two ways
     - by typing the \ continuation character and pressing enter
     - by pressing enter when there is an unterminated block
-      started with begin, for, function, if, switch, or while
   * can be recalled and edited just like single-line commands
     - use up and down arrows to navigate between lines
 - to include a space in an argument,
