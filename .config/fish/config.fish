@@ -58,7 +58,7 @@ alias cdvim 'cd $PROGRAMMING_DIR/Tools/Vim'
 
 # Git aliases
 # Note that fish uses parens in place of backticks to execute sub-commands.
-alias pull "git pull origin (git rev-parse --abbrev-ref HEAD)"
+alias pull 'git pull origin (git rev-parse --abbrev-ref HEAD)'
 alias push 'git push origin (git rev-parse --abbrev-ref HEAD)'
 alias pushn 'git push --no-verify origin (git rev-parse --abbrev-ref HEAD)'
 alias sha 'git rev-parse HEAD'
@@ -66,16 +66,16 @@ alias sha 'git rev-parse HEAD'
 alias sr 'git log --author="Volkmann" --branches --no-merges --since="8 days ago" --pretty=format:"%cd %s" | tac'
 
 # Ask for confirmation before overwriting or deleting files.
-alias cp "cp -i"
-alias mv "mv -i"
-alias rm "rm -i"
+alias cp 'cp -i'
+alias mv 'mv -i'
+alias rm 'rm -i'
 
 # For a nicely formatted dump of LD_LIBRARY_PATH ...
 alias eld "echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/:/\n   /g'"
 
 # Code printing (fancy two columns)
-alias ens "enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp"
-alias ens1 "enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"
+alias ens 'enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp'
+alias ens1 'enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63'
 
 alias findcss 'find3 css'
 alias findhtml 'find3 html'
@@ -110,16 +110,12 @@ alias mysqladmin /usr/local/mysql/bin/mysqladmin
 # Shows all paths in $PATH on separate lines.
 alias showpath 'printf "%s\n" $PATH'
 
-alias sortedpath "ruby -e 'puts ENV[\"PATH\"].split(File::PATH_SEPARATOR).sort'"
-
-#complete -C complete-ant-cmd.pl ant build.sh
-
 # Kill the process listening on a given port.
-alias klp "kill-listening-process"
+alias klp 'kill-listening-process'
 
 # For React Native
-alias rna="react-native run-android"
-alias rni="react-native run-ios"
+alias rna='react-native run-android'
+alias rni='react-native run-ios'
 
 # For Web Components and Polymer
 alias pe 'clear; eslint -f codeframe *.html demo/*.html test/*.html'
