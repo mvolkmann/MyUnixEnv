@@ -2,10 +2,13 @@
 <html>
   <head>
     <title>The fish Shell</title>
-    <meta charset="utf-8">
     <style>
       body {
         font-family: sans-serif;
+      }
+      code {
+        background-color: lightyellow;
+        font-weight: bold;
       }
       div {
         margin-bottom: 10px;
@@ -23,6 +26,12 @@
   </head>
   <body>
     <h1>The fish Shell</h1>
+    <div>
+      by Mark Volkmann<br>
+      mark@objectcomputing.com<br>
+      Object Computing, Inc.<br>
+      September 2017
+    </div>
     <h4>
       Come for the colors and autocomplete,
       stay for the sane scripting!
@@ -137,8 +146,9 @@
       Search that page for "Go Fish".
     </div>
     <div>
-      For macOS there is an installer and
-      fish can also be installed with "brew nstall fish".
+      For macOS there is an installer.
+      If <a href="https://brew.sh/">Homebrew</a> has been installed,
+      fish can also be installed by entering <code>brew install fish</code>.
     </div>
     <div>
       For Windows, fish can be run in Cygwin.
@@ -163,19 +173,19 @@
       The main web site at
       <a href="https://fishshell.com/">https://fishshell.com/</a>
       provides excellent documentation.
-      Entering just "<code>help</code>" in a terminal
+      Entering just <code>help</code> in a terminal
       opens the local copy of this documentation
       for the version of fish that is installed
       in the default web browser.
     </div>
     <div>
-      Entering "<code>man <i>command-name</i></code>"
+      Entering <code>man <i>command-name</i></code>
       displays help in the terminal.
-      For many commands, entering "<code><i>command-name</i> -h</code>"
+      For many commands, entering <code><i>command-name</i> -h</code>
       is the same.
     </div>
     <div>
-      Entering "<code>help <i>command-name</i></code>"
+      Entering <code>help <i>command-name</i></code>
       displays the same help in the default web browser,
       but with better formatting.
     </div>
@@ -201,14 +211,14 @@
     <h3>Starting Fish</h3>
     <div>
       Once fish has been installed, to start a fish shell from a terminal,
-      enter "<code>fish</code>".
-      To exit a fish shell, enter "<code>exit</code>".
+      enter <code>fish</code>.
+      To exit a fish shell, enter <code>exit</code>.
     </div>
 
     <h3>Default Shell</h3>
     <div>
       To make fish the default shell so new terminal windows automatically use it,
-      enter "<code>chsh -s /usr/local/bin/fish</code>".
+      enter <code>chsh -s /usr/local/bin/fish</code>.
       TODO: Does this assume the current shell is bash?
     </div>
 
@@ -232,7 +242,7 @@
       Possible commands and switches are derived from
       man pages that fish has parsed.
       If new man pages are installed,
-      enter "<code>fish_update_completions</code>" to parse them.
+      enter <code>fish_update_completions</code> to parse them.
     </div>
 
     <h3>Tab Completions</h3>
@@ -250,64 +260,206 @@
       users (ex. su and press tab to see all usernames),
       and more
     </div>
+    <div>
+      If there is only one option, it will be expanded in place
+      If there is more than one option,
+      up to four rows will be listed.
+      If there are more than four rows of options,
+      they will be followed by "...and n more rows".
+      To see the remaining options, press tab again.
+      Highlighting cycles back to first option
+      if tab is pressed while the last option is highlighted.
+      To select an option, press tab repeatedly until
+      the desired option is highlighted
+      and press enter to accept it.
+      Press enter again to execute the command.
+    </div>
+    <div>
+      To filter the list of options,
+      press tab until an option is highlighted,
+      then type a substring that must be contained in the options.
+      A search entry field starting with "search:" will be displayed.
+      To skip selecting an option, press the escape key.
+    </div>
     <h4>Examples</h4>
     <div>
-      To output the value of a variable whose name begins with "re",
-      enter "<code>echo $re</code>" and press tab repeatedly
+      To list files in the current directory whoses names begin with "d",
+      enter <code>ls d</code> and press tab repeatedly
       until the desired variable is highlighted.
-      Press enter to accept the completion
-      and press enter again to execute the command.
+      This also works when only <code>ls</code> entered
+      before pressing tab.  In this case the options are
+      all files in the current directory.
+    </div>
+    <div>
+      To output the value of a variable whose name begins with "re",
+      enter <code>echo $re</code> and press tab repeatedly
+      until the desired variable is highlighted.
     </div>
     <div>
       To kill a process whose name contains "lo",
-      enter "<code>kill lo</code>" and press tab repeatedly
+      enter <code>kill lo</code> and press tab repeatedly
       until the desired process is highlighted.
-      Press enter to accept the corresponding process id
-      and press enter again to execute the command.
     </div>
     <div>
       To get help on a command that contains "lo",
-      enter "<code>man lo</code>" and press tab repeatedly
+      enter <code>man lo</code> and press tab repeatedly
       until the desired command is highlighted.
-      Press enter to accept the completion
-      and press enter again to execute the command.
-    </div>
-
-- while entering a command, press tab
-- if there is only one option, it will be expanded in place
-- if there is more than one option,
-  up to four will be listed on separate lines
-- to select an option, press tab repeatedly until
-  the desired option is highlighted and press enter
-  * highlighting cycles back to first option
-    if tab is pressed while last option is highlighted
-- to filter list of options,
-  press tab until an option is highlighted,
-  then type a substring that must be contained
-- to skip selecting an option, press esc
-- if there are more than four options, the first four will be listed
-  followed by "...and n more rows"
-- to see remaining options, press tab again
-- try completing file paths for the cd command
-  * press tab once to see options,
-    again to show all options if more than four,
-    and again to highlight first option
     </div>
 
     <h3>Custom Tab Completions</h3>
     <div>
-- can implement custom completions for custom commands
-  * complete -c command-name -s short-switch -l long-switch -a 'argument words'
-- an advanced topic
-  * see your functions/greet.fish and completions/greet.fish example
-    - TODO: not working!
-  * see https://fishshell.com/docs/current/commands.html#complete
-    and https://fishshell.com/docs/current/index.html#completion-own
+      Tab completions can be defined for custom commands
+      using the <code>complete</code> command.
+      This is an advanced topic.
+    </div>
+    <div>
+      The syntax is
+      <code>complete -c <i>command-name</i> -s <code>short-switch</code> -l <code>long-switch</code> -a '<i>argument words</i>'</code>
+    </div>
+    <div>
+    <div>
+       TODO: See your functions/greet.fish and completions/greet.fish example
+       which is not working yet.
+       Also see https://fishshell.com/docs/current/commands.html#complete
+       and https://fishshell.com/docs/current/index.html#completion-own.
+    </div>
+
+    <h3>Command History</h3>
+    <div>
+      All commands entered except those that begin with a space
+      (which are treated like incognito commands)
+      are saved in command history.
+      This exception may be removed in fish 3.
+      Duplicate commands are automatically removed,
+      retaining only their most recent occurrence.
+    </div>
+    <div>
+      Command history is stored in <code>~/.local/share/fish/fish_history</code>.
+      This file stores each command and when it was entered.
+    </div>
+    <div>
+      To list all commands in the hisory, enter <code>history</code>.
+    </div>
+    <div>
+      To list only commands that contain a given substring,
+      enter <code>history <i>text</i></code>.
+      This is the same as entering
+      <code>history search --contains <i>substring</i></code>.
+      <code>-c</code> is short for <code>--contains</code>.
+    </div>
+    <div>
+      To list only commands that begin with a given prefix,
+      <code>history search --prefix <i>prefix</i></code>.
+      <code>-p</code> is short for <code>--prefix</code>.
+    </div>
+    <div>
+      To include the date and time that commands were issued,
+      add the <code>--show-time-prepends</code> (<code>-t</code>) switch.
+    </div>
+    <div>
+      To limit the number of commands output,
+      add the <code>--max</code> (<code>-n</code>) switch followed by a number.
+      For example, <code>history -n 5</code>.
+    </div>
+    <div>
+      To clear all command history, enter <code>history clear</code>.
+    </div>
+    <div>
+      To delete commands from history that contain a given substring,
+      enter <code>history delete --contains <i>substring </i></code>.
+    </div>
+    <div>
+      To delete commands from history that begin with a given prefix,
+      enter <code>history delete --prefix <i>prefix </i></code>.
+    </div>
+    <div>
+      To navigate through all previously entered commands
+      press the up and down arrow keys.
+      Press enter to execute the displayed command
+      or press ctrl-c to exit without executing one.
+      To restrict to commands that contain a given substring,
+      type the substring before pressing the arrow keys.
+    </div>
+
+    <h3>Changing Working Directory</h3>
+    <div>
+      Like in other shells, the current working directory
+      can be changed by using the <code>cd</code> command.
+      However, since the initial character of directory paths
+      (<code>.</code>, <code>/</code>, and <code>~</code>)
+      is not a valid character in any command,
+      fish interprets just entering a directory path
+      as a request to change the working directory.
+      For example, entering
+      <code>~</code> cds to your home directory and
+      <code>..</code> cds to the parent directory.
+    </div>
+    <div>
+      Tab completion can be used to assist in
+      entering each part of a directory path.
+      This even works without entering anything,
+      so it's possible to navigate to any child directory
+      by just pressing tab repeatedly
+      until the desired directory name is highlighted
+      and then pressing enter once to select it
+      and again to execute the command.
+    </div>
+    <div>
+      Like in other shells, to get the current working directory
+      enter <code>pwd</code>.
+    </div>
+    <div>
+      The <code>dirh</code> command prints list of last 25 directories visited.
+      The current directory will be highlighted.
+      To go back one, enter <code>prevd</code> or
+      press alt-left (in macOS, cmd-option-left).
+      To go forward one, enter <code>nextd</code> or
+      press alt-right (in macOS, cmd-option-right).
+      This is a very convenient way to change to a previous directory!
+    </div>
+    <div>
+      In addition, a stack of past directories is maintained.
+      To push a new directory onto the stack and cd to it,
+      enter <code>pushd <i>directory</i></code>.
+      To pop the current directory off the stack
+      and cd to the directory now at the top,
+      enter <code>popd</code>.
+      It is not possible to pop the list directory off the stack.
+      To view the current directory stack, enter <code>dirs</code>.
+    </div>
+
+    <h3>Abbreviations</h3>
+    <div>
+      Like other shells, fish supports aliases.
+      It also supports abbreviations which are similar, but expand when typed.
+      Unlike aliases, when abbreviations are defined in a terminal
+      (as opposed to inside <code>config.fish</code>),
+      they become available in all sessions.
+    </div>
+    <div>
+      To define an abbreviation, enter
+      <code>abbr <i>name</i> <i>value </i></code>.
+    </div>
+    <div>
+      To list all abbreviations, enter <code>abbr</code>.
+    </div>
+    <div>
+      To undefine (erase) an alias, enter <code>abbr -e name</code>.
     </div>
 
     <h3></h3>
     <div>
     </div>
+
+    <h3></h3>
+    <div>
+    </div>
+
+    <h3></h3>
+    <div>
+    </div>
+
+    <hr>
 
 LOOK FOR TODO IN THIS FILE!
 
@@ -462,30 +614,6 @@ printf Command
   set format 'my name is %s and i am %s%i%s years old.'
   printf $format mark (set_color red) 56 (set_color normal)
 
-Command History
-- all commands entered are saved in command history
-  * unless they begin with a space (like incognito commands)
-    - this feature may be removed in fish 3
-  * duplicate commands are removed, retaining only the most recent
-  * to list all: history
-  * to list only those that contain a given substring
-    - history text
-    - same as history search --contains substring (-c)
-  * to list only those that begin with a given prefix
-    - history search --prefix prefix (-p)
-  * to include date/time commands were issued: history --show-time-prepends (-t)
-  * to limit number of commands output: history -n number
-  * to clear all history: history clear
-  * to delete commands from history that contain a given substring
-    - history delete --contains substring
-  * to delete commands from history that begin with a given prefix
-    - history delete --prefix prefix
-- type part of a previous command and press up and down arrows
-  to navigate through all previous commands that match
-- press enter to execute one or ctrl-c to exit
-- command history is stored in ~/.local/share/fish/fish_history
-  * stores each command and when it was entered
-
 Aliases
 - to define an alias
   * alias name "{command}"
@@ -504,41 +632,6 @@ Aliases
   * alias
 - to undefine an alias
   * erase the function with: functions -e name
-
-Abbreviations
-- similar to aliases, but expand when typed
-- available in all sessions, unlike aliases
-- to define
-  * abbr name value
-- to list all abbreviations
-  * abbr
-- to undefine (erase) an alias
-  * abbr -e name
-
-Changing Working Directory
-- can use cd command like other shells
-- can also just enter a directory path
-  * ex. ~ cds to home directory
-  * can enter any path that starts with ., /, or ~
-  * ex. .. cds to parent directory
-- use tab completion to complete the next path part
-  * can even press tab without typing anything
-    to cd to a child directory
-- to get current working directory, enter pwd
-- dirh prints list of last 25 directories visited
-  * current directory will be highlighted
-  * to go back one, enter prevd or
-    press cmd-option-left (alt-left in Windows)
-  * to go forward one, enter nextd or
-    press cmd-option-right (alt-right in Windows)
-- using stack
-  * to push a new directory onto the stack and cd to it,
-    pushd directory
-  * to pop the current directory off the stack
-    and cd to the directory now at the top,
-    popd
-    - can't pop last directory from stack
-  * to view the directory stack, dirs
 
 Commands
 - every command is executed by entering its name
