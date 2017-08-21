@@ -432,27 +432,60 @@
       To view the current directory stack, enter <code>dirs</code>.
     </div>
 
+    <h3>Aliases</h3>
+    <div>
+      An alias is an alternate name, usually shorter, for some command.
+    </div>
+    <div>
+      To define an alias, enter <code>alias name <i>command </i></code>.
+    </div>
+    <div>
+      To list all aliases, enter <code>alias</code>.
+    </div>
+    <div>
+      To remove an alias, enter <code>functions -e <i>name </i></code>.
+    </div>
+    <div>
+      Defining an alias creates a function with the specified name
+      that runs the command.  Functions are covered later.
+      The function is only defined in the current session
+      and goes away when the session exits.
+      To create aliases that are available in all sessions,
+      define them in <code>config.fish</code>.
+      For more information, see "Defining aliases" at
+      <a href="https://fishshell.com/docs/current/index.html#introduction">https://fishshell.com/docs/current/index.html#introduction</a>.
+    </div>
+
     <h3>Abbreviations</h3>
     <div>
-      Like other shells, fish supports aliases.
-      It also supports abbreviations which are similar, but expand when typed.
-      Unlike aliases, when abbreviations are defined in a terminal
-      (as opposed to inside <code>config.fish</code>),
-      they become available in all sessions.
+      In addition to aliases, fish supports abbreviations.
+      These are similar, but expand when typed.
     </div>
     <div>
       To define an abbreviation, enter
       <code>abbr <i>name</i> <i>value </i></code>.
     </div>
     <div>
-      To list all abbreviations, enter <code>abbr</code>.
+      For example, if <code>abbr co git checkout</code>
+        is entered and the "co" followed by a space is entered,
+        co will be replaced by "git checkout" while typing.
     </div>
     <div>
-      To undefine (erase) an alias, enter <code>abbr -e name</code>.
+      Unlike aliases, when abbreviations are defined in a terminal
+      (as opposed to inside <code>config.fish</code>),
+      they become available in all sessions.
+      In general, abbreviations are preferred over aliases.
     </div>
-
-    <h3></h3>
     <div>
+      To output a list of all abbreviation names, enter <code>abbr --list</code>.
+    </div>
+    <div>
+      To output a list of all abbreviation names and their values,
+      enter <code>abbr --show</code> or just <code>abbr</code>.
+    </div>
+    <div>
+      To undefine (erase) an alias,
+      enter <code>abbr --erase <i>name</i></code>.
     </div>
 
     <h3></h3>
@@ -617,25 +650,6 @@ printf Command
 - ex.
   set format 'my name is %s and i am %s%i%s years old.'
   printf $format mark (set_color red) 56 (set_color normal)
-
-Aliases
-- to define an alias
-  * alias name "{command}"
-  * creates a function with the specified name that runs the command
-    - not actually written to files under ~/.config/fish/functions
-    - can also write a function to implement an alias,
-      be see "Defining aliases" at
-      https://fishshell.com/docs/current/index.html#introduction
-      for important things to consider
-      * these functions are not autoloaded,
-        so they should either be defined in config.fish
-        or sourced from there
-  * only available in the current session, unlike abbreviations
-    - so abbreviations are preferred
-- to list all aliases
-  * alias
-- to undefine an alias
-  * erase the function with: functions -e name
 
 Commands
 - every command is executed by entering its name

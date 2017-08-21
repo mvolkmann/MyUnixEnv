@@ -25,11 +25,11 @@ set -U fish_greeting ''
 #---------------------------------------------------------------------------
 
 # For git
-abbr --add br git branch
-abbr --add ci git commit -av
-abbr --add co git checkout
-abbr --add log git log
-abbr --add status git status
+abbr br git branch
+abbr ci git commit -av
+abbr git checkout
+abbr git log
+abbr git status
 
 # For npm
 abbr --add nr npm run
