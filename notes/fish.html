@@ -1,10 +1,317 @@
-Fish Shell Notes (version 2.6.0)
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The fish Shell</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      div {
+        margin-bottom: 10px;
+      }
+      h1 {
+        color: blue;
+      }
+      h3 {
+        color: blue;
+      }
+      h4 {
+        color: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>The fish Shell</h1>
+    <h4>
+      Come for the colors and autocomplete,
+      stay for the sane scripting!
+    </h4>
+
+    <h3>Overview</h3>
+    <div>
+      Fish is a *nix shell that offers an alternative
+      to shells like bash and zsh.
+      At a high level, fish provides the following benefits:
+    </div>
+    <ul>
+      <li>auto-suggestions while typing</li>
+      <li>auto-complete of commands, their switches, file paths,
+        variable names, git branches, and more</li>
+      <li>easy access to web-based help</li>
+      <li>colorful prompts</li>
+      <li>ability to customize colors and the prompt using a web UI</li>
+      <li>highly consistent and simple scripting language</li>
+    </ul>
+    <div>
+      The latest version of fish at the time of this article is 2.6.0.
+      In this article, we will show why you might prefer fish.
+    </div>
+
+    <h3>License</h3>
+    <div>
+      The fish shell uses the GNU General Public License, version 2.
+      Here's a summary of that license:
+    </div>
+    <blockquote>
+      You may copy, distribute and modify the software
+      as long as you track changes/dates in source files.
+      Any modifications to or software including (via compiler)
+      GPL-licensed code must also be made available under the GPL
+      along with build and install instructions.
+    </blockquote>
+
+    <h3>Goals</h3>
+    <div>
+      The goals for fish are listed at
+      <a href="https://fishshell.com/docs/current/design.html">
+        https://fishshell.com/docs/current/design.html
+      </a>.
+      Here are the most significant goals:
+    </div>
+    <ul>
+      <li>
+        Everything that can be done in other shell languages
+        should be possible to do in fish,
+        though fish may rely on external commands in doing so.
+     </li>
+      <li>
+        Fish should be user friendly, but not at the expense of expressiveness.
+        Most tradeoffs between power and ease of use
+        can be avoided with careful design.
+     </li>
+      <li>
+        Whenever possible without breaking the above goals,
+        fish should follow the Posix syntax.<br>
+        TODO: What are the downsides of not being 100% Posix compliant?
+     </li>
+      <li>
+        The shell language should have a small set of orthogonal features.
+      </li>
+      <li>
+        Everything should be tab-completable, and
+        every tab completion should have a description.
+     </li>
+      <li>
+        Every syntax error and error in a builtin command should contain
+        an error message describing what went wrong and a relevant help page.
+        Whenever possible, errors should be flagged red
+        by the syntax highlighter.
+      </li>
+      <li>
+        The language should be uniform, so that once
+        the user understands the command/argument syntax,
+        they will know the whole language, and be able to
+        use tab-completion to discover new features.
+      </li>
+    </ul>
+
+    <h3>History</h3>
+    <div>
+      The first release of fish was on Februrary 13, 2005.
+      Axel Liljencrantz was the main developer and maintainer of
+      versions 1.0 to 1.23.1 which were in SourceForge.
+      The last 1.x release was in March 2009.
+      Various people maintained forks at Gitorious and elsewhere,
+      but it seems no releases were ever made.
+      A person that goes by "ridiculousfish" got involved in about 2012
+      and released a beta of a fork called fishfish.
+      This brought in a lot of the work of previous fish contributors
+      and eventually became fish 2.0.
+    </div>
+    <div>
+      fish was originally implemented in C, but is now primarily C++.
+    </div>
+    <div>
+      fish 3.0 is targeted to be released in Q1 2018.
+      For a list of fixes/features targeted for this release, see
+      <a href="https://github.com/fish-shell/fish-shell/milestone/18">https://github.com/fish-shell/fish-shell/milestone/18</a>
+      For a list of additional fixes/features that *may* be in this release, see
+      <a href="https://github.com/fish-shell/fish-shell/milestone/7">https://github.com/fish-shell/fish-shell/milestone/7</a>
+    </div>
+
+    <h3>Installing</h3>
+    <div>
+      Instructions for installing fish are at
+      <a href="https://fishshell.com/">https://fishshell.com/</a>.
+      Search that page for "Go Fish".
+    </div>
+    <div>
+      For macOS there is an installer and
+      fish can also be installed with "brew nstall fish".
+    </div>
+    <div>
+      For Windows, fish can be run in Cygwin.
+      In Windows 10 fish can be run in the "Windows Subsystem for Linux" (WSL).
+    </div>
+    <div>
+      In case you find fish is not for you,
+      which I believe is highly unlikely, it can be uninstalled by
+      changing the default shell to something else (like bash)
+      and running the following commands:
+    </div>
+    <ul>
+      <li><code>rm -Rf /usr/local/etc/fish /usr/local/share/fish ~/.config/fish</code></li>
+      <li><code>rm /usr/local/share/man/man1/fish*.1</code></li>
+      <li><code>cd /usr/local/bin</code></li>
+      <li><code>rm -f fish fish_indent</code></li>
+    </ul>
+
+    <h3>Help</h3>
+    <div>
+      There are many sources for help on fish.
+      The main web site at
+      <a href="https://fishshell.com/">https://fishshell.com/</a>
+      provides excellent documentation.
+      Entering just "<code>help</code>" in a terminal
+      opens the local copy of this documentation
+      for the version of fish that is installed
+      in the default web browser.
+    </div>
+    <div>
+      Entering "<code>man <i>command-name</i></code>"
+      displays help in the terminal.
+      For many commands, entering "<code><i>command-name</i> -h</code>"
+      is the same.
+    </div>
+    <div>
+      Entering "<code>help <i>command-name</i></code>"
+      displays the same help in the default web browser,
+      but with better formatting.
+    </div>
+    <div>
+      Other great sources of help include:
+    </div>
+    <ul>
+      <li>
+        Github repo at
+        <a href="https://github.com/fish-shell/">https://github.com/fish-shell/</a>
+      </li>
+      <li>
+        Wikipedia page at
+        <a href="https://en.wikipedia.org/wiki/Friendly_interactive_shell">https://en.wikipedia.org/wiki/Friendly_interactive_shell</a>
+      </li>
+      <li>
+        official mailing list at
+        <a href="mailto:fish-users@lists.sourceforge.net">fish-users@lists.sourceforge.net</a>
+      </li>
+      <li>IRC channel #fish on irc.oftc.net</li>
+    </ul>
+
+    <h3>Starting Fish</h3>
+    <div>
+      Once fish has been installed, to start a fish shell from a terminal,
+      enter "<code>fish</code>".
+      To exit a fish shell, enter "<code>exit</code>".
+    </div>
+
+    <h3>Default Shell</h3>
+    <div>
+      To make fish the default shell so new terminal windows automatically use it,
+      enter "<code>chsh -s /usr/local/bin/fish</code>".
+      TODO: Does this assume the current shell is bash?
+    </div>
+
+    <h3>Autosuggestions</h3>
+    <div>
+      Autosuggestions suggest remaining text for a command
+      while the command is being typed.
+      Typically this appears as gray text,
+      sometimes referred to as ghosting,
+      but the color can be customized.
+      It derives suggestions from command history,
+      possible commands, possible switches (a.k.a. options),
+      variables, and file paths.
+    </div>
+    <div>
+      If the suggestion is not desired, continue typing.
+      To accept a suggested completion, press the right arrow.
+      To execute the command, press enter.
+    </div>
+    <div>
+      Possible commands and switches are derived from
+      man pages that fish has parsed.
+      If new man pages are installed,
+      enter "<code>fish_update_completions</code>" to parse them.
+    </div>
+
+    <h3>Tab Completions</h3>
+    <div>
+      Autosuggestions only provide one suggestion.
+      To see more options, press tab.
+      This presents a list of options that includes
+      command names, switches, variable names,
+      file paths,
+      git branch names (including remote branches),
+      process names/ids
+      job names/ids,
+      man page names
+      ssh hosts,
+      users (ex. su and press tab to see all usernames),
+      and more
+    </div>
+    <h4>Examples</h4>
+    <div>
+      To output the value of a variable whose name begins with "re",
+      enter "<code>echo $re</code>" and press tab repeatedly
+      until the desired variable is highlighted.
+      Press enter to accept the completion
+      and press enter again to execute the command.
+    </div>
+    <div>
+      To kill a process whose name contains "lo",
+      enter "<code>kill lo</code>" and press tab repeatedly
+      until the desired process is highlighted.
+      Press enter to accept the corresponding process id
+      and press enter again to execute the command.
+    </div>
+    <div>
+      To get help on a command that contains "lo",
+      enter "<code>man lo</code>" and press tab repeatedly
+      until the desired command is highlighted.
+      Press enter to accept the completion
+      and press enter again to execute the command.
+    </div>
+
+- while entering a command, press tab
+- if there is only one option, it will be expanded in place
+- if there is more than one option,
+  up to four will be listed on separate lines
+- to select an option, press tab repeatedly until
+  the desired option is highlighted and press enter
+  * highlighting cycles back to first option
+    if tab is pressed while last option is highlighted
+- to filter list of options,
+  press tab until an option is highlighted,
+  then type a substring that must be contained
+- to skip selecting an option, press esc
+- if there are more than four options, the first four will be listed
+  followed by "...and n more rows"
+- to see remaining options, press tab again
+- try completing file paths for the cd command
+  * press tab once to see options,
+    again to show all options if more than four,
+    and again to highlight first option
+    </div>
+
+    <h3>Custom Tab Completions</h3>
+    <div>
+- can implement custom completions for custom commands
+  * complete -c command-name -s short-switch -l long-switch -a 'argument words'
+- an advanced topic
+  * see your functions/greet.fish and completions/greet.fish example
+    - TODO: not working!
+  * see https://fishshell.com/docs/current/commands.html#complete
+    and https://fishshell.com/docs/current/index.html#completion-own
+    </div>
+
+    <h3></h3>
+    <div>
+    </div>
 
 LOOK FOR TODO IN THIS FILE!
 
 For article
-- Come for the colors and autocomplete,
-  stay for the sane scripting!
 - create example script in Fish, Bash, and Node
   that lists files containing given text in their name
   in tree form that colors file types differently
@@ -16,95 +323,6 @@ For article
   * writing functions
   * advanced
 - get some ideas from the Wikipedia entry
-
-Goals
-- copied from https://fishshell.com/docs/current/design.html
-  * Everything that can be done in other shell languages
-    should be possible to do in fish,
-    though fish may rely on external commands in doing so.
-  * Fish should be user friendly, but not at the expense of expressiveness.
-    Most tradeoffs between power and ease of use can be avoided
-    with careful design.
-  * Whenever possible without breaking the above goals,
-    fish should follow the Posix syntax.
-    - TODO: What are the downsides of not being 100% Posix compliant?
-  * The shell language should have a small set of orthogonal features.
-  * Everything should be tab-completable, and
-    every tab completion should have a description.
-  * Every syntax error and error in a builtin command should contain
-    an error message describing what went wrong and a relevant help page.
-    Whenever possible, errors should be flagged red by the syntax highlighter.
-  * The language should be uniform, so that once
-    the user understands the command/argument syntax,
-    they will know the whole language, and be able to
-    use tab-completion to discover new features.
-  * see the webpage above for more
-
-Licence
-- uses GNU General Public License, version 2
-  * summary:
-    You may copy, distribute and modify the software
-    as long as you track changes/dates in source files.
-    Any modifications to or software including (via compiler)
-    GPL-licensed code must also be made available under the GPL
-    along with build and install instructions.
-
-History
-* first release was on 13 Februrary 2005
-* Axel Liljencrantz was the main developer and maintainer of
-  versions 1.0 to 1.23.1 which were in SourceForge
-* the last 1.x release was in March 2009
-* various people maintained forks at Gitorious and elsewhere,
-  but it seems no releases were ever made
-* ridiculousfish got involved in about 2012
-  and released a beta of a fork called fishfish
-* this brought in a lot of the work of previous fish contributors
-* this became fish 2.0
-* fish 3.0 is targeted to be released in Q1 2018
-  - for a list of fixes/features targeted for this release, see
-    https://github.com/fish-shell/fish-shell/milestone/18
-  - for a list of additional fixes/features that *may* be in this release, see
-    https://github.com/fish-shell/fish-shell/milestone/7
-* originally implemented in C, but is now primarily C++
-
-Help
-- man command-name
-  * displays same help in terminal
-- help command-name
-  * same as man, but displays browser which looks nicer
-  * for most commands, can also use: command-name -h
-- browse https://fishshell.com/
-  * entering just "help" opens the local copy of the documentation
-    at this URL for the version of fish that is installed
-    in the default web browser
-- Github: https://github.com/fish-shell/
-- Wikipedia: https://en.wikipedia.org/wiki/Friendly_interactive_shell
-- use official mailing list at fish-users@lists.sourceforge.net
-- use IRC channel #fish on irc.oftc.net
-
-Installing
-- browse https://fishshell.com/
-  and search for "Go Fish"
-- for macOS there is an installer
-  and can run "brew install fish"
-- for Windows, can run in Cygwin or
-  the Windows 10 bash environment
-  known as "Windows Subsystem for Linux" (WSL)
-
-Starting a fish shell
-- enter "fish"
-- to exit, enter "exit"
-
-Making default shell
-- chsh -s /usr/local/bin/fish
-
-Uninstalling
-- change default shell to something else like bash
-- run these commands
-  rm -Rf /usr/local/etc/fish /usr/local/share/fish ~/.config/fish
-  rm /usr/local/share/man/man1/fish*.1
-  cd /usr/local/bin
-  rm -f fish fish_indent
 
 Configuring
 - can configure from shell, in a configuration file, and in the web UI
@@ -244,19 +462,6 @@ printf Command
   set format 'my name is %s and i am %s%i%s years old.'
   printf $format mark (set_color red) 56 (set_color normal)
 
-Autosuggestions
-- suggests commands as you type
-- suggested completion text is gray
-- gets suggestions from command history,
-  possible commands, possible switches (a.k.a. options),
-  and file paths
-  * possible switches are determined by parsing man pages
-  * if new man pages are installed,
-    enter fish_update_completions to update these
-- to accept completion, press right arrow
-  * still need to press enter to execute command
-- continue typing if suggestion is not desired
-
 Command History
 - all commands entered are saved in command history
   * unless they begin with a space (like incognito commands)
@@ -280,50 +485,6 @@ Command History
 - press enter to execute one or ctrl-c to exit
 - command history is stored in ~/.local/share/fish/fish_history
   * stores each command and when it was entered
-
-Tab Completions
-- can complete command names (all three kinds),
-  switches,
-  variable names
-  (ex. echo $re then press tab to see all variables that contain "re"),
-  file paths,
-  git branch names (including remote branches),
-  process names/ids
-  (ex. kill fs and press tab to see all processes whose names contain "fs"),
-  job names/ids,
-  man page names
-  (ex. man js and press tab to see all page names that contain "js"),
-  ssh hosts,
-  users (ex. su and press tab to see all usernames),
-  and more
-- while entering a command, press tab
-- if there is only one option, it will be expanded in place
-- if there is more than one option,
-  up to four will be listed on separate lines
-- to select an option, press tab repeatedly until
-  the desired option is highlighted and press enter
-  * highlighting cycles back to first option
-    if tab is pressed while last option is highlighted
-- to filter list of options,
-  press tab until an option is highlighted,
-  then type a substring that must be contained
-- to skip selecting an option, press esc
-- if there are more than four options, the first four will be listed
-  followed by "...and n more rows"
-- to see remaining options, press tab again
-- try completing file paths for the cd command
-  * press tab once to see options,
-    again to show all options if more than four,
-    and again to highlight first option
-
-Custom Tab Completions
-- can implement custom completions for custom commands
-  * complete -c command-name -s short-switch -l long-switch -a 'argument words'
-- an advanced topic
-  * see your functions/greet.fish and completions/greet.fish example
-    - TODO: not working!
-  * see https://fishshell.com/docs/current/commands.html#complete
-    and https://fishshell.com/docs/current/index.html#completion-own
 
 Aliases
 - to define an alias
@@ -1386,3 +1547,6 @@ Random Numbers and Options
       set color (random choice $colors)
 
 TODO: Document how to use the "spin" function you installed.
+    </div>
+  </body>
+</html>
