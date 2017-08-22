@@ -140,6 +140,14 @@
       <a href="https://github.com/fish-shell/fish-shell/milestone/7">https://github.com/fish-shell/fish-shell/milestone/7</a>
     </div>
 
+    <h3>Sections</h3>
+    <div>
+      The remainder of this article is split into three sections.
+      The first section describes using fish.
+      The second section describes customizing fish.
+      The third section describes fish scripting.
+    </div>
+
     <h3>Installing</h3>
     <div>
       Instructions for installing fish are at
@@ -538,8 +546,8 @@
       A function is defined by using the <code>function</code> command.
       Functions can have named parameters.
       Functions cannot return a value,
-      but they can write to a stream like stdout and stderr
-      and they can set a return status that goes into the variable <code>status</code>.
+      but they can write to a stream like stdout and stderr and
+      they can set a return status that goes into the variable <code>status</code>.
       When a function is called, whatever it writes to stdout
       can be captured in a variable with
       <code>set myVar (myFunction args)</code>
@@ -577,6 +585,43 @@
         but it won't be available in other existing or future sessions.
       </li>
     </ul>
+
+    <h3>Comparing fish functions to JavaScript</h3>
+    <div>
+      Let's look at an example of a simple function that
+      takes two numbers and returns their product.
+      It's useful to see how fish functions differ from
+      functions in more traditional programming languages like JavaScript.
+    </div>
+    <div>
+      Here is the function in JavaScript and a call to it.
+    </div>
+    <code>
+      function product(n1, n2) {
+        return n1 * n2;
+      }
+      const result = product(2, 3); // 6
+    </code>
+    <div>
+      Here is the function in fish and a call to it.
+    </div>
+    <code>
+      function product -a n1 n2
+        math "$n1 * $n2"
+      end
+      set result (product 2 3) # 6
+    </code>
+    <div>
+       Everthing in fish is done with commands, even defining functions.
+       The <code>-a</code> switch of the <code>function</code> command
+       specifies named parameters
+       Functions in fish cannot return a value,
+       but they can write to streams like stdout.
+       Math is performed using the <code>math</code> function
+       which writes its result to stdout.
+       Surrounding a function call with parens allows its stdout to be
+       captured and placed in a variable.
+    </div>
 
     <hr>
 
