@@ -488,13 +488,93 @@
       enter <code>abbr --erase <i>name</i></code>.
     </div>
 
-    <h3></h3>
+    <h3>PATH environment variable</h3>
     <div>
+      PATH is a variable that holds a lists of paths
+      that can be searched when a command is entered.
+      Later we'll discuss the three types of variables in fish.
+      PATH is a "universal" variable, which means that
+      it is shared by all active and future shells.
+      It's value is not a colon-separated string like in other shells.
+      It is a list of strings, like an array in many programming languages.
+    </div>
+    <div>
+      To see the current value, enter <code>echo $PATH</code>.
+    </div>
+  * paths are separated by spaces
+- the universal variable fish_user_paths
+  is automatically prepended to this
+  * TODO: Why?
+  * it is recommended to set fish_user_paths
+    rather than modifying PATH
+- to prepend a path to PATH
+  * set -U fish_user_paths $fish_user_paths {new-path}
+  * outputs a warning if new-path doesn't exist but adds it anyway
+  * see .config/fish/functions/addpath.fish
+- to remove a path from PATH
+  * if set -l index (contains -i {some-path} $fish_user_paths)
+      set -e fish_user_paths[$index]
+    end
+  * see .config/fish/functions/rmpath.fish
+  * TODO: sure this is a mess, but is it easier in bash?
+- before modifying fish_user_profile in config.fish,
+  test that the value to be added isn't already present
+  so each shell startup doesn't modify it again
+
     </div>
 
     <h3></h3>
     <div>
     </div>
+
+    <h3>Fish Scripting</h3>
+    <div>
+      If you appreciate programming languages with simple, consistent syntax,
+      you will love scripting in fish!
+    </div>
+    <div>
+      Scripts are implementing by writing a function.
+      Functions become custom commands that can be executed from a terminal.
+      A function is defined by using the <code>function</code> command.
+      Functions can have named parameters.
+      Functions cannot return a value,
+      but they can write to a stream like stdout and stderr
+      and they can set a return status that goes into the variable <code>status</code>.
+      When a function is called, whatever it writes to stdout
+      can be captured in a variable with
+      <code>set myVar (myFunction args)</code>
+    </div>
+    <div>
+      In other shells, many steps are required to write and enable a new script.
+    </div>
+    <ul>
+      <li>Decide where to create the implementation file.</li>
+      <li>Create the file and write the code.</li>
+      <li>Make sure the directory is listed in the PATH environment variable.</li>
+      <li>Add a "shebang" comment as the first line.</li>
+      <li>Use the <code>chmod</code> command to make the file executable.</li>
+    </ul>
+    <div>
+      While the same can be done with fish scripts,
+      most of these steps are not necessary.
+      The easiest way to write and enable a new fish script is:
+    </div>
+    <ul>
+      <li>
+        Enter <code>funced <i>name </i></code>.
+        This opens an editor for entering or modifying the script.
+        If the script is new, the editor is populated with
+        a starting point for a function definition.
+      </li>
+      <li>Write the code.</li>
+      <li>
+        Enter <code>funcsave <i>name </i></code>.
+        This saves the script to a file with the same name as the function
+        in the ~/.config/fish/functions directory.
+        When commands are executed, fish automatically looks
+        for their implementation here.
+      </li>
+    </ul>
 
     <hr>
 
@@ -1113,31 +1193,6 @@ Hashmaps
         eval echo '$'items-$color
       end
 
-PATH environment variable
-- a universal variable that holds a list of paths
-  * not a colon-separated string
-- to see current value
-  * echo $PATH
-  * paths are separated by spaces
-- the universal variable fish_user_paths
-  is automatically prepended to this
-  * TODO: Why?
-  * it is recommended to set fish_user_paths
-    rather than modifying PATH
-- to prepend a path to PATH
-  * set -U fish_user_paths $fish_user_paths {new-path}
-  * outputs a warning if new-path doesn't exist but adds it anyway
-  * see .config/fish/functions/addpath.fish
-- to remove a path from PATH
-  * if set -l index (contains -i {some-path} $fish_user_paths)
-      set -e fish_user_paths[$index]
-    end
-  * see .config/fish/functions/rmpath.fish
-  * TODO: sure this is a mess, but is it easier in bash?
-- before modifying fish_user_profile in config.fish,
-  test that the value to be added isn't already present
-  so each shell startup doesn't modify it again
-
 Math
 - the math function is a wrapper around the bc command
   (abbreviation for "basic calculator")
@@ -1459,11 +1514,15 @@ If statements
 - for a single line "if"
   * if condition; statement; end
 
-and & or commands
+and &amp; or commands
 - note that these are commands, not keywords
 - to conditionally execute a command only if $status is 0
   command1; and command2
-  * not the same as command1; command2
+  * this is the same as
+    command1
+    and command2
+  * this is not the same as
+    command1; command2
     because that will run command2 even if command1 has a bad status
 - to conditionally execute a command only if $status is not 0
   command1; or command2
