@@ -25,9 +25,11 @@ set -U fish_greeting ''
 #---------------------------------------------------------------------------
 
 # For git
+abbr --add add git add
 abbr --add br git branch
 abbr --add ci git commit -av
 abbr --add co git checkout
+abbr --add cob git checkout -b
 abbr --add log git log
 abbr --add status git status
 
