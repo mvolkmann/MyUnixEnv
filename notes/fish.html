@@ -531,7 +531,82 @@
 
     </div>
 
-    <h3></h3>
+    <h3>Configuring</h3>
+    <div>
+      The fish shell can be configured in three ways:
+      by executing commands in a shell,
+      adding commands in a configuration file,
+      and in a web UI.
+    </div>
+    <div>
+      Fish is billed as not needing configuation.
+      Strictly speaking that is true,
+      but if you currently use another shell like bash,
+      you likely have configuration for it and
+      will want similar configuration for fish.
+      Examples include creating abbreviations and aliases,
+      and setting variables such as PATH.
+    </div>
+    <div>
+      The fish configuration file is named <code>config.fish</code>
+      and should be placed in the <code>~/.config/fish</code> directory.
+    </div>
+    <div>
+      While functions can be defined in <code>config.fish</code>,
+      it is more efficient to use autoloading functions.
+    </div>
+  * to run a command only when starting a login shell
+    - determine from exit status of command "status --is-login"
+      * ex. if status --is-login; ...; end
+    - a login shell is created for every new terminal window
+      * includes creating new tmux panes
+  * to run a command only when starting an interactive shell
+    - determine from exit status of command "status --is-interactive"
+      * ex. if status --is-interactive; ...; end
+    - an interactive shell is created when a subshell is created
+      * ex. by entering "fish" inside a fish shell
+    - login shells are also interactive
+- web UI
+  * to start, fish_config [starting-tab-name]
+    - starts a local web server opens a tab in the default web browser
+  * tabs include
+    - colors
+      * displays current color settings
+        and allows them to be customized
+      * select a theme, press "Set Theme!" button, and
+        wait a few seconds for it to change to "Theme Set!"
+      * doesn't change background color in iTerm2
+        - do this in Preferences...Profiles...Colors...Background
+      * can customize color for these:
+        - commands, parameters, statement terminators, quoted strings,
+          redirections, errors, comments, and autosuggestions
+        - click on the syntax example of each near the top
+          and select a color from the color grid below
+        - press "Set Theme" when finished selecting colors
+        - doesn't apply to function definitions
+          when files that define them are simply cat'ed
+    - prompt
+      * displays current prompt
+      * allows selection from 17 predefined prompts
+      * select one and press "Prompt Set!"
+      * DANGER: This overwrites functions/fish_prompt.fish,
+        so if you defined a custom prompt in that file,
+        don't do this!
+    - functions - view-only
+    - variables - view-only
+      * lists all universal variables and their values,
+        not global or local variables
+    - history - view-only
+      * lists command history
+    - bindings - view-only
+      * lists current key bindings
+    - abbreviations - view-only
+      * lists abbreviations, typically defined in config.fish
+  * pressing enter in the terminal will shutdown the server
+    that serves this help
+    - restarting it by entering fish_config again
+      will open a new browser tab
+
     <div>
     </div>
 
@@ -639,64 +714,6 @@ For article
   * writing functions
   * advanced
 - get some ideas from the Wikipedia entry
-
-Configuring
-- can configure from shell, in a configuration file, and in the web UI
-- configuration file
-  * ~/.config/fish/config.fish
-  * can define functions here, but it is
-    more efficient to use autoloading functions
-  * to run a command only when starting a login shell
-    - determine from exit status of command "status --is-login"
-      * ex. if status --is-login; ...; end
-    - a login shell is created for every new terminal window
-      * includes creating new tmux panes
-  * to run a command only when starting an interactive shell
-    - determine from exit status of command "status --is-interactive"
-      * ex. if status --is-interactive; ...; end
-    - an interactive shell is created when a subshell is created
-      * ex. by entering "fish" inside a fish shell
-    - login shells are also interactive
-- web UI
-  * to start, fish_config [starting-tab-name]
-    - starts a local web server opens a tab in the default web browser
-  * tabs include
-    - colors
-      * displays current color settings
-        and allows them to be customized
-      * select a theme, press "Set Theme!" button, and
-        wait a few seconds for it to change to "Theme Set!"
-      * doesn't change background color in iTerm2
-        - do this in Preferences...Profiles...Colors...Background
-      * can customize color for these:
-        - commands, parameters, statement terminators, quoted strings,
-          redirections, errors, comments, and autosuggestions
-        - click on the syntax example of each near the top
-          and select a color from the color grid below
-        - press "Set Theme" when finished selecting colors
-        - doesn't apply to function definitions
-          when files that define them are simply cat'ed
-    - prompt
-      * displays current prompt
-      * allows selection from 17 predefined prompts
-      * select one and press "Prompt Set!"
-      * DANGER: This overwrites functions/fish_prompt.fish,
-        so if you defined a custom prompt in that file,
-        don't do this!
-    - functions - view-only
-    - variables - view-only
-      * lists all universal variables and their values,
-        not global or local variables
-    - history - view-only
-      * lists command history
-    - bindings - view-only
-      * lists current key bindings
-    - abbreviations - view-only
-      * lists abbreviations, typically defined in config.fish
-  * pressing enter in the terminal will shutdown the server
-    that serves this help
-    - restarting it by entering fish_config again
-      will open a new browser tab
 
 Tools for fish (in alphabetical order)
 - Fisherman - https://github.com/fisherman/fisherman
