@@ -36,6 +36,11 @@ abbr --add status git status
 # For npm
 abbr --add nr npm run
 
+# Ask for confirmation before overwriting or deleting files.
+abbr --add cp 'cp -i'
+abbr --add mv 'mv -i'
+abbr --add rm 'rm -i'
+
 #---------------------------------------------------------------------------
 # Aliases
 #---------------------------------------------------------------------------
@@ -68,11 +73,6 @@ alias pushn 'git push --no-verify origin (git rev-parse --abbrev-ref HEAD)'
 alias sha 'git rev-parse HEAD'
 # status report from git commits
 alias sr 'git log --author="Volkmann" --branches --no-merges --since="8 days ago" --pretty=format:"%cd %s" | tac'
-
-# Ask for confirmation before overwriting or deleting files.
-alias cp 'cp -i'
-alias mv 'mv -i'
-alias rm 'rm -i'
 
 # For a nicely formatted dump of LD_LIBRARY_PATH ...
 alias eld "echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/:/\n   /g'"

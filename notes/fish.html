@@ -471,7 +471,7 @@
     </div>
     <div>
       To define an abbreviation, enter
-      <code>abbr --add <i>name</i> <i>value </i></code>.
+      <code>abbr --add <i>name</i> <i>value </i></code> (-a).
     </div>
     <div>
       For example, if <code>abbr -add co git checkout</code>
@@ -485,44 +485,65 @@
       In general, abbreviations are preferred over aliases.
     </div>
     <div>
-      To output a list of all abbreviation names, enter <code>abbr --list</code>.
+      To output a list of all abbreviation names,
+      enter <code>abbr --list</code> (-l).
     </div>
     <div>
       To output a list of all abbreviation names and their values,
-      enter <code>abbr --show</code> or just <code>abbr</code>.
+      enter <code>abbr --show</code> (-s) or just <code>abbr</code>.
     </div>
     <div>
       To undefine (erase) an alias,
-      enter <code>abbr --erase <i>name</i></code>.
+      enter <code>abbr --erase <i>name</i></code> (-e).
     </div>
 
     <h3>PATH environment variable</h3>
     <div>
-      PATH is a variable that holds a lists of paths
+      <code>PATH</code> is a variable that holds a lists of paths
       that can be searched when a command is entered.
       Later we'll discuss the three types of variables in fish.
-      PATH is a "universal" variable, which means that
-      it is shared by all active and future shells.
-      It's value is not a colon-separated string like in other shells.
-      It is a list of strings, like an array in many programming languages.
+      <code>PATH</code> is a global variable, which means that
+      changes to it are available in the current session,
+      but not in others.
+      Its value is not a colon-separated string like in other shells.
+      It is a list of space-separated strings that is treated like an array.
+      Should this be set in config.fish?
     </div>
     <div>
       To see the current value, enter <code>echo $PATH</code>.
     </div>
-  * paths are separated by spaces
-- the universal variable fish_user_paths
-  is automatically prepended to this
-  * TODO: Why?
-  * it is recommended to set fish_user_paths
-    rather than modifying PATH
-- to prepend a path to PATH
-  * set -U fish_user_paths $fish_user_paths {new-path}
-  * outputs a warning if new-path doesn't exist but adds it anyway
-  * see .config/fish/functions/addpath.fish
-- to remove a path from PATH
-  * if set -l index (contains -i {some-path} $fish_user_paths)
-      set -e fish_user_paths[$index]
-    end
+    <div>
+      The universal variable <code>fish_user_paths</code>
+      is automatically prepended to <code>PATH</code>.
+      This provides a why to add to the beginning of PATH
+      in a way that affects all current and future sessions.
+      TODO: Why?
+      It is recommended to set fish_user_paths
+      rather than modifying <code>PATH</code>.
+      Should this not be set in config.fish?
+    </div>
+    <div>
+      To prepend a path to PATH,<br>
+      <code>set -U fish_user_paths $fish_user_paths <i>new-path</i></code><br>
+      This outputs a warning if <code><i>new-path</i></code>
+      doesn't exist, but adds it anyway.
+      TODO: see .config/fish/functions/addpath.fish
+    </div>
+    <div>
+      As we will see later, all variables hold a list.
+      It's just that many of them only contain a single value.
+      Removing a path from PATH or fish_user_paths is done
+      the same way as removing an item from any list.
+    </div>
+    <div>
+      To remove a path from fish_user_paths:
+    </div>
+    <code>
+      if set -l index (contains -i <i>some-path</i> $fish_user_paths)
+        set -e fish_user_paths[$index]
+      end
+    <code>
+  * see .config/fish/functions/listrm.fish
   * see .config/fish/functions/rmpath.fish
   * TODO: sure this is a mess, but is it easier in bash?
 - before modifying fish_user_profile in config.fish,
