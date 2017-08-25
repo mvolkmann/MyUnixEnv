@@ -530,6 +530,9 @@
     <h3>Variables</h3>
     <div>
       Variable names in fish consist of letters, digits, and underscores.
+      All variable values are lists that hold zero, one, or more string values.
+      Variable names are case-sensitive.
+      <code>myvar</code> and <code>myVar</code> are different variables.
     </div>
     <div>
       There are three variable scopes.
@@ -583,40 +586,12 @@
     </div>
     <div>
       To get the value of a variable use <code>$<i>name</i></code>.
+      If this appears next to other text,
+      say the strings "foo" and "bar",
+      use <code>foo{$<i>name</i>}bar</code>
+      or <code>'foo'$<code>name</code>'bar'</code>.
     </div>
-  * if next to other text,
-    use foo{$name}bar or 'foo'$name'bar'
-  * can use multiple $'s to interpret the value of a variable as a variable name
-    - ex. set foo 1; set bar foo; echo $$bar # 1
-    - from https://fishshell.com/docs/current/index.html#expand-variable
-      "When using this feature together with array brackets,
-      the brackets will always match the innermost $ dereference."
-    - ex.
-      set colors red green blue
-      set listName colors
-      echo $$listName[2] doesn't work
-      * evaluates like tmp = $listName[2] and then $tmp on that
-      * $listName[2] gives array index out of bounds
-        because the value of $listName is just 'colors'
-        and that has no value at index 2
-      echo $$listName[1][2] gives green
-      * $$listName[1][2] evaluates like
-        $listName[1] which gives 'colors'
-        and then $colors[2] which gives 'green'
-- can use multiple $'s to treat the value of a variable as a variable name
-  * ex.
-    set pocket 'wallet'
-    set pant pocket
-    echo $$pant # wallet
-  * ex.
-    set foreground blue
-    set background green
-    set side fore
-    set name "$side"ground
-    echo $$name # blue
-- all variable values are lists that hold zero, one, or more string values
-- variable names are case-sensitive
-  * myvar and myVar are different variables
+GRONK
 - delete (erase) with: set -e {name} (--erase)
   * will delete variable in the closest existing scope
     - local then global then universal
@@ -653,11 +628,66 @@
     - ex. assuming colors is a list of colors
       vared colors[3]
 
+    <h3>Advanced Use of Variables</h3>
+    <div>
+      Move this section down!
+    </div>
+    <div>
+      Multiple $'s can be used to interpret the value of a variable
+      as a variable name.  Consider the following examples.
+    </div>
+    <code>
+      set foo 1
+      set bar foo
+      echo $$bar # 1
+    </code>
+    <code>
+      set pocket 'wallet'
+      set pant pocket
+      echo $$pant # wallet
+    </code>
+    <code>
+      set foreground blue
+      set background green
+      set side fore
+      set name "$side"ground
+      echo $$name # blue
+    </code>
+    <div>
+      From
+      <a href="https://fishshell.com/docs/current/index.html#expand-variable">https://fishshell.com/docs/current/index.html#expand-variable</a>,
+      "When using this feature together with array brackets,
+      the brackets will always match the innermost $ dereference."
+      To understand this, consider the following example.
+    </div>
+    <code>
+      set colors red green blue
+      set listName colors
+    </code>
+    <div>
+      How can we write code to get the value "green"
+      from the list of colors?
+    </div>
+    <div>
+      <code>echo $$listName[2]</code>
+      doesn't work because it evaluates like
+      <code>tmp = $listName[2]</code>
+      and then <code>$tmp</code> on that.
+      <code>$listName[2]</code> gives array index out of bounds
+      because the value of <code>$listName</code> is just
+      <code>'colors'</code> and that has no value at index 2.
+    </div>
+    <div>
+      <code>echo $$listName[1][2]</code> works!
+      <code>$$listName[1][2]</code> evaluates like
+      <code>$listName[1]</code> which gives <code>'colors'</code>
+      and then <code>$colors[2]</code> which gives <code>'green'</code>.
+    </div>
+
     <h3>PATH environment variable</h3>
     <div>
       <code>PATH</code> is a variable that holds a lists of paths
       that the shell searches when a command is entered.
-      Later we'll discuss the three types of variables in fish.
       <code>PATH</code> is a global variable, which means that
       changes to it are available anywhere in the current session,
       but not in others.
