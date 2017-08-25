@@ -9,15 +9,17 @@
       code {
         background-color: lightyellow;
         font-weight: bold;
+        padding: 3px 2px;
       }
       div {
         margin-bottom: 10px;
       }
-      h1 {
+      h1, h2, h3 {
         color: blue;
       }
-      h3 {
-        color: blue;
+      h2 {
+        border-top: solid red 3px;
+        padding-top: 20px;
       }
       h4 {
         color: purple;
@@ -145,10 +147,12 @@
       The remainder of this article is split into three sections.
       The first section describes using fish.
       The second section describes customizing fish.
-      The third section describes fish scripting.
+      The third section describes scripting in fish.
     </div>
 
-    <h3>Installing</h3>
+    <h2>Using Fish</h2>
+
+    <h3>Installing Fish</h3>
     <div>
       Instructions for installing fish are at
       <a href="https://fishshell.com/">https://fishshell.com/</a>.
@@ -440,6 +444,32 @@
       To view the current directory stack, enter <code>dirs</code>.
     </div>
 
+    <h2>Customizing Fish</h2>
+
+    <div>
+      The fish shell can be configured in three ways:
+      by executing commands in a shell,
+      adding commands in a configuration file,
+      and in a web UI.
+    </div>
+    <div>
+      Fish is billed as not needing configuation.
+      Strictly speaking that is true,
+      but if you currently use another shell like bash,
+      you likely have configuration for it
+      (in <code>~/.bash_profile</code> and <code>~/.bashrc</code>)
+      and will want similar configuration for fish.
+      Examples include creating aliases and abbreviations,
+      and setting variables such as PATH.
+    </div>
+    <div>
+      The fish configuration file is named <code>config.fish</code>
+      and should be placed in the <code>~/.config/fish</code> directory.
+      Saving configuration here enables
+      copying that file to other machines
+      where the same configuration is desired.
+    </div>
+
     <h3>Aliases</h3>
     <div>
       An alias is an alternate name, usually shorter, for some command.
@@ -497,30 +527,163 @@
       enter <code>abbr --erase <i>name</i></code> (-e).
     </div>
 
+    <h3>Variables</h3>
+    <div>
+      Variable names in fish consist of letters, digits, and underscores.
+    </div>
+    <div>
+      There are three variable scopes.
+    </div>
+    <div>
+      Local variables available only in the current block
+      Blocks begin with one of these commands,
+      each of which are discussed later:
+      <code>begin</code>, <code>if</code>, <code>for</code>,
+      <code>function</code> , <code>switch</code>,
+      or <code>while</code>.
+      Blocks are terminated by a corresponding <code>end</code> keyword.
+    </div>
+    <div>
+      Global variables are available anywhere in the current session.
+    </div>
+    <div>
+      Universal variables are available in every session.
+      They are even available in future sessions
+      because they are saved across reboots
+      Settings of universal variables are stored in
+      <code>~/.config/fish/fishd.<i>machine-id</i></code>.
+    </div>
+    <div>
+      Regardless of scope, every variable is set using the command
+      <code>set <i>name </i> <i>value </i></code>.
+      This command accepts many switches.
+    </div>
+    <div>
+      To make a variable local, add <code>--local</code> (<code>-l</code>).<br>
+      To make a variable global, add <code>--global</code> (<code>-g</code>).<br>
+      To make a variable universal, add <code>--universal</code> (<code>-U</code>).<br>
+      To export a variable so it is visible in child processes, add <code>--export</code> (<code>-x</code>).  Note that this is not a new kind of scope.  It is convention for exported variable names to be all uppercase.
+    </div>
+    <div>
+      The same variable name can be assigned a different value
+      in each scope.  The value used depends on context,
+      using the lowest scope visible, local then global then universal.
+    </div>
+    <div>
+      What happens when a variable is set without specifying a scope
+      depends on whether it has been previously set.
+      If the variable has already been set in any scope,
+      this changes the value of the lowest visible scope already set.
+      If the variable has not already been set in any scope,
+      the new variable will be local to the function in which it is set,
+      not the block where it is set.
+      If not in a function, the variable will be global
+      When a variable is set in <code>config.fish</code>
+      with no scope switch, it becomes global.
+    </div>
+    <div>
+      To get the value of a variable use <code>$<i>name</i></code>.
+    </div>
+  * if next to other text,
+    use foo{$name}bar or 'foo'$name'bar'
+  * can use multiple $'s to interpret the value of a variable as a variable name
+    - ex. set foo 1; set bar foo; echo $$bar # 1
+    - from https://fishshell.com/docs/current/index.html#expand-variable
+      "When using this feature together with array brackets,
+      the brackets will always match the innermost $ dereference."
+    - ex.
+      set colors red green blue
+      set listName colors
+      echo $$listName[2] doesn't work
+      * evaluates like tmp = $listName[2] and then $tmp on that
+      * $listName[2] gives array index out of bounds
+        because the value of $listName is just 'colors'
+        and that has no value at index 2
+      echo $$listName[1][2] gives green
+      * $$listName[1][2] evaluates like
+        $listName[1] which gives 'colors'
+        and then $colors[2] which gives 'green'
+- can use multiple $'s to treat the value of a variable as a variable name
+  * ex.
+    set pocket 'wallet'
+    set pant pocket
+    echo $$pant # wallet
+  * ex.
+    set foreground blue
+    set background green
+    set side fore
+    set name "$side"ground
+    echo $$name # blue
+- all variable values are lists that hold zero, one, or more string values
+- variable names are case-sensitive
+  * myvar and myVar are different variables
+- delete (erase) with: set -e {name} (--erase)
+  * will delete variable in the closest existing scope
+    - local then global then universal
+  * can specify the scope in which the variable should be erased
+- to list names and values of variables
+  * all: set
+  * only universal: set -U
+  * only global: set -g
+  * only local: set -l
+  * only exported: set -x
+- to list only the names of all defined variables
+  * set --names (-n)
+  * add a scope switch to only list
+    names of variables in a given scope
+  * this may abbreviate long names
+  * to avoid, add --long (-L)
+- query (determine if set) with: set --query name (or -q)
+  * sets status variable to 0 if set and 1 if not
+    - to see, echo $status
+    - ex. set -q color; echo $status
+  * add a scope switch to only query in a given scope
+    - ex. to query whether color is a global variable,
+      set -qg color; echo $status
+  * a variable can be set and not have a value
+    - ex. set name
+    - like setting a variable to null in JavaScript, versus undefined
+  * to determine if a variable has a value
+    - set -q name[0]
+- to interactively edit the value of a variable
+  * vared name
+  * useful for values that are long strings
+  * can't edit values that are lists with more than one item,
+    but can edit a single item
+    - ex. assuming colors is a list of colors
+      vared colors[3]
+
     <h3>PATH environment variable</h3>
     <div>
       <code>PATH</code> is a variable that holds a lists of paths
-      that can be searched when a command is entered.
+      that the shell searches when a command is entered.
       Later we'll discuss the three types of variables in fish.
       <code>PATH</code> is a global variable, which means that
-      changes to it are available in the current session,
+      changes to it are available anywhere in the current session,
       but not in others.
       Its value is not a colon-separated string like in other shells.
       It is a list of space-separated strings that is treated like an array.
-      Should this be set in config.fish?
+    </div>
+    <div>
+      Typical PATH is defined in <code>config.fish</code>.
     </div>
     <div>
       To see the current value, enter <code>echo $PATH</code>.
     </div>
     <div>
       The universal variable <code>fish_user_paths</code>
-      is automatically prepended to <code>PATH</code>.
-      This provides a why to add to the beginning of PATH
-      in a way that affects all current and future sessions.
-      TODO: Why?
-      It is recommended to set fish_user_paths
-      rather than modifying <code>PATH</code>.
-      Should this not be set in config.fish?
+      is another list of paths that is
+      automatically prepended to <code>PATH</code>.
+      Seting this modifies <code>PATH</code> in a way that
+      affects all current and future sessions
+      without having to modify <code>config.fish</code>
+      and source it again.
+      However, a benefit of changing PATH in <code>config.fish</code>
+      is that the file can easily be copied to other machines.
+    </div>
+    <div>
+      <code>fish_user_paths</code> should only be set in a terminal,
+      not in <code>config.fish</code>.
     </div>
     <div>
       To prepend a path to PATH,<br>
@@ -545,33 +708,10 @@
     <code>
   * see .config/fish/functions/listrm.fish
   * see .config/fish/functions/rmpath.fish
-  * TODO: sure this is a mess, but is it easier in bash?
-- before modifying fish_user_profile in config.fish,
-  test that the value to be added isn't already present
-  so each shell startup doesn't modify it again
 
     </div>
 
     <h3>Configuring</h3>
-    <div>
-      The fish shell can be configured in three ways:
-      by executing commands in a shell,
-      adding commands in a configuration file,
-      and in a web UI.
-    </div>
-    <div>
-      Fish is billed as not needing configuation.
-      Strictly speaking that is true,
-      but if you currently use another shell like bash,
-      you likely have configuration for it and
-      will want similar configuration for fish.
-      Examples include creating abbreviations and aliases,
-      and setting variables such as PATH.
-    </div>
-    <div>
-      The fish configuration file is named <code>config.fish</code>
-      and should be placed in the <code>~/.config/fish</code> directory.
-    </div>
     <div>
       While functions can be defined in <code>config.fish</code>,
       it is more efficient to use autoloading functions.
@@ -631,7 +771,8 @@
     <div>
     </div>
 
-    <h3>Fish Scripting</h3>
+    <h2>Scripting in Fish</h2>
+
     <div>
       If you appreciate programming languages with simple, consistent syntax,
       you will love scripting in fish!
@@ -910,110 +1051,6 @@ Pipes and Redirections
   * to avoid overwriting an existing file, use ^?
   * to append, use ^^ instead of ^
 - to redirect stderr to stdout, some-command 2>&1
-
-Variables
-- variable names consist of letters, digits, and underscores
-- there are three variable scopes
-  - local
-    * available only in the current block
-    * blocks begin with one of these keywords:
-      begin, if, for, function, switch, or while
-    * blocks end with the corresponding end keyword
-  - global
-    * available anywhere in the current session
-  - universal
-    * available in every session, even future sessions
-      because they are saved across reboots
-      - stored in ~/.config/fish/fishd.{machine-id}
-- set with: set {name} {value}
-  * to make it local, add --local (-l) switch
-  * to make it global, add --global (-g) switch
-  * to make it universal, add --universal (-U) switch
-  * to export it so it is visible in child processes,
-    add --export (-x) switch
-    - this is not a new kind of scope
-    - it is convention for exported variable names to be all uppercase
-  * if set with no scope switch
-    - if the variable has already been set in any scope,
-      this changes the value of the lowest scope already set
-    - if the variable has not already been set in any scope,
-      the new variable will be local to the function in which it is set,
-      not the block where it is set
-      - if not in a function, it will be global
-    - when a variable is set in config.fish with no scope switch,
-      it defaults to global
-- the same variable name can be set to different values in different scopes
-  * references are resolved at the lowest scope found,
-    local then global then universal
-- get with $name
-  * if next to other text,
-    use foo{$name}bar or 'foo'$name'bar'
-  * can use multiple $'s to interpret the value of a variable as a variable name
-    - ex. set foo 1; set bar foo; echo $$bar # 1
-    - from https://fishshell.com/docs/current/index.html#expand-variable
-      "When using this feature together with array brackets,
-      the brackets will always match the innermost $ dereference."
-    - ex.
-      set colors red green blue
-      set listName colors
-      echo $$listName[2] doesn't work
-      * evaluates like tmp = $listName[2] and then $tmp on that
-      * $listName[2] gives array index out of bounds
-        because the value of $listName is just 'colors'
-        and that has no value at index 2
-      echo $$listName[1][2] gives green
-      * $$listName[1][2] evaluates like
-        $listName[1] which gives 'colors'
-        and then $colors[2] which gives 'green'
-- can use multiple $'s to treat the value of a variable as a variable name
-  * ex.
-    set pocket 'wallet'
-    set pant pocket
-    echo $$pant # wallet
-  * ex.
-    set foreground blue
-    set background green
-    set side fore
-    set name "$side"ground
-    echo $$name # blue
-- all variable values are lists that hold zero, one, or more string values
-- variable names are case-sensitive
-  * myvar and myVar are different variables
-- delete (erase) with: set -e {name} (--erase)
-  * will delete variable in the closest existing scope
-    - local then global then universal
-  * can specify the scope in which the variable should be erased
-- to list names and values of variables
-  * all: set
-  * only universal: set -U
-  * only global: set -g
-  * only local: set -l
-  * only exported: set -x
-- to list only the names of all defined variables
-  * set --names (-n)
-  * add a scope switch to only list
-    names of variables in a given scope
-  * this may abbreviate long names
-  * to avoid, add --long (-L)
-- query (determine if set) with: set --query name (or -q)
-  * sets status variable to 0 if set and 1 if not
-    - to see, echo $status
-    - ex. set -q color; echo $status
-  * add a scope switch to only query in a given scope
-    - ex. to query whether color is a global variable,
-      set -qg color; echo $status
-  * a variable can be set and not have a value
-    - ex. set name
-    - like setting a variable to null in JavaScript, versus undefined
-  * to determine if a variable has a value
-    - set -q name[0]
-- to interactively edit the value of a variable
-  * vared name
-  * useful for values that are long strings
-  * can't edit values that are lists with more than one item,
-    but can edit a single item
-    - ex. assuming colors is a list of colors
-      vared colors[3]
 
 Special Variables
 - there are many variables whose names begin with "fish_"
