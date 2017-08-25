@@ -950,6 +950,21 @@ Variables
     use foo{$name}bar or 'foo'$name'bar'
   * can use multiple $'s to interpret the value of a variable as a variable name
     - ex. set foo 1; set bar foo; echo $$bar # 1
+    - from https://fishshell.com/docs/current/index.html#expand-variable
+      "When using this feature together with array brackets,
+      the brackets will always match the innermost $ dereference."
+    - ex.
+      set colors red green blue
+      set listName colors
+      echo $$listName[2] doesn't work
+      * evaluates like tmp = $listName[2] and then $tmp on that
+      * $listName[2] gives array index out of bounds
+        because the value of $listName is just 'colors'
+        and that has no value at index 2
+      echo $$listName[1][2] gives green
+      * $$listName[1][2] evaluates like
+        $listName[1] which gives 'colors'
+        and then $colors[2] which gives 'green'
 - can use multiple $'s to treat the value of a variable as a variable name
   * ex.
     set pocket 'wallet'
