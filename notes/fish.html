@@ -946,6 +946,10 @@ Variables
   * references are resolved at the lowest scope found,
     local then global then universal
 - get with $name
+  * if next to other text,
+    use foo{$name}bar or 'foo'$name'bar'
+  * can use multiple $'s to interpret the value of a variable as a variable name
+    - ex. set foo 1; set bar foo; echo $$bar # 1
 - can use multiple $'s to treat the value of a variable as a variable name
   * ex.
     set pocket 'wallet'
