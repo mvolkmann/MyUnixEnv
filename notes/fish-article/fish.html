@@ -828,6 +828,161 @@
       and then <code>$colors[2]</code> which gives <code>'green'</code>.
     </div>
 
+    <h3>Strings</h3>
+    <div>
+      Literal string values are specified by enclosing text
+      in single or double quotes.
+      Variable substitution occurs in double quotes, but not in single.
+      For example, the reference to <code>$USER</code>
+      in the following is replaced by its value:
+      <code>set msg "Good morning, $USER. Have a great day!"</code>
+    </div>
+    <div>
+      In a single quoted string,
+      single quotes can be escaped with <code>\'</code>
+      and backslashes can be escaped with <code>\\</code>.
+      In a double quoted string,
+      double quotes can be escaped with <code>\"</code>.
+      <code>$</code> which is used for variable substitution
+      can be escaped with <code>\$</code>
+      and backslashes can be escaped with <code>\\</code>.
+    </div>
+    <div>
+      The <code>string</code> command has many subcommands
+      that are specified by following <code>string</code>
+      with a space and the name of the subcommand.
+    </div>
+    <div>
+      To get the length of a string, use
+      <code>string length $<i>name</i></code>
+    </div>
+    <div>
+      Literal strings can be concatenated with the value of a variable.
+      For example,
+    </div>
+    <pre>
+      set middle 'some middle'
+      set result 'some prefix'$middle'some suffix'
+    </pre>
+    <div>
+      These are similar, but result in a list with count of 3.
+    </div>
+    <pre>
+      set result some prefix"$middle"some suffix
+      set result some prefix{$middle}some suffix
+    </pre>
+    <div>
+      Here are tests than can be performed on
+      variables that hold a single string.
+    </div>
+    <ul>
+      GRONK add <code>
+      <li>is empty: if test -z $var</li>
+      <li>is not empty: if test -n $var</li>
+      <li>is identical to another: if $v1 = $v2</li>
+      <li>is not identical to another: if $v1 != $v2</li>
+    </ul>
+    <div>
+    </div>
+    <div>
+    </div>
+  * cannot test whether one string is less than or greater than another
+    in sorting order!
+    - < and > operators are only implemented for numbers
+    - TODO: Is there any workaround for this?
+- the "string" command has many "subcommands"
+- indexes start at 1
+- to get a substring
+  * string sub $name -s startIndex -l length
+  * if -s is omitted, it defaults to 1
+  * if -l is omitted, gets to end
+  * if -s is negative, it counts from end
+    - ex. to get last three characters, use -s -3
+  * ex. to get initials from a full name
+    - set initialList (string sub -l 1 $first $middle $last)
+    - set initials (string join '' $initialList)
+- to split a string on a delimiter, resulting in a list
+  * string split delim $var
+  * ex.
+    set csv 'red,green,blue'
+    set colors (string split , $csv)
+- to trim leading and/or trailing characters
+  * by default, trims whitespace from both sides
+  * switches
+    - --left (-l) to only trim from left
+    - --right (-r) to only trim from right
+    - --chars (-c) to specify characters to be trimmed instead of whitespace
+  * ex. set result (string trim --left --chars 0 00019) # 19
+- to create a new string by joining existing ones
+  using a delimiter between them
+  * ex. set dateStr (string join '/' $month $day $year)
+- to create a string that repeats a given string
+  * use string repeat with --count (-n) switch
+  * ex. set newText (string repeat -n3 'foo') # foofoofoo
+- to determine if a string matches a regular expression
+  * use match subcommand with --regex (-r)
+  * by default, just returns first match or none if not found
+    - to return all matches, add --all (-a)
+  * to make matching case-insenstive, add --ingore-case (-i)
+  * to get indexes and lengths of matches instead of matching text,
+    add --index (-n)
+  * can use capture groups
+    * returns list containing full match followed by each capture match
+  * to get lines that do not match instead of those that do, add --invert (-v)
+  * sets status to 0 if at least one match was found and 1 if not
+  * uses Perl regular expression syntax
+  * ex.
+    set text 'this is foolish work for a boolean'
+    set matches (string match -ar '.oo' $text) # foo boo
+    set matches (string match -anr '.oo' $text) # 9 3 28 3
+    - result is alternating list of indexes and lengths
+- to replace text in a string with other text
+  * string replace is similar to string match
+  * can match against literal text or a regex (using -r)
+  * ex. replace all occurrences of "foo" with "bar"
+    set text 'this is foolish work for a fool'
+    set newText (string replace -a 'foo' 'bar' $text)
+  * when using a regex, can use capture groups
+
+    <h3>Numbers</h3>
+    <div>
+      Only integers are supported, not floating point,
+      When a variable is set to a number, it is stored as a string.
+    </div>
+    <div>
+      For example, if <code>set score 12345</code> is entered,
+      the variable score will be set to a string containing
+      the five characters "12345".
+    </div>
+    <div>
+      To test the relationship between two numbers,
+      use the <code>test</code> command.
+      This supports many switches for various comparisons.
+      Both operands must be numbers or
+      strings that only contain digits which are converted to numbers.
+    </div>
+    <ul>
+      <li>equal: <code>if $n1 -eq $n2</code></li>
+      <li>not equal: <code>if test $n1 -ne $n2</code></li>
+      <li>less than: <code>if test $n1 -lt $n2</code></li>
+      <li>less than or equal: <code>if test $n1 -le $n2</code></li>
+      <li>greater than: <code>if test $n1 -gt $n2</code></li>
+      <li>greater than or equal: <code>if test $n1 -ge $n2</code></li>
+    </ul>
+
+    <h3>Dates</h3>
+    <div>
+      The <code>date</code> command returns the current date.
+      The default format looks like "Sat Aug 26 16:54:52 CDT 2017".
+      To use a different format, specify it using a format string
+      as defined by <code>strftime</code>
+      For details, enter <code>man strftime</code>.
+    </div>
+    <div>
+      For example, to format the date as "Saturday August 26, 2017"
+      enter <code>date '+%A %B %d, %G'</code>
+    </div>
+
     <h3>Lists (a.k.a Arrays)</h3>
     <div>
       Recall that the value of all variables is a list which
@@ -836,36 +991,37 @@
       They cannot contain other lists.
     </div>
     <div>
-      To create an empty list, enter <code>set <i>name</i></code>.
+      To create an empty list,
+      enter <code>set <i>name</i></code>
+    </div>
+    <div>
+      To create a non-empty list,
+      enter <code>set <i>name </i> <i>item1 </i> <i>item2 </i> ...</code>
+    </div>
+    <div>
+      For example, <code>set colors red green blue</code>
+      is equivalent to <code>set colors 'red' 'green' 'blue'</code>.
+      Neither of these is equivalent to <code>set colors 'red green blue'</code>
+      in which the value of <code>colors</code> is set to a single string.
+    </div>
+    <div>
+      To append an item to a list, enter
+      <code>set <i>name </i> $<i>name</i> <i>newItem</i></code>
+    </div>
+    <div>
+      To append an item to a list, enter
+      <code>set <i>name </i> <i>newItem</i> $<i>name</i></code>
+    </div>
+    <div>
+      To get an item from a list by index,
+      enter <code><i>name</i>[<i>index</i>]</code><br>
+      Indexes start at 1, not 0.
+      Use negative indexes to retrieve from the end of the list.
+      For example, <code><i>name</i>[-1]</code> gets the last item.
+    </div>
+    <div>
     </div>
 GRONK
-    <div>
-    </div>
-    <div>
-    </div>
-    <div>
-    </div>
-    <div>
-    </div>
-    <div>
-    </div>
-- to create a non-empty list
-  * set myList item1 item2 ...
-  * set colors red green blue
-    is equivalent to
-    set colors 'red' 'green' 'blue'
-    which is not the same as
-    set colors 'red green blue'
-    in which the value of colors is a single string
-- to append
-  * set myList $myList newItem
-- to prepend
-  * set myList newItem $myList
-- to get an item by index
-  * myList[index]
-  * indexes start at 1, not 0
-  * use negative indexes to retrieve from end
-    - myList[-1] gets last item
 - to set an item by index
   * set myList[index] value
 - to get a slice which is a new list
@@ -1294,109 +1450,6 @@ status Command
     - this has issues
     - see https://github.com/fish-shell/fish-shell/issues/4161
   * status print-stack-trace
-
-Strings
-- literals are delimited by single or double quotes
-  * ex. set name 'Mark Volkmann'
-  * in a single quoted string,
-    single quotes can be escaped with \'
-    and backslashes can be escaped with \\
-  * in a double quoted string,
-    double quotes can be escaped with \"
-    $ which is used for variable substitution can be escaped with \$
-    and backslashes can be escaped with \\
-- variable substitution occurs in double quotes, but not in single
-  * ex. set msg "Good morning, $USER. Have a great day!"
-- to get length
-  * string length $name
-- to concatenate a literal string with the value of a variable
-  * ex.
-    set middle 'some middle'
-    set result 'some prefix'$middle'some suffix'
-    - these are similar but result in a list with count of 3
-      set result some prefix"$middle"some suffix
-      set result some prefix{$middle}some suffix
-- to test whether a string ...
-  * is empty: if test -z $var
-  * is not empty: if test -n $var
-  * is identical to another: if $v1 = $v2
-  * is not identical to another: if $v1 != $v2
-  * cannot test whether one string is less than or greater than another
-    in sorting order!
-    - < and > operators are only implemented for numbers
-    - TODO: Is there any workaround for this?
-- the "string" command has many "subcommands"
-- indexes start at 1
-- to get a substring
-  * string sub $name -s startIndex -l length
-  * if -s is omitted, it defaults to 1
-  * if -l is omitted, gets to end
-  * if -s is negative, it counts from end
-    - ex. to get last three characters, use -s -3
-  * ex. to get initials from a full name
-    - set initialList (string sub -l 1 $first $middle $last)
-    - set initials (string join '' $initialList)
-- to split a string on a delimiter, resulting in a list
-  * string split delim $var
-  * ex.
-    set csv 'red,green,blue'
-    set colors (string split , $csv)
-- to trim leading and/or trailing characters
-  * by default, trims whitespace from both sides
-  * switches
-    - --left (-l) to only trim from left
-    - --right (-r) to only trim from right
-    - --chars (-c) to specify characters to be trimmed instead of whitespace
-  * ex. set result (string trim --left --chars 0 00019) # 19
-- to create a new string by joining existing ones
-  using a delimiter between them
-  * ex. set dateStr (string join '/' $month $day $year)
-- to create a string that repeats a given string
-  * use string repeat with --count (-n) switch
-  * ex. set newText (string repeat -n3 'foo') # foofoofoo
-- to determine if a string matches a regular expression
-  * use match subcommand with --regex (-r)
-  * by default, just returns first match or none if not found
-    - to return all matches, add --all (-a)
-  * to make matching case-insenstive, add --ingore-case (-i)
-  * to get indexes and lengths of matches instead of matching text,
-    add --index (-n)
-  * can use capture groups
-    * returns list containing full match followed by each capture match
-  * to get lines that do not match instead of those that do, add --invert (-v)
-  * sets status to 0 if at least one match was found and 1 if not
-  * uses Perl regular expression syntax
-  * ex.
-    set text 'this is foolish work for a boolean'
-    set matches (string match -ar '.oo' $text) # foo boo
-    set matches (string match -anr '.oo' $text) # 9 3 28 3
-    - result is alternating list of indexes and lengths
-- to replace text in a string with other text
-  * string replace is similar to string match
-  * can match against literal text or a regex (using -r)
-  * ex. replace all occurrences of "foo" with "bar"
-    set text 'this is foolish work for a fool'
-    set newText (string replace -a 'foo' 'bar' $text)
-  * when using a regex, can use capture groups
-
-Numbers
-- only integers are supported, not floating point,
-  but they are stored in variables as strings
-  * ex. set score 12345; echo (string length $score) # 5
-- to test the relationship between two numbers ...
-  * equal: if $n1 -eq $n2
-  * not equal:  if test $n1 -ne $n2
-  * less than:  if test $n1 -lt $n2
-  * less than or equal:  if test $n1 -le $n2
-  * greater than:  if test $n1 -gt $n2
-  * greater than or equal:  if test $n1 -ge $n2
-- both operands must be a number
-
-Dates
-- date command returns current date by default
-- format using a format string defined by strftime
-  * http://man7.org/linux/man-pages/man3/strftime.3.html
-- ex. date "+%A %B %d, %G" # Tuesday, August 15, 2017
 
 Files
 - to test whether a file ...
