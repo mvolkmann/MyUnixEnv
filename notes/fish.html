@@ -591,42 +591,60 @@
       use <code>foo{$<i>name</i>}bar</code>
       or <code>'foo'$<code>name</code>'bar'</code>.
     </div>
-GRONK
-- delete (erase) with: set -e {name} (--erase)
-  * will delete variable in the closest existing scope
-    - local then global then universal
-  * can specify the scope in which the variable should be erased
-- to list names and values of variables
-  * all: set
-  * only universal: set -U
-  * only global: set -g
-  * only local: set -l
-  * only exported: set -x
-- to list only the names of all defined variables
-  * set --names (-n)
-  * add a scope switch to only list
-    names of variables in a given scope
-  * this may abbreviate long names
-  * to avoid, add --long (-L)
-- query (determine if set) with: set --query name (or -q)
-  * sets status variable to 0 if set and 1 if not
-    - to see, echo $status
-    - ex. set -q color; echo $status
-  * add a scope switch to only query in a given scope
-    - ex. to query whether color is a global variable,
-      set -qg color; echo $status
-  * a variable can be set and not have a value
-    - ex. set name
-    - like setting a variable to null in JavaScript, versus undefined
-  * to determine if a variable has a value
-    - set -q name[0]
-- to interactively edit the value of a variable
-  * vared name
-  * useful for values that are long strings
-  * can't edit values that are lists with more than one item,
-    but can edit a single item
-    - ex. assuming colors is a list of colors
-      vared colors[3]
+    <div>
+      To delete (or erase) a variable,
+      enter <code>set --erase <i>name</i></code> (<code>-e</code>).
+      This will delete the variable from the closest scope
+      in which it is currently defined,
+      considering local, then global, then universal.
+      A scope can also be specified using the
+      <code>--local</code> (<code>-l</code>),
+      <code>--global</code> (<code>-g</code>), and
+      <code>--universal</code> (<code>-U</code>) switches.
+    </div>
+    <div>
+      To list the names and values of all variables
+      in the lowest in which they can be found,
+      enter <code>set</code>.
+      A scope switch can also be specified
+      to list only the variables in that scope.
+      To list all variables that have been exported,
+      add the <code>--export</code> switch.
+    </div>
+    <div>
+      To list only the names of all defined variables,
+      enter <code>set --names</code> (<code>-n</code>).
+      A scope switch can also be specified
+      to list only the variable names in that scope.
+    </div>
+    <div>
+      To determine if a variable has been set (query),
+      enter <code>set --query <i>name</i></code> (<code>-q</code>).
+      This sets the status variable to 0 if set and 1 if not.
+      For example, <code>set -q fish_greeting; echo $status</code>.
+      A scope switch can also be specified to query only in that scope.
+    </div>
+    <div>
+      A variable can be set and not have a value.
+      For example, <code>set foo</code>
+      sets the variable <code>foo</code>, but it doesn't have a value.
+      This is similar to setting a variable to <code>null</code>
+      in JavaScript versus <code>undefined</code>.
+      To determine if a variable has a value,
+      enter <code>set -q name[0]</code>
+      and verify that status is set to zero.
+    </div>
+    <div>
+      To interactively edit the value of a variable,
+      enter <code>vared <i>name</i></code>.
+      This is useful for values that are long strings.
+      It cannot be used to edit values that are lists
+      containiner more than one item.
+      To edit a specific item in a list,
+      specify the item index.
+      For example, if the variable colors holds a list of colors,
+      the third color can be edited with <code>vared colors[3]</code>.
+    </div>
 
     <h3>Advanced Use of Variables</h3>
     <div>
