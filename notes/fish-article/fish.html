@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>)
 <html>
   <head>
     <title>The fish Shell</title>
@@ -14,15 +14,20 @@
       div {
         margin-bottom: 10px;
       }
-      h1, h2, h3 {
+      h1, h3 {
         color: blue;
       }
       h2 {
         border-top: solid red 3px;
+        color: purple;
         padding-top: 20px;
+        text-decoration: underline;
       }
       h4 {
         color: purple;
+      }
+      img {
+        width: 800px;
       }
     </style>
   </head>
@@ -95,7 +100,14 @@
       <li>
         Whenever possible without breaking the above goals,
         fish should follow the Posix syntax.<br>
-        TODO: What are the downsides of not being 100% Posix compliant?
+        (This may lead some to avoid using fish for
+        sysadmin and install types of scripts
+        because there is often a desire for those to be highly portable
+        without requiring installation of new software such as fish.
+        However, for scripts targeted at typical users
+        or scripts that only you will use,
+        implementing them in a shell that is not 100% Posix compliant
+        is much less of a concern.)
      </li>
       <li>
         The shell language should have a small set of orthogonal features.
@@ -137,9 +149,9 @@
     <div>
       fish 3.0 is targeted to be released in Q1 2018.
       For a list of fixes/features targeted for this release, see
-      <a href="https://github.com/fish-shell/fish-shell/milestone/18">https://github.com/fish-shell/fish-shell/milestone/18</a>
+      <a href="https://github.com/fish-shell/fish-shell/milestone/18">https://github.com/fish-shell/fish-shell/milestone/18</a>.
       For a list of additional fixes/features that *may* be in this release, see
-      <a href="https://github.com/fish-shell/fish-shell/milestone/7">https://github.com/fish-shell/fish-shell/milestone/7</a>
+      <a href="https://github.com/fish-shell/fish-shell/milestone/7">https://github.com/fish-shell/fish-shell/milestone/7</a>.
     </div>
 
     <h3>Sections</h3>
@@ -459,8 +471,8 @@
       <code>fish_config <i>starting-tab-name</i></code>.
       Specifying the starting tab name is optional
       and defaults to "colors".
-      This starts a local web server opens a new tab
-      in the default web browser.
+      This starts a local web server and
+      opens a new tab in the default web browser.
       This UI contains seven tabs that are described below.
     </div>
     <div>
@@ -470,6 +482,7 @@
       press the "Set Theme!" button, and
       wait a few seconds for it to change to "Theme Set!"
     </div>
+    <img src="config-colors.png" alt="color config screenshot">
     <div>
       Colors can be customized for the following syntax elements:
       commands, parameters, statement terminators, quoted strings,
@@ -499,37 +512,50 @@
       so if you have defined a custom prompt in that file,
       and don't want to wipe it out, don't do this!
     </div>
+    <img src="config-prompt.png" alt="color config screenshot">
     <div>
-    - functions - view-only
+      The "functions" tab provides a read-only view
+      of all functions that have been defined.
+      Select a function name to see its definition
+      which includes all the commands it executes.
     </div>
+    <img src="config-functions.png" alt="color config screenshot">
     <div>
-    - variables - view-only
-      * lists all universal variables and their values,
-        not global or local variables
+      The "variables" tab provides a read-only view
+      that lists all universal variables and their values.
+      This does not list global or local variables.
     </div>
+    <img src="config-variables.png" alt="color config screenshot">
     <div>
-    - history - view-only
-      * lists command history
+      The "history" tab provides a read-only view
+      of your command history in the order in which commands
+      were issued from a terminal starting with the most recent commands.
     </div>
+    <img src="config-history.png" alt="color config screenshot">
     <div>
-    - bindings - view-only
-      * lists current key bindings
+      The "bindings" tab provides a read-only view
+      that lists the current key bindings.
     </div>
+    <img src="config-bindings.png" alt="color config screenshot">
     <div>
-    - abbreviations - view-only
-      * lists abbreviations, typically defined in config.fish
+      The "abbreviations" tab provides a read-only view
+      that lists all abbreviations.
+      Often these are defined in <code>config.fish</code> (discussed later),
+      but they can be defined from a terminal.
     </div>
+    <img src="config-abbreviations.png" alt="color config screenshot">
     <div>
-  * pressing enter in the terminal will shutdown the server
-    that serves this help
-    - restarting it by entering fish_config again
-      will open a new browser tab
+      Pressing the enter key in the terminal where
+      the <code>fish_config</code> command was entered
+      shuts down the server that serves this web UI.
+      To restart it, enter <code>fish_config</code> again,
+      which will also open a new browser tab.
     </div>
 
     <h3>Configuration via fish.config</h3>
     <div>
       Fish is billed as not needing configuation.
-      Strictly speaking that is true,
+      Strictly speaking this is true,
       but if you currently use another shell like bash,
       you likely have configuration for it
       (in <code>~/.bash_profile</code> and <code>~/.bashrc</code>)
@@ -545,9 +571,9 @@
       where the same configuration is desired.
     </div>
     <div>
-      A login shell is created for every new terminal window.
+      A "login shell" is created for every new terminal window.
       For users of tmux, this includes creating new tmux panes.
-      An interactive shell is created when a subshell is created.
+      An "interactive shell" is created when a subshell is created.
       For example, this happens when the command <code>fish</code>
       is entered in a fish shell.
       Login shells are also considered interactive shells.
@@ -555,9 +581,9 @@
     <div>
       Inside <code>config.fish</code>,
       to run commands only when starting a login shell,
-      place the commands inside an <code>if</code> as follows:
+      place the commands inside an <code>if</code> command as follows:
       <code>if status --is-login; ...; end</code>.
-      To run commands only when starting an interactive shell
+      To run commands only when starting an interactive shell, use
       <code>if status --is-interactive; ...; end</code>.
     </div>
     <div>
@@ -581,7 +607,7 @@
     </div>
     <div>
       Defining an alias creates a function with the specified name
-      that runs the command.  Functions are covered later.
+      that runs the command.  Functions are described later.
       The function is only defined in the current session
       and goes away when the session exits.
       To create aliases that are available in all sessions,
@@ -600,9 +626,13 @@
       <code>abbr --add <i>name</i> <i>value </i></code> (-a).
     </div>
     <div>
-      For example, if <code>abbr -add co git checkout</code>
-        is entered and the "co" followed by a space is entered,
-        co will be replaced by "git checkout" while typing.
+      For example, the following defines an abbreviation
+      for checking out a git branch:
+      <code>abbr -add co git checkout</code>.
+      Once this is defined, "co" followed by a space can be entered
+      in a terminal and that will be expanded to "git checkout".
+      Continue typing a branch name and press enter to execute the command.
+      The branch name is often auto-suggested and can be tab completed.
     </div>
     <div>
       Unlike aliases, when abbreviations are defined in a terminal
@@ -612,15 +642,16 @@
     </div>
     <div>
       To output a list of all abbreviation names,
-      enter <code>abbr --list</code> (-l).
-    </div>
+      enter <code>abbr --list</code> (<code>-l).
+    </code> </div>
     <div>
       To output a list of all abbreviation names and their values,
-      enter <code>abbr --show</code> (-s) or just <code>abbr</code>.
+      enter <code>abbr --show</code> (<code>-s</code>)
+      or just <code>abbr</code>.
     </div>
     <div>
-      To undefine (erase) an alias,
-      enter <code>abbr --erase <i>name</i></code> (-e).
+      To delete (erase) an alias,
+      enter <code>abbr --erase <i>name</i></code> (<code>-e</code>).
     </div>
 
     <h3>Variables</h3>
@@ -661,7 +692,10 @@
       To make a variable local, add <code>--local</code> (<code>-l</code>).<br>
       To make a variable global, add <code>--global</code> (<code>-g</code>).<br>
       To make a variable universal, add <code>--universal</code> (<code>-U</code>).<br>
-      To export a variable so it is visible in child processes, add <code>--export</code> (<code>-x</code>).  Note that this is not a new kind of scope.  It is convention for exported variable names to be all uppercase.
+      To export a variable so it is visible in child processes,
+      add <code>--export</code> (<code>-x</code>).
+      Note that this is not a new kind of scope.
+      It is convention for exported variable names to be all uppercase.
     </div>
     <div>
       The same variable name can be assigned a different value
@@ -750,23 +784,20 @@
       Multiple $'s can be used to interpret the value of a variable
       as a variable name.  Consider the following examples.
     </div>
-    <code>
+    <pre>
       set foo 1
       set bar foo
       echo $$bar # 1
-    </code>
-    <code>
+
       set pocket 'wallet'
       set pant pocket
       echo $$pant # wallet
-    </code>
-    <code>
+
       set foreground blue
       set background green
       set side fore
       set name "$side"ground
-      echo $$name # blue
-    </code>
+      echo $$name # blue</pre>
     <div>
       From
       <a href="https://fishshell.com/docs/current/index.html#expand-variable">https://fishshell.com/docs/current/index.html#expand-variable</a>,
@@ -774,10 +805,9 @@
       the brackets will always match the innermost $ dereference."
       To understand this, consider the following example.
     </div>
-    <code>
+    <pre>
       set colors red green blue
-      set listName colors
-    </code>
+      set listName colors</pre>
     <div>
       How can we write code to get the value "green"
       from the list of colors?
@@ -797,6 +827,102 @@
       <code>$listName[1]</code> which gives <code>'colors'</code>
       and then <code>$colors[2]</code> which gives <code>'green'</code>.
     </div>
+
+    <h3>Lists (a.k.a Arrays)</h3>
+    <div>
+      Recall that the value of all variables is a list which
+      may contain any number of items, including just one.
+      Lists contain string values.
+      They cannot contain other lists.
+    </div>
+    <div>
+      To create an empty list, enter <code>set <i>name</i></code>.
+    </div>
+GRONK
+    <div>
+    </div>
+    <div>
+    </div>
+    <div>
+    </div>
+    <div>
+    </div>
+    <div>
+    </div>
+- to create a non-empty list
+  * set myList item1 item2 ...
+  * set colors red green blue
+    is equivalent to
+    set colors 'red' 'green' 'blue'
+    which is not the same as
+    set colors 'red green blue'
+    in which the value of colors is a single string
+- to append
+  * set myList $myList newItem
+- to prepend
+  * set myList newItem $myList
+- to get an item by index
+  * myList[index]
+  * indexes start at 1, not 0
+  * use negative indexes to retrieve from end
+    - myList[-1] gets last item
+- to set an item by index
+  * set myList[index] value
+- to get a slice which is a new list
+  * myList[start..end]
+  * start and end can be positive or negative
+- to test whether an item is in a list
+  * if contains item $myList
+      # code goes here
+    end
+  * this contains command sets status to 0 if found and 1 if not
+- to get index of an item in a list
+  * contains --index item $myList (-i)
+- to remove an item
+  * if set -l index (contains -i someItem $myList)
+      set -e myList[$index]
+    end
+  * don't need if check if the item definitely exists
+  * see .config/fish/functions/listrm.fish
+    - TRY TO FIX ISSUE IN THIS!
+- to create a reversed list
+  * myList[-1..1]
+- to get the length of a list
+  * count $myList
+- to iterate over all items in a list
+  * for item in $myList
+      # use $item here
+    end
+- adjacent lists
+  * result in cartesian products
+  * ex.
+    set columns a b c
+    set rows 1 2
+    set cells $columns$rows # a1 b1 c1 a2 b2 c2
+    count $cells # 6
+    set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
+    set labels "Column "$columns # Column a Column b Column c
+    count $labels # 3
+    set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2
+    - cannot have spaces around commas
+- conversion to lists
+  * when a fish shell is started,
+    if the variables PATH, CDPATH, or MANPATH exist,
+    they are converted to lists by splitting on colons
+
+Hashmaps
+- not currently supported, but discussed here:
+  https://github.com/fish-shell/fish-shell/issues/390
+- will be added in fish 3
+- can simulate with plain variables,
+  but can't iterate over the keys unless they are held in a list
+  ex. set colors red green blue
+      set items-red fire
+      set items-green grass
+      set items-blue water
+      for color in colors
+        eval echo '$'items-$color
+      end
 
     <h3>PATH environment variable</h3>
     <div>
@@ -850,16 +976,6 @@
         set -e fish_user_paths[$index]
       end
     <code>
-  * see .config/fish/functions/listrm.fish
-  * see .config/fish/functions/rmpath.fish
-
-    </div>
-
-    <h3>Configuring</h3>
-GRONK
-
-    <div>
-    </div>
 
     <h2>Scripting in Fish</h2>
 
@@ -955,6 +1071,9 @@ GRONK
     </div>
 
     <hr>
+
+  * see .config/fish/functions/listrm.fish
+  * see .config/fish/functions/rmpath.fish
 
 LOOK FOR TODO IN THIS FILE!
 
@@ -1348,85 +1467,6 @@ Eval
   set extension '.js'
   set command ls *.$extension
   eval $command
-
-Lists (a.k.a. Arrays)
-- lists cannot contain other lists
-- to create an empty list
-  * set myList
-- to create a non-empty list
-  * set myList item1 item2 ...
-  * set colors red green blue
-    is equivalent to
-    set colors 'red' 'green' 'blue'
-    which is not the same as
-    set colors 'red green blue'
-    in which the value of colors is a single string
-- to append
-  * set myList $myList newItem
-- to prepend
-  * set myList newItem $myList
-- to get an item by index
-  * myList[index]
-  * indexes start at 1, not 0
-  * use negative indexes to retrieve from end
-    - myList[-1] gets last item
-- to set an item by index
-  * set myList[index] value
-- to get a slice which is a new list
-  * myList[start..end]
-  * start and end can be positive or negative
-- to test whether an item is in a list
-  * if contains item $myList
-      # code goes here
-    end
-  * this contains command sets status to 0 if found and 1 if not
-- to get index of an item in a list
-  * contains --index item $myList (-i)
-- to remove an item
-  * if set -l index (contains -i someItem $myList)
-      set -e myList[$index]
-    end
-  * don't need if check if the item definitely exists
-  * see .config/fish/functions/listrm.fish
-    - TRY TO FIX ISSUE IN THIS!
-- to create a reversed list
-  * myList[-1..1]
-- to get the length of a list
-  * count $myList
-- to iterate over all items in a list
-  * for item in $myList
-      # use $item here
-    end
-- adjacent lists
-  * result in cartesian products
-  * ex.
-    set columns a b c
-    set rows 1 2
-    set cells $columns$rows # a1 b1 c1 a2 b2 c2
-    count $cells # 6
-    set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
-    set labels "Column "$columns # Column a Column b Column c
-    count $labels # 3
-    set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2
-    - cannot have spaces around commas
-- conversion to lists
-  * when a fish shell is started,
-    if the variables PATH, CDPATH, or MANPATH exist,
-    they are converted to lists by splitting on colons
-
-Hashmaps
-- not currently supported, but discussed here:
-  https://github.com/fish-shell/fish-shell/issues/390
-- will be added in fish 3
-- can simulate with plain variables,
-  but can't iterate over the keys unless they are held in a list
-  ex. set colors red green blue
-      set items-red fire
-      set items-green grass
-      set items-blue water
-      for color in colors
-        eval echo '$'items-$color
-      end
 
 Math
 - the math function is a wrapper around the bc command
