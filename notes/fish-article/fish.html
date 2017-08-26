@@ -452,6 +452,81 @@
       adding commands in a configuration file,
       and in a web UI.
     </div>
+
+    <h3>Configuration via Web UI</h3>
+    <div>
+      To start the web UI, enter
+      <code>fish_config <i>starting-tab-name</i></code>.
+      Specifying the starting tab name is optional
+      and defaults to "colors".
+      This starts a local web server opens a new tab
+      in the default web browser.
+      This UI contains seven tabs that are described below.
+    </div>
+    <div>
+      The "colors" tab displays the current color settings
+      and allows them to be customized.
+      To use a provided color theme, select one,
+      press the "Set Theme!" button, and
+      wait a few seconds for it to change to "Theme Set!"
+    </div>
+    <div>
+      Colors can be customized for the following syntax elements:
+      commands, parameters, statement terminators, quoted strings,
+      redirections, errors, comments, and autosuggestions.
+      To customize one of these, click the corresponding syntax example
+      near the top of the UI and
+      select a color from the color grid below.
+      When finished customizing the colors,
+      press the "Set Theme" button.
+      Note that these colors are not used when fish function definitions
+      are simply cat'ed in a terminal.
+    </div>
+    <div>
+      While the "color" tab allows seelcting a background color,
+      this is only for seeing how the other colors look
+      against that background.
+      It does not actually change the terminal background color.
+      If using iTerm2 in macOS, the bacground color can be changed by
+      selecting Preferences...Profiles...Colors...Background.
+    </div>
+    <div>
+      The "prompt" tab displays then contents
+      of the current fish shell prompt.
+      It allows selection from 17 predefined prompts.
+      To change the prompt, select one and press "Prompt Set!"
+      DANGER: This overwrites <code>functions/fish_prompt.fish</code>,
+      so if you have defined a custom prompt in that file,
+      and don't want to wipe it out, don't do this!
+    </div>
+    <div>
+    - functions - view-only
+    </div>
+    <div>
+    - variables - view-only
+      * lists all universal variables and their values,
+        not global or local variables
+    </div>
+    <div>
+    - history - view-only
+      * lists command history
+    </div>
+    <div>
+    - bindings - view-only
+      * lists current key bindings
+    </div>
+    <div>
+    - abbreviations - view-only
+      * lists abbreviations, typically defined in config.fish
+    </div>
+    <div>
+  * pressing enter in the terminal will shutdown the server
+    that serves this help
+    - restarting it by entering fish_config again
+      will open a new browser tab
+    </div>
+
+    <h3>Configuration via fish.config</h3>
     <div>
       Fish is billed as not needing configuation.
       Strictly speaking that is true,
@@ -468,6 +543,27 @@
       Saving configuration here enables
       copying that file to other machines
       where the same configuration is desired.
+    </div>
+    <div>
+      A login shell is created for every new terminal window.
+      For users of tmux, this includes creating new tmux panes.
+      An interactive shell is created when a subshell is created.
+      For example, this happens when the command <code>fish</code>
+      is entered in a fish shell.
+      Login shells are also considered interactive shells.
+    </div>
+    <div>
+      Inside <code>config.fish</code>,
+      to run commands only when starting a login shell,
+      place the commands inside an <code>if</code> as follows:
+      <code>if status --is-login; ...; end</code>.
+      To run commands only when starting an interactive shell
+      <code>if status --is-interactive; ...; end</code>.
+    </div>
+    <div>
+      While functions can be defined in <code>config.fish</code>,
+      it is more efficient to use autoloading functions.
+      These are discussed later.
     </div>
 
     <h3>Aliases</h3>
@@ -760,61 +856,7 @@
     </div>
 
     <h3>Configuring</h3>
-    <div>
-      While functions can be defined in <code>config.fish</code>,
-      it is more efficient to use autoloading functions.
-    </div>
-  * to run a command only when starting a login shell
-    - determine from exit status of command "status --is-login"
-      * ex. if status --is-login; ...; end
-    - a login shell is created for every new terminal window
-      * includes creating new tmux panes
-  * to run a command only when starting an interactive shell
-    - determine from exit status of command "status --is-interactive"
-      * ex. if status --is-interactive; ...; end
-    - an interactive shell is created when a subshell is created
-      * ex. by entering "fish" inside a fish shell
-    - login shells are also interactive
-- web UI
-  * to start, fish_config [starting-tab-name]
-    - starts a local web server opens a tab in the default web browser
-  * tabs include
-    - colors
-      * displays current color settings
-        and allows them to be customized
-      * select a theme, press "Set Theme!" button, and
-        wait a few seconds for it to change to "Theme Set!"
-      * doesn't change background color in iTerm2
-        - do this in Preferences...Profiles...Colors...Background
-      * can customize color for these:
-        - commands, parameters, statement terminators, quoted strings,
-          redirections, errors, comments, and autosuggestions
-        - click on the syntax example of each near the top
-          and select a color from the color grid below
-        - press "Set Theme" when finished selecting colors
-        - doesn't apply to function definitions
-          when files that define them are simply cat'ed
-    - prompt
-      * displays current prompt
-      * allows selection from 17 predefined prompts
-      * select one and press "Prompt Set!"
-      * DANGER: This overwrites functions/fish_prompt.fish,
-        so if you defined a custom prompt in that file,
-        don't do this!
-    - functions - view-only
-    - variables - view-only
-      * lists all universal variables and their values,
-        not global or local variables
-    - history - view-only
-      * lists command history
-    - bindings - view-only
-      * lists current key bindings
-    - abbreviations - view-only
-      * lists abbreviations, typically defined in config.fish
-  * pressing enter in the terminal will shutdown the server
-    that serves this help
-    - restarting it by entering fish_config again
-      will open a new browser tab
+GRONK
 
     <div>
     </div>
@@ -859,7 +901,11 @@
         If the script is new, the editor is populated with
         a starting point for a function definition.
       </li>
-      <li>Write the code.</li>
+      <li>
+        Write or modify the code and save the changes.
+        If the function was previously defined in a file,
+        this will not update the file!
+      </li>
       <li>
         Enter <code>funcsave <i>name </i></code>.
         This saves the script to a file with the same name as the function
