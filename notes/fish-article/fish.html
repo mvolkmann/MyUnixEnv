@@ -1680,44 +1680,58 @@ Wildcards
 - ** is like *, but also matches /
   which enables recursing into subdirectories
 
-Pipes and Redirections
-- pipe stdout of one command to the stdin of another
-  with | like other shells
-- for commands that read from stdin,
-  to read from a file instead use < like other shells
-  ex. some-command < file-path
-- for commands that write to stdout,
-  to write to a file instead use > like other shells
-  ex. some-command > file-path
-  * to avoid overwriting an existing file, use >?
-  * to append, use >> instead of >
-- for commands that write to stderr,
-  to write to a file instead use ^ unlike other shells that use 2>
-  * ex. some-command ^ file-path
-  * but can also use 2>
-  * to avoid overwriting an existing file, use ^?
-  * to append, use ^^ instead of ^
-- to redirect stderr to stdout, some-command 2>&1
+    <h3>Pipes and Redirection</h3>
+    <div>
+      To "pipe" the stdout of one commmand into the stdin of another,
+      use <code>|</code> like other shells.
+      For example, <code>echo '<i>some input</i>' | <i>someCommand</i></code>.
+    </div>
+    <div>
+      For commands that read from stdin, to read from a file instead,
+      use <code>&lt;</code> like in other shells.
+      For example, <code><i>someCommand</i> &lt; <i>someFilePath</i></code>.
+    </div>
+    <div>
+      For commands that write to stdout, to write to a file instead,
+      use <code>&gt;</code> like in other shells.
+      For example, <code><i>someCommand</i> &gt; <i>someFilePath</i></code>.
+      To avoid overwriting an existing file, use <code>&gt;?</code> instead of <code>&gt;</code>.
+      To append to an existing file, use <code>&gt;&gt;</code> instead of <code>&gt;</code>.
+    </div>
+    <div>
+      For commands that write to stderr, to write to a file instead
+      use <code>^</code> unlike other shells that use <code>2></code>.
+      For example, <code><i>someCommand</i> ^ <code>someFilePath</code></code>.
+      For compatibility with other shells, <code>2></code> can also be used.
+      To avoid overwriting an existing file, use <code>^?</code> instead of <code>^</code>.
+      To append to an existing file, use <code>^^</code> instead of <code>^</code>.
+    </div>
+    <div>
+      To redirect stderr to stdout, use <code><i>someCommand</i> 2&gt;&amp;1</code>.
+    </div>
 
-Special Variables
-- there are many variables whose names begin with "fish_"
-  that control various things
-- examples
-  * CMD_DURATION is set to the duration of the last command in milliseconds
-  * COLUMNS is set to # of columns in current terminal
-  * FISH_VERSION is set to the version of the fish shell being used
-    - the "version" variable is also set to this
-    - can also output by entering "fish -v"
-  * HOME is set to the user's home directory
-  * LINES is set to # of lines (or rows) in current terminal
-  * PWD is set to the current (or present) working directory
-  * USER is set to the current username
-  * _ holds the name of the currently executing command
-  * fish_user_paths - see "PATH" section
-  * status is set to the status of the last command
-- internal variables
-  * variables whose names begin with __FISH or __fish
-    are for internal use and should not be used or changed
+    <h3>Special Variables</h3>
+    <div>
+      There are many global variables that are automatically set
+      to store various things.  Examples include:
+    </div>
+    <ul>
+      <li><code>CMD_DURATION</code> - duration of the last command in milliseconds</li>
+      <li><code>COLUMNS</code> - number of columns in the current terminal</li>
+      <li><code>FISH_VERSION</code> and <code>version</code>
+        - version of the fish shell being used
+        (can be output by entering <code>fish -v</code>)</li>
+      <li><code>HOME</code> - user's home directory</li>
+      <li><code>LINES</code> - number of lines (or rows) in current terminal</li>
+      <li><code>PWD</code> - current (or present) working directory</li>
+      <li><code>USER</code> - current username</li>
+      <li><code>_</code> - name of the currently executing command</li>
+      <li><code>status</code> - status of the last command</li>
+    </ul>
+    <div>
+      Variables whose names begin with <code>__fish</code>
+      are for internal use and should not be used or changed.
+    </div>
 
 status Command
 - has many subcommands
