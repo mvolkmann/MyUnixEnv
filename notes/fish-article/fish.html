@@ -66,8 +66,13 @@
       <li>highly consistent and simple scripting language</li>
     </ul>
     <div>
+      This article explains why you might prefer fish over other shells.
+      Really learning a shell is similar to learning a new programming language.
+      Similar topics are covered here such as
+      variables, functions, string operations, and so on.
+    </div>
+    <div>
       The latest version of fish at the time of this article is 2.6.0.
-      In this article, we will show why you might prefer fish.
     </div>
 
     <h3>License</h3>
@@ -1080,65 +1085,97 @@ echo $status # 0 for found
       For example, <code><i>name</i>[-1]</code> gets the last item.
     </div>
     <div>
+      To set an item by index,
+      <code>set <code>name</code>[<i>index</i>] <i>value</i></code>
     </div>
-GRONK
-- to set an item by index
-  * set myList[index] value
-- to get a slice which is a new list
-  * myList[start..end]
-  * start and end can be positive or negative
-- to test whether an item is in a list
-  * if contains item $myList
-      # code goes here
-    end
-  * this contains command sets status to 0 if found and 1 if not
-- to get index of an item in a list
-  * contains --index item $myList (-i)
-- to remove an item
-  * if set -l index (contains -i someItem $myList)
-      set -e myList[$index]
-    end
-  * don't need if check if the item definitely exists
-  * see .config/fish/functions/listrm.fish
-    - TRY TO FIX ISSUE IN THIS!
-- to create a reversed list
-  * myList[-1..1]
-- to get the length of a list
-  * count $myList
-- to iterate over all items in a list
-  * for item in $myList
-      # use $item here
-    end
-- adjacent lists
-  * result in cartesian products
-  * ex.
-    set columns a b c
-    set rows 1 2
-    set cells $columns$rows # a1 b1 c1 a2 b2 c2
-    count $cells # 6
-    set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
-    set labels "Column "$columns # Column a Column b Column c
-    count $labels # 3
-    set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2
-    - cannot have spaces around commas
-- conversion to lists
-  * when a fish shell is started,
-    if the variables PATH, CDPATH, or MANPATH exist,
-    they are converted to lists by splitting on colons
+    <div>
+      To get a slice which is a new list, use
+      <code><i>name</i>[<i>start</i>..<i>end</i>]</code><br>
+      <code><i>start</i></code> and <code><i>end</i></code>
+      can be positive or negative.
+    </div>
+    <div>
+      To test whether an item is in a list, use<br>
+<pre>
+if contains <i>item</i> $<i>name</i>
+  # code goes here
+end</pre>
+    <div>
+      The <code>contains</code> command sets <code>status</code>
+      to 0 if found and 1 if not.
+    </div>
+    <div>
+      To get the index of an item in a list, use<br>
+      <code>contains --index <i>item</i> $<i>name</i></code> (<code>-i</code>)
+    </div>
+    <div>
+      To remove an item from a list, use
+    </div>
+<pre>
+if set -l index (contains -i <i>item</i> $<i>name</i>)
+  set -e <i>name</i>[$index]
+end</pre>
+    <div>
+      To create a reversed version of an existing list, use
+      <code>set <i>newName</i> <i>existingName</i>[-1..1]</code>
+    </div>
+    <div>
+      To get the length of a list, use
+      <code>count $<i>name</i></code>
+    </div>
+    <div>
+      To iterate over all the items in a list, use
+<pre>
+for <i>item</i> in $<i>name</i>
+  # use $<i>item</i> here
+end</pre>
+    </div>
+    <div>
+      Adjacent lists result in cartesian products.
+      For example,
+    </div>
+<pre>
+set columns a b c
+set rows 1 2
+set cells $columns$rows # a1 b1 c1 a2 b2 c2
+count $cells # 6
 
-Hashmaps
-- not currently supported, but discussed here:
-  https://github.com/fish-shell/fish-shell/issues/390
-- will be added in fish 3
-- can simulate with plain variables,
-  but can't iterate over the keys unless they are held in a list
-  ex. set colors red green blue
-      set items-red fire
-      set items-green grass
-      set items-blue water
-      for color in colors
-        eval echo '$'items-$color
-      end
+set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
+
+set labels "Column "$columns # Column a Column b Column c
+count $labels # 3
+
+set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
+    <div>
+      Note that spaces cannot appear around the commas
+      in the last example.
+    </div>
+    <div>
+      When a fish shell is started,
+      if the variables <code>PATH</code>, <code>CDPATH</code>, or <code>MANPATH</code> exist,
+      they are converted to lists by splitting on colons.
+    </div>
+
+    <h3>Hashmaps</h3>
+    <div>
+      Hashmaps are not currently supported, but have been discussed at
+      <a href="https://github.com/fish-shell/fish-shell/issues/390">https://github.com/fish-shell/fish-shell/issues/390</a>.
+      They will be added in fish 3.
+    </div>
+    <div>
+      Hashmaps can simulated with plain variables,
+      but there isn't a way to iterate over the keys
+      unless they are held in a list.
+      For example,
+    </div>
+    <pre>
+set colors red green blue
+set items_red fire
+set items_green grass
+set items_blue water
+for color in $colors
+  eval echo '$'items_$color
+end</pre>
 
     <h3>PATH environment variable</h3>
     <div>
@@ -1191,7 +1228,7 @@ Hashmaps
       if set -l index (contains -i <i>some-path</i> $fish_user_paths)
         set -e fish_user_paths[$index]
       end
-    <code>
+    </code>
 
     <h2>Scripting in Fish</h2>
 
