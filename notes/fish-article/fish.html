@@ -1733,15 +1733,26 @@ Wildcards
       are for internal use and should not be used or changed.
     </div>
 
-status Command
-- has many subcommands
-- examples that are useful inside functions defined in .fish files
-  * status current-filename
-  * status current-function
-  * status current-line-number
-    - this has issues
-    - see https://github.com/fish-shell/fish-shell/issues/4161
-  * status print-stack-trace
+    <h3>status Command</h3>
+      <div>
+        The <code>status</code> command has many subcommands.
+        Examples that are useful inside functions
+        defined in <code>.fish</code> files include:
+      </div>
+      <ul>
+        <li><code>status current-filename</code> -
+          outputs file path of current file</li>
+        <li><code>status current-function</code> -
+          outputs name of current function</li>
+        <li><code>status current-line-number</code> -
+          outputs the line number within the file where this appears
+          This command has issues.  See
+          <a href="https://github.com/fish-shell/fish-shell/issues/4161">https://github.com/fish-shell/fish-shell/issues/4161</a>.
+        </li>
+        <li>status print-stack-trace</code> -
+          prints a stack trace which is useful for debugging issues
+          in nested function calls</li>
+      </ul>
 
 Files
 - to test whether a file ...
