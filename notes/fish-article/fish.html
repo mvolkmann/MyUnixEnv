@@ -466,6 +466,91 @@
       To view the current directory stack, enter <code>dirs</code>.
     </div>
 
+    <h2>Commands</h2>
+    <div>
+      Every fish command is executed by entering its name
+      followed by switches and arguments, if any, separated by spaces.
+      Everything in fish is done with commands.
+      This includes control statements like
+      <code>if</code>, <code>switch</code>,
+      <code>for</code>, and <code>while</code>.
+      It also includes defining functions.
+      It's hard to think of another programming language
+      with such a consistent syntax.
+    </div>
+    <div>
+      All commands set the <code>status</code> environment variable to
+      <code>0</code> for success and another number for failure.
+      <code>true</code> and <code>false</code> are not boolean literals.
+      <code>false</code> is a command that sets status to 1.
+      <code>true</code> is a command that sets status to 0.
+    </div>
+    <div>
+      Commands are terminated by a newline or semicolon.
+      In a shell, pressing the enter key produces a newline.
+      Semicolons allow multiple commands to appear on the same line.
+    </div>
+    <div>
+      There is a short list of commands that create a "block"
+      which is a set of commands.
+      These include <code>block</code>,
+      <code>if</code>, <code>switch</code>,
+      <code>for</code>, and <code>while</code>.
+      These can span any number of lines and
+      are terminated when the <code>end</code> keyword is reached.
+    </div>
+    <div>
+      Commands can split over multiple lines in two ways.
+      One is by pressing enter when there is an unterminated block.
+      Another is by typing the <code>\</code> continuation character
+      before a command has been completed entered
+      and pressing the enter key.
+    </div>
+    <div>
+      Multi-line commands can be recalled and edited
+      just like single-line commands.
+      After a multi-line command has been recalled,
+      press the left arrow and then
+      use the up and down arrows to navigate between lines.
+    </div>
+    <div>
+      To include a space in an argument,
+      precede the space with a backslash or
+      enclose the argument in single or double quotes.
+    </div>
+    <div>
+      Arguments are expanded before commands are executed.
+      This includes evaluating wildcards in file paths.
+    </div>
+    <div>
+      To execute one command and then execute a second command
+      only if the first succeeded, use
+      <code><i>command1</i>; and <i>command2</i></code><br>
+      Note the semicolon at end of the first command and the use of
+      <code>and</code> instead of <code>&&</code> like in bash.
+      <code>and</code> is not a keyword.  It is a command that executes the
+      command passed to it only if status from the previous command is zero.
+      If <code><i>command1</i>; <i>command2</i></code> were used instead
+      and <code><i>command1</i></code> had a bad status,
+      <code><i>command2</i></code> would still be executed.
+    </div>
+    <div>
+      To execute one command and then execute a second command
+      only if the first failed, use
+      <code><i>command1</i>; or <i>command2</i></code><br>
+      Note the semicolon at end of the first command and the use of
+      <code>or</code> instead of <code>||</code> like in bash.
+      <code>or</code> is not a keyword.  It is a command that executes the
+      command passed to it only if status from the previous command is non-zero.
+    </div>
+    <div>
+      While these conventions for <code>and</code> and <code>or</code>
+      may seem unusual at first,
+      they follow the consistent syntax of fish
+      where everything is done with commands and
+      all commands are terminated with a newline or semicolon.
+    </div>
+
     <h2>Customizing Fish</h2>
 
     <div>
@@ -662,6 +747,16 @@
     <div>
       To delete (erase) an alias,
       enter <code>abbr --erase <i>name</i></code> (<code>-e</code>).
+    </div>
+
+    <h3>echo> Command</h3>
+    <div>
+      The <code>echo</code> command writes its expanded arguments to stdout.
+      Normally all arguments are output with a space between them.
+      To suppress this, add the <code>-s</code> switch.
+      To suppress the newline that is normally output at the end,
+      add the <code>-n</code> switch.
+      To make a sound ("beep"), output the <code>\a</code> character.
     </div>
 
     <h3>Variables</h3>
@@ -1035,6 +1130,63 @@ echo $status # 0 for found
       <li>greater than or equal: <code>if test $n1 -ge $n2</code></li>
     </ul>
 
+    <h3>Math</h3>
+    <div>
+      The <code>math</code> command is a wrapper around the
+      <code>bc</code> command which is an abbreviation
+      for "basic calculator".
+      It allows an expression to be specified as an argument instead of
+      piping it in through stdin as is required with <code>bc</code>.
+      The result is written to stdout.
+      It sets status to a non-zero number if expression is invalid.
+    </div>
+    <div>
+      Unlike the fish shell itself,
+      this command supports floating point numbers.
+    </div>
+    <div>
+      For information on available operators and functions,
+      enter <code>man bc</code>.
+    </div>
+    <div>
+      The <code>math</code> command accepts any number of arguments
+      that are concatenated to form the expression
+      that will be parsed by the <code>bc</code> command.
+      It is only necessary to surround the expression in quotes
+      if it contains characters that the shell would interpret specially.
+      However, since these characters include
+      <code>*</code> (for multiplication) and parentheses,
+      quotes are often required.
+    </div>
+    <div>
+      By default, the division and modulo operators
+      output an integer result obtained by
+      truncting the decimal portion (not rounding)
+      even if all operands are floating point.
+      To include decimal places in the result,
+      add the <code>-s</code> switch followed by
+      a number of decimal points with no space after <code>-s</code>.
+      For example, <code>math 2 / 3</code> outputs <code>0</code>,
+      but <code>math -s3 2 / 3</code> outputs <code>.667</code>.
+    </div>
+    <div>
+      The <code>bc</code> command supports functions
+      from the Unix standard math library
+      if the <code>-l</code> switch is added.
+      These functions include sine (s), cosine (c), arctangent (a),
+      natural logarithm (l), exponentiation (e), and bessel (j).
+      Unfortunately the <code>math</code> command doesn't support
+      the <code>-l</code> switch, so these functions cannot be used.
+      However, the <code>bc</code> command can be used directly in fish.
+    </div>
+    <div>
+      Here is an example that utilizes variables.
+    </div>
+    <pre>
+set width 2
+set height 3
+set area (math "$width * $height") # 6</pre>
+
     <h3>Dates</h3>
     <div>
       The <code>date</code> command outputs the current date.
@@ -1230,6 +1382,69 @@ end</pre>
       end
     </code>
 
+    <div>
+      Every time a command is evaluated, fish first checks whether there
+      is a file in any path listed in <code>fish_function_path</code>
+      with the same name and a <code>.fish</code> extension.
+      This path list typically contains <code>~/.config/fish/functions</code>
+      which is where user-defined functions are usually placed.
+      It does not search subdirectories of these paths.
+      If a matching file is found, and the file has not been loaded
+      within the "staleness interval" (discussed later),
+      it loads the file to get the current definition of the function
+      and executes the function.
+      This is referred to as "auto-loading".
+    </div>
+    <div>
+      If no such function is found, fish then checks whether there is
+      an executable file in any path listed in <code>PATH</code>
+      with the same name.  If so, that file is executed.
+    </div>
+    <div>
+      TODO: Describe the difference between commands and builtins!
+    </div>
+    <div>
+      Function auto-loading allows functions to be used in place of
+      a command, builtin, or executables in <code>PATH</code>.
+      For example, the date command can be overridden
+      with a custom function by entering
+      <code>function date; echo pwned date; end</code>.
+      After this, entering <code>date</code> outputs "pwned date"
+      instead of the output of the <code>date</code> command
+      in the current fish session.
+      To affect all fish sessions, enter <code>funcsave date</code>.
+    </div>
+    <div>
+      The staleness interval avoids thrashing the file system
+      every time a command is executed and is around five seconds.
+      To use a modified function definition before the
+      staleness interval passes, source the file.  For example,
+    </div>
+    <pre>
+funced foo; and funcsave foo; and source foo.fish</pre>
+    <div>
+      The <code>funced</code> and <code>funcsave</code> commands
+      are described later.
+    </div>
+    <div>
+      It is recommended that these files only define
+      the function whose name matches the command.
+    </div>
+    <div>
+      Functions defined in these paths
+      are immediately available in all fish shells.
+      Changes to them are automatically reloaded in all fish shells
+      the next time they are used.
+    </div>
+    <div>
+      To run a command instead of a function with the same name,
+      use <code>command <i>name</i></code>.
+    </div>
+    <div>
+      To run a builtin instead of a function with the same name,
+      use <code>builtin <i>name</i></code>.
+    </div>
+
     <h2>Scripting in Fish</h2>
 
     <div>
@@ -1325,6 +1540,7 @@ end</pre>
 
     <hr>
 
+GRONK
   * see .config/fish/functions/listrm.fish
   * see .config/fish/functions/rmpath.fish
 
@@ -1355,143 +1571,108 @@ Tools for fish (in alphabetical order)
   * "makes it easy to organize and share collections of
     useful shell functions, tools, and themes"
 
-Colors
-- all colors are customizable using the set_color command
-  * outputs sequence of characters that change terminal text color
-    for subsequently output text
-  * can capture in a variable and output later
-  * ex. set makeBlue (set_color blue); echo $makeBlue'I am blue'
-- by default when entering commands,
-  text is red until a valid command is entered
-  and then it changes to white
-- by default when typing file paths, the text is underlined
-  unless no directory or file matches what has been typed
-- specifying a color
-  * color names
-    - black, red, green, yellow, blue, magenta, cyan, white
-    - brblack, brred, brgreen, bryellow, brblue, brmagenta, brcyan, brwhite
-    - can list these with "set_color -c"
-  * color values
-    - 3 or 6 character hex
-      * ex. f0f is full red, no green, and full blue which is purple
-- set_color switches
-  * --background (-b)
-  * --print-colors (-c) prints list of named colors
-  * --bold (-o) sets bold mode.
-  * --dim (-d) sets dim mode
-    - doesn't seem to have any effect in iTerm2
-  * --italics (-i) sets italics mode
-    - doesn't work in iTerm2
-    - TODO: Is there any way to fix this?
-  * --reverse (-r) sets reverse mode
-  * --underline (-u) sets underlined mode
-  * using set_color without these switches resets to default mode
-- to reset all colors and switches, set_color normal
-- variables that control colors
-  * there are many that begin with "fish_color_"
-    and "fish_pager_color_"
-- ex.
-  * echo Roses are (set_color red)red(set_color normal), \
-      violets are (set_color blue)blue(set_color normal).
-  * also see examples in your functions/fish_prompt.fish file
+    <h3>Colors</h3>
+    <div>
+      By default when entering commands,
+      text is red until a valid command is entered
+      and then it changes to white.
+      When typing file paths, the text is underlined
+      unless no directory or file matches what has been typed so far.
+    </div>
+    <div>
+      The color of output can be customized
+      using the <code>set_color</code> command.
+      This command outputs a sequence of characters that changes
+      the foreground color for subsequently output text.
+    </div>
+<pre>
+echo Roses are (set_color red)red(set_color normal), \
+  violets are (set_color blue)blue(set_color normal).</pre>
+    <div>
+      Thee characters output by the <code>set_color</code> command
+      can be captured in a variable and output later.
+      For example,
+      <code>set makeBlue (set_color blue); echo 'I am '$makeBlue'blue'</code>
+    </div>
+    <div>
+      Colors can be specified by using a color name or value.
+      The supported color names include
+      black, red, green, yellow, blue, magenta, cyan, and white.
+      There are also bright versions of these where "br"
+      is prepended to the name, for example, brblue.
+      Color values are specified with three or six hex characters.
+      For example, <code>f0f</code> is full red, no green, and full blue
+      which is between magenta and brmagenta.
+    </div>
+    <div>
+      The <code>set_color</code> command supports many switches.
+    </div>
+    <ul>
+      <li>--background (-b) to specify a background instead of a foreground color</li>
+      <li>--print-colors (-c) prints the list of supported color names</li>
+      <li>--bold (-o) sets bold mode</li>
+      <li>--dim (-d) sets dim mode
+        (This doesn't seem to have any effect in iTerm2.)</li>
+      <li>--italics (-i) sets italics mode
+        (This doesn't work in iTerm2.  Is there any way to fix this?)</li>
+      <li>--reverse (-r) sets reverse mode</li>
+      <li>--underline (-u) sets underlined mode</li>
+    </ul>
+    <div>
+      Using <code>set_color</code> without these switches resets to default mode.
+    </div>
+    <div>
+      To reset all colors and switches, use <code>set_color normal </code>.
+    </div>
+    <div>
+      There are many universal variables whose names begin with
+      <code>fish_color_</code> or <code>fish_pager_color_</code>
+      that control colors of various syntax elements.
+      These variables can be modified to customize the colors.
+    </div>
+    <div>
+      TODO: Also see examples in your functions/fish_prompt.fish file.
+    </div>
 
-echo Command
-- writes to stdout
-- -n switch suppresses newline that is normally output at end
-  * to beep, echo -n \a (it seems -n isn't needed)
-- -s switch causes arguments to not be separated by spaces
+    <h3>printf Command</h3>
+    <div>
+      The <code>printf</code> command writes to stdout using a format string.
+      It takes a format string as its first argument,
+      followed by the values to be output.
+    </div>
+    <div>
+      The format string can contain a format specifier
+      for each of the values to be output.
+      The supported format specifiers include:
+    </div>
+    <ul>
+      <li><code>%d</code> for decimal</li>
+      <li><code>%i</code> for integer</li>
+      <li><code>%f</code> for float</li>
+      <li><code>%s</code> for string</li>
+      <li><code>%%</code> for literal %</li>
+      <li>and more</li>
+    </ul>
+    <div>
+      The <code>printf</code> command supports several escape characters
+      including these:
+    </div>
+    <ul>
+      <li><code>\a</code> for bell</li>
+      <li><code>\n</code> for newline</li>
+      <li><code>\t</code> for tab</li>
+      <li>and more</li>
+    </ul>
+    <div>
+      Here are some examples of using the <code>printf</code> command.
+    </div>
+<pre>
+set format 'my name is %s and i am '(set_color red)%i(set_color normal)' years old.'
+printf $format mark 56
 
-printf Command
-- writes to stdout using a format string
-- printf format-string arg1 arg2 ...
-- format specifiers
-  * %d for decimal
-  * %i for integer
-  * %f for float
-  * %s for string
-  * %% for literal %
-  * and more
-- escapes
-  * \a for bell
-  * \n for newline
-  * \t for tab
-  * and more
-- ex.
-  set format 'my name is %s and i am '(set_color red)%i(set_color normal)' years old.'
-  printf $format mark 56
-- ex.
-  set format 'my name is %s and i am %s%i%s years old.'
-  printf $format mark (set_color red) 56 (set_color normal)
-
-Commands
-- every command is executed by entering its name
-  followed by switches and arguments, if any, separated by spaces
-  * it's hard to think of a programming language with such a consistent syntax
-- commands are terminated by a newline or semicolon
-  * in a shell, pressing enter produces a newline
-  * semicolons allow multiple commands to appear on the same line
-- multi-line commands
-  * a short list of commands create a block
-    - begin, for, function, if, switch, and while
-    - these can span any number of lines and
-      are terminated when the "end" keyword is reached
-  * commands can split over multiple lines in two ways
-    - by typing the \ continuation character and pressing enter
-    - by pressing enter when there is an unterminated block
-  * can be recalled and edited just like single-line commands
-    - use up and down arrows to navigate between lines
-- to include a space in an argument,
-  preceded space with a backslash or
-  enclose argument in single or double quotes
-- arguments are expanded before commands are executed
-  * this includes evaluating wildcards in file paths
-- all commands set the "status" environment variable to
-  0 for success and another number for failure
-  * true and false are not boolean literals
-  * false is a command that sets status to 1
-  * true is a command that sets status to 0
-- to execute one command and then execute a second command
-  only if the first is successful
-  * command1; and command2
-  * note the semicolon at end of first command
-  * note the use of "and" instead of "&&" like in bash
-  * if the following is used instead and command1 has a bad status,
-    command2 will still be executed
-    - command1; command2
-- to execute one command and then execute a second command
-  only if the first failed
-  * command1; or command2
-  * note the use of "or" instead of "||" like in bash
-- autoloading
-  * every time a command is evaluated
-    it first checks whether there is a file
-    in any path listed in fish_function_path
-    with the same name and a .fish extension
-    - this typically contains ~/.config/fish/functions
-      which is where user-defined functions are usually placed
-    - if found and the file has not been loaded
-      within the "staleness interval",
-      it loads the file to get the current definition of the function
-      and executes the function
-      * the staleness interval avoids thrashing the file system
-      * around 5 seconds
-      * can source the file to avoid this delay
-        - funced foo; and funcsave foo; and source foo.fish
-    - does not search subdirectories of these paths
-    - it is recommended that these files only define
-      the function whose name matches the command
-  * functions defined here
-    - are immediately available in all fish shells
-    - changes to them are automatically reloaded in all fish shells
-      the next time they are used
-  * this allows a function to be used in place of
-    a command or builtin and executables in PATH
-    - ex. function date; echo pwned date; end
-      date outputs "pwned date" instead of the output of the date command
-  * to run a command instead of a function with the same name
-    - command name
-  * to run a builtin instead of a function with the same name
-    - builtin name
+set format 'my name is %s and i am %s%i%s years old.'
+printf $format mark (set_color red) 56 (set_color normal)
+</pre>
 
 Wildcards
 - ? matches a single character
@@ -1617,31 +1798,6 @@ Eval
   set extension '.js'
   set command ls *.$extension
   eval $command
-
-Math
-- the math function is a wrapper around the bc command
-  (abbreviation for "basic calculator")
-- supports floating point numbers
-- converts strings to numbers
-  * important because when a number is assigned
-    to a variable, it is saved as a string
-- pass a string containing a mathematical expression
-- sets status to a non-zero number if expression is invalid
-- writes result to stdout
-- to limit number of decimal places in result, -sn
-  where n is the number of decimal places to show
-  - defaults to zero!
-  - doesn't round properly!
-- ex.
-  set width 2
-  set height 3
-  set area (math "$width * $height") # 6
-- some supported functions
-  * sine: s(angle)
-  * cosine: c(angle)
-  * arctangent: a(angle)
-  * natural logarithm: l(x)
-  * e raised to a power: e(power)
 
 Functions
 - functions cannot return a value,
