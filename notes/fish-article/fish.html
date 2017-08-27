@@ -29,6 +29,11 @@
       img {
         width: 800px;
       }
+      pre {
+        background-color: lightyellow;
+        font-weight: bold;
+        width: 800px;
+      }
     </style>
   </head>
   <body>
@@ -785,19 +790,19 @@
       as a variable name.  Consider the following examples.
     </div>
     <pre>
-      set foo 1
-      set bar foo
-      echo $$bar # 1
+set foo 1
+set bar foo
+echo $$bar # 1
 
-      set pocket 'wallet'
-      set pant pocket
-      echo $$pant # wallet
+set pocket 'wallet'
+set pant pocket
+echo $$pant # wallet
 
-      set foreground blue
-      set background green
-      set side fore
-      set name "$side"ground
-      echo $$name # blue</pre>
+set foreground blue
+set background green
+set side fore
+set name "$side"ground
+echo $$name # blue</pre>
     <div>
       From
       <a href="https://fishshell.com/docs/current/index.html#expand-variable">https://fishshell.com/docs/current/index.html#expand-variable</a>,
@@ -806,8 +811,8 @@
       To understand this, consider the following example.
     </div>
     <pre>
-      set colors red green blue
-      set listName colors</pre>
+set colors red green blue
+set listName colors</pre>
     <div>
       How can we write code to get the value "green"
       from the list of colors?
@@ -851,6 +856,9 @@
       The <code>string</code> command has many subcommands
       that are specified by following <code>string</code>
       with a space and the name of the subcommand.
+      To suppress output from these and
+      just use the value of the status variable,
+      add the <code>--quiet</code> (<code>-q</code>) switch.
     </div>
     <div>
       To get the length of a string, use
@@ -861,81 +869,133 @@
       For example,
     </div>
     <pre>
-      set middle 'some middle'
-      set result 'some prefix'$middle'some suffix'
-    </pre>
+set middle 'some middle'
+set result 'some prefix'$middle'some suffix'</pre>
     <div>
       These are similar, but result in a list with count of 3.
     </div>
     <pre>
-      set result some prefix"$middle"some suffix
-      set result some prefix{$middle}some suffix
-    </pre>
+set result some prefix"$middle"some suffix
+set result some prefix{$middle}some suffix</pre>
     <div>
-      Here are tests than can be performed on
+      Here are some tests than can be performed on
       variables that hold a single string.
     </div>
     <ul>
-      GRONK add <code>
-      <li>is empty: if test -z $var</li>
-      <li>is not empty: if test -n $var</li>
-      <li>is identical to another: if $v1 = $v2</li>
-      <li>is not identical to another: if $v1 != $v2</li>
+      <li>is empty?: <code>if test -z $<i>var</i></code></li>
+      <li>is not empty?: <code>if test -n $<i>var</i></code></li>
+      <li>is identical to another?: <code>if $<i>var1</i> = $<i>var2</i></code></li>
+      <li>is not identical to another?: <code>if $<i>var1</i> != $<i>var2</i></code></li>
     </ul>
     <div>
+      Current there is no way in fish to test whether
+      one string is less than or greater than another in sorting order.
+      The <code>&lt;</code> and <code>&gt;</code> operators
+      are only implemented for numbers.
+      TODO: Is there any workaround for this?
     </div>
     <div>
+      String indexes start at 1, not 0.
+      To get a substring, use
+      <code>string sub $<i>name</i> -s <i>startIndex</i> -l <i>length</i></code><br>
+      If <code>-s</code> is omitted, it defaults to <code>1</code>.
+      If <code>-l</code> is omitted, this gets characters to the end.
+      If <code>-s</code> is negative, it counts from the end of the string.
+      For example, to get last three characters, use <code>-s -3</code>.
     </div>
-  * cannot test whether one string is less than or greater than another
-    in sorting order!
-    - < and > operators are only implemented for numbers
-    - TODO: Is there any workaround for this?
-- the "string" command has many "subcommands"
-- indexes start at 1
-- to get a substring
-  * string sub $name -s startIndex -l length
-  * if -s is omitted, it defaults to 1
-  * if -l is omitted, gets to end
-  * if -s is negative, it counts from end
-    - ex. to get last three characters, use -s -3
-  * ex. to get initials from a full name
-    - set initialList (string sub -l 1 $first $middle $last)
-    - set initials (string join '' $initialList)
-- to split a string on a delimiter, resulting in a list
-  * string split delim $var
-  * ex.
-    set csv 'red,green,blue'
-    set colors (string split , $csv)
-- to trim leading and/or trailing characters
-  * by default, trims whitespace from both sides
-  * switches
-    - --left (-l) to only trim from left
-    - --right (-r) to only trim from right
-    - --chars (-c) to specify characters to be trimmed instead of whitespace
-  * ex. set result (string trim --left --chars 0 00019) # 19
-- to create a new string by joining existing ones
-  using a delimiter between them
-  * ex. set dateStr (string join '/' $month $day $year)
-- to create a string that repeats a given string
-  * use string repeat with --count (-n) switch
-  * ex. set newText (string repeat -n3 'foo') # foofoofoo
-- to determine if a string matches a regular expression
-  * use match subcommand with --regex (-r)
-  * by default, just returns first match or none if not found
-    - to return all matches, add --all (-a)
-  * to make matching case-insenstive, add --ingore-case (-i)
-  * to get indexes and lengths of matches instead of matching text,
-    add --index (-n)
-  * can use capture groups
-    * returns list containing full match followed by each capture match
-  * to get lines that do not match instead of those that do, add --invert (-v)
-  * sets status to 0 if at least one match was found and 1 if not
-  * uses Perl regular expression syntax
+    <div>
+      To split a string on a delimiter resulting in a list, use
+      <code>string split <i>delim</i> $<i>var</i></code><br>
+      For example,
+    </div>
+    <pre>
+      set csv 'red,green,blue'
+      set colors (string split , $csv) # red gree blue</pre>
+    </div>
+    <div>
+      To trim leading and/or trailing characters, use
+      <code>string trim $<i>var</i></code><br>
+      By default, this trims whitespace from both ends of the string.
+      Switches can be used to change this.
+    </div>
+    <ul>
+      <li><code>--left</code> (<code>-l</code>) to only trims from left</li>
+      <li><code>--right</code> (<code>-r</code>) to only trim from right</li>
+      <li><code>--chars</code> (<code>-c</code>) specifies
+        characters to be trimmed instead of whitespace</li>
+    </ul>
+    <div>
+      For example, to remove leading zeros,<br>
+      <code>set result (string trim --left --chars 0 00019) # 19</code>
+    </div>
+    <div>
+      To create a new string by joining existing ones
+      using a delimiter between them, use <code>string join</code>.
+      For example,<br>
+      <code>set dateStr (string join '/' $month $day $year)</code>
+    </div>
+    <div>
+      Another example is getting initials from a full name.
+      Note how <code>string sub</code> can be used to get
+      substrings from multiple strings in one call.
+      Also note how the delimiter passed to <code>string join</code>
+      can be an empty string.
+    </div>
+    <pre>
+      set initialList (string sub -l 1 $first $middle $last)
+      set initials (string join '' $initialList)</pre>
+    <div>
+      To create a string that repeats a given string,
+      use <code>string repeat</code> with the
+      <code>--count</code> (<code>-n</code>) switch
+      For example,<br>
+      <code>set newText (string repeat -n3 'foo') # foofoofoo</code>
+    </div>
+
+    <h3>Regular Expressions</h3>
+    <div>
+      To determine if a string matches a regular expression,
+      use <code>string match</code> subcommand
+      with the <code>--regex</code> (<code>-r</code>) switch.
+      This uses Perl regular expression syntax.
+      By default, only the first match is output,
+      or nothing if not found.
+      This sets status to 0 if at least one match was found and 1 if not.
+    </div>
+    <div>
+      For example,
+    </div>
+    <pre>
+set name 'Mark Volkmann'
+string match -qr 'Vo' $name
+echo $status # 0 for found
+    </pre>
+    <div>
+      To output all matches, add the
+      <code>--all</code> (<code>-a</code>) switch.
+      To make matching case-insenstive,
+      add the <code>--ingore-case</code> (<code>-i</code>) switch.
+      To get indexes and lengths of matches instead of matching text,
+      add the <code>--index</code> (<code>-n</code>) switch.
+    </div>
+    <div>
+      Regular expressions can use capture groups.
+      In this case, <code>string match</code> outputs a list containing
+      the full match followed by each capture match.
+    </div>
+    <div>
+      To determine if a string doesn't match,
+      add the <code>--invert</code> (<code>-v</code>) switch.
+    </div>
   * ex.
     set text 'this is foolish work for a boolean'
     set matches (string match -ar '.oo' $text) # foo boo
     set matches (string match -anr '.oo' $text) # 9 3 28 3
     - result is alternating list of indexes and lengths
+    <div>
+    </div>
+    <div>
+    </div>
 - to replace text in a string with other text
   * string replace is similar to string match
   * can match against literal text or a regex (using -r)
@@ -972,7 +1032,7 @@
 
     <h3>Dates</h3>
     <div>
-      The <code>date</code> command returns the current date.
+      The <code>date</code> command outputs the current date.
       The default format looks like "Sat Aug 26 16:54:52 CDT 2017".
       To use a different format, specify it using a format string
       as defined by <code>strftime</code>
@@ -1192,7 +1252,7 @@ Hashmaps
     <h3>Comparing fish functions to JavaScript</h3>
     <div>
       Let's look at an example of a simple function that
-      takes two numbers and returns their product.
+      takes two numbers and outputs their product.
       It's useful to see how fish functions differ from
       functions in more traditional programming languages like JavaScript.
     </div>
