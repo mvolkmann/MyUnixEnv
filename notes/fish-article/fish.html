@@ -1756,77 +1756,136 @@ Wildcards
           in nested function calls</li>
       </ul>
 
-Files
-- to test whether a file ...
-  * exists: if test -e $file
-  * is a file: if test -f $file
-  * is a directory: if test -d $file
-  * is a symbolic link: if test -L $file
-  * is readable: if test -r $file
-  * is writable: if test -w $file
-  * is an executable file: if test -x $file
-  * is a non-empty file (has size): if test -s $file
-  * and more (see test command for details)
-- to iterate over lines in a file
-  * direct a file into a loop as follows:
-    while read line
-      # do something with the line
-    end < file-path
-- to open files using their default application
-  * open file-path1 file-path2 ...
-    - ex. open demo.html
+      <h3>Tests</h3>
+      <div>
+        The <code>test</code> command is commmonly used in
+        <code>if</code> and <code>while</code> commands.
+        Tests for strings, numbers, and files are
+        described in those sections of this article.
+        For example, <code>test $color = 'yellow'</code>.
+      </div>
+      <div>
+        To negate any test, add <code>!</code> after <code>test</code>
+        and before the expression being tested.
+        For example, <code>test ! $color = 'yellow'</code>.
+        This call also be written as <code>test $color != 'yellow'</code>.
+      </div>
+      <div>
+        There are two ways to combine conditions
+        The first option is to use the
+        <code>and</code> and <code>or</code> commands.
+        For example,
+      </div>
+      <pre>
+if test $color = 'yellow'; and test $size = 'large'
+  # code here
+end</pre>.
+      <div>
+        This can also be written on two lines
+        by replacing the semicolon with a newline as follows.
+      </div>
+      <pre>
+if test $color = 'yellow'
+  and test $size = 'large'
+  # code here
+end</pre>
+      <div>
+        The second option is to place <code>-a</code> or <code>-o</code>
+        between the conditions.  For example,
+      </div>
+      <pre>
+if test \( $color = 'yellow' \) -a \( $size = 'large' \)
+  # code here
+end</pre>
+      <div>
+        But this option requires parentheses and those must be escaped
+        which results in some ugly code, so the first option is preferred.
+      </div>
 
-Tests
-- commmonly used in "if" and "while" statements
-- tests for strings, numbers, and files
-  are described in those sections
-- to negate any test, add "!" before "test"
-- two ways to combine conditions with "and" or "or"
-  * option 1: place each command on a separate line where
-    each line but the first begins with "and" or "or"
-    - ex.
-      test $color = 'yellow'
-      and test $size = 'large'
-    - "and" cannot be placed at the end of the first line
-  * option 2: place -a or -o between the conditions
-    - ex. test \( $color = 'yellow' \) -a \( $size = 'large' \)
-    - this is too ugly! prefer option 1
+      <h3>Files</h3>
+      <div>
+        To open files using their default applications,
+        enter <code>open <i>filePath1</i> <i>filePath2</i> ...</code>.
+        For example, <code>open demo.html</code>
+        opens the file in the default web browser.
+      </div>
+      <div>
+        To iterate over the lines in a text file,
+        redirect a file into a loop as follows:
+      </div>
+      <pre>
+while read line
+  # do something with the line
+end &lt; <i>filePath</i> </pre>
+      <div>
+        To test various characteristics of a file
+        assuming <code>file</code> is a variable that holds a file path,
+      </div>
+      <ul>
+        <li>exists: <code>if test -e $<i>file</i></code></li>
+        <li>is a file: <code>if test -f $<i>file</i></code></li>
+        <li>is a directory: <code>if test -d $<i>file</i></code></li>
+        <li>is a symbolic link: <code>if test -L $<i>file</i></code></li>
+        <li>is readable: <code>if test -r $<i>file</i></code></li>
+        <li>is writable: <code>if test -w $<i>file</i></code></li>
+        <li>is an executable file: <code>if test -x $<i>file</i></code></li>
+        <li>is a non-empty file (has size): <code>if test -s $<i>file</i></code></li>
+        <li>and more (see test command for details)</li>
+      </ul>
 
-Command Substitution
-- to use the output of one command as an argument to another,
-  surround the command with parens,
-  not backticks like in some other shells
-- if the command outputs more than one line,
-  each will be treated as a separate argument
-  to the outer command
-- to set a variable to the output of a command
-  * set name (command)
-  * ex. set today (date)
-- can concatenate command output with literal strings
-  and other command output
-  * ex.
-    set dateFormat '+%A %B %d, %G' # ex. Tuesday, August 15, 2017
-    set announcement 'Today is '(date $dateFormat)'.'
-    - note the use of string concatention by placing
-      literal strings next to the parens
-- doesn't work inside strings
-  * ex. the command is not evaluated in
-    "Today is (date $dateFormat)."
+      <h3>Command Substitution</h3>
+      <div>
+        To use the output of one command as an argument to another,
+        surround the command with parens,
+        not backticks like in some other shells.
+      </div>
+      <div>
+        If the command outputs more than one line,
+        each will be treated as a separate argument
+        to the outer command.
+      </div>
+      <div>
+        To set a variable to the output of a command,
+        use <code>set <i>name</i> (<i>command</i>)</code>.
+        For example, <code>set today (date)</code>.
+      </div>
+      <div>
+        Command output can be concatenated with literal strings
+        and other command output.  For example,
+      </div>
+      <pre>
+set dateFormat '+%A %B %d, %G' # ex. Tuesday, August 15, 2017
+set announcement 'Today is '(date $dateFormat)'.'</pre>
+      <div>
+        Note the use of string concatention by placing
+        literal strings next to the parens.
+      </div>
+      <div>
+        This does not work inside strings.
+        For example, the command in the following string is not evaluated:
+        <code>"Today is (date $dateFormat)."</code>
+      </div>
 
-Brace expansion
-- used to produce multiple arguments for a command
-- ex. ls *.{css,html.js} expands to ls *.css *.html *.js
-- also useful in the cp and mv commands
+      <h3>Brace Expansion</h3>
+      <div>
+        Brace expansion is used to produce multiple arguments for a command.
+        For example, <code>ls *.{css,html.js}</code>
+        expands to <code>ls *.css *.html *.js</code>.
+        This is also useful in the <code>cp</code> and <code>mv</code> commands.
+      </div>
 
-Eval
-- evaluates a command in a string
-  that can be built using concatention and variable substitution
-- ex.
-  set extension '.js'
-  set command ls *.$extension
-  eval $command
+      <h3>Eval</h3>
+      <div>
+        The <code>eval</code> command evaluates a command in a string
+        that can be built using concatention and variable substitution.
+        For example,
+      </div>
+      <pre>
+set extension '.js'
+set command ls *.$extension
+eval $command</pre>
 
-Functions
+      <h3>Functions</h3>
 - functions cannot return a value,
   but they can set the status variable
   and they can write to streams like stdout and stderr
@@ -2002,7 +2061,7 @@ Functions
   set_color normal
   return some-non-zero-status
 
-Auto-running Functions
+      <h3>Auto-running Functions</h3>
 - functions can run automatically when an event is fired
   * uses --on-event (-e) switch
   * ex.
@@ -2062,7 +2121,7 @@ Auto-running Functions
     end
     TODO: TRY THIS!
 
-Types of commands
+      <h3>Types of commands</h3>
 - a command is any program the shell can run
 - there are three types of commands: builtins, commands, and functions
 - builtins
@@ -2101,7 +2160,7 @@ Types of commands
   * for functions, this also outputs their definition
   * to get just the type, type -t name
 
-If statements
+      <h3>if Command</h3>
 - if condition
     statements
   else if condition
@@ -2122,7 +2181,7 @@ If statements
 - for a single line "if"
   * if condition; statement; end
 
-and &amp; or commands
+      <h3>and &amp; or Commands</h3>
 - note that these are commands, not keywords
 - to conditionally execute a command only if $status is 0
   command1; and command2
@@ -2136,7 +2195,7 @@ and &amp; or commands
   command1; or command2
 - these can be used in the condition of an "if" or "while"
 
-Switch statements
+      <h3>switch Command</h3>
 - switch expression # ex. $color
   case value1 value2
     statements
@@ -2154,7 +2213,7 @@ Switch statements
 - to treat one case value as the default
   case default-value '*'
 
-Loops
+      <h3>Loop Commands</h3>
 - while condition
     # commands go here
   end
@@ -2178,10 +2237,11 @@ Loops
   * use "break" to exit early
   * use "continue" to skip remainder of current iteration
 
-Multiple statements on same line
+      <h3>Multiple Statements on a Line</h3>
 - separate by semicolons
 - ex. function foo; echo in foo; end
 
+      <h3>Custom Greeting</h3>
 Custom Greeting
 - by default, new fish shells display the greeting
   "Welcome to fish, the friendly interactive shell"
@@ -2190,7 +2250,7 @@ Custom Greeting
 - to suppress this, erase the current setting with
   set -e fish_greeting
 
-Custom Prompt
+      <h3>Custom Prompt</h3>
 - the default fish prompt displays whoami, hostname,
   the abbreviated working directory (returned by prompt_pwd),
   and ">"
@@ -2232,7 +2292,7 @@ end
     which is a bit distracting
     - make this an empty function to disable
 
-Reading from stdin
+      <h3>Reading From stdin</h3>
 - read var
   * waits for user to enter something, terminated by enter key
     - a single line
@@ -2270,14 +2330,17 @@ Reading from stdin
     echo you entered $line
   end
 
-Getting absolute path from a relative path
+      <h3>Getting Absolute Path from a Relative Path</h3>
+
 - realpath abs-path
 
+      <h3>Processes</h3>
 Processes
 - to get the current process id, %self
 - to get the process id of the job with number n, %n
 - to get the ids of all processes whose names begin with "prefix", $prefix
 
+      <h3>Jobs</h3>
 Jobs
 - to run a command in background, add & to end of command
   * does not work for custom functions!
@@ -2296,7 +2359,7 @@ Jobs
   * if you try to exit again,
     it will kill all the background jobs and exit
 
-Debugging Functions
+      <h3>Debugging Functions</h3>
 - add use of "breakpoint" commands in function
 - run the function
 - when a breakpoint is reached,
@@ -2308,6 +2371,7 @@ Debugging Functions
 - to stop the running function before it reaches its end,
   enter "kill %self"
 
+      <h3>Random Numbers</h3>
 Random Numbers and Options
 - random generates an integer in the range [0, 32767]
 - argument meanings depend on number given
@@ -2323,6 +2387,11 @@ Random Numbers and Options
     - ex.
       set colors red orange yellow green blue purple
       set color (random choice $colors)
+
+      <h3>Option Parsing</h3>
+      <div>
+        Research the <code>getopt</code> command.
+      </div>
 
 TODO: Document how to use the "spin" function you installed.
     </div>
