@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>The fish Shell</title>
-    <style>
+    <style type="text/css">
       body {
         font-family: sans-serif;
       }
@@ -826,7 +826,7 @@
       If this appears next to other text,
       say the strings "foo" and "bar",
       use <code>foo{$<i>name</i>}bar</code>
-      or <code>'foo'$<code>name</code>'bar'</code>.
+      or <code>'foo'$<i>name</i>'bar'</code>.
     </div>
     <div>
       To delete (or erase) a variable,
@@ -2214,32 +2214,62 @@ eval $command</pre>
   case default-value '*'
 
       <h3>Loop Commands</h3>
-- while condition
-    # commands go here
-  end
-  * condition can use "and" and "or"
-  * uses status of condition to determine whether to iterate again
-    0 to continue; anything else to stop
-  * for an endless loop, use "true" for condition
-- for var in list
-    # use var here
-  end
-  * to iterate over a list of numbers, use seq command
-    - ex. for n in (seq 5); echo $n; end
-      * outputs 1, 2, 3, 4, 5 on separate lines
-    - seq can be followed by 1, 2 or 3 numbers
-      to specify the first, increment, and last values
-      * if only one, it is the last, first defaults to 1, and incr defaults 1
-      * if only two, they are first and last, and incr defaults to 1
-  * can iterate over relative file paths that match a pattern
-    ex. for path in b*.fish; echo $path; end
-- in both kinds of loops
-  * use "break" to exit early
-  * use "continue" to skip remainder of current iteration
+      <div>
+        Two kinds of loops are supported, <code>while</code> and <code>for</code>.
+      </div>
+      <div>
+        The syntax for a <code>while</code> loop is:
+      </div>
+<pre>
+while <i>command</i>
+  # commands go here
+end</pre>
+      <div>
+        This uses the status of the command
+        to determine whether to iterate again.
+        It continues as long as the status is zero
+        and stops when it is non-zero.
+      </div>
+      <div>
+        For an endless loop, use the <code>true</code> command.
+      </div>
+      <div>
+        To test multiple conditions, use the
+        <code>and</code> and <code>or</code> commands.
+      </div>
+      <div>
+        The syntax for a <code>for</code> loop is:
+      </div>
+<pre>
+for var in list
+  # use var here
+end</pre>
+      <div>
+        To iterate over a list of numbers, use the <code>seq</code> command.
+        For example, <code>for n in (seq 5); echo $n; end</code>
+        outputs 1, 2, 3, 4, and 5 on separate lines.
+        The <code>seq</code> command can be followed by 1, 2 or 3 numbers
+        to specify the first, increment, and last values.
+        If only one argument is supplied, it is the last,
+        first defaults to 1, and incr defaults 1
+        If only two arguments are supplied,
+        they are the first and last values, and incr defaults to 1.
+      </div>
+      <div>
+        A for command can be used to iterate over the relative file paths
+        that match a pattern.  For example,
+        <code>for path in b*.fish; echo $path; end</code>
+      </div>
+      <div>
+        In both kinds of loops, use <code>break</code> to exit early and
+        <code>continue</code> to skip the remainder of the current iteration.
+      </div>
 
       <h3>Multiple Statements on a Line</h3>
-- separate by semicolons
-- ex. function foo; echo in foo; end
+      <div>
+        A line can contain more than one statement if they are separated by semicolons.
+        For example, <code>function foo; echo in foo; end</code>.
+      </div>
 
       <h3>Custom Greeting</h3>
 Custom Greeting
@@ -2253,7 +2283,7 @@ Custom Greeting
       <h3>Custom Prompt</h3>
 - the default fish prompt displays whoami, hostname,
   the abbreviated working directory (returned by prompt_pwd),
-  and ">"
+  and "&gt;"
   * abbreviated working directory returned by prompt_pwd isn't very useful
   * somewhat better if characters per path part is increased
     - defaults to 1
@@ -2263,7 +2293,7 @@ Custom Greeting
   * use set_color to control colors of various parts
   * can have multiple lines
 - if custom prompt doesn't fit in terminal width,
-  it will use just "> " instead
+  it will use just "&gt;> " instead
 - ex.
 function fish_prompt
   # Get the current Git branch.
