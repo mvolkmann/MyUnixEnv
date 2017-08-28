@@ -1,4 +1,4 @@
-<!DOCTYPE html>)
+<!DOCTYPE html>
 <html>
   <head>
     <title>The fish Shell</title>
@@ -529,7 +529,7 @@
       only if the first succeeded, use
       <code><i>command1</i>; and <i>command2</i></code><br>
       Note the semicolon at end of the first command and the use of
-      <code>and</code> instead of <code>&&</code> like in bash.
+      <code>and</code> instead of <code>&amp;&amp;</code> like in bash.
       <code>and</code> is not a keyword.  It is a command that executes the
       command passed to it only if status from the previous command is zero.
       If <code><i>command1</i>; <i>command2</i></code> were used instead
@@ -882,6 +882,14 @@
       For example, if the variable colors holds a list of colors,
       the third color can be edited with <code>vared colors[3]</code>.
     </div>
+    <div>
+      Currently there is no way to request the value of a variable
+      in a specific scope.  Version 2.7 of fish will add
+      <code>set --show <i>name</i></code>
+      which display information about a given variable name
+      in all scopes in which it is defined.
+      This version of fish will likely be released in September 2017.
+    </div>
 
     <h3>Advanced Use of Variables</h3>
     <div>
@@ -1084,27 +1092,28 @@ echo $status # 0 for found
       Regular expressions can use capture groups.
       In this case, <code>string match</code> outputs a list containing
       the full match followed by each capture match.
+      The result is an alternating list of indexes and lengths.
+      For example,
     </div>
+    <pre>
+set text 'This is foolish work for a boolean.'
+set matches (string match -ar '.oo' $text) # foo boo
+set matches (string match -anr '.oo' $text) # 9 3 28 3</pre>
     <div>
       To determine if a string doesn't match,
       add the <code>--invert</code> (<code>-v</code>) switch.
     </div>
-  * ex.
-    set text 'this is foolish work for a boolean'
-    set matches (string match -ar '.oo' $text) # foo boo
-    set matches (string match -anr '.oo' $text) # 9 3 28 3
-    - result is alternating list of indexes and lengths
     <div>
+      To replace text in a string with other text,
+      use <code>string replace</code>.
+      This is similar to <code>string match</code>
+      It can match against literal text or a regex (using <code>-r</code>)
+      When using a regex, it can utilize capture groups.
+      For example, to replace all occurrences of "foo" with "bar",
     </div>
-    <div>
-    </div>
-- to replace text in a string with other text
-  * string replace is similar to string match
-  * can match against literal text or a regex (using -r)
-  * ex. replace all occurrences of "foo" with "bar"
-    set text 'this is foolish work for a fool'
-    set newText (string replace -a 'foo' 'bar' $text)
-  * when using a regex, can use capture groups
+    <pre>
+set text 'this is foolish work for a fool'
+set newText (string replace -a 'foo' 'bar' $text)</pre>
 
     <h3>Numbers</h3>
     <div>
@@ -1240,7 +1249,7 @@ set area (math "$width * $height") # 6</pre>
     </div>
     <div>
       To set an item by index,
-      <code>set <code>name</code>[<i>index</i>] <i>value</i></code>
+      <code>set <i>name</i>[<i>index</i>] <i>value</i></code>
     </div>
     <div>
       To get a slice which is a new list, use
@@ -1541,8 +1550,6 @@ funced foo; and funcsave foo; and source foo.fish</pre>
     </div>
 
     <hr>
-
-GRONK
   * see .config/fish/functions/listrm.fish
   * see .config/fish/functions/rmpath.fish
 
@@ -1561,6 +1568,7 @@ For article
   * advanced
 - get some ideas from the Wikipedia entry
 
+GRONK
 Tools for fish (in alphabetical order)
 - Fisherman - https://github.com/fisherman/fisherman
   * "The fish-shell plugin manager"
@@ -1703,7 +1711,7 @@ Wildcards
     <div>
       For commands that write to stderr, to write to a file instead
       use <code>^</code> unlike other shells that use <code>2></code>.
-      For example, <code><i>someCommand</i> ^ <code>someFilePath</code></code>.
+      For example, <code><i>someCommand</i> ^ <i>someFilePath</i></code>.
       For compatibility with other shells, <code>2></code> can also be used.
       To avoid overwriting an existing file, use <code>^?</code> instead of <code>^</code>.
       To append to an existing file, use <code>^^</code> instead of <code>^</code>.
@@ -1751,7 +1759,7 @@ Wildcards
           This command has issues.  See
           <a href="https://github.com/fish-shell/fish-shell/issues/4161">https://github.com/fish-shell/fish-shell/issues/4161</a>.
         </li>
-        <li>status print-stack-trace</code> -
+        <li><code>status print-stack-trace</code> -
           prints a stack trace which is useful for debugging issues
           in nested function calls</li>
       </ul>
@@ -2057,7 +2065,7 @@ eval $command</pre>
   * they are not closures
 - if a function needs to output an error message, do this:
   set_color $fish_color_error
-  echo errorMsg 1>&2
+  echo errorMsg 1&gt;&amp;2
   set_color normal
   return some-non-zero-status
 
@@ -2372,7 +2380,7 @@ Processes
 
       <h3>Jobs</h3>
 Jobs
-- to run a command in background, add & to end of command
+- to run a command in background, add &amp; to end of command
   * does not work for custom functions!
   * TODO: Why?
 - to suspend currently running command, press ctrl-z
