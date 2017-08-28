@@ -1677,11 +1677,13 @@ set format 'my name is %s and i am %s%i%s years old.'
 printf $format mark (set_color red) 56 (set_color normal)
 </pre>
 
-Wildcards
-- ? matches a single character
-- * matches any number of characters not containing /
-- ** is like *, but also matches /
-  which enables recursing into subdirectories
+    <h3>Wildcards</h3>
+    <div>
+      <code>?</code> matches a single character.<br>
+      <code>*</code> matches any number of characters not containing <code>/</code>.<br>
+      <code>**</code> is like <code>*</code>, but also matches <code>/</code>.
+      This enables recursing into subdirectories.
+    </div>
 
     <h3>Pipes and Redirection</h3>
     <div>
