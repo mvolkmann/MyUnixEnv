@@ -2164,25 +2164,47 @@ eval $command</pre>
   * to get just the type, type -t name
 
       <h3>if Command</h3>
-- if condition
-    statements
-  else if condition
-    statements
-  else
-    statements
-  end
-- condition must be a command and its status is used
-  * 0 is success and treated as true
-  * any other value is an error and treated as false
-  * opposite from most programming languages
-- a common command to use in an "if" is "test"
-  ex. if test $status # success
-  ex. if test $status !- 0 # failure
-- can negate condition being tested
-  ex. if not test $status
-  ex. if not any-command
-- for a single line "if"
-  * if condition; statement; end
+      <div>
+        The if command supports conditional logic.
+        It's syntax is:
+      </div>
+      <pre>
+if <i>command</i>
+  <i>commands</i>
+else if <code>command</code>
+  <i>commands</i>
+else
+  <i>commands</i>
+end</pre>
+      <div>
+        Note that <code>if</code> is followed by a fish command,
+        not a "condition".
+        The status of the command it used to determine
+        whether the commands in that branch will be executed.
+        A status of 0 is treated as success or true and
+        any other value is treated as an error or false.
+        This is opposite from most programming languages,
+        but is standard in shells.
+      </div>
+      <div>
+        A common command to use in an <code>if</code>
+        is <code>test</code>.  For example,
+        to explictly test the status of the
+        last command executed before an <code>if</code>, use
+        <code>if test $status # success</code> or
+        <code>if test $status !- 0 # failure</code>
+      </div>
+      <div>
+        A command status can be negated using
+        the <code>not</code> command.  For example,
+        <code>if not test $status</code> or
+        <code>if not <i>someCommand</i></code>.
+      </div>
+      <div>
+        An <code>if</code> command can be specified on a single line
+        using semicolons as follows:
+        <code>if <i>command</i>; <i>statements</i>; end</code>
+      </div>
 
       <h3>and &amp; or Commands</h3>
 - note that these are commands, not keywords
@@ -2275,29 +2297,50 @@ end</pre>
       </div>
 
       <h3>Custom Greeting</h3>
-Custom Greeting
-- by default, new fish shells display the greeting
-  "Welcome to fish, the friendly interactive shell"
-- to change this,
-  set -U fish_greeting 'You are a fish!'
-- to suppress this, erase the current setting with
-  set -e fish_greeting
+      <div>
+        By default, new fish shells display the greeting
+        "Welcome to fish, the friendly interactive shell".
+        To change this, enter something like
+        <code>set -U fish_greeting 'You are a fish!'</code>.
+        To suppress the greeting, erase the current setting with
+        <code>set -e fish_greeting</code>.
+      </div>
 
       <h3>Custom Prompt</h3>
-- the default fish prompt displays whoami, hostname,
-  the abbreviated working directory (returned by prompt_pwd),
-  and "&gt;"
-  * abbreviated working directory returned by prompt_pwd isn't very useful
-  * somewhat better if characters per path part is increased
-    - defaults to 1
-    - set fish_prompt_pwd_dir_length 3
-- to customize, create ~/.config/fish/functions/fish_prompt.fish
-  that echos the desired prompt
-  * use set_color to control colors of various parts
-  * can have multiple lines
-- if custom prompt doesn't fit in terminal width,
-  it will use just "&gt;> " instead
-- ex.
+      <div>
+        The default fish prompt displays the output of the
+        <code>whoami</code> and <code>hostname</code> commands,
+        followed by the abbreviated working directory
+        (returned by the <code>prompt_pwd</code> command)
+        and "&gt;".
+        The abbreviated working directory output by
+        <code>prompt_pwd</code> isn't very useful.
+        It is somewhat better if the characters per path part,
+        which defaults to 1, is increased.
+        To increase it to 3, enter
+        <code>set fish_prompt_pwd_dir_length 3</code>.
+      </div>
+      <div>
+        To customize the command prompt, create the file
+        <code>~/.config/fish/functions/fish_prompt.fish</code>
+        containing a function with the name <code>fish_prompt</code>
+        that echoes the desired prompt.
+        This can use the <code>set_color</code> command
+        to control colors of various parts.
+        Any number of lines can be output, but typically
+        there is only one and more than two is unusual.
+      </div>
+      <div>
+        If the prompt doesn't fit in the current terminal width,
+        it will instead just output "<code>&gt;</code>".
+        The <code>fish_prompt</code> function could compare the length
+        of what it wants to output with the <code>COLUMNS</code> variable
+        and output something that fits.
+      </div>
+      <div>
+        Here's an example of a custom prompt.
+      </div>
+      <pre>
 function fish_prompt
   # Get the current Git branch.
   # This will be an empty string if not in a Git repo.
@@ -2315,15 +2358,50 @@ function fish_prompt
   set_color --bold yellow
   echo $branch
   set_color normal
-  echo -n '🐠  '
-end
-- can define a right prompt with the function fish_right_prompt
-- can display Vim mode in prompt with the function fish_mode_prompt
-  * ex. N for normal, I for insert, R for replace, and V for visuaul
+  echo -n '🐠  ' # The odd characters here are actually a fish icon.
+end</pre>
+      <div>
+        It is also possible to define a "right prompt"
+        by defining the function <code>fish_right_prompt</code>.
+        This is right-aligned within terminals.
+      </div>
+      <div>
+        If the <code>VISUAL</code> global variable is set to "vim",
+        fish can display the Vim mode in the prompt
+        using the function <code>fish_mode_prompt</code>.
+        For example, this could display
+        "N" for normal, "I" for insert, "R" for replace,
+        and "V" for visual mode.
   * see your functions/fish_mode_prompt.fish file
-  * outputs a new prompt every time mode changes
-    which is a bit distracting
-    - make this an empty function to disable
+        This function outputs a new prompt every time the mode changes
+        which is a bit distracting.
+        To disable this feature,
+        make this a function that doesn't output anything.
+      </div>
+      <div>
+        Here's an example of a custom mode prompt.
+      </div>
+      <pre>
+function fish_mode_prompt
+  if test "$fish_key_bindings" = "fish_vi_key_bindings"
+    switch $fish_bind_mode
+      case default
+        set_color red
+        echo N
+      case insert
+        set_color green
+        echo I
+      case replace_one
+        set_color green
+        echo R
+      case visual
+        set_color magenta
+        echo V
+    end
+    set_color normal
+    printf ' '
+  end
+end</pre>
 
       <h3>Reading From stdin</h3>
 - read var
