@@ -1,5 +1,11 @@
 # This function is run every time Fish displays a new prompt.
 function fish_prompt
+  # No fancy prompt if window is too narrow.
+  #if test $COLUMNS -lt 20 #TODO: HOw to test this?
+  #   echo '🐠  '
+  #   return
+  # end
+
   set vimModeLen 2 # appears at beginning of prompt
   #TODO: When the terminal width is less than 20, why is COLUMNS is always 80!
   set remaining (math "$COLUMNS - $vimModeLen")
