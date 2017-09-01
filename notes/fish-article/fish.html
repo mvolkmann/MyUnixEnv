@@ -2207,33 +2207,66 @@ end</pre>
       </div>
 
       <h3>and &amp; or Commands</h3>
-- note that these are commands, not keywords
-- to conditionally execute a command only if $status is 0
-  command1; and command2
-  * this is the same as
-    command1
-    and command2
-  * this is not the same as
-    command1; command2
-    because that will run command2 even if command1 has a bad status
-- to conditionally execute a command only if $status is not 0
-  command1; or command2
-- these can be used in the condition of an "if" or "while"
+      <div>
+        In fish, <code>and</code> and <code>or</code> are commands,
+        not keywords or operators.
+        Both take a single argument which is a command
+        to be conditionally executed based on the
+        status of the previously executed command.
+        If they do run the specified command,
+        the <code>status</code> variable is set to
+        the status of that command.
+        Otherwise it is not changed.
+      </div>
+      <div>
+        To conditionally execute a command only
+        if the previous command was successful,
+        <code><i>command1</i>; and <i>command2</i></code>.
+        This is the same as
+        <pre>
+<i>command1</i>
+and <i>command2</i></pre>
+      <div>
+        This is not the same as
+        <code><i>command1</i>; <i>command2</i></code>
+        because that will run <code><i>command2</i></code>
+        even if <code><i>command1</i></code>
+        was not successful.
+      </div>
+      <div>
+        To conditionally execute a command only
+        if the previous command failed,
+        <code><i>command1</i>; or <i>command2</i></code>.
+      </div>
+      <div>
+        The <code>and</code> and <code>or</code> commands are often
+        used in <code>if</code> and <code>while</code> commands.
+      </div>
 
       <h3>switch Command</h3>
-- switch expression # ex. $color
-  case value1 value2
-    statements
-  case value3
-    statements
+      <div>
+        The switch command conditionally executes other commands
+        based on the value of a expression.
+        Often the expression is the value of a single variable.
+        It's syntax is:
+      </div>
+      <pre>
+switch <i>expression</i> # ex. $color
+  case <i>value1</i> <i>value2</i>
+    <i>statements</i>
+  case <i>value3</i>
+    <i>statements</i>
   case '*' # like default in other languages
-    statements
-  end
-- expression should evaluate to a string
-- each case can be followed by one or more values
-  separated by spaces
-  * values that do not contain special characters
-    do not need to be in quotes
+    <i>statements</i>
+end</pre>
+      </div>
+        The expression should evaluate to a string.
+      <div>
+      </div>
+      <div>
+      </div>
+      <div>
+      </div>
 - does not fall through; no break at end of each case
 - to treat one case value as the default
   case default-value '*'
