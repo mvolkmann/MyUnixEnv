@@ -2272,15 +2272,12 @@ switch <i>expression</i> # ex. $color
 end</pre>
       </div>
         The expression should evaluate to a string.
+        Note that a "break" statement is not needed at the end of each <code>case</code>
+        because execution does not fall through as it does in many programming languages.
       <div>
+        To treat one case value as the default, use
+        <code>case default-value '*'</code>.
       </div>
-      <div>
-      </div>
-      <div>
-      </div>
-- does not fall through; no break at end of each case
-- to treat one case value as the default
-  case default-value '*'
 
       <h3>Loop Commands</h3>
       <div>
@@ -2450,79 +2447,78 @@ end</pre>
       <h3>Reading From stdin</h3>
       <div>
         The command <code>read <i>var</i></code>
-        waits for the user to enter something, terminated by enter key
+        waits for the user to enter something, terminated by the enter key,
         and sets <code><i>var</i></code> to what was entered.
         Only a single line can be entered.
       </div>
       <div>
-        The <code>read</code> command takes many switches.
+        The <code>read</code> command accepts many switches.
+        It accepts the same switches as the <code>set</code> command
+        for choosing the scope of the variable that is set
+        This includes <code>-l</code> (local), <code>-g</code> (global),
+        and <code>-U</code> (universal).
+        It also accepts the following switches:
       </div>
       <ul>
         <li>
-          <code>--command <i>text</i></code> (<code>-c</code>)
-          sets the initial text as if the user had entered it.
+          <code>--command <i>text</i></code> (<code>-c</code>)<br>
+          This sets the initial text as if the user had entered it.
           The user can modify this.
           For example, to prompt for a meeting date
           and default to the current date,
           <code>read --command (date '+%m/%d/%G') meetingDate</code>
         </li>
         <li>
-          same switches as <code>set</code>
-          for choosing the scope of the variable that is set
-          This includes <code>-l</code> (local), <code>-g</code> (global),
-          <code>-x</code> (export), and <code>-U</code> (universal).
+          <code>--prompt-str <i>text</i></code> (<code>-P</code>)<br>
+          This sets the prompt text which defaults to "read&gt; ".
+          See the "favorite color" example below.
         </li>
         <li>
-          <code>--silent</code> (<code>-i</code>) to mask input (ex. for passwords)
-        </li>
-        <li>
-          <code>--prompt-str <i>text</i></code> (<code>-P</code>)
-          sets the prompt text which defaults to "read> ".
-          For example, to prompt for a color,
-          <code>read --prompt-str 'Enter a color: ' color</code>
-        </li>
-        <li>
-          <code>--prompt-cmd <i>command</i></code> (<code>-p</code>)
-          sets the prompt text to the output of the specified command.
-          This is useful for dynamic prompts.
-          For example, to ask the user if they were born in the current month, use
+          <code>--prompt-cmd <i>command</i></code> (<code>-p</code>)<br>
+          This sets the prompt text to the output of the specified command.
+          It is useful for dynamic prompts.
+          For example, to ask the user if they were born in the current month, use<br>
           <code>read --prompt-cmd "echo Were you born in (date '+%B')'? '" bornThisMonth</code>
         </li>
         <li>
-          <code>--array</code> (<code>-a</code>)
-          sets the variable to a list of the words entered
+          <code>--silent</code> (<code>-i</code>)<br>
+          This masks the input.  For example, this is appropriate for entering passwords.
+        </li>
+        <li>
+          <code>--array</code> (<code>-a</code>)<br>
+          This sets the variable to a list of the words entered
           instead of a single string value.
-          For example, <code>read --array favColors</code>.
-          If a user enters "red green blue",
-          <code>favColors</code> will be set to that list of colors
+          For example, <code>read --array favColors</code>
+          sets the variable favColors to the list of colors the user enters.
+          If "red green blue" is entered, favColors will be set to that list
           and <code>count $colors</code> will output 3.
         </li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>and many more</li>
       </ul>
-  * --local (-l) makes variables local
-  * --global (-g) makes variables global
-  * --universal (-U) makes variables universal
-  * --export (-x) exports variables
-  * and many more
-  * ex. read -P 'Favorite color: ' -c yellow color
-
-- can have more than one variable
-  * sets each to the word at the corresponding position
-  * last variable gets all remaining words
-  * ex. read first second
-    - if user enters "foo bar baz",
-      first is set to "foo" and
-      second is set to "bar baz"
-- to read lines from user until they press enter on an empty line
+      <div>
+        For example, to prompt the user for their favorite color,
+        with the default being yellow, use
+        <code>read --prompt-str 'Favorite color: ' --command yellow color</code>.
+        This sets the variable <code>color</code> to what the user enters.
+      </div>
+      <div>
+        The read command can set more than one variable.
+        Each is set to the word at the corresponding position.
+        The last variable gets all the remaining words.
+        For example, if <code>read first second</code>
+        is run and the user enters "foo bar baz",
+        <code>first</code> is set to "foo" and
+        <code>second</code> is set to "bar baz".
+      </div>
+      <div>
+        To read multiple lines from the user
+        until they press enter on an empty line:
+      </div>
+      <pre>
   while read line
     if test -z $line; break; end
     echo you entered $line
-  end
+  end</pre>
 
       <h3>Absolute Path</h3>
       <div>
