@@ -1889,6 +1889,15 @@ set command ls *.$extension
 eval $command</pre>
 
       <h3>Functions</h3>
+      <div>
+        Functions give a name to a set of commands that are executed
+        when the function is invoked.
+        Functions can become available to execute as commands.
+        In that case they can override builtin commands.
+        For example,
+        function date; echo pwned; end
+        will override the builtin date command.
+      </div>
 - functions cannot return a value,
   but they can set the status variable
   and they can write to streams like stdout and stderr
