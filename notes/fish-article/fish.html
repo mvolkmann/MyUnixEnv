@@ -1208,7 +1208,9 @@ set area (math "$width * $height") # 6</pre>
     </div>
     <div>
       For example, to format the date as "Saturday August 26, 2017"
-      enter <code>date '+%A %B %d, %G'</code>
+      enter <code>date '+%A %B %d, %G'</code>.
+      To format it as "08/26/2017"
+      enter <code>date '+%m/%d/%G'</code>.
     </div>
 
     <h3>Lists (a.k.a Arrays)</h3>
@@ -2446,30 +2448,69 @@ function fish_mode_prompt
 end</pre>
 
       <h3>Reading From stdin</h3>
-- read var
-  * waits for user to enter something, terminated by enter key
-    - a single line
-  * sets var to what user entered
-- switches
-  * --command text (-c)
-    - sets initial text as if user had entered it
-    - users can modify this
-  * same switches as "set" for choosing scope of variable
-    - includes -l (local), -g (global), -x (export), and -U (universal)
-  * --silent (-i) to mask input (ex. for passwords)
-  * --prompt-str text (-P)
-    - sets prompt text
-  * --prompt-cmd command (-p)
-    - sets command that outputs the prompt
-    - useful for dynamic prompts
-  * --array (-a)
-    - sets variable to a list of the words entered
+      <div>
+        The command <code>read <i>var</i></code>
+        waits for the user to enter something, terminated by enter key
+        and sets <code><i>var</i></code> to what was entered.
+        Only a single line can be entered.
+      </div>
+      <div>
+        The <code>read</code> command takes many switches.
+      </div>
+      <ul>
+        <li>
+          <code>--command <i>text</i></code> (<code>-c</code>)
+          sets the initial text as if the user had entered it.
+          The user can modify this.
+          For example, to prompt for a meeting date
+          and default to the current date,
+          <code>read --command (date '+%m/%d/%G') meetingDate</code>
+        </li>
+        <li>
+          same switches as <code>set</code>
+          for choosing the scope of the variable that is set
+          This includes <code>-l</code> (local), <code>-g</code> (global),
+          <code>-x</code> (export), and <code>-U</code> (universal).
+        </li>
+        <li>
+          <code>--silent</code> (<code>-i</code>) to mask input (ex. for passwords)
+        </li>
+        <li>
+          <code>--prompt-str <i>text</i></code> (<code>-P</code>)
+          sets the prompt text which defaults to "read> ".
+          For example, to prompt for a color,
+          <code>read --prompt-str 'Enter a color: ' color</code>
+        </li>
+        <li>
+          <code>--prompt-cmd <i>command</i></code> (<code>-p</code>)
+          sets the prompt text to the output of the specified command.
+          This is useful for dynamic prompts.
+          For example, to ask the user if they were born in the current month, use
+          <code>read --prompt-cmd "echo Were you born in (date '+%B')'? '" bornThisMonth</code>
+        </li>
+        <li>
+          <code>--array</code> (<code>-a</code>)
+          sets the variable to a list of the words entered
+          instead of a single string value.
+          For example, <code>read --array favColors</code>.
+          If a user enters "red green blue",
+          <code>favColors</code> will be set to that list of colors
+          and <code>count $colors</code> will output 3.
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
   * --local (-l) makes variables local
   * --global (-g) makes variables global
   * --universal (-U) makes variables universal
   * --export (-x) exports variables
   * and many more
   * ex. read -P 'Favorite color: ' -c yellow color
+
 - can have more than one variable
   * sets each to the word at the corresponding position
   * last variable gets all remaining words
@@ -2483,79 +2524,129 @@ end</pre>
     echo you entered $line
   end
 
-      <h3>Getting Absolute Path from a Relative Path</h3>
-
-- realpath abs-path
+      <h3>Absolute Path</h3>
+      <div>
+        To get the absolute path of a relative path,
+        use the <code>realpath</code> command.
+        For example, when in the directory <code>/foo/bar/baz</code>,
+       entering <code>realpath ../../qux</code>
+       outputs <code>/foo/qux</code>.
+      </div>
 
       <h3>Processes</h3>
-Processes
-- to get the current process id, %self
-- to get the process id of the job with number n, %n
-- to get the ids of all processes whose names begin with "prefix", $prefix
+      <div>
+        The <code>%</code> character followed by specific words
+        expands to a process id.
+        <code>%self</code> expands to the current process id.
+        <code>%<i>jobNumber</i></code> expands to the
+        process id of the specified job.
+        <code>%<i>processName</i></code> expands to the
+        process id of the specified process.
+        For example, to see the process ids of all fish processes,
+        enter <code>echo %fish</code>.
+        If only a process name prefix is specified, the ids of all
+        processes with names beginning with that prefix are output.
+      </div>
 
       <h3>Jobs</h3>
-Jobs
-- to run a command in background, add &amp; to end of command
-  * does not work for custom functions!
-  * TODO: Why?
-- to suspend currently running command, press ctrl-z
-  * does not work for custom functions!
-  * TODO: Why?
-- to continue running a suspended command in background enter "bg"
-- to get a list of background jobs and their job numbers, enter "jobs"
-- to bring a background job back to the foreground,
-  enter "fg" for the job most recently placed in background
-  or "fg %job-number" for a specific job
-  or "fg process-number"
-- if you try to exit from a shell that has background jobs,
-  it will warn about this and not exit
-  * if you try to exit again,
-    it will kill all the background jobs and exit
+      <div>
+        To run a command in background,
+        add <code>&amp;</code> to end of the command.
+        This does not work for custom functions.
+        TODO: Why?
+      </div>
+      <div>
+        To suspend a currently running command, press ctrl-z.
+        This does not work for custom functions.
+        TODO: Why?
+      </div>
+      <div>
+        To continue running a suspended command in background
+        enter <code>bg</code>.
+      </div>
+      <div>
+        To get a list of background jobs and their job numbers,
+        enter <code>jobs</code>.
+      </div>
+      <div>
+        To bring a background job back to the foreground,
+        enter <code>fg</code> for the job most recently placed in background,
+        or <code>fg %<i>jobNumber</i></code> for a specific job,
+        or <code>fg <i>processNumber</i></code>.
+      </div>
+      <div>
+        If you attempt to exit from a shell that has background jobs,
+        it will warn about this and not exit.
+        If you attempt to exit again,
+        it will kill all the background jobs and exit.
+      </div>
 
       <h3>Debugging Functions</h3>
-- add use of "breakpoint" commands in function
-- run the function
-- when a breakpoint is reached,
-  the function will stop and control will be returned to the shell
-- can examine and modify variables in the function
-  * ex. echo $count
-  * ex. set count 7
-- to resume execution, enter "exit"
-- to stop the running function before it reaches its end,
-  enter "kill %self"
+      <div>
+        A common way to debug functions is to add echo commands
+        and comment out parts of the code.
+        Often a better approach is to add breakpoints
+        to stop execution at specific places.
+        While stopped, variables can be examined and modified.
+        Then execution can be continued.
+      </div>
+      <div>
+        To add breakpoints in a function,
+        add uses of the <code>breakpoint</code> command.
+        After adding them, run the function.
+        When a breakpoint is reached, the function will stop
+        and control will be returned to the shell.
+        Use the <code>echo</code> command to examine variables.
+        and the <code>set</code> command to modify them.
+        For example, <code>echo $count</code> and <code>set count 7</code>.
+      </div>
+      <div>
+        To resume execution, enter <code>exit</code>.
+        To stop the running function before it reaches its end,
+        enter <code>kill %self</code>.
+      </div>
 
-      <h3>Random Numbers</h3>
-Random Numbers and Options
-- random generates an integer in the range [0, 32767]
-- argument meanings depend on number given
-  * if 1, it is a seed
-  * if 2, they are start and end of the range
-    - ex. for a dice roll, random 1 6
-  * if 3, they are start, step, and end
-    - where only numbers that are increments of step from start
-      will be generated
-- to select a random item from a list of options
-  * random choice option1 option2 ...
-    - ex. random choice red green blue
-    - ex.
-      set colors red orange yellow green blue purple
-      set color (random choice $colors)
+      <h3>Random Numbers and Options</h3>
+      <div>
+        The <code>random</code> command outputs
+        an integer in the range [0, 32767].
+        It takes up to three arguments and
+        typically at least two are specified.
+        Their meaning depends on the number given.
+        If only one is specified, it is a seed.
+        If two are specified,
+        they are the start and end of the range.
+        For example, for a dice roll use <code>random 1 6</code>.
+        If three are specified,
+        they are the start, step, and end of the range
+        where only numbers that are increments of step from start
+        will be generated.
+        For example, to generate a random number between 0 and 100
+        that is an increment of 5, use <code>random 0 5 100</code>.
+      </div>
+      <div>
+        To select a random item from a list of options,
+        use <code>random <i>choice</i> <i>option1</i> <i>option2</i> ...</code>.
+        For example, to choose a random color from a list of options,
+        <pre>
+set colors red orange yellow green blue purple
+set color (random choice $colors)</pre>
+      </div>
 
       <h3>Option Parsing</h3>
       <div>
         Research the <code>getopt</code> command.
       </div>
 
-TODO: Document how to use the "spin" function you installed.
     </div>
 
     <hr>
-  * see .config/fish/functions/listrm.fish
-  * see .config/fish/functions/rmpath.fish
-
 LOOK FOR TODO IN THIS FILE!
 
-For article
+TODO: Document how to use the "spin" function you installed.
+TODO: See .config/fish/functions/listrm.fish
+TODO: See .config/fish/functions/rmpath.fish
+TODO: For article
 - create example script in Fish, Bash, and Node
   that lists files containing given text in their name
   in tree form that colors file types differently
