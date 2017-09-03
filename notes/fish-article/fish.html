@@ -1401,7 +1401,7 @@ end</pre>
       <code>set -U fish_user_paths $fish_user_paths <i>new-path</i></code><br>
       This outputs a warning if <code><i>new-path</i></code>
       doesn't exist, but adds it anyway.
-      TODO: see .config/fish/functions/addpath.fish
+      TODO: see ~/.config/fish/functions/addpath.fish
     </div>
     <div>
       As we will see later, all variables hold a list.
@@ -1915,170 +1915,212 @@ eval $command</pre>
 
       <h3>Functions</h3>
       <div>
-        Functions give a name to a set of commands that are executed
-        when the function is invoked.
-        Functions can become available to execute as commands.
+        Functions give a name to a set of commands that
+        are executed when the function is invoked.
+        Functions can become available to execute as commands
+        when their name is used as a command in a shell.
         In that case they can override builtin commands.
         For example,
         function date; echo pwned; end
         will override the builtin date command.
       </div>
-- functions cannot return a value,
-  but they can set the status variable
-  and they can write to streams like stdout and stderr
-- to capture stdout from a function in a variable
-  * set result (someFn args)
-  * ex.
-    function product -a n1 n2
-      echo (math "$n1 * $n2")
-    end
-    set result (product 3 4) # 12
-- function names cannot begin with - and cannot contain /,
-  but can contain any other characters, even spaces
-  * to contain a space, prefix with \
-    - ex. function foo\ bar; echo in foo bar; end
-    - to call, foo\ bar
-- a fish function is a list of commmands
-  that are executed when the name of the function
-  is used as a command in the shell
-- to call a function, must specify its name
-  * no parens around arguments or commas between them
-- functions can be defined interactively
-  by using the "function" command
-  * this continues reading from stdin
-    until it sees a line containing the closing "end"
-- to define a function
-  * function name
-      # code goes here
-    end
-  * many switches can follow the function name
-    - some are described later
-    - to add documentation, --description "some desc"
-      * or -d
-      * displayed by "functions --details --verbose fn-name"
-        in the fifth line
-        - see --details below
-      * see your fndesc.fish function that only displays description
-- all functions are public
-  * use prefixes for "private" functions
-    to avoid name conflicts
-    * ex. _prefix_name
-- to make available in future sessions
-  * define in files under .config/fish/functions
-  * no need to mark these files as executable
-  * no need to modify PATH
-    - all are defined in functions directory
-      * can they be in subdirectories to categorize them?
-  * no need to add a shebang comment
-    - all are assumed to be used only in the fish shell
-  * these files are loaded the first time
-    the function they define is called
-  * name of file must match name of function
-    - the autoloading mechanism for functions requires this
-      * see more in "Commands" section
-    - ex. define function foo in file named foo.fish
-  * can define multiple functions in the same file,
-    but they will not be available until the function
-    whose name matches the file is called once
-    - so doing this is not recommended
-- to save a function definition that has been entered interactively
-  in a file in .config/fish/functions
-  * funcsave name
-  * uses tabs for indentation
-  * allows the function to be autoloaded in all future sessions
-- to edit a function definition
-  * funced name
-  * if the function is not already defined, it will be created
-  * uses editor in variable VISUAL that can be set in config.fish
-    - defaults to emacs
-    - ex. set VISUAL vim
-  * emphasize using this and funcsave over
-    manually creating files in the proper directory
-    - after every use of funced, run funcsave to save changes
-      in .fish file under ~/.config/fish/functions
-  * why does it ask if a weird file should be removed after exiting editor?
-    - What are the files under /var/folders/jc/...?
-    - can delete them with find /var/folders/js -name '*.fish' -delete
-- to format a .fish file
-  * fish_indent < some-name.fish
-    - writes to stdout
-    - to output using colors specified in fish_config, add --ansi switch
-    - to output as HTML, add --html switch
-      * can add colors to specific syntax items with CSS
-  * to read from a file and rewrite it with formatted version
-    - fish_indent -w some-name.fish
-  * uses four-space indentation and that cannot be customized,
-    but can replace all occurrences for four spaces with two
-    - see your fish_indent2.fish script
-    - run with fish_indent2 name
-    - creates a file with "-new" at end
-    - TODO: Fix to overwrite the input file
-- to list all currently defined functions
-  * functions
-    - add --all or -a to include functions that begin with an underscore
-  * to view in web UI
-    - fish_config functions
-- to output the code for one or more functions
-  * functions name1 name2 ...
-- to see where a function is defined (its path)
-  * functions --details name
-    - or -D
-  * if not saved to a file, will output "stdin"
-- to see even more detail about a function
-  * functions --details --verbose name
-    - or -Dv
-    - outputs these five lines
-      * path to definition
-      * whether it was autoloaded (outputs "autoloaded" or "n/a")
-      * line number within file where definition begins
-        or 0 if not autoloaded
-      * whether "scope shadowing" was disabled
-      * the function description specified with --description or -d
-  * if not saved to a file, will output "stdin"
-- to copy a function definition to a new name
-  * functions --copy old-name new-name
-    - or -c
-  * only copies body, not switches
-- to delete (erase) a function: functions -e name
-  * doesn't remove automatically loaded functions
-  * doesn't delete files that define them
-  * just makes them inactive
-- to test if a function exists
-  * functions --query name
-    - or -q
-  * sets status
-- return command
-  - can use to exit before end
-  * sets exit status of function which defaults to 0 for success,
-    but can be specified
-    - ex. return 2
-- functions cannot return a value
-  * they can only use the return command to return a status
-  * but they can write to stdout
-  * to set a variable to the stdout of a function
-    - set var (fnname args)
-    - ex.
-      set width 2
-      set height 3
-      set area (math "$width * $height") # 6
-- arguments
-  * held in a list in $argv
-    - first argument is in $argv[1]
-  * iterate over arguments like iterating over any list
-  * can also use named parameters
-    - ex.
-      function orderShirt -a color size
-        # Use $color and $size here.
-        # $argv is also set to a list of the arguments.
-      end
-    - all named parameters will be "set",
-      but ones not specified will be set to an empty list
-      * seems like a bad design
-      * TODO: what's the rationale?
-    - to test whether the named parameter is set,
-      set -q name[1]
-    - to set a named parameter to a default value,
-      set -q name[1]; or set name 'default value'
+      <div>
+        To call a function, specify its name optionally followed by arguments.
+        No parentheses are used around arguments and no commas are used between them.
+      </div>
+      <div>
+        Functions cannot return a value,
+        but they can set the status variable
+        and they can write to streams like stdout and stderr.
+        To capture stdout from a function in a variable, use
+        <code>set <i>variable</i> (<i>someFn</i> <i>args</i>)</code>.
+        For example:
+      </div>
+      <pre>
+function product -a n1 n2
+  echo (math "$n1 * $n2")
+end
+set result (product 3 4) # 12</pre>
+      <div>
+        Function names cannot begin with <code>-</code>
+        and cannot contain <code>/</code>,
+        but they can contain any other characters, even spaces.
+        To include a space, prefix it with <code>\</code>.
+        For example, <code>function foo\ bar; echo in foo bar; end</code>
+        To call this function, use <code>foo\ bar</code>.
+      </div>
+      <div>
+        Functions can be defined interactively
+        using the <code>function</code> command.
+        This continues reading from stdin
+        until a corresponding <code>end</code> is entered.
+        For example,
+      </div>
+      <pre>
+function <i>name</i>
+  # code goes here
+end</pre>
+      <div>
+        Many switches can follow the function name.
+        Some are described later.
+        To add documentation, use <code>--description "<i>some desc</i>"</code>
+        (<code>-d</code>).
+        To display the description of a function, enter
+        <code>functions --details --verbose <i>fnName</i> </code>
+        and note the fifth line of the output.
+        The <code>--details</code> switch is described further below.
+        TODO: See your fndesc.fish function that only displays description.
+      </div>
+      <div>
+         All functions are public.
+         Prefixes can be used to denote "private" functions
+         and to avoid name conflicts.
+         For example, <code>_<i>somePrefix</i> </code>.
+      </div>
+      <div>
+        The most common way to make functions available in future sessions
+        is to define them in files
+        under the <code>~/.config/fish/functions</code> directory
+        (not in subdirectories of this directory).
+        There is no need to mark these files as executable.
+        There no need to modify PATH because by default this directory is included.
+        This is no need to add a "shebang comment" in these files.
+        All functions defined here are assumed to be used only in the fish shell.
+      </div>
+      <div>
+        These files are loaded the first time
+        the function they define is called.
+        The autoloading mechanism for functions requires the name
+        of these files to match the name of function they define.
+        TODO: See more in "Commands" section.
+        For example, define the function foo in a file named <code>foo.fish</code>.
+        Multiple functions can be defined in the same file,
+        but they will not be available until the function
+        whose name matches the file is called once,
+        so doing this is not recommended.
+      </div>
+      <div>
+        To save a function definition that has been entered interactively
+        in a file in <code>~/.config/fish/functions</code>, enter
+        <code>funcsave <i>name</i></code>.
+        This uses tabs for indentation.
+        Doing this allows the function to be autoloaded in all future sessions.
+      </div>
+      <div>
+        To edit a function definition, enter <code>funced <i>name</i></code>.
+        If the function is not already defined, it will be created.
+        This uses the editor in the <code>VISUAL</code> variable
+        that can be set in <code>config.fish</code>.
+        It defaults to emacs, but can be changed to Vim with
+        <code>set VISUAL vim</code>.
+        This is more convenient that starting an editor first and then
+        creating the file in the proper directory or locating it
+        from within the editor.
+        After every use of <code>funced</code>,
+        if the changes should be available in other sessions,
+        including both current and future sessions,
+        run <code>funcsave</code>.
+        This save the changes in a <code>.fish</code> file
+        under <code>~/.config/fish/functions</code>.
+      </div>
+      <div>
+        To output a formatted version of a <code>.fish</code> file, enter
+        <code>fish_indent &lt; <i>someName</i>.fish</code>.
+        The fish_indent command writes to stdout.
+        To output using the colors specified in <code>fish_config</code>,
+        add the <code>--ansi</code> switch.
+        To output as HTML, add the <code>--html</code> switch.
+        With HTML it is possible to add colors to specific syntax items using CSS.
+        To read from a file and rewrite it with formatted version, enter
+        <code>fish_indent -w <i>someName</i>.fish</code>.
+        This uses four-space indentation and that cannot be customized,
+        but all occurrences for four spaces can be replaced with two
+        using the <code>sed</code> command.
+        TODO:
+        - see your fish_indent2.fish script
+        - run with fish_indent2 name
+        - creates a file with "-new" at end
+        - Fix to overwrite the input file
+      </div>
+      <div>
+        To list all currently defined functions, enter <code>functions</code>.
+        To include private fish functions whose names begin with a double underscore,
+        add the <code>--all</code> (<code>-a</code>) switch.
+        To view all currently defined functions in the web UI,
+        enter <code>fish_config functions</code>.
+      </div>
+      <div>
+        To output the code for one or more functions, enter
+        <code>functions <i>name1</i> <i>name2</i> ...</code>.
+      </div>
+      <div>
+        To see the path to where a function is defined, enter
+        <code>functions --details <i>name</i></code> (<code>-D</code>).
+        If the function has not been saved to a file, this will output "stdin".
+      </div>
+      <div>
+        To see even more detail about a function, enter
+        <code>functions --details --verbose <i>name</i></code> (<code>-Dv</code>).
+        This outputs the following five lines:
+      </div>
+      <ul>
+        <li>path to definition</li>
+        <li>whether it was autoloaded (outputs "autoloaded" or "n/a")</li>
+        <li>line number within file where definition beginsi or 0 if not autoloaded</li>
+        <li>whether "scope shadowing" was disabled</li>
+        <li>the function description specified with the
+          <code>--description</code> or <code>-d</code> switch
+          or "n/a" if no description was provided</li>
+      </ul>
+      <div>
+        To copy a function definition to a new name, enter
+        <code>functions --copy <i>oldName</i> <i>newName</i></code> (<code>-c</code>).
+        This only copies the function body, not any switches specified in the definition.
+      </div>
+      <div>
+        To delete (erase) a function, enter
+        <code>functions --erase <i>name</i></code> (<code>-e</code>).
+        If the function is defined in a file, this doesn't delete the file.
+        It just makes it inactive in the current session.
+      </div>
+      <div>
+        To test if a function exists, enter
+        <code>functions --query <i>name</i></code> (<code>-q</code>).
+        This sets status to 0 if the function exists and 1 otherwise.
+      </div>
+      <div>
+        The <code>return</code> command can be used in a function
+        to exit before the end.
+        This also sets the exit status of the function
+        which defaults to 0 for success, but can be specified.
+        For exammple, <code>return 2</code> exits the function
+        in which it was executed and sets status to 2..
+      </div>
+      <div>
+        The arguments specified in a function call
+        are held in a list in the <code>argv</code> variable.
+        The first argument can be accessed with <code>$argv[1]</code>.
+        Iterate over the arguments is done in the same way as iterating over any list.
+      </div>
+      <div>
+        Functions can also use named parameters.
+        For example:
+      </div>
+      <pre>
+function orderShirt -a color size
+  # Use $color and $size here.
+  # $argv is also set to a list of the arguments.
+end</pre>
+      <div>
+        All named parameters will be "set",
+        but ones not specified will be set to an empty list.
+        TODO: This seems like a bad design.  What is the rationale?
+        To test whether a specific named parameter is set, use
+        <code>set -q <i>name</i>[1]</code>.
+        To set a named parameter to a default value, use
+        <code>set <i>name</i> '<i>defaultValue</i>'</code>.
+        TODO: Verify this!
+      </div>
 - switches
   * to process command-line arguments as switches (a.k.a. options)
     for option in $argv
