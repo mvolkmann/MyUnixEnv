@@ -2121,24 +2121,32 @@ end</pre>
         <code>set <i>name</i> '<i>defaultValue</i>'</code>.
         TODO: Verify this!
       </div>
-- switches
-  * to process command-line arguments as switches (a.k.a. options)
-    for option in $argv
-      switch "$option"
-        case -h --help
-          # code here
-        ...
-        case '*'
-          # code here
-      end
-    end
-- function do not have access to local variables set outside them
-  * they are not closures
-- if a function needs to output an error message, do this:
-  set_color $fish_color_error
-  echo errorMsg 1&gt;&amp;2
-  set_color normal
-  return some-non-zero-status
+      <div>
+        To process command-line arguments to a function as switches (a.k.a. options):
+      </div>
+      <pre>
+for option in $argv
+  switch "$option"
+    case -h --help
+      # code here
+    ...
+    case '*'
+      # code here
+  end
+end</pre>
+      <div>
+        Function do not have access to local variables set outside them.
+        They are not closures like functions in programming languages like JavaScript.
+      </div>
+      <div>
+        If a function needs to output an error message,
+        a good approach is the following:
+      </div>
+      <pre>
+set_color $fish_color_error
+echo <i>someErrorMsg</i> 1&gt;&amp;2
+set_color normal
+return <i>someNonZeroStatus</i></pre>
 
       <h3>Auto-running Functions</h3>
       <div>
