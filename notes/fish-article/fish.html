@@ -5,6 +5,7 @@
     <style type="text/css">
       body {
         font-family: sans-serif;
+        margin: 20px 40px;
       }
       code {
         background-color: lightyellow;
@@ -58,7 +59,7 @@
     </div>
     <ul>
       <li>auto-suggestions while typing</li>
-      <li>auto-complete of commands, their switches, file paths,
+      <li>auto-complete of commands, their switches (a.k.a. options), file paths,
         variable names, git branches, and more</li>
       <li>easy access to web-based help</li>
       <li>colorful prompts</li>
@@ -354,7 +355,7 @@
     </div>
     <div>
       The syntax is
-      <code>complete -c <i>command-name</i> -s <i>short-switch</i> -l <i>long-switch</i> -a '<i>argument words</i>'</code>
+      <code>complete -c <i>commandName</i> -s <i>shortSwitch</i> -l <i>longSwitch</i> -a '<i>argument words</i>'</code>
     </div>
     <div>
     <div>
@@ -481,6 +482,12 @@
       with such a consistent syntax.
     </div>
     <div>
+      Many switches support both a long and short form.
+      Long switch names are preceded by two dashes.
+      Short switch names are preceded by one dash
+      and their names are a single letter.
+    </div>
+    <div>
       All commands set the <code>status</code> environment variable to
       <code>0</code> for success and another number for failure.
       <code>true</code> and <code>false</code> are not boolean literals.
@@ -572,6 +579,8 @@
       opens a new tab in the default web browser.
       This UI contains seven tabs that are described below.
     </div>
+
+    <h4>Color Tab</h4>
     <div>
       The "colors" tab displays the current color settings
       and allows them to be customized.
@@ -600,6 +609,8 @@
       If using iTerm2 in macOS, the bacground color can be changed by
       selecting Preferences...Profiles...Colors...Background.
     </div>
+
+    <h4>Prompt Tab</h4>
     <div>
       The "prompt" tab displays then contents
       of the current fish shell prompt.
@@ -609,38 +620,50 @@
       so if you have defined a custom prompt in that file,
       and don't want to wipe it out, don't do this!
     </div>
-    <img src="config-prompt.png" alt="color config screenshot">
+    <img src="config-prompt.png" alt="prompt config screenshot">
+
+    <h4>Functions Tab</h4>
     <div>
       The "functions" tab provides a read-only view
       of all functions that have been defined.
       Select a function name to see its definition
       which includes all the commands it executes.
     </div>
-    <img src="config-functions.png" alt="color config screenshot">
+    <img src="config-functions.png" alt="functions config screenshot">
+
+    <h4>Variables Tab</h4>
     <div>
       The "variables" tab provides a read-only view
       that lists all universal variables and their values.
       This does not list global or local variables.
     </div>
-    <img src="config-variables.png" alt="color config screenshot">
+    <img src="config-variables.png" alt="variables config screenshot">
+
+    <h4>History Tab</h4>
     <div>
       The "history" tab provides a read-only view
       of your command history in the order in which commands
       were issued from a terminal starting with the most recent commands.
     </div>
     <img src="config-history.png" alt="color config screenshot">
+
+    <h4>Bindings Tab</h4>
     <div>
       The "bindings" tab provides a read-only view
       that lists the current key bindings.
     </div>
-    <img src="config-bindings.png" alt="color config screenshot">
+    <img src="config-bindings.png" alt="bindings config screenshot">
+
+    <h4>Abbreviations Tab</h4>
     <div>
       The "abbreviations" tab provides a read-only view
       that lists all abbreviations.
       Often these are defined in <code>config.fish</code> (discussed later),
       but they can be defined from a terminal.
     </div>
-    <img src="config-abbreviations.png" alt="color config screenshot">
+    <img src="config-abbreviations.png" alt="abbreviations config screenshot">
+
+    <h4>Configuration Server</h4>
     <div>
       Pressing the enter key in the terminal where
       the <code>fish_config</code> command was entered
@@ -751,7 +774,7 @@
       enter <code>abbr --erase <i>name</i></code> (<code>-e</code>).
     </div>
 
-    <h3>echo> Command</h3>
+    <h3>echo Command</h3>
     <div>
       The <code>echo</code> command writes its expanded arguments to stdout.
       Normally all arguments are output with a space between them.
@@ -893,10 +916,10 @@
 
     <h3>Advanced Use of Variables</h3>
     <div>
-      Move this section down!
+      TODO: Move this section down!
     </div>
     <div>
-      Multiple $'s can be used to interpret the value of a variable
+      Multiple <code>$</code>'s can be used to interpret the value of a variable
       as a variable name.  Consider the following examples.
     </div>
     <pre>
@@ -2076,103 +2099,177 @@ eval $command</pre>
   return some-non-zero-status
 
       <h3>Auto-running Functions</h3>
-- functions can run automatically when an event is fired
-  * uses --on-event (-e) switch
-  * ex.
-    function takeShelter --on-event tornado
-      echo Tornado warning! Take shelter!
-    end
-  * these functions are not auto-loaded
-    - consider defining them in config.fish or
-      sourcing files that define them from config.fish
-      - source file-path
-        * executes commands in the file without starting a new process
-        * changes to variables will affect the current shell
-  * can register any number of functions to run on the same event
-  * events can be emitted with: emit event-name
-    - event-name can be any string
-    - event-name can be followed by any number of arguments
-    - these become the value of the argv list inside functions
-    - ex. emit tornado 'category 4' 12
-  * events are only handled within the current process
-  * fish generates these events:
-    - fish_prompt: whenever a new fish prompt is about to be displayed
-    - fish_command_not_found: whenever a command lookup failed
-      * like Ruby's method_missing
-    - fish_preexec: before executing an interactive command
-      * the command line is passed as the first parameter
-      * emitted even if the command is invalid
-    - fish_postexec: after executing an interactive command
-      * the command line is passed as the first parameter
-      * emitted even if the command is invalid
-- functions can run automatically when a variable changes
-  * uses --on-variable (-v) switch
-  * ex.
-    function announcePath --on-variable PATH
-      echo PATH is now $PATH
-    end
-    set -U PATH /foo $PATH
-- a function can run automatically when a given process exits
-  * uses --on-process-exit or -p
-  * ex.
-    function announceProcessExit --on-process-exit 12345
-      echo an important process exited
-    end
-    function announceMyExit --on-process-exit %self
-      echo I am exiting
-    end
-- a function can run automatically when signal is received
-  * uses --on-signal or -s followed by a signal name or number
-  * see https://www.tutorialspoint.com/unix/unix-signals-traps.htm
-  * to see a list of supported signals, enter "kill -l"
-  * ctrl-c sends an "int" signal
-  * to send any signal to a given process
-    - kill -sig pid
-      where sig is a signal name or number
-  * ex. to handle a kill of the current process
-    function handleTermSignal --on-signal term
-      echo received term signal
-    end
-    TODO: TRY THIS!
+      <div>
+        Functions can run automatically when an event is fired.
+        This is configured by adding the <code>--on-event</code> (<code>-e</code>)
+        switch to a function definition.
+        For example,
+      </div>
+      <pre>
+function takeShelter --on-event tornado
+  echo Tornado warning! Take shelter!
+end</pre>
+      <div>
+        Functions that run when an event is fired are not auto-loaded.
+        Consider defining them in <code>config.fish</code> or
+        sourcing files that define them from <code>config.fish</code>.
+        The command <code>source <i>filePath</i></code>
+        executes commands in the file without starting a new process.
+        Changes to variables made in this code affects the current shell.
+      </div>
+      <div>
+        Any number of functions can be registered to run on the same event.
+      </div>
+      <div>
+        Events can be emitted with <code>emit <i>eventName</i></code>.
+        The event name can be any string.
+        The event name can be followed by any number of arguments.
+        These become the value of the <code>argv</code> list inside the function.
+        For example, <code>emit tornado 'category 4' 12</code>.
+      </div>
+      <div>
+        Events are only handled within the current process.
+      </div>
+      <div>
+        Fish generates these events:
+      </div>
+      <ul>
+        <li>
+          <code>fish_prompt</code><br>
+          This is emitted whenever a new fish prompt is about to be displayed.
+        </li>
+        <li>
+          <code>fish_command_not_found</code><br>
+          This is emitted whenever a command lookup fails.
+          It is a bit like <code>method_missing</code> in the Ruby programming language.
+        </li>
+        <li>
+          <code>fish_preexec</code><br>
+          This is emitted before executing an interactive command,
+          even if the command is invalid.
+          The command line is passed as the first parameter.
+        </li>
+        <li>
+          <code>fish_postexec</code><br>
+          This is emitted after executing an interactive command,
+          even if the command is invalid.
+          The command line is passed as the first parameter.
+        </li>
+      </ul>
+      <div>
+        Functions can run automatically when a variable changes.
+        This is configured by adding the <code>--on-variable</code> (<code>-v</code>)
+        switch to a function definition.
+        For example, the following function runs every time
+        the PATH variable changes.
+        It echoes the new value.
+      </div>
+      <pre>
+function announcePath --on-variable PATH
+  echo PATH is now $PATH
+end
+set -U PATH /foo $PATH</pre>
+      <div>
+        Functions can run automatically when a given process exits.
+        This is configured by adding the <code>--on-process-exit</code> (<code>-p</code>)
+        switch to a function definition.
+        For example,
+      </div>
+      <pre>
+function announceProcessExit --on-process-exit 12345
+  echo an important process exited
+end
+function announceMyExit --on-process-exit %self
+  echo I am exiting
+end</pre>
+      <div>
+        Function can run automatically when a specific signal is received.
+        This is configured by adding the <code>--on-signal</code> (<code>-s</code>)
+        switch, followed by a signal name or number, to a function definition.
+        For a list of possible signals, enter <code>kill -l</code>.
+        Also see
+        <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
+        As an example, pressing ctrl-c sends an interrupt signal which has the name "int".
+      </div>
+      <div>
+        To send any signal to a given process, enter
+        <code>kill -sig <i>signalNameOrNumber</i> <i>pid</i></code>.
+        For example, to handle a kill of the current process,
+      </div>
+      <pre>
+function handleTermSignal --on-signal term
+  echo received term signal
+end</pre>
+TODO: TRY THIS!  Maybe need to test with a signal that doesn't kill the process so you can see the echo.
 
-      <h3>Types of commands</h3>
-- a command is any program the shell can run
-- there are three types of commands: builtins, commands, and functions
-- builtins
-  * commands that are provided by the shell
-  * examples include: contains, echo, and if
-  * to get a list of builtin names
-    - builtin --names (or -n)
-    - the "builtin" command can also be used to
-      execute a specific builtin instead of a
-      command or function with the same name
-- commands
-  * executables found in PATH
-  * ex. chmod, ls, node, and vim
-  * to get information about a command
-    - command name
-  * to get the path to a command
-    - command --search name (-s name)
-      or
-      which name
-    - the "command" command can also be used to
-      execute a specific command instead of a
-      builtin or function with the same name
-- functions
-  * some are provided by fish
-    ex. abbr, cd, eval
-  * user-defined functions can be defined in .fish files
-    under ~/.config/fish/functions
-  * aliases are converted to functions
-  * there are many fish-specific functions
-    whose names begin with "fish_"
-  * to determine if a function is defined
-    - functions --query name
-      * sets status to 0 if defined or 1 if not
-- to get the type of a name
-  * type name
-  * for functions, this also outputs their definition
-  * to get just the type, type -t name
+      <h3>Types of Commands</h3>
+      <div>
+        A "command" is any program the shell can run.
+        There are three types of commands: builtins, commands, and functions.
+      </div>
+      <div>
+        "Builtins" are commands that are provided by the shell.
+        Examples include <code>contains</code>, <code>echo</code>, and <code>if</code>.
+        To get a list of builtin names, enter
+        <code>builtin --names</code> (<code>-n</code>)
+        The <code>builtin</code> command can also be used to
+        execute a specific builtin instead of a
+        command or function with the same name.
+      </div>
+      <div>
+        "Commands" are executables found in <code>PATH</code>.
+        Examples include <code>chmod</code>, <code>ls</code>,
+        <code>node</code>, and <code>vim</code>.
+        To get information about a command, enter
+        <code>command <i>name</i></code>.
+        To get the path to a command, enter
+        <code>command --search <i>name</i></code> (<code>-s</code>)
+        or <code>which <i>name</i></code>.
+        The <code>command</code> command can also be used to
+        execute a specific command instead of a
+        builtin or function with the same name.
+      </div>
+      <div>
+        "Functions" have two sources, those provided by fish
+        and those that are user-defined.
+        Examples of provided functions include
+        <code>abbr</code>, <code>cd</code>, and <code>eval</code>.
+        There are also many fish-specific functions
+        whose names begin with <code>fish_</code>.
+      </div>
+      <div>
+        User-defined functions can be defined in
+        files with a <code>.fish</code> extension
+        in any directory listed in the fish_function_path directory.
+        By default, this includes the <code>~/.config/fish/functions</code> directory.
+      </div>
+      <div>
+        Aliases created with the <code>alias</code> command are converted to functions.
+        To see the definition of these functions,
+        enter <code>functions <i>aliasName</i></code> or <code>type <i>name</i></code>.
+        For example,
+      </div>
+      <pre>
+alias greet 'echo Hello, $USER'
+functions greet
+# This outputs the following:
+# Defined in - @ line 0
+function greet --description 'alias greet echo Hello, $USER'
+  echo Hello, $USER $argv;
+end</pre>
+      <div>
+        TODO: Why does the function above output $argv?
+      </div>
+      <div>
+        To determine if a function is defined, enter
+        <code>functions --query <i>name</i></code>.
+        This sets status to 0 if defined or 1 if not.
+      </div>
+      <div>
+        To get the type of a name, enter <code>type <i>name</i></code>.
+        For functions, this also outputs their definition.
+        To get just the type, enter <code>type -t <i>name</i></code>.
+      </div>
 
       <h3>if Command</h3>
       <div>
