@@ -260,7 +260,6 @@
     <div>
       To make fish the default shell so new terminal windows automatically use it,
       enter <code>chsh -s /usr/local/bin/fish</code>.
-      TODO: Does this assume the current shell is bash?
     </div>
 
     <h3>Autosuggestions</h3>
@@ -717,13 +716,13 @@
       An alias is an alternate name, usually shorter, for some command.
     </div>
     <div>
-      To define an alias, enter <code>alias name <i>command </i></code>.
+      To define an alias, enter <code>alias name <i>command</i></code>.
     </div>
     <div>
       To list all aliases, enter <code>alias</code>.
     </div>
     <div>
-      To remove an alias, enter <code>functions -e <i>name </i></code>.
+      To remove an alias, enter <code>functions -e <i>name</i></code>.
     </div>
     <div>
       Defining an alias creates a function with the specified name
@@ -914,58 +913,6 @@
       This version of fish will likely be released in September 2017.
     </div>
 
-    <h3>Advanced Use of Variables</h3>
-    <div>
-      TODO: Move this section down!
-    </div>
-    <div>
-      Multiple <code>$</code>'s can be used to interpret the value of a variable
-      as a variable name.  Consider the following examples.
-    </div>
-    <pre>
-set foo 1
-set bar foo
-echo $$bar # 1
-
-set pocket 'wallet'
-set pant pocket
-echo $$pant # wallet
-
-set foreground blue
-set background green
-set side fore
-set name "$side"ground
-echo $$name # blue</pre>
-    <div>
-      From
-      <a href="https://fishshell.com/docs/current/index.html#expand-variable">https://fishshell.com/docs/current/index.html#expand-variable</a>,
-      "When using this feature together with array brackets,
-      the brackets will always match the innermost $ dereference."
-      To understand this, consider the following example.
-    </div>
-    <pre>
-set colors red green blue
-set listName colors</pre>
-    <div>
-      How can we write code to get the value "green"
-      from the list of colors?
-    </div>
-    <div>
-      <code>echo $$listName[2]</code>
-      doesn't work because it evaluates like
-      <code>tmp = $listName[2]</code>
-      and then <code>$tmp</code> on that.
-      <code>$listName[2]</code> gives array index out of bounds
-      because the value of <code>$listName</code> is just
-      <code>'colors'</code> and that has no value at index 2.
-    </div>
-    <div>
-      <code>echo $$listName[1][2]</code> works!
-      <code>$$listName[1][2]</code> evaluates like
-      <code>$listName[1]</code> which gives <code>'colors'</code>
-      and then <code>$colors[2]</code> which gives <code>'green'</code>.
-    </div>
-
     <h3>Strings</h3>
     <div>
       Literal string values are specified by enclosing text
@@ -1021,11 +968,11 @@ set result some prefix{$middle}some suffix</pre>
       <li>is not identical to another?: <code>if $<i>var1</i> != $<i>var2</i></code></li>
     </ul>
     <div>
-      Current there is no way in fish to test whether
+      Currently there is no way in fish to test whether
       one string is less than or greater than another in sorting order.
       The <code>&lt;</code> and <code>&gt;</code> operators
       are only implemented for numbers.
-      TODO: Is there any workaround for this?
+      TODO: Is there any workaround for this?  You asked on the mailing list on 9/3.
     </div>
     <div>
       String indexes start at 1, not 0.
@@ -1401,7 +1348,6 @@ end</pre>
       <code>set -U fish_user_paths $fish_user_paths <i>new-path</i></code><br>
       This outputs a warning if <code><i>new-path</i></code>
       doesn't exist, but adds it anyway.
-      TODO: see ~/.config/fish/functions/addpath.fish
     </div>
     <div>
       As we will see later, all variables hold a list.
@@ -1435,9 +1381,6 @@ end</pre>
       If no such function is found, fish then checks whether there is
       an executable file in any path listed in <code>PATH</code>
       with the same name.  If so, that file is executed.
-    </div>
-    <div>
-      TODO: Describe the difference between commands and builtins!
     </div>
     <div>
       Function auto-loading allows functions to be used in place of
@@ -1659,7 +1602,9 @@ echo Roses are (set_color red)red(set_color normal), \
       These variables can be modified to customize the colors.
     </div>
     <div>
-      TODO: Also see examples in your functions/fish_prompt.fish file.
+      For another example of using the set_color command,
+      see the custom prompt defined in the file <code>fish_prompt.fish</code> later
+      in the "Custom Prompt" section.
     </div>
 
     <h3>printf Command</h3>
@@ -1738,6 +1683,55 @@ printf $format mark (set_color red) 56 (set_color normal)
     </div>
     <div>
       To redirect stderr to stdout, use <code><i>someCommand</i> 2&gt;&amp;1</code>.
+    </div>
+
+    <h3>Advanced Use of Variables</h3>
+    <div>
+      Multiple <code>$</code>'s can be used to interpret the value of a variable
+      as a variable name.  Consider the following examples.
+    </div>
+    <pre>
+set foo 1
+set bar foo
+echo $$bar # 1
+
+set pocket 'wallet'
+set pant pocket
+echo $$pant # wallet
+
+set foreground blue
+set background green
+set side fore
+set name "$side"ground
+echo $$name # blue</pre>
+    <div>
+      From
+      <a href="https://fishshell.com/docs/current/index.html#expand-variable">https://fishshell.com/docs/current/index.html#expand-variable</a>,
+      "When using this feature together with array brackets,
+      the brackets will always match the innermost $ dereference."
+      To understand this, consider the following example.
+    </div>
+    <pre>
+set colors red green blue
+set listName colors</pre>
+    <div>
+      How can we write code to get the value "green"
+      from the list of colors?
+    </div>
+    <div>
+      <code>echo $$listName[2]</code>
+      doesn't work because it evaluates like
+      <code>tmp = $listName[2]</code>
+      and then <code>$tmp</code> on that.
+      <code>$listName[2]</code> gives array index out of bounds
+      because the value of <code>$listName</code> is just
+      <code>'colors'</code> and that has no value at index 2.
+    </div>
+    <div>
+      <code>echo $$listName[1][2]</code> works!
+      <code>$$listName[1][2]</code> evaluates like
+      <code>$listName[1]</code> which gives <code>'colors'</code>
+      and then <code>$colors[2]</code> which gives <code>'green'</code>.
     </div>
 
     <h3>Special Variables</h3>
@@ -2308,7 +2302,10 @@ function greet --description 'alias greet echo Hello, $USER'
   echo Hello, $USER $argv;
 end</pre>
       <div>
-        TODO: Why does the function above output $argv?
+        Note how within this function <code>$argv</code> is added
+        to the end of the command specified in the alias.
+        This allows additional switches and arguments to be
+        passed to the command when the alias is used.
       </div>
       <div>
         To determine if a function is defined, enter
@@ -2526,27 +2523,58 @@ end</pre>
         and output something that fits.
       </div>
       <div>
-        Here's an example of a custom prompt.
+        Here's an example of a custom prompt
+        that takes the terminal width into account.
+        Note that there is no way in fish to determine if the window width
+        is less than 20 characters because when that is the case,
+        the COLUMNS variable is set to 80.
+        This is done because fish doesn't behave sensibly
+        if the width is much less than 20.
       </div>
       <pre>
+# This function is run every time Fish displays a new prompt.
 function fish_prompt
-  # Get the current Git branch.
-  # This will be an empty string if not in a Git repo.
-  set git_branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
+  set vimModeLen 2 # appears at beginning of prompt
+  set remaining (math "$COLUMNS - $vimModeLen")
 
-  # If in a Git repo (-q for quiet) ...
-  if string length -q $git_branch
-    set branch " ($git_branch)"
+  # Display present working directory.
+  set_color --bold brblue # pwd color
+  set pwdLen (string length $PWD)
+  if test $pwdLen -le $remaining
+    echo -n $PWD # -n suppresses newline at end
+    set remaining (math "$remaining - $pwdLen")
   else
-    set branch ''
+    echo -n (prompt_pwd)
+    set remaining 0
   end
 
-  set_color --bold brblue
-  echo -n $PWD # -n suppresses newline at end
-  set_color --bold yellow
-  echo $branch
+  # Get the current Git branch.
+  # This will be an empty string if not in a Git repo.
+  set branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
+  set branchLen (string length $branch)
+
+  # If in a Git repo ...
+  if test $branchLen -gt 0
+    # If branch name won't fit on current line ...
+    if test $branchLen -gt $remaining
+      echo # newline
+      echo -n '  ' # indents past Vim mode on previous line
+      set remaining $COLUMNS
+    else
+      echo -n ' '
+    end
+
+    # If branch name will fit on current line ...
+    if test $branchLen -le $remaining
+      # Display current Git branch.
+      set_color --bold yellow # git branch color
+      echo -n $branch
+    end
+  end
+
+  # Display "fish" prompt on new line.
   set_color normal
-  echo -n '🐠  ' # The odd characters here are actually a fish icon.
+  printf '\\n🐠  '
 end</pre>
       <div>
         It is also possible to define a "right prompt"
