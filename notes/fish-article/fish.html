@@ -968,11 +968,27 @@ set result some prefix{$middle}some suffix</pre>
       <li>is not identical to another?: <code>if $<i>var1</i> != $<i>var2</i></code></li>
     </ul>
     <div>
-      Currently there is no way in fish to test whether
-      one string is less than or greater than another in sorting order.
-      The <code>&lt;</code> and <code>&gt;</code> operators
-      are only implemented for numbers.
-      TODO: Is there any workaround for this?  You asked on the mailing list on 9/3.
+      To test the relationship between two strings in sorting order,
+      use the <code>expr</code> command.
+      This evaluates an expression where each operand and operator
+      is passed as a separate argument.
+      It returns <code>1</code> if the expression evaluates to true
+      and <code>0</code> if false,
+      which is opposite from how command status values are set.
+    </div>
+    <div>
+      For example, to determine if a string in the variable <code>v1</code>
+      is less than or equal to a string in the variable <code>v2</code>, use:
+    </div>
+    <pre>
+if expr $v1 '<=' $v2
+  # code goes here
+end</pre>
+    <div>
+      Note that expr coerces strings to numbers if it can,
+      so <code>expr '3' '<' '12'</code> outputs 1 for true
+      despite the fact that the string <code>'3'</code>
+      sorts after the string <code>'12'</code>.
     </div>
     <div>
       String indexes start at 1, not 0.
