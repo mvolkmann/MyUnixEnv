@@ -31,6 +31,7 @@
         color: purple;
       }
       img {
+        margin: 10px 0;
         width: 800px;
       }
       pre {
@@ -82,6 +83,7 @@
     </div>
     <div>
       The latest version of fish at the time of this article is 2.6.0.
+      TODO: This may change before this article is published!
     </div>
 
     <h3>License</h3>
@@ -527,14 +529,14 @@
       These include <code>block</code>,
       <code>if</code>, <code>switch</code>,
       <code>for</code>, and <code>while</code>.
-      These can span any number of lines and
-      are terminated when the <code>end</code> keyword is reached.
+      These commands can span any number of lines and
+      are terminated when the <code>end</code> command is reached.
     </div>
     <div>
       Commands can split over multiple lines in two ways.
       One is by pressing enter when there is an unterminated block.
       Another is by typing the <code>\</code> continuation character
-      before a command has been completed entered
+      before a command has been completely entered
       and pressing the enter key.
     </div>
     <div>
@@ -556,11 +558,11 @@
     <div>
       To execute one command and then execute a second command
       only if the first succeeded, use
-      <code><i>command1</i>; and <i>command2</i></code><br>
+      <code><i>command1</i>; and <i>command2</i></code>.
       Note the semicolon at end of the first command and the use of
       <code>and</code> instead of <code>&amp;&amp;</code> like in bash.
       <code>and</code> is not a keyword.  It is a command that executes the
-      command passed to it only if status from the previous command is zero.
+      command passed to it only if the status from the previous command is zero.
       If <code><i>command1</i>; <i>command2</i></code> were used instead
       and <code><i>command1</i></code> had a bad status,
       <code><i>command2</i></code> would still be executed.
@@ -568,11 +570,11 @@
     <div>
       To execute one command and then execute a second command
       only if the first failed, use
-      <code><i>command1</i>; or <i>command2</i></code><br>
+      <code><i>command1</i>; or <i>command2</i></code>.
       Note the semicolon at end of the first command and the use of
       <code>or</code> instead of <code>||</code> like in bash.
       <code>or</code> is not a keyword.  It is a command that executes the
-      command passed to it only if status from the previous command is non-zero.
+      command passed to it only if the status from the previous command is non-zero.
     </div>
     <div>
       While these conventions for <code>and</code> and <code>or</code>
@@ -597,9 +599,9 @@
       <code>fish_config <i>starting-tab-name</i></code>.
       Specifying the starting tab name is optional
       and defaults to "colors".
-      This starts a local web server and
+      This command starts a local web server and
       opens a new tab in the default web browser.
-      This UI contains seven tabs that are described below.
+      The UI contains seven tabs that are described below.
     </div>
 
     <h4>Color Tab</h4>
@@ -608,7 +610,7 @@
       and allows them to be customized.
       To use a provided color theme, select one,
       press the "Set Theme!" button, and
-      wait a few seconds for it to change to "Theme Set!"
+      wait a few seconds for it to change to "Theme Set!".
     </div>
     <img src="config-colors.png" alt="color config screenshot">
     <div>
@@ -617,14 +619,13 @@
       redirections, errors, comments, and autosuggestions.
       To customize one of these, click the corresponding syntax example
       near the top of the UI and
-      select a color from the color grid below.
-      When finished customizing the colors,
-      press the "Set Theme" button.
+      select a color from the color grid that will be displayed below.
+      When finished customizing the colors, press the "Set Theme" button.
       Note that these colors are not used when fish function definitions
       are simply cat'ed in a terminal.
     </div>
     <div>
-      While the "color" tab allows seelcting a background color,
+      While the "color" tab allows selecting a background color,
       this is only for seeing how the other colors look
       against that background.
       It does not actually change the terminal background color.
@@ -634,13 +635,14 @@
 
     <h4>Prompt Tab</h4>
     <div>
-      The "prompt" tab displays then contents
+      The "prompt" tab displays the contents
       of the current fish shell prompt.
       It allows selection from 17 predefined prompts.
       To change the prompt, select one and press "Prompt Set!"
       DANGER: This overwrites <code>functions/fish_prompt.fish</code>,
-      so if you have defined a custom prompt in that file,
+      so if you have defined a custom prompt in that file
       and don't want to wipe it out, don't do this!
+      Creating custom prompts is discussed later.
     </div>
     <img src="config-prompt.png" alt="prompt config screenshot">
 
@@ -658,6 +660,7 @@
       The "variables" tab provides a read-only view
       that lists all universal variables and their values.
       This does not list global or local variables.
+      The distintions between these variable types is discussed later.
     </div>
     <img src="config-variables.png" alt="variables config screenshot">
 
@@ -679,9 +682,9 @@
     <h4>Abbreviations Tab</h4>
     <div>
       The "abbreviations" tab provides a read-only view
-      that lists all abbreviations.
+      that lists all the abbreviations that have been defined.
       Often these are defined in <code>config.fish</code> (discussed later),
-      but they can be defined from a terminal.
+      but they can also be defined from a terminal.
     </div>
     <img src="config-abbreviations.png" alt="abbreviations config screenshot">
 
@@ -703,13 +706,13 @@
       (in <code>~/.bash_profile</code> and <code>~/.bashrc</code>)
       and will want similar configuration for fish.
       Examples include creating aliases and abbreviations,
-      and setting variables such as PATH.
+      and setting variables such as <code>PATH</code>.
     </div>
     <div>
       The fish configuration file is named <code>config.fish</code>
       and should be placed in the <code>~/.config/fish</code> directory.
-      Saving configuration here enables
-      copying that file to other machines
+      Saving configuration in this file enables
+      copying the file to other machines
       where the same configuration is desired.
     </div>
     <div>
@@ -745,17 +748,18 @@
       To list all aliases, enter <code>alias</code>.
     </div>
     <div>
-      To remove an alias, enter <code>functions -e <i>name</i></code>.
+      To remove an alias, enter <code>functions --erase <i>name</i></code> (<code>-e</code>).
     </div>
     <div>
       Defining an alias creates a function with the specified name
-      that runs the command.  Functions are described later.
+      that runs when the alias is used as a command.
+      Functions are described later.
       The function is only defined in the current session
       and goes away when the session exits.
       To create aliases that are available in all sessions,
       define them in <code>config.fish</code>.
       For more information, see "Defining aliases" at
-      <a href="https://fishshell.com/docs/current/index.html#introduction">https://fishshell.com/docs/current/index.html#introduction</a>.
+      <a href="https://fishshell.com/docs/current/index.html#introduction" target="_blank">https://fishshell.com/docs/current/index.html#introduction</a>.
     </div>
 
     <h3>Abbreviations</h3>
@@ -765,27 +769,29 @@
     </div>
     <div>
       To define an abbreviation, enter
-      <code>abbr --add <i>name</i> <i>value </i></code> (-a).
+      <code>abbr --add <i>name</i> <i>value </i></code> (<code>-a</code>).
     </div>
     <div>
       For example, the following defines an abbreviation
       for checking out a git branch:
-      <code>abbr -add co git checkout</code>.
-      Once this is defined, "co" followed by a space can be entered
-      in a terminal and that will be expanded to "git checkout".
+      <code>abbr --add co git checkout</code>.
+      Once this is defined, <code>co</code> followed by a space can be entered
+      in a terminal and that will expand to <code>git checkout</code>.
       Continue typing a branch name and press enter to execute the command.
       The branch name is often auto-suggested and can be tab completed.
     </div>
     <div>
       Unlike aliases, when abbreviations are defined in a terminal
       (as opposed to inside <code>config.fish</code>),
-      they become available in all sessions.
+      they become available in all current and future sessions.
+    </div>
+    <div>
       In general, abbreviations are preferred over aliases.
     </div>
     <div>
       To output a list of all abbreviation names,
-      enter <code>abbr --list</code> (<code>-l).
-    </code> </div>
+      enter <code>abbr --list</code> (<code>-l</code>).
+    </div>
     <div>
       To output a list of all abbreviation names and their values,
       enter <code>abbr --show</code> (<code>-s</code>)
@@ -796,42 +802,32 @@
       enter <code>abbr --erase <i>name</i></code> (<code>-e</code>).
     </div>
 
-    <h3>echo Command</h3>
-    <div>
-      The <code>echo</code> command writes its expanded arguments to stdout.
-      Normally all arguments are output with a space between them.
-      To suppress this, add the <code>-s</code> switch.
-      To suppress the newline that is normally output at the end,
-      add the <code>-n</code> switch.
-      To make a sound ("beep"), output the <code>\a</code> character.
-    </div>
-
     <h3>Variables</h3>
     <div>
       Variable names in fish consist of letters, digits, and underscores.
       All variable values are lists that hold zero, one, or more string values.
-      Variable names are case-sensitive.
+      Variable names are case-sensitive, so
       <code>myvar</code> and <code>myVar</code> are different variables.
     </div>
     <div>
       There are three variable scopes.
     </div>
     <div>
-      Local variables available only in the current block
+      <b>Local variables</b> available only in the current block.
       Blocks begin with one of these commands,
       each of which are discussed later:
       <code>begin</code>, <code>if</code>, <code>for</code>,
       <code>function</code> , <code>switch</code>,
       or <code>while</code>.
-      Blocks are terminated by a corresponding <code>end</code> keyword.
+      Blocks are terminated by a corresponding <code>end</code> command.
     </div>
     <div>
-      Global variables are available anywhere in the current session.
+      <b>Global variables</b> are available anywhere in the current session.
     </div>
     <div>
-      Universal variables are available in every session.
+      <b>Universal variables</b> are available in every session.
       They are even available in future sessions
-      because they are saved across reboots
+      because they are saved across reboots.
       Settings of universal variables are stored in
       <code>~/.config/fish/fishd.<i>machine-id</i></code>.
     </div>
@@ -862,14 +858,14 @@
       If the variable has not already been set in any scope,
       the new variable will be local to the function in which it is set,
       not the block where it is set.
-      If not in a function, the variable will be global
+      If not in a function, the variable will be global.
       When a variable is set in <code>config.fish</code>
       with no scope switch, it becomes global.
     </div>
     <div>
       To get the value of a variable use <code>$<i>name</i></code>.
       If this appears next to other text,
-      say the strings "foo" and "bar",
+      say the strings <code>foo</code> and <code>bar</code>,
       use <code>foo{$<i>name</i>}bar</code>
       or <code>'foo'$<i>name</i>'bar'</code>.
     </div>
@@ -878,7 +874,7 @@
       enter <code>set --erase <i>name</i></code> (<code>-e</code>).
       This will delete the variable from the closest scope
       in which it is currently defined,
-      considering local, then global, then universal.
+      considering local then global then universal.
       A scope can also be specified using the
       <code>--local</code> (<code>-l</code>),
       <code>--global</code> (<code>-g</code>), and
@@ -910,30 +906,33 @@
       A variable can be set and not have a value.
       For example, <code>set foo</code>
       sets the variable <code>foo</code>, but it doesn't have a value.
-      This is similar to setting a variable to <code>null</code>
-      in JavaScript versus <code>undefined</code>.
+      For JavaScript developers, this is similar to setting a variable
+      to <code>null</code> versus <code>undefined</code>.
       To determine if a variable has a value,
-      enter <code>set -q name[0]</code>
-      and verify that status is set to zero.
+      enter <code>set -q <i>name</i>[0]</code>
+      and verify that <code>status</code> is set to zero.
     </div>
     <div>
       To interactively edit the value of a variable,
       enter <code>vared <i>name</i></code>.
       This is useful for values that are long strings.
       It cannot be used to edit values that are lists
-      containiner more than one item.
+      containing more than one item.
       To edit a specific item in a list,
       specify the item index.
-      For example, if the variable colors holds a list of colors,
+      For example, if the variable <code>colors</code> holds a list of colors,
       the third color can be edited with <code>vared colors[3]</code>.
     </div>
     <div>
       Currently there is no way to request the value of a variable
       in a specific scope.  Version 2.7 of fish will add
-      <code>set --show <i>name</i></code>
-      which display information about a given variable name
-      in all scopes in which it is defined.
+      a <code>--show</code> switch to the <code>set</code> command.
+      To display information about a given variable name
+      in all scopes in which it is defined,
+      you will be able to enter
+      <code>set --show <i>name</i></code>.
       This version of fish will likely be released in September 2017.
+      TODO: This may be out before this article is published!
     </div>
 
     <h3>Strings</h3>
@@ -947,25 +946,25 @@
     </div>
     <div>
       In a single quoted string,
-      single quotes can be escaped with <code>\'</code>
-      and backslashes can be escaped with <code>\\</code>.
+      single quotes can be escaped with <code>\'</code>.
       In a double quoted string,
-      double quotes can be escaped with <code>\"</code>.
-      <code>$</code> which is used for variable substitution
-      can be escaped with <code>\$</code>
-      and backslashes can be escaped with <code>\\</code>.
+      double quotes can be escaped with <code>\"</code> and
+      <code>$</code> (which is used for variable substitution)
+      can be escaped with <code>\$</code>.
+      In both kinds of strings,
+      backslashes can be escaped with <code>\\</code>.
     </div>
     <div>
       The <code>string</code> command has many subcommands
       that are specified by following <code>string</code>
       with a space and the name of the subcommand.
       To suppress output from these and
-      just use the value of the status variable,
+      just use the value of the <code>status</code> variable,
       add the <code>--quiet</code> (<code>-q</code>) switch.
     </div>
     <div>
       To get the length of a string, use
-      <code>string length $<i>name</i></code>
+      <code>string length $<i>name</i></code>.
     </div>
     <div>
       Literal strings can be concatenated with the value of a variable.
@@ -985,10 +984,10 @@ set result some prefix{$middle}some suffix</pre>
       variables that hold a single string.
     </div>
     <ul>
-      <li>is empty?: <code>if test -z $<i>var</i></code></li>
-      <li>is not empty?: <code>if test -n $<i>var</i></code></li>
-      <li>is identical to another?: <code>if $<i>var1</i> = $<i>var2</i></code></li>
-      <li>is not identical to another?: <code>if $<i>var1</i> != $<i>var2</i></code></li>
+      <li>is empty: <code>if test -z $<i>var</i></code></li>
+      <li>is not empty: <code>if test -n $<i>var</i></code></li>
+      <li>is identical to another: <code>if $<i>var1</i> = $<i>var2</i></code></li>
+      <li>is not identical to another: <code>if $<i>var1</i> != $<i>var2</i></code></li>
     </ul>
     <div>
       To test the relationship between two strings in sorting order,
@@ -1008,7 +1007,7 @@ if expr $v1 '<=' $v2
   # code goes here
 end</pre>
     <div>
-      Note that expr coerces strings to numbers if it can,
+      Note that <code>expr</code> coerces strings to numbers if it can,
       so <code>expr '3' '<' '12'</code> outputs 1 for true
       despite the fact that the string <code>'3'</code>
       sorts after the string <code>'12'</code>.
@@ -1029,7 +1028,11 @@ end</pre>
     </div>
     <pre>
       set csv 'red,green,blue'
-      set colors (string split , $csv) # red gree blue</pre>
+      set colors (string split , $csv) # red green blue</pre>
+    <div>
+      Note out in the previous line the <code>string split</code> command
+      was surrounded by parentheses.  This allows its stdout to be captured.
+    </div>
     </div>
     <div>
       To trim leading and/or trailing characters, use
@@ -1038,20 +1041,22 @@ end</pre>
       Switches can be used to change this.
     </div>
     <ul>
-      <li><code>--left</code> (<code>-l</code>) to only trims from left</li>
-      <li><code>--right</code> (<code>-r</code>) to only trim from right</li>
-      <li><code>--chars</code> (<code>-c</code>) specifies
-        characters to be trimmed instead of whitespace</li>
+      <li><code>--left</code> (<code>-l</code>) only trims from left</li>
+      <li><code>--right</code> (<code>-r</code>) only trim from right</li>
+      <li><code>--chars</code> (<code>-c</code>) specifies the
+        characters to be trimmed instead of just whitespace</li>
     </ul>
     <div>
-      For example, to remove leading zeros,<br>
-      <code>set result (string trim --left --chars 0 00019) # 19</code>
+      For example, to remove leading zeros,
     </div>
+    <pre>
+set myText '00019'
+set result (string trim --left --chars 0 $myText) # 19</pre>
     <div>
       To create a new string by joining existing ones
       using a delimiter between them, use <code>string join</code>.
       For example,<br>
-      <code>set dateStr (string join '/' $month $day $year)</code>
+      <code>set dateStr (string join '/' $month $day $year) # 9/7/2017</code>
     </div>
     <div>
       Another example is getting initials from a full name.
@@ -1061,8 +1066,8 @@ end</pre>
       can be an empty string.
     </div>
     <pre>
-      set initialList (string sub -l 1 $first $middle $last)
-      set initials (string join '' $initialList)</pre>
+      set initialList (string sub -l 1 $first $middle $last) # R M V
+      set initials (string join '' $initialList) # RMV</pre>
     <div>
       To create a string that repeats a given string,
       use <code>string repeat</code> with the
@@ -1552,7 +1557,7 @@ funced foo; and funcsave foo; and source foo.fish</pre>
        but they can write to streams like stdout.
        Math is performed using the <code>math</code> function
        which writes its result to stdout.
-       Surrounding a function call with parens allows its stdout to be
+       Surrounding a command with parens allows its stdout to be
        captured and placed in a variable.
     </div>
 
@@ -1580,6 +1585,16 @@ funced foo; and funcsave foo; and source foo.fish</pre>
         <a href="https://github.com/justinmayer/tacklebox">https://github.com/justinmayer/tacklebox</a>
       </li>
     </ul>
+
+    <h3>echo Command</h3>
+    <div>
+      The <code>echo</code> command writes its expanded arguments to stdout.
+      Normally all arguments are output with a space between them.
+      To suppress this, add the <code>-s</code> switch.
+      To suppress the newline that is normally output at the end,
+      add the <code>-n</code> switch.
+      To make a sound ("beep"), output the <code>\a</code> character.
+    </div>
 
     <h3>Colors</h3>
     <div>
