@@ -1078,20 +1078,27 @@ set result (string trim --left --chars 0 $myText) # 19</pre>
 
     <h3>Regular Expressions</h3>
     <div>
-      To determine if a string matches a regular expression,
-      use <code>string match</code> subcommand
-      with the <code>--regex</code> (<code>-r</code>) switch.
+      To determine if a string matches a "pattern",
+      use the <code>string match</code> subcommand.
+      By default this just compares one string to another
+      for an exact match which isn't very useful.
+    </div>
+    <div>
+      A more common use it to match against a regular expression
+      by adding the <code>--regex</code> (<code>-r</code>) switch.
       This uses Perl regular expression syntax.
-      By default, only the first match is output,
+      By default only the first match is output,
       or nothing if not found.
       This sets status to 0 if at least one match was found and 1 if not.
+      To suppress output describing the matches,
+      add the <code>--quiet</code> (<code>-q</code>) switch.
     </div>
     <div>
       For example,
     </div>
     <pre>
 set name 'Mark Volkmann'
-string match -qr 'Vo' $name
+string match --quiet --regex 'Vo' $name
 echo $status # 0 for found
     </pre>
     <div>
@@ -1107,12 +1114,18 @@ echo $status # 0 for found
       In this case, <code>string match</code> outputs a list containing
       the full match followed by each capture match.
       The result is an alternating list of indexes and lengths.
-      For example,
+    </div>
+    <div>
+      Here are several examples of using <code>string match</code>
+      with regular expressions:
     </div>
     <pre>
 set text 'This is foolish work for a boolean.'
 set matches (string match -ar '.oo' $text) # foo boo
-set matches (string match -anr '.oo' $text) # 9 3 28 3</pre>
+set matches (string match -anr '.oo' $text) # 9 3 28 3
+set text 'A foal isn\'t boolean.'
+set matches (string match -ar '.(o.).' 'foal bool') # foal oa bool oo</pre>
+
     <div>
       To determine if a string doesn't match,
       add the <code>--invert</code> (<code>-v</code>) switch.
@@ -1121,17 +1134,19 @@ set matches (string match -anr '.oo' $text) # 9 3 28 3</pre>
       To replace text in a string with other text,
       use <code>string replace</code>.
       This is similar to <code>string match</code>
-      It can match against literal text or a regex (using <code>-r</code>)
+      It can match against literal text,
+      or a regex using <code>--regex</code> (<code>-r</code>).
       When using a regex, it can utilize capture groups.
       For example, to replace all occurrences of "foo" with "bar",
     </div>
     <pre>
 set text 'this is foolish work for a fool'
-set newText (string replace -a 'foo' 'bar' $text)</pre>
+set newText (string replace -a 'foo' 'bar' $text) # not using a regex
+set newText (string replace -a '.oo' 'bar' $text) # using a regex</pre>
 
     <h3>Numbers</h3>
     <div>
-      Only integers are supported, not floating point,
+      Only integers are supported, not floating point.
       When a variable is set to a number, it is stored as a string.
     </div>
     <div>
@@ -1144,7 +1159,8 @@ set newText (string replace -a 'foo' 'bar' $text)</pre>
       use the <code>test</code> command.
       This supports many switches for various comparisons.
       Both operands must be numbers or
-      strings that only contain digits which are converted to numbers.
+      strings that only contain digits which will be
+      converted to numbers for the comparison.
     </div>
     <ul>
       <li>equal: <code>if $n1 -eq $n2</code></li>
