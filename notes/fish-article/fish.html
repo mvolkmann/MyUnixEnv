@@ -15,6 +15,9 @@
       div {
         margin-bottom: 10px;
       }
+      #fish-logo {
+        width: 300px;
+      }
       h1, h3 {
         color: blue;
       }
@@ -35,6 +38,9 @@
         font-weight: bold;
         width: 800px;
       }
+      @media print {
+        margin: 1in;
+      }
     </style>
   </head>
   <body>
@@ -49,7 +55,7 @@
       Come for the colors and autocomplete,
       stay for the sane scripting!
     </h4>
-    <img src="fish-logo.png" alt="fish logo">
+    <img id="fish-logo" src="fish-logo.png" alt="fish logo">
 
     <h3>Overview</h3>
     <div>
@@ -130,15 +136,15 @@
         every tab completion should have a description.
      </li>
       <li>
-        Every syntax error and error in a builtin command should contain
+        Every syntax error and error in a builtin command should result in
         an error message describing what went wrong and a relevant help page.
         Whenever possible, errors should be flagged red
         by the syntax highlighter.
       </li>
       <li>
-        The language should be uniform, so that once
+        The language should be uniform so that once
         the user understands the command/argument syntax,
-        they will know the whole language, and be able to
+        they will know the whole language and be able to
         use tab-completion to discover new features.
       </li>
     </ul>
@@ -153,7 +159,7 @@
       but it seems no releases were ever made.
       A person that goes by "ridiculousfish" got involved in about 2012
       and released a beta of a fork called fishfish.
-      This brought in a lot of the work of previous fish contributors
+      This incorporated a lot of the work of previous fish contributors
       and eventually became fish 2.0.
     </div>
     <div>
@@ -177,7 +183,7 @@
 
     <h2>Using Fish</h2>
 
-    <h3>Installing Fish</h3>
+    <h3>Installing</h3>
     <div>
       Instructions for installing fish are at
       <a href="https://fishshell.com/">https://fishshell.com/</a>.
@@ -190,8 +196,16 @@
     </div>
     <div>
       For Windows, fish can be run in Cygwin.
-      In Windows 10 fish can be run in the "Windows Subsystem for Linux" (WSL).
+      In Windows 10, fish can be run in the "Windows Subsystem for Linux" (WSL).
     </div>
+
+    <h3>Default Shell</h3>
+    <div>
+      To make fish the default shell so new terminal windows automatically use it,
+      enter <code>chsh -s /usr/local/bin/fish</code>.
+    </div>
+
+    <h3>Uninstalling</h3>
     <div>
       In case you find fish is not for you,
       which I believe is highly unlikely, it can be uninstalled by
@@ -220,7 +234,7 @@
       Entering <code>man <i>command-name</i></code>
       displays help in the terminal.
       For many commands, entering <code><i>command-name</i> -h</code>
-      is the same.
+      does the same.
     </div>
     <div>
       Entering <code>help <i>command-name</i></code>
@@ -251,15 +265,9 @@
 
     <h3>Starting Fish</h3>
     <div>
-      Once fish has been installed, to start a fish shell from a terminal,
-      enter <code>fish</code>.
+      Once fish has been installed, enter <code>fish</code>
+      to start a fish shell from a terminal.
       To exit a fish shell, enter <code>exit</code>.
-    </div>
-
-    <h3>Default Shell</h3>
-    <div>
-      To make fish the default shell so new terminal windows automatically use it,
-      enter <code>chsh -s /usr/local/bin/fish</code>.
     </div>
 
     <h3>Autosuggestions</h3>
@@ -270,7 +278,7 @@
       sometimes referred to as ghosting,
       but the color can be customized.
       It derives suggestions from command history,
-      possible commands, possible switches (a.k.a. options),
+      possible commands, possible switches,
       variables, and file paths.
     </div>
     <div>
@@ -293,25 +301,25 @@
       command names, switches, variable names,
       file paths,
       git branch names (including remote branches),
-      process names/ids
+      process names/ids,
       job names/ids,
-      man page names
+      man page names,
       ssh hosts,
       users (ex. su and press tab to see all usernames),
-      and more
+      and more.
     </div>
     <div>
-      If there is only one option, it will be expanded in place
+      If there is only one option, it will be expanded in place.
       If there is more than one option,
       up to four rows will be listed.
       If there are more than four rows of options,
       they will be followed by "...and n more rows".
       To see the remaining options, press tab again.
+      To select an option, press tab repeatedly until
+      the desired option is highlighted.
       Highlighting cycles back to first option
       if tab is pressed while the last option is highlighted.
-      To select an option, press tab repeatedly until
-      the desired option is highlighted
-      and press enter to accept it.
+      When the desired option is highlighted, press enter to accept it.
       Press enter again to execute the command.
     </div>
     <div>
@@ -323,9 +331,9 @@
     </div>
     <h4>Examples</h4>
     <div>
-      To list files in the current directory whoses names begin with "d",
+      To list files in the current directory whose names contain with "d",
       enter <code>ls d</code> and press tab repeatedly
-      until the desired variable is highlighted.
+      until the desired filename is highlighted.
       This also works when only <code>ls</code> entered
       before pressing tab.  In this case the options are
       all files in the current directory.
@@ -334,16 +342,22 @@
       To output the value of a variable whose name begins with "re",
       enter <code>echo $re</code> and press tab repeatedly
       until the desired variable is highlighted.
+      Then press enter once to select it and
+      again to execute the <code>echo</code> command.
     </div>
     <div>
       To kill a process whose name contains "lo",
       enter <code>kill lo</code> and press tab repeatedly
       until the desired process is highlighted.
+      Then press enter once to select it and
+      again to execute the <code>kill</code> command.
     </div>
     <div>
       To get help on a command that contains "lo",
       enter <code>man lo</code> and press tab repeatedly
       until the desired command is highlighted.
+      Then press enter once to select the command and
+      again to execute the <code>man</code> command.
     </div>
 
     <h3>Custom Tab Completions</h3>
@@ -366,19 +380,36 @@
 
     <h3>Command History</h3>
     <div>
-      All commands entered except those that begin with a space
-      (which are treated like incognito commands)
-      are saved in command history.
+      All commands entered are saved in command history,
+      except those that begin with a space.
+      Those are treated like incognito commands.
       This exception may be removed in fish 3.
       Duplicate commands are automatically removed,
       retaining only their most recent occurrence.
+    </div>
+    <div>
+      Many commands accept switches that affect their functionality.
+      Switches can have short and long forms.
+      For example, the <code>grep</code> command can perform case insensite matches.
+      This is specified using the <code>--ignore-case</code> (long)
+      or <code>-i</code> (short) switch.
+      Command examples in this article always use the long forms of switches
+      and commands are followed by the short form in parentheses.
     </div>
     <div>
       Command history is stored in <code>~/.local/share/fish/fish_history</code>.
       This file stores each command and when it was entered.
     </div>
     <div>
-      To list all commands in the hisory, enter <code>history</code>.
+      To navigate through all previously entered commands
+      press the up and down arrow keys.
+      Press enter to execute the displayed command
+      or press ctrl-c to exit without executing one.
+      To restrict to commands that contain a given substring,
+      type the substring before pressing the arrow keys.
+    </div>
+    <div>
+      To list all commands in the history, enter <code>history</code>.
     </div>
     <div>
       To list only commands that contain a given substring,
@@ -389,8 +420,7 @@
     </div>
     <div>
       To list only commands that begin with a given prefix,
-      <code>history search --prefix <i>prefix</i></code>.
-      <code>-p</code> is short for <code>--prefix</code>.
+      <code>history search --prefix <i>prefix</i></code> (<code>-p</code>).
     </div>
     <div>
       To include the date and time that commands were issued,
@@ -412,14 +442,6 @@
       To delete commands from history that begin with a given prefix,
       enter <code>history delete --prefix <i>prefix </i></code>.
     </div>
-    <div>
-      To navigate through all previously entered commands
-      press the up and down arrow keys.
-      Press enter to execute the displayed command
-      or press ctrl-c to exit without executing one.
-      To restrict to commands that contain a given substring,
-      type the substring before pressing the arrow keys.
-    </div>
 
     <h3>Changing Working Directory</h3>
     <div>
@@ -431,8 +453,8 @@
       fish interprets just entering a directory path
       as a request to change the working directory.
       For example, entering
-      <code>~</code> cds to your home directory and
-      <code>..</code> cds to the parent directory.
+      <code>..</code> cds to the parent directory and
+      <code>~</code> cds to your home directory.
     </div>
     <div>
       Tab completion can be used to assist in
@@ -449,7 +471,8 @@
       enter <code>pwd</code>.
     </div>
     <div>
-      The <code>dirh</code> command prints list of last 25 directories visited.
+      The <code>dirh</code> command prints a
+      list of the last 25 directories visited.
       The current directory will be highlighted.
       To go back one, enter <code>prevd</code> or
       press alt-left (in macOS, cmd-option-left).
@@ -464,11 +487,11 @@
       To pop the current directory off the stack
       and cd to the directory now at the top,
       enter <code>popd</code>.
-      It is not possible to pop the list directory off the stack.
+      It is not possible to pop the last directory off the stack.
       To view the current directory stack, enter <code>dirs</code>.
     </div>
 
-    <h2>Commands</h2>
+    <h3>Commands</h3>
     <div>
       Every fish command is executed by entering its name
       followed by switches and arguments, if any, separated by spaces.
@@ -490,8 +513,8 @@
       All commands set the <code>status</code> environment variable to
       <code>0</code> for success and another number for failure.
       <code>true</code> and <code>false</code> are not boolean literals.
-      <code>false</code> is a command that sets status to 1.
       <code>true</code> is a command that sets status to 0.
+      <code>false</code> is a command that sets status to 1.
     </div>
     <div>
       Commands are terminated by a newline or semicolon.
