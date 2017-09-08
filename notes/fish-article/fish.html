@@ -1232,10 +1232,10 @@ set area (math "$width * $height") # 6</pre>
       Here's an example that determines the sine of 45 degrees.
     </div>
     <pre>
-      set pi (echo "a(1) * 4" | bc -l) # 3.14159265
-      set degrees 45
-      set radians (math -s8 "$degrees * $pi / 180") # .78539816
-      set result (echo "s($radians)" | bc -l) # .70710678</pre>
+set pi (echo "a(1) * 4" | bc -l) # 3.14159265
+set degrees 45
+set radians (math -s8 "$degrees * $pi / 180") # .78539816
+set result (echo "s($radians)" | bc -l) # .70710678</pre>
 
     <h3>Dates</h3>
     <div>
