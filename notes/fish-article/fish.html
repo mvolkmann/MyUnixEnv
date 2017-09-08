@@ -1142,7 +1142,9 @@ set matches (string match -ar '.(o.).' 'foal bool') # foal oa bool oo</pre>
     <pre>
 set text 'this is foolish work for a fool'
 set newText (string replace -a 'foo' 'bar' $text) # not using a regex
-set newText (string replace -a '.oo' 'bar' $text) # using a regex</pre>
+# this is barlish work for a barl
+set newText (string replace -ar '.oo' 'bar' $text) # using a regex
+# this is barlish work for a barl</pre>
 
     <h3>Numbers</h3>
     <div>
@@ -1177,7 +1179,8 @@ set newText (string replace -a '.oo' 'bar' $text) # using a regex</pre>
       <code>bc</code> command which is an abbreviation
       for "basic calculator".
       It allows an expression to be specified as an argument instead of
-      piping it in through stdin as is required with <code>bc</code>.
+      reading from a file or piping in through stdin
+      as is required with <code>bc</code>.
       The result is written to stdout.
       It sets status to a non-zero number if expression is invalid.
     </div>
@@ -1211,6 +1214,13 @@ set newText (string replace -a '.oo' 'bar' $text) # using a regex</pre>
       but <code>math -s3 2 / 3</code> outputs <code>.667</code>.
     </div>
     <div>
+      Here is an example that utilizes variables.
+    </div>
+    <pre>
+set width 2
+set height 3
+set area (math "$width * $height") # 6</pre>
+    <div>
       The <code>bc</code> command supports functions
       from the Unix standard math library
       if the <code>-l</code> switch is added.
@@ -1219,14 +1229,13 @@ set newText (string replace -a '.oo' 'bar' $text) # using a regex</pre>
       Unfortunately the <code>math</code> command doesn't support
       the <code>-l</code> switch, so these functions cannot be used.
       However, the <code>bc</code> command can be used directly in fish.
-    </div>
-    <div>
-      Here is an example that utilizes variables.
+      Here's an example that determines the sine of 45 degrees.
     </div>
     <pre>
-set width 2
-set height 3
-set area (math "$width * $height") # 6</pre>
+      set pi (echo "a(1) * 4" | bc -l) # 3.14159265
+      set degrees 45
+      set radians (math -s8 "$degrees * $pi / 180") # .78539816
+      set result (echo "s($radians)" | bc -l) # .70710678</pre>
 
     <h3>Dates</h3>
     <div>
