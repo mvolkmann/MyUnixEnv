@@ -735,10 +735,14 @@
     <div>
       A "login shell" is created for every new terminal window.
       For users of tmux, this includes creating new tmux panes.
-      An "interactive shell" is created when a subshell is created.
+      An "interactive shell" is one in which a user
+      can enter commands and see their output.
+      They are created when a subshell is created.
       For example, this happens when the command <code>fish</code>
       is entered in a fish shell.
-      Login shells are also considered interactive shells.
+      Login shells are also interactive shells.
+      When a shell script is run, a new non-interactive shell
+      is created and is used to run the script.
     </div>
     <div>
       Inside <code>config.fish</code>,
@@ -1720,8 +1724,7 @@ echo Roses are (set_color red)red(set_color normal), \
       The supported format specifiers include:
     </div>
     <ul>
-      <li><code>%d</code> for decimal</li>
-      <li><code>%i</code> for integer</li>
+      <li><code>%d</code> or <code>%i</code> for signed decimal (integer)</li>
       <li><code>%f</code> for float</li>
       <li><code>%s</code> for string</li>
       <li><code>%%</code> for literal %</li>
@@ -1859,366 +1862,367 @@ set listName colors</pre>
     </div>
 
     <h3>status Command</h3>
-      <div>
-        The <code>status</code> command has many subcommands.
-        Examples that are useful inside functions include:
-      </div>
-      <ul>
-        <li><code>status current-filename</code> -
-          outputs file path of current file</li>
-        <li><code>status current-function</code> -
-          outputs name of current function</li>
-        <li><code>status current-line-number</code> -
-          outputs the line number within the file where this appears.
-          This command has issues.  See
-          <a href="https://github.com/fish-shell/fish-shell/issues/4161">https://github.com/fish-shell/fish-shell/issues/4161</a>.
-        </li>
-        <li><code>status print-stack-trace</code> -
-          prints a stack trace which is useful for debugging issues
-          in nested function calls</li>
-      </ul>
+    <div>
+      The <code>status</code> command has many subcommands.
+      Examples that are useful inside functions include:
+    </div>
+    <ul>
+      <li><code>status current-filename</code> -
+        outputs file path of current file</li>
+      <li><code>status current-function</code> -
+        outputs name of current function</li>
+      <li><code>status current-line-number</code> -
+        outputs the line number within the file where this appears.
+        This command has issues.  See
+        <a href="https://github.com/fish-shell/fish-shell/issues/4161">https://github.com/fish-shell/fish-shell/issues/4161</a>.
+      </li>
+      <li><code>status print-stack-trace</code> -
+        prints a stack trace which is useful for debugging issues
+        in nested function calls</li>
+    </ul>
 
-      <h3>More on Tests</h3>
-      <div>
-        The <code>test</code> command is commonly used in
-        <code>if</code> and <code>while</code> commands.
-        Tests for strings, numbers, and files are
-        described in those sections of this article.
-        For example, <code>test $color = 'yellow'</code>.
-      </div>
-      <div>
-        To negate any test, add <code>!</code> after <code>test</code>
-        and before the expression being tested.
-        For example, <code>test ! $color = 'yellow'</code>.
-        This call also be written as <code>test $color != 'yellow'</code>.
-      </div>
-      <div>
-        There are two ways to combine conditions.
-        The first option is to use the
-        <code>and</code> and <code>or</code> commands.
-        For example,
-      </div>
-      <pre>
+    <h3>More on Tests</h3>
+    <div>
+      The <code>test</code> command is commonly used in
+      <code>if</code> and <code>while</code> commands.
+      Tests for strings, numbers, and files are
+      described in those sections of this article.
+      For example, <code>test $color = 'yellow'</code>.
+    </div>
+    <div>
+      To negate any test, add <code>!</code> after <code>test</code>
+      and before the expression being tested.
+      For example, <code>test ! $color = 'yellow'</code>.
+      This call also be written as <code>test $color != 'yellow'</code>.
+    </div>
+    <div>
+      There are two ways to combine conditions.
+      The first option is to use the
+      <code>and</code> and <code>or</code> commands.
+      For example,
+    </div>
+    <pre>
 if test $color = 'yellow'; and test $size = 'large'
   # code here
 end</pre>.
-      <div>
-        This can also be written on two lines
-        by replacing the semicolon with a newline as follows.
-      </div>
-      <pre>
+    <div>
+      This can also be written on two lines
+      by replacing the semicolon with a newline as follows.
+    </div>
+    <pre>
 if test $color = 'yellow'
   and test $size = 'large'
   # code here
 end</pre>
-      <div>
-        The second option is to place <code>-a</code> or <code>-o</code>
-        between the conditions.  For example,
-      </div>
-      <pre>
+    <div>
+      The second option is to place <code>-a</code> or <code>-o</code>
+      between the conditions.  For example,
+    </div>
+    <pre>
 if test \( $color = 'yellow' \) -a \( $size = 'large' \)
   # code here
 end</pre>
-      <div>
-        But this option requires parentheses and those must be escaped
-        which results in some ugly code, so the first option is preferred.
-      </div>
+    <div>
+      But this option requires parentheses and those must be escaped
+      which results in some ugly code, so the first option is preferred.
+    </div>
 
-      <h3>Files</h3>
-      <div>
-        To open files using their default applications,
-        enter <code>open <i>filePath1</i> <i>filePath2</i> ...</code>.
-        For example, <code>open demo.html</code>
-        opens the file in the default web browser.
-      </div>
-      <div>
-        To iterate over the lines in a text file,
-        redirect a file into a loop as follows:
-      </div>
-      <pre>
+    <h3>Files</h3>
+    <div>
+      To open files using their default applications,
+      enter <code>open <i>filePath1</i> <i>filePath2</i> ...</code>.
+      For example, <code>open demo.html</code>
+      opens the file in the default web browser.
+    </div>
+    <div>
+      To iterate over the lines in a text file,
+      redirect a file into a loop as follows:
+    </div>
+    <pre>
 while read line
   # do something with $line
 end &lt; <i>filePath</i> </pre>
-      <div>
-        To test various characteristics of a file,
-        assuming <code>file</code> is a variable that holds a file path,
-      </div>
-      <ul>
-        <li>exists: <code>if test -e $<i>file</i></code></li>
-        <li>is a file: <code>if test -f $<i>file</i></code></li>
-        <li>is a directory: <code>if test -d $<i>file</i></code></li>
-        <li>is a symbolic link: <code>if test -L $<i>file</i></code></li>
-        <li>is readable: <code>if test -r $<i>file</i></code></li>
-        <li>is writable: <code>if test -w $<i>file</i></code></li>
-        <li>is an executable file: <code>if test -x $<i>file</i></code></li>
-        <li>is a non-empty file (has size): <code>if test -s $<i>file</i></code></li>
-        <li>and more (see test command for details)</li>
-      </ul>
+    <div>
+      To test various characteristics of a file,
+      assuming <code>file</code> is a variable that holds a file path,
+    </div>
+    <ul>
+      <li>exists: <code>if test -e $<i>file</i></code></li>
+      <li>is a file: <code>if test -f $<i>file</i></code></li>
+      <li>is a directory: <code>if test -d $<i>file</i></code></li>
+      <li>is a symbolic link: <code>if test -L $<i>file</i></code></li>
+      <li>is readable: <code>if test -r $<i>file</i></code></li>
+      <li>is writable: <code>if test -w $<i>file</i></code></li>
+      <li>is an executable file: <code>if test -x $<i>file</i></code></li>
+      <li>is a non-empty file (has size): <code>if test -s $<i>file</i></code></li>
+      <li>and more (see test command for details)</li>
+    </ul>
 
-      <h3>Command Substitution</h3>
-      <div>
-        To use the output of one command as an argument to another,
-        surround the command with parens,
-        not backticks like in some other shells.
-      </div>
-      <div>
-        If the command outputs more than one line,
-        each will be treated as a separate argument
-        to the outer command.
-      </div>
-      <div>
-        To set a variable to the output of a command,
-        use <code>set <i>name</i> (<i>command</i>)</code>.
-        For example, <code>set today (date)</code>.
-      </div>
-      <div>
-        Command output can be concatenated with literal strings
-        and other command output.  For example,
-      </div>
-      <pre>
+    <h3>Command Substitution</h3>
+    <div>
+      To use the output of one command as an argument to another,
+      surround the command with parens,
+      not backticks like in some other shells.
+    </div>
+    <div>
+      If the command outputs more than one line,
+      each will be treated as a separate argument
+      to the outer command.
+    </div>
+    <div>
+      To set a variable to the output of a command,
+      use <code>set <i>name</i> (<i>command</i>)</code>.
+      For example, <code>set today (date)</code>.
+    </div>
+    <div>
+      Command output can be concatenated with literal strings
+      and other command output.  For example,
+    </div>
+    <pre>
 set dateFormat '+%A %B %d, %G' # ex. Tuesday, August 15, 2017
 set announcement 'Today is '(date $dateFormat)'.'</pre>
-      <div>
-        Note the use of string concatention by placing
-        literal strings next to the parens.
-      </div>
-      <div>
-        This does not work inside strings.
-        For example, the command in the following string is not evaluated:
-        <code>"Today is (date $dateFormat)."</code>
-      </div>
+    <div>
+      Note the use of string concatention by placing
+      literal strings next to the parens.
+    </div>
+    <div>
+      This does not work inside strings.
+      For example, the command in the following string is not evaluated:
+      <code>"Today is (date $dateFormat)."</code>
+    </div>
 
-      <h3>Brace Expansion</h3>
-      <div>
-        Brace expansion is used to produce multiple arguments for a command.
-        For example, <code>ls *.{css,html.js}</code>
-        expands to <code>ls *.css *.html *.js</code>.
-        This is also useful in the <code>cp</code> and <code>mv</code> commands.
-      </div>
+    <h3>Brace Expansion</h3>
+    <div>
+      Brace expansion is used to produce multiple arguments for a command.
+      For example, <code>ls *.{css,html.js}</code>
+      expands to <code>ls *.css *.html *.js</code>.
+      This is also useful in the <code>cp</code> and <code>mv</code> commands.
+    </div>
 
-      <h3>Eval</h3>
-      <div>
-        The <code>eval</code> command evaluates a command in a string
-        that can be built using concatention and variable substitution.
-        For example,
-      </div>
-      <pre>
+    <h3>Eval</h3>
+    <div>
+      The <code>eval</code> command evaluates a command in a string
+      that can be built using concatention and variable substitution.
+      For example,
+    </div>
+    <pre>
 set extension '.js'
 set command ls *.$extension
 eval $command</pre>
 
-      <h3>Functions</h3>
-      <div>
-        Functions give a name to a set of commands that
-        are executed when the function is invoked.
-        Functions can become available to execute as commands
-        when their name is used as a command in a shell.
-        In that case they can override
-        commands from <code>PATH</code> and builtin commands.
-      </div>
-      <div>
-        To call a function, specify its name optionally followed by arguments.
-        No parentheses are used around arguments and no commas are used between them.
-      </div>
-      <div>
-        Functions cannot return a value,
-        but they can set the status variable
-        and they can write to streams like stdout and stderr.
-        To capture stdout from a function in a variable, use
-        <code>set <i>variable</i> (<i>someFn</i> <i>args</i>)</code>.
-        For example:
-      </div>
-      <pre>
+    <h3>Functions</h3>
+    <div>
+      Functions give a name to a set of commands that
+      are executed when the function is invoked.
+      Functions can become available to execute as commands
+      when their name is used as a command in a shell.
+      In that case they can override
+      commands from <code>PATH</code> and builtin commands.
+    </div>
+    <div>
+      To call a function, specify its name optionally followed by arguments.
+      No parentheses are used around arguments and no commas are used between them.
+    </div>
+    <div>
+      Functions cannot return a value,
+      but they can set the status variable
+      and they can write to streams like stdout and stderr.
+      To capture stdout from a function in a variable, use
+      <code>set <i>variable</i> (<i>someFn</i> <i>args</i>)</code>.
+      For example:
+    </div>
+    <pre>
 function product -a n1 n2
   echo (math "$n1 * $n2")
 end
 set result (product 3 4) # 12</pre>
-      <div>
-        Function names cannot begin with <code>-</code>
-        and cannot contain <code>/</code>,
-        but they can contain any other characters, even spaces.
-        To include a space, prefix it with <code>\</code>.
-        For example, <code>function foo\ bar; echo in foo bar; end</code>
-        To call this function, use <code>foo\ bar</code>.
-      </div>
-      <div>
-        Functions can be defined interactively
-        using the <code>function</code> command.
-        This continues reading from stdin
-        until a corresponding <code>end</code> command is entered.
-        For example,
-      </div>
-      <pre>
+    <div>
+      Function names cannot begin with <code>-</code>
+      and cannot contain <code>/</code>,
+      but they can contain any other characters, even spaces.
+      To include a space, prefix it with <code>\</code>.
+      For example, <code>function foo\ bar; echo in foo bar; end</code>
+      To call this function, use <code>foo\ bar</code>.
+    </div>
+    <div>
+      Functions can be defined interactively
+      using the <code>function</code> command.
+      This continues reading from stdin
+      until a corresponding <code>end</code> command is entered.
+      For example,
+    </div>
+    <pre>
 function <i>name</i>
   # code goes here
 end</pre>
-      <div>
-        Many switches can follow the function name.
-        Some are described later.
-        To add documentation, use <code>--description "<i>some desc</i>"</code>
-        (<code>-d</code>).
-        To display the description of a function, enter
-        <code>functions --details --verbose <i>fnName</i> </code>
-        and note the fifth line of the output.
-        The <code>--details</code> switch is described further below.
-        TODO: See your fndesc.fish function that only displays description.
-      </div>
-      <div>
-         All functions are public.
-         Prefixes can be used to denote "private" functions
-         and to avoid name conflicts.
-         For example, <code>_<i>somePrefix</i> </code>.
-      </div>
-      <div>
-        The most common way to make functions available in future sessions
-        is to define them in files
-        under the <code>~/.config/fish/functions</code> directory
-        (not in subdirectories of this directory).
-        There is no need to mark these files as executable.
-        There no need to modify PATH because by default this directory is included.
-        This is no need to add a "shebang comment" in these files.
-        All functions defined here are assumed to be used only in the fish shell.
-      </div>
-      <div>
-        These files are loaded the first time
-        the function they define is called.
-        The autoloading mechanism for functions requires the name
-        of these files to match the name of function they define.
-        TODO: See more in "Commands" section.
-        For example, define the function foo in a file named <code>foo.fish</code>.
-        Multiple functions can be defined in the same file,
-        but they will not be available until the function
-        whose name matches the file is called once,
-        so doing this is not recommended.
-      </div>
-      <div>
-        To save a function definition that has been entered interactively
-        in a file in <code>~/.config/fish/functions</code>, enter
-        <code>funcsave <i>name</i></code>.
-        This uses tabs for indentation.
-        Doing this allows the function to be autoloaded in all future sessions.
-      </div>
-      <div>
-        To edit a function definition, enter <code>funced <i>name</i></code>.
-        If the function is not already defined, it will be created.
-        This uses the editor in the <code>VISUAL</code> variable
-        that can be set in <code>config.fish</code>.
-        It defaults to emacs, but can be changed to Vim with
-        <code>set VISUAL vim</code>.
-        This is more convenient that starting an editor first and then
-        creating the file in the proper directory or locating it
-        from within the editor.
-        After every use of <code>funced</code>,
-        if the changes should be available in other sessions,
-        including both current and future sessions,
-        run <code>funcsave <i>name</i></code>.
-        This saves the changes in a <code>.fish</code> file
-        under <code>~/.config/fish/functions</code>.
-      </div>
-      <div>
-        To output a formatted version of a <code>.fish</code> file, enter
-        <code>fish_indent &lt; <i>someName</i>.fish</code>.
-        The fish_indent command writes to stdout.
-        To output using the colors specified in <code>fish_config</code>,
-        add the <code>--ansi</code> switch.
-        To output as HTML, add the <code>--html</code> switch.
-        With HTML it is possible to add colors to specific syntax items using CSS.
-        To read from a file and rewrite it with a formatted version, enter
-        <code>fish_indent -w <i>someName</i>.fish</code>.
-        This uses four-space indentation and that cannot be customized,
-        but all occurrences for four spaces can be replaced with two
-        using the <code>sed</code> command.
-        TODO:
-        - see your fish_indent2.fish script
-        - run with fish_indent2 name
-        - creates a file with "-new" at end
-        - Fix to overwrite the input file
-      </div>
-      <div>
-        To list all currently defined functions, enter <code>functions</code>.
-        To include private fish functions whose names begin with a double underscore,
-        add the <code>--all</code> (<code>-a</code>) switch.
-        To view all currently defined functions in the web UI,
-        enter <code>fish_config functions</code>.
-      </div>
-      <div>
-        To output the code for one or more functions, enter
-        <code>functions <i>name1</i> <i>name2</i> ...</code>.
-      </div>
-      <div>
-        To see the path to where a function is defined, enter
-        <code>functions --details <i>name</i></code> (<code>-D</code>).
-        If the function has not been saved to a file, this will output "stdin".
-      </div>
-      <div>
-        To see even more detail about a function, enter
-        <code>functions --details --verbose <i>name</i></code> (<code>-Dv</code>).
-        This outputs the following five lines:
-      </div>
-      <ul>
-        <li>path to definition</li>
-        <li>whether it was autoloaded (outputs "autoloaded" or "n/a")</li>
-        <li>line number within file where definition begins or 0 if not autoloaded</li>
-        <li>whether "scope shadowing" was disabled</li>
-        <li>the function description specified with the
-          <code>--description</code> or <code>-d</code> switch
-          or "n/a" if no description was provided</li>
-      </ul>
-      <div>
-        To copy a function definition to a new name, enter
-        <code>functions --copy <i>oldName</i> <i>newName</i></code> (<code>-c</code>).
-        This only copies the function body, not any switches specified in the definition.
-      </div>
-      <div>
-        To delete (erase) a function, enter
-        <code>functions --erase <i>name</i></code> (<code>-e</code>).
-        If the function is defined in a file, this doesn't delete the file.
-        It just makes the function inactive in the current session.
-      </div>
-      <div>
-        To test if a function exists, enter
-        <code>functions --query <i>name</i></code> (<code>-q</code>).
-        This sets status to 0 if the function exists and 1 otherwise.
-      </div>
-      <div>
-        The <code>return</code> command can be used in a function
-        to exit before the end.
-        This also sets the exit status of the function
-        which defaults to 0 for success, but can be specified.
-        For exammple, <code>return 2</code> exits the function
-        in which it was executed and sets status to 2..
-      </div>
-      <div>
-        The arguments specified in a function call
-        are held in a list in the <code>argv</code> variable.
-        The first argument can be accessed with <code>$argv[1]</code>.
-        Iterating over the arguments is done in the same way as iterating over any list.
-      </div>
-      <div>
-        Functions can also use named parameters.
-        For example:
-      </div>
-      <pre>
+    <div>
+      Many switches can follow the function name.
+      Some are described later.
+      To add documentation, use <code>--description "<i>some desc</i>"</code>
+      (<code>-d</code>).
+      To display the description of a function, enter
+      <code>functions --details --verbose <i>fnName</i> </code>
+      and note the fifth line of the output.
+      The <code>--details</code> switch is described further below.
+      TODO: See your fndesc.fish function that only displays description.
+    </div>
+    <div>
+       All functions are public.
+       Prefixes can be used to denote "private" functions
+       and to avoid name conflicts.
+       For example, <code>_<i>somePrefix</i> </code>.
+    </div>
+    <div>
+      The most common way to make functions available in future sessions
+      is to define them in files
+      under the <code>~/.config/fish/functions</code> directory
+      (not in subdirectories of this directory).
+      There is no need to mark these files as executable.
+      There no need to modify PATH because by default this directory is included.
+      This is no need to add a "shebang comment" in these files.
+      All functions defined here are assumed to be used only in the fish shell.
+    </div>
+    <div>
+      These files are loaded the first time
+      the function they define is called.
+      The autoloading mechanism for functions requires the name
+      of these files to match the name of function they define.
+      TODO: See more in "Commands" section.
+      For example, define the function foo in a file named <code>foo.fish</code>.
+      Multiple functions can be defined in the same file,
+      but they will not be available until the function
+      whose name matches the file is called once,
+      so doing this is not recommended.
+    </div>
+    <div>
+      To save a function definition that has been entered interactively
+      in a file in <code>~/.config/fish/functions</code>, enter
+      <code>funcsave <i>name</i></code>.
+      This uses tabs for indentation.
+      Doing this allows the function to be autoloaded in all future sessions.
+    </div>
+    <div>
+      To edit a function definition, enter <code>funced <i>name</i></code>.
+      If the function is not already defined, it will be created.
+      This uses the editor in the <code>VISUAL</code> variable
+      that can be set in <code>config.fish</code>.
+      It defaults to emacs, but can be changed to Vim with
+      <code>set VISUAL vim</code>.
+      This is more convenient that starting an editor first and then
+      creating the file in the proper directory or locating it
+      from within the editor.
+      After every use of <code>funced</code>,
+      if the changes should be available in other sessions,
+      including both current and future sessions,
+      run <code>funcsave <i>name</i></code>.
+      This saves the changes in a <code>.fish</code> file
+      under <code>~/.config/fish/functions</code>.
+    </div>
+    <div>
+      To output a formatted version of a <code>.fish</code> file, enter
+      <code>fish_indent &lt; <i>someName</i>.fish</code>.
+      The fish_indent command writes to stdout.
+      To output using the colors specified in <code>fish_config</code>,
+      add the <code>--ansi</code> (no short form) switch.
+      To output as HTML, add the <code>--html</code> (no short form) switch.
+      With HTML it is possible to add colors to specific syntax items using CSS.
+      To read from a file and rewrite it with a formatted version, enter
+      <code>fish_indent --write <i>someName</i> (<code>-w</code>).fish</code>.
+      This uses four-space indentation and that cannot be customized,
+      but all occurrences for four spaces can be replaced with two
+      using the <code>sed</code> command.
+      TODO:
+      - see your fish_indent2.fish script
+      - run with fish_indent2 name
+      - creates a file with "-new" at end
+      - Fix to overwrite the input file
+    </div>
+    <div>
+      To list all currently defined functions, enter <code>functions</code>.
+      To include private fish functions whose names begin with a double underscore,
+      add the <code>--all</code> (<code>-a</code>) switch.
+      To view all currently defined functions in the web UI,
+      enter <code>fish_config functions</code>.
+    </div>
+    <div>
+      To output the code for one or more functions, enter
+      <code>functions <i>name1</i> <i>name2</i> ...</code>.
+    </div>
+    <div>
+      To see the path to where a function is defined, enter
+      <code>functions --details <i>name</i></code> (<code>-D</code>).
+      If the function has not been saved to a file, this will output "stdin".
+    </div>
+    <div>
+      To see even more detail about a function, enter
+      <code>functions --details --verbose <i>name</i></code> (<code>-Dv</code>).
+      This outputs the following five lines:
+    </div>
+    <ul>
+      <li>path to definition</li>
+      <li>whether it was autoloaded (outputs "autoloaded" or "n/a")</li>
+      <li>line number within file where definition begins or 0 if not autoloaded</li>
+      <li>whether "scope shadowing" was disabled</li>
+      <li>the function description specified with the
+        <code>--description</code> or <code>-d</code> switch
+        or "n/a" if no description was provided</li>
+    </ul>
+
+    <div>
+      To copy a function definition to a new name, enter
+      <code>functions --copy <i>oldName</i> <i>newName</i></code> (<code>-c</code>).
+      This only copies the function body, not any switches specified in the definition.
+    </div>
+    <div>
+      To delete (erase) a function, enter
+      <code>functions --erase <i>name</i></code> (<code>-e</code>).
+      If the function is defined in a file, this doesn't delete the file.
+      It just makes the function inactive in the current session.
+    </div>
+    <div>
+      To test if a function exists, enter
+      <code>functions --query <i>name</i></code> (<code>-q</code>).
+      This sets status to 0 if the function exists and 1 otherwise.
+    </div>
+    <div>
+      The <code>return</code> command can be used in a function
+      to exit before the end.
+      This also sets the exit status of the function
+      which defaults to 0 for success, but can be specified.
+      For exammple, <code>return 2</code> exits the function
+      in which it was executed and sets status to 2..
+    </div>
+    <div>
+      The arguments specified in a function call
+      are held in a list in the <code>argv</code> variable.
+      The first argument can be accessed with <code>$argv[1]</code>.
+      Iterating over the arguments is done in the same way as iterating over any list.
+    </div>
+    <div>
+      Functions can also use named parameters.
+      For example:
+    </div>
+    <pre>
 function orderShirt -a color size
   # Use $color and $size here.
   # $argv is also set to a list of the arguments.
 end</pre>
-      <div>
-        All named parameters will be "set",
-        but ones not specified will be set to an empty list.
-        To test whether a specific named parameter is set, use
-        <code>set -q <i>name</i>[1]</code>.
-        To set a named parameter to a default value if it is not specified, use:
-        <pre>
+    <div>
+      All named parameters will be "set",
+      but ones not specified will be set to an empty list.
+      To test whether a specific named parameter is set, use
+      <code>set -q <i>name</i>[1]</code>.
+      To set a named parameter to a default value if it is not specified, use:
+      <pre>
 if something
   set <i>name</i> '<i>defaultValue</i>'
 end</pre>
-        TODO: Verify this!
-      </div>
-      <div>
-        To process command-line arguments to a function as switches (a.k.a. options):
-      </div>
-      <pre>
+      TODO: Verify this!
+    </div>
+    <div>
+      To process command-line arguments to a function as switches (a.k.a. options):
+    </div>
+    <pre>
 for option in $argv
   switch "$option"
     case -h --help
@@ -2228,172 +2232,172 @@ for option in $argv
       # code here
   end
 end</pre>
-      <div>
-        The <code>switch</code> command is described later.
-      </div>
-      <div>
-        Function do not have access to local variables set outside them.
-        They are not closures like functions in programming languages like JavaScript.
-      </div>
-      <div>
-        If a function needs to output an error message,
-        a good approach is the following:
-      </div>
-      <pre>
+    <div>
+      The <code>switch</code> command is described later.
+    </div>
+    <div>
+      Function do not have access to local variables set outside them.
+      They are not closures like functions in programming languages like JavaScript.
+    </div>
+    <div>
+      If a function needs to output an error message,
+      a good approach is the following:
+    </div>
+    <pre>
 set_color $fish_color_error
 echo <i>someErrorMsg</i> 1&gt;&amp;2
 set_color normal
 return <i>someNonZeroStatus</i></pre>
 
-      <h3>Auto-running Functions</h3>
-      <div>
-        Functions can run automatically when an event is fired.
-        This is configured by adding the <code>--on-event</code> (<code>-e</code>)
-        switch to a function definition.
-        For example,
-      </div>
-      <pre>
+    <h3>Auto-running Functions</h3>
+    <div>
+      Functions can run automatically when an event is fired.
+      This is configured by adding the <code>--on-event</code> (<code>-e</code>)
+      switch to a function definition.
+      For example,
+    </div>
+    <pre>
 function takeShelter --on-event tornado
   echo Tornado warning! Take shelter!
 end</pre>
-      <div>
-        Functions that run when an event is fired are not auto-loaded.
-        Consider defining them in <code>config.fish</code> or
-        sourcing files that define them from <code>config.fish</code>.
-        The command <code>source <i>filePath</i></code>
-        executes commands in the file without starting a new process.
-        Changes to variables made in this code affects the current shell.
-      </div>
-      <div>
-        Any number of functions can be registered to run on the same event.
-      </div>
-      <div>
-        Events can be emitted with <code>emit <i>eventName</i></code>.
-        The event name can be any string.
-        The event name can be followed by any number of arguments.
-        These become the value of the <code>argv</code> list inside the function.
-        For example, <code>emit tornado 'category 4' 12</code>.
-      </div>
-      <div>
-        Events are only handled within the current process.
-      </div>
-      <div>
-        The fish shell generates these events:
-      </div>
-      <ul>
-        <li>
-          <code>fish_prompt</code><br>
-          This is emitted whenever a new fish prompt is about to be displayed.
-        </li>
-        <li>
-          <code>fish_command_not_found</code><br>
-          This is emitted whenever a command lookup fails.
-          It is a bit like <code>method_missing</code> in the Ruby programming language.
-        </li>
-        <li>
-          <code>fish_preexec</code><br>
-          This is emitted before executing an interactive command,
-          even if the command is invalid.
-          The command line is passed as the first parameter.
-        </li>
-        <li>
-          <code>fish_postexec</code><br>
-          This is emitted after executing an interactive command,
-          even if the command is invalid.
-          The command line is passed as the first parameter.
-        </li>
-      </ul>
-      <div>
-        Functions can run automatically when a variable changes.
-        This is configured by adding the <code>--on-variable</code> (<code>-v</code>)
-        switch to a function definition.
-        For example, the following function runs every time
-        the PATH variable changes.
-        It echoes the new value.
-      </div>
-      <pre>
+    <div>
+      Functions that run when an event is fired are not auto-loaded.
+      Consider defining them in <code>config.fish</code> or
+      sourcing files that define them from <code>config.fish</code>.
+      The command <code>source <i>filePath</i></code>
+      executes commands in the file without starting a new process.
+      Changes to variables made in this code affects the current shell.
+    </div>
+    <div>
+      Any number of functions can be registered to run on the same event.
+    </div>
+    <div>
+      Events can be emitted with <code>emit <i>eventName</i></code>.
+      The event name can be any string.
+      The event name can be followed by any number of arguments.
+      These become the value of the <code>argv</code> list inside the function.
+      For example, <code>emit tornado 'category 4' 12</code>.
+    </div>
+    <div>
+      Events are only handled within the current process.
+    </div>
+    <div>
+      The fish shell generates these events:
+    </div>
+    <ul>
+      <li>
+        <code>fish_prompt</code><br>
+        This is emitted whenever a new fish prompt is about to be displayed.
+      </li>
+      <li>
+        <code>fish_command_not_found</code><br>
+        This is emitted whenever a command lookup fails.
+        It is a bit like <code>method_missing</code> in the Ruby programming language.
+      </li>
+      <li>
+        <code>fish_preexec</code><br>
+        This is emitted before executing an interactive command,
+        even if the command is invalid.
+        The command line is passed as the first parameter.
+      </li>
+      <li>
+        <code>fish_postexec</code><br>
+        This is emitted after executing an interactive command,
+        even if the command is invalid.
+        The command line is passed as the first parameter.
+      </li>
+    </ul>
+    <div>
+      Functions can run automatically when a variable changes.
+      This is configured by adding the <code>--on-variable</code> (<code>-v</code>)
+      switch to a function definition.
+      For example, the following function runs every time
+      the PATH variable changes.
+      It echoes the new value.
+    </div>
+    <pre>
 function announcePath --on-variable PATH
   echo PATH is now $PATH
 end
 set -U PATH /foo $PATH</pre>
-      <div>
-        Functions can run automatically when a given process exits.
-        This is configured by adding the <code>--on-process-exit</code> (<code>-p</code>)
-        switch to a function definition.
-        For example,
-      </div>
-      <pre>
+    <div>
+      Functions can run automatically when a given process exits.
+      This is configured by adding the <code>--on-process-exit</code> (<code>-p</code>)
+      switch to a function definition.
+      For example,
+    </div>
+    <pre>
 function announceProcessExit --on-process-exit 12345
   echo an important process exited
 end
 function announceMyExit --on-process-exit %self
   echo I exited
 end</pre>
-      <div>
-        Function can run automatically when a specific signal is received.
-        This is configured by adding the <code>--on-signal</code> (<code>-s</code>)
-        switch, followed by a signal name or number, to a function definition.
-        For a list of possible signals, enter <code>kill -l</code>.
-        Also see
-        <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
-        As an example, pressing ctrl-c sends an interrupt signal which has the name "int".
-      </div>
-      <div>
-        To send any signal to a given process, enter
-        <code>kill -sig <i>signalNameOrNumber</i> <i>pid</i></code>.
-        For example, to handle a kill of the current process,
-      </div>
-      <pre>
+    <div>
+      Function can run automatically when a specific signal is received.
+      This is configured by adding the <code>--on-signal</code> (<code>-s</code>)
+      switch, followed by a signal name or number, to a function definition.
+      For a list of possible signals, enter <code>kill -l</code>.
+      Also see
+      <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
+      As an example, pressing ctrl-c sends an interrupt signal which has the name "int".
+    </div>
+    <div>
+      To send any signal to a given process, enter
+      <code>kill -sig <i>signalNameOrNumber</i> <i>pid</i></code>.
+      For example, to handle a kill of the current process,
+    </div>
+    <pre>
 function handleTermSignal --on-signal term
   echo received term signal
 end</pre>
 TODO: TRY THIS!  Maybe need to test with a signal that doesn't kill the process so you can see the echo.
 
-      <h3>Types of Commands</h3>
-      <div>
-        A "command" is any program the shell can run.
-        There are three types of commands: builtins, commands, and functions.
-      </div>
-      <div>
-        "Builtins" are commands that are provided by the shell.
-        Examples include <code>contains</code>, <code>echo</code>, and <code>if</code>.
-        To get a list of builtin names, enter
-        <code>builtin --names</code> (<code>-n</code>)
-        The <code>builtin</code> command can also be used to
-        execute a specific builtin instead of a
-        command or function with the same name.
-      </div>
-      <div>
-        "Commands" are executables found in <code>PATH</code>.
-        Examples include <code>chmod</code>, <code>ls</code>,
-        <code>node</code>, and <code>vim</code>.
-        To get information about a command, enter
-        <code>command <i>name</i></code>.
-        To get the path to a command, enter
-        <code>command --search <i>name</i></code> (<code>-s</code>)
-        or <code>which <i>name</i></code>.
-        The <code>command</code> command can also be used to
-        execute a specific command instead of a
-        builtin or function with the same name.
-      </div>
-      <div>
-        "Functions" have two sources, those provided by fish
-        and those that are user-defined.
-        Examples of provided functions include
-        <code>abbr</code>, <code>cd</code>, and <code>eval</code>.
-        There are also many fish-specific functions
-        whose names begin with <code>fish_</code>.
-      </div>
-      <div>
-        User-defined functions can be defined in
-        files with a <code>.fish</code> extension
-        in any directory listed in the <code>fish_function_path</code> directory.
-        By default, this includes the <code>~/.config/fish/functions</code> directory.
-      </div>
-      <div>
-        For example,
-      </div>
-      <pre>
+    <h3>Types of Commands</h3>
+    <div>
+      A "command" is any program the shell can run.
+      There are three types of commands: builtins, commands, and functions.
+    </div>
+    <div>
+      "Builtins" are commands that are provided by the shell.
+      Examples include <code>contains</code>, <code>echo</code>, and <code>if</code>.
+      To get a list of builtin names, enter
+      <code>builtin --names</code> (<code>-n</code>)
+      The <code>builtin</code> command can also be used to
+      execute a specific builtin instead of a
+      command or function with the same name.
+    </div>
+    <div>
+      "Commands" are executables found in <code>PATH</code>.
+      Examples include <code>chmod</code>, <code>ls</code>,
+      <code>node</code>, and <code>vim</code>.
+      To get information about a command, enter
+      <code>command <i>name</i></code>.
+      To get the path to a command, enter
+      <code>command --search <i>name</i></code> (<code>-s</code>)
+      or <code>which <i>name</i></code>.
+      The <code>command</code> command can also be used to
+      execute a specific command instead of a
+      builtin or function with the same name.
+    </div>
+    <div>
+      "Functions" have two sources, those provided by fish
+      and those that are user-defined.
+      Examples of provided functions include
+      <code>abbr</code>, <code>cd</code>, and <code>eval</code>.
+      There are also many fish-specific functions
+      whose names begin with <code>fish_</code>.
+    </div>
+    <div>
+      User-defined functions can be defined in
+      files with a <code>.fish</code> extension
+      in any directory listed in the <code>fish_function_path</code> directory.
+      By default, this includes the <code>~/.config/fish/functions</code> directory.
+    </div>
+    <div>
+      For example,
+    </div>
+    <pre>
 alias greet 'echo Hello, $USER'
 functions greet
 # This outputs the following:
@@ -2401,29 +2405,29 @@ functions greet
 function greet --description 'alias greet echo Hello, $USER'
   echo Hello, $USER $argv;
 end</pre>
-      <div>
-        Note how within this function <code>$argv</code> is added
-        to the end of the command specified in the alias.
-        This allows additional switches and arguments to be
-        passed to the command when the alias is used.
-      </div>
-      <div>
-        To determine if a function is defined, enter
-        <code>functions --query <i>name</i></code>.
-        This sets status to 0 if defined or 1 if not.
-      </div>
-      <div>
-        To get the type of a name, enter <code>type <i>name</i></code>.
-        For functions, this also outputs their definition.
-        To get just the type, enter <code>type -t <i>name</i></code>.
-      </div>
+    <div>
+      Note how within this function <code>$argv</code> is added
+      to the end of the command specified in the alias.
+      This allows additional switches and arguments to be
+      passed to the command when the alias is used.
+    </div>
+    <div>
+      To determine if a function is defined, enter
+      <code>functions --query <i>name</i></code>.
+      This sets status to 0 if defined or 1 if not.
+    </div>
+    <div>
+      To get the type of a name, enter <code>type <i>name</i></code>.
+      For functions, this also outputs their definition.
+      To get just the type, enter <code>type -t <i>name</i></code>.
+    </div>
 
-      <h3>if Command</h3>
-      <div>
-        The if command supports conditional logic.
-        It's syntax is:
-      </div>
-      <pre>
+    <h3>if Command</h3>
+    <div>
+      The if command supports conditional logic.
+      It's syntax is:
+    </div>
+    <pre>
 if <i>command</i>
   <i>commands</i>
 else if <code>command</code>
@@ -2431,81 +2435,85 @@ else if <code>command</code>
 else
   <i>commands</i>
 end</pre>
-      <div>
-        Note that <code>if</code> is followed by a fish command,
-        not a "condition".
-        The status of the command it used to determine
-        whether the commands in that branch will be executed.
-        A status of 0 is treated as success or true and
-        any other value is treated as an error or false.
-        This is opposite from most programming languages,
-        but is standard in shells.
-      </div>
-      <div>
-        A common command to use in an <code>if</code>
-        is <code>test</code>.  For example,
-        to explictly test the status of the
-        last command executed before an <code>if</code>, use
-        <code>if test $status # success</code> or
-        <code>if test $status != 0 # failure</code>
-      </div>
-      <div>
-        A command status can be negated using
-        the <code>not</code> command.  For example,
-        <code>if not test $status</code> or
-        <code>if not <i>someCommand</i></code>.
-      </div>
-      <div>
-        An <code>if</code> command can be specified on a single line
-        using semicolons as follows:<br>
-        <code>if <i>command</i>; <i>statements</i>; end</code>
-      </div>
+    <div>
+      Note that <code>if</code> is followed by a fish command,
+      not a "condition".
+      The status of the command it used to determine
+      whether the commands in that branch will be executed.
+      A status of 0 is treated as success or true and
+      any other value is treated as an error or false.
+      This is opposite from most programming languages,
+      but is standard in shells.
+    </div>
+    <div>
+      A common command to use in an <code>if</code>
+      is <code>test</code>.  For example,
+      to explictly test the status of the
+      last command executed before an <code>if</code>, use
+      <code>if test $status # success</code> or
+      <code>if test $status != 0 # failure</code>
+    </div>
+    <div>
+      A command status can be negated using
+      the <code>not</code> command.
+      This command changes the status variable
+      to 1 if it is currently 0, and 0 otherwise.
+      For example,
+      <code>if not test $status</code> or
+      <code>if not <i>someCommand</i></code>.
+    </div>
+    <div>
+      An <code>if</code> command can be specified on a single line
+      using semicolons as follows:<br>
+      <code>if <i>command</i>; <i>statements</i>; end</code>
+    </div>
 
-      <h3>and &amp; or Commands</h3>
-      <div>
-        In fish, <code>and</code> and <code>or</code> are commands,
-        not keywords or operators.
-        Both take a single argument which is a command
-        to be conditionally executed based on the
-        status of the previously executed command.
-        If they do run the specified command,
-        the <code>status</code> variable is set to
-        the status of that command.
-        Otherwise it is not changed.
-      </div>
-      <div>
-        To conditionally execute a command only
-        if the previous command was successful,
-        <code><i>command1</i>; and <i>command2</i></code>.
-        This is the same as
-        <pre>
+    <h3>and &amp; or Commands</h3>
+    <div>
+      In fish, <code>and</code> and <code>or</code> are commands,
+      not keywords or operators.
+      Both take a single argument which is a command
+      to be conditionally executed based on the
+      status of the previously executed command.
+      If they do run the specified command,
+      the <code>status</code> variable is set to
+      the status of that command.
+      Otherwise it is not changed.
+    </div>
+    <div>
+      To conditionally execute a command only
+      if the previous command was successful,
+      <code><i>command1</i>; and <i>command2</i></code>.
+      This is the same as
+    </div>
+    <pre>
 <i>command1</i>
 and <i>command2</i></pre>
-      <div>
-        This is not the same as
-        <code><i>command1</i>; <i>command2</i></code>
-        because that will run <code><i>command2</i></code>
-        even if <code><i>command1</i></code>
-        was not successful.
-      </div>
-      <div>
-        To conditionally execute a command only
-        if the previous command failed,
-        <code><i>command1</i>; or <i>command2</i></code>.
-      </div>
-      <div>
-        The <code>and</code> and <code>or</code> commands are often
-        used in <code>if</code> and <code>while</code> commands.
-      </div>
+    <div>
+      This is not the same as
+      <code><i>command1</i>; <i>command2</i></code>
+      because that will run <code><i>command2</i></code>
+      even if <code><i>command1</i></code>
+      was not successful.
+    </div>
+    <div>
+      To conditionally execute a command only
+      if the previous command failed,
+      <code><i>command1</i>; or <i>command2</i></code>.
+    </div>
+    <div>
+      The <code>and</code> and <code>or</code> commands are often
+      used in <code>if</code> and <code>while</code> commands.
+    </div>
 
-      <h3>switch Command</h3>
-      <div>
-        The switch command conditionally executes other commands
-        based on the value of a expression.
-        Often the expression is the value of a single variable.
-        It's syntax is:
-      </div>
-      <pre>
+    <h3>switch Command</h3>
+    <div>
+      The switch command conditionally executes other commands
+      based on the value of a expression.
+      Often the expression is the value of a single variable.
+      It's syntax is:
+    </div>
+    <pre>
 switch <i>expression</i> # ex. $color
   case <i>value1</i> <i>value2</i>
     <i>statements</i>
@@ -2514,124 +2522,125 @@ switch <i>expression</i> # ex. $color
   case '*' # like default in other languages
     <i>statements</i>
 end</pre>
-      </div>
-        The expression should evaluate to a string.
-        Note that a "break" statement is not needed at the end of each <code>case</code>
-        because execution does not fall through as it does in many programming languages.
-      <div>
-        To treat one case value as the default, use
-        <code>case default-value '*'</code>.
-      </div>
+    </div>
+      The expression should evaluate to a string.
+      Note how a <code>case</code> can list more than one value.  Also note
+      that a "break" statement is not needed at the end of each <code>case</code>
+      because execution does not fall through as it does in many programming languages.
+    <div>
+      To treat one case value as the default, use
+      <code>case default-value '*'</code>.
+    </div>
 
-      <h3>Loop Commands</h3>
-      <div>
-        Two kinds of loops are supported, <code>while</code> and <code>for</code>.
-      </div>
-      <div>
-        The syntax for a <code>while</code> loop is:
-      </div>
-<pre>
+    <h3>Loop Commands</h3>
+    <div>
+      Two kinds of loops are supported, <code>while</code> and <code>for</code>.
+    </div>
+    <div>
+      The syntax for a <code>while</code> loop is:
+    </div>
+    <pre>
 while <i>command</i>
   # commands go here
 end</pre>
-      <div>
-        This uses the status of a command
-        to determine whether to iterate again.
-        It continues as long as the status is zero
-        and stops when it is non-zero.
-      </div>
-      <div>
-        For an endless loop, use the <code>true</code> command.
-      </div>
-      <div>
-        To test multiple conditions, use the
-        <code>and</code> and <code>or</code> commands.
-      </div>
-      <div>
-        The syntax for a <code>for</code> loop is:
-      </div>
-<pre>
+    <div>
+      This uses the status of a command
+      to determine whether to iterate again.
+      It continues as long as the status is zero
+      and stops when it is non-zero.
+    </div>
+    <div>
+      For an endless loop, use the <code>true</code> command.
+    </div>
+    <div>
+      To test multiple conditions, use the
+      <code>and</code> and <code>or</code> commands.
+    </div>
+    <div>
+      The syntax for a <code>for</code> loop is:
+    </div>
+    <pre>
 for <i>var</i> in <i>list</i>
   # use $<i>var</i> here
 end</pre>
-      <div>
-        To iterate over a list of numbers, use the <code>seq</code> command.
-        For example, <code>for n in (seq 5); echo $n; end</code>
-        outputs 1, 2, 3, 4, and 5 on separate lines.
-        The <code>seq</code> command can be followed by 1, 2 or 3 numbers
-        to specify the first, increment, and last values.
-        If only one argument is supplied, it is the last,
-        first defaults to 1, and incr defaults 1
-        If only two arguments are supplied,
-        they are the first and last values, and incr defaults to 1.
-      </div>
-      <div>
-        A <code>for</code> command can be used to iterate over the relative file paths
-        that match a pattern.  For example,
-        <code>for path in b*.fish; echo $path; end</code>
-      </div>
-      <div>
-        In both kinds of loops, use <code>break</code> to exit early and
-        <code>continue</code> to skip the remainder of the current iteration.
-      </div>
+    <div>
+      To iterate over a list of numbers, use the <code>seq</code> command.
+      For example, <code>for n in (seq 5); echo $n; end</code>
+      outputs 1, 2, 3, 4, and 5 on separate lines.
+      The <code>seq</code> command can be followed by 1, 2 or 3 numbers
+      to specify the first, increment, and last values.
+      If only one argument is supplied, it is the last,
+      first defaults to 1, and incr defaults 1
+      If only two arguments are supplied,
+      they are the first and last values, and incr defaults to 1.
+    </div>
+    <div>
+      A <code>for</code> command can be used to iterate over the relative file paths
+      that match a pattern.  For example,
+      <code>for path in b*.fish; echo $path; end</code>
+    </div>
+    <div>
+      In both kinds of loops, use <code>break</code> to exit early and
+      <code>continue</code> to skip the remainder of the current iteration.
+    </div>
 
-      <h3>Multiple Statements on a Line</h3>
-      <div>
-        A line can contain more than one statement if they are separated by semicolons.
-        For example, <code>function foo; echo in foo; end</code>.
-      </div>
+    <h3>Multiple Statements on a Line</h3>
+    <div>
+      A line can contain more than one statement if they are separated by semicolons.
+      For example, <code>function foo; echo in foo; end</code>.
+    </div>
 
-      <h3>Custom Greeting</h3>
-      <div>
-        By default, new fish shells display the greeting
-        "Welcome to fish, the friendly interactive shell".
-        To change this, enter something like
-        <code>set -U fish_greeting 'You are a fish!'</code>.
-        To suppress the greeting, erase the current setting with
-        <code>set -e fish_greeting</code>.
-      </div>
+    <h3>Custom Greeting</h3>
+    <div>
+      By default, new fish shells display the greeting
+      "Welcome to fish, the friendly interactive shell".
+      To change this, enter something like
+      <code>set -U fish_greeting 'You are a fish!'</code>.
+      To suppress the greeting, erase the current setting with
+      <code>set -e fish_greeting</code>.
+    </div>
 
-      <h3>Custom Prompt</h3>
-      <div>
-        The default fish prompt displays the output of the
-        <code>whoami</code> and <code>hostname</code> commands,
-        followed by the abbreviated working directory
-        (returned by the <code>prompt_pwd</code> command)
-        and "<code>&gt;</code>".
-        The abbreviated working directory output by
-        <code>prompt_pwd</code> is so abbreviated that it isn't very useful.
-        It is somewhat better if the characters per path part,
-        which defaults to 1, is increased.
-        To increase it to 3, enter
-        <code>set fish_prompt_pwd_dir_length 3</code>.
-      </div>
-      <div>
-        To customize the command prompt, create the file
-        <code>~/.config/fish/functions/fish_prompt.fish</code>
-        containing a function with the name <code>fish_prompt</code>
-        that echoes the desired prompt.
-        This can use the <code>set_color</code> command
-        to control the colors of various parts.
-        Any number of lines can be output, but typically
-        there is only one and more than two is unusual.
-      </div>
-      <div>
-        If the prompt doesn't fit in the current terminal width,
-        it will instead just output "<code>&gt;</code>".
-        The <code>fish_prompt</code> function can compare the length
-        of what it wants to output with the <code>COLUMNS</code> variable
-        and output something that fits.
-      </div>
-      <div>
-        Here's an example of a custom prompt
-        that takes the terminal width into account.
-        Note that there is no way in fish to determine if the window width
-        is less than 20 characters because when that is the case,
-        the COLUMNS variable is set to 80.
-        This is done because fish doesn't behave sensibly
-        if the width is much less than 20.
-      </div>
-      <pre>
+    <h3>Custom Prompt</h3>
+    <div>
+      The default fish prompt displays the output of the
+      <code>whoami</code> and <code>hostname</code> commands,
+      followed by the abbreviated working directory
+      (returned by the <code>prompt_pwd</code> command)
+      and "<code>&gt;</code>".
+      The abbreviated working directory output by
+      <code>prompt_pwd</code> is so abbreviated that it isn't very useful.
+      It is somewhat better if the characters per path part,
+      which defaults to 1, is increased.
+      To increase it to 3, enter
+      <code>set fish_prompt_pwd_dir_length 3</code>.
+    </div>
+    <div>
+      To customize the command prompt, create the file
+      <code>~/.config/fish/functions/fish_prompt.fish</code>
+      containing a function with the name <code>fish_prompt</code>
+      that echoes the desired prompt.
+      This can use the <code>set_color</code> command
+      to control the colors of various parts.
+      Any number of lines can be output, but typically
+      there is only one and more than two is unusual.
+    </div>
+    <div>
+      If the prompt doesn't fit in the current terminal width,
+      it will instead just output "<code>&gt;</code>".
+      The <code>fish_prompt</code> function can compare the length
+      of what it wants to output with the <code>COLUMNS</code> variable
+      and output something that fits.
+    </div>
+    <div>
+      Here's an example of a custom prompt
+      that takes the terminal width into account.
+      Note that there is no way in fish to determine if the window width
+      is less than 20 characters because when that is the case,
+      the COLUMNS variable is set to 80.
+      This is done because fish doesn't behave sensibly
+      if the width is much less than 20.
+    </div>
+    <pre>
 # This function is run every time Fish displays a new prompt.
 function fish_prompt
   set vimModeLen 2 # appears at beginning of prompt (described later)
@@ -2677,27 +2686,27 @@ function fish_prompt
   set_color normal
   printf '\\n🐠  ' # unicode for fish emoji
 end</pre>
-      <div>
-        It is also possible to define a "right prompt"
-        by defining the function <code>fish_right_prompt</code>.
-        This is right-aligned within terminals.
-      </div>
-      <div>
-        If the <code>VISUAL</code> global variable is set to "vim",
-        fish can display the Vim mode in the prompt
-        using the function <code>fish_mode_prompt</code>.
-        For example, this could display
-        "N" for normal, "I" for insert, "R" for replace,
-        and "V" for visual mode.
-        This function outputs a new prompt every time the mode changes
-        which is a bit distracting.
-        To disable this feature,
-        make this a function that doesn't output anything.
-      </div>
-      <div>
-        Here's an example of a custom mode prompt.
-      </div>
-      <pre>
+    <div>
+      It is also possible to define a "right prompt"
+      by defining the function <code>fish_right_prompt</code>.
+      This is right-aligned within terminals.
+    </div>
+    <div>
+      If the <code>VISUAL</code> global variable is set to "vim",
+      fish can display the Vim mode in the prompt
+      using the function <code>fish_mode_prompt</code>.
+      For example, this could display
+      "N" for normal, "I" for insert, "R" for replace,
+      and "V" for visual mode.
+      This function outputs a new prompt every time the mode changes
+      which is a bit distracting.
+      To disable this feature,
+      make this a function that doesn't output anything.
+    </div>
+    <div>
+      Here's an example of a custom mode prompt.
+    </div>
+    <pre>
 function fish_mode_prompt
   if test "$fish_key_bindings" = "fish_vi_key_bindings"
     switch $fish_bind_mode
@@ -2719,194 +2728,194 @@ function fish_mode_prompt
   end
 end</pre>
 
-      <h3>Reading From stdin</h3>
-      <div>
-        The command <code>read <i>var</i></code>
-        waits for the user to enter something, terminated by the enter key,
-        and sets <code><i>var</i></code> to what was entered.
-        Only a single line can be entered.
-      </div>
-      <div>
-        The <code>read</code> command accepts many switches.
-        It accepts the same switches as the <code>set</code> command
-        for choosing the scope of the variable that is set.
-        It also accepts the following switches:
-      </div>
-      <ul>
-        <li>
-          <code>--prompt-str <i>text</i></code> (<code>-P</code>)<br>
-          This sets the prompt text which defaults to "read&gt; ".
-          See the "favorite color" example below.
-        </li>
-        <li>
-          <code>--prompt-cmd <i>command</i></code> (<code>-p</code>)<br>
-          This sets the prompt text to the output of the specified command.
-          It is useful for dynamic prompts.
-          For example, to ask the user if they were born in the current month, use<br>
-          <code>read --prompt-cmd "echo Were you born in (date '+%B')'? '" bornThisMonth</code>
-        </li>
-        <li>
-          <code>--command <i>text</i></code> (<code>-c</code>)<br>
-          This sets the initial text as if the user had entered it.
-          The user can modify this.
-          For example, to prompt for a meeting date
-          and default to the current date,
-          <code>read --command (date '+%m/%d/%G') meetingDate</code>
-        </li>
-        <li>
-          <code>--silent</code> (<code>-i</code>)<br>
-          This masks the input.  For example, this is appropriate for entering passwords.
-        </li>
-        <li>
-          <code>--array</code> (<code>-a</code>)<br>
-          This sets the variable to a list of the words entered
-          instead of a single string value.
-          For example, <code>read --array favColors</code> sets the variable
-          <code>favColors</code> to the list of colors the user enters.
-          If "red green blue" is entered, favColors will be set to that list
-          and <code>count $colors</code> will output 3.
-        </li>
-        <li>and many more</li>
-      </ul>
-      <div>
-        For example, to prompt the user for their favorite color,
-        with the default being yellow, use
-        <code>read --prompt-str 'Favorite color: ' --command yellow color</code>.
-        This sets the variable <code>color</code> to what the user enters.
-      </div>
-      <div>
-        The read command can set more than one variable.
-        Each is set to the word at the corresponding position.
-        The last variable gets all the remaining words.
-        For example, if <code>read first second</code>
-        is run and the user enters "foo bar baz",
-        <code>first</code> is set to "foo" and
-        <code>second</code> is set to "bar baz".
-      </div>
-      <div>
-        To read multiple lines from the user
-        until they press enter on an empty line:
-      </div>
-      <pre>
+    <h3>Reading From stdin</h3>
+    <div>
+      The command <code>read <i>var</i></code>
+      waits for the user to enter something, terminated by the enter key,
+      and sets <code><i>var</i></code> to what was entered.
+      Only a single line can be entered.
+    </div>
+    <div>
+      The <code>read</code> command accepts many switches.
+      It accepts the same switches as the <code>set</code> command
+      for choosing the scope of the variable that is set.
+      It also accepts the following switches:
+    </div>
+    <ul>
+      <li>
+        <code>--prompt-str <i>text</i></code> (<code>-P</code>)<br>
+        This sets the prompt text which defaults to "read&gt; ".
+        See the "favorite color" example below.
+      </li>
+      <li>
+        <code>--prompt-cmd <i>command</i></code> (<code>-p</code>)<br>
+        This sets the prompt text to the output of the specified command.
+        It is useful for dynamic prompts.
+        For example, to ask the user if they were born in the current month, use<br>
+        <code>read --prompt-cmd "echo Were you born in (date '+%B')'? '" bornThisMonth</code>
+      </li>
+      <li>
+        <code>--command <i>text</i></code> (<code>-c</code>)<br>
+        This sets the initial text as if the user had entered it.
+        The user can modify this.
+        For example, to prompt for a meeting date
+        and default to the current date,
+        <code>read --command (date '+%m/%d/%G') meetingDate</code>
+      </li>
+      <li>
+        <code>--silent</code> (<code>-i</code>)<br>
+        This masks the input.  For example, this is appropriate for entering passwords.
+      </li>
+      <li>
+        <code>--array</code> (<code>-a</code>)<br>
+        This sets the variable to a list of the words entered
+        instead of a single string value.
+        For example, <code>read --array favColors</code> sets the variable
+        <code>favColors</code> to the list of colors the user enters.
+        If "red green blue" is entered, favColors will be set to that list
+        and <code>count $colors</code> will output 3.
+      </li>
+      <li>and many more</li>
+    </ul>
+    <div>
+      For example, to prompt the user for their favorite color,
+      with the default being yellow, use
+      <code>read --prompt-str 'Favorite color: ' --command yellow color</code>.
+      This sets the variable <code>color</code> to what the user enters.
+    </div>
+    <div>
+      The read command can set more than one variable.
+      Each is set to the word at the corresponding position.
+      The last variable gets all the remaining words.
+      For example, if <code>read first second</code>
+      is run and the user enters "foo bar baz",
+      <code>first</code> is set to "foo" and
+      <code>second</code> is set to "bar baz".
+    </div>
+    <div>
+      To read multiple lines from the user
+      until they press enter on an empty line:
+    </div>
+    <pre>
 while read line
   if test -z $line; break; end
   echo you entered $line
 end</pre>
 
-      <h3>Absolute Path</h3>
-      <div>
-        To get the absolute path of a relative path,
-        use the <code>realpath</code> command.
-        For example, when in the directory <code>/foo/bar/baz</code>,
-       entering <code>realpath ../../qux</code>
-       outputs <code>/foo/qux</code>.
-      </div>
+    <h3>Absolute Path</h3>
+    <div>
+      To get the absolute path of a relative path,
+      use the <code>realpath</code> command.
+      For example, when in the directory <code>/foo/bar/baz</code>,
+     entering <code>realpath ../../qux</code>
+     outputs <code>/foo/qux</code>.
+    </div>
 
-      <h3>Processes</h3>
-      <div>
-        The <code>%</code> character followed by specific words
-        expands to a process id.
-        <code>%self</code> expands to the current process id.
-        <code>%<i>jobNumber</i></code> expands to the
-        process id of the specified job.
-        <code>%<i>processName</i></code> expands to the
-        process id of the specified process name.
-        For example, to see the process ids of all fish processes,
-        enter <code>echo %fish</code>.
-        If only a process name prefix is specified, the ids of all
-        processes with names beginning with that prefix are output.
-      </div>
+    <h3>Processes</h3>
+    <div>
+      The <code>%</code> character followed by specific words
+      expands to a process id.
+      <code>%self</code> expands to the current process id.
+      <code>%<i>jobNumber</i></code> expands to the
+      process id of the specified job.
+      <code>%<i>processName</i></code> expands to the
+      process id of the specified process name.
+      For example, to see the process ids of all fish processes,
+      enter <code>echo %fish</code>.
+      If only a process name prefix is specified, the ids of all
+      processes with names beginning with that prefix are output.
+    </div>
 
-      <h3>Jobs</h3>
-      <div>
-        To run a command in background,
-        add <code>&amp;</code> to end of the command.
-        This does not work for custom functions.
-        TODO: Why?
-      </div>
-      <div>
-        To suspend a currently running command, press ctrl-z.
-        This does not work for custom functions.
-        TODO: Why?
-      </div>
-      <div>
-        To continue running a suspended command in background
-        enter <code>bg</code>.
-      </div>
-      <div>
-        To get a list of background jobs and their job numbers,
-        enter <code>jobs</code>.
-      </div>
-      <div>
-        To bring a background job back to the foreground,
-        enter <code>fg</code> for the job most recently placed in background.
-        For a specific job, enter <code>fg %<i>jobNumber</i></code>
-        or <code>fg <i>processNumber</i></code>.
-      </div>
-      <div>
-        If you attempt to exit from a shell that has background jobs,
-        it will warn about this and not exit.
-        If you attempt to exit again,
-        it will kill all the background jobs and exit.
-      </div>
+    <h3>Jobs</h3>
+    <div>
+      To run a command in background,
+      add <code>&amp;</code> to end of the command.
+      This does not work for custom functions.
+      TODO: Why?
+    </div>
+    <div>
+      To suspend a currently running command, press ctrl-z.
+      This does not work for custom functions.
+      TODO: Why?
+    </div>
+    <div>
+      To continue running a suspended command in background
+      enter <code>bg</code>.
+    </div>
+    <div>
+      To get a list of background jobs and their job numbers,
+      enter <code>jobs</code>.
+    </div>
+    <div>
+      To bring a background job back to the foreground,
+      enter <code>fg</code> for the job most recently placed in background.
+      For a specific job, enter <code>fg %<i>jobNumber</i></code>
+      or <code>fg <i>processNumber</i></code>.
+    </div>
+    <div>
+      If you attempt to exit from a shell that has background jobs,
+      it will warn about this and not exit.
+      If you attempt to exit again,
+      it will kill all the background jobs and exit.
+    </div>
 
-      <h3>Debugging Functions</h3>
-      <div>
-        A common way to debug functions is to add echo commands
-        and comment out parts of the code.
-        Often a better approach is to add breakpoints
-        to stop execution at specific places.
-        While stopped, variables can be examined and modified.
-        Then execution can be continued.
-      </div>
-      <div>
-        To add breakpoints in a function,
-        add uses of the <code>breakpoint</code> command.
-        After adding them, run the function.
-        When a breakpoint is reached, the function will stop
-        and control will be returned to the shell.
-        Use the <code>echo</code> command to examine variables.
-        and the <code>set</code> command to modify them.
-        For example, <code>echo $count</code> and <code>set count 7</code>.
-      </div>
-      <div>
-        To resume execution, enter <code>exit</code>.
-        To stop the running function before it reaches its end,
-        enter <code>kill %self</code>.
-      </div>
+    <h3>Debugging Functions</h3>
+    <div>
+      A common way to debug functions is to add echo commands
+      and comment out parts of the code.
+      Often a better approach is to add breakpoints
+      to stop execution at specific places.
+      While stopped, variables can be examined and modified.
+      Then execution can be continued.
+    </div>
+    <div>
+      To add breakpoints in a function,
+      add uses of the <code>breakpoint</code> command.
+      After adding them, run the function.
+      When a breakpoint is reached, the function will stop
+      and control will be returned to the shell.
+      Use the <code>echo</code> command to examine variables.
+      and the <code>set</code> command to modify them.
+      For example, <code>echo $count</code> and <code>set count 7</code>.
+    </div>
+    <div>
+      To resume execution, enter <code>exit</code>.
+      To stop the running function before it reaches its end,
+      enter <code>kill %self</code>.
+    </div>
 
-      <h3>Random Numbers and Options</h3>
-      <div>
-        The <code>random</code> command outputs
-        an integer in the range [0, 32767].
-        It takes up to three arguments and
-        typically at least two are specified.
-        Their meaning depends on the number given.
-        If only one is specified, it is a seed.
-        If two are specified,
-        they are the start and end of the range.
-        For example, for a dice roll use <code>random 1 6</code>.
-        If three are specified,
-        they are the start, step, and end of the range
-        where only numbers that are increments of step from start
-        will be generated.
-        For example, to generate a random number between 0 and 100
-        that is an increment of 5, use <code>random 0 5 100</code>.
-      </div>
-      <div>
-        To select a random item from a list of options,
-        use <code>random choice <i>option1</i> <i>option2</i> ...</code>.
-        For example, to choose a random color from a list of options,
-        <pre>
+    <h3>Option Parsing</h3>
+    <div>
+      Research the <code>getopt</code> command.
+    </div>
+
+    <h2>Extras</h2>
+
+    <h3>Random Numbers and Options</h3>
+    <div>
+      The <code>random</code> command outputs
+      an integer in the range [0, 32767].
+      It takes up to three arguments and
+      typically at least two are specified.
+      Their meaning depends on the number given.
+      If only one is specified, it is a seed.
+      If two are specified,
+      they are the start and end of the range.
+      For example, for a dice roll use <code>random 1 6</code>.
+      If three are specified,
+      they are the start, step, and end of the range
+      where only numbers that are increments of step from start
+      will be generated.
+      For example, to generate a random number between 0 and 100
+      that is an increment of 5, use <code>random 0 5 100</code>.
+    </div>
+    <div>
+      To select a random item from a list of options,
+      use <code>random choice <i>option1</i> <i>option2</i> ...</code>.
+      For example, to choose a random color from a list of options,
+      <pre>
 set colors red orange yellow green blue purple
 set color (random choice $colors)</pre>
-      </div>
-
-      <h3>Option Parsing</h3>
-      <div>
-        Research the <code>getopt</code> command.
-      </div>
-
     </div>
 
     <hr>
