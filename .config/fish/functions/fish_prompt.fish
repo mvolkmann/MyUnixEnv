@@ -1,7 +1,7 @@
 # This function is run every time Fish displays a new prompt.
 function fish_prompt
   # No fancy prompt if window is too narrow.
-  #if test $COLUMNS -lt 20 #TODO: HOw to test this?
+  #if test $COLUMNS -lt 20 #TODO: How to test this?
   #   echo '🐠  '
   #   return
   # end
@@ -24,24 +24,26 @@ function fish_prompt
   # Get the current Git branch.
   # This will be an empty string if not in a Git repo.
   set branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
-  set branchLen (string length $branch)
+  if test -n "$branch"
+    set branchLen (string length $branch)
 
-  # If in a Git repo ...
-  if test $branchLen -gt 0
-    # If branch name won't fit on current line ...
-    if test $branchLen -gt $remaining
-      echo # newline
-      echo -n '  ' # indents past Vim mode on previous line
-      set remaining $COLUMNS
-    else
-      echo -n ' '
-    end
+    # If in a Git repo ...
+    if test $branchLen -gt 0
+      # If branch name won't fit on current line ...
+      if test $branchLen -gt $remaining
+        echo # newline
+        echo -n '  ' # indents past Vim mode on previous line
+        set remaining $COLUMNS
+      else
+        echo -n ' '
+      end
 
-    # If branch name will fit on current line ...
-    if test $branchLen -le $remaining
-      # Display current Git branch.
-      set_color --bold yellow # git branch color
-      echo -n $branch
+      # If branch name will fit on current line ...
+      if test $branchLen -le $remaining
+        # Display current Git branch.
+        set_color --bold yellow # git branch color
+        echo -n $branch
+      end
     end
   end
 

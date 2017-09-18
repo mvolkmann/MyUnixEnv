@@ -60,9 +60,9 @@
 
     <h3>Table of Contents</h3>
     <ul>
-      <li><a href="#overview">Overview</li>
-      <li><a href="#license">License</li>
-      <li><a href="#goals">Goals</li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#license">License</a></li>
+      <li><a href="#goals">Goals</a></li>
     </ul>
 
     <h3><a name="overview">Overview</a></h3>
@@ -211,6 +211,7 @@
       I highly recommend installing fish now so you can try each feature
       as it is explained here.
       It's easy enough to uninstall later if desired.
+    </div>
 
     <h3>Default Shell</h3>
     <div>
@@ -388,7 +389,6 @@
       The syntax is
       <code>complete -c <i>commandName</i> -s <i>shortSwitch</i> -l <i>longSwitch</i> -a '<i>argument words</i>'</code>
     </div>
-    <div>
     <div>
        TODO: See your functions/greet.fish and completions/greet.fish example
        which is not working yet.
@@ -1007,10 +1007,10 @@ set result some prefix{$middle}some suffix</pre>
       variables that hold a single string.
     </div>
     <ul>
-      <li>is empty: <code>if test -z $<i>var</i></code></li>
-      <li>is not empty: <code>if test -n $<i>var</i></code></li>
-      <li>is identical to another: <code>if $<i>var1</i> = $<i>var2</i></code></li>
-      <li>is not identical to another: <code>if $<i>var1</i> != $<i>var2</i></code></li>
+      <li>is empty: <code>if test -z "$<i>var</i>"</code></li>
+      <li>is not empty: <code>if test -n "$<i>var</i>"</code></li>
+      <li>is identical to another: <code>if "$<i>var1</i>" = "$<i>var2</i>"</code></li>
+      <li>is not identical to another: <code>if "$<i>var1</i>" != "$<i>var2</i>"</code></li>
     </ul>
     <div>
       To test the relationship between two strings in sorting order,
@@ -2127,7 +2127,7 @@ end</pre>
       To output as HTML, add the <code>--html</code> (no short form) switch.
       With HTML it is possible to add colors to specific syntax items using CSS.
       To read from a file and rewrite it with a formatted version, enter
-      <code>fish_indent --write <i>someName</i> (<code>-w</code>).fish</code>.
+      <code>fish_indent --write <i>someName</i>.fish</code> (<code>-w</code>).
       This uses four-space indentation and that cannot be customized,
       but all occurrences for four spaces can be replaced with two
       using the <code>sed</code> command.
