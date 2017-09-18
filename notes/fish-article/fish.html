@@ -166,8 +166,8 @@
       The last 1.x release was in March 2009.
       Various people maintained forks at Gitorious and elsewhere,
       but it seems no releases were ever made.
-      A person that goes by "ridiculousfish" got involved in about 2012
-      and released a beta of a fork called fishfish.
+      A person that goes by "ridiculousfish" got involved in late 2011
+      and released a beta of a fork called fishfish in 2012.
       This incorporated much of the work of previous fish contributors
       and eventually became fish 2.0.
     </div>
@@ -406,13 +406,9 @@
       retaining only their most recent occurrence.
     </div>
     <div>
-      Many commands accept switches that affect their functionality.
-      Switches can have short and long forms.
-      For example, the <code>grep</code> command can perform case insensitive matches.
-      This is specified using the <code>--ignore-case</code> (long)
-      or <code>-i</code> (short) switch.
-      Command examples in this article always use the long forms of switches
-      and commands are followed by the short form in parentheses.
+      A separate command history is maintained for each session,
+      but new sessions start with the command history
+      of the session from which they were created.
     </div>
     <div>
       Command history is stored in <code>~/.local/share/fish/fish_history</code>.
@@ -425,6 +421,16 @@
       or press ctrl-c to exit without executing one.
       To restrict to commands that contain a given substring,
       type the substring before pressing the arrow keys.
+    </div>
+    <div>
+      Many commands accept switches that affect their functionality.
+      Switches can have short and long forms.
+      For example, the <code>grep</code> command
+      can perform case insensitive matches.
+      This is specified using the <code>--ignore-case</code> (long)
+      or <code>-i</code> (short) switch.
+      Command examples in this article always use the long forms of switches
+      and commands are followed by the short form in parentheses.
     </div>
     <div>
       To list all commands in the history, enter <code>history</code>.
@@ -447,6 +453,7 @@
       To limit the number of commands output,
       add the <code>--max</code> (<code>-n</code>) switch followed by a number.
       For example, <code>history -n 5</code>.
+      Note that the space after <code>-n</code> is required.
     </div>
     <div>
       To clear all command history, enter <code>history clear</code>.
@@ -698,10 +705,20 @@
 
     <h4>Abbreviations Tab</h4>
     <div>
-      The "abbreviations" tab provides a read-only view
-      that lists all the abbreviations that have been defined.
-      Often these are defined in <code>config.fish</code> (discussed later),
-      but they can also be defined from a terminal.
+      The "abbreviations" tab provides an editable list
+      of all the abbreviations that have been defined.
+      To modify an existing abbreviation, click the current command,
+      change it, and press the "Save" button.
+      To delete an existing abbreviations,
+      click the circled "X" to its right.
+      To add a new abbreviation, enter a name and a command
+      in the two inputs at the bottom and press the "Save" button.
+      one for the name and one for the associated command.
+      Changing the name of an existing abbreviation
+      creates a new abbreviation with that name,
+      but doesn't delete the existing one.
+      Often abbreviations are defined in <code>config.fish</code>
+      (discussed later), but they can also be defined from a terminal.
     </div>
     <img src="config-abbreviations.png" alt="abbreviations config screenshot">
 
