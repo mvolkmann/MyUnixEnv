@@ -2660,10 +2660,10 @@ function fish_prompt
   # Get the current Git branch.
   # This will be an empty string if not in a Git repo.
   set branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
-  set branchLen (string length $branch)
 
   # If in a Git repo ...
-  if test $branchLen -gt 0
+  if test -n "$branch"
+    set branchLen (string length $branch)
     # If branch name won't fit on current line ...
     if test $branchLen -gt $remaining
       echo # newline

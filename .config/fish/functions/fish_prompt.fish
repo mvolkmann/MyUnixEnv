@@ -17,7 +17,7 @@ function fish_prompt
     echo -n $PWD # -n suppresses newline at end
     set remaining (math "$remaining - $pwdLen")
   else
-    echo -n (prompt_pwd)
+    echo -n (prompt_pwd) # abbreviated working directory
     set remaining 0
   end
 
@@ -43,6 +43,7 @@ function fish_prompt
       set_color --bold yellow # git branch color
       echo -n $branch
     end
+    # If branch doesn't fit, it is not output.
   end
 
   # Display "fish" prompt on new line.
