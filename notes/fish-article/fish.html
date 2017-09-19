@@ -60,12 +60,82 @@
 
     <h3>Table of Contents</h3>
     <ul>
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#license">License</a></li>
-      <li><a href="#goals">Goals</a></li>
+      <li><a href="#Overview">Overview</a></li>
+      <li><a href="#License">License</a></li>
+      <li><a href="#Goals">Goals</a></li>
+      <li><a href="#History">History</a></li>
+      <li><a href="#Sections">Sections</a></li>
+      <li><a href="#UsingFish">Using Fish</a></li>
+      <li><a href="#Installing">Installing</a></li>
+      <li><a href="#DefaultShell">Default Shell</a></li>
+      <li><a href="#Uninstalling">Uninstalling</a></li>
+      <li><a href="#Help">Help</a></li>
+      <li><a href="#StartingFish">Starting Fish</a></li>
+      <li><a href="#Autosuggestions">Autosuggestions</a></li>
+      <li><a href="#TabCompletions">Tab Completions</a></li>
+      <li><a href="#CustomTabCompletions">Custom Tab Completions</a></li>
+      <li><a href="#CommandHistory">Command History</a></li>
+      <li><a href="#ChangingWorkingDirectory">Changing Working Directory</a></li>
+      <li><a href="#Commands">Commands</a></li>
+      <li><a href="#CustomizingFish">Customizing Fish</a></li>
+      <li><a href="#ConfigurationViaWebUi">Configuration via Web UI</a></li>
+      <li><a href="#ColorTab">Color Tab</a></li>
+      <li><a href="#PromptTab">Prompt Tab</a></li>
+      <li><a href="#FunctionsTab">Functions Tab</a></li>
+      <li><a href="#VariablesTab">Variables Tab</a></li>
+      <li><a href="#HistoryTab">History Tab</a></li>
+      <li><a href="#BindingsTab">Bindings Tab</a></li>
+      <li><a href="#AbbreviationsTab">Abbreviations Tab</a></li>
+      <li><a href="#ConfigurationServer">Configuration Server</a></li>
+      <li><a href="#ConfigurationViaFishConfig">Configuration via fish.config</a></li>
+      <li><a href="#Aliases">Aliases</a></li>
+      <li><a href="#Abbreviations">Abbreviations</a></li>
+      <li><a href="#Variables">Variables</a></li>
+      <li><a href="#Strings">Strings</a></li>
+      <li><a href="#RegularExpressions">Regular Expressions</a></li>
+      <li><a href="#Numbers">Numbers</a></li>
+      <li><a href="#Math">Math</a></li>
+      <li><a href="#Dates">Dates</a></li>
+      <li><a href="#Lists">Lists (a.k.a Arrays)</a></li>
+      <li><a href="#Hashmaps">Hashmaps</a></li>
+      <li><a href="#Path">PATH environment variable</a></li>
+      <li><a href="#FunctionsAndAutoLoading">Functions and Auto-loading</a></li>
+      <li><a href="#ComparingToJavaScript">Comparing fish functions to JavaScript</a></li>
+      <li><a href="#ToolsForFish">Tools for fish</a></li>
+      <li><a href="#echoCommand">echo Command</a></li>
+      <li><a href="#Colors">Colors</a></li>
+      <li><a href="#printfCommand">printf Command</a></li>
+      <li><a href="#Wildcards">Wildcards</a></li>
+      <li><a href="#PipesAndRedirection">Pipes and Redirection</a></li>
+      <li><a href="#AdvancedUseOfVariables">Advanced Use of Variables</a></li>
+      <li><a href="#SpecialVariables">Special Variables</a></li>
+      <li><a href="#statusCommand">status Command</a></li>
+      <li><a href="#MoreOnTests">More on Tests</a></li>
+      <li><a href="#Files">Files</a></li>
+      <li><a href="#CommandSubstitution">Command Substitution</a></li>
+      <li><a href="#BraceExpansion">Brace Expansion</a></li>
+      <li><a href="#Eval">Eval</a></li>
+      <li><a href="#Functions">Functions</a></li>
+      <li><a href="#AutoRunningFunctions">Auto-running Functions</a></li>
+      <li><a href="#TypesOfCommands">Types of Commands</a></li>
+      <li><a href="#ifCommand">if Command</a></li>
+      <li><a href="#andAndOrCommands">and &amp; or Commands</a></li>
+      <li><a href="#switchCommand">switch Command</a></li>
+      <li><a href="#LoopCommands">Loop Commands</a></li>
+      <li><a href="#MultipleStatementsOnALine">Multiple Statements on a Line</a></li>
+      <li><a href="#CustomGreeting">Custom Greeting</a></li>
+      <li><a href="#CustomPrompt">Custom Prompt</a></li>
+      <li><a href="#ReadingFromStdin">Reading From stdin</a></li>
+      <li><a href="#AbsolutePath">Absolute Path</a></li>
+      <li><a href="#Processes">Processes</a></li>
+      <li><a href="#Jobs">Jobs</a></li>
+      <li><a href="#DebuggingFunctions">Debugging Functions</a></li>
+      <li><a href="#OptionParsing">Option Parsing</a></li>
+      <li><a href="#Extras">Extras</a></li>
+      <li><a href="#RandomNumbersAndOptions">Random Numbers and Options</a></li>
     </ul>
 
-    <h3><a name="overview">Overview</a></h3>
+    <h3><a name="Overview">Overview</a></h3>
     <div>
       Fish is a *nix shell that offers an alternative
       to shells like bash and zsh.
@@ -93,7 +163,7 @@
       TODO: This may change before this article is published!
     </div>
 
-    <h3><a name="license">License</a></h3>
+    <h3><a name="License">License</a></h3>
     <div>
       The fish shell uses the GNU General Public License, version 2.
       Here's a summary of that license:
@@ -106,7 +176,7 @@
       along with build and install instructions.
     </blockquote>
 
-    <h3><a name="goals">Goals</a></h3>
+    <h3><a name="Goals">Goals</a></h3>
     <div>
       The goals for fish are listed at
       <a href="https://fishshell.com/docs/current/design.html">
@@ -158,7 +228,7 @@
       </li>
     </ul>
 
-    <h3>History</h3>
+    <h3><a name="History">History</a></h3>
     <div>
       The first release of fish was on Februrary 13, 2005.
       Axel Liljencrantz was the main developer and maintainer of
@@ -167,7 +237,7 @@
       Various people maintained forks at Gitorious and elsewhere,
       but it seems no releases were ever made.
       A person that goes by "ridiculousfish" got involved in late 2011
-      and released a beta of a fork called fishfish in 2012.
+      and released a beta of a fork called "fishfish" in 2012.
       This incorporated much of the work of previous fish contributors
       and eventually became fish 2.0.
     </div>
@@ -182,7 +252,7 @@
       <a href="https://github.com/fish-shell/fish-shell/milestone/7">https://github.com/fish-shell/fish-shell/milestone/7</a>.
     </div>
 
-    <h3>Sections</h3>
+    <h3><a name="Sections">Sections</a></h3>
     <div>
       The remainder of this article is split into three sections.
       The first section describes using fish.
@@ -190,9 +260,9 @@
       The third section describes scripting in fish.
     </div>
 
-    <h2>Using Fish</h2>
+    <h2><a name="UsingFish">Using Fish</a></h2>
 
-    <h3>Installing</h3>
+    <h3><a name="Installing">Installing</a></h3>
     <div>
       Instructions for installing fish are at
       <a href="https://fishshell.com/">https://fishshell.com/</a>.
@@ -213,7 +283,7 @@
       It's easy enough to uninstall later if desired.
     </div>
 
-    <h3>Default Shell</h3>
+    <h3><a name="DefaultShell">Default Shell</a></h3>
     <div>
       To make fish the default shell so new terminal windows automatically use it,
       enter <code>chsh -s /usr/local/bin/fish</code>.
@@ -221,7 +291,7 @@
       convinced that fish is for you.  I'm confident you will!
     </div>
 
-    <h3>Uninstalling</h3>
+    <h3><a name="Uninstalling">Uninstalling</a></h3>
     <div>
       This fish shell can be uninstalled by changing
       the default shell to something else (like bash)
@@ -234,7 +304,7 @@
       <li><code>rm -f fish fish_indent</code></li>
     </ul>
 
-    <h3>Help</h3>
+    <h3><a name="Help">Help</a></h3>
     <div>
       There are many sources for help on fish.
       The main web site at
@@ -278,14 +348,14 @@
       <li>IRC channel #fish on irc.oftc.net</li>
     </ul>
 
-    <h3>Starting Fish</h3>
+    <h3><a name="StartingFish">Starting Fish</a></h3>
     <div>
       Once fish has been installed, open a terminal.
       If fish is not the default shell, enter <code>fish</code> to start a fish shell.
       To exit a fish shell, enter <code>exit</code>.
     </div>
 
-    <h3>Autosuggestions</h3>
+    <h3><a name="Autosuggestions">Autosuggestions</a></h3>
     <div>
       Autosuggestions suggest remaining text for a command
       while the command is being typed.
@@ -308,7 +378,7 @@
       enter <code>fish_update_completions</code> to parse them.
     </div>
 
-    <h3>Tab Completions</h3>
+    <h3><a name="TabCompletions">Tab Completions</a></h3>
     <div>
       Autosuggestions only provide one suggestion.
       To see more options, press tab.
@@ -379,7 +449,7 @@
       again to execute the <code>man</code> command.
     </div>
 
-    <h3>Custom Tab Completions</h3>
+    <h3><a name="CustomTabCompletions">Custom Tab Completions</a></h3>
     <div>
       Tab completions can be defined for custom commands
       using the <code>complete</code> command.
@@ -396,7 +466,7 @@
        and https://fishshell.com/docs/current/index.html#completion-own.
     </div>
 
-    <h3>Command History</h3>
+    <h3><a name="CommandHistory">Command History</a></h3>
     <div>
       All commands entered are saved in command history,
       except those that begin with a space.
@@ -467,7 +537,7 @@
       enter <code>history delete --prefix <i>prefix</i></code> (<code>-p</code>).
     </div>
 
-    <h3>Changing Working Directory</h3>
+    <h3><a name="ChangingWorkingDirectory">Changing Working Directory</a></h3>
     <div>
       Like in other shells, the current working directory
       can be changed by using the <code>cd</code> command.
@@ -515,7 +585,7 @@
       To view the current directory stack, enter <code>dirs</code>.
     </div>
 
-    <h3>Commands</h3>
+    <h3><a name="Commands">Commands</a></h3>
     <div>
       Every fish command is executed by entering its name
       followed by switches and arguments, if any, separated by spaces.
@@ -535,11 +605,26 @@
       and their names are a single letter.
     </div>
     <div>
-      All commands set the <code>status</code> environment variable to
+      Nearly all commands set the <code>status</code> variable to
       <code>0</code> for success and another number for failure.
       <code>true</code> and <code>false</code> are not boolean literals.
       <code>true</code> is a command that sets status to 0 and
       <code>false</code> is a command that sets status to 1.
+      Commands that do not set <code>status</code> include
+      <code>and</code>,
+      <code>begin</code>,
+      <code>break</code>,
+      <code>builtin</code>,
+      <code>case</code>,
+      <code>command</code>,
+      <code>continue</code>,
+      <code>else</code>,
+      <code>end</code>,
+      <code>for</code>,
+      <code>if</code>,
+      <code>or</code>,
+      <code>switch</code>,
+      and <code>while</code>.
     </div>
     <div>
       Commands are terminated by a newline or semicolon.
@@ -608,7 +693,7 @@
       all commands are terminated with a newline or semicolon.
     </div>
 
-    <h2>Customizing Fish</h2>
+    <h2><a name="CustomizingFish">Customizing Fish</a></h2>
 
     <div>
       The fish shell can be configured in three ways:
@@ -617,7 +702,7 @@
       and in a web UI.
     </div>
 
-    <h3>Configuration via Web UI</h3>
+    <h3><a name="ConfigurationViaWebUi">Configuration via Web UI</a></h3>
     <div>
       To start the web UI, enter
       <code>fish_config <i>starting-tab-name</i></code>.
@@ -628,7 +713,7 @@
       The UI contains seven tabs that are described below.
     </div>
 
-    <h4>Color Tab</h4>
+    <h4><a name="ColorTab">Color Tab</a></h4>
     <div>
       The "colors" tab displays the current color settings
       and allows them to be customized.
@@ -657,7 +742,7 @@
       selecting Preferences...Profiles...Colors...Background.
     </div>
 
-    <h4>Prompt Tab</h4>
+    <h4><a name="PromptTab">Prompt Tab</a></h4>
     <div>
       The "prompt" tab displays the contents
       of the current fish shell prompt.
@@ -670,7 +755,7 @@
     </div>
     <img src="config-prompt.png" alt="prompt config screenshot">
 
-    <h4>Functions Tab</h4>
+    <h4><a name="FunctionsTab">Functions Tab</a></h4>
     <div>
       The "functions" tab provides a read-only view
       of all functions that have been defined.
@@ -679,7 +764,7 @@
     </div>
     <img src="config-functions.png" alt="functions config screenshot">
 
-    <h4>Variables Tab</h4>
+    <h4><a name="VariablesTab">Variables Tab</a></h4>
     <div>
       The "variables" tab provides a read-only view
       that lists all universal variables and their values.
@@ -688,7 +773,7 @@
     </div>
     <img src="config-variables.png" alt="variables config screenshot">
 
-    <h4>History Tab</h4>
+    <h4><a name="HistoryTab">History Tab</a></h4>
     <div>
       The "history" tab provides a mostly read-only view
       of your command history in the order in which commands
@@ -699,14 +784,14 @@
     </div>
     <img src="config-history.png" alt="color config screenshot">
 
-    <h4>Bindings Tab</h4>
+    <h4><a name="BindingsTab">Bindings Tab</a></h4>
     <div>
       The "bindings" tab provides a read-only view
       that lists the current key bindings.
     </div>
     <img src="config-bindings.png" alt="bindings config screenshot">
 
-    <h4>Abbreviations Tab</h4>
+    <h4><a name="AbbreviationsTab">Abbreviations Tab</a></h4>
     <div>
       The "abbreviations" tab provides an editable list
       of all the abbreviations that have been defined.
@@ -725,7 +810,7 @@
     </div>
     <img src="config-abbreviations.png" alt="abbreviations config screenshot">
 
-    <h4>Configuration Server</h4>
+    <h4><a name="ConfigurationServer">Configuration Server</a></h4>
     <div>
       Pressing the enter key in the terminal where
       the <code>fish_config</code> command was entered
@@ -734,7 +819,7 @@
       which will also open a new browser tab.
     </div>
 
-    <h3>Configuration via fish.config</h3>
+    <h3><a name="ConfigurationViaFishConfig">Configuration via fish.config</a></h3>
     <div>
       Fish is billed as not needing configuation.
       Strictly speaking this is true,
@@ -778,7 +863,7 @@
       These are discussed later.
     </div>
 
-    <h3>Aliases</h3>
+    <h3><a name="Aliases">Aliases</a></h3>
     <div>
       An alias is an alternate name, usually shorter, for some command.
     </div>
@@ -803,7 +888,7 @@
       <a href="https://fishshell.com/docs/current/index.html#introduction" target="_blank">https://fishshell.com/docs/current/index.html#introduction</a>.
     </div>
 
-    <h3>Abbreviations</h3>
+    <h3><a name="Abbreviations">Abbreviations</a></h3>
     <div>
       In addition to aliases, fish supports abbreviations.
       These are similar, but expand when typed.
@@ -843,9 +928,11 @@
       enter <code>abbr --erase <i>name</i></code> (<code>-e</code>).
     </div>
 
-    <h3>Variables</h3>
+    <h3><a name="Variables">Variables</a></h3>
     <div>
       Variable names in fish consist of letters, digits, and underscores.
+      Unlike variable names in most programming languages,
+      these can begin with a digit.
       All variable values are lists that hold zero, one, or more string values,
       although most have only one.
       Variable names are case-sensitive, so
@@ -978,7 +1065,7 @@
       TODO: This may be out before this article is published!
     </div>
 
-    <h3>Strings</h3>
+    <h3><a name="Strings">Strings</a></h3>
     <div>
       Literal string values are specified by enclosing text
       in single or double quotes.
@@ -1118,7 +1205,7 @@ set result (string trim --left --chars 0 $myText) # 19</pre>
       <code>set newText (string repeat -n3 'foo') # foofoofoo</code>
     </div>
 
-    <h3>Regular Expressions</h3>
+    <h3><a name="RegularExpressions">Regular Expressions</a></h3>
     <div>
       To determine if a string matches a "pattern",
       use the <code>string match</code> subcommand.
@@ -1192,7 +1279,7 @@ set newText (string replace -a 'foo' 'bar' $text) # not using a regex
 set newText (string replace -ar '.oo' 'bar' $text) # using a regex
 # this is barlish work for a barl</pre>
 
-    <h3>Numbers</h3>
+    <h3><a name="Numbers">Numbers</a></h3>
     <div>
       Only integers are supported, not floating point.
       When a variable is set to a number, it is stored as a string.
@@ -1219,7 +1306,7 @@ set newText (string replace -ar '.oo' 'bar' $text) # using a regex
       <li>greater than or equal: <code>if test $n1 -ge $n2</code></li>
     </ul>
 
-    <h3>Math</h3>
+    <h3><a name="Math">Math</a></h3>
     <div>
       The <code>math</code> command is a wrapper around the
       <code>bc</code> command which is an abbreviation
@@ -1283,7 +1370,7 @@ set degrees 45
 set radians (math -s8 "$degrees * $pi / 180") # .78539816
 set result (echo "s($radians)" | bc -l) # .70710678</pre>
 
-    <h3>Dates</h3>
+    <h3><a name="Dates">Dates</a></h3>
     <div>
       The <code>date</code> command outputs the current date.
       The default format looks like "Sat Aug 26 16:54:52 CDT 2017".
@@ -1298,7 +1385,7 @@ set result (echo "s($radians)" | bc -l) # .70710678</pre>
       enter <code>date '+%m/%d/%G'</code>.
     </div>
 
-    <h3>Lists (a.k.a Arrays)</h3>
+    <h3><a name="Lists">Lists (a.k.a Arrays)</a></h3>
     <div>
       Recall that the value of all variables is a list which
       may contain any number of items, including none or just one.
@@ -1406,7 +1493,7 @@ set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
       they are converted to lists by splitting on colons.
     </div>
 
-    <h3>Hashmaps</h3>
+    <h3><a name="Hashmaps">Hashmaps</a></h3>
     <div>
       Hashmaps are not currently supported, but have been discussed at
       <a href="https://github.com/fish-shell/fish-shell/issues/390">https://github.com/fish-shell/fish-shell/issues/390</a>.
@@ -1427,7 +1514,7 @@ for color in $colors
   eval echo '$'items_$color
 end</pre>
 
-    <h3>PATH environment variable</h3>
+    <h3><a name="PATH">PATH environment variable</a></h3>
     <div>
       <code>PATH</code> is a variable that holds a lists of paths
       that the shell searches when a command is entered.
@@ -1478,7 +1565,7 @@ if set -l index (contains -i <i>some-path</i> $fish_user_paths)
   set -e fish_user_paths[$index]
 end</pre>
 
-    <h3>Functions and Auto-loading</h3>
+    <h3><a name="FunctionsAndAutoLoading">Functions and Auto-loading</a></h3>
     <div>
       Every time a command is evaluated, fish first checks whether there
       is a file in any path listed in <code>fish_function_path</code>
@@ -1597,7 +1684,7 @@ funced foo; and funcsave foo; and source ~/.config/fish/functions/foo.fish</pre>
       </li>
     </ul>
 
-    <h3>Comparing fish functions to JavaScript</h3>
+    <h3><a name="ComparingToJavaScript">Comparing fish functions to JavaScript</a></h3>
     <div>
       Let's look at an example of a simple function that
       takes two numbers and outputs their product.
@@ -1632,7 +1719,7 @@ set result (product 2 3) # 6</pre>
        captured and placed in a variable.
     </div>
 
-    <h3>Tools for fish</h3>
+    <h3><a name="ToolsForFish">Tools for fish</a></h3>
     <div>
       Here's a list of popular tools for fish in alphabetical order.
     </div>
@@ -1657,7 +1744,7 @@ set result (product 2 3) # 6</pre>
       </li>
     </ul>
 
-    <h3>echo Command</h3>
+    <h3><a name="echoCommand">echo Command</a></h3>
     <div>
       The <code>echo</code> command writes its expanded arguments to stdout.
       Normally all arguments are output with a space between them.
@@ -1667,7 +1754,7 @@ set result (product 2 3) # 6</pre>
       To make a sound ("beep"), output the <code>\a</code> character.
     </div>
 
-    <h3>Colors</h3>
+    <h3><a name="Colors">Colors</a></h3>
     <div>
       By default when entering commands,
       text is red until a valid command is entered
@@ -1732,7 +1819,7 @@ echo Roses are (set_color red)red(set_color normal), \
       in the "Custom Prompt" section.
     </div>
 
-    <h3>printf Command</h3>
+    <h3><a name="printfCommand">printf Command</a></h3>
     <div>
       The <code>printf</code> command writes to stdout using a format string.
       It takes a format string as its first argument,
@@ -1771,7 +1858,7 @@ set format 'My name is %s and I am %s%i%s years old.'
 printf $format Paige (set_color red) 6 (set_color normal)
 </pre>
 
-    <h3>Wildcards</h3>
+    <h3><a name="Wildcards">Wildcards</a></h3>
     <div>
       <code>?</code> matches a single character.<br>
       <code>*</code> matches any number of characters not containing <code>/</code>.<br>
@@ -1779,7 +1866,7 @@ printf $format Paige (set_color red) 6 (set_color normal)
       This enables recursing into subdirectories.
     </div>
 
-    <h3>Pipes and Redirection</h3>
+    <h3><a name="PipesAndRedirection">Pipes and Redirection</a></h3>
     <div>
       To "pipe" the stdout of one command into the stdin of another,
       use <code>|</code> like other shells.
@@ -1809,7 +1896,7 @@ printf $format Paige (set_color red) 6 (set_color normal)
       To redirect stderr to stdout, use <code><i>someCommand</i> 2&gt;&amp;1</code>.
     </div>
 
-    <h3>Advanced Use of Variables</h3>
+    <h3><a name="AdvancedUseOfVariables">Advanced Use of Variables</a></h3>
     <div>
       Multiple <code>$</code>'s can be used to interpret the value of a variable
       as a variable name.  Consider the following examples:
@@ -1858,7 +1945,7 @@ set listName colors</pre>
       and then <code>$colors[2]</code> which gives <code>'green'</code>.
     </div>
 
-    <h3>Special Variables</h3>
+    <h3><a name="SpecialVariables">Special Variables</a></h3>
     <div>
       There are many global variables that are automatically set
       to various values.  Examples include:
@@ -1881,7 +1968,7 @@ set listName colors</pre>
       are for internal use and should not be used or changed.
     </div>
 
-    <h3>status Command</h3>
+    <h3><a name="statusCommand">status Command</a></h3>
     <div>
       The <code>status</code> command has many subcommands.
       Examples that are useful inside functions include:
@@ -1901,7 +1988,7 @@ set listName colors</pre>
         in nested function calls</li>
     </ul>
 
-    <h3>More on Tests</h3>
+    <h3><a name="MoreOnTests">More on Tests</a></h3>
     <div>
       The <code>test</code> command is commonly used in
       <code>if</code> and <code>while</code> commands.
@@ -1947,7 +2034,7 @@ end</pre>
       which results in some ugly code, so the first option is preferred.
     </div>
 
-    <h3>Files</h3>
+    <h3><a name="Files">Files</a></h3>
     <div>
       To open files using their default applications,
       enter <code>open <i>filePath1</i> <i>filePath2</i> ...</code>.
@@ -1978,7 +2065,7 @@ end &lt; <i>filePath</i> </pre>
       <li>and more (see test command for details)</li>
     </ul>
 
-    <h3>Command Substitution</h3>
+    <h3><a name="CommandSubstitution">Command Substitution</a></h3>
     <div>
       To use the output of one command as an argument to another,
       surround the command with parens,
@@ -2011,7 +2098,7 @@ set announcement 'Today is '(date $dateFormat)'.'</pre>
       <code>"Today is (date $dateFormat)."</code>
     </div>
 
-    <h3>Brace Expansion</h3>
+    <h3><a name="BraceExpansion">Brace Expansion</a></h3>
     <div>
       Brace expansion is used to produce multiple arguments for a command.
       For example, <code>ls *.{css,html.js}</code>
@@ -2019,7 +2106,7 @@ set announcement 'Today is '(date $dateFormat)'.'</pre>
       This is also useful in the <code>cp</code> and <code>mv</code> commands.
     </div>
 
-    <h3>Eval</h3>
+    <h3><a name="Eval">Eval</a></h3>
     <div>
       The <code>eval</code> command evaluates a command in a string
       that can be built using concatention and variable substitution.
@@ -2030,7 +2117,7 @@ set extension '.js'
 set command ls *.$extension
 eval $command</pre>
 
-    <h3>Functions</h3>
+    <h3><a name="Functions">Functions</a></h3>
     <div>
       Functions give a name to a set of commands that
       are executed when the function is invoked.
@@ -2269,7 +2356,7 @@ echo <i>someErrorMsg</i> 1&gt;&amp;2
 set_color normal
 return <i>someNonZeroStatus</i></pre>
 
-    <h3>Auto-running Functions</h3>
+    <h3><a name="AutoRunningFunctions">Auto-running Functions</a></h3>
     <div>
       Functions can run automatically when an event is fired.
       This is configured by adding the <code>--on-event</code> (<code>-e</code>)
@@ -2373,7 +2460,7 @@ function handleTermSignal --on-signal term
 end</pre>
 TODO: TRY THIS!  Maybe need to test with a signal that doesn't kill the process so you can see the echo.
 
-    <h3>Types of Commands</h3>
+<h3><a name="TypesOfCommands">Types of Commands</a></h3>
     <div>
       A "command" is any program the shell can run.
       There are three types of commands: builtins, commands, and functions.
@@ -2442,7 +2529,7 @@ end</pre>
       To get just the type, enter <code>type -t <i>name</i></code>.
     </div>
 
-    <h3>if Command</h3>
+    <h3><a name="ifCommand">if Command</a></h3>
     <div>
       The if command supports conditional logic.
       It's syntax is:
@@ -2488,7 +2575,7 @@ end</pre>
       <code>if <i>command</i>; <i>statements</i>; end</code>
     </div>
 
-    <h3>and &amp; or Commands</h3>
+    <h3><a name="andAndOrCommands">and &amp; or Commands</a></h3>
     <div>
       In fish, <code>and</code> and <code>or</code> are commands,
       not keywords or operators.
@@ -2526,7 +2613,7 @@ and <i>command2</i></pre>
       used in <code>if</code> and <code>while</code> commands.
     </div>
 
-    <h3>switch Command</h3>
+    <h3><a name="switchCommand">switch Command</a></h3>
     <div>
       The switch command conditionally executes other commands
       based on the value of a expression.
@@ -2552,7 +2639,7 @@ end</pre>
       <code>case default-value '*'</code>.
     </div>
 
-    <h3>Loop Commands</h3>
+    <h3><a name="LoopCommands">Loop Commands</a></h3>
     <div>
       Two kinds of loops are supported, <code>while</code> and <code>for</code>.
     </div>
@@ -2604,13 +2691,13 @@ end</pre>
       <code>continue</code> to skip the remainder of the current iteration.
     </div>
 
-    <h3>Multiple Statements on a Line</h3>
+    <h3><a name="MultipleStatementsOnALine">Multiple Statements on a Line</a></h3>
     <div>
       A line can contain more than one statement if they are separated by semicolons.
       For example, <code>function foo; echo in foo; end</code>.
     </div>
 
-    <h3>Custom Greeting</h3>
+    <h3><a name="CustomGreeting">Custom Greeting</a></h3>
     <div>
       By default, new fish shells display the greeting
       "Welcome to fish, the friendly interactive shell".
@@ -2620,7 +2707,7 @@ end</pre>
       <code>set -e fish_greeting</code>.
     </div>
 
-    <h3>Custom Prompt</h3>
+    <h3><a name="CustomPrompt">Custom Prompt</a></h3>
     <div>
       The default fish prompt displays the output of the
       <code>whoami</code> and <code>hostname</code> commands,
@@ -2748,7 +2835,7 @@ function fish_mode_prompt
   end
 end</pre>
 
-    <h3>Reading From stdin</h3>
+    <h3><a name="ReadingFromStdin">Reading From stdin</a></h3>
     <div>
       The command <code>read <i>var</i></code>
       waits for the user to enter something, terminated by the enter key,
@@ -2822,7 +2909,7 @@ while read line
   echo you entered $line
 end</pre>
 
-    <h3>Absolute Path</h3>
+    <h3><a name="AbsolutePath">Absolute Path</a></h3>
     <div>
       To get the absolute path of a relative path,
       use the <code>realpath</code> command.
@@ -2831,7 +2918,7 @@ end</pre>
      outputs <code>/foo/qux</code>.
     </div>
 
-    <h3>Processes</h3>
+    <h3><a name="Processes">Processes</a></h3>
     <div>
       The <code>%</code> character followed by specific words
       expands to a process id.
@@ -2846,7 +2933,7 @@ end</pre>
       processes with names beginning with that prefix are output.
     </div>
 
-    <h3>Jobs</h3>
+    <h3><a name="Jobs">Jobs</a></h3>
     <div>
       To run a command in background,
       add <code>&amp;</code> to end of the command.
@@ -2879,7 +2966,7 @@ end</pre>
       it will kill all the background jobs and exit.
     </div>
 
-    <h3>Debugging Functions</h3>
+    <h3><a name="DebuggingFunctions">Debugging Functions</a></h3>
     <div>
       A common way to debug functions is to add echo commands
       and comment out parts of the code.
@@ -2904,14 +2991,14 @@ end</pre>
       enter <code>kill %self</code>.
     </div>
 
-    <h3>Option Parsing</h3>
+    <h3><a name="OptionParsing">Option Parsing</a></h3>
     <div>
       Research the <code>getopt</code> command.
     </div>
 
-    <h2>Extras</h2>
+    <h2><a name="Extras">Extras</a></h2>
 
-    <h3>Random Numbers and Options</h3>
+    <h3><a name="RandomNumbersAndOptions">Random Numbers and Options</a></h3>
     <div>
       The <code>random</code> command outputs
       an integer in the range [0, 32767].
