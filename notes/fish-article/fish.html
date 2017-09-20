@@ -740,7 +740,9 @@
       this is only for seeing how the other colors look
       against that background.
       It does not actually change the terminal background color.
-      If using iTerm2 in macOS, the background color can be changed by
+      If using the Terminal app in macOS, the background color can be changed by
+      selecting Preferences...Profiles...Background...Colors &amp; Effects.
+      If using the iTerm2 app in macOS, the background color can be changed by
       selecting Preferences...Profiles...Colors...Background.
     </div>
 
@@ -1146,7 +1148,8 @@ end</pre>
     </div>
     <div>
       To get a substring, use
-      <code>string sub $<i>name</i> -s <i>startIndex</i> -l <i>length</i></code>.
+      <code>string sub $<i>name</i> --start <i>startIndex</i> --length <i>length</i></code>
+      (<code>-s</code> and <code>-l</code>).
       String indexes start at 1, not 0.
       If <code>-s</code> is omitted, it defaults to <code>1</code>.
       If <code>-l</code> is omitted, this gets characters to the end.
@@ -1278,7 +1281,7 @@ set matches (string match -ar '.(o.).' $text) # foal oa bool oo</pre>
 set text 'This is foolish work for a fool.'
 set newText (string replace -a 'foo' 'bar' $text) # not using a regex
 # this is barlish work for a barl
-set newText (string replace -ar '.oo' 'bar' $text) # using a regex
+set newText (string replace -ar '.oo' 'bar' $text) # regex matching more than foo
 # this is barlish work for a barl</pre>
 
     <h3><a name="Numbers">Numbers</a></h3>
@@ -1341,12 +1344,22 @@ set newText (string replace -ar '.oo' 'bar' $text) # using a regex
       By default, the division and modulo operators
       output an integer result obtained by
       truncting the decimal portion (not rounding)
-      even if all operands are floating point.
+      even if all operands are floating point numbers.
       To include decimal places in the result,
       add the <code>-s</code> switch followed by
       a number of decimal points with no space after <code>-s</code>.
-      For example, <code>math 2 / 3</code> outputs <code>0</code>,
-      but <code>math -s3 2 / 3</code> outputs <code>.667</code>.
+      For example, <code>math '2 / 3'</code> outputs <code>0</code>,
+      but <code>math -s3 '2 / 3'</code> outputs <code>.666</code>.
+      Note how this does not perform rounding at the last decimal place.
+      As a consequence of this, <code>math -s0 '2 / 3'</code>
+      outputs <code>0</code>, not <code>1</code>.
+    </div>
+    <div>
+      The easiest way to get rounding is to use <code>printf</code>.
+      For example, to round at three decimal places,
+      <code>printf '%.3f' (math -s4 '2 / 3')</code> which outputs 0.667.
+      Note how this requests one more decimal place from <code>math</code>
+      that is requested from <code>printf</code>.
     </div>
     <div>
       Here is an example that utilizes variables.
