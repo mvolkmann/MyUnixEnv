@@ -1610,6 +1610,12 @@ end</pre>
       This is referred to as "auto-loading".
     </div>
     <div>
+      Functions defined in these paths
+      are immediately available in all fish shells.
+      Changes to them are automatically reloaded in all fish shells
+      the next time they are used.
+    </div>
+    <div>
       If no such function is found, fish then checks whether there is
       an executable file in any path listed in <code>PATH</code>
       with the same name.  If so, that file is executed.
@@ -1640,12 +1646,6 @@ funced foo; and funcsave foo; and source ~/.config/fish/functions/foo.fish</pre>
     <div>
       It is recommended that these files only define
       the function whose name matches the command.
-    </div>
-    <div>
-      Functions defined in these paths
-      are immediately available in all fish shells.
-      Changes to them are automatically reloaded in all fish shells
-      the next time they are used.
     </div>
     <div>
       It is possible to have a function, builtin, and command
@@ -1741,15 +1741,15 @@ function product -a n1 n2
 end
 set result (product 2 3) # 6</pre>
     <div>
-       Everthing in fish is done with commands, even defining functions.
-       The <code>-a</code> switch of the <code>function</code> command
-       specifies named parameters.
-       Recall that functions in fish cannot return a value,
-       but they can write to streams like stdout.
-       Math is performed using the <code>math</code> function
-       which writes its result to stdout.
-       Surrounding a command with parens allows its stdout to be
-       captured and placed in a variable.
+      Everthing in fish is done with commands, even defining functions.
+      The <code>--argument-names</code> (<code>-a</code>) switch of the
+      <code>function</code> command specifies named parameters.
+      Recall that functions in fish cannot return a value,
+      but they can write to streams like stdout.
+      Math is performed using the <code>math</code> function
+      which writes its result to stdout.
+      Surrounding a command with parens allows its stdout to be
+      captured and placed in a variable.
     </div>
 
     <h3><a name="ToolsForFish">Tools for fish</a></h3>
@@ -1781,9 +1781,9 @@ set result (product 2 3) # 6</pre>
     <div>
       The <code>echo</code> command writes its expanded arguments to stdout.
       Normally all arguments are output with a space between them.
-      To suppress this, add the <code>-s</code> switch.
+      To suppress this, add the <code>-s</code> switch (no long form).
       To suppress the newline that is normally output at the end,
-      add the <code>-n</code> switch.
+      add the <code>-n</code> switch (no long form).
       To make a sound ("beep"), output the <code>\a</code> character.
     </div>
 
@@ -1791,7 +1791,8 @@ set result (product 2 3) # 6</pre>
     <div>
       By default when entering commands,
       text is red until a valid command is entered
-      and then it changes to white.
+      and then it changes to "normal"
+      which is the configurble, default, foreground color.
       When typing file paths, the text is underlined
       unless no directory or file matches what has been typed so far.
     </div>
@@ -1839,6 +1840,11 @@ echo Roses are (set_color red)red(set_color normal), \
     </div>
     <div>
       To reset all colors and switches, use <code>set_color normal</code>.
+      Typically this is close to white or black, but it is configurable.
+      When commands are entered in a shell,
+      the color of their output is automatically reset to normal
+      after each line is entered.
+      The color is not automatically reset inside a function.
     </div>
     <div>
       There are many universal variables whose names begin with
