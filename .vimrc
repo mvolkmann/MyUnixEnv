@@ -27,7 +27,8 @@ set dictionary+=~/.vim/computer-words
 
 "set guifont=Monaco:h14
 "set guifont=Inconsolata:h18 " font used in GUI-version of Vim
-set guifont=Inconsolata\ for\ Powerline:h15
+"set guifont=Inconsolata\ for\ Powerline:h15
+set guifont=Consolas
 set hlsearch " highlight all search matches, not just the first
 set incsearch " use incremental searching
 set mouse=a " enable use of mouse in all modes
@@ -36,7 +37,7 @@ set mouse=a " enable use of mouse in all modes
 " See http://stackoverflow.com/questions/21608480/gulp-js-watch-task-runs-twice-when-saving-files.
 set nobackup
 
-set nocompatible " running vim, not vi, so don't force vi compatibility
+"set nocompatible " running vim, not vi, so don't force vi compatibility
 set noshowmode " since it is already being displayed in the status bar by airline
 set number
 set relativenumber
@@ -102,12 +103,15 @@ hi! DiffText   ctermbg=18 " blue for parts of lines that were changed
 "let g:solarized_termtrans=1
 "colorscheme solarized
 
-" These work with .vim/syntax/javascript.vim.
 " To enable italics, see
 " https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
+set t_ZH=[3m
+set t_ZR=[23m
+
+" These work with .vim/syntax/javascript.vim.
 hi Boolean ctermfg=172 " orange
 hi Class ctermfg=12 " blue
-hi Comment ctermfg=42 " green cterm=italic
+hi Comment ctermfg=42 cterm=italic " green
 hi Function ctermfg=9 " red
 hi Keyword ctermfg=191 " yellow
 hi Normal ctermfg=7 " light gray
@@ -145,7 +149,7 @@ hi cssValueNumber ctermfg=15 " white
 hi cssUIAttr ctermfg=15 " white
 hi cssUIProp ctermfg=191 " yellow
 
-hi lessComment ctermfg=22 " green cterm=italic
+hi lessComment ctermfg=22 cterm=italic " green
 hi lessVariable ctermfg=13 " magenta
 
 hi htmlArg ctermfg=8 " dark gray; attribute names
@@ -456,10 +460,10 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 
 " Elm --- {{{
 let g:elm_jump_to_error = 0
-let g:elm_make_output_file = "elm.js"
+let g:elm_make_output_file = 'elm.js'
 let g:elm_make_show_warnings = 0
 let g:elm_syntastic_show_warnings = 0
-let g:elm_browser_command = ""
+let g:elm_browser_command = ''
 let g:elm_detailed_complete = 0
 let g:elm_format_autosave = 0
 let g:elm_format_fail_silently = 0
