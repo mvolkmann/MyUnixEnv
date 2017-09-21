@@ -30,7 +30,6 @@ cp MyUnixEnv/bin/* bin
 tic MyUnixEnv/xterm-256color-italic.terminfo
 tic MyUnixEnv/screen-256color-italic.terminfo
 tic MyUnixEnv/tmux-256color-italic.terminfo
-echo See comments in setup scripts for additional manual steps!
 # Don't forget to change iTerm preferences!
 # Under Profiles...Text,
 # change the font to one that supports italic
@@ -38,4 +37,5 @@ echo See comments in setup scripts for additional manual steps!
 # Under Profiles...Terminal, change "Report Terminal Type"
 # to xterm-256color-italic.
 
-echo success!
+echo Success!
+echo See comments in the setup script for additional manual steps!
