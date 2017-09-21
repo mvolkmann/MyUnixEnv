@@ -1371,11 +1371,11 @@ set area (math "$width * $height") # 6</pre>
     <div>
       The <code>bc</code> command supports functions
       from the Unix standard math library
-      if the <code>-l</code> switch is added.
+      if the <code>--mathlib</code> (<code>-l</code>) switch is added.
       These functions include sine (s), cosine (c), arctangent (a),
       natural logarithm (l), exponentiation (e), and bessel (j).
       Unfortunately the <code>math</code> command doesn't support
-      the <code>-l</code> switch, so these functions cannot be used.
+      the <code>--mathlibl</code> switch, so it cannot use these functions.
       However, the <code>bc</code> command can be used directly in fish.
       Here's an example that determines the sine of 45 degrees.
     </div>
@@ -1383,7 +1383,7 @@ set area (math "$width * $height") # 6</pre>
 set pi (echo "a(1) * 4" | bc -l) # 3.14159265
 set degrees 45
 set radians (math -s8 "$degrees * $pi / 180") # .78539816
-set result (echo "s($radians)" | bc -l) # .70710678</pre>
+set result (echo "s($radians)" | bc --mathlib) # .70710678</pre>
 
     <h3><a name="Dates">Dates</a></h3>
     <div>
@@ -1435,7 +1435,7 @@ set result (echo "s($radians)" | bc -l) # .70710678</pre>
     </div>
     <div>
       To get an item from a list by index,
-      enter <code><i>$name</i>[<i>index</i>]</code>.
+      use <code><i>$name</i>[<i>index</i>]</code>.
       Indexes start at 1, not 0.
       Use negative indexes to retrieve from the end of a list.
       For example, <code><i>$name</i>[-1]</code> gets the last item.
@@ -1446,7 +1446,7 @@ set result (echo "s($radians)" | bc -l) # .70710678</pre>
     </div>
     <div>
       To get a slice which is a new list, use
-      <code><i>name</i>[<i>start</i>..<i>end</i>]</code><br>
+      <code>$<i>name</i>[<i>start</i>..<i>end</i>]</code><br>
       <code><i>start</i></code> and <code><i>end</i></code>
       can be positive or negative.
     </div>
@@ -1508,6 +1508,17 @@ set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
       they are converted to lists by splitting on colons.
     </div>
 
+    <h3><a name="Eval">Eval</a></h3>
+    <div>
+      The <code>eval</code> command evaluates a command in a string
+      that can be built using concatention and variable substitution.
+      For example,
+    </div>
+    <pre>
+set extension '.js'
+set command ls *.$extension
+eval $command</pre>
+
     <h3><a name="Hashmaps">Hashmaps</a></h3>
     <div>
       Hashmaps are not currently supported, but have been discussed at
@@ -1526,8 +1537,12 @@ set items_red fire
 set items_green grass
 set items_blue water
 for color in $colors
-  eval echo '$'items_$color
+  eval echo '$'items_$color # fire, grass, water
 end</pre>
+    <div>
+      Without the use of <code>eval</code> above, this would output
+      <code>$items_red</code>, <code>$items_green</code>, and <code>$items_blue</code>.
+    </div>
 
     <h3><a name="PATH">PATH environment variable</a></h3>
     <div>
@@ -1633,12 +1648,15 @@ funced foo; and funcsave foo; and source ~/.config/fish/functions/foo.fish</pre>
       the next time they are used.
     </div>
     <div>
-      To run a command instead of a function with the same name,
-      use <code>command <i>name</i></code>.
-    </div>
-    <div>
+      It is possible to have a function, builtin, and command
+      that all have the same name.
+      Functions take precedence over builtins
+      and builtins take precedence over commands.
+      To run a function, just enter its name.
       To run a builtin instead of a function with the same name,
-      use <code>builtin <i>name</i></code>.
+      enter <code>builtin <i>name</i></code>.
+      To run a command instead of a function or builtin with the same name,
+      enter <code>command <i>name</i></code>.
     </div>
 
     <h2>Scripting in Fish</h2>
@@ -2120,17 +2138,6 @@ set announcement 'Today is '(date $dateFormat)'.'</pre>
       expands to <code>ls *.css *.html *.js</code>.
       This is also useful in the <code>cp</code> and <code>mv</code> commands.
     </div>
-
-    <h3><a name="Eval">Eval</a></h3>
-    <div>
-      The <code>eval</code> command evaluates a command in a string
-      that can be built using concatention and variable substitution.
-      For example,
-    </div>
-    <pre>
-set extension '.js'
-set command ls *.$extension
-eval $command</pre>
 
     <h3><a name="Functions">Functions</a></h3>
     <div>
