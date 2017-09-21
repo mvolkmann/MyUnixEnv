@@ -27,4 +27,8 @@ cp MyUnixEnv/bin/* bin
 
 #cp -f MyUnixEnv/javascript.snippets .vim/bundle/snipmate.vim/snippets
 
+tic MyUnixEnv/xterm-256color-italic.terminfo
+tic MyUnixEnv/screen-256color-italic.terminfo
+tic MyUnixEnv/tmux-256color-italic.terminfo
+
 echo success!
