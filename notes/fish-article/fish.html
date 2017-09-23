@@ -2041,7 +2041,11 @@ set listName colors</pre>
     </div>
     <ul>
       <li><code>status current-filename</code> -
-        outputs file path of current file</li>
+        outputs file path of current file<br>
+        If the function was defined interactively
+        and has not been explicitly saved to a file,
+        this will output the path to the temporary file
+        where its definition has been saved.</li>
       <li><code>status current-function</code> -
         outputs name of current function</li>
       <li><code>status current-line-number</code> -
@@ -2130,6 +2134,10 @@ end &lt; <i>filePath</i> </pre>
       <li>is a non-empty file (has size): <code>if test -s $<i>file</i></code></li>
       <li>and more (see test command for details)</li>
     </ul>
+    <div>
+      The <code>test</code> command does not support
+      long forms of switches used above.
+    </div>
 
     <h3><a name="CommandSubstitution">Command Substitution</a></h3>
     <div>
