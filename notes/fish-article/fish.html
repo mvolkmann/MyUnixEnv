@@ -1828,19 +1828,26 @@ echo Roses are (set_color red)red(set_color normal), \
       <li><code>--background</code> (<code>-b</code>) to specify a background instead of a foreground color</li>
       <li><code>--prin</code>t-colors (<code>-c</code>) prints the list of supported color names</li>
       <li><code>--bold</code> (<code>-o</code>) sets bold mode</li>
-      <li><code>--dim</code> (<code>-d</code>) sets dim mode
-        (This doesn't seem to have any effect in iTerm2.)</li>
+      <li><code>--dim</code> (<code>-d</code>) sets dim mode<br>
+        Some terminals, including iTerm2 on macOS, don't support this by default.</li>
       <li><code>--italics</code> (<code>-i</code>) sets italics mode<br>
-      (This doesn't work in iTerm2 on macS.  For the steps to enable, see
+        Some terminals, including iTerm2 on macOS, don't support this by default.</li>
+      <li><code>--reverse</code> (<code>-r</code>) sets reverse mode</li>
+      <li><code>--underline</code> (<code>-u</code>) sets underlined mode</li>
+    </ul>
+    <div>
+      To enable the use of <code>--dim</code> and <code>--italics</code>
+      on macOS in iTerm2, vim, and tmux, see
       <a href="https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/">https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/</a>,
       the answer from Ian Edington at
       <a href="https://apple.stackexchange.com/questions/249307/tic-doesnt-read-from-stdin-and-segfaults-when-adding-terminfo-to-support-italic/295584#295584">https://apple.stackexchange.com/questions/249307/tic-doesnt-read-from-stdin-and-segfaults-when-adding-terminfo-to-support-italic/295584#295584</a>,
       and the Vim-specific information at
       <a href="https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic">https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic</a>.
-      Wow, computers are hard!</li>
-      <li><code>--reverse</code> (<code>-r</code>) sets reverse mode</li>
-      <li><code>--underline</code> (<code>-u</code>) sets underlined mode</li>
-    </ul>
+      Also see my <code>.terminfo</code> files at
+      <a href="https://github.com/mvolkmann/MyUnixEnv">https://github.com/mvolkmann/MyUnixEnv</a>
+      and the <code>setup</code> script there that
+      runs the <code>tic</code> command on the <code>.terminfo</code> files.
+    </div>
     <div>
       Using <code>set_color</code> without these switches resets to default mode.
     </div>
