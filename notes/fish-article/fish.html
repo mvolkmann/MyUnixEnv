@@ -2207,12 +2207,14 @@ function product -a n1 n2
 end
 set result (product 3 4) # 12</pre>
     <div>
-      Function names cannot begin with <code>-</code>
-      and cannot contain <code>/</code>,
-      but they can contain any other characters, even spaces.
+      Function names cannot begin with a dash (<code>-</code>),
+      but they can begin with any other character, even digits.
+      Function names cannot contain a slash (<code>/</code>),
+      but they can contain any other character, even spaces.
       To include a space, prefix it with <code>\</code>.
       For example, <code>function foo\ bar; echo in foo bar; end</code>
       To call this function, use <code>foo\ bar</code>.
+      While this is supported, doing this seems like a bad idea.
     </div>
     <div>
       Functions can be defined interactively
