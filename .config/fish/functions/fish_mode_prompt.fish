@@ -17,7 +17,6 @@ function fish_mode_prompt
         set_color magenta
         echo V
     end
-    set_color normal
-    printf ' '
+    echo ' '
   end
 end

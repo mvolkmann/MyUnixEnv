@@ -2893,6 +2893,8 @@ end</pre>
     </div>
     <div>
       Here's an example of a custom mode prompt.
+      Newlines normally output by the <code>echo</code> command
+      are stripped when this function runs.
     </div>
     <pre>
 function fish_mode_prompt
@@ -2911,8 +2913,7 @@ function fish_mode_prompt
         set_color magenta
         echo V
     end
-    set_color normal
-    printf ' '
+    echo ' '
   end
 end</pre>
 
