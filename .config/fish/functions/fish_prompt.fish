@@ -48,5 +48,6 @@ function fish_prompt
 
   # Display "fish" prompt on new line.
   set_color normal
+  # This uses printf instead of echo to output a leading newline.
   printf '\\n🐠  '
 end

@@ -2871,6 +2871,7 @@ function fish_prompt
   end
 
   # Display "fish" prompt on new line.
+  # This uses printf instead of echo to output a leading newline.
   set_color normal
   printf '\\n&#x1F420  ' # uses unicode for fish emoji;
 end</pre>
