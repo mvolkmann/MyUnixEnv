@@ -32,9 +32,9 @@ function fish_prompt
     if test $branchLen -gt $remaining
       echo # newline
       echo -n '  ' # indents past Vim mode on previous line
-      set remaining $COLUMNS
+      set remaining $COLUMNS # resets to full width
     else
-      echo -n ' '
+      echo -n ' ' # space between PWD and branch name
     end
 
     # If branch name will fit on current line ...

@@ -2602,8 +2602,12 @@ end</pre>
     </div>
     <div>
       To get the type of a name, enter <code>type <i>name</i></code>.
-      For functions, this also outputs their definition.
+      For a function, this outputs "<i>name</i> is a function with definition",
+      followed by the definition.
+      For a builtin, this outputs "<i>name</i> is a builtin".
+      For a command, this outputs the path to the file that defines it.
       To get just the type, enter <code>type -t <i>name</i></code>.
+      This outputs "function", "builtin", or "file" (for commands).
     </div>
 
     <h3><a name="ifCommand">if Command</a></h3>
