@@ -2509,28 +2509,35 @@ set -U PATH /foo $PATH</pre>
 function announceProcessExit --on-process-exit 12345
   echo an important process exited
 end
+
+# %self expands to the current process id.
 function announceMyExit --on-process-exit %self
   echo I exited
 end</pre>
     <div>
       Function can run automatically when a specific signal is received.
       This is configured by adding the <code>--on-signal</code> (<code>-s</code>)
-      switch, followed by a signal name or number, to a function definition.
+      switch followed by a signal name or number to a function definition.
       For a list of possible signals, enter <code>kill -l</code>.
-      Also see
-      <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
-      As an example, pressing ctrl-c sends an interrupt signal which has the name "int".
+      To see the keystrokes that generate some of these signals,
+      enter <code>stty -a</code> and look for "cchars:".
+      As an example, pressing ctrl-d sends an "eof" signal.
     </div>
     <div>
       To send any signal to a given process, enter
-      <code>kill -sig <i>signalNameOrNumber</i> <i>pid</i></code>.
-      For example, to handle a kill of the current process,
+      <code>kill -<i>signalNameOrNumber</i> <i>pid</i></code>.
+      For example, to handle a "hup" signal,
     </div>
     <pre>
-function handleTermSignal --on-signal term
-  echo received term signal
-end</pre>
-TODO: TRY THIS!  Maybe need to test with a signal that doesn't kill the process so you can see the echo.
+function handleHupSignal --on-signal hup
+  echo got hup
+end
+
+kill -hup %self # got hup</pre>
+    <div>
+      For more information on Unix signals, see
+      <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
+    </div>
 
 <h3><a name="TypesOfCommands">Types of Commands</a></h3>
     <div>
@@ -2981,6 +2988,38 @@ while read line
   echo you entered $line
 end</pre>
 
+    <h3><a name="DebuggingFunctions">Debugging Functions</a></h3>
+    <div>
+      A common way to debug functions is to add echo commands
+      and comment out parts of the code.
+      Often a better approach is to add breakpoints
+      to stop execution at specific places.
+      While stopped, variables can be examined and modified.
+      Then execution can be continued.
+    </div>
+    <div>
+      To add breakpoints in a function,
+      add uses of the <code>breakpoint</code> command.
+      After adding them, run the function.
+      When a breakpoint is reached, the function will stop
+      and control will be returned to the shell.
+      Use the <code>echo</code> command to examine variables.
+      and the <code>set</code> command to modify them.
+      For example, <code>echo $count</code> and <code>set count 7</code>.
+    </div>
+    <div>
+      To resume execution, enter <code>exit</code>.
+      To stop the running function before it reaches its end,
+      enter <code>kill %self</code>.
+    </div>
+
+    <h3><a name="OptionParsing">Option Parsing</a></h3>
+    <div>
+      Research the <code>getopt</code> command.
+    </div>
+
+    <h2><a name="Extras">Extras</a></h2>
+
     <h3><a name="AbsolutePath">Absolute Path</a></h3>
     <div>
       To get the absolute path of a relative path,
@@ -3037,38 +3076,6 @@ end</pre>
       If you attempt to exit again,
       it will kill all the background jobs and exit.
     </div>
-
-    <h3><a name="DebuggingFunctions">Debugging Functions</a></h3>
-    <div>
-      A common way to debug functions is to add echo commands
-      and comment out parts of the code.
-      Often a better approach is to add breakpoints
-      to stop execution at specific places.
-      While stopped, variables can be examined and modified.
-      Then execution can be continued.
-    </div>
-    <div>
-      To add breakpoints in a function,
-      add uses of the <code>breakpoint</code> command.
-      After adding them, run the function.
-      When a breakpoint is reached, the function will stop
-      and control will be returned to the shell.
-      Use the <code>echo</code> command to examine variables.
-      and the <code>set</code> command to modify them.
-      For example, <code>echo $count</code> and <code>set count 7</code>.
-    </div>
-    <div>
-      To resume execution, enter <code>exit</code>.
-      To stop the running function before it reaches its end,
-      enter <code>kill %self</code>.
-    </div>
-
-    <h3><a name="OptionParsing">Option Parsing</a></h3>
-    <div>
-      Research the <code>getopt</code> command.
-    </div>
-
-    <h2><a name="Extras">Extras</a></h2>
 
     <h3><a name="RandomNumbersAndOptions">Random Numbers and Options</a></h3>
     <div>
