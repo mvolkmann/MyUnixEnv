@@ -10,7 +10,7 @@ function fish_mode_prompt
       case insert
         set_color green
         echo I
-      case replace_one
+      case replace_one # There is no replace_all.
         set_color green
         echo R
       case visual
