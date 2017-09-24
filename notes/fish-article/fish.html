@@ -2308,12 +2308,13 @@ end</pre>
       With HTML it is possible to add colors to specific syntax items using CSS.
       To read from a file and rewrite it with a formatted version, enter
       <code>fish_indent --write <i>someName</i>.fish</code> (<code>-w</code>).
-      This uses four-space indentation and that cannot be customized,
-      but all occurrences for four spaces can be replaced with two
-      using the following command.
+      This uses four-space indentation and that cannot be customized.
+      However, all occurrences of four spaces can be replaced with two
+      using the following command which also saves a backup of the original file
+      in a new file with <code>.bak</code> appended to the name.
     </div>
     <pre>
-sed -i bak 's/    /  /g' <i>fn-name</i>.fish</pre>
+sed -i .bak 's/    /  /g' <i>fn-name</i>.fish</pre>
     <div>
       To list all currently defined functions, enter <code>functions</code>.
       To include private fish functions whose names begin with a double underscore,
@@ -2326,7 +2327,7 @@ sed -i bak 's/    /  /g' <i>fn-name</i>.fish</pre>
       <code>functions <i>name1</i> <i>name2</i> ...</code>.
     </div>
     <div>
-      To see the path to where a function is defined, enter
+      To output the path to where a function is defined, enter
       <code>functions --details <i>name</i></code> (<code>-D</code>).
       If the function has not been saved to a file, this will output "stdin".
     </div>
@@ -2388,14 +2389,11 @@ end</pre>
       All named parameters will be "set",
       but ones not specified will be set to an empty list.
       To test whether a specific named parameter is set, use
-      <code>set -q <i>name</i>[1]</code>.
+      <code>set -q <i>argName</i>[1]</code>.
       To set a named parameter to a default value if it is not specified, use:
-      <pre>
-if something
-  set <i>name</i> '<i>defaultValue</i>'
-end</pre>
-      TODO: Verify this!
     </div>
+    <pre>
+set -q <i>argName</i>[1]; or set -l <i>argName</i> <i>defaultValue</i></pre>
     <div>
       To process command-line arguments to a function as switches (a.k.a. options):
     </div>
@@ -2497,6 +2495,10 @@ function announcePath --on-variable PATH
   echo PATH is now $PATH
 end
 set -U PATH /foo $PATH</pre>
+    <div>
+      Since changing the variable <code>fish_user_paths</code>
+      also changes <code>PATH</code>, that also triggers this function.
+    </div>
     <div>
       Functions can run automatically when a given process exits.
       This is configured by adding the <code>--on-process-exit</code> (<code>-p</code>)
