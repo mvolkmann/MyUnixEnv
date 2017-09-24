@@ -2230,14 +2230,22 @@ end</pre>
     <div>
       Many switches can follow the function name.
       Some are described later.
-      To add documentation, use <code>--description "<i>some desc</i>"</code>
+      To add documentation, use <code>--description '<i>some desc</i>'</code>
       (<code>-d</code>).
       To display the description of a function, enter
       <code>functions --details --verbose <i>fnName</i> </code>
       and note the fifth line of the output.
       The <code>--details</code> switch is described further below.
-      TODO: See your fndesc.fish function that only displays description.
     </div>
+    <div>
+      Here is a function that can be used to
+      only output the description of another function:
+    </div>
+    <pre>
+function fndesc -a fnName -d 'displays description of a function'
+  set lines (functions -Dv $fnName)
+  echo $lines[5]
+end</pre>
     <div>
        All functions are public.
        Prefixes can be used to denote "private" functions
@@ -2302,13 +2310,10 @@ end</pre>
       <code>fish_indent --write <i>someName</i>.fish</code> (<code>-w</code>).
       This uses four-space indentation and that cannot be customized,
       but all occurrences for four spaces can be replaced with two
-      using the <code>sed</code> command.
-      TODO:
-      - see your fish_indent2.fish script
-      - run with fish_indent2 name
-      - creates a file with "-new" at end
-      - Fix to overwrite the input file
+      using the following command.
     </div>
+    <pre>
+sed -i bak 's/    /  /g' <i>fn-name</i>.fish</pre>
     <div>
       To list all currently defined functions, enter <code>functions</code>.
       To include private fish functions whose names begin with a double underscore,

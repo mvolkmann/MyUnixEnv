@@ -4,7 +4,7 @@
 # that can be called from the command-line.
 # Perhaps additional functions can be defined
 # that can be called from that function.
-function foo
+function foo -d 'outputs a given person name and color'
   if test (count $argv) -ne 2
     set_color red; echo -n usage: foo
     set_color --italic; echo ' name color'
