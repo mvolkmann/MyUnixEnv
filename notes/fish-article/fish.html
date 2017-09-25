@@ -1108,6 +1108,9 @@
       To suppress output from these and
       just use the value of the <code>status</code> variable,
       add the <code>--quiet</code> (<code>-q</code>) switch.
+      If any arguments begin with a dash, add "<code> -- </code>"
+      after any switches and before any arguments
+      to indicate where the switches end.
     </div>
     <div>
       To get the length of a string, use
@@ -2729,8 +2732,24 @@ end</pre>
       specified with either <code>-h</code> or <code>--help</code>.
     </div>
     <pre>
-      TODO: PUT CODE HERE - see switch_demo.fish
-    </pre>
+function product
+  set result 1
+  for arg in $argv
+    switch $arg
+      case '-h' '--help'
+        echo 'This function returns the product of its arguments.'
+        return
+      case '*'
+        # If $arg starts with a dash ...
+        if string match -qr '^-' -- $arg
+          echo "Unsupported switch $arg"
+          return
+        end
+        set result (math "$result * $arg")
+    end
+  end
+  echo $result
+end</pre>
 
     <h3><a name="LoopCommands">Loop Commands</a></h3>
     <div>
