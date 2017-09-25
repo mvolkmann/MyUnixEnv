@@ -143,7 +143,6 @@
       <li><a href="#Processes">Processes</a></li>
       <li><a href="#Jobs">Jobs</a></li>
       <li><a href="#DebuggingFunctions">Debugging Functions</a></li>
-      <li><a href="#OptionParsing">Option Parsing</a></li>
 
       <li class="level1"><a href="#Extras">Extras</a></li>
       <li><a href="#RandomNumbersAndOptions">Random Numbers and Options</a></li>
@@ -1162,7 +1161,7 @@ end</pre>
     </div>
     <div>
       To get a substring, use
-      <code>string sub $<i>name</i> --start <i>startIndex</i> --length <i>length</i></code>
+      <code>string sub --start <i>startIndex</i> --length <i>length</i> $<i>name</i></code>
       (<code>-s</code> and <code>-l</code>).
       String indexes start at 1, not 0.
       If <code>-s</code> is omitted, it defaults to <code>1</code>.
@@ -2719,6 +2718,13 @@ end</pre>
       To treat one case value as the default, use
       <code>case default-value '*'</code>.
     </div>
+    <div>
+      For example, this function accepts a "help" switch
+      specified with either <code>-h</code> or <code>--help</code>.
+    </div>
+    <pre>
+      PUT CODE HERE - see switch_demo.fish
+    </pre>
 
     <h3><a name="LoopCommands">Loop Commands</a></h3>
     <div>
@@ -3017,11 +3023,6 @@ end</pre>
       enter <code>kill %self</code>.
     </div>
 
-    <h3><a name="OptionParsing">Option Parsing</a></h3>
-    <div>
-      Research the <code>getopt</code> command.
-    </div>
-
     <h2><a name="Extras">Extras</a></h2>
 
     <h3><a name="AbsolutePath">Absolute Path</a></h3>
@@ -3052,13 +3053,14 @@ end</pre>
     <div>
       To run a command in background,
       add <code>&amp;</code> to end of the command.
-      This does not work for custom functions.
-      TODO: Why?
+      This works for commands, but not for functions.
+      For a discusion on the reason why, see
+      <a href="https://github.com/fish-shell/fish-shell/issues/238">https://github.com/fish-shell/fish-shell/issues/238</a>.
     </div>
     <div>
       To suspend a currently running command, press ctrl-z.
-      This does not work for custom functions.
-      TODO: Why?
+      This does not work for functions, likely for the same
+      reason that functions cannot be run in the background.
     </div>
     <div>
       To continue running a suspended command in background
@@ -3108,10 +3110,14 @@ set colors red orange yellow green blue purple
 set color (random choice $colors)</pre>
     </div>
 
+    <h2>Summary</h2>
+    <div>
+      TODO: Add summary here.
+    </div>
+
     <hr>
 LOOK FOR TODO IN THIS FILE!
 
-TODO: Document how to use the "spin" function you installed.<br>
 TODO: See .config/fish/functions/listrm.fish<br>
 TODO: See .config/fish/functions/rmpath.fish<br>
 TODO: For article<br>
@@ -3119,6 +3125,8 @@ TODO: For article<br>
   that lists files containing given text in their name
   in tree form that colors file types differently
   (ex. red for .js, blue for .scss, ...)
+  * see your webls.fish
+    and $JS_DIR/Node.js/webls/index.js
   * maybe make colors configurable<br>
 - get some ideas from the Wikipedia entry
   </body>
