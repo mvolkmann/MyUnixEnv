@@ -1222,6 +1222,12 @@ set result (string trim --left --chars 0 $myText) # 19</pre>
       For example,<br>
       <code>set newText (string repeat -n3 'foo') # foofoofoo</code>
     </div>
+    <div>
+      If the string to be operated on begins with a dash,
+      separate it from any switches that preceded it with two dashes.
+      For example,
+      TODO: Provide an example like this: string match -qr '^-' -- $arg
+    </div>
 
     <h3><a name="RegularExpressions">Regular Expressions</a></h3>
     <div>
