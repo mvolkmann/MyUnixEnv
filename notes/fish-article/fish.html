@@ -104,6 +104,7 @@
       <li><a href="#AbbreviationsTab">Abbreviations Tab</a></li>
       <li><a href="#ConfigurationServer">Configuration Server</a></li>
       <li><a href="#ConfigurationViaFishConfig">Configuration via fish.config</a></li>
+      <li><a href="#CustomGreeting">Custom Greeting</a></li>
       <li><a href="#Aliases">Aliases</a></li>
       <li><a href="#Abbreviations">Abbreviations</a></li>
       <li><a href="#Path">PATH environment variable</a></li>
@@ -135,15 +136,14 @@
       <li><a href="#ifCommand">if Command</a></li>
       <li><a href="#switchCommand">switch Command</a></li>
       <li><a href="#LoopCommands">Loop Commands</a></li>
-      <li><a href="#CustomGreeting">Custom Greeting</a></li>
       <li><a href="#CustomPrompt">Custom Prompt</a></li>
+      <li><a href="#DebuggingFunctions">Debugging Functions</a></li>
+
+      <li class="level1"><a href="#Extras">Extras</a></li>
       <li><a href="#ReadingFromStdin">Reading From stdin</a></li>
       <li><a href="#AbsolutePath">Absolute Path</a></li>
       <li><a href="#Processes">Processes</a></li>
       <li><a href="#Jobs">Jobs</a></li>
-      <li><a href="#DebuggingFunctions">Debugging Functions</a></li>
-
-      <li class="level1"><a href="#Extras">Extras</a></li>
       <li><a href="#RandomNumbersAndOptions">Random Numbers and Options</a></li>
       <li><a href="#CustomTabCompletions">Custom Tab Completions</a></li>
     </ul>
@@ -977,6 +977,16 @@ set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
       While functions can be defined in <code>config.fish</code>,
       it is more efficient to use autoloading functions.
       These are discussed later.
+    </div>
+
+    <h3><a name="CustomGreeting">Custom Greeting</a></h3>
+    <div>
+      By default, new fish shells display the greeting
+      "Welcome to fish, the friendly interactive shell".
+      To change this, enter something like
+      <code>set -U fish_greeting 'You are a fish!'</code>.
+      To suppress the greeting, erase the current setting with
+      <code>set -e fish_greeting</code>.
     </div>
 
     <h3><a name="Aliases">Aliases</a></h3>
@@ -2765,16 +2775,6 @@ end</pre>
       <code>continue</code> to skip the remainder of the current iteration.
     </div>
 
-    <h3><a name="CustomGreeting">Custom Greeting</a></h3>
-    <div>
-      By default, new fish shells display the greeting
-      "Welcome to fish, the friendly interactive shell".
-      To change this, enter something like
-      <code>set -U fish_greeting 'You are a fish!'</code>.
-      To suppress the greeting, erase the current setting with
-      <code>set -e fish_greeting</code>.
-    </div>
-
     <h3><a name="CustomPrompt">Custom Prompt</a></h3>
     <div>
       The default fish prompt displays the output of the
@@ -2905,6 +2905,33 @@ function fish_mode_prompt
   end
 end</pre>
 
+    <h3><a name="DebuggingFunctions">Debugging Functions</a></h3>
+    <div>
+      A common way to debug functions is to add echo commands
+      and comment out parts of the code.
+      Often a better approach is to add breakpoints
+      to stop execution at specific places.
+      While stopped, variables can be examined and modified.
+      Then execution can be continued.
+    </div>
+    <div>
+      To add breakpoints in a function,
+      add uses of the <code>breakpoint</code> command.
+      After adding them, run the function.
+      When a breakpoint is reached, the function will stop
+      and control will be returned to the shell.
+      Use the <code>echo</code> command to examine variables.
+      and the <code>set</code> command to modify them.
+      For example, <code>echo $count</code> and <code>set count 7</code>.
+    </div>
+    <div>
+      To resume execution, enter <code>exit</code>.
+      To stop the running function before it reaches its end,
+      enter <code>kill %self</code>.
+    </div>
+
+    <h2><a name="Extras">Extras</a></h2>
+
     <h3><a name="ReadingFromStdin">Reading From stdin</a></h3>
     <div>
       The command <code>read <i>var</i></code>
@@ -2978,33 +3005,6 @@ while read line
   if test -z $line; break; end
   echo you entered $line
 end</pre>
-
-    <h3><a name="DebuggingFunctions">Debugging Functions</a></h3>
-    <div>
-      A common way to debug functions is to add echo commands
-      and comment out parts of the code.
-      Often a better approach is to add breakpoints
-      to stop execution at specific places.
-      While stopped, variables can be examined and modified.
-      Then execution can be continued.
-    </div>
-    <div>
-      To add breakpoints in a function,
-      add uses of the <code>breakpoint</code> command.
-      After adding them, run the function.
-      When a breakpoint is reached, the function will stop
-      and control will be returned to the shell.
-      Use the <code>echo</code> command to examine variables.
-      and the <code>set</code> command to modify them.
-      For example, <code>echo $count</code> and <code>set count 7</code>.
-    </div>
-    <div>
-      To resume execution, enter <code>exit</code>.
-      To stop the running function before it reaches its end,
-      enter <code>kill %self</code>.
-    </div>
-
-    <h2><a name="Extras">Extras</a></h2>
 
     <h3><a name="AbsolutePath">Absolute Path</a></h3>
     <div>
