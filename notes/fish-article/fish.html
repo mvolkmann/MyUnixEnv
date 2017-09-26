@@ -83,10 +83,15 @@
       <li><a href="#StartingFish">Starting Fish</a></li>
       <li><a href="#Autosuggestions">Autosuggestions</a></li>
       <li><a href="#TabCompletions">Tab Completions</a></li>
-      <li><a href="#CustomTabCompletions">Custom Tab Completions</a></li>
-      <li><a href="#CommandHistory">Command History</a></li>
       <li><a href="#ChangingWorkingDirectory">Changing Working Directory</a></li>
       <li><a href="#Commands">Commands</a></li>
+      <li><a href="#MultipleStatementsOnALine">Multiple Statements on a Line</a></li>
+      <li><a href="#andAndOrCommands">and &amp; or Commands</a></li>
+      <li><a href="#CommandHistory">Command History</a></li>
+      <li><a href="#CommandSubstitution">Command Substitution</a></li>
+      <li><a href="#Wildcards">Wildcards</a></li>
+      <li><a href="#PipesAndRedirection">Pipes and Redirection</a></li>
+      <li><a href="#BraceExpansion">Brace Expansion</a></li>
 
       <li class="level1"><a href="#CustomizingFish">Customizing Fish</a></li>
       <li><a href="#ConfigurationViaWebUi">Configuration via Web UI</a></li>
@@ -101,6 +106,11 @@
       <li><a href="#ConfigurationViaFishConfig">Configuration via fish.config</a></li>
       <li><a href="#Aliases">Aliases</a></li>
       <li><a href="#Abbreviations">Abbreviations</a></li>
+      <li><a href="#Path">PATH environment variable</a></li>
+      <li><a href="#ToolsForFish">Tools for fish</a></li>
+
+      <li class="level1"><a href="#ScriptingInFish">Scripting in Fish</a></li>
+      <li><a href="#ComparingToJavaScript">Comparing fish functions to JavaScript</a></li>
       <li><a href="#Variables">Variables</a></li>
       <li><a href="#Strings">Strings</a></li>
       <li><a href="#RegularExpressions">Regular Expressions</a></li>
@@ -109,33 +119,22 @@
       <li><a href="#Dates">Dates</a></li>
       <li><a href="#Lists">Lists (a.k.a Arrays)</a></li>
       <li><a href="#Hashmaps">Hashmaps</a></li>
-      <li><a href="#Path">PATH environment variable</a></li>
-      <li><a href="#FunctionsAndAutoLoading">Functions and Auto-loading</a></li>
-
-      <li class="level1"><a href="#ScriptingInFish">Scripting in Fish</a></li>
-      <li><a href="#ComparingToJavaScript">Comparing fish functions to JavaScript</a></li>
-      <li><a href="#ToolsForFish">Tools for fish</a></li>
       <li><a href="#echoCommand">echo Command</a></li>
       <li><a href="#Colors">Colors</a></li>
       <li><a href="#printfCommand">printf Command</a></li>
-      <li><a href="#Wildcards">Wildcards</a></li>
-      <li><a href="#PipesAndRedirection">Pipes and Redirection</a></li>
       <li><a href="#AdvancedUseOfVariables">Advanced Use of Variables</a></li>
       <li><a href="#SpecialVariables">Special Variables</a></li>
       <li><a href="#statusCommand">status Command</a></li>
       <li><a href="#MoreOnTests">More on Tests</a></li>
       <li><a href="#Files">Files</a></li>
-      <li><a href="#CommandSubstitution">Command Substitution</a></li>
-      <li><a href="#BraceExpansion">Brace Expansion</a></li>
       <li><a href="#Eval">Eval</a></li>
       <li><a href="#Functions">Functions</a></li>
+      <li><a href="#FunctionAutoLoading">Function Autoloading</a></li>
       <li><a href="#AutoRunningFunctions">Auto-running Functions</a></li>
       <li><a href="#TypesOfCommands">Types of Commands</a></li>
       <li><a href="#ifCommand">if Command</a></li>
-      <li><a href="#andAndOrCommands">and &amp; or Commands</a></li>
       <li><a href="#switchCommand">switch Command</a></li>
       <li><a href="#LoopCommands">Loop Commands</a></li>
-      <li><a href="#MultipleStatementsOnALine">Multiple Statements on a Line</a></li>
       <li><a href="#CustomGreeting">Custom Greeting</a></li>
       <li><a href="#CustomPrompt">Custom Prompt</a></li>
       <li><a href="#ReadingFromStdin">Reading From stdin</a></li>
@@ -146,7 +145,11 @@
 
       <li class="level1"><a href="#Extras">Extras</a></li>
       <li><a href="#RandomNumbersAndOptions">Random Numbers and Options</a></li>
+      <li><a href="#CustomTabCompletions">Custom Tab Completions</a></li>
     </ul>
+    <div>
+      TODO: Verify that the TOC is correct.
+    </div>
 
     <h3><a name="Overview">Overview</a></h3>
     <div>
@@ -462,94 +465,6 @@
       again to execute the <code>man</code> command.
     </div>
 
-    <h3><a name="CustomTabCompletions">Custom Tab Completions</a></h3>
-    <div>
-      Tab completions can be defined for custom commands
-      using the <code>complete</code> command.
-      This is an advanced topic.
-    </div>
-    <div>
-      The syntax is
-      <code>complete -c <i>commandName</i> -s <i>shortSwitch</i> -l <i>longSwitch</i> -a '<i>argument words</i>'</code>
-    </div>
-    <div>
-       TODO: See your functions/greet.fish and completions/greet.fish example
-       which is not working yet.
-       Also see https://fishshell.com/docs/current/commands.html#complete
-       and https://fishshell.com/docs/current/index.html#completion-own.
-    </div>
-
-    <h3><a name="CommandHistory">Command History</a></h3>
-    <div>
-      All commands entered are saved in command history,
-      except those that begin with a space.
-      Those are treated like incognito commands.
-      This exception may be removed in fish 3.
-      Duplicate commands are automatically removed,
-      retaining only their most recent occurrence.
-    </div>
-    <div>
-      A separate command history is maintained for each session,
-      but new sessions start with the command history
-      of the session from which they were created.
-    </div>
-    <div>
-      Command history is stored in <code>~/.local/share/fish/fish_history</code>.
-      This file stores each command and when it was entered.
-    </div>
-    <div>
-      To navigate through all previously entered commands
-      press the up and down arrow keys.
-      Press enter to execute the displayed command
-      or press ctrl-c to exit without executing one.
-      To restrict to commands that contain a given substring,
-      type the substring before pressing the arrow keys.
-    </div>
-    <div>
-      Many commands accept switches that affect their functionality.
-      Switches can have short and long forms.
-      For example, the <code>grep</code> command
-      can perform case insensitive matches.
-      This is specified using the <code>--ignore-case</code> (long)
-      or <code>-i</code> (short) switch.
-      Command examples in this article always use the long forms of switches
-      and commands are followed by the short form in parentheses.
-    </div>
-    <div>
-      To list all commands in the history, enter <code>history</code>.
-    </div>
-    <div>
-      To list only commands that contain a given substring,
-      enter <code>history <i>text</i></code>.
-      This is the same as entering
-      <code>history search --contains <i>substring</i></code> (<code>-c</code>).
-    </div>
-    <div>
-      To list only commands that begin with a given prefix, enter
-      <code>history search --prefix <i>prefix</i></code> (<code>-p</code>).
-    </div>
-    <div>
-      To include the date and time that commands were issued,
-      add the <code>--show-time-prepends</code> (<code>-t</code>) switch.
-    </div>
-    <div>
-      To limit the number of commands output,
-      add the <code>--max</code> (<code>-n</code>) switch followed by a number.
-      For example, <code>history -n 5</code>.
-      Note that the space after <code>-n</code> is required.
-    </div>
-    <div>
-      To clear all command history, enter <code>history clear</code>.
-    </div>
-    <div>
-      To delete commands from history that contain a given substring,
-      enter <code>history delete --contains <i>substring</i></code>.
-    </div>
-    <div>
-      To delete commands from history that begin with a given prefix,
-      enter <code>history delete --prefix <i>prefix</i></code> (<code>-p</code>).
-    </div>
-
     <h3><a name="ChangingWorkingDirectory">Changing Working Directory</a></h3>
     <div>
       Like in other shells, the current working directory
@@ -612,10 +527,17 @@
       It is somewhat like Lisp in this regard.
     </div>
     <div>
-      Many switches support both a long and short form.
+      Many commands accept switches that affect their functionality.
+      Switches can have short and long forms.
       Long switch names are preceded by two dashes.
       Short switch names are preceded by one dash
       and their names are a single letter.
+      For example, the <code>grep</code> command
+      can perform case insensitive matches.
+      This is specified using the <code>--ignore-case</code> (long)
+      or <code>-i</code> (short) switch.
+      Command examples in this article always use the long forms of switches
+      and commands are followed by the short form in parentheses.
     </div>
     <div>
       Nearly all commands set the <code>status</code> variable to
@@ -679,26 +601,53 @@
       Arguments are expanded before commands are executed.
       This includes evaluating wildcards in file paths.
     </div>
+
+    <h3><a name="MultipleStatementsOnALine">Multiple Statements on a Line</a></h3>
     <div>
-      To execute one command and then execute a second command
-      only if the first succeeded, use
+      A line can contain more than one statement if they are separated by semicolons.
+      For example, <code>cd foo; pwd; ls</code>.
+    </div>
+
+    <h3><a name="andAndOrCommands">and &amp; or Commands</a></h3>
+    <div>
+      In fish, <code>and</code> and <code>or</code> are commands,
+      not keywords or operators.
+      Both take a single argument which is a command
+      to be conditionally executed based on the
+      status of the previously executed command.
+      If they do run the specified command,
+      the <code>status</code> variable is set to
+      the status of that command.
+      Otherwise it is not changed.
+    </div>
+    <div>
+      To conditionally execute a command only
+      if the previous command was successful, use
       <code><i>command1</i>; and <i>command2</i></code>.
       Note the semicolon at end of the first command and the use of
       <code>and</code> instead of <code>&amp;&amp;</code> like in bash.
-      <code>and</code> is not a keyword.  It is a command that executes the
-      command passed to it only if the status from the previous command is zero.
-      If <code><i>command1</i>; <i>command2</i></code> were used instead
-      and <code><i>command1</i></code> had a bad status,
-      <code><i>command2</i></code> would still be executed.
+      This is the same as
+    </div>
+    <pre>
+<i>command1</i>
+and <i>command2</i></pre>
+    <div>
+      This is not the same as
+      <code><i>command1</i>; <i>command2</i></code>
+      because that will run <code><i>command2</i></code>
+      even if <code><i>command1</i></code>
+      was not successful.
     </div>
     <div>
-      To execute one command and then execute a second command
-      only if the first failed, use
+      To conditionally execute a command only
+      if the previous command failed, use
       <code><i>command1</i>; or <i>command2</i></code>.
       Note the semicolon at end of the first command and the use of
       <code>or</code> instead of <code>||</code> like in bash.
-      <code>or</code> is not a keyword.  It is a command that executes the
-      command passed to it only if the status from the previous command is non-zero.
+    </div>
+    <div>
+      The <code>and</code> and <code>or</code> commands are often
+      used in <code>if</code> and <code>while</code> commands.
     </div>
     <div>
       While these conventions for <code>and</code> and <code>or</code>
@@ -707,6 +656,152 @@
       where everything is done with commands and
       all commands are terminated with a newline or semicolon.
     </div>
+
+    <h3><a name="CommandHistory">Command History</a></h3>
+    <div>
+      All commands entered are saved in command history,
+      except those that begin with a space.
+      Those are treated like incognito commands.
+      This exception may be removed in fish 3.
+      Duplicate commands are automatically removed,
+      retaining only their most recent occurrence.
+    </div>
+    <div>
+      A separate command history is maintained for each session,
+      but new sessions start with the command history
+      of the session from which they were created.
+    </div>
+    <div>
+      Command history is stored in <code>~/.local/share/fish/fish_history</code>.
+      This file stores each command and when it was entered.
+    </div>
+    <div>
+      To navigate through all previously entered commands
+      press the up and down arrow keys.
+      Press enter to execute the displayed command
+      or press ctrl-c to exit without executing one.
+      To restrict to commands that contain a given substring,
+      type the substring before pressing the arrow keys.
+    </div>
+    <div>
+      To list all commands in the history, enter <code>history</code>.
+    </div>
+    <div>
+      To list only commands that contain a given substring,
+      enter <code>history <i>text</i></code>.
+      This is the same as entering
+      <code>history search --contains <i>substring</i></code> (<code>-c</code>).
+    </div>
+    <div>
+      To list only commands that begin with a given prefix, enter
+      <code>history search --prefix <i>prefix</i></code> (<code>-p</code>).
+    </div>
+    <div>
+      To include the date and time that commands were issued,
+      add the <code>--show-time-prepends</code> (<code>-t</code>) switch.
+    </div>
+    <div>
+      To limit the number of commands output,
+      add the <code>--max</code> (<code>-n</code>) switch followed by a number.
+      For example, <code>history -n 5</code>.
+      Note that the space after <code>-n</code> is required.
+    </div>
+    <div>
+      To clear all command history, enter <code>history clear</code>.
+    </div>
+    <div>
+      To delete commands from history that contain a given substring,
+      enter <code>history delete --contains <i>substring</i></code>.
+    </div>
+    <div>
+      To delete commands from history that begin with a given prefix,
+      enter <code>history delete --prefix <i>prefix</i></code> (<code>-p</code>).
+    </div>
+
+    <h3><a name="CommandSubstitution">Command Substitution</a></h3>
+    <div>
+      To use the output of one command as an argument to another,
+      surround the command with parens,
+      not backticks like in some other shells.
+    </div>
+    <div>
+      If the command outputs more than one line,
+      each will be treated as a separate argument
+      to the outer command.
+    </div>
+    <div>
+      To set a variable to the output of a command,
+      use <code>set <i>name</i> (<i>command</i>)</code>.
+      For example, <code>set today (date)</code>.
+    </div>
+    <div>
+      Command output can be concatenated with literal strings
+      and other command output.  For example,
+    </div>
+    <pre>
+set dateFormat '+%A %B %d, %G' # ex. Tuesday, August 15, 2017
+set announcement 'Today is '(date $dateFormat)'.'</pre>
+    <div>
+      Note the use of string concatention by placing
+      literal strings next to the parens.
+    </div>
+    <div>
+      This does not work inside strings.
+      For example, the command in the following string is not evaluated:
+      <code>"Today is (date $dateFormat)."</code>
+    </div>
+
+    <h3><a name="Wildcards">Wildcards</a></h3>
+    <div>
+      <code>?</code> matches a single character.<br>
+      <code>*</code> matches any number of characters not containing <code>/</code>.<br>
+      <code>**</code> is like <code>*</code>, but also matches <code>/</code>.
+      This enables recursing into subdirectories.
+    </div>
+
+    <h3><a name="PipesAndRedirection">Pipes and Redirection</a></h3>
+    <div>
+      To "pipe" the stdout of one command into the stdin of another,
+      use <code>|</code> like other shells.
+      For example, <code>echo '<i>some input</i>' | <i>someCommand</i></code>.
+    </div>
+    <div>
+      For commands that read from stdin, to read from a file instead,
+      use <code>&lt;</code> like in other shells.
+      For example, <code><i>someCommand</i> &lt; <i>someFilePath</i></code>.
+    </div>
+    <div>
+      For commands that write to stdout, to write to a file instead,
+      use <code>&gt;</code> like in other shells.
+      For example, <code><i>someCommand</i> &gt; <i>someFilePath</i></code>.
+      To avoid overwriting an existing file, use <code>&gt;?</code> instead of <code>&gt;</code>.
+      To append to an existing file, use <code>&gt;&gt;</code> instead of <code>&gt;</code>.
+    </div>
+    <div>
+      For commands that write to stderr, to write to a file instead
+      use <code>^</code> unlike other shells that use <code>2></code>.
+      For example, <code><i>someCommand</i> ^ <i>someFilePath</i></code>.
+      For compatibility with other shells, <code>2></code> can also be used.
+      To avoid overwriting an existing file, use <code>^?</code> instead of <code>^</code>.
+      To append to an existing file, use <code>^^</code> instead of <code>^</code>.
+    </div>
+    <div>
+      To redirect stderr to stdout, use <code><i>someCommand</i> 2&gt;&amp;1</code>.
+    </div>
+
+    <h3><a name="BraceExpansion">Brace Expansion</a></h3>
+    <div>
+      Brace expansion is used to produce multiple arguments for a command.
+      For example, <code>ls *.{css,html.js}</code>
+      expands to <code>ls *.css *.html *.js</code>.
+      This is also useful in the <code>cp</code> and <code>mv</code> commands.
+    </div>
+    <div>
+      Brace expansion can also be used to generate "cartesian products".
+      For example, to set a variable to this kind of result:
+    </div>
+    <pre>
+set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
 
     <h2><a name="CustomizingFish">Customizing Fish</a></h2>
 
@@ -867,6 +962,10 @@
       is created and is used to run the script.
     </div>
     <div>
+      TODO: You emailed Charles on 9/25 to find out
+      what else creates interactive shells.
+    </div>
+    <div>
       Inside <code>config.fish</code>,
       to run commands only when starting a login shell,
       place the commands inside an <code>if</code> command as follows:
@@ -943,6 +1042,169 @@
     <div>
       To delete (erase) an alias,
       enter <code>abbr --erase <i>name</i></code> (<code>-e</code>).
+    </div>
+
+    <h3><a name="PATH">PATH environment variable</a></h3>
+    <div>
+      <code>PATH</code> is a variable that holds a lists of paths
+      that the shell searches when a command is entered.
+      <code>PATH</code> is a global variable, which means that
+      changes to it are available anywhere in the current session,
+      but not in others.
+      Its value is not a colon-separated string like in other shells.
+      It is a list created from a space-separated string.
+    </div>
+    <div>
+      Typical PATH is defined in <code>config.fish</code>.
+    </div>
+    <div>
+      To see the current value, enter <code>echo $PATH</code>.
+    </div>
+    <div>
+      The universal variable <code>fish_user_paths</code>
+      is another list of paths that is
+      automatically prepended to <code>PATH</code>.
+      Setting this modifies <code>PATH</code> in a way that
+      affects all current and future sessions
+      without having to modify <code>config.fish</code>
+      and source it again.
+      However, a benefit of changing PATH in <code>config.fish</code>
+      is that the file can easily be copied to other machines.
+    </div>
+    <div>
+      <code>fish_user_paths</code> should only be set in a terminal,
+      not in <code>config.fish</code>.
+    </div>
+    <div>
+      To prepend a path to PATH,<br>
+      <code>set -U fish_user_paths $fish_user_paths <i>new-path</i></code><br>
+      This outputs a warning if no directory matching <code><i>new-path</i></code>
+      is found, but adds it anyway.
+    </div>
+    <div>
+      As we will see later, all variables hold a list.
+      It's just that many of them only contain a single value.
+      Removing a path from PATH or fish_user_paths is done
+      the same way as removing an item from any list.
+    </div>
+    <div>
+      To remove a path from fish_user_paths:
+    </div>
+    <pre>
+if set -l index (contains -i <i>some-path</i> $fish_user_paths)
+  set -e fish_user_paths[$index]
+end</pre>
+
+    <h3><a name="ToolsForFish">Tools for fish</a></h3>
+    <div>
+      Here's a list of popular tools for fish in alphabetical order.
+    </div>
+    <ul>
+      <li>Fisherman -
+        "The fish-shell plugin manager"<br>
+        <a href="https://github.com/fisherman/fisherman">https://github.com/fisherman/fisherman</a>
+      </li>
+      <li>Fundle -
+        "a minimalist package manager for fish inspired by Vundle"<br>
+        <a href="https://github.com/tuvistavie/fundle">https://github.com/tuvistavie/fundle</a>
+      </li>
+      <li>Oh My Fish -
+        "provides core infrastructure to allow you to install packages
+        which extend or modify the look of your shell"<br>
+        <a href="https://github.com/oh-my-fish/oh-my-fish">https://github.com/oh-my-fish/oh-my-fish</a>
+      </li>
+      <li>Tacklebox -
+        "makes it easy to organize and share collections of
+        useful shell functions, tools, and themes"<br>
+        <a href="https://github.com/justinmayer/tacklebox">https://github.com/justinmayer/tacklebox</a>
+      </li>
+    </ul>
+    <div>
+      TODO: Try each of these and say more about them.
+      Are they active and supported?
+    </div>
+
+    <h2><a name="ScriptingInFish">Scripting in Fish</a></h2>
+
+    <div>
+      If you appreciate programming languages with simple, consistent syntax,
+      you will love scripting in fish!
+    </div>
+    <div>
+      A script is implementing by writing a function.
+      Functions become custom commands that can be executed from a terminal.
+    </div>
+    <div>
+      In other shells, many steps are required to write and enable a new script.
+    </div>
+    <ul>
+      <li>Decide where to create the implementation file.</li>
+      <li>Make sure the directory is listed in the PATH environment variable.</li>
+      <li>Create the file and write the code.</li>
+      <li>Add a "shebang" comment as the first line.</li>
+      <li>Use the <code>chmod</code> command to make the file executable.</li>
+    </ul>
+    <div>
+      While the same can be done with fish scripts,
+      most of these steps are not necessary.
+      The easiest way to write and enable a new fish script is:
+    </div>
+    <ul>
+      <li>
+        Enter <code>funced <i>name</i></code>.
+        This opens an editor for entering or modifying the script.
+        If the script is new, the editor is populated with
+        a starting point for a function definition.
+      </li>
+      <li>
+        Write or modify the code, save the changes, and exit the editor.
+        If the function was previously defined in a file,
+        this will not update the file!
+      </li>
+      <li>
+        Enter <code>funcsave <i>name</i></code>.
+        This saves the script to a file with the same name as the function
+        in the <code>~/.config/fish/functions</code> directory.
+        When commands are executed, fish automatically looks
+        for their implementation here.
+        If this step is skipped, the function can still be used as a command,
+        but it won't be available in other existing or future sessions.
+      </li>
+    </ul>
+
+    <h3><a name="ComparingToJavaScript">Comparing fish functions to JavaScript</a></h3>
+    <div>
+      Let's look at an example of a simple function that
+      takes two numbers and outputs their product.
+      It's useful to see how fish functions differ from
+      functions in more traditional programming languages like JavaScript.
+    </div>
+    <div>
+      Here is the function in JavaScript and a call to it.
+    </div>
+    <pre>
+function product(n1, n2) {
+  return n1 * n2;
+}
+const result = product(2, 3); // 6</pre>
+    <div>
+      Here is the function in fish and a call to it.
+    </div>
+    <pre>
+function product -a n1 n2
+  math "$n1 * $n2"
+end
+set result (product 2 3) # 6</pre>
+    <div>
+      Everthing in fish is done with commands, even defining functions.
+      The <code>--argument-names</code> (<code>-a</code>) switch of the
+      <code>function</code> command specifies named parameters.
+      Recall that functions in fish cannot return a value,
+      but they can write to streams like stdout.
+      Math is performed using the <code>math</code> function
+      which writes its result to stdout.
+      Surrounding a command with parens allows its stdout to be
+      captured and placed in a variable.
     </div>
 
     <h3><a name="Variables">Variables</a></h3>
@@ -1049,17 +1311,6 @@
       A scope switch can also be specified to query only in that scope.
     </div>
     <div>
-      A variable can be set and not have a value.
-      For example, <code>set foo</code>
-      sets the variable <code>foo</code>, but it doesn't have a value.
-      For JavaScript developers, this is similar to setting a variable
-      to <code>null</code> (has a value)
-      versus <code>undefined</code> (has no value).
-      To determine if a variable has a value,
-      enter <code>set -q <i>name</i>[0]</code>
-      and verify that <code>status</code> is set to zero.
-    </div>
-    <div>
       To interactively edit the value of a variable,
       enter <code>vared <i>name</i></code>.
       This is useful for values that are long strings.
@@ -1080,6 +1331,18 @@
       <code>set --show <i>name</i></code>.
       This version of fish will likely be released in September 2017.
       TODO: This may be out before this article is published!
+    </div>
+    <div>
+      A variable can be set and not have a value.
+      For example, <code>set foo</code>
+      sets the variable <code>foo</code>, but it doesn't have a value.
+      For JavaScript developers, this is similar to setting a variable
+      to <code>null</code> (has a value)
+      versus <code>undefined</code> (has no value).
+      To determine if a variable has a value,
+      enter <code>set -q <i>name</i>[0]</code>
+      and verify that <code>status</code> is set to zero.
+      This will be more clear when lists are described later.
     </div>
 
     <h3><a name="Strings">Strings</a></h3>
@@ -1517,9 +1780,7 @@ count $cells # 6
 set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
 
 set labels 'Column '$columns # Column a Column b Column c
-count $labels # 3
-
-set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
+count $labels # 3</pre>
     <div>
       Note that spaces cannot appear around the commas
       in the last example.
@@ -1565,239 +1826,6 @@ end</pre>
       Without the use of <code>eval</code> above, this would output
       <code>$items_red</code>, <code>$items_green</code>, and <code>$items_blue</code>.
     </div>
-
-    <h3><a name="PATH">PATH environment variable</a></h3>
-    <div>
-      <code>PATH</code> is a variable that holds a lists of paths
-      that the shell searches when a command is entered.
-      <code>PATH</code> is a global variable, which means that
-      changes to it are available anywhere in the current session,
-      but not in others.
-      Its value is not a colon-separated string like in other shells.
-      It is a list created from a space-separated string.
-    </div>
-    <div>
-      Typical PATH is defined in <code>config.fish</code>.
-    </div>
-    <div>
-      To see the current value, enter <code>echo $PATH</code>.
-    </div>
-    <div>
-      The universal variable <code>fish_user_paths</code>
-      is another list of paths that is
-      automatically prepended to <code>PATH</code>.
-      Setting this modifies <code>PATH</code> in a way that
-      affects all current and future sessions
-      without having to modify <code>config.fish</code>
-      and source it again.
-      However, a benefit of changing PATH in <code>config.fish</code>
-      is that the file can easily be copied to other machines.
-    </div>
-    <div>
-      <code>fish_user_paths</code> should only be set in a terminal,
-      not in <code>config.fish</code>.
-    </div>
-    <div>
-      To prepend a path to PATH,<br>
-      <code>set -U fish_user_paths $fish_user_paths <i>new-path</i></code><br>
-      This outputs a warning if no directory matching <code><i>new-path</i></code>
-      is found, but adds it anyway.
-    </div>
-    <div>
-      As we will see later, all variables hold a list.
-      It's just that many of them only contain a single value.
-      Removing a path from PATH or fish_user_paths is done
-      the same way as removing an item from any list.
-    </div>
-    <div>
-      To remove a path from fish_user_paths:
-    </div>
-    <pre>
-if set -l index (contains -i <i>some-path</i> $fish_user_paths)
-  set -e fish_user_paths[$index]
-end</pre>
-
-    <h3><a name="FunctionsAndAutoLoading">Functions and Auto-loading</a></h3>
-    <div>
-      Every time a command is evaluated, fish first checks whether there
-      is a file in any path listed in <code>fish_function_path</code>
-      with the same name and a <code>.fish</code> extension.
-      This path list typically contains <code>~/.config/fish/functions</code>
-      which is where user-defined functions are usually placed.
-      It does not search subdirectories of these paths.
-      If a matching file is found, and the file has not been loaded
-      within the "staleness interval" (discussed later),
-      it loads the file to get the current definition of the function
-      and executes the function.
-      This is referred to as "auto-loading".
-    </div>
-    <div>
-      Functions defined in these paths
-      are immediately available in all fish shells.
-      Changes to them are automatically reloaded in all fish shells
-      the next time they are used.
-    </div>
-    <div>
-      If no such function is found, fish then checks whether there is
-      an executable file in any path listed in <code>PATH</code>
-      with the same name.  If so, that file is executed.
-    </div>
-    <div>
-      Function auto-loading allows functions to be used in place of
-      commands, builtins, and executables in <code>PATH</code>.
-      For example, the <code>date</code> command can be overridden
-      with a custom function by entering
-      <code>function date; echo pwned date; end</code>.
-      After this, entering <code>date</code> outputs "pwned date"
-      instead of the output of the <code>date</code> command
-      in the current fish session.
-      To affect all fish sessions, enter <code>funcsave date</code>.
-    </div>
-    <div>
-      The staleness interval avoids thrashing the file system
-      every time a command is evaluated, and is around five seconds.
-      To use a modified function definition before the
-      staleness interval passes, source the file.  For example,
-    </div>
-    <pre>
-funced foo; and funcsave foo; and source ~/.config/fish/functions/foo.fish</pre>
-    <div>
-      The <code>funced</code> and <code>funcsave</code> commands
-      are described later.
-    </div>
-    <div>
-      It is recommended that these files only define
-      the function whose name matches the command.
-    </div>
-    <div>
-      It is possible to have a function, builtin, and command
-      that all have the same name.
-      Functions take precedence over builtins
-      and builtins take precedence over commands.
-      To run a function, just enter its name.
-      To run a builtin instead of a function with the same name,
-      enter <code>builtin <i>name</i></code>.
-      To run a command instead of a function or builtin with the same name,
-      enter <code>command <i>name</i></code>.
-    </div>
-
-    <h2><a name="ScriptingInFish">Scripting in Fish</a></h2>
-
-    <div>
-      If you appreciate programming languages with simple, consistent syntax,
-      you will love scripting in fish!
-    </div>
-    <div>
-      Scripts are implementing by writing a function.
-      Functions become custom commands that can be executed from a terminal.
-      A function is defined by using the <code>function</code> command.
-      Functions can have named parameters.
-      Functions cannot return a value,
-      but they can write to a stream like stdout and stderr and
-      they can return a status that goes into the variable <code>status</code>.
-      When a function is called, whatever it writes to stdout
-      can be captured in a variable with
-      <code>set myVar (myFunction args)</code>.
-      Parentheses can also be used to pass the output of a command
-      as an argument to another command.
-    </div>
-    <div>
-      In other shells, many steps are required to write and enable a new script.
-    </div>
-    <ul>
-      <li>Decide where to create the implementation file.</li>
-      <li>Make sure the directory is listed in the PATH environment variable.</li>
-      <li>Create the file and write the code.</li>
-      <li>Add a "shebang" comment as the first line.</li>
-      <li>Use the <code>chmod</code> command to make the file executable.</li>
-    </ul>
-    <div>
-      While the same can be done with fish scripts,
-      most of these steps are not necessary.
-      The easiest way to write and enable a new fish script is:
-    </div>
-    <ul>
-      <li>
-        Enter <code>funced <i>name</i></code>.
-        This opens an editor for entering or modifying the script.
-        If the script is new, the editor is populated with
-        a starting point for a function definition.
-      </li>
-      <li>
-        Write or modify the code, save the changes, and exit the editor.
-        If the function was previously defined in a file,
-        this will not update the file!
-      </li>
-      <li>
-        Enter <code>funcsave <i>name</i></code>.
-        This saves the script to a file with the same name as the function
-        in the <code>~/.config/fish/functions</code> directory.
-        When commands are executed, fish automatically looks
-        for their implementation here.
-        If this step is skipped, the function can still be used as a command,
-        but it won't be available in other existing or future sessions.
-      </li>
-    </ul>
-
-    <h3><a name="ComparingToJavaScript">Comparing fish functions to JavaScript</a></h3>
-    <div>
-      Let's look at an example of a simple function that
-      takes two numbers and outputs their product.
-      It's useful to see how fish functions differ from
-      functions in more traditional programming languages like JavaScript.
-    </div>
-    <div>
-      Here is the function in JavaScript and a call to it.
-    </div>
-    <pre>
-function product(n1, n2) {
-  return n1 * n2;
-}
-const result = product(2, 3); // 6</pre>
-    <div>
-      Here is the function in fish and a call to it.
-    </div>
-    <pre>
-function product -a n1 n2
-  math "$n1 * $n2"
-end
-set result (product 2 3) # 6</pre>
-    <div>
-      Everthing in fish is done with commands, even defining functions.
-      The <code>--argument-names</code> (<code>-a</code>) switch of the
-      <code>function</code> command specifies named parameters.
-      Recall that functions in fish cannot return a value,
-      but they can write to streams like stdout.
-      Math is performed using the <code>math</code> function
-      which writes its result to stdout.
-      Surrounding a command with parens allows its stdout to be
-      captured and placed in a variable.
-    </div>
-
-    <h3><a name="ToolsForFish">Tools for fish</a></h3>
-    <div>
-      Here's a list of popular tools for fish in alphabetical order.
-    </div>
-    <ul>
-      <li>Fisherman -
-        "The fish-shell plugin manager"<br>
-        <a href="https://github.com/fisherman/fisherman">https://github.com/fisherman/fisherman</a>
-      </li>
-      <li>Fundle -
-        "a minimalist package manager for fish inspired by Vundle"<br>
-        <a href="https://github.com/tuvistavie/fundle">https://github.com/tuvistavie/fundle</a>
-      </li>
-      <li>Oh My Fish -
-        "provides core infrastructure to allow you to install packages
-        which extend or modify the look of your shell"<br>
-        <a href="https://github.com/oh-my-fish/oh-my-fish">https://github.com/oh-my-fish/oh-my-fish</a>
-      </li>
-      <li>Tacklebox -
-        "makes it easy to organize and share collections of
-        useful shell functions, tools, and themes"<br>
-        <a href="https://github.com/justinmayer/tacklebox">https://github.com/justinmayer/tacklebox</a>
-      </li>
-    </ul>
 
     <h3><a name="echoCommand">echo Command</a></h3>
     <div>
@@ -1931,44 +1959,6 @@ printf $format Paige 6
 set format 'My name is %s and I am %s%i%s years old.'
 printf $format Paige (set_color red) 6 (set_color normal)
 </pre>
-
-    <h3><a name="Wildcards">Wildcards</a></h3>
-    <div>
-      <code>?</code> matches a single character.<br>
-      <code>*</code> matches any number of characters not containing <code>/</code>.<br>
-      <code>**</code> is like <code>*</code>, but also matches <code>/</code>.
-      This enables recursing into subdirectories.
-    </div>
-
-    <h3><a name="PipesAndRedirection">Pipes and Redirection</a></h3>
-    <div>
-      To "pipe" the stdout of one command into the stdin of another,
-      use <code>|</code> like other shells.
-      For example, <code>echo '<i>some input</i>' | <i>someCommand</i></code>.
-    </div>
-    <div>
-      For commands that read from stdin, to read from a file instead,
-      use <code>&lt;</code> like in other shells.
-      For example, <code><i>someCommand</i> &lt; <i>someFilePath</i></code>.
-    </div>
-    <div>
-      For commands that write to stdout, to write to a file instead,
-      use <code>&gt;</code> like in other shells.
-      For example, <code><i>someCommand</i> &gt; <i>someFilePath</i></code>.
-      To avoid overwriting an existing file, use <code>&gt;?</code> instead of <code>&gt;</code>.
-      To append to an existing file, use <code>&gt;&gt;</code> instead of <code>&gt;</code>.
-    </div>
-    <div>
-      For commands that write to stderr, to write to a file instead
-      use <code>^</code> unlike other shells that use <code>2></code>.
-      For example, <code><i>someCommand</i> ^ <i>someFilePath</i></code>.
-      For compatibility with other shells, <code>2></code> can also be used.
-      To avoid overwriting an existing file, use <code>^?</code> instead of <code>^</code>.
-      To append to an existing file, use <code>^^</code> instead of <code>^</code>.
-    </div>
-    <div>
-      To redirect stderr to stdout, use <code><i>someCommand</i> 2&gt;&amp;1</code>.
-    </div>
 
     <h3><a name="AdvancedUseOfVariables">Advanced Use of Variables</a></h3>
     <div>
@@ -2147,47 +2137,6 @@ end &lt; <i>filePath</i> </pre>
       long forms of switches used above.
     </div>
 
-    <h3><a name="CommandSubstitution">Command Substitution</a></h3>
-    <div>
-      To use the output of one command as an argument to another,
-      surround the command with parens,
-      not backticks like in some other shells.
-    </div>
-    <div>
-      If the command outputs more than one line,
-      each will be treated as a separate argument
-      to the outer command.
-    </div>
-    <div>
-      To set a variable to the output of a command,
-      use <code>set <i>name</i> (<i>command</i>)</code>.
-      For example, <code>set today (date)</code>.
-    </div>
-    <div>
-      Command output can be concatenated with literal strings
-      and other command output.  For example,
-    </div>
-    <pre>
-set dateFormat '+%A %B %d, %G' # ex. Tuesday, August 15, 2017
-set announcement 'Today is '(date $dateFormat)'.'</pre>
-    <div>
-      Note the use of string concatention by placing
-      literal strings next to the parens.
-    </div>
-    <div>
-      This does not work inside strings.
-      For example, the command in the following string is not evaluated:
-      <code>"Today is (date $dateFormat)."</code>
-    </div>
-
-    <h3><a name="BraceExpansion">Brace Expansion</a></h3>
-    <div>
-      Brace expansion is used to produce multiple arguments for a command.
-      For example, <code>ls *.{css,html.js}</code>
-      expands to <code>ls *.css *.html *.js</code>.
-      This is also useful in the <code>cp</code> and <code>mv</code> commands.
-    </div>
-
     <h3><a name="Functions">Functions</a></h3>
     <div>
       Functions give a name to a set of commands that
@@ -2203,8 +2152,8 @@ set announcement 'Today is '(date $dateFormat)'.'</pre>
     </div>
     <div>
       Functions cannot return a value,
-      but they can set the status variable
-      and they can write to streams like stdout and stderr.
+      but they can write to a stream like stdout and stderr and
+      they can return a status that goes into the variable <code>status</code>.
       To capture stdout from a function in a variable, use
       <code>set <i>variable</i> (<i>someFn</i> <i>args</i>)</code>.
       For example:
@@ -2270,18 +2219,69 @@ end</pre>
       This is no need to add a "shebang comment" in these files.
       All functions defined here are assumed to be used only in the fish shell.
     </div>
+
+    <h3><a name="FunctionAutoLoading">Function Autoloading</a></h3>
     <div>
-      These files are loaded the first time
-      the function they define is called.
-      The autoloading mechanism for functions requires the name
-      of these files to match the name of function they define.
-      TODO: See more in "Commands" section.
-      For example, define the function foo in a file named <code>foo.fish</code>.
+      Every time a command is evaluated, fish first checks whether there
+      is a file in any path listed in <code>fish_function_path</code>
+      with the same name and a <code>.fish</code> extension.
+      This path list typically contains <code>~/.config/fish/functions</code>
+      which is where user-defined functions are usually placed.
+      It does not search subdirectories of these paths.
+      If a matching file is found, and the file has not been loaded
+      within the "staleness interval" (discussed later),
+      it loads the file to get the current definition of the function
+      and executes the function.
+      This is referred to as "autoloading".
+    </div>
+    <div>
+      For example, define the function "foo" in a file named <code>foo.fish</code>.
       Multiple functions can be defined in the same file,
       but they will not be available until the function
       whose name matches the file is called once,
       so doing this is not recommended.
     </div>
+    <div>
+      Functions defined in a path listed in <code>fish_function_path</code>
+      are immediately available in all fish shells.
+      Changes to them are automatically reloaded in all fish shells
+      the next time they are used.
+    </div>
+    <div>
+      If no such function is found, fish then checks whether there is
+      an executable file in any path listed in <code>PATH</code>
+      with the same name.  If so, that file is executed.
+    </div>
+    <div>
+      Function autoloading allows functions to be used in place of
+      commands, builtins, and executables in <code>PATH</code>.
+      For example, the <code>date</code> command can be overridden
+      with a custom function by entering
+      <code>function date; echo pwned date; end</code>.
+      After this, entering <code>date</code> outputs "pwned date"
+      instead of the output of the <code>date</code> command
+      in the current fish session.
+    </div>
+    <div>
+      The staleness interval avoids thrashing the file system
+      every time a command is evaluated, and is around five seconds.
+      To use a modified function definition before the
+      staleness interval passes, source the file.  For example,
+    </div>
+    <pre>
+funced foo; and funcsave foo; and source ~/.config/fish/functions/foo.fish</pre>
+    <div>
+      It is possible to have a function, builtin, and command
+      that all have the same name.
+      Functions take precedence over builtins
+      and builtins take precedence over commands.
+      To run a function, just enter its name.
+      To run a builtin instead of a function with the same name,
+      enter <code>builtin <i>name</i></code>.
+      To run a command instead of a function or builtin with the same name,
+      enter <code>command <i>name</i></code>.
+    </div>
+
     <div>
       To save a function definition that has been entered interactively
       in a file in <code>~/.config/fish/functions</code>, enter
@@ -2444,7 +2444,7 @@ function takeShelter --on-event tornado
   echo Tornado warning! Take shelter!
 end</pre>
     <div>
-      Functions that run when an event is fired are not auto-loaded.
+      Functions that run when an event is fired are not autoloaded.
       Consider defining them in <code>config.fish</code> or
       sourcing files that define them from <code>config.fish</code>.
       The command <code>source <i>filePath</i></code>
@@ -2547,7 +2547,7 @@ kill -hup %self # got hup</pre>
       <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
     </div>
 
-<h3><a name="TypesOfCommands">Types of Commands</a></h3>
+    <h3><a name="TypesOfCommands">Types of Commands</a></h3>
     <div>
       A "command" is any program the shell can run.
       There are three types of commands: builtins, commands, and functions.
@@ -2664,44 +2664,6 @@ end</pre>
       <code>if <i>command</i>; <i>statements</i>; end</code>
     </div>
 
-    <h3><a name="andAndOrCommands">and &amp; or Commands</a></h3>
-    <div>
-      In fish, <code>and</code> and <code>or</code> are commands,
-      not keywords or operators.
-      Both take a single argument which is a command
-      to be conditionally executed based on the
-      status of the previously executed command.
-      If they do run the specified command,
-      the <code>status</code> variable is set to
-      the status of that command.
-      Otherwise it is not changed.
-    </div>
-    <div>
-      To conditionally execute a command only
-      if the previous command was successful,
-      <code><i>command1</i>; and <i>command2</i></code>.
-      This is the same as
-    </div>
-    <pre>
-<i>command1</i>
-and <i>command2</i></pre>
-    <div>
-      This is not the same as
-      <code><i>command1</i>; <i>command2</i></code>
-      because that will run <code><i>command2</i></code>
-      even if <code><i>command1</i></code>
-      was not successful.
-    </div>
-    <div>
-      To conditionally execute a command only
-      if the previous command failed,
-      <code><i>command1</i>; or <i>command2</i></code>.
-    </div>
-    <div>
-      The <code>and</code> and <code>or</code> commands are often
-      used in <code>if</code> and <code>while</code> commands.
-    </div>
-
     <h3><a name="switchCommand">switch Command</a></h3>
     <div>
       The switch command conditionally executes other commands
@@ -2801,12 +2763,6 @@ end</pre>
     <div>
       In both kinds of loops, use <code>break</code> to exit early and
       <code>continue</code> to skip the remainder of the current iteration.
-    </div>
-
-    <h3><a name="MultipleStatementsOnALine">Multiple Statements on a Line</a></h3>
-    <div>
-      A line can contain more than one statement if they are separated by semicolons.
-      For example, <code>function foo; echo in foo; end</code>.
     </div>
 
     <h3><a name="CustomGreeting">Custom Greeting</a></h3>
@@ -3135,24 +3091,41 @@ set colors red orange yellow green blue purple
 set color (random choice $colors)</pre>
     </div>
 
+    <h3><a name="CustomTabCompletions">Custom Tab Completions</a></h3>
+    <div>
+      Tab completions can be defined for custom commands
+      using the <code>complete</code> command.
+      This is an advanced topic.
+    </div>
+    <div>
+      The syntax is
+      <code>complete -c <i>commandName</i> -s <i>shortSwitch</i> -l <i>longSwitch</i> -a '<i>argument words</i>'</code>
+    </div>
+    <div>
+       TODO: See your functions/greet.fish and completions/greet.fish example
+       which is not working yet.
+       Also see https://fishshell.com/docs/current/commands.html#complete
+       and https://fishshell.com/docs/current/index.html#completion-own.
+    </div>
+
+    <h3><a name="Example">Example in Node, bash, and fish</a></h3>
+    <div>
+      TODO: See your webls.fish and $JS_DIR/Node.js/webls/index.js.
+      Maybe make colors configurable with switches like
+      <code>--html blue --js red</code>.
+    </div>
+
     <h2>Summary</h2>
     <div>
       TODO: Add summary here.
     </div>
 
     <hr>
-LOOK FOR TODO IN THIS FILE!
-
-TODO: See .config/fish/functions/listrm.fish<br>
-TODO: See .config/fish/functions/rmpath.fish<br>
-TODO: For article<br>
-- create example script in Fish, Bash, and Node
-  that lists files containing given text in their name
-  in tree form that colors file types differently
-  (ex. red for .js, blue for .scss, ...)
-  * see your webls.fish
-    and $JS_DIR/Node.js/webls/index.js
-  * maybe make colors configurable<br>
-- get some ideas from the Wikipedia entry
+    <ul>
+      <li>LOOK FOR TODO IN THIS FILE!</li>
+      <li>TODO: See .config/fish/functions/listrm.fish</li>
+      <li>TODO: See .config/fish/functions/rmpath.fish</li>
+      <li>TODO: Get ideas from the fish shell Wikipedia entry.</li>
+    </ul>
   </body>
 </html>
