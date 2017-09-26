@@ -126,8 +126,8 @@
       <li><a href="#AdvancedUseOfVariables">Advanced Use of Variables</a></li>
       <li><a href="#SpecialVariables">Special Variables</a></li>
       <li><a href="#statusCommand">status Command</a></li>
-      <li><a href="#MoreOnTests">More on Tests</a></li>
       <li><a href="#Files">Files</a></li>
+      <li><a href="#MoreOnTests">More on Tests</a></li>
       <li><a href="#Eval">Eval</a></li>
       <li><a href="#Functions">Functions</a></li>
       <li><a href="#FunctionAutoLoading">Function Autoloading</a></li>
@@ -146,6 +146,9 @@
       <li><a href="#Jobs">Jobs</a></li>
       <li><a href="#RandomNumbersAndOptions">Random Numbers and Options</a></li>
       <li><a href="#CustomTabCompletions">Custom Tab Completions</a></li>
+      <li><a href="#Example">Example in Node, bash, and fish</a></li>
+
+      <li class="level1"><a href="#Summary">Summary</a></li>
     </ul>
     <div>
       TODO: Verify that the TOC is correct.
@@ -2066,6 +2069,41 @@ set listName colors</pre>
         in nested function calls</li>
     </ul>
 
+    <h3><a name="Files">Files</a></h3>
+    <div>
+      To open files using their default applications,
+      enter <code>open <i>filePath1</i> <i>filePath2</i> ...</code>.
+      For example, <code>open demo.html</code>
+      opens the file in the default web browser.
+    </div>
+    <div>
+      To iterate over the lines in a text file,
+      redirect a file into a loop as follows:
+    </div>
+    <pre>
+while read line
+  # do something with $line
+end &lt; <i>filePath</i> </pre>
+    <div>
+      To test various characteristics of a file,
+      assuming <code>file</code> is a variable that holds a file path,
+    </div>
+    <ul>
+      <li>exists: <code>if test -e $<i>file</i></code></li>
+      <li>is a file: <code>if test -f $<i>file</i></code></li>
+      <li>is a directory: <code>if test -d $<i>file</i></code></li>
+      <li>is a symbolic link: <code>if test -L $<i>file</i></code></li>
+      <li>is readable: <code>if test -r $<i>file</i></code></li>
+      <li>is writable: <code>if test -w $<i>file</i></code></li>
+      <li>is an executable file: <code>if test -x $<i>file</i></code></li>
+      <li>is a non-empty file (has size): <code>if test -s $<i>file</i></code></li>
+      <li>and more (see test command for details)</li>
+    </ul>
+    <div>
+      The <code>test</code> command does not support
+      long forms of switches used above.
+    </div>
+
     <h3><a name="MoreOnTests">More on Tests</a></h3>
     <div>
       The <code>test</code> command is commonly used in
@@ -2110,41 +2148,6 @@ end</pre>
     <div>
       But this option requires parentheses and those must be escaped
       which results in some ugly code, so the first option is preferred.
-    </div>
-
-    <h3><a name="Files">Files</a></h3>
-    <div>
-      To open files using their default applications,
-      enter <code>open <i>filePath1</i> <i>filePath2</i> ...</code>.
-      For example, <code>open demo.html</code>
-      opens the file in the default web browser.
-    </div>
-    <div>
-      To iterate over the lines in a text file,
-      redirect a file into a loop as follows:
-    </div>
-    <pre>
-while read line
-  # do something with $line
-end &lt; <i>filePath</i> </pre>
-    <div>
-      To test various characteristics of a file,
-      assuming <code>file</code> is a variable that holds a file path,
-    </div>
-    <ul>
-      <li>exists: <code>if test -e $<i>file</i></code></li>
-      <li>is a file: <code>if test -f $<i>file</i></code></li>
-      <li>is a directory: <code>if test -d $<i>file</i></code></li>
-      <li>is a symbolic link: <code>if test -L $<i>file</i></code></li>
-      <li>is readable: <code>if test -r $<i>file</i></code></li>
-      <li>is writable: <code>if test -w $<i>file</i></code></li>
-      <li>is an executable file: <code>if test -x $<i>file</i></code></li>
-      <li>is a non-empty file (has size): <code>if test -s $<i>file</i></code></li>
-      <li>and more (see test command for details)</li>
-    </ul>
-    <div>
-      The <code>test</code> command does not support
-      long forms of switches used above.
     </div>
 
     <h3><a name="Functions">Functions</a></h3>
@@ -3115,7 +3118,7 @@ set color (random choice $colors)</pre>
       <code>--html blue --js red</code>.
     </div>
 
-    <h2>Summary</h2>
+    <h3><a name="Summary">Summary</a></h3>
     <div>
       TODO: Add summary here.
     </div>
