@@ -96,7 +96,7 @@ Issues
   that are unaware of your custom infix operators
 - "elm-stuff" is a silly directory name
   * What ends up here besides the "packages" directory?
-- why is the ternary operator not supported?
+- why isn't the ternary operator supported?
 - the official Elm documentation
   * pretends that ES6 either doesn't exist or isn't commonly available
   * ignores the availability of Flow and TypeScript
@@ -137,7 +137,7 @@ Math
 - ex. 5 // 2 -- 2 : Int -- integer division
 
 Operators
-- can use a functions by surrounding with parens
+- can use as functions by surrounding with parens
 - ex. (+) 2 3 -- 5
 - ex. ((+) 2) 3 -- 5
 
