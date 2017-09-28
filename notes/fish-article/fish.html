@@ -415,7 +415,7 @@
     <div>
       The options presented depend on the command that has been entered.
       For example, if the <code>su</code> command has been entered,
-      pressing tab displayes all known usernames.
+      pressing tab displays all known usernames.
     </div>
     <div>
       If there is only one option, it will be expanded in place.
@@ -428,6 +428,7 @@
       the desired option is highlighted.
       Highlighting cycles back to first option
       if tab is pressed while the last option is highlighted.
+      Alternatively, use the arrow keys to move to an option.
       When the desired option is highlighted, press enter to accept it.
       Press enter again to execute the command.
     </div>
@@ -466,6 +467,14 @@
       until the desired command is highlighted.
       Then press enter once to select the command and
       again to execute the <code>man</code> command.
+    </div>
+    <div>
+      To run an npm command,
+      enter <code>npm</code> followed by a space and press tab.
+      All npm commands will be displayed.
+      Use the arrow keys to navigate to the desired command.
+      Optionally continue typing to specify arguments
+      Press enter to execute the command.
     </div>
 
     <h3><a name="ChangingWorkingDirectory">Changing Working Directory</a></h3>
@@ -648,6 +657,17 @@ and <i>command2</i></pre>
       Note the semicolon at end of the first command and the use of
       <code>or</code> instead of <code>||</code> like in bash.
     </div>
+    <div>
+      If an attempt is made to use
+      the bash <code>&amp;&amp;</code> and <code>||</code> operators,
+      fish outputs a message explaining the correct altenatives.
+      For example,
+    </div>
+    <pre>
+🐠  date && ls
+fish: Unsupported use of '&&'. In fish, please use 'COMMAND; and COMMAND'.
+date && ls
+      ^</pre>
     <div>
       The <code>and</code> and <code>or</code> commands are often
       used in <code>if</code> and <code>while</code> commands.
@@ -1113,6 +1133,11 @@ end</pre>
       Here's a list of popular tools for fish in alphabetical order.
     </div>
     <ul>
+      <li>awesome-fish -<br>
+        "A curated list of awesome tools, prompts,
+        and other cool nuggets for the amazing fish-shell."<br>
+        <a href="https://github.com/JorgeBucaran/awesome-fis://github.com/JorgeBucaran/awesome-fish">https://github.com/JorgeBucaran/awesome-fis://github.com/JorgeBucaran/awesome-fish</a>
+      </li>
       <li>Fisherman -
         "The fish-shell plugin manager"<br>
         <a href="https://github.com/fisherman/fisherman">https://github.com/fisherman/fisherman</a>
