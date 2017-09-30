@@ -2461,13 +2461,14 @@ sed -i .bak 's/    /  /g' <i>fn-name</i>.fish</pre>
       Iterating over the arguments is done in the same way as iterating over any list.
     </div>
     <div>
-      Functions can also use named parameters.
-      For example:
+      Here is another example of a function
+      that uses named parameters:
     </div>
     <pre>
-function orderShirt -a color size
-  # Use $color and $size here.
+function orderShirt -a size color
+  # Use $size and $color here.
   # $argv is also set to a list of the arguments.
+  echo I see you want to order a $size shirt that is $color.
 end</pre>
     <div>
       All named parameters will be "set",
@@ -2478,7 +2479,17 @@ end</pre>
       To set a named parameter to a default value if it is not specified, use:
     </div>
     <pre>
-set -q <i>argName</i>[1]; or set -l <i>argName</i> <i>defaultValue</i></pre>
+set -q <i>argName</i>[1]; or set <i>argName</i> <i>defaultValue</i></pre>
+    <div>
+      Here is the previous example, modified to
+      have default values for the arguments:
+    </div>
+    <pre>
+function orderShirt -a size color
+  set -q size[1]; or set size 'large'
+  set -q color[1]; or set color 'white'
+  echo I see you want to order a $size shirt that is $color.
+end</pre>
     <div>
       To process command-line arguments to a function as switches (a.k.a. options):
     </div>
