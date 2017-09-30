@@ -678,9 +678,9 @@ and <i>command2</i></pre>
       For example,
     </div>
     <pre>
-🐠  date && ls
-fish: Unsupported use of '&&'. In fish, please use 'COMMAND; and COMMAND'.
-date && ls
+🐠  date &amp;&amp; ls
+fish: Unsupported use of '&amp;&amp;'. In fish, please use 'COMMAND; and COMMAND'.
+date &amp;&amp; ls
       ^</pre>
     <div>
       The <code>and</code> and <code>or</code> commands are often
@@ -2490,22 +2490,6 @@ function orderShirt -a size color
   set -q color[1]; or set color 'white'
   echo I see you want to order a $size shirt that is $color.
 end</pre>
-    <div>
-      To process command-line arguments to a function as switches (a.k.a. options):
-    </div>
-    <pre>
-for option in $argv
-  switch "$option"
-    case -h --help
-      # code here
-    ...
-    case '*'
-      # code here
-  end
-end</pre>
-    <div>
-      The <code>switch</code> command is described later.
-    </div>
     <div>
       Functions do not have access to local variables set outside them.
       They are not closures like functions in
