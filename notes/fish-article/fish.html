@@ -2621,7 +2621,7 @@ end
 
 # %self expands to the current process id.
 function announceMyExit --on-process-exit %self
-  echo I exited
+  echo 'got process exit' &gt; process.log
 end</pre>
 
     <h4>Auto-running on Signals</h4>
