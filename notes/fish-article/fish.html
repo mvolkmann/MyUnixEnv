@@ -2517,15 +2517,19 @@ function takeShelter --on-event tornado
   echo Tornado warning! Take shelter!
 end</pre>
     <div>
-      Functions that run when an event is fired are not autoloaded.
+      Any number of functions can be registered to run on the same event.
+      A function be triggered by any number of events by
+      specifying the <code>--on-event</code> switch more than once.
+    </div>
+    <div>
+      These functions must be loaded before
+      the events that trigger them are fired.
+      They should not rely on autoloading.
       Consider defining them in <code>config.fish</code> or
       sourcing files that define them from <code>config.fish</code>.
       The command <code>source <i>filePath</i></code>
       executes commands in the file without starting a new process.
       Changes to variables made in this code affects the current shell.
-    </div>
-    <div>
-      Any number of functions can be registered to run on the same event.
     </div>
     <div>
       Events can be emitted with <code>emit <i>eventName</i></code>.
