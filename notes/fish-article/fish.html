@@ -1918,8 +1918,9 @@ set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
 set labels 'Column '$columns # Column a Column b Column c
 count $labels # 3</pre>
     <div>
-      When a fish shell is started,
-      if the variables <code>PATH</code>, <code>CDPATH</code>, or <code>MANPATH</code> exist,
+      When a fish shell is started, if the variables
+      <code>PATH</code>, <code>CDPATH</code>, or <code>MANPATH</code>
+      are set in a parent shell such as bash,
       they are converted to lists by splitting on colons.
     </div>
 
