@@ -3000,6 +3000,9 @@ end</pre>
       which is a bit distracting.
       To disable this feature,
       make this a function that doesn't output anything.
+      It is not enough to just not define this function
+      because fish provides a default implementation
+      that must be overridden to change.
     </div>
     <div>
       Here's an example of a custom mode prompt.
@@ -3008,7 +3011,7 @@ end</pre>
     </div>
     <pre>
 function fish_mode_prompt
-  if test "$fish_key_bindings" = "fish_vi_key_bindings"
+  if test "$fish_key_bindings" = 'fish_vi_key_bindings'
     switch $fish_bind_mode
       case default
         set_color red
@@ -3029,7 +3032,7 @@ end</pre>
 
     <h3><a name="DebuggingFunctions">Debugging Functions</a></h3>
     <div>
-      A common way to debug functions is to add echo commands
+      A common way to debug functions is to add <code>echo</code> commands
       and comment out parts of the code.
       Often a better approach is to add breakpoints
       to stop execution at specific places.
@@ -3080,7 +3083,7 @@ end</pre>
     </div>
     <div>
       The <code>read</code> command accepts many switches.
-      It accepts the same switches as the <code>set</code> command
+      These include the same switches as the <code>set</code> command
       for choosing the scope of the variable that is set.
       It also accepts the following switches:
     </div>
@@ -3102,7 +3105,7 @@ end</pre>
         This sets the initial text as if the user had entered it.
         The user can modify this.
         For example, to prompt for a meeting date
-        and default to the current date,
+        and default to the current date in a format like "09/30/2017",
         <code>read --command (date '+%m/%d/%G') meetingDate</code>
       </li>
       <li>
@@ -3115,8 +3118,8 @@ end</pre>
         instead of a single string value.
         For example, <code>read --array favColors</code> sets the variable
         <code>favColors</code> to the list of colors the user enters.
-        If "red green blue" is entered, favColors will be set to that list
-        and <code>count $colors</code> will output 3.
+        If "red green blue" is entered, <code>favColors</code> will be set
+        to that list and <code>count $colors</code> will output 3.
       </li>
       <li>and many more</li>
     </ul>
@@ -3129,7 +3132,8 @@ end</pre>
     <div>
       The read command can set more than one variable.
       Each is set to the word at the corresponding position.
-      The last variable gets all the remaining words.
+      The last variable is set to a string that is a
+      space-separated list of all the remaining words.
       For example, if <code>read first second</code>
       is run and the user enters "foo bar baz",
       <code>first</code> is set to "foo" and
@@ -3182,16 +3186,17 @@ end</pre>
       enter <code>jobs</code>.
     </div>
     <div>
-      To bring a background job back to the foreground,
-      enter <code>fg</code> for the job most recently placed in background.
-      For a specific job, enter <code>fg %<i>jobNumber</i></code>
+      To bring the job most recently placed in the background
+      to the foreground, enter <code>fg</code>.
+      To bring a specific background job to the foreground,
+      enter <code>fg %<i>jobNumber</i></code>
       or <code>fg <i>processNumber</i></code>.
     </div>
     <div>
       If you attempt to exit from a shell that has background jobs,
-      it will warn about this and not exit.
+      fish will warn about this and not exit.
       If you attempt to exit again,
-      it will kill all the background jobs and exit.
+      fish will kill all the background jobs and exit.
     </div>
 
     <h3><a name="RandomNumbersAndOptions">Random Numbers and Options</a></h3>
@@ -3208,8 +3213,8 @@ end</pre>
       If three are specified,
       they are the start, step, and end of the range
       where only numbers that are increments of step from start
-      will be generated.
-      For example, to generate a random number between 0 and 100
+      but not greater than end will be generated.
+      For example, to generate a random number between 0 and 100 inclusive
       that is an increment of 5, use <code>random 0 5 100</code>.
     </div>
     <div>
