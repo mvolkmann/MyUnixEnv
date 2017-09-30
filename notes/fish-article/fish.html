@@ -1876,7 +1876,8 @@ set result (echo "s($radians)" | bc --mathlib) # .70710678</pre>
       <code>set <i>newName</i> <i>existingName</i>[-1..1]</code>
     </div>
     <div>
-      To test whether an item is in a list, use<br>
+      To test whether an item is in a list, use:
+    </div>
 <pre>
 if contains <i>item</i> $<i>name</i>
   # code goes here
@@ -2746,7 +2747,7 @@ end</pre>
     <div>
       Note that <code>if</code> is followed by a fish command,
       not a "condition".
-      The status of the command it used to determine
+      The status of the command is used to determine
       whether the commands in that branch will be executed.
       A status of 0 is treated as success or true and
       any other value is treated as an error or false.
@@ -2764,7 +2765,7 @@ end</pre>
     <div>
       A command status can be negated using
       the <code>not</code> command.
-      This command changes the status variable
+      This command changes <code>status</code>
       to 1 if it is currently 0, and 0 otherwise.
       For example,
       <code>if not test $status</code> or
@@ -2792,11 +2793,14 @@ switch <i>expression</i> # ex. $color
   case '*' # like default in other languages
     <i>statements</i>
 end</pre>
-    </div>
+    <div>
       The expression should evaluate to a string.
+    </div>
+    <div>
       Note how a <code>case</code> can list more than one value.  Also note
       that a "break" statement is not needed at the end of each <code>case</code>
       because execution does not fall through as it does in many programming languages.
+    </div>
     <div>
       To treat one case value as the default, use
       <code>case default-value '*'</code>.
