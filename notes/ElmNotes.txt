@@ -96,7 +96,7 @@ Issues
   that are unaware of your custom infix operators
 - "elm-stuff" is a silly directory name
   * What ends up here besides the "packages" directory?
-- why is the ternary operator not supported?
+- why isn't the ternary operator supported?
 - the official Elm documentation
   * pretends that ES6 either doesn't exist or isn't commonly available
   * ignores the availability of Flow and TypeScript
@@ -137,7 +137,7 @@ Math
 - ex. 5 // 2 -- 2 : Int -- integer division
 
 Operators
-- can use a functions by surrounding with parens
+- can use as functions by surrounding with parens
 - ex. (+) 2 3 -- 5
 - ex. ((+) 2) 3 -- 5
 
@@ -354,7 +354,7 @@ Anonymous Functions
 - definition starts with \ because it looks a little like the lambda symbol
 - ex. \x y -> x * y
 - to assign a name: product = \x y -> x * 7
-- this is just another way to write: double x y = x * y
+- this is just another way to write: product x y = x * y
 
 Function Application Operators
 - copied from F#
@@ -423,7 +423,7 @@ Linked Lists
 - to create an instance,
   numbers : IntList
   numbers = Node 1 (Node 2 (Node 3 Empty))
-  * parens are necessary in to use the result of a function call
+  * parens are necessary in order to use the result of a function call
     as an argument another function
     * other ways to write this include
       numbers = Node 1 <| Node 2 <| Node 3 Empty
