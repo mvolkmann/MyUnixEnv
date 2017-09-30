@@ -2533,9 +2533,10 @@ end</pre>
     </div>
     <div>
       Events can be emitted with <code>emit <i>eventName</i></code>.
-      The event name can be any string.
-      The event name can be followed by any number of arguments.
-      These become the value of the <code>argv</code> list inside the function.
+      The event name can be any string and
+      it can be followed by any number of arguments.
+      These become the value of the <code>argv</code> list
+      inside the function.
       For example, <code>emit tornado 'category 4' 12</code>.
     </div>
     <div>
@@ -2555,22 +2556,18 @@ end</pre>
         It is a bit like <code>method_missing</code> in the Ruby programming language.
       </li>
       <li>
-        <code>fish_preexec</code><br>
-        This is emitted before executing an interactive command,
-        even if the command is invalid.
-        The command line is passed as the first parameter.
-      </li>
-      <li>
-        <code>fish_postexec</code><br>
-        This is emitted after executing an interactive command,
+        <code>fish_preexec</code> and <code>fish_postexec</code><br>
+        These are emitted before and after
+        executing an interactive command,
         even if the command is invalid.
         The command line is passed as the first parameter.
       </li>
     </ul>
     <div>
-      Functions can run automatically when a variable changes.
-      This is configured by adding the <code>--on-variable</code> (<code>-v</code>)
-      switch to a function definition.
+      Functions can run automatically when variables changes.
+      This is configured by adding
+      the <code>--on-variable</code> (<code>-v</code>) switch
+      to a function definition.
       For example, the following function runs every time
       the PATH variable changes.
       It echoes the new value.
@@ -2584,6 +2581,14 @@ set -U PATH /foo $PATH</pre>
       Since changing the variable <code>fish_user_paths</code>
       also changes <code>PATH</code>, that also triggers this function.
     </div>
+    <div>
+      The --on-variable switch can be used multiple times on the
+      same function to trigger on changes to multiple variables.
+    </div>
+      Similar to triggering on events,
+      these functions must be loaded before
+      the events that trigger them are fired.
+      They should not rely on autoloading.
     <div>
       Functions can run automatically when a given process exits.
       This is configured by adding the <code>--on-process-exit</code> (<code>-p</code>)
