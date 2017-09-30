@@ -265,7 +265,8 @@
       A person that goes by "ridiculousfish" got involved in late 2011
       and released a beta of a fork called "fishfish" in 2012.
       This incorporated much of the work of previous fish contributors
-      and eventually became fish 2.0.
+      and eventually became fish 2.0
+      which was released on September 1, 2013.
     </div>
     <div>
       fish was originally implemented in C, but is now primarily C++.
@@ -1685,13 +1686,15 @@ set matches (string match -ar '.(o.).' $text) # foal oa bool oo</pre>
       in that it can match against literal text,
       or a regex using the <code>--regex</code> (<code>-r</code>) switch.
       When using a regex, it can utilize capture groups.
+      To replace all occurrences instead of just the first,
+      include the <code>--all</code> (<code>-a</code>) switch.
     </div>
     <div>
       For example, to replace all occurrences of "foo" with "bar",
     </div>
     <pre>
 set text 'This is foolish work for a fool.'
-set newText (string replace -a 'foo' 'bar' $text) # not using a regex
+set newText (string replace --all 'foo' 'bar' $text) # not using a regex
 # this is barlish work for a barl
 set newText (string replace -ar '.oo' 'bar' $text) # regex matching more than foo
 # this is barlish work for a barl</pre>
@@ -2229,9 +2232,6 @@ set result (product 2 3) # 6</pre>
       For example:
     </div>
     <pre>
-function product -a n1 n2
-  echo (math "$n1 * $n2")
-end
 set result (product 3 4) # 12</pre>
     <div>
       Function names cannot begin with a dash (<code>-</code>),
@@ -2350,7 +2350,8 @@ end</pre>
     </div>
     <div>
       The staleness interval avoids thrashing the file system
-      every time a command is evaluated, and is around five seconds.
+      every time a command is evaluated, and is around 15 seconds.
+      This is an implementation detail that cannot be configured.
       To use a modified function definition before the
       staleness interval passes, source the file.  For example,
     </div>
