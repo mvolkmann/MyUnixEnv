@@ -2507,9 +2507,29 @@ return <i>someNonZeroStatus</i></pre>
 
     <h3><a name="AutoRunningFunctions">Auto-running Functions</a></h3>
     <div>
-      Functions can run automatically when an event is fired.
-      This is configured by adding the <code>--on-event</code> (<code>-e</code>)
-      switch to a function definition.
+      Functions can run automatically based on
+      events, variable changes, process exits, and signals.
+    </div>
+    <div>
+      These functions must be loaded before their triggers occur.
+      They should not rely on autoloading.
+      Consider defining them in <code>config.fish</code> or
+      sourcing files that define them from <code>config.fish</code>.
+      The command <code>source <i>filePath</i></code>
+      executes commands in the file without starting a new process.
+    </div>
+    <div>
+      Changes to non-local variables made in these functions
+      affect the current shell.
+    </div>
+
+    <h4>Auto-running on Events</h4>
+    <div>
+      To configure a function to run automatically
+      when an event is fired, add the
+      <code>--on-event</code> (<code>-e</code>) switch
+      followed by an event name
+      to the function definition.
       For example,
     </div>
     <pre>
@@ -2518,18 +2538,8 @@ function takeShelter --on-event tornado
 end</pre>
     <div>
       Any number of functions can be registered to run on the same event.
-      A function be triggered by any number of events by
-      specifying the <code>--on-event</code> switch more than once.
-    </div>
-    <div>
-      These functions must be loaded before
-      the events that trigger them are fired.
-      They should not rely on autoloading.
-      Consider defining them in <code>config.fish</code> or
-      sourcing files that define them from <code>config.fish</code>.
-      The command <code>source <i>filePath</i></code>
-      executes commands in the file without starting a new process.
-      Changes to variables made in this code affects the current shell.
+      A function can be triggered by any number of events by
+      specifying more than one <code>--on-event</code> switch.
     </div>
     <div>
       Events can be emitted with <code>emit <i>eventName</i></code>.
@@ -2563,11 +2573,14 @@ end</pre>
         The command line is passed as the first parameter.
       </li>
     </ul>
+
+    <h4>Auto-running on Variable Changes</h4>
     <div>
-      Functions can run automatically when variables changes.
-      This is configured by adding
-      the <code>--on-variable</code> (<code>-v</code>) switch
-      to a function definition.
+      To configure a function to run automatically
+      when variables changes, add the
+      <code>--on-variable</code> (<code>-v</code>) switch
+      followed by a variable name
+      to the function definition.
       For example, the following function runs every time
       the PATH variable changes.
       It echoes the new value.
@@ -2582,17 +2595,23 @@ set -U PATH /foo $PATH</pre>
       also changes <code>PATH</code>, that also triggers this function.
     </div>
     <div>
-      The --on-variable switch can be used multiple times on the
-      same function to trigger on changes to multiple variables.
+      A function can be triggered by any number of variable changes by
+      specifying more than one <code>--on-variable</code> switch.
     </div>
+    <div>
       Similar to triggering on events,
       these functions must be loaded before
       the events that trigger them are fired.
       They should not rely on autoloading.
+    </div>
+
+    <h4>Auto-running on Process Exits</h4>
     <div>
-      Functions can run automatically when a given process exits.
-      This is configured by adding the <code>--on-process-exit</code> (<code>-p</code>)
-      switch to a function definition.
+      To configure a function to run automatically
+      when a given process exits, add the
+      <code>--on-process-exit</code> (<code>-p</code>) switch
+      followed by a process id
+      to the function definition.
       For example,
     </div>
     <pre>
@@ -2604,10 +2623,13 @@ end
 function announceMyExit --on-process-exit %self
   echo I exited
 end</pre>
+
+    <h4>Auto-running on Signals</h4>
     <div>
-      Function can run automatically when a specific signal is received.
-      This is configured by adding the <code>--on-signal</code> (<code>-s</code>)
-      switch followed by a signal name or number to a function definition.
+      To configure a function to run automatically
+      when a specific signal is received, add the
+      <code>--on-signal</code> (<code>-s</code>) switch
+      followed by a signal name or number to a function definition.
       For a list of possible signals, enter <code>kill -l</code>.
       To see the keystrokes that generate some of these signals,
       enter <code>stty -a</code> and look for "cchars:".
@@ -2624,6 +2646,10 @@ function handleHupSignal --on-signal hup
 end
 
 kill -hup %self # got hup</pre>
+    <div>
+      A function can be triggered by any number of signals by
+      specifying more than one <code>--on-signal</code> switch.
+    </div>
     <div>
       For more information on Unix signals, see
       <a href="https://www.tutorialspoint.com/unix/unix-signals-traps.htm">https://www.tutorialspoint.com/unix/unix-signals-traps.htm</a>.
