@@ -1,4 +1,5 @@
 # This function is run every time Fish displays a new prompt.
+# TODO: This isn't being called when $COLUMNS is 52!
 function fish_prompt
   # No fancy prompt if window is too narrow.
   #if test $COLUMNS -lt 20 #TODO: How to test this?
@@ -18,7 +19,7 @@ function fish_prompt
     set remaining (math "$remaining - $pwdLen")
   else
     echo -n (prompt_pwd) # abbreviated working directory
-    set remaining 0
+    set remaining 0 # so nothing else is output on this line
   end
 
   # Get the current Git branch.
@@ -28,13 +29,13 @@ function fish_prompt
   # If in a Git repo ...
   if test -n "$branch"
     set branchLen (string length $branch)
-    # If branch name won't fit on current line ...
-    if test $branchLen -gt $remaining
+    # If branch name will fit on current line ...
+    if test $branchLen -le $remaining
+      echo -n ' ' # space between PWD and branch name
+    else
       echo # newline
       echo -n '  ' # indents past Vim mode on previous line
       set remaining $COLUMNS # resets to full width
-    else
-      echo -n ' ' # space between PWD and branch name
     end
 
     # If branch name will fit on current line ...
@@ -43,11 +44,11 @@ function fish_prompt
       set_color --bold yellow # git branch color
       echo -n $branch
     end
-    # If branch doesn't fit, it is not output.
+    # If branch name doesn't fit, it is not output.
   end
 
-  # Display "fish" prompt on new line.
+  # Always display "fish" prompt on new line.
   set_color normal
   # This uses printf instead of echo to output a leading newline.
-  printf '\\n🐠  '
+  printf '\\n🐠  ' # uses unicode for fish emoji
 end
