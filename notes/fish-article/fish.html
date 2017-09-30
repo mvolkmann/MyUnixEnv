@@ -847,9 +847,13 @@ set announcement 'Today is '(date $dateFormat)'.'</pre>
     <pre>
 set cells {a,b,c}{1,2} # a1 b1 c1 a2 b2 c2</pre>
     <div>
-      Comments begin with <code>#</code>.
+      Comments begin with <code>#</code> like in other shells.
       In the line above, the value assigned to the variable
       is shown in a comment at the end of the line.
+    </div>
+    <div>
+      Note that spaces cannot appear around the commas
+      in brace expansion.
     </div>
 
     <h2><a name="CustomizingFish">Customizing Fish</a></h2>
@@ -1913,10 +1917,6 @@ set dashedCells $columns'-'$rows # a-1 b-1 c-1 a-2 b-2 c-2
 
 set labels 'Column '$columns # Column a Column b Column c
 count $labels # 3</pre>
-    <div>
-      Note that spaces cannot appear around the commas
-      in the last example.
-    </div>
     <div>
       When a fish shell is started,
       if the variables <code>PATH</code>, <code>CDPATH</code>, or <code>MANPATH</code> exist,
