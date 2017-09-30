@@ -241,8 +241,9 @@
         every tab completion should have a description.
      </li>
       <li>
-        Every syntax error and error in a builtin command should result in
-        an error message describing what went wrong and a relevant help page.
+        Every syntax error and error in a builtin command
+        should result in an error message describing
+        what went wrong and a relevant help page.
         Whenever possible, errors should be flagged in red
         by the syntax highlighter.
       </li>
@@ -2322,8 +2323,9 @@ end</pre>
       so doing this is not recommended.
     </div>
     <div>
-      Functions defined in a path listed in <code>fish_function_path</code>
-      are immediately available in all fish shells.
+      Functions defined in a path listed in
+      <code>fish_function_path</code> are
+      immediately available in all fish shells.
       Changes to them are automatically reloaded in all fish shells
       the next time they are used.
     </div>
@@ -2336,17 +2338,6 @@ end</pre>
       After this, entering <code>date</code> outputs "pwned date"
       instead of the output of the <code>date</code> command
       in the current fish session.
-    </div>
-    <div>
-      It is possible to have a function, builtin, and command
-      that all have the same name.
-      Functions take precedence over builtins
-      and builtins take precedence over commands.
-      To run a function, just enter its name.
-      To run a builtin instead of a function with the same name,
-      enter <code>builtin <i>name</i></code>.
-      To run a command instead of a function or builtin with the same name,
-      enter <code>command <i>name</i></code>.
     </div>
     <div>
       The staleness interval avoids thrashing the file system
@@ -2658,16 +2649,28 @@ kill -hup %self # got hup</pre>
     <h3><a name="TypesOfCommands">Types of Commands</a></h3>
     <div>
       A "command" is any program the shell can run.
-      There are three types of commands: builtins, commands, and functions.
+      There are three types of commands:
+      builtins, commands, and functions.
+    </div>
+    <div>
+      It is possible to have a function, builtin, and command
+      that all have the same name.
+      <b>Functions take precedence over builtins
+      and builtins take precedence over commands.</b>
+      To run a function, just enter its name.
+      To run a builtin instead of a function with the same name,
+      enter <code>builtin <i>name</i></code>.
+      To run a command instead of a function or builtin with the same name,
+      enter <code>command <i>name</i></code>.
     </div>
     <div>
       "Builtins" are commands that are provided by the shell.
-      Examples include <code>contains</code>, <code>echo</code>, and <code>if</code>.
+      Examples include <code>cd</code>, <code>echo</code>, and <code>if</code>.
       To get a list of builtin names, enter
       <code>builtin --names</code> (<code>-n</code>)
       The <code>builtin</code> command can also be used to
-      execute a specific builtin instead of a
-      command or function with the same name.
+      execute a specific builtin instead of
+      a function with the same name.
     </div>
     <div>
       "Commands" are executables found in <code>PATH</code>.
@@ -2689,13 +2692,14 @@ kill -hup %self # got hup</pre>
       whose names begin with <code>fish_</code>.
     </div>
     <div>
-      User-defined functions can be defined in
+      User-defined functions are typically defined in
       files with a <code>.fish</code> extension
       in any directory listed in the <code>fish_function_path</code> directory.
       By default, this includes the <code>~/.config/fish/functions</code> directory.
     </div>
     <div>
-      For example,
+      Recall that the alias command generates a function
+      that implements the alias.  For example,
     </div>
     <pre>
 alias greet 'echo Hello, $USER'
@@ -2729,7 +2733,7 @@ end</pre>
     <h3><a name="ifCommand">if Command</a></h3>
     <div>
       The if command supports conditional logic.
-      It's syntax is:
+      Its syntax is:
     </div>
     <pre>
 if <i>command</i>
@@ -2777,7 +2781,7 @@ end</pre>
       The switch command conditionally executes other commands
       based on the value of a expression.
       Often the expression is the value of a single variable.
-      It's syntax is:
+      Its syntax is:
     </div>
     <pre>
 switch <i>expression</i> # ex. $color
