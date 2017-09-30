@@ -2810,7 +2810,7 @@ end</pre>
       specified with either <code>-h</code> or <code>--help</code>.
     </div>
     <pre>
-function product
+function product -d 'outputs product of any # of arguments'
   set result 1
   for arg in $argv
     switch $arg
@@ -2819,6 +2819,7 @@ function product
         return
       case '*'
         # If $arg starts with a dash ...
+        # -- is needed in case $arg starts with a dash.
         if string match -qr '^-' -- $arg
           echo "Unsupported switch $arg"
           return
@@ -2862,20 +2863,31 @@ for <i>var</i> in <i>list</i>
 end</pre>
     <div>
       To iterate over a list of numbers, use the <code>seq</code> command.
-      For example, <code>for n in (seq 5); echo $n; end</code>
-      outputs 1, 2, 3, 4, and 5 on separate lines.
+      For example:
+    </div>
+    <pre>
+for n in (seq 5)
+  echo $n
+ end</pre>
+    <div>
+      This outputs 1, 2, 3, 4, and 5 on separate lines.
+    </div>
+    <div>
       The <code>seq</code> command can be followed by 1, 2 or 3 numbers
       to specify the first, increment, and last values.
       If only one argument is supplied, it is the last,
-      first defaults to 1, and incr defaults 1
-      If only two arguments are supplied,
-      they are the first and last values, and incr defaults to 1.
+      first defaults to 1, and increment defaults 1
+      If only two arguments are supplied, they are the
+      first and last values, and increment defaults to 1.
     </div>
     <div>
       A <code>for</code> command can be used to iterate over the relative file paths
-      that match a pattern.  For example,
-      <code>for path in b*.fish; echo $path; end</code>
+      that match a pattern.  For example:
     </div>
+    <pre>
+for path in b*.fish
+  echo $path
+end</pre>
     <div>
       In both kinds of loops, use <code>break</code> to exit early and
       <code>continue</code> to skip the remainder of the current iteration.
@@ -2888,6 +2900,8 @@ end</pre>
       followed by the abbreviated working directory
       (returned by the <code>prompt_pwd</code> command)
       and "<code>&gt;</code>".
+    </div>
+    <div>
       The abbreviated working directory output by
       <code>prompt_pwd</code> is so abbreviated that it isn't very useful.
       It is somewhat better if the characters per path part,
@@ -2896,14 +2910,16 @@ end</pre>
       <code>set fish_prompt_pwd_dir_length 3</code>.
     </div>
     <div>
-      To customize the command prompt, create the file
+      To customize the command prompt to something other than
+      the predefined options available in <code>fish_config</code>,
+      create the file
       <code>~/.config/fish/functions/fish_prompt.fish</code>
       containing a function with the name <code>fish_prompt</code>
       that echoes the desired prompt.
       This can use the <code>set_color</code> command
       to control the colors of various parts.
       Any number of lines can be output, but typically
-      there is only one and more than two is unusual.
+      there are only one or two.
     </div>
     <div>
       If the prompt doesn't fit in the current terminal width,

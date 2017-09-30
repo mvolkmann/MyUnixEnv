@@ -1,4 +1,4 @@
-function product
+function product -d 'outputs product of any # of arguments'
   set result 1
   for arg in $argv
     switch $arg
@@ -7,6 +7,7 @@ function product
         return
       case '*'
         # If $arg starts with a dash ...
+        # -- is needed in case $arg starts with a dash.
         if string match -qr '^-' -- $arg
           echo "Unsupported switch $arg"
           return
