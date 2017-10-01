@@ -9,7 +9,6 @@
 function lscolor
   # Default colors
   set cssColor 'green'
-  set defaultColor 'white'
   set htmlColor 'blue'
   set jsColor 'red'
   set scssColor 'green'
@@ -17,6 +16,10 @@ function lscolor
   # Use colors specified in switches.
   for arg in $argv
     set pieces (string split '=' $arg)
+    if test (count $pieces) -lt 2
+      echo 'invalid argument "'$arg'"'
+      return 1
+    end
     set extension $pieces[1]
     set color $pieces[2]
     set varName $extension'Color'
@@ -24,7 +27,7 @@ function lscolor
   end
 
   for file in (ls -1)
-    set_color $defaultColor
+    set_color white
     set pieces (string split '.' $file)
     if test (count $pieces) -ge 2
       set extension $pieces[2]
