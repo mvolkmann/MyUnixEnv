@@ -9,6 +9,7 @@
 function lscolor
   # Default colors
   set cssColor 'green'
+  set defaultColor 'white'
   set htmlColor 'blue'
   set jsColor 'red'
   set scssColor 'green'
@@ -27,14 +28,15 @@ function lscolor
   end
 
   for file in (ls -1)
-    set_color white
+    set color $defaultColor
     set pieces (string split '.' $file)
     if test (count $pieces) -ge 2
       set extension $pieces[2]
       set varName $extension'Color'
       set color $$varName
-      if test -n "$color"; set_color $color; end
+      if test -z "$color"; set color $defaultColor; end
     end
+    set_color $color
     echo $file
   end
 end
