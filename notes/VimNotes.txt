@@ -215,6 +215,14 @@ Change (delete and enter insert mode)
   s  - substitute characters (can precede with # of characters)
        and enter insert mode
   c/{text}Enter - change all characters from cursor to given text
+  cgn - change selected text and
+        enable use of dot to change subsequent occurrences
+        * press n to jump to next occurence
+          - can press repeatedly to skip some occurrences
+        * press . to make the same change again
+          - press this before pressing n to both
+            jump to the next occurrence and change it
+
 
 Change Case
 - to change the case of the letter under the cursor, press ~
@@ -667,6 +675,8 @@ Keyboard Macros
   @{letter} - to call macro {letter}
   @@        - to call the last executed macro again
 - macros are saved across editing sessions
+- to paste the content of a macro at the current cursor position
+  * enter i ctrl-r ctrl-r {macro-key}
 
 Leader Key
 - first key pressed to invoke many plugin commands

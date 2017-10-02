@@ -256,6 +256,12 @@ nnoremap <c-s> :update<cr>
 " Source the current buffer
 nnoremap <leader>sb :source %<cr>
 
+" Macros {{{
+let @a='i<a href="lv$hyA">kjpa</a>'
+let @c='i<code>f i</code>'
+let @i='i<i>f i</i>'
+" }}}
+
 " Simplify key mapping for omnifunc completion.
 inoremap <leader>c <c-x><c-o>
 
