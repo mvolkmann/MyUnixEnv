@@ -1,6 +1,9 @@
+# This echoes text using colors specified with the --color (-c) switch
+# which can be used any number of times.  For example,
+# cecho -c red fire -c green grass -c normal cloud -c blue sky
+# Tab completion can be used to select colors
+# after the --color (-c) switch has been typed.
 function cecho -d 'echoes given text in color'
-  set color white
-
   for arg in $argv
     switch $arg
       case '-c' '--color'
@@ -10,7 +13,7 @@ function cecho -d 'echoes given text in color'
           set_color $arg
           set -e nextArgIsColor
         else
-          echo -n ' '$arg
+          echo -n $arg' '
         end
     end
   end
