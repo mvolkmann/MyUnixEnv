@@ -14,7 +14,7 @@ function cecho -d 'echoes given text in color'
           set_color $arg
           set expectColor # no value
         else
-          echo -n $arg' '
+          echo -n $arg' ' # includes space between words
         end
     end
   end
@@ -25,5 +25,7 @@ end
 # -f disallows completion with filenames found in the current directory.
 # -s specifies the short name of the color swtich
 # -l specifies the long name of the color swtich
+# -r specifies that the switch requires a value
 # -a specifies the supported completions
-complete --command cecho -f -s c -l color -a 'black blue cyan green magenta red white yellow'
+set colors 'black blue cyan green magenta red white yellow'
+complete --command cecho -f -r -s c -l color -a "$colors"
