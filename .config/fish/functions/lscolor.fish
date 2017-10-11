@@ -9,7 +9,7 @@
 function lscolor
   # Default colors
   set cssColor green
-  set defaultColor white
+  set defaultColor normal
   set htmlColor blue
   set jsColor red
   set scssColor green

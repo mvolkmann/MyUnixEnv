@@ -19,28 +19,28 @@ htmlColor=$blue
 jsColor=$red
 scssColor=$green
 
+usage() {
+  echo invalid argument $0
+  exit 1
+}
+
 # Use colors specified in switches.
 for arg in "$@"; do
-  IFS="="
-  pieces=$arg
-  if [ ${#pieces[@]} -lt 2 ]; then
-    echo 'invalid argument "'$arg'"'
-    exit 1
-  fi
-  extension=${pieces[0]}
-  color=${pieces[1]}
-  varName="${extension}Color}"
-  eval $varName=$color
+  extension=${arg%%=*}
+  [[ -z $extension ]] && usage
+  color=${arg##*=}
+  [[ -z $color ]] && usage
+  varName="${extension}Color"
+  eval $varName=\${!color}
 done
 
 for file in *; do
   extension=${file##*.}
-  # Two brackets is the only safe way!
-  if [[ $extension == $file ]]; then  # no extension was found
+  if [[ $extension == $file ]]; then # no extension found
     color=$defaultColor
   else
-    colorName=${extension}Color
-    color=${!colorName}
+    colorVar=${extension}Color
+    color=${!colorVar}
     if [ -z $color ]; then
       color=$defaultColor
     fi
