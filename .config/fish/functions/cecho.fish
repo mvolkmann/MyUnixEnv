@@ -4,7 +4,7 @@
 # cecho -c red fire -c green grass -c normal cloud -c blue sky
 # Tab completion can be used to select colors
 # after the --color (-c) switch has been typed.
-function cecho -d 'echoes given text in color'
+function cecho -d 'echoes given text in colors'
   for arg in $argv
     switch $arg
       case '-c' '--color'
