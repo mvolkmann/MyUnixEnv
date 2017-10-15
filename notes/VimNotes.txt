@@ -9,7 +9,7 @@ Starting
 - vim .                   - same as vim +E, but not in Cygwin
 - vim --remote {filename} - to edit file in existing vim session
                             (doesn't work on Mac OS X)
-- vim -u NONE             - start without .vimrc
+- vim -u NONE             - start without configuration in .vimrc
 - vim --noplugin          - start without loading plugins
 
 Help
