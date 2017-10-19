@@ -1,72 +1,72 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
-[submodule ".vim/bundle/ale"]
-	path = .vim/bundle/ale
+[submodule ".vim/pack/plugins/ale"]
+	path = .vim/pack/plugins/ale
 	url = https://github.com/w0rp/ale.git
-[submodule ".vim/bundle/asciidoc-vim"]
-	path = .vim/bundle/asciidoc-vim
+[submodule ".vim/pack/plugins/asciidoc-vim"]
+	path = .vim/pack/plugins/asciidoc-vim
 	url = https://github.com/dagwieers/asciidoc-vim.git
-[submodule ".vim/bundle/ctrlp.vim"]
-	path = .vim/bundle/ctrlp.vim
+[submodule ".vim/pack/plugins/fzf.vim"]
+	path = .vim/pack/plugins/fzf.vim
 	url = https://github.com/kien/ctrlp.vim.git
-[submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
+[submodule ".vim/pack/plugins/nerdcommenter"]
+	path = .vim/pack/plugins/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule ".vim/bundle/rainbow_parentheses.vim"]
-	path = .vim/bundle/rainbow_parentheses.vim
+[submodule ".vim/pack/plugins/rainbow_parentheses.vim"]
+	path = .vim/pack/plugins/rainbow_parentheses.vim
 	url = https://github.com/junegunn/rainbow_parentheses.vim.git
-[submodule ".vim/bundle/ultisnips"]
-	path = .vim/bundle/ultisnips
+[submodule ".vim/pack/plugins/ultisnips"]
+	path = .vim/pack/plugins/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
-[submodule ".vim/bundle/vim-colors-solarized"]
-	path = .vim/bundle/vim-colors-solarized
+[submodule ".vim/pack/plugins/vim-colors-solarized"]
+	path = .vim/pack/plugins/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule ".vim/bundle/vim-easymotion"]
-	path = .vim/bundle/vim-easymotion
+[submodule ".vim/pack/plugins/vim-easymotion"]
+	path = .vim/pack/plugins/vim-easymotion
 	url = https://github.com/Lokaltog/vim-easymotion
-[submodule ".vim/bundle/vim-fixmyjs"]
-	path = .vim/bundle/vim-fixmyjs
+[submodule ".vim/pack/plugins/vim-fixmyjs"]
+	path = .vim/pack/plugins/vim-fixmyjs
 	url = https://github.com/ruanyl/vim-fixmyjs.git
-[submodule ".vim/bundle/vim-fugitive"]
-	path = .vim/bundle/vim-fugitive
+[submodule ".vim/pack/plugins/vim-fugitive"]
+	path = .vim/pack/plugins/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
-[submodule ".vim/bundle/vim-gitgutter"]
-	path = .vim/bundle/vim-gitgutter
+[submodule ".vim/pack/plugins/vim-gitgutter"]
+	path = .vim/pack/plugins/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule ".vim/bundle/vim-javascript"]
-	path = .vim/bundle/vim-javascript
+[submodule ".vim/pack/plugins/vim-javascript"]
+	path = .vim/pack/plugins/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
-[submodule ".vim/bundle/vim-js-arrow-function"]
-	path = .vim/bundle/vim-js-arrow-function
+[submodule ".vim/pack/plugins/vim-js-arrow-function"]
+	path = .vim/pack/plugins/vim-js-arrow-function
 	url = https://github.com/mvolkmann/vim-js-arrow-function.git
-[submodule ".vim/bundle/vim-jsx"]
-	path = .vim/bundle/vim-jsx
+[submodule ".vim/pack/plugins/vim-jsx"]
+	path = .vim/pack/plugins/vim-jsx
 	url = https://github.com/mxw/vim-jsx.git
-[submodule ".vim/bundle/vim-less"]
-	path = .vim/bundle/vim-less
+[submodule ".vim/pack/plugins/vim-less"]
+	path = .vim/pack/plugins/vim-less
 	url = https://github.com/groenewege/vim-less
-[submodule ".vim/bundle/vim-repeat"]
-	path = .vim/bundle/vim-repeat
+[submodule ".vim/pack/plugins/vim-repeat"]
+	path = .vim/pack/plugins/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule ".vim/bundle/vim-snippets"]
-	path = .vim/bundle/vim-snippets
+[submodule ".vim/pack/plugins/vim-snippets"]
+	path = .vim/pack/plugins/vim-snippets
 	url = https://github.com/honza/vim-snippets.git
-[submodule ".vim/bundle/vim-surround"]
-	path = .vim/bundle/vim-surround
+[submodule ".vim/pack/plugins/vim-surround"]
+	path = .vim/pack/plugins/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule ".vim/bundle/vim-tag-comment"]
-	path = .vim/bundle/vim-tag-comment
+[submodule ".vim/pack/plugins/vim-tag-comment"]
+	path = .vim/pack/plugins/vim-tag-comment
 	url = https://github.com/mvolkmann/vim-tag-comment.git
-[submodule ".vim/bundle/vim-tmux-navigator"]
-	path = .vim/bundle/vim-tmux-navigator
+[submodule ".vim/pack/plugins/vim-tmux-navigator"]
+	path = .vim/pack/plugins/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule ".vim/bundle/vim-unimpaired"]
-	path = .vim/bundle/vim-unimpaired
+[submodule ".vim/pack/plugins/vim-unimpaired"]
+	path = .vim/pack/plugins/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule ".vim/bundle/vim-vinegar"]
-	path = .vim/bundle/vim-vinegar
+[submodule ".vim/pack/plugins/vim-vinegar"]
+	path = .vim/pack/plugins/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar.git
-[submodule ".vim/bundle/ctrlp-funky"]
-	path = .vim/bundle/ctrlp-funky
+[submodule ".vim/pack/plugins/ctrlp-funky"]
+	path = .vim/pack/plugins/ctrlp-funky
 	url = https://github.com/tacahiroy/ctrlp-funky.git

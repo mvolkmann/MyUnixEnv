@@ -2,11 +2,16 @@ set encoding=utf-8
 scriptencoding utf-8
 
 " Pathogen --- {{{
-call pathogen#infect() " installs plugins found in ~/.vim/bundle
+" I'm no longer using Pathogen and am instead using
+" native package loading which was introduced in Vim 8.
+" It automatically loads all plugins found in
+" ~/.vim/pack/plugins/start where "plugins" can have any name.
+" For more details, see https://shapeshed.com/vim-packages/.
+"call pathogen#infect() " installs plugins found in ~/.vim/bundle
 
 " Generate documentation from files in each directory in runtimepath.
 " To see a list of these directories, enter :set runtimepath
-call pathogen#helptags()
+"call pathogen#helptags()
 " }}}
 
 " Miscellaneous options {{{
@@ -165,9 +170,9 @@ hi cursorLineNr ctermfg=12 " blue
 " }}}
 
 " Command-T plugin setup for fast file navigation {{{
-let g:CommandTCancelMap=['<ESC>', '<c-c>']
-let g:CommandTSelectNextMap=['<c-n>', 'j', '<DOWN>']
-let g:CommandTSelectPrevMap=['<c-p>', 'k', '<UP>']
+"let g:CommandTCancelMap=['<ESC>', '<c-c>']
+"let g:CommandTSelectNextMap=['<c-n>', 'j', '<DOWN>']
+"let g:CommandTSelectPrevMap=['<c-p>', 'k', '<UP>']
 " }}}
 
 " Key mappings --- {{{
@@ -272,9 +277,12 @@ inoremap <leader>c <c-x><c-o>
 "snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
 
 " CtrlP mappings - full path fuzzy file, buffer, mru, tag, ... finder
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP .'
+" I'm no longer using CtrlP and am using FZF instead.
+" It's configured to be invoked with ctrl-p.
+"let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_cmd = 'CtrlP .'
 "let g:ctrlp_working_path_mode='c'
+nmap <c-p> :FZF!<cr>
 
 " ctrlp-funky mappings
 " To get a list of all functions in current file,
@@ -312,10 +320,10 @@ if executable('ag')
 
   " Use ag in CtrlP for listing files.
   " It is lightning fast and respects .gitignore.
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
   " ag is fast enough that CtrlP doesn't need to cache.
-  let g:ctrlp_use_caching = 0
+  "let g:ctrlp_use_caching = 0
 endif
 " }}}
 
