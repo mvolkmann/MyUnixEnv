@@ -47,7 +47,8 @@ To determine if the current file is the file passed to the node command
 -------------------------------------------------------------------------------
 
 To install Node Package Manager (npm)
-- Node must be installed first
+- Node must be installed first and that comes with npm,
+  so you can just use that version
 - approach #1
   * curl http://npmjs.org/install.sh | sh
 - approach #2
@@ -87,7 +88,8 @@ To create a new package
   * enter "npm help json" for details
   * run "npm init" to have it prompt for details and create the file
     - safe to run in a non-empty directory
-...
+- to change the default license that "npm suggests" to MIT,
+  enter "npm config set init-license MIT"
 - enter "npm publish ..."
 
 npm commands include:
