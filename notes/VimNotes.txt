@@ -804,6 +804,20 @@ Moving Around
   t{char}  - forward to just before next occurrence of {char}
   T{char}  - backward to just before previous occurrence of {char}
 
+Native Package Loading
+- added in Vim8
+- create the directory ~/vim/pack/plugins
+- create the subdirectories opt and start
+  * opt is for plugins that will be manually loaded when needed
+    by entering ":packadd {packagename}"
+  * start is for plugins that will be automatically loaded
+    when Vim is started (most will go here)
+- clone the repo for each desired Vim plugin
+  into the opt or start directory
+- consider making this submodules of the Git repo
+  that holds your Vim configuration
+- for more information, see https://shapeshed.com/vim-packages/
+
 NERD_Tree plugin
 - tried it, but like using built-in netrw better
 
@@ -906,7 +920,8 @@ Paste
     - :set paste!
 
 Pathogen
-- better way to install Vim plugins
+- a way to install Vim plugins
+- I have switched to using "Native Package Loading" described above
 - add these lines to .vimrc
   call pathogen#infect()
   call pathogen#helptags() " generates help documentation for plugins
