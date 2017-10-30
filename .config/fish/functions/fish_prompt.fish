@@ -34,7 +34,8 @@ function fish_prompt
       echo -n ' ' # space between PWD and branch name
     else
       echo # newline
-      echo -n '  ' # indents past Vim mode on previous line
+      # Indent past Vim mode on previous line.
+      echo -n (string repeat -n$vimModeLen ' ')
       set remaining $COLUMNS # resets to full width
     end
 

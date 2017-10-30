@@ -30,7 +30,7 @@ function lscolor
   for file in (ls -d *)
     set pieces (string split . $file)
     if test (count $pieces) -ge 2
-      set extension $pieces[2]
+      set extension $pieces[-1] # last piece
       set varName $extension'Color'
       set color $$varName
       if test -z "$color"; set color $defaultColor; end
