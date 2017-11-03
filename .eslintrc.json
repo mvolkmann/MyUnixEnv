@@ -8,9 +8,12 @@
   },
 
   "globals": {
+    "afterEach": false,
     "beforeEach": false,
     "describe": false,
+    "expect": false,
     "it": false,
+    "test": false,
     "$": false
   },
 
@@ -60,7 +63,7 @@
     "eol-last": "off",
     "eqeqeq": "error",
     "flowtype/boolean-style": ["error", "boolean"],
-    "flowtype/define-flow-type": ["error", {"no-undef": "error"}],
+    "flowtype/define-flow-type": "error",
     "flowtype/delimiter-dangle": ["error", "never"],
     "flowtype/generic-spacing": ["error", "never"],
     "flowtype/no-dupe-keys": "error",
@@ -298,7 +301,8 @@
     "prefer-spread": "error",
     "prefer-template": "off",
     "quote-props": ["error", "as-needed"],
-    "quotes": ["error", "single", "avoid-escape"],
+    //"quotes": ["error", "single", "avoid-escape"],
+    "quotes": "off",
     "radix": "error",
     "react/display-name": "off",
     "react/forbid-component-props": "off",
@@ -325,7 +329,6 @@
     "react/jsx-no-undef": "error",
     "react/jsx-pascal-case": "error",
     "react/jsx-sort-props": "off",
-    "react/jsx-space-before-closing": ["warn", "always"],
     "react/jsx-tag-spacing": ["error", {
       "afterOpening": "never",
       "beforeSelfClosing": "always",

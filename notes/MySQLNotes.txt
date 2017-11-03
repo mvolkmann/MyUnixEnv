@@ -1,18 +1,17 @@
 MySQL Notes
 
 Mac OS X
-- MySQL is installed in /usr/local/mysql by default
-- PATH should include /usr/local/mysql/bin
-- to start the daemon
-    sudo safe_mysqld (can't run in background; it prompts for root password)
-    ctrl-z
-    Is this the best way?
-  * another way
-    cd /usr/local/mysql
-    sudo ./bin/safe_mysqld
-    ctrl-z
-- to use interactive commands
-    mysql -uroot
+- to install brew install mysql
+- for some reason this is also necessary
+  cd /usr/local
+  mkdir mysql
+  cd mysql
+  mkdir bin
+  cd bin
+  ln -s /usr/local/bin/mysql mysql
+- to start the daemon, mysql.server start
+- to stop the daemon, mysql.server stop
+- to use interactive commands, mysql -uroot
 - to execute an SQL script
     mysql -uroot < {script-name}.sql
 
@@ -40,13 +39,13 @@ JDBC
     "jdbc:mysql://localhost:3306/{database-name}"
 
 Interactive usage common commands
-- mysql
 - show databases;
 - create database {database-name};
 - use {database-name};
 - show tables;
 - drop table if exists {table-name};
-- create table ( {col-name} {col-type}, ... );
+- create table {table-name} ({col-name} {col-type}, ...);
+- insert into {table-name} ({col1}, {col2}, ...) values ({v1}, {v2}, ...);
 - select * from {table-name};
 - source {file-name}.sql;
 - exit
