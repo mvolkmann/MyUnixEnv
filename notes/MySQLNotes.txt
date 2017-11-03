@@ -45,6 +45,12 @@ Interactive usage common commands
 - show tables;
 - drop table if exists {table-name};
 - create table {table-name} ({col-name} {col-type}, ...);
+  * for example,
+    create table user (
+      id int auto_increment primary key,
+      username text,
+      password text
+    );
 - insert into {table-name} ({col1}, {col2}, ...) values ({v1}, {v2}, ...);
 - select * from {table-name};
 - source {file-name}.sql;
