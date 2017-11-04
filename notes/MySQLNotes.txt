@@ -41,6 +41,7 @@ JDBC
 Interactive usage common commands
 - show databases;
 - create database {database-name};
+- drop database {database-name};
 - use {database-name};
 - show tables;
 - drop table if exists {table-name};
@@ -51,6 +52,7 @@ Interactive usage common commands
       username text,
       password text
     );
+- describe {table-name};
 - insert into {table-name} ({col1}, {col2}, ...) values ({v1}, {v2}, ...);
 - select * from {table-name};
 - source {file-name}.sql;

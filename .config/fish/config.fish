@@ -130,12 +130,6 @@ alias pl 'clear; polylint demo/index.html'
 alias plr 'clear; livereload "*.html, demo/*.html, test/*.html"'
 alias pso 'clear; polymer serve -o'
 
-# For Monsanto
-alias cdapi 'cd ~/Monsanto/launchpad-api'
-alias cdui 'cd ~/Monsanto/launchpad-ui'
-alias pgstart 'pg_ctl -D /usr/local/var/postgres start'
-alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
-
 #---------------------------------------------------------------------------
 # Environment Variables
 #---------------------------------------------------------------------------
@@ -200,18 +194,13 @@ set JS_DIR $LANGUAGES_DIR/javascript
 #set PATH $PATH $MAVEN_HOME/bin
 #set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
 
-# Monsanto settings
-set POSTGRES_DB launchpad
-set POSTGRES_USER launchpad
-set POSTGRES_PASSWORD launchpad
-set NODE_ENV local
-alias pgl 'psql -d launchpad'
-
 # MongoDB settings
 #set PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
 
-# MySQL settings
-#set PATH $PATH /usr/local/mysql-5.0.51a-osx10.5-x86/bin
+# PostgreSQL settings
+alias pgstart 'pg_ctl -D /usr/local/var/postgres start'
+alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
+alias pgl 'psql -d demo'
 
 # Node.js settings
 set NODE_PATH . /usr/local/lib/node_modules # Mocha needs this

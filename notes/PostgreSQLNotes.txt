@@ -83,6 +83,15 @@ To start the database server
 To create a database
 - createdb -U{username} {db-name}
 
+To create a table
+- create table {table-name} ({col-name} {col-type}, ...);
+  * for example (user is a reserved table),
+    create table user2 (
+      id bigserial primary key,
+      username text,
+      password text
+    );
+
 To delete a database
 - dropdb -U{username} {db-name}
 
