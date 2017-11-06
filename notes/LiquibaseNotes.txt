@@ -1,0 +1,63 @@
+Liquibase Notes
+
+- open source tool for performing database migration and versioning
+- a competing tool is Flyway
+
+- to install
+  * on Mac, brew install liquibase
+
+- describe a changeset in an XML file
+  * for example, here is changelog.xml:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="1" author="Mark Volkmann">
+    <!-- Adding a new table. -->
+    <createTable tableName="ice_cream">
+      <column name="id" type="int">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="flavor" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="available" type="boolean" defaultValueBoolean="true" />
+    </createTable>
+  </changeSet>
+</databaseChangeLog>
+
+- execute changeset with a command like the following:
+  liquibase \
+    --driver=com.mysql.jdbc.Driver \
+    --classpath=/path/to/classes \
+    --changeLogFile=changelog.xml \
+    --url="jdbc:mysql://localhost/example" \
+    --username={username} \
+    --password={password} \
+    migrate
+
+- after a changeset is successfully executed,
+  subsequently executed changesets must use new ids
+  * otherwise a "change sets check sum" error will be output
+  * but can reuse ids if database is dropped and recreated
+
+- valid changeSet commands include:
+  * createTable, dropTable, renameTable,
+  * addColumn, dropColumn, renameColumn,
+  * delete (with column children), insert (with column children),
+  * addAutoIncrement,
+  * addPrimaryKey, dropPrimayKey,
+  * createIndex, dropIndex
+  * addUniqueConstraint, dropUniqueConstraint,
+  * addNotNullConstraint, dropNotNullConstraint
+  * addForeignKeyConstraint, dropForeignKeyConstraint,
+  * for more and to see the required attributes and child elements,
+    see the documentation and examples at
+    http://www.liquibase.org/documentation/changes/
+    and the XML Schema at
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd

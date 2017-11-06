@@ -11,7 +11,7 @@ Mac OS X
   ln -s /usr/local/bin/mysql mysql
 - to start the daemon, mysql.server start
 - to stop the daemon, mysql.server stop
-- to use interactive commands, mysql -uroot
+- to use interactive commands, mysql -uroot [database-name]
 - to execute an SQL script
     mysql -uroot < {script-name}.sql
 
