@@ -11,24 +11,55 @@ Liquibase Notes
 
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- See notes/LiquibaseNotes.txt. -->
 <databaseChangeLog
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <changeSet id="1" author="Mark Volkmann">
-    <!-- Adding a new table. -->
+  <!--changeSet id="1" author="Mark Volkmann">
+    <dropTable tableName="ice_cream"/>
     <createTable tableName="ice_cream">
       <column name="id" type="int">
-        <constraints primaryKey="true" nullable="false" />
+        <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="flavor" type="text">
+      <column name="name" type="text">
         <constraints nullable="false"/>
       </column>
-      <column name="available" type="boolean" defaultValueBoolean="true" />
     </createTable>
+  </changeSet-->
+
+  <changeSet id="2" author="Mark Volkmann">
+    <createIndex
+      catalogName="demo"
+      schemaName="demo"
+      tableName="ice_cream"
+      indexName="idx_ice_cream"
+      unique="true"
+    >
+      <column name="id" type="int"/>
+    </createIndex>
+    <addAutoIncrement
+      catalogName="demo"
+      schemaName="demo"
+      tableName="ice_cream"
+      columnName="id"
+      columnDataType="int"
+      incrementBy="1"
+      startWith="1"
+    />
+    <renameColumn
+      tableName="ice_cream"
+      oldColumnName="name"
+      newColumnName="flavor"
+      columnDataType="text"
+    />
+    <addColumn tableName="ice_cream">
+      <column name="available" type="boolean" defaultValueBoolean="true"/>
+    </addColumn>
   </changeSet>
+
 </databaseChangeLog>
 
 - execute changeset with a command like the following:
