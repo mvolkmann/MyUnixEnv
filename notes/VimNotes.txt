@@ -605,7 +605,7 @@ HTML Output
   * need to write it with :w
 
 Installing Plugins
-- install Pathogen
+- see "Native Package Loading"
 - to see list of plugins that were successfully installed,
   :scriptnames
 - see "Submodules" section in GitNotes.txt
@@ -806,16 +806,18 @@ Moving Around
 
 Native Package Loading
 - added in Vim8
-- create the directory ~/vim/pack/plugins
-- create the subdirectories opt and start
-  * opt is for plugins that will be manually loaded when needed
-    by entering ":packadd {packagename}"
-  * start is for plugins that will be automatically loaded
-    when Vim is started (most will go here)
-- clone the repo for each desired Vim plugin
-  into the opt or start directory
-- consider making this submodules of the Git repo
-  that holds your Vim configuration
+- initial setup
+  * create the directory ~/.vim/pack/plugins
+  * create the subdirectories opt and start
+    - opt is for plugins that will be manually loaded when needed
+      by entering ":packadd {packagename}"
+    - start is for plugins that will be automatically loaded
+      when Vim is started (most will go here)
+    - consider making this submodules of the Git repo
+      that holds your Vim configuration
+- installing a new plugin
+  * cd ~/.vim/pack/plugins/start
+  * clone the git repo for the plugin
 - for more information, see https://shapeshed.com/vim-packages/
 
 NERD_Tree plugin
