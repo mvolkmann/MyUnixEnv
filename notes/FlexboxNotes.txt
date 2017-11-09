@@ -38,8 +38,9 @@ Flexbox Notes
   * center: aligns at center
   * space-between: aligns items with equal spacing between each
     (no space before first or after last)
-  * space-around: aligns items with equal spacing around each
-    (half space before first and after last)
+  * space-around: aligns items with equal spacing around each,
+    but half space before first and after last
+  * space-evenly: aligns items with equal spacing around each
 
 - align-items: aligns items vertically within container
   * flex-start: aligns items at top

@@ -298,6 +298,7 @@ Merging
 - three kinds of merges
   * straight - merges all individual commits separately
   * squashed - merges all individual commits as a single commit
+    - see "squash" under "Rebase" for details
   * cherry-picking - merges only a single, selected commit
 - to merge one branch into another
   * git checkout {to-branch} # if it isn't already the current branch
@@ -747,6 +748,22 @@ Rebasing
   * git rebase --abort
 - for interactive selection of which commits to squash
   * git rebase -i
+  * to squash all commits but the first into the first
+    - git checkout master
+    - git pull
+    - git checkout {branch-with-commits}
+    - consider creating a new branch from {branch-with-commits} that is a copy
+      * if you are concerned about messing this up
+    - git rebase -i master
+    - change "pick" to "s" at the beginning of all commit lines but the first
+    - save (:wq)
+    - git push --force origin {branch-with-commits or new branch}
+    - replace all comments with a single new comment
+    - save (:wq)
+    - create a new pull request
+    - after pull request is approved
+      * merge the branch with the squashed commits
+      * delete the merged branch and the original if a copy was created
 
 SSL
 - if attempting to clone a repo gives the error
