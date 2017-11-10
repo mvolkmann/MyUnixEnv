@@ -10,6 +10,7 @@ ln -s MyUnixEnv/.bash_profile .bash_profile
 ln -s MyUnixEnv/.bashrc .bashrc
 ln -s MyUnixEnv/.config .config
 ln -s MyUnixEnv/.eslintrc.json .eslintrc.json
+ln -s MyUnixEnv/.ghci .ghci
 ln -s MyUnixEnv/.gitconfig .gitconfig
 ln -s MyUnixEnv/.gvimrc .gvimrc
 ln -s MyUnixEnv/.jshintrc .jshintrc

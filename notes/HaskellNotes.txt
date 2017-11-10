@@ -1,15 +1,152 @@
 Haskell Notes
 
-Download
-- from http://hackage.haskell.org/platform/
-- there is a .dmg file for Mac OS X
+Overview
+- started in 1987 and standardized in 1999
+- a purely functional language
+- everything is immutable
+  * can't change the value of variables
+- statically typed with type inference
+- lazy
+  * doesn't evaluate function calls until the result is needed
 
-Install
-- open a Terminal window
-- cd to directory created by unzip
-- enter "./configure"
-- enter "sudo make install"
+Learning Resources
+- free online book "Learn You a Haskell for Great Good!"
+  at http://learnyouahaskell.com/
+- https://www.haskell.org/
+- https://wiki.haskell.org/
+
+Installing
+- browse http://hackage.haskell.org/platform/
+- two options for Mac
+  * download .dmg file and double-click
+  * brew cask install haskell-platform
+
+Compiler
+- most popular is Glasgow Haskell Compiler (GHC)
+
+Libraries
+- browse http://hackage.haskell.org/
 
 Interactive sessions
 - enter "ghci"
 - to exit, press ctrl-d
+- recall previous commands with up arrow
+- prompt
+  * default is "Prelude> "
+  * change with :set prompt "new prompt"
+  * can add this command to ~/.ghci to change for all future sessions
+  * mine uses an elephant emoji for the elephant on the
+    cover of the book "Learn You a Haskell for Great Good!"
+- to see the type of a name, enter :t name
+  * very useful for learning
+
+Source Files
+- referred to as Haskell scripts
+- have a file extension of .hs
+- load these into an interactive session with :l {filename}
+- reload current script with :r
+- example
+  * create file hello.hs containing this function definition:
+    hello name = "Hello, " ++ name + "!"
+  * ghci
+  * :l hello
+  * hello "Mark"
+
+Operators
+- these are actually infix functions
+- math: + - * /
+  * use parens to control order of evaluation
+- logic
+  && for and
+  || for or
+  not
+- comparison
+  * operands must be the same type
+  == for equal
+  /= for not equal
+
+Boolean
+- values are True and False
+
+Strings
+- literal values are surrounded by double quotes
+- really a list of characters
+- concatenate with ++
+  * really builds a new list from two lists
+
+Characters
+- single letters surrounded by single quotes
+
+Functions
+- name cannot begin with an uppercase letter
+- most functions are prefix functions,
+  but some are infix functions
+- to call a prefix function,
+  start with the name followed by arguments
+  all separated by spaces (no parens)
+- to use a prefix function as an infix,
+  surround its name with backticks
+- all functions return a value
+- prefix functions are evaluated before infix functions,
+  so parens are needed in succ (2 * 3) which returns 7
+  * succ 2 * 3 returns 9
+- builtin functions
+  * numbers
+    - div returns integer division result
+    - max returns largest of two arguments
+    - min returns smallest of two arguments
+    - pred n returns n - 1
+    - succ n returns n + 1
+    - sqrt n returns square root of n
+- example
+  hypot x y = sqrt (x * x + y * y)
+  hypot 3 4 returns 5
+- scripts can call functions defined later in the file
+
+Conditional Logic
+- if expression
+  * if condition then expression else expression
+  * else is required
+  * no parens or semicolons
+  * returns value of selected expression
+
+Lists
+- items are surrounded by square brackets
+  and separated by commas
+- ex. [1, 3, 7]
+  * same as 1:3:7:[]
+  * : is called the "cons" operator
+- all items must be the same type
+- implemented as linked lists, so
+  accessing elements in the middle is not efficient
+- to get number of items, length list
+- to test whether a list is empty, null list
+  * returns a boolean
+- to get first item, head list
+- to get last item, last list
+- to get all but first item, tail list
+- to get all but last item, init list
+- to create a list that contains the first n items, take n list
+- to create a list that contains the last n items, drop n list
+- to create list that is result of prepending new item
+  * item:list
+- to create list that is result of appending new item
+  * list:item
+- to create list where first item is modified
+  * newItem:tail list
+- to create a new list from two lists
+  * list1++list2
+- to get an item at a given index
+  * list!!index
+- to create a reversed version of a list: reverse list
+- to get smallest number in a list: minimum list
+- to get largest number in a list: maximum list
+- to get sum of numbers in a list: sum list
+- to get product of numbers in a list: product list
+- to test whether an item is in a list: elem item list
+- lists can be nested
+
+Variables
+- to set use name = expression
+- does this really create a function that
+  always returns the value of the expression?
