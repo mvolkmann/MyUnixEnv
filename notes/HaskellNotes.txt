@@ -9,6 +9,7 @@ Overview
 - lazy
   * doesn't evaluate function calls until the result is needed
 - has no for or while loops
+- the Vim ALE plugin has support for linting Haskell code!
 
 Learning Resources
 - free online book "Learn You a Haskell for Great Good!"
@@ -39,6 +40,8 @@ Interactive sessions
   * can add this command to ~/.ghci to change for all future sessions
   * mine uses an elephant emoji for the elephant on the
     cover of the book "Learn You a Haskell for Great Good!"
+- to enable Vim keybindings
+  * create ~/.haskeline and add "editMode: Vi"
 - to see the type of a name, enter :t name
   * very useful for learning
 
@@ -46,6 +49,7 @@ Source Files
 - referred to as Haskell scripts
 - have a file extension of .hs
 - load these into an interactive session with :l {filename}
+  * can omit .hs extension when loading
 - reload current script with :r
 - example
   * create file hello.hs containing this function definition:
@@ -57,10 +61,13 @@ Source Files
 Comments
 - single-line: start with --
 - multi-line: surround with {- -}
+
 Operators
 - these are actually infix functions
 - numbers
   * basic: + - * /
+  * exponentiation: **
+    - ex. 2 ** 3 == 8
   * use parens to control order of evaluation
   * div performs integer division, discarding the remainder
     - ex. div 8 3 == 2
@@ -74,7 +81,7 @@ Operators
 - logic
   && for and
   || for or
-  not
+  not (the word rather than ! as in some other languages)
 - comparison
   * operands must be the same type
   * == for equal
@@ -82,16 +89,49 @@ Operators
   * < <= >= >
 
 Boolean
-- values are True and False
+- Bool - values are True and False
+
+Numbers
+- primitive types
+  * Int - 4 bytes
+  * Integer - arbitrary precison
+  * Float - 4 bytes
+  * Double - 8 bytes
+  * surround negative numbers with parens
+    to avoid confusion with the subtraction operator
+    - ex. 5 + (-2)
+- number typeclass hierarchy
+  * note that a typeclass can derive from multiple other typeclasses
+  * Num
+    * Fractional
+      * Floating
+        * Float
+        * Double
+      * RealFrac
+        * Float
+        * Double
+    * Real derives from Ord which adds ordering functions
+      * Integral derives from Enum
+        * Int
+        * Integer
+      * RealFrac
+        * Float
+        * Double
+  * RealFloat derives from RealFrac and Floating
+    * Float
+    * Double
+  * Complex
+- type conversions
+  * to convert an Integral to a Floating, fromIntegral integralValue
+
+Characters
+- Char - single letter surrounded by single quotes
 
 Strings
 - literal values are surrounded by double quotes
 - really a list of characters
 - concatenate with ++
   * really builds a new list from two lists
-
-Characters
-- single letters surrounded by single quotes
 
 Names
 - variable identifiers start with a lowercase letter
@@ -100,6 +140,19 @@ Names
 - operators are formed from one or more of '!#$%&*+./<=>?@\^|-~'
 - constructors can be operator names, if they start with a ':'
   - ex. :+ for Data.Complex
+
+Modules
+- module names must start with an uppercase letter
+- can use functions in any module by prefixing them with the module name
+  * ex. Data.List, Data.Map, System.IO
+- to use functions in a module without prefixes, import ModuleName
+- the most commonly used functions are defined in the Prelude module
+  which is imported by default
+- to define a module
+  * create a file named {module-name}.hs
+  * first line must be
+    module {module-name} where
+  * add definitions after this
 
 Functions
 - syntax to call
@@ -138,30 +191,65 @@ Functions
     - min returns smallest of two arguments
     - pred n returns n - 1
     - succ n returns n + 1
+    - round (closest), ceiling (up), floor (down), truncate (toward zero)
     - sqrt n returns square root of n
+    - trigonometry: sin, cos, tan, asin, acos, atan,
+    - hyperbolic: sinh, cosh, tanh, asinh, acosh, atanh
+    - logarithmic: log, exp (e ** n)
+- builtin variables
+  * for numbers
+    - pi
 - example
   hypot x y = sqrt (x * x + y * y)
   hypot 3 4 returns 5
 - scripts can call functions defined later in the file
 
-Type Signatures
-
-Conditional Logic
-- if expression
-  * if condition then expression else expression
-  * else is required
-  * no parens or semicolons
-  * returns value of selected expression
+Types
+- ues Hindley-Milner type system
+- syntax is name :: type
+- variable example
+  * firstName :: String
+- function example
+  * add :: Num a => a -> a -> a
+    add x y = x + y
+  * means all occurrences of a in the signature have type Num
+  * takes two Num arguments and returns a Num
+  * ghci detail
+    - entering the type signature and definition on two lines doesn't work
+    - workarounds
+      * enter them on same line separated by a semicolon
+        - ex. let add :: Num a => a -> a -> a; add x y = x + y
+      * enter them in a block
+        :{
+        let add :: Num a => a -> a -> a
+            add x y = x + y -- indented 4 spaces
+        :}
+      * turn on multline mode which automatically infers use of :{ and :}
+        :set +m -- one tie
+        let add :: Num a => a -> a -> a
+            add x y = x + y -- indented 4 spaces
+        press return to exit block
+  * automatically supports currying
+    - ex.
+      plus5 = add 5
+      plus5 2 == 7
+- another function example
+  * charAt :: String -> Int -> Char
+    charAt str index = str !! index
+- type classes
+  * define an interface that specific types implement
+  * builtin examples include Eq, Ord, Show, Read,
+    Enum, Bounded, Num, Floating, and Integral
 
 Lists
 - all items must be the same type
 - items are surrounded by square brackets
   and separated by commas
 - ex. [1, 3, 7]
-  * same as 1:3:7:[]
+  * same as 1 : 3 : 7 : []
   * : is called the "cons" operator
 - implemented as linked lists, so
-  accessing elements in the middle is not efficient
+  accessing items other than the first is not efficient
 - to get number of items, length list
 - to test whether a list is empty, null list
   * returns a boolean
@@ -174,16 +262,16 @@ Lists
 - to create a list that contains the first n items, take n list
 - to create a list that contains the last n items, drop n list
 - to create list that is result of prepending new item
-  * item:list
+  * item : list
 - to create list that is result of appending new item
-  * list:item
+  * list ++ [item]
 - to create list where first item is modified
-  * newItem:tail list
-- to create a new list from two lists
+  * newItem : tail list
+- to create a new list by concatenating two lists
   * list1 ++ list2
   * both arguments must be a list
 - to get an item at a given index
-  * list!!index
+  * list !! index
   * indexes start at 1
   * also used to get a character from a string since those are lists
   * slow for long lists since implemented with a linked list
@@ -216,6 +304,17 @@ Lists
     - ex. words "foo bar baz" == ["foo","bar","baz"]
   * unwords takes a list of works and returns a string of the words separated by spaces
     - ex. unwords ["foo","bar","baz"] == "foo bar baz"
+  * splitAt creates a list of two lists obtained by
+    spliting a given list at an index
+    - ex. splitAt 3 [1,2,3,4,5] == [[1,2,3], [4,5]]
+  * sort creates a sorted version of a list
+    - must import Data.List
+    - ex. sort [9, 3, 6, 2] == [2, 3, 6, 9]
+  * zipWith creates a list from multiple lists using the result
+    of a function called with items at corresponding positions
+    - ex. zipWith min [1, 9, 5, 4] [2, 7, 6] === [1, 7, 5, 4]
+    - note how the last item in the first list has no corresponding item
+      in the second, so it just used that item in the result
 
 Ranges
 - create lists of all elements between two items inclusive
@@ -233,11 +332,14 @@ Ranges
 - replicate creates a list containing a given number of the same item
   * ex. replicate 3 "Ho" == ["Ho","Ho","Ho"]
   - note how this creates a list of strings rather than an single string
-- cycle creates a list of repeating items
+- repeat creates an infinite list of a single repeated item
+  * ex. take 4 (repeat 3) === [3,3,3,3]
+- cycle creates an infinite list of repeating items
   * ex. take 6 (cycle [5, 10]) === [5,10,5,10,5,10]
 
 List Comprehensions
-- produce a list containing the results of an expression
+- like a list factory
+- produces a list containing the results of an expression
   where a variable is set to each value in another list
 - ex. [n * 2 | n <- [1..4]] == [2,4,6,8]
   * n * 2 is called the "output"
@@ -264,7 +366,7 @@ List Comprehensions
 Tuples
 - a fixed length set of values with specific types at each position
   * each position can hold a different type
-  * called a "pair" if two items
+  * called a "pair" if two items (most common size)
   * called a "triple" if three items
 - items are surrounded by parens instead of
   square brackets that are used for lists
@@ -287,13 +389,6 @@ Association Lists
   * ex. lookup "baz" mapping == Nothing
   * just does a sequential search, so not efficient
 
-Modules
-- can use functions in any module by prefixing them with the module name
-  * ex. Data.List, Data.Map, System.IO
-- to use functions in a module without prefixes, import ModuleName
-- the most commonly used functions are defined in the Prelude module
-  which is imported by default
-
 Data.Map
 - a hashmap data structure
 - can create from an association list
@@ -301,6 +396,13 @@ Data.Map
 - ex. myMap = fromList [("foo", 1), ("bar", 2)]
 - to get the value for a given key, myMap ! key
 - to get the number of keys in a Map, size myMap
+
+Conditional Logic
+- if expression
+  * if condition then expression else expression
+  * else is required
+  * no parens or semicolons
+  * returns value of selected expression
 
 Higher Order Functions
 - these are functions that take an argument that is a function
@@ -311,6 +413,8 @@ Higher Order Functions
   * takes a function and list and returns a list of
     the items for which the function returns True
   * ex. filter odd [1,4,7,10] == [1,7]
+  * ex. filter (> 5) [1,4,7,10] == [7, 10]
+    - (> 5) creates a function using currying
 - foldl is like reduce in JavaScript
   * takes a function, starting value, and a list
     - if the function is an infix function,
