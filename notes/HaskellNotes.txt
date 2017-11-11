@@ -28,7 +28,7 @@ Libraries
 - browse http://hackage.haskell.org/
 
 Interactive sessions
-- enter "ghci"
+- enter "ghci" to start the REPL
 - to exit, press ctrl-d
 - recall previous commands with up arrow
 - prompt
@@ -225,6 +225,11 @@ List Comprehensions
   * uses the cartesian product of the lists
   * goes through all items in second list for each item in first list
     - order is 1 and 4, 1 and 5, 2 and 4, 2 and 5, 3 and 4, 3 and 5
+  * can split onto multiple lines, but not in the REPL
+    - ex.
+      [n * 2 |
+       n <- [1..4],
+       even n]
 - ex. remove all spaces, dashes, and underscores from a string
   * squeeze str = [char | char <- str, not (elem char [' ', '-', '_'])]
   * squeeze "foo bar-baz_qux" == "foobarbazqux"
@@ -232,6 +237,8 @@ List Comprehensions
 Tuples
 - a fixed length set of values with specific types at each position
   * each position can hold a different type
+  * called a "pair" if two items
+  * called a "triple" if three items
 - items are surrounded by parens instead of
   square brackets that are used for lists
 - fst t returns the first item in the two-item tuple t
