@@ -206,6 +206,26 @@ Custom Types
   area circle == 28.27
   area rectangle == 12.0
 
+Custom Type Classes
+- ex. ShapeCompare
+width :: Shape -> Float
+width (Circle _ _ radius) = radius * 2
+width (Rectangle x1 _ x2 _) = abs (x1 - x2)
+height :: Shape -> Float
+height (Circle _ _ radius) = radius * 2
+height (Rectangle _ y1 _ y2) = abs (y1 - y2)
+class ShapeCompare kind where
+  isLarger :: kind -> kind -> Bool
+  isWider :: kind -> kind -> Bool
+  isTaller :: kind -> kind -> Bool
+instance ShapeCompare Shape where
+  isLarger shape1 shape2 = area shape1 > area shape2
+  isWider shape1 shape2 = width shape1 > width shape2
+  isTaller shape1 shape2 = height shape1 > height shape2
+-- isLarger circle rectangle == False
+-- isWider circle rectangle == False
+-- isTaller circle rectangle == True
+
 $ precedence operator
 - means expression after it takes precedence over expression before it
 - ex. abs (x1 - x2) == abs $ x1 - x2
@@ -644,6 +664,27 @@ Libraries
 - unix
 - Win32
 
+do
+- creates a block
+- is the value of the last expression the value of the do?
+
+File I/O
+- import System.IO
+- to write from a file
+  filePath = "demo.txt"
+  writeDemo = do
+    file <- openFile filePath WriteMode
+    hPutStrLn file ("some text")
+    hClose file
+  writeDemo
+- to read from a file
+  readDemo = do
+    file <- openFile filePath ReadMode
+    contents <- hGetContents file
+    putStr contents
+    hClose file
+--readDemo
+
 Creating Executables
 - create a .hs file with a "main" function
 - ghc {name}.hs
@@ -651,7 +692,6 @@ Creating Executables
 - example
   * in file greet.hs
     import System.IO
-
     main = do
       -- lines inside do must have the same indentation
       putStrLn "Enter your name."
