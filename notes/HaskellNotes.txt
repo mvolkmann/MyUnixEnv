@@ -33,6 +33,7 @@ Interactive sessions
 - recall previous commands with up arrow
 - prompt
   * default is "Prelude> "
+    - this is the name of the standard library that is automatically loaded
   * change with :set prompt "new prompt"
   * can add this command to ~/.ghci to change for all future sessions
   * mine uses an elephant emoji for the elephant on the
@@ -54,16 +55,27 @@ Source Files
 
 Operators
 - these are actually infix functions
-- math: + - * /
+- numbers
+  * basic: + - * /
   * use parens to control order of evaluation
+  * div performs integer division, discarding the remainder
+    - ex. div 8 3 == 2
+  * mod a b retunns a modulo b
+  * gcd a b returns the greatest common denominator of a and b
+    - ex. gcd 12 15 == 3
+  * lcm a b returns the lowest common multiple of a and b
+    - ex. lcm 6 10 == 30
+  * even n determines if n is even
+  * odd n determines if n is odd
 - logic
   && for and
   || for or
   not
 - comparison
   * operands must be the same type
-  == for equal
-  /= for not equal
+  * == for equal
+  * /= for not equal
+  * < <= >= >
 
 Boolean
 - values are True and False
@@ -86,12 +98,16 @@ Functions
   all separated by spaces (no parens)
 - to use a prefix function as an infix,
   surround its name with backticks
+  * ex. 8 `div` 3 == 2
+- to use an infix function as a prefix,
+  surround its name with parens
+  * ex. (*) 2 3 == 6
 - all functions return a value
 - prefix functions are evaluated before infix functions,
   so parens are needed in succ (2 * 3) which returns 7
   * succ 2 * 3 returns 9
 - builtin functions
-  * numbers
+  * for numbers
     - div returns integer division result
     - max returns largest of two arguments
     - min returns smallest of two arguments
@@ -111,21 +127,23 @@ Conditional Logic
   * returns value of selected expression
 
 Lists
+- all items must be the same type
 - items are surrounded by square brackets
   and separated by commas
 - ex. [1, 3, 7]
   * same as 1:3:7:[]
   * : is called the "cons" operator
-- all items must be the same type
 - implemented as linked lists, so
   accessing elements in the middle is not efficient
 - to get number of items, length list
 - to test whether a list is empty, null list
   * returns a boolean
-- to get first item, head list
-- to get last item, last list
-- to get all but first item, tail list
-- to get all but last item, init list
+- slicing
+  * these raise an exception if called on an empty list
+  * to get first item, head list
+  * to get last item, last list
+  * to get all but first item, tail list
+  * to get all but last item, init list
 - to create a list that contains the first n items, take n list
 - to create a list that contains the last n items, drop n list
 - to create list that is result of prepending new item
@@ -135,16 +153,121 @@ Lists
 - to create list where first item is modified
   * newItem:tail list
 - to create a new list from two lists
-  * list1++list2
+  * list1 ++ list2
+  * both arguments must be a list
 - to get an item at a given index
   * list!!index
-- to create a reversed version of a list: reverse list
+  * indexes start at 1
+  * also used to get a character from a string since those are lists
+  * slow for long lists since implemented with a linked list
+- to create a reversed copy of a list: reverse list
 - to get smallest number in a list: minimum list
 - to get largest number in a list: maximum list
 - to get sum of numbers in a list: sum list
 - to get product of numbers in a list: product list
 - to test whether an item is in a list: elem item list
 - lists can be nested
+- lists can be compared if corresponding items can be compared
+  * ex. [1, 3, 5] < [2, 4, 6] gives True
+  * ex. [1, 3, 5] < [1, 4, 6] gives True
+  * ex. [1, 3, 5] < [1, 3, 6] gives True
+  * ex. [1, 3, 5] < [1, 3, 5] gives False
+- other list functions
+  * notElem
+  * concat takes a list of list and returns a flatten list
+    - the lists cannot contain nested lists
+      * recall that all items in a list must be the same type,
+        so [1, [2, 3]] is not a valid list
+    - ex. concat [[1,2], [3,4,5]] == [1,2,3,4,5]
+  * takeWhile creates a list of all initial items
+    in another list that meet a predicate
+    - ex. takeWhile even [2,4,6,7,8] == [2,4,6]
+  * dropWhile creates a list of all remaining items
+    in another list after the initial elements meet a predicat
+    - ex. dropWhile even [2,4,6,7,8] == [7,8]
+  * words takes a string and returns a list of words delimited by spaces
+    - ex. words "foo bar baz" == ["foo","bar","baz"]
+  * unwords takes a list of works and returns a string of the words separated by spaces
+    - ex. unwords ["foo","bar","baz"] == "foo bar baz"
+
+Ranges
+- create lists of all elements between two items inclusive
+  * ex. [3..7] == [3,4,5,6,7]
+  * ex. ['c'..'f'] == "cdef"
+- can specify a step by including second item
+  * ex. [5, 10..27] == [5,10,15,20,25]
+- specifying a step is the only way to get a decreasing range
+  * ex. [10, 9..0] == [10,9,8,7,6,5,4,3,2,1,0]
+- to create an infinite list, don't specify upper bound
+  * ex. [3, 6..]
+  * in the REPL this will output items forever (ctrl-c to stop)
+  * use a function like take to limit the output
+    - ex. take 10 [3, 6..]
+- replicate creates a list containing a given number of the same item
+  * ex. replicate 3 "Ho" == ["Ho","Ho","Ho"]
+  - note how this creates a list of strings rather than an single string
+- cycle creates a list of repeating items
+  * ex. take 6 (cycle [5, 10]) === [5,10,5,10,5,10]
+
+List Comprehensions
+- produce a list containing the results of an expression
+  where a variable is set to each value in another list
+- ex. [n * 2 | n <- [1..4]] == [2,4,6,8]
+  * n * 2 is called the "output"
+  * [1..4] is the list from which values are "drawn"
+  * each item drawn is bound to n
+- a "predicate" can be added after the draw list
+  to filter the items drawn
+  * ex. [n * 2 | n <- [1..4], even n] == [4,8]
+  * can have any number of predicates separated by commas
+- can draw values from more than one list
+  * ex. [a + b | a <- [1,2,3], b <- [4,5]] == [5,6,6,7,7,8]
+  * uses the cartesian product of the lists
+  * goes through all items in second list for each item in first list
+    - order is 1 and 4, 1 and 5, 2 and 4, 2 and 5, 3 and 4, 3 and 5
+- ex. remove all spaces, dashes, and underscores from a string
+  * squeeze str = [char | char <- str, not (elem char [' ', '-', '_'])]
+  * squeeze "foo bar-baz_qux" == "foobarbazqux"
+
+Tuples
+- a fixed length set of values with specific types at each position
+  * each position can hold a different type
+- items are surrounded by parens instead of
+  square brackets that are used for lists
+- fst t returns the first item in the two-item tuple t
+  * only works for tuples with a length of 2
+- snd t returns the second item in the two-item tuple t
+  * only works for tuples with a length of 2
+- zip creates a list of tuples from two lists
+  * ex. zip [1, 2, 3] [4, 5] === [(1,4), (2, 5)]
+  * number of tuples in result is equal to length of shortest list
+- unzip creates a tuple of lists from a list of tuples
+  * ex. unzip [(1,4), (2,5)] == ([1,2], [4,5])
+
+Higher Order Functions
+- these are functions that take an argument that is a function
+- map returns a list contructed from the results
+  of passing each item in a list to a function
+  * ex. map succ [1,3,7] == [2,4,8]
+- filter
+  * takes a function and list and returns a list of
+    the items for which the function returns True
+  * ex. filter odd [1,4,7,10] == [1,7]
+- foldl is like reduce in JavaScript
+  * takes a function, starting value, and a list
+    - if the function is an infix function,
+      surround it with parens to turn it into a prefix function
+  * ex. foldl (*) 1 [1,2,3,4] == 24
+    - of course this can be done more easily with product [1,2,3,4]
+- foldr is like foldl, but processes
+  the list items from right to left
+
+Other Functions
+- show thing
+  returns the string representation of thing
+  * requires thing to have a Show function
+- read str :: type
+  returns result of converting str to an instance of type
 
 Variables
 - to set use name = expression
