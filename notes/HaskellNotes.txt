@@ -89,19 +89,40 @@ Strings
 Characters
 - single letters surrounded by single quotes
 
+Names
+- variable identifiers start with a lowercase letter
+- constructor identifiers with an uppercase letter
+- both can contain underscores, single quotes, letters and digits
+- operators are formed from one or more of '!#$%&*+./<=>?@\^|-~'
+- constructors can be operator names, if they start with a ':'
+  - ex. :+ for Data.Complex
+
 Functions
+- syntax to call
+  * name arguments
+  * arguments are separated by spaces
+  * to use the result of another function as an argument
+    surround the call with parens
+    - ex. max (min 2 3) (min 5 4) == 4
+- syntax to define
+  * name parameters = expression
+  * parameters are separated by spaces
+  * if the name consists of letters, the function is prefix
+    - if the function has two parameters,
+      surround with backticks to use as infix
+    - ex. 8 `div` 3 == 2
+  * if the name consists of symbols, the function is infix
+    - if the function has two parameters,
+      surround with parens to use as prefix
+    - ex. (*) 2 3 == 6
+- defaults to prefix
+  - can you specify that a function is infix?
 - name cannot begin with an uppercase letter
 - most functions are prefix functions,
   but some are infix functions
 - to call a prefix function,
   start with the name followed by arguments
   all separated by spaces (no parens)
-- to use a prefix function as an infix,
-  surround its name with backticks
-  * ex. 8 `div` 3 == 2
-- to use an infix function as a prefix,
-  surround its name with parens
-  * ex. (*) 2 3 == 6
 - all functions return a value
 - prefix functions are evaluated before infix functions,
   so parens are needed in succ (2 * 3) which returns 7
@@ -118,6 +139,8 @@ Functions
   hypot x y = sqrt (x * x + y * y)
   hypot 3 4 returns 5
 - scripts can call functions defined later in the file
+
+Type Signatures
 
 Conditional Logic
 - if expression
@@ -251,6 +274,30 @@ Tuples
 - unzip creates a tuple of lists from a list of tuples
   * ex. unzip [(1,4), (2,5)] == ([1,2], [4,5])
 
+Association Lists
+- a list of tuples where each tuple is a key/value pair
+- there is also a Map type defined in Data.Map
+- ex. mapping = [("foo", 1), ("bar", 2)]
+- lookup function finds the value for a given key
+  * ex. lookup "bar" mapping == Just 2
+  * ex. lookup "baz" mapping == Nothing
+  * just does a sequential search, so not efficient
+
+Modules
+- can use functions in any module by prefixing them with the module name
+  * ex. Data.List, Data.Map, System.IO
+- to use functions in a module without prefixes, import ModuleName
+- the most commonly used functions are defined in the Prelude module
+  which is imported by default
+
+Data.Map
+- a hashmap data structure
+- can create from an association list
+- to use, without Data.Map prefix, import Data.Map
+- ex. myMap = fromList [("foo", 1), ("bar", 2)]
+- to get the value for a given key, myMap ! key
+- to get the number of keys in a Map, size myMap
+
 Higher Order Functions
 - these are functions that take an argument that is a function
 - map returns a list contructed from the results
@@ -280,3 +327,29 @@ Variables
 - to set use name = expression
 - does this really create a function that
   always returns the value of the expression?
+
+Libraries
+- array
+- base
+- binary
+- bytestring
+- Cabal
+- containers
+- deepseq
+- directory
+- filepath
+- ghc
+- ghc-boot
+- ghc-compact
+- ghc-prim
+- hoopl
+- hpc
+- integer-gmp
+- process
+- template-haskell
+- time
+- unix
+- Win32
+
+PureScript
+- compiles Haskell to JavaScript
