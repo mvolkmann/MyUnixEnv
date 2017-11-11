@@ -31,7 +31,7 @@ Libraries
 
 Interactive sessions
 - enter "ghci" to start the REPL
-- to exit, press ctrl-d
+- to exit, press ctrl-d or enter :quit
 - recall previous commands with up arrow
 - prompt
   * default is "Prelude> "
@@ -42,15 +42,25 @@ Interactive sessions
     cover of the book "Learn You a Haskell for Great Good!"
 - to enable Vim keybindings
   * create ~/.haskeline and add "editMode: Vi"
-- to see the type of a name, enter :t name
+- to get help, :help or :?
+- to get information about a function, :info name
+- to see the type of a name, enter :type name or :t name
   * very useful for learning
+- to see the type of all expressions entered, :set +t
+  * turn off with :unset +t
+- to list all modules that have been imported, :show modules
+- to run a shell command, :!{command}
+  * ex. :!date
+  * to clear the screen within ghci, :!clear
+- has a builtin debugger supported by many colon commands
 
 Source Files
 - referred to as Haskell scripts
 - have a file extension of .hs
-- load these into an interactive session with :l {filename}
+- load these into an interactive session with
+  :load {filename} or :l {filename}
   * can omit .hs extension when loading
-- reload current script with :r
+- reload current script with :reload or :r
 - example
   * create file hello.hs containing this function definition:
     hello name = "Hello, " ++ name + "!"
@@ -66,7 +76,10 @@ Operators
 - these are actually infix functions
 - numbers
   * basic: + - * /
-  * exponentiation: **
+  * exponentiation
+    ** - Floating exponent
+    ^  - Num exponent
+    ^^ - Fractional exponent
     - ex. 2 ** 3 == 8
   * use parens to control order of evaluation
   * div performs integer division, discarding the remainder
@@ -78,6 +91,7 @@ Operators
     - ex. lcm 6 10 == 30
   * even n determines if n is even
   * odd n determines if n is odd
+  * abs n retunns absolute value of n
 - logic
   && for and
   || for or
@@ -132,6 +146,78 @@ Strings
 - really a list of characters
 - concatenate with ++
   * really builds a new list from two lists
+- the show function converts nearly anything into a String
+
+Enumerated Types
+- ex.
+  -- Adding "deriving Show" allows Color values to be converted to Strings.
+  -- Adding "deriving Eq" allows Color values to be compared with == and /=
+  data Color = Red | Green | Blue deriving (Eq, Show)
+  colorToTemp2 :: Color -> String
+  colorToTemp2 color = case color of
+    Red -> "hot"
+    Blue -> "cold"
+    _ -> "normal"
+
+Overriding a type class implementation
+- ex.
+  data Size = S | M | L -- cannot say "deriving Show" since overridden below
+  instance Show Size where
+    show S = "small"
+    show M = "medium"
+    show L = "large"
+  show S == "small"
+  size = M
+  show size == "medium"
+
+Custom Types
+- struct-like
+  -- Person has name and number fields.
+  data Person = Person {
+    name :: String,
+    id :: Int
+  } deriving Show
+  getName :: Person -> String
+  getName (Person name _) = name
+  getId :: Person -> Int
+  getId (Person _ id) = id
+  person :: Person
+  person = Person "Mark" 19
+  getName person == Mark
+  getId person == 19
+- union types
+  data Shape =
+    Circle {
+      centerX :: Float,
+      centerY :: Float,
+      radius :: Float
+    } |
+    Rectangle {
+      x1 :: Float,
+      y1 :: Float,
+      x2 :: Float,
+      y2 :: Float
+    }
+  area :: Shape -> Float
+  area (Circle _ _ radius) = pi * radius ^ 2
+  area (Rectangle x1 y1 x2 y2) = (abs (x1 - x2)) * (abs (y1 - y2))
+  circle = Circle 1 2 3
+  rectangle = Rectangle 2 2 6 5
+  area circle == 28.27
+  area rectangle == 12.0
+
+$ precedence operator
+- means expression after it takes precedence over expression before it
+- ex. abs (x1 - x2) == abs $ x1 - x2
+- I don't like this!
+- another example
+  putStrLn ("Hello, " ++ name)
+  is the same as
+  putStrLn $ "Hello, " ++ name
+
+. precedence operator
+- evaluates expression on right and passes it to function left
+- need a good example
 
 Names
 - variable identifiers start with a lowercase letter
@@ -142,6 +228,7 @@ Names
   - ex. :+ for Data.Complex
 
 Modules
+- typically define functions that are useful in other code
 - module names must start with an uppercase letter
 - can use functions in any module by prefixing them with the module name
   * ex. Data.List, Data.Map, System.IO
@@ -203,6 +290,89 @@ Functions
   hypot x y = sqrt (x * x + y * y)
   hypot 3 4 returns 5
 - scripts can call functions defined later in the file
+- can create overloaded versions
+  * ex.
+    place :: Int => String
+    place 0 = "not started"
+    place 1 = "first"
+    place 2 = "second"
+    place 3 = "third"
+    place n = show n ++ "th"
+    TODO: Handle 11, 12, 13, 21, 22, 23, ...
+
+Function Guards
+- similar to a switch statement in other languages
+- ex.
+  colorMeaning :: String -> String
+  colorMeaning color
+    | color == "red" = "fire"
+    | color == "green" = "land"
+    | color == "blue" = "water"
+    | otherwise = "no meaning"
+- a where clause computes values used in guards
+  * ex.
+    grade :: Int -> Int -> Char
+    grade points possible
+      | percent >= 90 = 'A'
+      | percent >= 80 = 'B'
+      | percent >= 70 = 'C'
+      | percent >= 60 = 'D'
+      | otherwise = 'F'
+      where percent = (fromIntegral points) / (fromIntegral possible) * 100
+
+Functions on Lists
+- can use a kind of destructuring to get items from a list parameter
+  * ex.
+    -- This takes a list of Ints and returns a String.
+    listReport :: [Int] -> String
+    -- only matches empty lists
+    listReport [] = "empty"
+    -- only matches lists with one item
+    listReport (first:[]) = "first is " ++ show first
+    -- only matches lists with two items
+    listReport (first:second:[]) =
+      "initial are " ++ show first ++ " and " ++ show second
+    -- only matches lists with more than two items
+    listReport (first:rest) = show first ++ " and " ++ show rest
+- can get full list and some items
+  * ex.
+    initial :: String -> String
+    -- first is a Char; [first] is a list of Chars which is a String
+    initial name@(first:rest) = name ++ " starts with " ++ [first]
+- can build a new list by processing each item in a list recursively
+  * ex.
+    doubleList :: [Int] -> [Int]
+    doubleList [] = []
+    doubleList (first:rest) = first * 2 : doubleList rest
+    -- Note use of cons operator (:) above.
+  * can also do this with
+    map (* 2) [1,2,3]
+
+Functions that take a Function
+- ex.
+  double :: Int -> Int
+  double x = x * 2
+  -- first parameter type is a function that takes an Int and returns an Int
+  process :: (Int -> Int) -> Int -> Int
+  process fn n = fn (n + 1)
+  -- process double 2 == 6 which is (2 + 1) * 2
+
+Recurison
+- factorial with recursion
+  fac :: Int -> Int
+  fac 0 = 1
+  fac n = n * fac (n - 1)
+  fac 4 -- 24
+- factorial without recursion
+  fac2 :: Int -> Int
+  fac2 n = product [1..n]
+
+Lambdas
+- functions that do not have a name
+- often used to pass short functions to another function
+  such as map
+- ex. double and add one to each item in a list
+  map (\x -> x * 2 + 1) [1,2,3] = [3,5,7]
 
 Types
 - ues Hindley-Milner type system
@@ -210,7 +380,7 @@ Types
 - variable example
   * firstName :: String
 - function example
-  * add :: Num a => a -> a -> a
+  * add :: Num a => a -> a -> a -- syntax only works with type classes
     add x y = x + y
   * means all occurrences of a in the signature have type Num
   * takes two Num arguments and returns a Num
@@ -236,10 +406,11 @@ Types
 - another function example
   * charAt :: String -> Int -> Char
     charAt str index = str !! index
-- type classes
-  * define an interface that specific types implement
-  * builtin examples include Eq, Ord, Show, Read,
-    Enum, Bounded, Num, Floating, and Integral
+
+Type classes
+- define an interface that specific types implement
+- builtin examples include Eq, Ord, Show, Read,
+  Enum, Bounded, Num, Floating, and Integral
 
 Lists
 - all items must be the same type
@@ -379,6 +550,9 @@ Tuples
   * number of tuples in result is equal to length of shortest list
 - unzip creates a tuple of lists from a list of tuples
   * ex. unzip [(1,4), (2,5)] == ([1,2], [4,5])
+- in functions that take a tuple as an argument, can destructure
+  * ex. addTuples (a1, a2) (b1, b2) = (a1 + b1, a2 + b2)
+    addTuples (3, 4) (7, 9) == (10, 13)
 
 Association Lists
 - a list of tuples where each tuple is a key/value pair
@@ -403,6 +577,17 @@ Conditional Logic
   * else is required
   * no parens or semicolons
   * returns value of selected expression
+- case expression
+  * case variable of
+      v1 -> r1
+      v2 -> r2
+      _ -> r3
+  * ex.
+    tempToColor :: String -> String
+    tempToColor temp = case temp of
+      "hot" -> "red"
+      "cold" -> "blue"
+      _ -> "green"
 
 Higher Order Functions
 - these are functions that take an argument that is a function
@@ -458,6 +643,36 @@ Libraries
 - time
 - unix
 - Win32
+
+Creating Executables
+- create a .hs file with a "main" function
+- ghc {name}.hs
+- run with ./name
+- example
+  * in file greet.hs
+    import System.IO
+
+    main = do
+      -- lines inside do must have the same indentation
+      putStrLn "Enter your name."
+      name <- getLine
+      putStrLn ("Hello, " ++ name ++ "!")
+  * ghc greet
+  * ./greet
+
+Pretty Printing
+- setup
+  stack install
+  stack install hindent
+  add ~/.local/bin to PATH
+  hindent {file-path}
+  * modifies file in place
+  * gives "Parse error" and doesn't modify the file
+    if there is a syntax error
+- Vim configuration
+  * install the vim-hindent plugin
+  * add this .vimrc
+    let g:hindent_on_save = 1
 
 PureScript
 - compiles Haskell to JavaScript

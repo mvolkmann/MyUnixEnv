@@ -58,7 +58,7 @@ alias cdlanguages 'cd $LANGUAGES_DIR'
 alias cdmaritz 'cd $MARITZ_DIR'
 alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
-alias cdnotes 'cd ~/MyUnixEnv/notes'
+alias cdnotes 'cd $HOME/MyUnixEnv/notes'
 alias cdoci 'cd $OCI_DIR'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
 alias cdrga 'cd $RGA_DIR'
@@ -177,6 +177,9 @@ set GITHUB_USER mvolkmann
 # grep settings
 # This setting may interfere with fink scripts!
 #set GREP_OPTIONS '--color=ALWAYS'
+
+# Haskell (GHC) settings
+set PATH $HOME/.local/bin $PATH
 
 # HTTP server to serve files in current directory
 alias serve 'python -m SimpleHTTPServer 8080'
