@@ -18,7 +18,7 @@ function! hindent#Hindent()
     let l:winview = winsaveview()
 
     if !executable('hindent')
-        echomsg 'Hindent not found in $PATH, did you installed it?
+        echomsg 'hindent not found in $PATH, did you installed it?
                     \ (stack install hindent)'
         return
     endif

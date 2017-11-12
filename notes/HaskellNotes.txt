@@ -710,9 +710,12 @@ Pretty Printing
   * gives "Parse error" and doesn't modify the file
     if there is a syntax error
 - Vim configuration
-  * install the vim-hindent plugin
+  * browse https://github.com/alx741/vim-hindent
+  * create the directory ~/.vim/ftplugin/haskell
+  * save the file hindent.vim there
   * add this .vimrc
     let g:hindent_on_save = 1
+  * may only work in a newly created shell
 
 PureScript
 - compiles Haskell to JavaScript
