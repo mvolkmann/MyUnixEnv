@@ -597,7 +597,7 @@ Pattern Matching
 
 Function Guards
 - can use both pattern matching and guards for same function,
-  but it's probably best to use one or the other
+  but often it is best to use one or the other
 - improved vesion of quadrant
   quadrant x y -- with guards
     | x == 0 = "on y axis"
@@ -624,6 +624,12 @@ Function Guards
       | percent >= 60 = 'D'
       | otherwise = 'F'
       where percent = (fromIntegral points) / (fromIntegral possible) * 100
+- using both guards and pattern matching
+  runLengthEncode :: Eq a => [a] -> [a]
+  runLengthEncode (x1:x2:xs) -- for lists of length 2 or more
+    | x1 == x2 = runLengthEncode (x2 : xs)
+    | otherwise = x1 : runLengthEncode (x2 : xs)
+  runLengthEncode xs = xs -- for lists of length 1 or 0
 
 Functions on Lists
 - can use a kind of destructuring to get items from a list parameter
@@ -975,6 +981,7 @@ Pretty Printing
 Any support for async I/O?
 
 Things I would change
+- remove -> tokens from function type signatures
 - drop the . and $ operators for changing evaluation order
 - remove need to use commas in lists and tuples
 - remove need to surround negative numbers with parens
