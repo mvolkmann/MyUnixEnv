@@ -1,21 +1,51 @@
 Haskell Notes
 
 Overview
-- started in 1987 and standardized in 1999
 - a purely functional language
+- named after the American mathmatician Dr. Haskell Brooks Curry (1900-1982),
+  a Harvard graduate known for his work in conbinatory logic
+  * taught at Harvard, Princeton, Penn State, and the University of Amsterdam
+  * interestingly there are three programming languages named after him,
+    Haskell, Brook, and Curry
 - everything is immutable
   * can't change the value of variables
 - statically typed with type inference
 - lazy
   * doesn't evaluate function calls until the result is needed
+- started in 1987 and standardized in 1999
+- first released in 1990
 - has no for or while loops
+  * instead iteration is performed with recursion
+    and functions like map, filter, and foldl
 - the Vim ALE plugin has support for linting Haskell code!
+- major specifications
+  * Haskell 98
+    - revised in 2003
+  * Haskell 2010
+    - added a foreign function interface (FFI) for calling C code
+    - added LANGUAGE pragma
+  * Haskell 2020
+    - a committee is working on this now
+- designed by many people including
+  Simon Peyton Jones, Erik Meijer, and Philip Wadler
+- GET MORE FROM WIKIPEDIA PAGE!
+
+Why Learn Haskell?
+- list some reasons
+- it's fun to learn a new programming language
+- learn functional programming
+- inspired Elm
+- can compile to JavaScript with PureScript
+  * can React apps be written in it?
+  * can Node apps be written in it?
 
 Learning Resources
 - free online book "Learn You a Haskell for Great Good!"
   at http://learnyouahaskell.com/
 - https://www.haskell.org/
 - https://wiki.haskell.org/
+- Hoogle - Haskell API search engine
+  * https://www.haskell.org/hoogle/
 
 Installing
 - browse http://hackage.haskell.org/platform/
@@ -23,11 +53,29 @@ Installing
   * download .dmg file and double-click
   * brew cask install haskell-platform
 
-Compiler
-- most popular is Glasgow Haskell Compiler (GHC)
+Compilers
+- for Haskell 201
+  * Glasgow Haskell Compiler (GHC)
+    - most popular
+    - has cryptic error messages
+  * Utrecht Haskell Compiler (UHC)
+  * LLVM Haskell Compiler (LHC)
+- Haskell dialects
+  * Disciple - http://disciple.ouroborus.net/
+    - "an experimental dialect of Haskell which investigates static typing
+      and program transformation in the presence of computational effects."
+  * Frege - https://github.com/Frege/frege
+    - "a Haskell for the JVM"
+  * PureScript
+    - "A strongly-typed functional programming language
+      that compiles to JavaScript"
+    - http://www.purescript.org/
 
 Libraries
 - browse http://hackage.haskell.org/
+
+Testing Tools
+- QuickCheck - https://www.fpcomplete.com/blog/2017/01/quickcheck
 
 Interactive sessions
 - enter "ghci" to start the REPL
@@ -44,7 +92,7 @@ Interactive sessions
   * create ~/.haskeline and add "editMode: Vi"
 - to get help, :help or :?
 - to get information about a function, :info name
-- to see the type of a name, enter :type name or :t name
+- to see the type of a name, enter :type {name} or :t {name}
   * very useful for learning
 - to see the type of all expressions entered, :set +t
   * turn off with :unset +t
@@ -103,14 +151,16 @@ Operators
   * < <= >= >
 
 Boolean
-- Bool - values are True and False
+- Bool - only values are True and False
 
 Numbers
 - primitive types
   * Int - 4 bytes
+    - "bounded" since it has a min and max value
   * Integer - arbitrary precison
-  * Float - 4 bytes
-  * Double - 8 bytes
+    - not bounded
+  * Float - 4 bytes (single precision)
+  * Double - 8 bytes (double precision)
   * surround negative numbers with parens
     to avoid confusion with the subtraction operator
     - ex. 5 + (-2)
@@ -135,18 +185,179 @@ Numbers
     * Float
     * Double
   * Complex
+- to set a variable to a number and specify its type, name = value :: type
+  * ex. n = 3 :: Int
+- most functions that take two or more numbers require them to be the same type
+  * ex.
+    a = 3
+    b = 2.1
+    a + b -- okay, 5.1
+    a = 3 :: Int
+    b = 2.1 :: Float
+    a + b -- error
 - type conversions
   * to convert an Integral to a Floating, fromIntegral integralValue
 
 Characters
-- Char - single letter surrounded by single quotes
+- Char - single unicode character surrounded by single quotes
 
 Strings
 - literal values are surrounded by double quotes
-- really a list of characters
+- really a List of Char
+  * String is the same as [Char] - interchangable
 - concatenate with ++
   * really builds a new list from two lists
 - the show function converts nearly anything into a String
+- change case
+  * import Data.Char
+  * map toUpper "foo" == "FOO"
+  * map toLower "FOO" == "foo"
+  * another way
+    - import qualified Data.Text as T
+    - p = T.pack "foo"
+    - T.toUpper p
+
+Currying
+- functions automatically support currying
+  * passing fewer arguments than allowed and getting back a new function
+  * see example below
+
+Types
+- ues Hindley-Milner type system
+- syntax is name :: type
+  * :: means "has type of"
+- variable examples
+  * firstName :: String
+  * names :: [String]
+    - an array of Strings
+- function examples
+  * add :: Int -> Int -> Int
+    - each parameter type is followed by ->
+      with the return type at the end
+    - takes two Ints and returns an Int
+    - also takes one Int and returns a
+      function that takes and Int and returns an Int
+  * type variables can be used to specify that
+    an argument type or the return type can be
+    any type or a type that derives from a specific type class
+    - ex. the swap function below takes any kind of list
+      and returns a new list where the first two items are swapped
+      swap :: [a] -> [a]
+      swap (first:second:rest) = second:first:rest
+      swap [1,2,3,4] == [2,1,3,4]
+  * to restrict a type variable to types that derive from a given type class
+      swap :: Num n => [n] -> [n]
+      swap (first:second:rest) = second:first:rest
+      swap [1,2,3,4] == [2,1,3,4]
+  * add :: Num a => a -> a -> a -- syntax only works with type classes
+    - means all occurrences of a in the signature have type Num
+    - takes two Num arguments and returns a Num
+    - is "a" called a "type alias"?
+    - => and the part to its left is called a "class constraint"
+      * if more than one, surround with parens and separate with commas
+      * ex. (Num a, String b) =>
+  * add x y = x + y
+    - implementation of the two function declarations
+  * currying example
+    plus5 = add 5
+    plus5 2 == 7
+  * ghci detail
+    - entering the type signature and definition on two lines doesn't work
+    - workarounds
+      * enter them on same line separated by a semicolon
+        - ex. let add :: Num a => a -> a -> a; add x y = x + y
+      * enter them in a block
+        :{
+        let add :: Num a => a -> a -> a
+            add x y = x + y -- indented 4 spaces
+        :}
+      * turn on multline mode which automatically infers use of :{ and :}
+        :set +m -- one tie
+        let add :: Num a => a -> a -> a
+            add x y = x + y -- indented 4 spaces
+        press return to exit block
+- another function example
+  * charAt :: String -> Int -> Char
+    charAt str index = str !! index
+- can see the type of a function in ghci with :t {function-name}
+
+Type Variables
+- allow a parameter to be more than one type
+  * ex. the head function works on lists of any type
+    - its signature is head :: [a] -> a
+      where a represents any type
+- all type names start uppercase and all type variables start lowercase
+  * typically type variable names are a single character
+- similar to generics in other languages such as Java and Flow/TypeScript
+- functions whose signatures use type variables
+  are called "polymorphic functions"
+
+Type Classes
+- not like classes in OO languages
+- define an interface (set of functions)
+- types that are instances implement all the functions
+  and are said to "derive" from the type class
+- a type can derive from any number of type classes
+- builtin examples include
+  * Eq
+    - for types whose values can be compared for equality
+    - functions are = and /=
+    - all standard Haskell classes implement Eq
+  * Ord
+    - for types whose values can be ordered
+    - funcions are <, <=, >=, and >
+  * Show
+    - for types can be converted to a String representation
+    - only function is show
+      * a little like JavaScript's JSON.stringify
+    - ex. show 3.14
+    - ex. show [1, 2, 3]
+    - ex. show ("foo", 7, True)
+  * Read
+    - for types that can be created from a String
+    - opposite of Show
+      * a little like JavaScript's JSON.parse
+    - only function is read
+    - when desired type is not known from context, must specify
+      * ex. read "3.14" :: Float
+      * ex. read "[1, 2, 3]" :: [Int]
+      * ex. read "(\"foo\", 7, True)" :: (String, Int, Bool)
+  * Enum
+    - for types with values that can be enumerated
+      and used in ranges to create Lists
+    - functions are succ and pred
+    - examples of builtin types that implement this are
+      Int, Integer, Float, and Double
+  * Bounded
+    - for types that have bounds
+    - functions are minBound and maxBound
+    - called on the type, not a value of the type
+      * ex. maxBound :: Int
+    - examples of builtin types that implement this are
+      Char, Int, Float, and Double
+  * Num
+    - for types that can be used as numbers
+    - builtin types that implement this are
+      Int, Integer, Float, and Double
+    - when a function type signature says that
+      two or more parameters have a type of Num,
+      those must have the same actual type
+      * ex. add :: (Num a) => a -> a -> a
+        add a b = a + b
+        n = 3 :: Int
+        add n 7.2 -- error because n and 7.2 are not the same type
+  * Floating
+    - the Float and Double types implement this
+    - some math functions take arguments of this type (ex. sqrt and sin)
+    - ex.
+      n = 3 :: Int
+      sqrt n -- error because n is not Floating
+  * Integral
+    - the Int and Integer types implement this
+    - fromIntegral function takes an Integral and converts it to Num
+      * needed in order to call a function like + on an Integral and a Floating
+      * ex. length [1,2,3] + 2.1 raises an error because
+        length returns an Int and 2.1 is not an Int
 
 Enumerated Types
 - ex.
@@ -250,9 +461,28 @@ Names
 Modules
 - typically define functions that are useful in other code
 - module names must start with an uppercase letter
+- Haskell Standard Library
+  * modules that ship with a Haskell compiler
+  * https://downloads.haskell.org/~ghc/latest/docs/html/libraries/
+  * top-level module names are:
+    Compiler, Control, Data, Debug, Distribution, Foreign,
+    GHC, GHCi, Graphics, Language, Media, Numeric, Prelude,
+    SizedSeq, System, Text, Trace, Type, Unsafe, Utils
+    - for async I/O, see Control.Concurrent.Async
+      * in standard library or separate download?
 - can use functions in any module by prefixing them with the module name
   * ex. Data.List, Data.Map, System.IO
-- to use functions in a module without prefixes, import ModuleName
+- to use functions in a module
+  * without prefixes, import {ModuleName}
+    - ex. import Data.Text
+    - some names in Data.Text conflict with names in Prelude,
+      so doing this is not recommended
+  * with full name, import qualified {ModuleName}
+    - ex. import qualified Data.Text
+    - use Data.Text. as prefix on all names in this module
+  * with a specified prefix, import qualified {ModuleName} as {prefix}
+    - ex. import qualified Data.Text as T
+    - use T. as prefix on all names in this module
 - the most commonly used functions are defined in the Prelude module
   which is imported by default
 - to define a module
@@ -275,10 +505,15 @@ Functions
     - if the function has two parameters,
       surround with backticks to use as infix
     - ex. 8 `div` 3 == 2
-  * if the name consists of symbols, the function is infix
+  * if the name consists of only symbols, the function is infix
     - if the function has two parameters,
       surround with parens to use as prefix
     - ex. (*) 2 3 == 6
+    - to pass an infix function as an argument to another function
+      surround with parens
+      * can also use parens to create a curried version
+        to pass to another function
+        - ex. map (* 2) someList
 - defaults to prefix
   - can you specify that a function is infix?
 - name cannot begin with an uppercase letter
@@ -310,18 +545,68 @@ Functions
   hypot x y = sqrt (x * x + y * y)
   hypot 3 4 returns 5
 - scripts can call functions defined later in the file
-- can create overloaded versions
+
+Pattern Matching
+- creates overloaded versions of a function
+  based on specific argument values
+- evaluated in the order defined
+- ex.
+  place :: Int => String
+  place 0 = "not started"
+  place 1 = "first"
+  place 2 = "second"
+  place 3 = "third"
+  place n = show n ++ "th" -- catchall pattern
+  * TODO: Handle 11, 12, 13, 21, 22, 23, ...
+- ex.
+  quadrant :: (Num n, String s) => n -> n -> s
+  quadrant 0 y = "on y-axis"
+  quadrant x 0 = "on x-axis"
+  quadrant x y = -- probably preferable to use guards (see below)
+    if x > 0 && y > 0 then "first"
+    else if x < 0 && y > 0 then "second"
+    else if x < 0 && y < 0 then "third"
+    else if x > 0 && y < 0 then "fourth"
+    else "impossible"
+- non-exhaustive pattern matching
+  * will get exception "Non-exhaustive patterns in function greek" from greek 3
+  greek :: Int -> String
+  greek 1 = "alpha"
+  greek 2 = "beta"
+- with tuples
+  - ex.
+  tupleMult :: Int -> (Int, Int) -> (Int, Int)
+  tupleMult n (a, b) = (a * n, b * n)
+  tupleMult 2 (3, 4) == (6, 8)
   * ex.
-    place :: Int => String
-    place 0 = "not started"
-    place 1 = "first"
-    place 2 = "second"
-    place 3 = "third"
-    place n = show n ++ "th"
-    TODO: Handle 11, 12, 13, 21, 22, 23, ...
+  tupleLast :: (Int, Int, Int) -> Int
+  tupleLast (_, _, last) = last
+  tupleLast (5, 2, 7) == 7
+- with lists
+  * note use of parens instead of []
+  * ex.
+  listSumFirst3 :: [Int] -> Int
+  listSumFirst3 (i1:i2:i3:rest) = i1 + i2 + i3
+  listSumFirst3 [1,2,3,4,5] == 6
+  * ex.
+  addHead :: [Int] -> [Int]
+  addHead (x:xs) = map (+ x) xs
+  addHead [2, 3, 4, 5] == [5, 6, 7]
+  - the use of variable names x and xs are common to get
+    the first item and the rest of the items in a list
 
 Function Guards
-- similar to a switch statement in other languages
+- can use both pattern matching and guards for same function,
+  but it's probably best to use one or the other
+- improved vesion of quadrant
+  quadrant x y -- with guards
+    | x == 0 = "on y axis"
+    | y == 0 = "on x axis"
+    | x > 0 && y > 0 = "first"
+    | x < 0 && y > 0 = "second"
+    | x < 0 && y < 0 = "third"
+    | x > 0 && y < 0 = "fourth"
+    | otherwise = "impossible"
 - ex.
   colorMeaning :: String -> String
   colorMeaning color
@@ -378,7 +663,7 @@ Functions that take a Function
   -- process double 2 == 6 which is (2 + 1) * 2
 
 Recurison
-- factorial with recursion
+- factorial with pattern matching and recursion
   fac :: Int -> Int
   fac 0 = 1
   fac n = n * fac (n - 1)
@@ -393,44 +678,7 @@ Lambdas
   such as map
 - ex. double and add one to each item in a list
   map (\x -> x * 2 + 1) [1,2,3] = [3,5,7]
-
-Types
-- ues Hindley-Milner type system
-- syntax is name :: type
-- variable example
-  * firstName :: String
-- function example
-  * add :: Num a => a -> a -> a -- syntax only works with type classes
-    add x y = x + y
-  * means all occurrences of a in the signature have type Num
-  * takes two Num arguments and returns a Num
-  * ghci detail
-    - entering the type signature and definition on two lines doesn't work
-    - workarounds
-      * enter them on same line separated by a semicolon
-        - ex. let add :: Num a => a -> a -> a; add x y = x + y
-      * enter them in a block
-        :{
-        let add :: Num a => a -> a -> a
-            add x y = x + y -- indented 4 spaces
-        :}
-      * turn on multline mode which automatically infers use of :{ and :}
-        :set +m -- one tie
-        let add :: Num a => a -> a -> a
-            add x y = x + y -- indented 4 spaces
-        press return to exit block
-  * automatically supports currying
-    - ex.
-      plus5 = add 5
-      plus5 2 == 7
-- another function example
-  * charAt :: String -> Int -> Char
-    charAt str index = str !! index
-
-Type classes
-- define an interface that specific types implement
-- builtin examples include Eq, Ord, Show, Read,
-  Enum, Bounded, Num, Floating, and Integral
+- \ was selected because it is part of the character lambda
 
 Lists
 - all items must be the same type
@@ -559,6 +807,7 @@ Tuples
   * each position can hold a different type
   * called a "pair" if two items (most common size)
   * called a "triple" if three items
+  * maximum length is 62
 - items are surrounded by parens instead of
   square brackets that are used for lists
 - fst t returns the first item in the two-item tuple t
@@ -699,6 +948,12 @@ Creating Executables
       putStrLn ("Hello, " ++ name ++ "!")
   * ghc greet
   * ./greet
+- example that uses a command-line argument
+  * see fact.hs in your Haskell directory
+
+Related Tools
+- Cabal
+- Stack
 
 Pretty Printing
 - setup
@@ -716,6 +971,16 @@ Pretty Printing
   * add this .vimrc
     let g:hindent_on_save = 1
   * may only work in a newly created shell
+
+Any support for async I/O?
+
+Things I would change
+- drop the . and $ operators for changing evaluation order
+- remove need to use commas in lists and tuples
+- remove need to surround negative numbers with parens
+  by saying that subtraction requires a space on both sides of -
+  and negation does not allow a space between - and the number
+- don't require parens around type aliases when there is more than one
 
 PureScript
 - compiles Haskell to JavaScript
