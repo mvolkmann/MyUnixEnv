@@ -60,6 +60,7 @@ alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
 alias cdnotes 'cd $HOME/MyUnixEnv/notes'
 alias cdoci 'cd $OCI_DIR'
+alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
 alias cdrga 'cd $RGA_DIR'
 alias cdsd 'cd $OCI_DIR/SmartDevice_Web_Demo'
@@ -225,3 +226,6 @@ set SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
 # Vim settings
 set fish_key_bindings fish_vi_key_bindings
 set VISUAL vim
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/Mark/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/google-cloud-sdk/path.fish.inc'; end; end
