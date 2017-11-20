@@ -1,14 +1,17 @@
 Haskell Notes
 
 Overview
-- a purely functional language
 - named after the American mathmatician Dr. Haskell Brooks Curry (1900-1982),
   a Harvard graduate known for his work in conbinatory logic
   * taught at Harvard, Princeton, Penn State, and the University of Amsterdam
   * interestingly there are three programming languages named after him,
     Haskell, Brook, and Curry
+- a purely functional language
 - everything is immutable
   * can't change the value of variables
+- side effects are controlled via monads
+- addresses concurrency and parallelism
+- supports creating domain-specifc languages?
 - statically typed with type inference
 - lazy
   * doesn't evaluate function calls until the result is needed
@@ -119,6 +122,13 @@ Source Files
 Comments
 - single-line: start with --
 - multi-line: surround with {- -}
+
+Assignment
+- to assign a value to a variable,
+  name = value
+- to assign values to multiple variables on one line,
+  (name1, name2) = (value1, value2)
+  * like destructuring in JavaScript
 
 Operators
 - these are actually infix functions
@@ -284,6 +294,27 @@ Types
     charAt str index = str !! index
 - can see the type of a function in ghci with :t {function-name}
 
+Predefined Types
+- are all of these defined in the Prelude module?
+- Bool, Char, String
+- Int, Integer, Float, Double
+- [a] - polymorphic list
+- (...) - tuple
+- () - unit (What is this?)
+- function
+- Maybe is Nothing or Just a
+- Either a b is Left a or Right b
+- Ordering is LT, EQ, or GT
+
+Predefined Type Classes
+- Bounded, Eq, Enum, Ord, Read, Show
+- Fractional, Num, ...
+- Data?
+- Bits?, FiniteBits?
+- Generic?
+- Ix?
+- Storable?
+
 Type Classes
 - not like classes in OO languages
 - define an interface (set of functions)
@@ -353,6 +384,47 @@ Type Classes
       * ex. length [1,2,3] + 2.1 raises an error because
         length returns an Int and 2.1 is not an Int
 
+Type and Data Constructors
+- parameterized type definitions that can be passed many types (polymorphic)
+- pass types to a type constructor of a type class or a to create a new type
+- pass values to a data constructor to create an instance of a type
+
+Dates and Times
+- see https://two-wrongs.com/haskell-time-library-tutorial
+- import Data.Time
+- to create a Day instance, use fromGregorian[Valid] year month day
+  * year must Integer; month and year must be Int
+  * returns Day
+  * without Valid
+    - returns a Day where the month is 1 if given < 1
+      and the day is the last day in the month if given > last day
+  * with Valid
+    - returns a Maybe that is
+      a Maybe Day if it's a valid date
+      and Nothing if it isn't a valid date
+- to get a triple (year, month, day) from a Day,
+  ymd = toGregorian someDay
+- to get a String representation of a Day,
+  show someDay
+- to create a Day that is n days after someDay,
+  newDay = addDays n someDay
+  * n can be negative to subtract days
+- to create a Day that is n months after someDay,
+  newDay = addGregorianMonthsClip n someDay
+  * n can be negative to subtract months
+  * "Clip" means that it will adjust the day to be within the result month
+- to get the number of days between to Day instances,
+  diff = diffDays day1 day2
+- to get the current date and time,
+  now <- getCurrentTime -- type is IO UTCTime
+  * getCurrentTime is impure
+    (can return a different value each time it is called)
+  * to get the UTCTime value out of it, use <- instead of =
+- to create a new UTCTime that is n seconds after someTime,
+  newTime = addUTCTime n someTime
+- to get the number of seconds between two UTCTime instances,
+  diff = diffUTCTime time1 time2
+
 Type Variables
 - allow a parameter or return type to be more than one type
   * ex. the head function works on lists of *any* type
@@ -374,10 +446,21 @@ Type Variables
   are called "polymorphic functions"
 
 Enumerated Types
-- ex.
-  -- Adding "deriving Show" allows Color values to be converted to Strings.
-  -- Adding "deriving Eq" allows Color values to be compared with == and /=
-  data Color = Red | Green | Blue deriving (Eq, Show)
+- ex. creating a custom Color type
+  data Color = Red | Green | Blue deriving (Eq, Ord, Show, Read)
+  * Red, Green, and Blue are "value constructors"
+    - used to create an instance of Color
+    - they can take arguments as shown below
+    - they can be used in pattern matching
+  * deriving causes the compiler to implement the
+    functions in a type class for your type for you
+    - don't need if you're going to supply the implementation
+  * deriving from Eq allows Color values to be compared with == and /=
+  * deriving from Ord allows Color values to be compared with <, <=, >=, >
+  * deriving from Show allows Color values to be converted to Strings
+  * deriving from Read allows strings to be Color values
+    - ex. read "Red" :: Color
+- using the custom Color type
   colorToTemp2 :: Color -> String
   colorToTemp2 color = case color of
     Red -> "hot"
@@ -396,20 +479,41 @@ Overriding a type class implementation
   show size == "medium"
 
 Custom Types
-- struct-like
-  -- Person has name and number fields.
-  data Person = Person {
-    name :: String,
-    id :: Int
-  } deriving Show
-  getName :: Person -> String
-  getName (Person name _) = name
-  getId :: Person -> Int
-  getId (Person _ id) = id
-  person :: Person
-  person = Person "Mark" 19
-  getName person == Mark
-  getId person == 19
+-- Custom, struct-like data type.
+-- Parens around Show are only need when
+-- deriving from more than one type class.
+-- Why can't a field use the name "id"?
+-- It seems to conflict with Prelude.id.
+data Person = Person
+  { personId :: Int
+  , firstName :: String
+  , lastName :: String
+  , middleName :: String
+  --, birthday :: Date
+  } deriving (Show)
+
+-- Can get a string representation with "show p".
+-- Can use field names as accessor functions with "{field-name} p".
+-- Will get an error if the field has no value.
+p1 = Person 1 "Joe" "Boxer"
+
+-- Creating an instance using record syntax,
+-- but must provide a value for ALL fields!
+p2 =
+  Person
+  { personId = 2
+  , firstName = "Richard"
+  , middleName = "Mark"
+  , lastName = "Volkmann"
+  }
+
+-- Function that operates on a Person.
+initials :: Person -> String
+initials p = head (firstName p) : head (middleName p) : head (lastName p) : []
+
+-- Create a new Person that is a modified version of an existing one.
+p3 = p2 {firstName = "Tamara", middleName = "Ann"}
+
 - union types
   data Shape =
     Circle {
@@ -433,16 +537,31 @@ Custom Types
 
 Custom Type Classes
 - ex. ShapeCompare
+
+-- function that computes the width of a shape
 width :: Shape -> Float
+-- Circle version
 width (Circle _ _ radius) = radius * 2
+-- Rectangle version
 width (Rectangle x1 _ x2 _) = abs (x1 - x2)
+
+-- function that computes the height of a circle
 height :: Shape -> Float
+-- Circle version
 height (Circle _ _ radius) = radius * 2
+-- Rectangle version
 height (Rectangle _ y1 _ y2) = abs (y1 - y2)
+
+-- custom type class
 class ShapeCompare kind where
   isLarger :: kind -> kind -> Bool
   isWider :: kind -> kind -> Bool
   isTaller :: kind -> kind -> Bool
+
+-- implementation of ShapeCompare for Shape type
+-- Note that the name of the type class being implemented
+-- is followed by the name of the type for which it is being implemented.
+-- We could implement the same type class for many types.
 instance ShapeCompare Shape where
   isLarger shape1 shape2 = area shape1 > area shape2
   isWider shape1 shape2 = width shape1 > width shape2
@@ -498,7 +617,9 @@ Modules
     - ex. import qualified Data.Text as T
     - use T. as prefix on all names in this module
 - the most commonly used functions are defined in the Prelude module
-  which is imported by default
+  * "imported by default into all Haskell modules unless
+    either there is an explicit import statement for it,
+    or the NoImplicitPrelude extension is enabled"
 - to define a module
   * create a file named {module-name}.hs
   * first line must be
@@ -559,6 +680,23 @@ Functions
   hypot x y = sqrt (x * x + y * y)
   hypot 3 4 returns 5
 - scripts can call functions defined later in the file
+
+Function Composition (dot operator)
+- to create a function that calls a set of functions
+  from right to left, use the dot operator to compose them
+  * (f . g . h) x === f (g (h x))
+  * when x is 2, 2 * ((4 * x) + 3) is 22
+  * can be written as ((* 2) . (+ 3) . (* 4)) 2 === 22
+- ex.
+  import Data.Char
+  capitalize :: String -> String
+  capitalize (x:xs) = toUpper x : map toLower xs
+  -- words breaks a sentence into a list of words by splitting on spaces.
+  -- map capitalize runs on that list and returns a list of capitalized words.
+  -- unwords concatenates all the Strings in list into a single String,
+  -- adding a space between each.
+  titleCase = unwords . map capitalize . words
+  title = titleCase "pEE wee'S Big adventure"
 
 Pattern Matching
 - creates overloaded versions of a function
@@ -995,6 +1133,54 @@ Pretty Printing
 
 Any support for async I/O?
 
+Terminology (copied from Wikipedia)
+- Monad
+  * "a way to structure computations in terms of values and
+    sequences of computations using those values
+    and returning monads"
+  * can think of creating a monad as putting a value in a box
+    and having a way to get the value out
+  * three monad properties
+    - modularity: allow computations to be composed of simpler computations
+      and separate composition strategy from the computations
+    - flexibility: allows computations to be easily reused
+      with different composition strategies
+    - isolation - isolates impure code (with side effects such as
+      I/O and state modification) from pure code (no side effects)
+  * a design pattern that defines how functions, actions, inputs, and outputs
+    can be used together to build generic types with the following organization:
+    - Define a data type, and how values of that data type are combined.
+    - Create functions that use the data type, and compose them together
+      into actions, following the rules defined in the first step
+    - For example, the Maybe monad encapsulates variables which may have a
+      null value, representing an option type, and automatically ensures that
+      null values are not passed as arguments to functions that
+      cannot handle them, serving as an alternative programming technique
+      to throwing and catching exceptions when null values arise.
+    - Another example is the List monad, where the empty list is a
+      constant value of type List, and the cons operator binds a plain value
+      as the head of a previous list.
+  * many kinds of monads can be defined, but a small set are so
+    commonly used that they are included in the Haskel standard library
+  * Maybe monad
+    - data Maybe a = Nothing | Just a
+    - represents the result of a computation that may not return a result
+    - "if a combined computation consists of one computation B
+      that depends on the result of another computation A,
+      then the combined computation should yield Nothing
+      whenever either A or B yield Nothing and
+      the combined computation should yield
+      the result of B applied to the result of A
+      when both computations succeed"
+  * IO monad
+  * List monad
+- Monoid
+- Functor
+- Combinator
+- Transducer
+- Lens
+- Applicative
+
 Things I would change
 - remove -> tokens from function type signatures
 - drop the . and $ operators for changing evaluation order
@@ -1003,6 +1189,7 @@ Things I would change
   by saying that subtraction requires a space on both sides of -
   and negation does not allow a space between - and the number
 - don't require parens around type aliases when there is more than one
+- change :: to : because where else is : used?
 
 PureScript
 - compiles Haskell to JavaScript
