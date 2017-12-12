@@ -1,42 +1,42 @@
-Etag Notes
+ETag Notes
 
-An Etag is an HTTP header that is used to identify a version of a resource.
+An ETag is an HTTP header that is used to identify a version of a resource.
 One use is to avoid the problem where current updates to a resource
 overwrite each other.
 
 In Node.js, the Express server automatically
-sets the Etag header in responses.
+sets the ETag header in responses.
 It is computed based on the response body
 using the npm package "etag" from Doug Wilson.
 However, when CORS is being used, clients cannot access this header
 unless it is explicitly enabled in both the client and the server.
 
-To enable use of the Etag header in the client,
+To enable use of the ETag header in the client,
 set the request header "Access-Control-Allow-Headers" to "ETag".
 This is typically specified in the headers property
 of the options object that is passed to the fetch function.
 
-To enable use of the Etag header in the server,
-set the response header "Access-Control-Expose-Headers" to "Etag".
+To enable use of the ETag header in the server,
+set the response header "Access-Control-Expose-Headers" to "ETag".
 This is typically done by calling the set method
 on the Express Response object.  For example,
 res.set('Access-Control-Expose-Headers', 'ETag');
 
-By default Express uses "weak" Etags.
+By default Express uses "weak" ETags.
 From MDN,
 "Weak validators are easy to generate
 but are far less useful for comparisons.
 Strong validators are ideal for comparisons
 but can be very difficult to generate efficiently."
 
-To use strong Etags in Express,
+To use strong ETags in Express,
 app.set('etag', 'strong');
 
-It can be useful to generate custom Etag values,
+It can be useful to generate custom ETag values,
 especially when the set of properties that
 describe the same resource differ between requests.
 
-To generate custom Etag values in Express,
+To generate custom ETag values in Express,
 
 const etag = require('etag');
 
@@ -45,9 +45,9 @@ app.set('etag', buffer => {
   // to a string and then a JavaScript object like this:
   try {
     const obj = JSON.parse(buffer.toString());
-    // Compute an Etag value based on some of the object properties.
-    return someEtagValue;
+    // Compute an ETag value based on some of the object properties.
+    return someETagValue;
   } catch (e) {
-    return etag(buffer); // default Etag calculation
+    return etag(buffer); // default ETag calculation
   }
 });
