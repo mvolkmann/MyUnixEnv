@@ -306,6 +306,9 @@ noremap <leader>e2 execute "normal! '<,'>:w !enscript --borders --columns-2 --fa
 
 " Haskell
 let g:hindent_on_save = 1
+nnoremap <Leader>ht :GhcModType<cr>
+nnoremap <Leader>htc :GhcModTypeClear<cr>
+autocmd FileType haskell nnoremap <buffer> <leader>? :call ale#cursor#ShowCursorDetail()<cr>
 
 " JavaScript and JSX syntax highlighting
 " Enable syntax highlighting for Flow.
