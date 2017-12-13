@@ -51,3 +51,16 @@ app.set('etag', buffer => {
     return etag(buffer); // default ETag calculation
   }
 });
+
+If an ETag header is explicitly set,
+the default computaion to add one is skipped.
+
+A client can specify that a PUT or PATCH should not proceed
+if the client had an old version of the resource by
+specifying an If-Match header set to the last ETag value known to them.
+The server code must fetch the current version of the resource,
+compute its ETag value, and compare it to the value in the If-Match header.
+If they do not match, the server should return a 409 CONFLICT status.
+
+An easy way to compute ETag values for a resource is to just
+use an incrementing version number starting from zero or one.
