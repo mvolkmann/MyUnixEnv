@@ -31,6 +31,8 @@ abbr --add ci git commit -av
 abbr --add co git checkout
 abbr --add cob git checkout -b
 abbr --add graph git log --graph --oneline
+abbr --add hrepl stack ghci # starts Haskell REPL
+abbr --add hrun stack runghc # runs a Haskell program
 abbr --add log git log
 abbr --add status git status
 
