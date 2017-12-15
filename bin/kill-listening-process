@@ -2,7 +2,7 @@
 # Kills the process listening on a given port.
 
 if [[ $# -ne 1 ]]; then
-  echo usage: kill-listening-port {port}
+  echo usage: kill-listening-process {port}
   exit 1
 fi
 
