@@ -446,7 +446,7 @@ let g:ale_sign_warning = '❓'
 let g:ale_statusline_format = ['👎 %d', '❓ %d', '']
 " %linter% is the name of the linter that provided the message
 " %s is the error or warning message
-let g:ale_echo_msg_format = '%linter% says %s'
+let g:ale_echo_msg_format = '%linter% says %s (%code%)'
 " Map keys to navigate between lines with errors and warnings.
 " <c-j> works, but <c-k> doesn't because that is mapped to
 " clear the screen in iTerm!  How can you remove that mapping?
