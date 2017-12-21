@@ -268,10 +268,10 @@ let @a='i<a href="lv$hyA">kjpa</a>'
 " find the next space, comma, period, or end of line,
 " turn off highlighting, 
 " enter insert mode, insert </code>, and exit insert mode.
-let @c='i<code>/ \|,\|\.\|$:nohi</code>'
+let @c='i<code>/ \|,\|\.\|<\|$:nohi</code>'
 
 " Same as @c, but inserts <i> tags instead of <code>.
-let @i='i<i>/ \|,\|\.\|$:nohi</i>'
+let @i='i<i>/ \|,\|\.\|<\|$:nohi</i>'
 " }}}
 
 " Simplify key mapping for omnifunc completion.
