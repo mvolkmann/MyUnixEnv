@@ -373,7 +373,8 @@ augroup javaScript
   set nofoldenable
 
   " Prettier JavaScript formatting
-  autocmd FileType javascript setlocal formatprg=prettier-eslint\ --stdin
+  "autocmd FileType javascript setlocal formatprg=prettier-eslint\ --stdin
+  autocmd FileType javascript setlocal formatprg=prettier\ --stdin
   " Automatically format JavaScript code before it is saved.
   " silent! is needed to avoid message "No write since last change".
   "autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
@@ -435,7 +436,9 @@ let g:ale_linters = {
 \  'javascript': ['eslint', 'flow'],
 \  'scss': ['stylelint']
 \}
-let g:ale_fixers = {}
+let g:ale_fixers = {
+\  'javascript': ['prettier'],
+\}
 "let g:ale_fixers.javascript = ['prettier_eslint']
 let g:ale_fixers.javascript = ['prettier', 'eslint']
 let g:ale_javascript_prettier_options = '--no-bracket-spacing --single-quote'
@@ -451,6 +454,7 @@ let g:ale_echo_msg_format = '%linter% says %s (%code%)'
 " <c-j> works, but <c-k> doesn't because that is mapped to
 " clear the screen in iTerm!  How can you remove that mapping?
 "TODO: Find non-conflicting keys for these!
+nnoremap <leader>af :ALEFix<cr>
 nnoremap <leader>an :ALENextWrap<cr>
 nnoremap <leader>ap :ALEPreviousWrap<cr>
 
