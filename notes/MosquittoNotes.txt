@@ -1,0 +1,19 @@
+Mosquitto Notes
+
+To install
+- brew install mosquitto
+
+To have the MQTT server automatically start on reboots
+- ln -sfv /usr/local/opt/mosquitto/*.plist ~/Library/LaunchAgents
+
+To manually start the MQTT server
+- launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mosquitto.plist
+
+To subscribe to topic
+- mosquitto_sub -t topic/state
+- no quotes are needed around the -t value
+
+To publish a message on a topic
+- open a new terminal
+- mosquitto_pub -t topic/state -m "Hello World"
+- no quotes are needed around the -t value
