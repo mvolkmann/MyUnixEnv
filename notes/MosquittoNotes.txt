@@ -1,5 +1,9 @@
 Mosquitto Notes
 
+Overview
+- "Mosquitto" is a name for the MQTT protocol.
+- It supports publish and subscribe operations.
+
 To install
 - brew install mosquitto
 
@@ -17,3 +21,22 @@ To publish a message on a topic
 - open a new terminal
 - mosquitto_pub -t topic/state -m "Hello World"
 - no quotes are needed around the -t value
+
+To use from Node.js or browser JavaScript
+- npm install mqtt
+- example code:
+const mqtt = require('mqtt');
+const client = mqtt.connect('mqtt://test.mosquitto.org');
+
+const topic = 'foo/bar';
+
+client.on('connect', () => {
+  client.subscribe(topic);
+  client.publish(topic, 'Hello from MQTT!');
+});
+
+client.on('message', (topic, message) => {
+  console.log(message.toString()); // message is a Buffer
+  client.end(); // don't call to continue listening
+});
+
