@@ -33,6 +33,17 @@ Modify rows
   ex. for SQL Server
     update some_table set end_date = cast('10/31/2014' as datetime) where id = 19
 
+Upsert rows
+- inserts if not present; updates if present
+- in MySQL
+  insert into {table-name}
+    ({column-name}, ...)
+    values (value, ...)
+  on duplicate key update
+    column-name-1 = v1,
+    column-name-2 = v2,
+    ...
+
 Delete rows
   delete from {table-name}
   where {condition}
