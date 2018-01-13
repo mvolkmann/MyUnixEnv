@@ -1,5 +1,9 @@
 Gimp Notes
 
+If pencil, brush, fill bucket, or other tools
+do not use the seleted foreground color,
+verify that Image ... Mode is set to RGB.
+
 To make parts of an image transparent
 - save as a .gif file if not already that format
   * File ... Export As ...
