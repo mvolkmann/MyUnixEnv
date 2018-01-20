@@ -1,6 +1,7 @@
 Docker Notes
 
-See your SETT article at ...
+See your start on a SETT article in
+~/Documents/OCI/SETT/docker-article/article.html.
 
 - Docker Engine: supports sharing Docker images
 - docker run docker/whalesay cowsay Hello from the whale!
