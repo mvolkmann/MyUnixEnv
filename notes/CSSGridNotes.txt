@@ -67,3 +67,62 @@ Spanning
   grid-column: span {n}
 - to make an item span multiple rows, add to CSS of item
   grid-row: span {n}
+
+Placing Items
+- add to CSS of item
+  grid-column-start: {col1}
+  grid-column-end: {col2} /* alternative to specifying span */
+  * previous two lines can be replaced by
+    grid-column: {col1} / {col2}
+    or
+    grid-column {col1} / span {col2 - col1 + 1}
+  grid-row-start: {row1}
+  grid-row-end: {row2} /* alternative to specifying span */
+  * previous two lines can be replaced by
+    grid-row: {row1} / {row2}
+    or
+    grid-row {row1} / span {row2 - row1 + 1}
+- negative values count from end where -1 is the last
+  * to span to last column or row
+    grid-column: {start-col} / -1;
+    - only works if an explicit number of columns is specified
+    - otherwise just uses one column
+    grid-row: {start-row} / -1;
+    - only works if an explicit number of rows is specified
+    - otherwise just uses one row
+
+- auto-fill fits as many cells as possible
+  * ex. grid-template-columns: repeat(auto-fill, 200px);
+    fits as many columns as will fit in the container
+    when each has a width of 200px
+  * adds extra explicit columns if they will fit
+  * doesn't expand items to fill available space
+  * resizing the window will reflow the items
+
+- auto-fit is similar to auto-fill
+  * doesn't add extra explicit columns
+    even if they would fit
+  * expands items to fill available space
+  * resizing the window will reflow the items
+
+- minmax function
+  * can be used for a column width or row height
+  * specifies a minimum and maximum size
+  * ex. grid-template-column: repeat(auto-fit, minmax(200px, 1fr));
+
+- fit-content function
+  * can be used for a column width or row height
+  * like auto, but sets a maximum size
+  * ex. grid-template-column: fit-content(200px) 300px;
+
+- grid template areas
+  * give names to cells
+  * can place specific elements in named cells
+  * ex.
+    grid-template-columns: 300px 1fr 200px
+    grid-template-rows: 200px 1fr 100px
+    grid-template-areas:
+      "header header header"
+      "left-nav center right-nav"
+      "left-nav center right-nav"
+      "footer footer footer"
