@@ -10,19 +10,21 @@
 - for Vim see https://github.com/mattn/emmet-vim
   * Vim trigger key
     - always something followed by comma
-    - defaults to <C-y> which is ctrl-y
+    - defaults to `<C-y>` which is ctrl-y
     - to change to leader key, add following in .vimrc
       let g:user_emmet_leader_key='<leader>'
       * if leader key is comma then trigger with comma comma
   * by default must be in insert mode at end of snippet
     when trigger key sequence is pressed
   * for snippets with more than one insertion point
-    press <emmet-leader>n to move to next
-    and <emmet-leader>N to move to previous
+    press `<emmet-leader>n` to move to next
+    and `<emmet-leader>N` to move to previous
   * to restrict usage to specific file types,
     add following to .vimrc
+    ```
     let g:user_emmet_install_global = 0 " don't enable for all file types
     autocmd FileType html,css EmmetInstall " specify file types
+    ```
 
 - syntax for HTML snippets
   * cursor position after triggering is shown as |
@@ -47,45 +49,52 @@
     - doesn't seem very common or useful
   * classes with .
     - ex. div.my-class -> `<div class="my-class">|</div>`
-    - ex. div.c1.c2 -> <div class="c1 c2">{content}</div>
+    - ex. div.c1.c2 -> `<div class="c1 c2">{content}</div>`
   * ids with #
-    - ex. div#my-id -> <div id="my-id">|</div>
+    - ex. div#my-id -> `<div id="my-id">|</div>`
   * attributes with []
     - surround values with no quotes (if no special characters)
       or single or double quotes (if special characters)
-    - ex. div[foo=1 bar=two] -> <div foo="1" bar="two">|</div>
+    - ex. div[foo=1 bar=two] -> `<div foo="1" bar="two">|</div>`
     - ex. div[foo="contains space" bar='single quotes'] ->
-      <div foo="contains space" bar="single quotes"></div>
+      `<div foo="contains space" bar="single quotes"></div>`
     - no comma between listed attributes
   * content with {}
-    - ex. div{my content} -> <div>my content|</div>
+    - ex. div{my content} -> `<div>my content|</div>`
   * multiplication with *
     - repeats pattern n times when *n is added after pattern
     - ex. td*3 ->
+      ```html
       <td>|</td>
       <td></td>
       <td></td>
+      ```
   * numbering with $
     - works in conjunction with multiplication
     - can use for ids, classes, and content
     - ex. ul>li.item$*3 ->
+      ```html
       <ul>
         <li class="item1">|</li>
         <li class="item2"></li>
         <li class="item3"></li>
       </ul>
+      ```
     - starts at 1 by default
     - specify different start with @start and *times
       * ex. div{item $@4}*3
+        ```html
         <div>item 4|</div>
         <div>item 5</div>
         <div>item 6</div>
+        ```
   * combining above
     - ex. div#my-id.my-class[foo=1 bar=two]{my content} ->
-      <div id="my-id" class="my-class" foo="1" bar="two">my content|</div>
+      `<div id="my-id" class="my-class" foo="1" bar="two">my content|</div>`
   * grouping with ()
     - for multiple, complex siblings
     - ex.table>(thead>tr>th*3)+(tbody>(tr>td*3)*2) ->
+      ```html
       <table>
         <thead>
           <tr>
@@ -107,13 +116,16 @@
           </tr>
         </tbody>
       </table>
+      ```
   * implicit tag names
     - can sometimes guess desired tag name based on context
-    - ex. .foo -> <div class="foo">|</div>
+    - ex. .foo -> `<div class="foo">|</div>`
     - ex. ul>.foo ->
+      ```html
       <ul>
         <li class="foo">|</li>
       </ul>
+      ```
 
 - Lorem Ipsum text
   * lorem or lipsum -> 100 words
@@ -121,6 +133,7 @@
 
 - most useful tag abbreviations (there are many more)
   ! - html template
+    ```html
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -131,28 +144,29 @@
       |
     </body>
     </html>
-  a -> <a href="|"></a>
-  a:link -> <a href="http://|"></a>
-  a:mail -> <a href="mailto:|"></a>
-  btn or button - <button>|</button>
-  c -> <!-- | -->
-  img -> <img src="|" alt="">
+    ```
+  a -> `<a href="|"></a>`
+  a:link -> `<a href="http://|"></a>`
+  a:mail -> `<a href="mailto:|"></a>`
+  btn or button - `<button>|</button>`
+  c -> `<!-- | -->`
+  img -> `<img src="|" alt="">`
   input:{type}
   - type can be one of
     button, checkbox, color, date, datetime, datetime-local,
     email, file, hidden, image, month, number, password, radio,
     range, search, submit, tel, text, time, url, or week
   - ex: input:number -> <input id="" type="number" name="">
-  label => <label for="|"></label>
-  link -> <link rel="stylesheet" href="|">
+  label => `<label for="|"></label>`
+  link -> `<link rel="stylesheet" href="|">`
   link:favicon ->
-    <link rel="shortcut icon" type="image/x-icon" href="|favicon.ico">
+    `<link rel="shortcut icon" type="image/x-icon" href="|favicon.ico">`
   ol+ - abbreviation for ol>li
-  opt or option -> <option value="|"></option>
+  opt or option -> `<option value="|"></option>`
   select+ - abbreviation for select>option
-  script:src -> <script src="|"></script>
+  script:src -> `<script src="|"></script>`
   table+ - abbreviation for table>tr>td
-  tarea or textarea -> <textarea id="|" name="" cols="30" rows="10"></textarea>
+  tarea or textarea -> `<textarea id="|" name="" cols="30" rows="10"></textarea>`
   tr+ - abbreviation for tr>td
   ul+ - abbreviation for ul>li
 
