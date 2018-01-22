@@ -206,7 +206,7 @@
   * `d:n` -> `display: none;`
   * `d:b` or `d` -> `display: block;`
   * `d:f` -> `display: flex;`
-  * `d:g` does not give display: grid!
+  * `d:g` does not give `display: grid`!
   * `d:i` -> `display: inline;`
   * `d:ib` -> `display: inline-block;`
   * `d:li` -> `display: list-item;`
