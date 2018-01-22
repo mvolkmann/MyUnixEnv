@@ -4,7 +4,7 @@
 - an editor plugin for quickly entering HTML and CSS
   * available for many editors including Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
 - not a simple snippet manager
-  * parses entered text to extract meaning
+  * parses entered text to extract meaning (called "dynamic snippets")
 - main web page is https://emmet.io/
 - cheat sheet at https://docs.emmet.io/cheat-sheet/
 
@@ -36,8 +36,8 @@
 
 ## Syntax for HTML snippets
 * mostly like CSS selector syntax with no spaces
-* cursor position after triggering is shown as |
-* child with >
+* cursor position after triggering is shown in examples as |
+* child with `>`
   - ex. `foo>bar>baz` ->
     ```html
     <foo>
@@ -46,20 +46,20 @@
       </bar>
     </foo>
     ```
-* sibling with +
+* sibling with `+`
   - ex. `foo+bar+baz` ->
     ```html
     <foo>|</foo>
     <bar></bar>
     <baz></baz>
     ```
-* climb up with ^
+* climb up with `^`
   - adds to parent
   - doesn't seem very common or useful
-* classes with .
+* classes with `.`
   - ex. `div.my-class` -> `<div class="my-class">|</div>`
   - ex. `div.c1.c2` -> `<div class="c1 c2">{content}</div>`
-* ids with #
+* ids with `#`
   - ex. `div#my-id` -> `<div id="my-id">|</div>`
 * attributes with []
   - surround values with no quotes (if no special characters)
@@ -68,9 +68,9 @@
   - ex. `div[foo="contains space" bar='single quotes']` ->
     `<div foo="contains space" bar="single quotes"></div>`
   - no comma between listed attributes
-* content with {}
+* content with `{}`
   - ex. `div{my content}` -> `<div>my content|</div>`
-* multiplication with *
+* multiplication with `*`
   - repeats pattern n times when *n is added after pattern
   - ex. `td*3` ->
     ```html
@@ -78,7 +78,7 @@
     <td></td>
     <td></td>
     ```
-* numbering with $
+* numbering with `$`
   - works in conjunction with multiplication
   - can use for ids, classes, and content
   - ex. `ul>li.item$*3` ->
@@ -100,7 +100,7 @@
 * combining above
   - ex. `div#my-id.my-class[foo=1 bar=two]{my content}` -><br />
     `<div id="my-id" class="my-class" foo="1" bar="two">my content|</div>`
-* grouping with ()
+* grouping with `()`
   - for multiple, complex siblings
   - ex. `table>(thead>tr>th*3)+(tbody>(tr>td*3)*2)` ->
     ```html
@@ -137,10 +137,11 @@
     ```
 
 ## Lorem Ipsum text
-* lorem or lipsum -> 100 words
-* lorem:n or lipsum:n -> n words
+* `lorem` or `lipsum` -> 100 words
+* `lorem:n` or `lipsum:n` -> n words
 
-## Most useful tag abbreviations (there are many more)
+## HTML snippets
+* there are many more, but these seem the most useful
 * `!` - html template
     ```html
     <!DOCTYPE html>
@@ -179,7 +180,8 @@
 * `tr+` - abbreviation for tr>td
 * `ul+` - abbreviation for ul>li
 
-## Most useful CSS snippets (there are many more)
+## CSS snippets
+* there are many more, but these seem the most useful
 * `ac` -> `align-content: |;`
 * `ac:c` -> `align-content: center;`
 * `ac:fe` -> `align-content: flex-end;`
@@ -245,6 +247,8 @@
 * `l` -> `left: |;`
 * `lh` -> `line-height: |;`
 * `m` -> `margin: |;`
+  - can add a number after this and many CSS snippets to specify a value
+  - ex. `m20` -> `margin: 20px;`
 * `mb` -> `margin-bottom: |;`
 * `ml` -> `margin-left: |;`
 * `mr` -> `margin-right: |;`
@@ -277,5 +281,5 @@
 * `z` -> `z-index`
 * `@media` or `@m` -> `@media screen { | }`
 
-## Creating custom snippets
+## Custom snippets
 * see https://docs.emmet.io/customization/
