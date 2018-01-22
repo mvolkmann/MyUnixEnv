@@ -29,7 +29,7 @@
     ```
     let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
     let g:user_emmet_install_global = 0
-    autocmd FileType htmlss,javascript.jsx EmmetInstall
+    autocmd FileType html,css,javascript.jsx EmmetInstall
     ```
 
 - syntax for HTML snippets
