@@ -43,6 +43,8 @@ To specify number of columns and size of each:
     - smaller elements are expanded to fit the cell size
   * value repeat(3, 150px)
     - creates three columns that are each 150px wide
+  * value repeat(3, 1fr)
+    - creates three columns that are equally sized to fill the width
   * rows are created automatically
   * can name grid lines by preceding sizes with [name]
 
@@ -89,6 +91,7 @@ Tracks
 Row heights
 - default to largest content height in any cell in each row
 - setting a height on the container changes this
+  * set height to 100vh to use full height
 
 repeat function
 - instead of "20px 20px 20px", can write "repeat(3, 20px)"
