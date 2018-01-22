@@ -25,6 +25,12 @@
     let g:user_emmet_install_global = 0 " don't enable for all file types
     autocmd FileType html,css EmmetInstall " specify file types
     ```
+  * to use with React and JSX
+    ```
+    let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
+    let g:user_emmet_install_global = 0
+    autocmd FileType htmlss,javascript.jsx EmmetInstall
+    ```
 
 - syntax for HTML snippets
   * cursor position after triggering is shown as |
