@@ -317,6 +317,7 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  },
 \}
+let g:jsx_ext_required = 0
 
 " Printing using enscript (these aren't working yet)
 noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"

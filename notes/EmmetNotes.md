@@ -37,14 +37,16 @@
       ```
   * sibling with +
     - ex. foo+bar+baz ->
+      ```html
       <foo>|</foo>
       <bar></bar>
       <baz></baz>
+      ```
   * climb up with ^
     - adds to parent
     - doesn't seem very common or useful
   * classes with .
-    - ex. div.my-class -> <div class="my-class">|</div>
+    - ex. div.my-class -> `<div class="my-class">|</div>`
     - ex. div.c1.c2 -> <div class="c1 c2">{content}</div>
   * ids with #
     - ex. div#my-id -> <div id="my-id">|</div>
