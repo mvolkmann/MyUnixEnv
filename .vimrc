@@ -312,6 +312,12 @@ map <leader>w <plug>(easymotion-bd-w)
 " Default trigger key is ctrl-y followed by comma.
 " Change to be leader followed by comma, so comma comma.
 let g:user_emmet_leader_key='<leader>'
+"let g:user_emmet_settings = {'javascript': {'extends': 'jsx'}}
+let g:user_emmet_settings = {
+\  'javascript' : {
+\      'extends' : 'jsx',
+\  },
+\}
 
 " Printing using enscript (these aren't working yet)
 noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"

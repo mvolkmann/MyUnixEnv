@@ -1,11 +1,30 @@
 CSS Grid Layout
 
+Resources
+- https://css-tricks.com/snippets/css/complete-guide-grid/
+- free Wes Bos course https://cssgrid.io/
+
+Overview
+- for the most part grid can do everything flexbox can do
+- while it may seem that grid is for 2D layouts
+  and flexbox is for 1D, grid does fine with 1D also
+- many flexbox properties can be transitioned, but currently
+  the only grid property that can do this is grid-gap
+- flexbox can support having variable width items on each row,
+  but grid can only approximate this using span
+
 To tell a container to use grid layout
 - display: grid
 - causes direct children to become "grid items"
+- children can also use grid layout
+  by setting their display to grid
 
 To specify spacing between all cells
 - grid-gap: 10px
+- there is no counterpart to this in flexbox
+  * using margins isn't a good alternative
+    because different margins would be needed
+    for first and last items
 
 To specify number of columns and size of each:
 - grid-template-columns: 100px 200px 150px
@@ -25,17 +44,24 @@ To specify number of columns and size of each:
   * value repeat(3, 150px)
     - creates three columns that are each 150px wide
   * rows are created automatically
+  * can name grid lines by preceding sizes with [name]
 
 To specify number of rows and size of each:
 - grid-template-rows: 100px 200px 150px
   * if grid-template-columns is not specified,
     the number of columns defaults to 1
+  * can name grid lines by preceding sizes with [name]
 - if there are more items than will fit
   in the specified columns and rows,
   the specified row sizes will repeat to accomodate them
 - to specify another size for any implicit rows, add
   grid-auto-rows: {some-height}
   * can specify multiple heights to cycle through
+
+To specify columns and rows in a single property:
+- grid-template: {cols} / {rows}
+  where {cols} is the values for grid-template-columns
+  and {rows} is the values for grid-template-rows
 
 Extra items
 - by default are placed on implicit rows
@@ -46,6 +72,14 @@ Extra items
   * when this is set, can specify
     grid-auto-columns: {some-width}
     - can specify multiple widths to cycle through
+- when the next item to layout doesn't fit
+  in the current row (when flow is row)
+  or the current column (when flow is column)
+  the remaining cells in that row/column are left empty
+- to avoid this and use following items to fill all areas
+  switch to "dense" layout with
+  grid-auto-flow: dense
+  * allows elements to be laid out in a slightly different order
 
 Tracks
 - columns and rows are also referred to as "tracks"
@@ -90,6 +124,7 @@ Placing Items
     grid-row: {start-row} / -1;
     - only works if an explicit number of rows is specified
     - otherwise just uses one row
+- can use grid line names in place of column and row numbers
 
 - auto-fill fits as many cells as possible
   * ex. grid-template-columns: repeat(auto-fill, 200px);
@@ -109,6 +144,10 @@ Placing Items
   * can be used for a column width or row height
   * specifies a minimum and maximum size
   * ex. grid-template-column: repeat(auto-fit, minmax(200px, 1fr));
+    - fits as many as possible with a minimum width of 200px each
+      and flows to additional rows if needed
+    - if all will fit on one row,
+      each is as wide a possible to fill the row
 
 - fit-content function
   * can be used for a column width or row height
@@ -116,13 +155,99 @@ Placing Items
   * ex. grid-template-column: fit-content(200px) 300px;
 
 - grid template areas
-  * give names to cells
-  * can place specific elements in named cells
-  * ex.
-    grid-template-columns: 300px 1fr 200px
-    grid-template-rows: 200px 1fr 100px
-    grid-template-areas:
-      "header header header"
-      "left-nav center right-nav"
-      "left-nav center right-nav"
-      "footer footer footer"
+  * give names to areas using grid-template-areas
+  * to see areas in Firefox Developer Edition,
+    - open dev tools
+    - select Inspector...Layout
+    - under "Overlay Grid", check box next to container
+    - under "Grid Display Settings" check
+      "Display line numbers" and "Display area names"
+  * place specific elements in named areas with grid-area
+    - ex.
+      #left-nav {
+        grid-area: left-nav
+      }
+  * ex. HTML
+    <div id="container">
+      <header>My Header</header>
+      <nav id="left-nav">My Left Nav</nav>
+      <section id="center">My Content</section>
+      <nav id="right-nav">My Right Nav</nav>
+      <footer>My Footer</footer>
+    </div>
+  * ex. CSS
+    .container {
+      display: grid;
+      height: 100vh;
+      grid-template-columns: 300px 1fr 200px
+      grid-template-rows: 100px 1fr 50px
+      grid-template-areas:
+        "header header header"
+        "left-nav center right-nav"
+        "footer footer footer"
+    }
+    - header and footer both span three columns
+    - note no commas between the area strings
+  * use a period instead of an area name to leave an area empty
+  * can use media queries to have a different layout
+    for different display sizes
+    - specify different grid-template-areas for each
+
+Aligning items
+- use these six propeties:
+  * justify-items, justify-content, justify-self
+    - always affect rows (horizontal),
+      regardless of grid-auto-flow direction unlike in flexbox
+  * align-items, align-content, align-self
+    - always affect columns (vertical),
+      regardless of grid-auto-flow direction unlike in flexbox
+- justify-items on container
+  * stretch (default) - stretches item across cell
+  * center - centers item horizontally in cell
+    - can use for simple centering with only one column and row
+    - ex.
+      display: grid;
+      justify-items: center;
+      align-items: center;
+  * start - left-justified
+  * end - right-justified
+- align-items on container
+  * same as justify-items, but affects vertical alignment
+  * won't have any effect unless row has a height
+- centering
+  * since default for justify-items and align-items is stretch,
+    it centers by default
+- place-items on container
+  * combines justify-items and align-items
+    so takes two values in that order
+  * browser support may be suspect
+- justify-content on container
+  * affects placement of cells on the row
+  * start (default) - left-justified
+  * center
+  * end - right-justified
+  * space-between - distributes excess space evenly
+    with no space before first or after last
+  * space-around - same as space-between but adds
+    half of calculated spacing before first and after last
+    - less commonly used than space-between
+- align-content on container
+  * same as justify-content, but affects vertical alignment
+  * won't have any effect unless row has a height
+- is there a place-content property?
+- justify-self on an item
+  * same as justify-items, but only applies to specified items
+  * not available for flexbox
+- align-self on an item
+  * same as align-items, but only applies to specified items
+  * is available for flexbox
+
+Order
+- all items have an order value of 0 by default
+  which causes them to be laid out in the order they appear
+- change the order of an item with
+  order: n
+- higher numbers appear after lower
+  so 1 comes after all the default 0's
+- avoid using since screen readers don't honor this
+  (at least currently)
