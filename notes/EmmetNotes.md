@@ -1,9 +1,9 @@
 # Emmet Notes
 
 - an editor plugin for quickly entering HTML and CSS
-    * available for many editors including Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
+  * available for many editors including Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
 - not a simple snippet manager
-    * parses entered text to extract meaning
+  * parses entered text to extract meaning
 - main web page is https://emmet.io/
 - cheat sheet at https://docs.emmet.io/cheat-sheet/
 
@@ -28,11 +28,13 @@
   * cursor position after triggering is shown as |
   * child with >
     - ex. foo>bar>baz ->
+      ```html
       <foo>
         <bar>
           <baz>|</baz>
         </bar>
       </foo>
+      ```
   * sibling with +
     - ex. foo+bar+baz ->
       <foo>|</foo>
