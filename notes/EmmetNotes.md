@@ -89,7 +89,7 @@
         <div>item 6</div>
         ```
   * combining above
-    - ex. `div#my-id.my-class[foo=1 bar=two]{my content}` ->
+    - ex. `div#my-id.my-class[foo=1 bar=two]{my content}` -><br />
       `<div id="my-id" class="my-class" foo="1" bar="two">my content|</div>`
   * grouping with ()
     - for multiple, complex siblings
@@ -171,102 +171,102 @@
   * `ul+` - abbreviation for ul>li
 
 - most useful CSS snippets (there are many more)
-  * ac -> align-content: |;
-  * ac:c -> align-content: center;
-  * ac:fe -> align-content: flex-end;
-  * ac:fs -> align-content: flex-start;
-  * ac:s -> align-content: stretch;
-  * ac:sa -> align-content: space-around;
-  * ac:sb -> align-content: space-between;
-  * ai -> align-items: |;
-  * ai:b -> align-items: baseline;
-  * ai:c -> align-items: center;
-  * ai:fe -> align-items: flex-end;
-  * ai:fs -> align-items: flex-start;
-  * ai:s -> align-items: stretch;
-  * as -> align-self: |;
-  * as:b -> align-self: baseline;
-  * as:c -> align-self: center;
-  * as:fe -> align-self: flex-end;
-  * as:fs -> align-self: flex-start;
-  * as:s -> align-self: stretch;
-  * b -> bottom: |;
-  * bd -> border: |;
-  * bd:n -> border: none;
-  * bdb or bb -> border-botom: |;
-  * bdl or bl -> border-left: |;
-  * bdr or br -> border-right: |;
-  * bdt or bt -> border-top: |;
-  * bg -> background: #000;
-  * bgc -> background-color: #fff;
-  * bgc:t -> background-color: transparent;
-  * c -> color: #000;
-  * cur:d -> cursor: default;
-  * cur:p -> cursor: pointer;
-  * d:n -> display: none;
-  * d:b or d -> display: block;
-  * d:f -> display: flex;
-  * d:g does not give display: grid!
-  * d:i -> display: inline;
-  * d:ib -> display: inline-block;
-  * d:li -> display: list-item;
-  * d:n -> display: none;
-  * d:t -> display: table;
-  * fxd -> flex-direction: |;
-  * fxd:c -> flex-direction: column;
-  * fxd:r -> flex-direction: row;
-  * ff -> font-family: |;
-  * ff:m -> font-family: monospace;
-  * ff:s -> font-family: serif;
-  * ff:ss -> font-family: sans-serif;
-  * fs -> font-style: |;
-  * fs:i -> font-style: italic;
-  * fs:n -> font-style: normal;
-  * fw -> font-weight: |;
-  * fw:b -> font-weight: bold;
-  * fw:n -> font-weight: normal;
-  * fz -> font-size: |;
-  * h -> height: |;
-  * jc -> justify-content: |;
-  * jc:c -> justify-content: center;
-  * jc:fe -> justify-content: flex-end;
-  * jc:fs -> justify-content: flex-start;
-  * jc:sa -> justify-content: space-around;
-  * jc:sb -> justify-content: space-between;
-  * l -> left: |;
-  * lh -> line-height: |;
-  * m -> margin: |;
-  * mb -> margin-bottom: |;
-  * ml -> margin-left: |;
-  * mr -> margin-right: |;
-  * mt -> margin-top: |;
-  * o -> outline: |;
-  * p -> padding: |;
-  * pb -> padding-bottom: |;
-  * pl -> padding-left: |;
-  * pr -> padding-right: |;
-  * pt -> padding-top: |;
-  * r -> right: |;
-  * t -> top: |;
-  * ta:c -> text-align: center;
-  * ta:j -> text-align: justify;
-  * ta:r -> text-align: right;
-  * ta:l or ta -> text-align: left;
-  * ta:r -> text-align: right;
-  * td:l -> text-decoration: line-through;
-  * td:n or td -> text-decoration: none;
-  * td:u -> text-decoration: underline;
-  * tt:c -> text-transform: capitalize;
-  * tt:l -> text-transform: lowercase;
-  * tt:u or tt -> text-transform: uppercase;
-  * v:h or v -> visibility: hidden;
-  * v:v -> visibility: visible;
-  * va:b -> vertical-align: bottom;
-  * va:m -> vertical-align: middle;
-  * va:t or va -> vertical-align: top;
-  * w -> width: |;
-  * z -> z-index
-  * @media or @m -> @media screen { | }
+  * `ac` -> `align-content: |;`
+  * `ac:c` -> `align-content: center;`
+  * `ac:fe` -> `align-content: flex-end;`
+  * `ac:fs` -> `align-content: flex-start;`
+  * `ac:s` -> `align-content: stretch;`
+  * `ac:sa` -> `align-content: space-around;`
+  * `ac:sb` -> `align-content: space-between;`
+  * `ai` -> `align-items: |;`
+  * `ai:b` -> `align-items: baseline;`
+  * `ai:c` -> `align-items: center;`
+  * `ai:fe` -> `align-items: flex-end;`
+  * `ai:fs` -> `align-items: flex-start;`
+  * `ai:s` -> `align-items: stretch;`
+  * `as` -> `align-self: |;`
+  * `as:b` -> `align-self: baseline;`
+  * `as:c` -> `align-self: center;`
+  * `as:fe` -> `align-self: flex-end;`
+  * `as:fs` -> `align-self: flex-start;`
+  * `as:s` -> `align-self: stretch;`
+  * `b` -> `bottom: |;`
+  * `bd` -> `border: |;`
+  * `bd:n` -> `border: none;`
+  * `bdb` or `bb` -> `border-botom: |;`
+  * `bdl` or `bl` -> `border-left: |;`
+  * `bdr` or `br` -> `border-right: |;`
+  * `bdt` or `bt` -> `border-top: |;`
+  * `bg` -> `background: #000;`
+  * `bgc` -> `background-color: #fff;`
+  * `bgc:t` -> `background-color: transparent;`
+  * `c` -> `color: #000;`
+  * `cur:d` -> `cursor: default;`
+  * `cur:p` -> `cursor: pointer;`
+  * `d:n` -> `display: none;`
+  * `d:b` or `d` -> `display: block;`
+  * `d:f` -> `display: flex;`
+  * `d:g` does not give display: grid!
+  * `d:i` -> `display: inline;`
+  * `d:ib` -> `display: inline-block;`
+  * `d:li` -> `display: list-item;`
+  * `d:n` -> `display: none;`
+  * `d:t` -> `display: table;`
+  * `fxd` -> `flex-direction: |;`
+  * `fxd:c` -> `flex-direction: column;`
+  * `fxd:r` -> `flex-direction: row;`
+  * `ff` -> `font-family: |;`
+  * `ff:m` -> `font-family: monospace;`
+  * `ff:s` -> `font-family: serif;`
+  * `ff:ss` -> `font-family: sans-serif;`
+  * `fs` -> `font-style: |;`
+  * `fs:i` -> `font-style: italic;`
+  * `fs:n` -> `font-style: normal;`
+  * `fw` -> `font-weight: |;`
+  * `fw:b` -> `font-weight: bold;`
+  * `fw:n` -> `font-weight: normal;`
+  * `fz` -> `font-size: |;`
+  * `h` -> `height: |;`
+  * `jc` -> `justify-content: |;`
+  * `jc:c` -> `justify-content: center;`
+  * `jc:fe` -> `justify-content: flex-end;`
+  * `jc:fs` -> `justify-content: flex-start;`
+  * `jc:sa` -> `justify-content: space-around;`
+  * `jc:sb` -> `justify-content: space-between;`
+  * `l` -> `left: |;`
+  * `lh` -> `line-height: |;`
+  * `m` -> `margin: |;`
+  * `mb` -> `margin-bottom: |;`
+  * `ml` -> `margin-left: |;`
+  * `mr` -> `margin-right: |;`
+  * `mt` -> `margin-top: |;`
+  * `o` -> `outline: |;`
+  * `p` -> `padding: |;`
+  * `pb` -> `padding-bottom: |;`
+  * `pl` -> `padding-left: |;`
+  * `pr` -> `padding-right: |;`
+  * `pt` -> `padding-top: |;`
+  * `r` -> `right: |;`
+  * `t` -> `top: |;`
+  * `ta:c` -> `text-align: center;`
+  * `ta:j` -> `text-align: justify;`
+  * `ta:r` -> `text-align: right;`
+  * `ta:l` or `ta` -> `text-align: left;`
+  * `ta:r` -> `text-align: right;`
+  * `td:l` -> `text-decoration: line-through;`
+  * `td:n` or td -> `text-decoration: none;`
+  * `td:u` -> `text-decoration: underline;`
+  * `tt:c` -> `text-transform: capitalize;`
+  * `tt:l` -> `text-transform: lowercase;`
+  * `tt:u` or tt -> `text-transform: uppercase;`
+  * `v:h` or v -> `visibility: hidden;`
+  * `v:v` -> `visibility: visible;`
+  * `va:b` -> `vertical-align: bottom;`
+  * `va:m` -> `vertical-align: middle;`
+  * `va:t` or va -> `vertical-align: top;`
+  * `w` -> `width: |;`
+  * `z` -> `z-index`
+  * `@media` or `@m` -> `@media screen { | }`
 
 - can add custom snippets
   * see https://docs.emmet.io/customization/
