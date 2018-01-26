@@ -1,13 +1,17 @@
 # Emmet Notes
 
 ## Overview
-- an editor plugin for quickly entering HTML and CSS
-  * available for many editors including
-    Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
-- not a simple snippet manager
-  * parses entered text to extract meaning (called "dynamic snippets")
-- main web page is https://emmet.io/
-- cheat sheet at https://docs.emmet.io/cheat-sheet/
+
+Emmet is an editor plugin for quickly entering HTML and CSS.
+It is available for many editors including
+Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
+
+Emmit is not just a simple snippet manager.
+It parses entered text to extract meaning.
+These kinds of snippets are refered to as "dynamic snippets".
+
+The main web site for Emmit is https://emmet.io/.
+Also see the cheat sheet at https://docs.emmet.io/cheat-sheet/.
 
 ## VS Code configuration
 - see https://code.visualstudio.com/docs/editor/emmet
