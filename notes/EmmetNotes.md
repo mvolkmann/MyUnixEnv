@@ -152,30 +152,54 @@ For example, `foo>bar>baz` expands to
 </foo>
 ```
 
-* sibling with `+`
-  - ex. `foo+bar+baz` ->
-    ```html
-    <foo>|</foo>
-    <bar></bar>
-    <baz></baz>
-    ```
-* climb up with `^`
-  - adds to parent
-  - doesn't seem very common or useful
-* classes with `.`
-  - ex. `div.my-class` -> `<div class="my-class">|</div>`
-  - ex. `div.c1.c2` -> `<div class="c1 c2">{content}</div>`
-* ids with `#`
-  - ex. `div#my-id` -> `<div id="my-id">|</div>`
-* attributes with []
-  - surround values with no quotes (if no special characters)
-    or single or double quotes (if special characters)
-  - ex. `div[foo=1 bar=two]` -> `<div foo="1" bar="two">|</div>`
-  - ex. `div[foo="contains space" bar='single quotes']` ->
-    `<div foo="contains space" bar="single quotes"></div>`
-  - no comma between listed attributes
-* content with `{}`
-  - ex. `div{my content}` -> `<div>my content|</div>`
+Sibling elements are specified with the `+` character.
+For example, `foo+bar+baz` expands to
+```html
+<foo>|</foo>
+<bar></bar>
+<baz></baz>
+```
+
+Climb up with the element hierarchy within a snippet with the `^` character.
+This adds to the parent element of the last element that was generated.
+This doesn't seem very common or useful.
+
+CSS class names are specified with the `.` character.
+For example, `div.my-class` expands to
+```html
+<div class="my-class">|</div>
+```
+and `div.c1.c2` expands to
+```html
+<div class="c1 c2">{content}</div>
+```
+
+Element ids are specified with the `#` character.
+For example, `div#my-id` expands to
+```html
+<div id="my-id">|</div>
+```
+
+Attributes are specified between square brackets.
+Values with no special characters do not require quotes.
+If special characters are present, enclose attribute values
+in single or double quotes.
+For example, `div[foo=1 bar=two]` expands to
+```html
+<div foo="1" bar="two">|</div>
+```
+and `div[foo="contains space" bar='single quotes']` expands to
+```html
+<div foo="contains space" bar="single quotes"></div>
+```
+Note that no commas are used between the listed attributes.
+
+Element content is specified betweeen curly braces.
+For example, `div{my content}` expands to
+```html
+<div>my content|</div>
+```
+
 * multiplication with `*`
   - repeats pattern n times when *n is added after pattern
   - ex. `td*3` ->
