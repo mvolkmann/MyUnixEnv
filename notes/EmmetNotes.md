@@ -29,6 +29,19 @@
     to include javascript: 'javascriptreact'
 - after typing an Emmet snippet, press tab to expand it
   * when using Vim emulation, must be in insert mode
+- the cursor will automatically be moved to an insertion point
+  within the expansion
+  * for snippets with multiple insertion points,
+    press tab to jump to the next one
+    and shift-tab to jump to the previous one
+- suggestions are displayed as snippets are typed
+  * to use the top suggestion before the snippet is fully entered,
+    press tab
+  * to use a different suggestion,
+    use to the arrows keys to navigate to it and press tab
+- to see the expansion before it is applied,
+  press ctrl-space to open the "documentation fly-out"
+  to the right of the suggestion
 - to enable Vim emulation
   * select View...Extensions
   * enter vscodevim in the search input
