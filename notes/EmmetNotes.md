@@ -96,20 +96,18 @@ Details on configuring Emmet for Vim can be found at
 https://github.com/mattn/emmet-vim.
 This is accomplished by modifying your `.vimrc` file.
 
-By default the key that triggers Emmet expansions
+By default the key sequence that triggers Emmet expansions
 is ctrl-y followed by a comma.
 
 It is common in Vim to use a "leader key" for many
 keyboard shortcuts and the comma keys is popular choice.
-To configure the leader key to be comma,
-add the following to your .vimrc file.
+To configure the leader key to be comma, add the following.
 ```
 let mapleader = ','
 ```
 
-Emmet has its own leader key.
-To set it to be the same as the Vim leader key,
-add the following to your .vimrc file.
+Emmet has its own leader key referred to as <emmet-leader>.
+To set it to be the same as the Vim leader key, add the following.
 ```
 let g:user_emmet_leader_key='<leader>'
 ```
@@ -119,36 +117,41 @@ by entering a snippet and pressing the comma key twice
 while still in insert mode.
 
 For snippets with more than one insertion point
-press `<emmet-leader>n` to move to next
-and `<emmet-leader>N` to move to previous
+press `<emmet-leader>n` to move to next one
+and `<emmet-leader>N` to move to previous one.
 
 By default Emmet snippets can be expanded in all file types.
-To restrict usage to specific file types,
-add the following to your .vimrc file.
+To restrict usage to specific file types, add the following.
 ```
 let g:user_emmet_install_global = 0 " don't enable for all file types
 autocmd FileType html,css,scss EmmetInstall " specifies file types
 ```
 
 To use Emmet in .js or .jsx files that define React components,
-add the following to your .vimrc file.
+add the following.
 ```
 let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
 autocmd FileType html,css,javascript.jsx,scss EmmetInstall
 ```
 
 ## Syntax for HTML snippets
-* mostly like CSS selector syntax with no spaces
-* cursor position after triggering is shown in examples as |
-* child with `>`
-  - ex. `foo>bar>baz` ->
-    ```html
-    <foo>
-      <bar>
-        <baz>|</baz>
-      </bar>
-    </foo>
-    ```
+
+The syntax for specifying HTML snippets is
+mostly like CSS selector syntax with no spaces.
+
+In the examples that follow, the cursor position
+after triggering is shown as `|`.
+
+Child elements are specified with the `>` character.
+For example, `foo>bar>baz` expands to
+```html
+<foo>
+  <bar>
+    <baz>|</baz>
+  </bar>
+</foo>
+```
+
 * sibling with `+`
   - ex. `foo+bar+baz` ->
     ```html
