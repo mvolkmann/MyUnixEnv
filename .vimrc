@@ -314,7 +314,7 @@ map <leader>w <plug>(easymotion-bd-w)
 let g:user_emmet_leader_key='<leader>'
 let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascript.jsx EmmetInstall
+autocmd FileType html,css,javascript.jsx,scss EmmetInstall
 
 " Printing using enscript (these aren't working yet)
 noremap <leader>e1 execute "normal! '<,'>:w !enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63"

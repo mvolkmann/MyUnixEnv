@@ -2,11 +2,42 @@
 
 ## Overview
 - an editor plugin for quickly entering HTML and CSS
-  * available for many editors including Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
+  * available for many editors including
+    Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
 - not a simple snippet manager
   * parses entered text to extract meaning (called "dynamic snippets")
 - main web page is https://emmet.io/
 - cheat sheet at https://docs.emmet.io/cheat-sheet/
+
+## VS Code configuration
+- see https://code.visualstudio.com/docs/editor/emmet
+- Emmet is available by default, but not enabled
+  * needs "emmet.triggerExpansionOnTab" set to true
+- Once enabled, it will be available by default for these type types:
+  css, haml, html, jade, jsx, less, sass, scss,
+  slim, stylus, xml, and xsl
+  * can add more by setting "emmet.includeLanguages"
+- to configure
+  * select Code...Preferences...Settings
+  * enter "Emmet" in the "Search Settings" input at the top
+  * see the available settings and their defaults on the left
+  * change settings in "USER SETTINGS" on the right
+  * to use tab key for trigger, change
+    "emmet.triggerExpansionOnTab" to true
+  * to enable use in React components in .js files
+    change the "emmet.includeLanguages" object
+    to include javascript: 'javascriptreact'
+- after typing an Emmet snippet, press tab to expand it
+  * when using Vim emulation, must be in insert mode
+- to enable Vim emulation
+  * select View...Extensions
+  * enter vscodevim in the search input
+  * press "Install" button vor vscodevim
+- to configure Vim emulation
+  * select Code...Preferences...Settings
+  * enter "vim" in the "Search Settings" input at the top
+  * see the available settings and their defaults on the left
+  * change settings in "USER SETTINGS" on the right
 
 ## Vim configuration
 - see https://github.com/mattn/emmet-vim
@@ -25,13 +56,12 @@
   add following to .vimrc
   ```
   let g:user_emmet_install_global = 0 " don't enable for all file types
-  autocmd FileType html,css EmmetInstall " specify file types
+  autocmd FileType html,css,scss EmmetInstall " specifies file types
   ```
 - to use with React and JSX
   ```
   let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
-  let g:user_emmet_install_global = 0
-  autocmd FileType html,css,javascript.jsx EmmetInstall
+  autocmd FileType html,css,javascript.jsx,scss EmmetInstall
   ```
 
 ## Syntax for HTML snippets

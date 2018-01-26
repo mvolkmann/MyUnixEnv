@@ -42,9 +42,9 @@ Version 9.2.1 notes
 - to stop server
   * pg_ctl -D /usr/local/var/postgres stop -m fast
 - to create a database
-  * createdb {db-name}
+  * create database {db-name}
 - to delete a database
-  * dropdb {db-name}
+  * drop database {db-name}
 - to list existing databases
   * psql -l
 - interactive mode
@@ -127,7 +127,7 @@ Run a single command
 - psql {db-name} {username} -c {query}
 
 Run commands in a file
-- psql {db-name} {username} -f {file}
+- psql -d {db-name} -u {username} -f {file}
 
 Auto-incrementing keys
 - approach #1
