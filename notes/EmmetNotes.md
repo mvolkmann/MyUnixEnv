@@ -311,28 +311,28 @@ The ones show below seem the most useful.
 </html>
 ```
 
-* `a` -> `<a href="|"></a>`
-* `a:link` -> `<a href="http://|"></a>`
-* `a:mail` -> `<a href="mailto:|"></a>`
+* `a` expands to `<a href="|"></a>`
+* `a:link` expands to `<a href="http://|"></a>`
+* `a:mail` expands to `<a href="mailto:|"></a>`
 * `btn` or `button` - `<button>|</button>`
-* `c` -> `<!-- | -->`
-* `img` -> `<img src="|" alt="">`
+* `c` expands to `<!-- | -->`
+* `img` expands to `<img src="|" alt="">`
 * `input:{type}`
   - type can be one of
     button, checkbox, color, date, datetime, datetime-local,
     email, file, hidden, image, month, number, password, radio,
     range, search, submit, tel, text, time, url, or week
-  - ex: `input:number` -> <input id="" type="number" name="">
-* `label` -> `<label for="|"></label>`
-* `link` -> `<link rel="stylesheet" href="|">`
-* `link:favicon` ->
+  - ex: `input:number` expands to <input id="" type="number" name="">
+* `label` expands to `<label for="|"></label>`
+* `link` expands to `<link rel="stylesheet" href="|">`
+* `link:favicon` expands to
   `<link rel="shortcut icon" type="image/x-icon" href="|favicon.ico">`
   * `ol+` - abbreviation for the snippet `ol>li`
-* `opt` or `option` -> `<option value="|"></option>`
+* `opt` or `option` expands to `<option value="|"></option>`
 * `select+` - abbreviation for the snippet `select>option`
-* `script:src` -> `<script src="|"></script>`
+* `script:src` expands to `<script src="|"></script>`
 * `table+` - abbreviation for the snippet `table>tr>td`
-* `tarea` or `textarea` -> `<textarea id="|" name="" cols="30" rows="10"></textarea>`
+* `tarea` or `textarea` expands to `<textarea id="|" name="" cols="30" rows="10"></textarea>`
 * `tr+` - abbreviation for the snippet `tr>td`
 * `ul+` - abbreviation for the snippet `ul>li`
 
@@ -340,105 +340,111 @@ The ones show below seem the most useful.
 
 Emmet supports a large number of CSS snippets.
 The ones show below seem the most useful.
+It may seem that there are too many to remember.
+However, in most cases your first guess for
+what a given snippet would be is correct.
 
-* `ac` -> `align-content: |;`
-* `ac:c` -> `align-content: center;`
-* `ac:fe` -> `align-content: flex-end;`
-* `ac:fs` -> `align-content: flex-start;`
-* `ac:s` -> `align-content: stretch;`
-* `ac:sa` -> `align-content: space-around;`
-* `ac:sb` -> `align-content: space-between;`
-* `ai` -> `align-items: |;`
-* `ai:b` -> `align-items: baseline;`
-* `ai:c` -> `align-items: center;`
-* `ai:fe` -> `align-items: flex-end;`
-* `ai:fs` -> `align-items: flex-start;`
-* `ai:s` -> `align-items: stretch;`
-* `as` -> `align-self: |;`
-* `as:b` -> `align-self: baseline;`
-* `as:c` -> `align-self: center;`
-* `as:fe` -> `align-self: flex-end;`
-* `as:fs` -> `align-self: flex-start;`
-* `as:s` -> `align-self: stretch;`
-* `b` -> `bottom: |;`
-* `bd` -> `border: |;`
-* `bd:n` -> `border: none;`
-* `bdb` or `bb` -> `border-botom: |;`
-* `bdl` or `bl` -> `border-left: |;`
-* `bdr` or `br` -> `border-right: |;`
-* `bdt` or `bt` -> `border-top: |;`
-* `bg` -> `background: #000;`
-* `bgc` -> `background-color: #fff;`
-* `bgc:t` -> `background-color: transparent;`
-* `c` -> `color: #000;`
-* `cur:d` -> `cursor: default;`
-* `cur:p` -> `cursor: pointer;`
-* `d:n` -> `display: none;`
-* `d:b` or `d` -> `display: block;`
-* `d:f` -> `display: flex;`
+* `ac` expands to `align-content: |;`
+* `ac:c` expands to `align-content: center;`
+* `ac:fe` expands to `align-content: flex-end;`
+* `ac:fs` expands to `align-content: flex-start;`
+* `ac:s` expands to `align-content: stretch;`
+* `ac:sa` expands to `align-content: space-around;`
+* `ac:sb` expands to `align-content: space-between;`
+* `ai` expands to `align-items: |;`
+* `ai:b` expands to `align-items: baseline;`
+* `ai:c` expands to `align-items: center;`
+* `ai:fe` expands to `align-items: flex-end;`
+* `ai:fs` expands to `align-items: flex-start;`
+* `ai:s` expands to `align-items: stretch;`
+* `as` expands to `align-self: |;`
+* `as:b` expands to `align-self: baseline;`
+* `as:c` expands to `align-self: center;`
+* `as:fe` expands to `align-self: flex-end;`
+* `as:fs` expands to `align-self: flex-start;`
+* `as:s` expands to `align-self: stretch;`
+* `b` expands to `bottom: |;`
+* `bd` expands to `border: |;`
+* `bd:n` expands to `border: none;`
+* `bdb` or `bb` expands to `border-bottom: |;`
+* `bdl` or `bl` expands to `border-left: |;`
+* `bdr` or `br` expands to `border-right: |;`
+* `bdt` or `bt` expands to `border-top: |;`
+* `bg` expands to `background: #000;`
+* `bgc` expands to `background-color: #fff;`
+* `bgc:t` expands to `background-color: transparent;`
+* `c` expands to `color: #000;`
+* `cur:d` expands to `cursor: default;`
+* `cur:p` expands to `cursor: pointer;`
+* `d:n` expands to `display: none;`
+* `d:b` or `d` expands to `display: block;`
+* `d:f` expands to `display: flex;`
 * `d:g` does not give `display: grid`!
-* `d:i` -> `display: inline;`
-* `d:ib` -> `display: inline-block;`
-* `d:li` -> `display: list-item;`
-* `d:n` -> `display: none;`
-* `d:t` -> `display: table;`
-* `fxd` -> `flex-direction: |;`
-* `fxd:c` -> `flex-direction: column;`
-* `fxd:r` -> `flex-direction: row;`
-* `ff` -> `font-family: |;`
-* `ff:m` -> `font-family: monospace;`
-* `ff:s` -> `font-family: serif;`
-* `ff:ss` -> `font-family: sans-serif;`
-* `fs` -> `font-style: |;`
-* `fs:i` -> `font-style: italic;`
-* `fs:n` -> `font-style: normal;`
-* `fw` -> `font-weight: |;`
-* `fw:b` -> `font-weight: bold;`
-* `fw:n` -> `font-weight: normal;`
-* `fz` -> `font-size: |;`
-* `h` -> `height: |;`
-* `jc` -> `justify-content: |;`
-* `jc:c` -> `justify-content: center;`
-* `jc:fe` -> `justify-content: flex-end;`
-* `jc:fs` -> `justify-content: flex-start;`
-* `jc:sa` -> `justify-content: space-around;`
-* `jc:sb` -> `justify-content: space-between;`
-* `l` -> `left: |;`
-* `lh` -> `line-height: |;`
-* `m` -> `margin: |;`
-  - can add a number after this and many CSS snippets to specify a value
-  - ex. `m20` -> `margin: 20px;`
-* `mb` -> `margin-bottom: |;`
-* `ml` -> `margin-left: |;`
-* `mr` -> `margin-right: |;`
-* `mt` -> `margin-top: |;`
-* `o` -> `outline: |;`
-* `p` -> `padding: |;`
-* `pb` -> `padding-bottom: |;`
-* `pl` -> `padding-left: |;`
-* `pr` -> `padding-right: |;`
-* `pt` -> `padding-top: |;`
-* `r` -> `right: |;`
-* `t` -> `top: |;`
-* `ta:c` -> `text-align: center;`
-* `ta:j` -> `text-align: justify;`
-* `ta:r` -> `text-align: right;`
-* `ta:l` or `ta` -> `text-align: left;`
-* `ta:r` -> `text-align: right;`
-* `td:l` -> `text-decoration: line-through;`
-* `td:n` or td -> `text-decoration: none;`
-* `td:u` -> `text-decoration: underline;`
-* `tt:c` -> `text-transform: capitalize;`
-* `tt:l` -> `text-transform: lowercase;`
-* `tt:u` or tt -> `text-transform: uppercase;`
-* `v:h` or v -> `visibility: hidden;`
-* `v:v` -> `visibility: visible;`
-* `va:b` -> `vertical-align: bottom;`
-* `va:m` -> `vertical-align: middle;`
-* `va:t` or va -> `vertical-align: top;`
-* `w` -> `width: |;`
-* `z` -> `z-index`
-* `@media` or `@m` -> `@media screen { | }`
+* `d:i` expands to `display: inline;`
+* `d:ib` expands to `display: inline-block;`
+* `d:li` expands to `display: list-item;`
+* `d:n` expands to `display: none;`
+* `d:t` expands to `display: table;`
+* `fxd` expands to `flex-direction: |;`
+* `fxd:c` expands to `flex-direction: column;`
+* `fxd:r` expands to `flex-direction: row;`
+* `ff` expands to `font-family: |;`
+* `ff:m` expands to `font-family: monospace;`
+* `ff:s` expands to `font-family: serif;`
+* `ff:ss` expands to `font-family: sans-serif;`
+* `fs` expands to `font-style: |;`
+* `fs:i` expands to `font-style: italic;`
+* `fs:n` expands to `font-style: normal;`
+* `fw` expands to `font-weight: |;`
+* `fw:b` expands to `font-weight: bold;`
+* `fw:n` expands to `font-weight: normal;`
+* `fz` expands to `font-size: |;`
+* `h` expands to `height: |;`
+* `jc` expands to `justify-content: |;`
+* `jc:c` expands to `justify-content: center;`
+* `jc:fe` expands to `justify-content: flex-end;`
+* `jc:fs` expands to `justify-content: flex-start;`
+* `jc:sa` expands to `justify-content: space-around;`
+* `jc:sb` expands to `justify-content: space-between;`
+* `l` expands to `left: |;`
+* `lh` expands to `line-height: |;`
+* `m` expands to `margin: |;`
+* `mb` expands to `margin-bottom: |;`
+* `ml` expands to `margin-left: |;`
+* `mr` expands to `margin-right: |;`
+* `mt` expands to `margin-top: |;`
+* `o` expands to `outline: |;`
+* `p` expands to `padding: |;`
+* `pb` expands to `padding-bottom: |;`
+* `pl` expands to `padding-left: |;`
+* `pr` expands to `padding-right: |;`
+* `pt` expands to `padding-top: |;`
+* `r` expands to `right: |;`
+* `t` expands to `top: |;`
+* `ta:c` expands to `text-align: center;`
+* `ta:j` expands to `text-align: justify;`
+* `ta:r` expands to `text-align: right;`
+* `ta:l` or `ta` expands to `text-align: left;`
+* `ta:r` expands to `text-align: right;`
+* `td:l` expands to `text-decoration: line-through;`
+* `td:n` or td expands to `text-decoration: none;`
+* `td:u` expands to `text-decoration: underline;`
+* `tt:c` expands to `text-transform: capitalize;`
+* `tt:l` expands to `text-transform: lowercase;`
+* `tt:u` or tt expands to `text-transform: uppercase;`
+* `v:h` or v expands to `visibility: hidden;`
+* `v:v` expands to `visibility: visible;`
+* `va:b` expands to `vertical-align: bottom;`
+* `va:m` expands to `vertical-align: middle;`
+* `va:t` or va expands to `vertical-align: top;`
+* `w` expands to `width: |;`
+* `z` expands to `z-index`
+* `@media` or `@m` expands to `@media screen { | }`
+
+A number can be added after many CSS snippets
+to specify a value.
+These include snippets for border, font, margin, and padding.
+For example, `m20` expands to `margin: 20px;`.
 
 ## Custom snippets
 
