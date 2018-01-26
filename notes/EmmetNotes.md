@@ -171,7 +171,7 @@ For example, `div.my-class` expands to
 ```
 and `div.c1.c2` expands to
 ```html
-<div class="c1 c2">{content}</div>
+<div class="c1 c2">|</div>
 ```
 
 Element ids are specified with the `#` character.
@@ -200,91 +200,117 @@ For example, `div{my content}` expands to
 <div>my content|</div>
 ```
 
-* multiplication with `*`
-  - repeats pattern n times when *n is added after pattern
-  - ex. `td*3` ->
-    ```html
-    <td>|</td>
-    <td></td>
-    <td></td>
-    ```
-* numbering with `$`
-  - works in conjunction with multiplication
-  - can use for ids, classes, and content
-  - ex. `ul>li.item$*3` ->
-    ```html
-    <ul>
-      <li class="item1">|</li>
-      <li class="item2"></li>
-      <li class="item3"></li>
-    </ul>
-    ```
-  - starts at 1 by default
-  - specify different start with @start and *times
-    * ex. `div{item $@4}*3` ->
-      ```html
-      <div>item 4|</div>
-      <div>item 5</div>
-      <div>item 6</div>
-      ```
-* combining above
-  - ex. `div#my-id.my-class[foo=1 bar=two]{my content}` -><br />
-    `<div id="my-id" class="my-class" foo="1" bar="two">my content|</div>`
-* grouping with `()`
-  - for multiple, complex siblings
-  - ex. `table>(thead>tr>th*3)+(tbody>(tr>td*3)*2)` ->
-    ```html
-    <table>
-      <thead>
-        <tr>
-          <th>|</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-    ```
-* implicit tag names
-  - can sometimes guess desired tag name based on context
-  - ex. `.foo` -> `<div class="foo">|</div>`
-  - ex. `ul>.foo` ->
-    ```html
-    <ul>
-      <li class="foo">|</li>
-    </ul>
-    ```
+Elements in a snippet can be repeated with the `*` character
+followed by a number.  For example, `td*3` expands to
+```html
+<td>|</td>
+<td></td>
+<td></td>
+```
+
+Incrementing numbers can be added in repeated content
+with the `$` character.
+This can use for ids, classes, and content.
+For example, `ul>li.item$*3` expands to
+```html
+<ul>
+  <li class="item1">|</li>
+  <li class="item2"></li>
+  <li class="item3"></li>
+</ul>
+```
+Numbering starts at 1 by default.
+A different starting value can be specified with `@start` and `*times`.
+For example, `div{item $@4}*3` expands to
+```html
+<div>item 4|</div>
+<div>item 5</div>
+<div>item 6</div>
+```
+
+The syntax described above can be combined
+to create more powerful snippets.
+For example, `div#my-id.my-class[foo=1 bar=two]{my content}` expands to
+```html
+<div id="my-id" class="my-class" foo="1" bar="two">my content|</div>
+```
+
+Parts of snippets can be groups using parentheses.
+This is useful for repeating specific sections.
+For example, `table>(thead>tr>th*3)+(tbody>(tr>td*3)*2)` expands to
+```html
+<table>
+  <thead>
+    <tr>
+      <th>|</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+Emmet can sometimes guess desired tag names based on context.
+These are called "implicit tag names".
+For example, `.foo` expands to
+```html
+<div class="foo">|</div>
+```
+and `ul>.foo` expands to
+```html
+<ul>
+  <li class="foo">|</li>
+</ul>
+```
 
 ## Lorem Ipsum text
-* `lorem` or `lipsum` -> 100 words
-* `lorem:n` or `lipsum:n` -> n words
+
+"Lorem Ipsum" is scrambled Latin text that is frequently used
+as a placeholder for text that will be supplied later.
+Emmet can generate this text.
+By default it generates 100 words,
+but the number of desired words can be specified.
+
+The snippet is the word "lorem" or the word "lipsum",
+optionally followed by a number.
+For example, `lorem` and `lipsum` expand to 100 words,
+while `lorem3` and `lipsum3` expand to 3 words.
+The words selected are random, but here is an example:
+```
+Sit debitis aliquam.
+```
 
 ## HTML snippets
-* there are many more, but these seem the most useful
-* `!` - html template
-    ```html
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title></title>
-    </head>
-    <body>
-      |
-    </body>
-    </html>
-    ```
+
+Emmet supports a large number of snippets.
+The ones show below seem the most useful.
+
+`!` expands to a common HTML template.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  |
+</body>
+</html>
+```
+
 * `a` -> `<a href="|"></a>`
 * `a:link` -> `<a href="http://|"></a>`
 * `a:mail` -> `<a href="mailto:|"></a>`
