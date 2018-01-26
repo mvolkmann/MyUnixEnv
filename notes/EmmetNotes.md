@@ -74,7 +74,7 @@ To see the expansion before it is applied,
 press ctrl-space to open the "documentation fly-out"
 to the right of the suggestion.
 
-![VS Code screenshot](https://github.com/mvolkmannMyUnixEnv/notes/Emmet-VSCode.png)
+![VS Code screenshot](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet-VSCode.png?raw=true)
 
 ### Vim emulation in VS Code
 
