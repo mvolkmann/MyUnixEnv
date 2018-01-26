@@ -4,82 +4,138 @@
 
 Emmet is an editor plugin for quickly entering HTML and CSS.
 It is available for many editors including
-Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio Code, and WebStorm
+Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio (VS) Code, and WebStorm
 
-Emmit is not just a simple snippet manager.
+Emmet is not just a simple snippet manager.
 It parses entered text to extract meaning.
 These kinds of snippets are refered to as "dynamic snippets".
+
+We will see many examples later, but here's one.
+The snippet `div#some-id.class1.class2[attr1=one attr2=2]{some content}`
+expands to
+`<div id="some-id" class="class1 class2" attr1="one" attr2="2">some content</div>`.
+Amazing!
+Simpler snippets are also very useful.
+For example, the CSS snippet `mb10` expands to `margin-bottom: 10px;`.
 
 The main web site for Emmit is https://emmet.io/.
 Also see the cheat sheet at https://docs.emmet.io/cheat-sheet/.
 
-## VS Code configuration
-- see https://code.visualstudio.com/docs/editor/emmet
-- Emmet is available by default, but not enabled
-  * needs "emmet.triggerExpansionOnTab" set to true
-- Once enabled, it will be available by default for these type types:
-  css, haml, html, jade, jsx, less, sass, scss,
-  slim, stylus, xml, and xsl
-  * can add more by setting "emmet.includeLanguages"
-- to configure
-  * select Code...Preferences...Settings
-  * enter "Emmet" in the "Search Settings" input at the top
-  * see the available settings and their defaults on the left
-  * change settings in "USER SETTINGS" on the right
-  * to use tab key for trigger, change
-    "emmet.triggerExpansionOnTab" to true
-  * to enable use in React components in .js files
-    change the "emmet.includeLanguages" object
-    to include javascript: 'javascriptreact'
-- after typing an Emmet snippet, press tab to expand it
-  * when using Vim emulation, must be in insert mode
-- the cursor will automatically be moved to an insertion point
-  within the expansion
-  * for snippets with multiple insertion points,
-    press tab to jump to the next one
-    and shift-tab to jump to the previous one
-- suggestions are displayed as snippets are typed
-  * to use the top suggestion before the snippet is fully entered,
-    press tab
-  * to use a different suggestion,
-    use to the arrows keys to navigate to it and press tab
-- to see the expansion before it is applied,
-  press ctrl-space to open the "documentation fly-out"
-  to the right of the suggestion
-- to enable Vim emulation
-  * select View...Extensions
-  * enter vscodevim in the search input
-  * press "Install" button vor vscodevim
-- to configure Vim emulation
-  * select Code...Preferences...Settings
-  * enter "vim" in the "Search Settings" input at the top
-  * see the available settings and their defaults on the left
-  * change settings in "USER SETTINGS" on the right
+## Getting Started
 
-## Vim configuration
-- see https://github.com/mattn/emmet-vim
-- Vim trigger key
-  * always something followed by comma
-  * defaults to `<C-y>` which is ctrl-y
-  * to change to leader key, add following in .vimrc
-    `let g:user_emmet_leader_key='<leader>'`
-    - if leader key is comma then trigger with comma comma
-- by default must be in insert mode at end of snippet
-  when trigger key sequence is pressed
-- for snippets with more than one insertion point
-  press `<emmet-leader>n` to move to next
-  and `<emmet-leader>N` to move to previous
-- to restrict usage to specific file types,
-  add following to .vimrc
-  ```
-  let g:user_emmet_install_global = 0 " don't enable for all file types
-  autocmd FileType html,css,scss EmmetInstall " specifies file types
-  ```
-- to use with React and JSX
-  ```
-  let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
-  autocmd FileType html,css,javascript.jsx,scss EmmetInstall
-  ```
+You will need to configure Emmet within your editor/IDE of choice.
+Instructions for specific ones can be found at https://emmet.io/download/.
+Click the box for your editor to see the details.
+
+Rather than walk through the steps for every editor,
+this article covers just two.
+Currently VS Code seems to be the most popular editor, so that is covered.
+I use Vim, so that is also covered.
+
+## VS Code
+
+Details on configuring Emmet for VS Code can be found at
+https://code.visualstudio.com/docs/editor/emmet.
+VS Code includes Emmet by default, but it is not enabled.
+Once Emmet is enabled, it will be available by default for these type types:
+css, haml, html, jade, jsx, less, sass, scss, slim, stylus, xml, and xsl.
+More file types can be added.
+
+### Configuring Emmet in VS Code
+
+* Select Code...Preferences...Settings.
+* Enter "Emmet" in the "Search Settings" input at the top.
+* Note the available settings and their defaults on the left.
+* Change settings in "USER SETTINGS" on the right.
+* To use tab key for trigger, change
+  "emmet.triggerExpansionOnTab" to true.
+* To enable use in React components in `.js` files
+  change the "emmet.includeLanguages" object
+  to include `javascript: 'javascriptreact'`
+
+### Using Emmet in VS Code
+
+After typing an Emmet snippet, press tab to expand it.
+When using Vim emulation, you must be in insert mode
+when the tab key is pressed.
+
+Tthe cursor will automatically be moved to an insertion point
+within the expansion.
+For snippets with multiple insertion points,
+press tab again to jump to the next one
+and shift-tab to jump to the previous one.
+
+Suggestions are displayed as snippets are typed.
+To use the top suggestion before the snippet is fully entered,
+press tab.
+To use a different suggestion, use to the up and down arrows keys
+to navigate to it and press tab.
+To see the expansion before it is applied,
+press ctrl-space to open the "documentation fly-out"
+to the right of the suggestion.
+
+TODO: INCLUDE SOME SCREENSHOTS!
+
+### Vim emulation in VS Code
+
+In case you are interested in enabling Vim emulation in VS Code,
+here are the steps.
+* Select View...Extensions.
+* Enter "vscodevim" in the search input.
+* Press the "Install" button for the vscodevim extension.
+
+To configure Vim emulation
+* Select Code...Preferences...Settings.
+* Enter "vim" in the "Search Settings" input at the top.
+* See the available settings and their defaults on the left.
+* Change settings in "USER SETTINGS" on the right.
+
+## Vim
+
+Details on configuring Emmet for Vim can be found at
+https://github.com/mattn/emmet-vim.
+This is accomplished by modifying your `.vimrc` file.
+
+By default the key that triggers Emmet expansions
+is ctrl-y followed by a comma.
+
+It is common in Vim to use a "leader key" for many
+keyboard shortcuts and the comma keys is popular choice.
+To configure the leader key to be comma,
+add the following to your .vimrc file.
+```
+let mapleader = ','
+```
+
+Emmet has its own leader key.
+To set it to be the same as the Vim leader key,
+add the following to your .vimrc file.
+```
+let g:user_emmet_leader_key='<leader>'
+```
+
+Once these changes are made, Emmet expansions can be triggered
+by entering a snippet and pressing the comma key twice
+while still in insert mode.
+
+For snippets with more than one insertion point
+press `<emmet-leader>n` to move to next
+and `<emmet-leader>N` to move to previous
+
+By default Emmet snippets can be expanded in all file types.
+To restrict usage to specific file types,
+add the following to your .vimrc file.
+```
+let g:user_emmet_install_global = 0 " don't enable for all file types
+autocmd FileType html,css,scss EmmetInstall " specifies file types
+```
+
+To use Emmet in .js or .jsx files that define React components,
+add the following to your .vimrc file.
+```
+let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
+autocmd FileType html,css,javascript.jsx,scss EmmetInstall
+```
 
 ## Syntax for HTML snippets
 * mostly like CSS selector syntax with no spaces
