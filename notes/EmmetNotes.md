@@ -294,7 +294,7 @@ Sit debitis aliquam.
 
 ## HTML snippets
 
-Emmet supports a large number of snippets.
+Emmet supports a large number of HTML snippets.
 The ones show below seem the most useful.
 
 `!` expands to a common HTML template.
@@ -327,17 +327,20 @@ The ones show below seem the most useful.
 * `link` -> `<link rel="stylesheet" href="|">`
 * `link:favicon` ->
   `<link rel="shortcut icon" type="image/x-icon" href="|favicon.ico">`
-* `ol+` - abbreviation for ol>li
+  * `ol+` - abbreviation for the snippet `ol>li`
 * `opt` or `option` -> `<option value="|"></option>`
-* `select+` - abbreviation for select>option
+* `select+` - abbreviation for the snippet `select>option`
 * `script:src` -> `<script src="|"></script>`
-* `table+` - abbreviation for table>tr>td
+* `table+` - abbreviation for the snippet `table>tr>td`
 * `tarea` or `textarea` -> `<textarea id="|" name="" cols="30" rows="10"></textarea>`
-* `tr+` - abbreviation for tr>td
-* `ul+` - abbreviation for ul>li
+* `tr+` - abbreviation for the snippet `tr>td`
+* `ul+` - abbreviation for the snippet `ul>li`
 
 ## CSS snippets
-* there are many more, but these seem the most useful
+
+Emmet supports a large number of CSS snippets.
+The ones show below seem the most useful.
+
 * `ac` -> `align-content: |;`
 * `ac:c` -> `align-content: center;`
 * `ac:fe` -> `align-content: flex-end;`
@@ -438,4 +441,13 @@ The ones show below seem the most useful.
 * `@media` or `@m` -> `@media screen { | }`
 
 ## Custom snippets
-* see https://docs.emmet.io/customization/
+
+Many Emmet plugins support user-defined custom snippets.
+For more information about these,
+see https://docs.emmet.io/customization/.
+
+## Summary
+
+Emmet can web developers a lot of time.
+Once you learn the basic syntax, it's easy to use.
+Give it a try in your favorite editor!
