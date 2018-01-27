@@ -179,6 +179,9 @@ However the same result can be achieved using parentheses instead of `^`.
 The equivalent snippet is `table>(tr>th+th)+(tr>td+td)`.
 Perhaps this is easier to understand.
 
+Multiple `^` characters can be used to climb up multiple levels, but
+that results in snippets that are difficult to understand at a glance.
+
 CSS class names are specified with the `.` character.
 For example, `div.my-class` expands to
 ```html
