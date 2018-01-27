@@ -160,9 +160,24 @@ For example, `foo+bar+baz` expands to
 <baz></baz>
 ```
 
-Climb up with the element hierarchy within a snippet with the `^` character.
-This adds to the parent element of the last element that was generated.
-This doesn't seem very common or useful.
+Climb up the element hierarchy within a snippet using the `^` character.
+This adds a sibling to the parent of the last element that was generated.
+For example, `table>tr>th+th^tr>td+td` expands to
+```html
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+```
+However the same result can be achieved using parentheses instead of `^`.
+The equivalent snippet is `table>(tr>th+th)+(tr>td+td)`.
+Perhaps this is easier to understand.
 
 CSS class names are specified with the `.` character.
 For example, `div.my-class` expands to
