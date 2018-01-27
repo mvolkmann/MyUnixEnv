@@ -179,6 +179,8 @@ However the same result can be achieved using parentheses instead of `^`.
 The equivalent snippet is<br />
 `table>(tr>th+th)+(tr>td+td)`.
 Perhaps this is easier to understand.
+Even easier would be to enter this as multiple snippets
+rather than trying to reason about how to use just one.
 
 Multiple `^` characters can be used to climb up multiple levels, but
 that results in snippets that are difficult to understand at a glance.
