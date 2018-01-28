@@ -501,19 +501,19 @@ but none of these are configured by default.
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
-| expand abbreviation | the primary action | enter or tab | ctrl-y comma |
+| expand abbreviation | the primary action | enter or tab | <emmet-leader> comma in insert mode |
+| go to next edit point | jumps to next edit point | cmd-opt-right arrow | <emmet-leader> n |
+| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | <emmet-leader> N |
+| wrap with abbreviation | wraps selected text in a snippet for which you will prompted | select lines and cmd-A | <emmet-leader> , in visual mode |
+| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | <emmet-leader> d |
+| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | <emmet-leader> D, but doesn't work |
+| remove tag | deletes tag under cursor, but not its contents | cmd-k | <emmet-leader> k (incorrectly also deletes contents) |
+| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | <emmet-leader> / (in normal or insert mode) |
+| merge lines | merges selected lines into one line | cmd-M | <emmet-leader> m |
+| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | <emmet-leader> j |
 | go to matching pair | jumps between a start and end tag | cmd-T | not supported |
-| wrap with abbreviation | wraps selected text with a tag for which you will prompted | select lines and cmd-A | not supported |
-| go to next edit point | jumps to next edit point | cmd-opt-right arrow | ctrl-y n |
-| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | ctrl-y N |
-| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | ctrl-y / (in normal or insert mode) |
 | select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not suported |
 | select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not suported |
-| remove tag | deletes tag under cursor, but not its contents | cmd-k | ctrl-y k (incorrectly also deletes contents) |
-| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | ctrl-y j |
-| merge lines | merges selected lines onto one line | cmd-M | ctrl-y m |
-| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | ctrl-y D |
-| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | ctrl-y d |
 | increment number by 1 | adds to number under cursor | ctrl-up arrow | not supported |
 | decrement number by 1| subtracts from number under cursor | ctrl-down arrow | not supported |
 | increment number by 10 | adds to number under cursor | ctrl-shift-up arrow | not supported |
@@ -528,7 +528,7 @@ but none of these are configured by default.
 | evaluate math expression | replaces the math expression under cursor with result | cmd-Y | not supported |
 | encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
 | reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
-| update image size | adds width and height attributes to the img tag under cursor | cmd-U | doesn't work |
+| update image size | adds width and height attributes to the img tag under cursor | cmd-U | <emmet-leader> i, but doesn't work |
 
 ### Non-standard Actions
 
@@ -538,7 +538,7 @@ but are implemented by either VS Code or vim-emmet.
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
 | update tag | changes tag under cursor; will prompt for new tag | cmd-c | not supported |
-| anchorize URL | changes URL under cursor to an anchor tag using that URL | not supported | ctry-y a |
+| anchorize URL | changes URL under cursor to an anchor tag using that URL; must start with http:// or https:// | not supported | ctry-y a in insert mode |
 
 ### "split/join tag" example
 
