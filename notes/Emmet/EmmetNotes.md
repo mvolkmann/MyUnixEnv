@@ -71,7 +71,7 @@ The expansion for the highlighted Emmet suggestion is displayed
 in a "documentation fly-out" to the right of the suggestion
 so you know what will be inserted before selected it.
 
-![VS Code screenshot](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet-VSCode.png?raw=true)
+![VS Code screenshot](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet/Emmet-VSCode.png?raw=true)
 
 The cursor will automatically be moved to
 an insertion point within the expansion.
@@ -470,25 +470,39 @@ For example, `m20` expands to `margin: 20px;`.
 
 ## Actions
 
-The table below describes the actions defined by Emmet
-and the keys to trigger them in VS Code and Vim.
+The tables below describe Emmet actions and
+the keys to trigger them in VS Code and Vim.
 For Windows and Linux, substitute "ctrl" wherever you see "cmd".
 
 In VS Code all Emmet actions can be selected from the "Command Pallete"
-which is opened by pressing ctrl-P (Windows and Linux) or cmd-P (Mac).
-None of these commands have a default keybinding.  To add keybindings, open
-Preferences...Keyboard Shortcuts from the "File" menu in Windows or Linux
-or the "Code" menu in macOS.  Enter "Emmet" in the search input at the top.
+which is opened by pressing cmd-P.
+None of these commands have a default keybinding.
+
+![VS Code Command Palette](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet/VSCodeCommandPalette.png?raw=true)
+
+To add keybindings in VS Code, open Preferences...Keyboard Shortcuts
+from the "File" menu in Windows or Linux or the "Code" menu in macOS.
+Enter "Emmet" in the search input at the top to
+filter the commands to just those supplied by Emmet.
 Select a command and press the "+" that appears to its left.
 Finally, type the shortcut key sequence to be associated with the command and press enter.
-In the table below, the "VS Code Key" column shows suggested shortcut keys,
+
+![VS Code Keyboard Shortcuts](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet/VSCodeKeyboardShortcuts.png?raw=true)
+
+VS Code allows keybindings to be added to commands
+even if the keybinding is already assigned to another command.
+To determine if a keybinding that have been assigned to multiple commands,
+right-click any command that uses it and select "Show Conflicts".
+
+In the tables below, the "VS Code Key" column shows suggested shortcut keys,
 but none of these are configured by default.
+
+### Commonly Used Actions
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
 | expand abbreviation | the primary action | enter or tab | ctrl-y , |
 | go to matching pair | jumps between a start and end tag | cmd-T | not supported |
-| update tag (non-standard) | changes tag under cursor; will prompt for new tag | cmd-c | not supported |
 | wrap with abbreviation | wraps selected text with a tag for which you will prompted | select lines and cmd-A | ? |
 | go to next edit point | jumps to next edit point | cmd-opt-right arrow | ctrl-y n |
 | go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | ctrl-y N |
@@ -498,17 +512,33 @@ but none of these are configured by default.
 | remove tag | deletes tag under cursor, but not its contents | cmd-k | ctrl-y k (incorrectly also deletes contents) |
 | split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | ctrl-y j |
 | merge lines | merges selected lines onto one line | cmd-M | ctrl-y m |
+| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | ctrl-y D |
+| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | ctrl-y d |
 | increment number by 1 | adds to number under cursor | ctrl-up arrow | not supported |
 | decrement number by 1| subtracts from number under cursor | ctrl-down arrow | not supported |
-| increment number by 10 | adds number under cursor | ctrl-shift-up arrow | not supported |
+| increment number by 10 | adds to number under cursor | ctrl-shift-up arrow | not supported |
 | decrement number by 10 | subtracts from number under cursor | ctrl-shift-down arrow | not supported |
+| increment number by .1 | adds to number under cursor | ctrl-opt-up arrow | not supported |
+| decrement number by .1 | subtracts from number under cursor | ctrl-opt-down arrow | not supported |
+
+### Less Commonly Used Actions
+
+| Action | Description | VS Code Key | Vim Key |
+| ------ | ----------- | ----------- | ------- |
 | evaluate math expression | replaces the math expression under cursor with result | cmd-Y | not supported |
-| update image size | adds width and height attributes to the img tag under cursor | cmd-U | doesn't work |
-| anchorize URL (non-standard?) | changes URL under cursor to an anchor tag using that URL | ? | ctry-y a |
-| balance tag outward (non-standard?) | selects all of element under cursor; repeat to expand outward | cmd-d | ctrl-y D |
-| balance tag inward (non-standard?) | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | ctrl-y d |
-| reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
 | encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
+| reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
+| update image size | adds width and height attributes to the img tag under cursor | cmd-U | doesn't work |
+
+### Non-standard Actions
+
+These are actions that are not described at https://emmet.io,
+but are implemented by either VS Code or vim-emmet.
+
+| Action | Description | VS Code Key | Vim Key |
+| ------ | ----------- | ----------- | ------- |
+| update tag | changes tag under cursor; will prompt for new tag | cmd-c | not supported |
+| anchorize URL | changes URL under cursor to an anchor tag using that URL | not supported | ctry-y a |
 
 ### "split/join tag" example
 
