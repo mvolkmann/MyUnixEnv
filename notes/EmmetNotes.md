@@ -4,12 +4,15 @@
 
 Emmet is an editor plugin for quickly entering HTML, XML, and CSS.
 It also supports many "actions" that operate on HTML and XML elements.
+The most commonly used action is to expand an abbreviation or snippet.
+
 Emmet was created by Sergey Chikuyonok.
 The original name was "Zen Coding".
-It is available for many editors including
+
+Emmet is available for many editors including
 Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio (VS) Code, and WebStorm.
-However, some implementations do not support all the snippets and actions
-defined by Emmet.
+However, some implementations do not support
+all the defined snippets and actions.
 
 Emmet is not just a simple snippet manager.
 It parses entered text to extract meaning.
