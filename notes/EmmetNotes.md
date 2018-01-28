@@ -480,7 +480,7 @@ None of these commands have a default keybinding.  To add keybindings, open
 Preferences...Keyboard Shortcuts from the "File" menu in Windows or Linux
 or the "Code" menu in macOS.  Enter "Emmet" in the search input at the top.
 Select a command and press the "+" that appears to its left.
-Finally, type the shortcut key sequence to be associated with the command.
+Finally, type the shortcut key sequence to be associated with the command and press enter.
 In the table below, the "VS Code Key" column shows suggested shortcut keys,
 but none of these are configured by default.
 
@@ -505,6 +505,7 @@ but none of these are configured by default.
 | decrement number by 10 | subtracts from number under cursor | ctrl-shift-down arrow | not supported |
 | reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
 | encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
+| update tag (non-standard) | changes tag under cursor; will prompt for new tag | cmd-C | not supported |
 | anchorize URL (non-standard?) | changes URL under cursor to an anchor tag using that URL | ? | ctry-y a |
 | balance tag outward (non-standard?) | selects all of element under cursor; repeat to expand outward | cmd-d | ctrl-y D |
 | balance tag inward (non-standard?) | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | ctrl-y d |
