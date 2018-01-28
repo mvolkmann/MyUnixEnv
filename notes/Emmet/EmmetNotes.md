@@ -532,7 +532,7 @@ but none of these are configured by default.
 
 ### Non-standard Actions
 
-These are actions that are not described at https://emmet.io,
+These are actions that are not described at https://docs.emmet.io,
 but are implemented by either VS Code or vim-emmet.
 
 | Action | Description | VS Code Key | Vim Key |
