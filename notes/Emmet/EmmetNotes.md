@@ -508,12 +508,12 @@ but none of these are configured by default.
 | balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | &lt;emmet-leader> d |
 | balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | &lt;emmet-leader> D, but doesn't work |
 | remove tag | deletes tag under cursor, but not its contents | cmd-k | &lt;emmet-leader> k (incorrectly also deletes contents) |
-| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | &lt;emmet-leader> / (in normal or insert mode) |
+| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | &lt;emmet-leader> / |
 | merge lines | merges selected lines into one line | cmd-M | &lt;emmet-leader> m |
 | split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | &lt;emmet-leader> j |
 | go to matching pair | jumps between a start and end tag | cmd-T | not supported |
-| select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not suported |
-| select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not suported |
+| select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not supported |
+| select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not supported |
 | increment number by 1 | adds to number under cursor | ctrl-up arrow | not supported |
 | decrement number by 1| subtracts from number under cursor | ctrl-down arrow | not supported |
 | increment number by 10 | adds to number under cursor | ctrl-shift-up arrow | not supported |
