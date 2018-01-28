@@ -51,7 +51,7 @@ More file types can be added.
 
 ### Configuring Emmet in VS Code
 
-* Open Preferences...Settings from the "File" menu in Windows or Linux
+* Open Preferences...Settings from the "File" menu in Windows and Linux,
   or the "Code" menu in macOS.
 * Enter "Emmet" in the "Search Settings" input at the top.
 * Note the available settings and their defaults on the left.
@@ -481,7 +481,7 @@ None of these commands have a default keybinding.
 ![VS Code Command Palette](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet/VSCodeCommandPalette.png?raw=true)
 
 To add keybindings in VS Code, open Preferences...Keyboard Shortcuts
-from the "File" menu in Windows or Linux or the "Code" menu in macOS.
+from the "File" menu in Windows and Linux, or the "Code" menu in macOS.
 Enter "Emmet" in the search input at the top to
 filter the commands to just those supplied by Emmet.
 Select a command and press the "+" that appears to its left.
@@ -491,7 +491,7 @@ Finally, type the shortcut key sequence to be associated with the command and pr
 
 VS Code allows keybindings to be added to commands
 even if the keybinding is already assigned to another command.
-To determine if a keybinding that have been assigned to multiple commands,
+To determine if a keybinding has been assigned to multiple commands,
 right-click any command that uses it and select "Show Conflicts".
 
 In the tables below, the "VS Code Key" column shows suggested shortcut keys,
@@ -501,12 +501,12 @@ but none of these are configured by default.
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
-| expand abbreviation | the primary action | enter or tab | ctrl-y , |
+| expand abbreviation | the primary action | enter or tab | ctrl-y comma |
 | go to matching pair | jumps between a start and end tag | cmd-T | not supported |
-| wrap with abbreviation | wraps selected text with a tag for which you will prompted | select lines and cmd-A | ? |
+| wrap with abbreviation | wraps selected text with a tag for which you will prompted | select lines and cmd-A | not supported |
 | go to next edit point | jumps to next edit point | cmd-opt-right arrow | ctrl-y n |
 | go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | ctrl-y N |
-| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | ctrl-y / in normal or insert mode |
+| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | ctrl-y / (in normal or insert mode) |
 | select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not suported |
 | select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not suported |
 | remove tag | deletes tag under cursor, but not its contents | cmd-k | ctrl-y k (incorrectly also deletes contents) |
