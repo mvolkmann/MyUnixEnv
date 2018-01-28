@@ -104,24 +104,19 @@ Vim plugin managers can be found there,
 as are configuration details.
 Configuration is accomplished by modifying your `.vimrc` file.
 
-By default the key sequence that triggers Emmet expansions
-is ctrl-y followed by a comma.
+All keyboard shortcuts for Emmet commands begin with <emmet-leader>.
+By default this is ctrl-y.
+The most commonly used keyboard shortcut expands a snippet.
+The key sequence that triggers this is <emmet-leader> followed by a comma.
 
-It is common in Vim to use a "leader key" for many
-keyboard shortcuts and the comma keys is popular choice.
-To configure the leader key to be comma, add the following.
+To change the value of <emmet-leader>, set the variable g:user_emmet_leader_key.
+For example, to change it to the space key, add the following:
 ```
-let mapleader = ','
-```
-
-Emmet has its own leader key referred to as <emmet-leader>.
-To set it to be the same as the Vim leader key, add the following.
-```
-let g:user_emmet_leader_key='<leader>'
+let g:user_emmet_leader_key='<space>'
 ```
 
 Once these changes are made, Emmet expansions can be triggered
-by entering a snippet and pressing the comma key twice
+by entering a snippet and pressing space followed by a comma
 while still in insert mode.
 
 For snippets with more than one insertion point
