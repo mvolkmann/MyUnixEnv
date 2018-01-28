@@ -51,38 +51,33 @@ More file types can be added.
 
 ### Configuring Emmet in VS Code
 
-* Select Code...Preferences...Settings.
+* Open Preferences...Settings from the "File" menu in Windows or Linux
+  or the "Code" menu in macOS.
 * Enter "Emmet" in the "Search Settings" input at the top.
 * Note the available settings and their defaults on the left.
 * Change settings in "USER SETTINGS" on the right.
-* To use tab key for trigger, change
-  "emmet.triggerExpansionOnTab" to true.
 * To enable use in React components in `.js` files
   change the "emmet.includeLanguages" object
   to include `javascript: 'javascriptreact'`
 
 ### Using Emmet in VS Code
 
-After typing an Emmet snippet, press tab to expand it.
-When using Vim emulation, you must be in insert mode
-when the tab key is pressed.
-
-Tthe cursor will automatically be moved to an insertion point
-within the expansion.
-For snippets with multiple insertion points,
-press tab again to jump to the next one
-and shift-tab to jump to the previous one.
-
-Suggestions are displayed as snippets are typed.
+Suggestions are displayed as snippets are typed along with non-Emmet suggestions.
 To use the top suggestion before the snippet is fully entered,
-press tab.
+press enter or tab.
 To use a different suggestion, use to the up and down arrows keys
-to navigate to it and press tab.
-To see the expansion before it is applied,
-press ctrl-space to open the "documentation fly-out"
-to the right of the suggestion.
+to navigate to it and press enter or tab.
+The expansion for the highlighted Emmet suggestion is displayed
+in a "documentation fly-out" to the right of the suggestion
+so you know what will be inserted before selected it.
 
 ![VS Code screenshot](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet-VSCode.png?raw=true)
+
+The cursor will automatically be moved to
+an insertion point within the expansion.
+For snippets with multiple insertion points,
+after entering a value at one
+press tab to jump to the next one.
 
 ### Vim emulation in VS Code
 
@@ -477,30 +472,42 @@ For example, `m20` expands to `margin: 20px;`.
 
 The table below describes the actions defined by Emmet
 and the keys to trigger them in VS Code and Vim.
+For Windows and Linux, substitute "ctrl" wherever you see "cmd".
+
+In VS Code all Emmet actions can be selected from the "Command Pallete"
+which is opened by pressing ctrl-P (Windows and Linux) or cmd-P (Mac).
+None of these commands have a default keybinding.  To add keybindings, open
+Preferences...Keyboard Shortcuts from the "File" menu in Windows or Linux
+or the "Code" menu in macOS.  Enter "Emmet" in the search input at the top.
+Select a command and press the "+" that appears to its left.
+Finally, type the shortcut key sequence to be associated with the command.
+In the table below, the "VS Code Key" column shows suggested shortcut keys,
+but none of these are configured by default.
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
-| expand abbreviation | the primary action | tab | ctrl-y , |
-| go to matching pair | jumps between a start and end tag | | not supported |
-| wrap with abbreviation | wraps selected text with a tag for which you will prompted | |
-| go to next edit point | jumps to next edit point | ? | ctrl-y n |
-| go to previous edit point | jumps to next edit point | ? | ctrl-y N |
-| select next item | moves to next syntax item and selects it | | not suported |
-| select previous item | moves to previous syntax item and selects it | | not suported |
-| toggle comment | toggles whether the tag under the cursor is commented out | | ctrl-y / in normal or insert mode |
-| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | | ctrl-y j |
-| remove tag | deletes tag under cursor, but not its contents | ? | ctrl-y k (incorrectly also deletes contents) |
-| merge lines | merges selected lines onto one line | ? | ctrl-y m |
-| update image size | addes width and height attributes to the img tag under cursor | ? | doesn't work |
-| evaluate math expression | replaces the math expression under cursor with result | ? | not supported |
-| increment number | adds one to number under cursor | ? | not supported |
-| decrement number | subtracts one from number under cursor | ? | not supported |
-| reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | | not supported |
-| enclude image to data:URL | changes CSS url function value from a file path to a data: URL | | not supported |
-| decode image from data:URL | changes CSS url function value from a data: URL to a file path | | not supported |
+| expand abbreviation | the primary action | enter or tab | ctrl-y , |
+| go to matching pair | jumps between a start and end tag | cmd-T | not supported |
+| wrap with abbreviation | wraps selected text with a tag for which you will prompted | select lines and cmd-A | ? |
+| go to next edit point | jumps to next edit point | cmd-opt-right arrow | ctrl-y n |
+| go to previous edit point | jumps to next edit point | cmd-opt-left arrow | ctrl-y N |
+| select next item | moves to next syntax item and selects it | cmd-> | not suported |
+| select previous item | moves to previous syntax item and selects it | cmd-< | not suported |
+| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | ctrl-y / in normal or insert mode |
+| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | ctrl-y j |
+| remove tag | deletes tag under cursor, but not its contents | cmd-k | ctrl-y k (incorrectly also deletes contents) |
+| merge lines | merges selected lines onto one line | cmd-M | ctrl-y m |
+| update image size | addes width and height attributes to the img tag under cursor | cmd-U | doesn't work |
+| evaluate math expression | replaces the math expression under cursor with result | cmd-Y | not supported |
+| increment number by 1 | adds to number under cursor | ctrl-up arrow | not supported |
+| decrement number by 1| subtracts from number under cursor | ctrl-down arrow | not supported |
+| increment number by 10 | adds number under cursor | ctrl-shift-up arrow | not supported |
+| decrement number by 10 | subtracts from number under cursor | ctrl-shift-down arrow | not supported |
+| reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
+| encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
 | anchorize URL (non-standard?) | changes URL under cursor to an anchor tag using that URL | ? | ctry-y a |
-| balance tag outward (non-standard?) | selects all of element under cursor; repeat to expand outward | | ctrl-y D |
-| balance tag inward (non-standard?) | selects all of element under cursor, but one level less than current selection; repeat to expand inward | | ctrl-y d |
+| balance tag outward (non-standard?) | selects all of element under cursor; repeat to expand outward | cmd-d | ctrl-y D |
+| balance tag inward (non-standard?) | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | ctrl-y d |
 
 
 ### "split/join tag" example
