@@ -2,9 +2,14 @@
 
 ## Overview
 
-Emmet is an editor plugin for quickly entering HTML and CSS.
+Emmet is an editor plugin for quickly entering HTML, XML, and CSS.
+It also supports many "actions" that operate on HTML and XML elements.
+Emmet was created by Sergey Chikuyonok.
+The original name was "Zen Coding".
 It is available for many editors including
-Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio (VS) Code, and WebStorm
+Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio (VS) Code, and WebStorm.
+However, some implementations do not support all the snippets and actions
+defined by Emmet.
 
 Emmet is not just a simple snippet manager.
 It parses entered text to extract meaning.
@@ -92,9 +97,12 @@ To configure Vim emulation
 
 ## Vim
 
-Details on configuring Emmet for Vim can be found at
+The Emmet plugin for Vim is available at
 https://github.com/mattn/emmet-vim.
-This is accomplished by modifying your `.vimrc` file.
+Instructions for installing it using a variety of
+Vim plugin managers can be found there,
+as are configuration details.
+Configuration is accomplished by modifying your `.vimrc` file.
 
 By default the key sequence that triggers Emmet expansions
 is ctrl-y followed by a comma.
@@ -466,6 +474,58 @@ A number can be added after many CSS snippets
 to specify a value.
 These include snippets for border, font, margin, and padding.
 For example, `m20` expands to `margin: 20px;`.
+
+## Actions
+
+The table below describes the actions defined by Emmet
+and the keys to trigger them in VS Code and Vim.
+
+To toggle the tag under the cursor between being
+uncommented and commented, press `<emmet-leader`/
+while in normal or insert mode.
+
+To merge all the tags selected in visual mode
+to a single line, press `<emmet-leader>m`.
+
+To turn a URL under the cursor into an anchor tag
+that uses the URL for its href attribute,
+press `<emmet-leader>a`.
+
+To delete the tag under the cursor and everything inside it,
+press `<emmet-leader>k` (for kill).
+
+To delete the content of the tag under the cursor
+and change it to be terminated in the shorthand way,
+press `<emmet-leader>j`.  For example, with the cursor over
+the start tag of the element `foo` this would change
+`<foo><bar>baz</bar></foo>` to `<foo />`.
+
+To select the entire element under the cursor
+when the cursor is over the start tag, end tag, or content,
+press `<emmet-leader>d` (for kill).
+Press repeatedly to expand outward.
+
+
+| Action | Description | VS Code Key | Vim Key |
+| ------ | ----------- | ----------- | ------- |
+| expand abbreviation | the primary action | tab | ctrl-y , |
+| go to matching pair | jumps between a start and end tag | | |
+| wrap with abbreviation | wraps selected text with a tag for which you will prompted | |
+| go to next edit point | jumps to next edit point | ? | ctrl-y n |
+| go to previous edit point | jumps to next edit point | ? | ctrl-y N |
+| select next item | | | |
+| select previous item | | | |
+| toggle comment | toggles whether the tag under the cursor is commented out | | ctrl-y / in normal or insert mode |
+| split/join tag | toggles tag under cursor from having a closing tag to closing in the shorthand way | | |
+| remove tag | deletes tag under cursor, but not its contents | ? | ctrl-y k (incorrectly also deletes contents) |
+| merge lines | merges selected lines onto one line | ? | ctrl-y m |
+| update image size | addes width and height attributes to the img tag under cursor | ? | doesn't work |
+| evaluate math expression | replaces the math expression under cursor with result | ? | not supported |
+| increment number | adds one to number under cursor | ? | not supported |
+| decrement number | subtracts one from number under cursor | ? | not supported |
+| reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | | not supported |
+| enclude image to data:URL | changes CSS url function value from a file path to a data: URL | | not supported |
+| decode image from data:URL | changes CSS url function value from a data: URL to a file path | | not supported |
 
 ## Custom snippets
 
