@@ -39,13 +39,15 @@ Rather than walk through the steps for every editor,
 this article covers just two.
 Currently VS Code seems to be the most popular editor, so that is covered.
 I use Vim, so that is also covered.
+To install Emmet in Atom, see https://atom.io/packages/emmet.
+To install Emmet in Sublime,
+see http://resource-guru.com/resources/install-emmet-in-sublime/.
 
 ## VS Code
 
 Details on configuring Emmet for VS Code can be found at
 https://code.visualstudio.com/docs/editor/emmet.
-VS Code includes Emmet by default, but it is not enabled.
-Once Emmet is enabled, it will be available by default for these type types:
+VS Code includes Emmet by default, enabled for these file types:
 css, haml, html, jade, jsx, less, sass, scss, slim, stylus, xml, and xsl.
 More file types can be added.
 
