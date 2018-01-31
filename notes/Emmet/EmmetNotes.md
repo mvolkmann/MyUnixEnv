@@ -41,7 +41,7 @@ Currently VS Code seems to be the most popular editor, so that is covered.
 I use Vim, so that is also covered.
 To install Emmet in Atom, see https://atom.io/packages/emmet.
 To install Emmet in Sublime,
-see http://resource-guru.com/resources/install-emmet-in-sublime/.
+see https://github.com/sergeche/emmet-sublime#readme.
 
 ## VS Code
 
