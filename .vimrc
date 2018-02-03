@@ -312,9 +312,7 @@ map <leader>w <plug>(easymotion-bd-w)
 "let g:user_emmet_install_global = 0 " don't enable for all file types
 "autocmd FileType html,css EmmetInstall " specify file types
 " Default trigger key is ctrl-y followed by comma.
-" Change to be leader followed by comma, so comma comma.
-"let g:user_emmet_leader_key='<leader>'
-"let g:user_emmet_leader_key='<space>'
+let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,javascript.jsx,scss EmmetInstall

@@ -1255,6 +1255,7 @@ Status Line
   * consider using vim-airline
 
 Surround plugin
+- https://github.com/tpope/vim-surround
 - operates on the things (delimiters) that surround text,
   not on the text inside them
 - adds, deletes, and changes surroundings (delimeters)
