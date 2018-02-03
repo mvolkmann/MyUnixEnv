@@ -1,5 +1,9 @@
 # Vim Reminders
 
+## matchit macro
+- press % to jump to corresponding delimiter
+- works with HTML/XML tags also when enabled
+
 ## splitjoin.vim
 * `gJ` to join a multi-line statement to one line
 * `gS` to split a single-line statement to multiple lines
