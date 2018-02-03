@@ -28,11 +28,11 @@
 * `S{delimiter}` surrounds selected text with the delimiter
   - left delimiter includes space inside, right does not
   - ex. `S(` on foo gives ( foo ) and `S)` gives (foo)
-* `S<tag-name surrounds select text with an HTML/XML tag
+* `S<tag-name` surrounds select text with an HTML/XML tag
   - ex. `S<div` or `S<div>` on foo gives <div>foo</div>
   - can type attributes in tag
-* `cs{current}{new}` changes the delimiter around the cursor position
-  - ex. to change double quotes around cursor with single, cs"'
+* `cs{current}{new}` changes the delimiter around cursor position
+  - ex. to change double quotes around cursor to single, cs"'
 * `cst{new-tag}` changes tag surrounding cursor position
 * `ds{delimiter}` deletes delimiter surround cursor position
   - ex. `ds"` changes "foo" to foo
