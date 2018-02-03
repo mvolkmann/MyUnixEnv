@@ -467,6 +467,10 @@ Echo
 - :echoe[rr] expr ...
   * same as echomsg, but rendered as an error message
 
+Emmet
+- HTML and CSS dynamic snippets
+- see Emmeet/EmmetNotes.md
+
 Filtering Lines
 - to pass a range of lines to a shell command,
   select the lines using V, type ! and then a shell command
