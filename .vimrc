@@ -50,6 +50,8 @@ set term=screen-256color
 set updatetime=750
 set wildmode=list:longest,full " gives tab completion lists in ex command area
 
+runtime macros/matchit.vim
+
 " Don't need this since it is specified in status line config.
 "set ruler " show line and column number of cursor position
 

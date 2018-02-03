@@ -723,6 +723,14 @@ Marks
   * all, :delm[arks]!
   * specific, :delm[arks] {marks}
 
+Matchit
+- a Vim macro that enables jumping between start and end HTML/XML tags
+  by extending the functionality of the % key
+- press the % key when the cursor is on tag
+  to jump to the corresponding tag
+- to enable, add this to .vimrc
+  runtime macros/matchit.vim
+
 Message History
 - :mes[sages] to see content of message history
 - will see "Press ENTER or type command to continue" at bottom
@@ -754,6 +762,14 @@ Modes
     - press c
     - enter replacement text
     - press esc
+  * to select the content of a tag or the start, end, and content
+    place the cursor on either tag or in the content
+    and press vat to include the tags
+    or vit to only select the content
+    - to expand the selection outward farther, repeatedly press at or it
+      * ex. vatatat or v3at
+    - once a tag is select, press o to jump between the start and end tags
+      or press % if the matchit macro is enabled
 - select - similar to visual, but Windows-like
   * not sure when this would be desirable
 - command-line - for entering one ex command (:)
@@ -1081,6 +1097,7 @@ Select in visual mode
   yank (y), delete (d), and paste (p)
 - substitutions in visual mode only affect selected lines
   :'<,'>s/old/new/
+- see vim-expand-region plugin below
 
 Shell commands
 - see Conque at http://code.google.com/p/conque/
@@ -1204,6 +1221,13 @@ Spell check
   setlocal spellfile+=~/.vim/spell/{name}.utf-8.add
 - for more see http://vimdoc.sourceforge.net/htmldoc/spell.html
 
+Split/Join plugin
+- https://github.com/AndrewRadev/splitjoin.vim
+- with cursor on first line of a multiline block statement
+  press gJ to join it to one line
+- with cursor on a single line block statement
+  press gS to split it onto multiple lines
+
 Splits
 - see "Windows" below
 
@@ -1256,8 +1280,8 @@ Surround plugin
   * ex. to add a div tag around the current paragraph, ysip<div>
 - to change surroundings, cs{current}{new}
   * ex. to change double quotes to single quotes, cs"'
-  * ex. to change double quotes to a div tag, cs"<div>
-  * ex. to change current surrounding tag to a div tag, cst<div>
+  * ex. to change double quotes to a div tag, cs"<div
+  * ex. to change current surrounding tag to a div tag, cst<div
   * ex. to change current surrounding tag to braces,
     - cst{ and press return (includes a space inside { and })
     - cst} and press return (no space inside { and })
@@ -1268,6 +1292,7 @@ Surround plugin
 - see https://github.com/tpope/vim-surround
 - install repeat.vim plugin so the dot (.) command
   will repeat these commands in another location
+- see "vat" and "vit" elsewhere in this document
 
 Syntastic
 - to see the checkers being used for the filetype of the current buffer
@@ -1626,6 +1651,12 @@ vim-vinegar
 
 Vundle
 - alternative to Pathogen
+
+vim-expand-region plugin
+- https://github.com/terryma/vim-expand-region
+- press + to select word under cursor
+- press + repeatedly to expand the selection
+- press - repeatedly to shrink the selection
 
 vim-js-arrow-function
 - press <leader>af to convert a JavaScript non-arrow function to an arrow function
