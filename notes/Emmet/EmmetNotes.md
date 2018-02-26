@@ -26,7 +26,7 @@ Amazing!
 Simpler snippets are also very useful.
 For example, the CSS snippet `mb10` expands to `margin-bottom: 10px;`.
 
-The main web site for Emmit is https://emmet.io/.
+The main web site for Emmet is https://emmet.io/.
 Also see the cheat sheet at https://docs.emmet.io/cheat-sheet/.
 
 ## Getting Started
@@ -39,9 +39,12 @@ Rather than walk through the steps for every editor,
 this article covers just two.
 Currently VS Code seems to be the most popular editor, so that is covered.
 I use Vim, so that is also covered.
-To install Emmet in Atom, see https://atom.io/packages/emmet.
-To install Emmet in Sublime,
-see https://github.com/sergeche/emmet-sublime#readme.
+
+Instructions for other popular editors can be found at the following sites:
+* Atom - https://atom.io/packages/emmet
+* IntelliJ - https://www.jetbrains.com/help/idea/enabling-emmet-support.html
+* Sublime - https://github.com/sergeche/emmet-sublime#readme
+* Webstorm - https://www.jetbrains.com/help/webstorm/enabling-emmet-support.html
 
 ## VS Code
 
@@ -75,10 +78,13 @@ so you know what will be inserted before selected it.
 
 ![VS Code screenshot](https://github.com/mvolkmann/MyUnixEnv/blob/master/notes/Emmet/Emmet-VSCode.png?raw=true)
 
-The cursor will automatically be moved to
-an insertion point within the expansion.
+Some expansions contain insertion points which are
+locations where additional text can be entered.
+The cursor will automatically be moved to an insertion point.
+For example, when <code>div</code> is expanded the cursor is moved to
+the <code>|</code> in <code>&lt;div>|&lt;/div></code>.
 For snippets with multiple insertion points,
-after entering a value at one
+after entering a value in one
 press tab to jump to the next one.
 
 ### Vim emulation in VS Code
@@ -142,8 +148,8 @@ autocmd FileType html,css,javascript.jsx,scss EmmetInstall
 The syntax for specifying HTML snippets is
 mostly like CSS selector syntax with no spaces.
 
-In the examples that follow, the cursor position
-after triggering is shown as `|`.
+In the examples that follow, the cursor position after
+triggering the snippet is indicated using the `|` character.
 
 Child elements are specified with the `>` character.
 For example, `foo>bar>baz` expands to
@@ -557,5 +563,5 @@ see https://docs.emmet.io/customization/.
 ## Summary
 
 Emmet can save web developers a lot of time.
-Once you learn the basic syntax, it's easy to use.
+Once you learn the basic syntax, it's pretty easy to use.
 Give it a try in your favorite editor!
