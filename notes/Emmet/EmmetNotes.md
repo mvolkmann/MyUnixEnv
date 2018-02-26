@@ -26,27 +26,30 @@ Amazing!
 Simpler snippets are also very useful.
 For example, the CSS snippet `mb10` expands to `margin-bottom: 10px;`.
 
-The main web site for Emmit is https://emmet.io/.
-Also see the cheat sheet at https://docs.emmet.io/cheat-sheet/.
+The main web site for Emmet is [https://emmet.io/](https://emmet.io/).
+Also see the cheat sheet at [https://docs.emmet.io/cheat-sheet/](https://docs.emmet.io/cheat-sheet/).
 
 ## Getting Started
 
 You will need to configure Emmet within your editor/IDE of choice.
-Instructions for specific ones can be found at https://emmet.io/download/.
+Instructions for specific ones can be found at [https://emmet.io/download/](https://emmet.io/download/).
 Click the box for your editor to see the details.
 
 Rather than walk through the steps for every editor,
 this article covers just two.
 Currently VS Code seems to be the most popular editor, so that is covered.
 I use Vim, so that is also covered.
-To install Emmet in Atom, see https://atom.io/packages/emmet.
-To install Emmet in Sublime,
-see https://github.com/sergeche/emmet-sublime#readme.
+
+For instructions in other popular editors, see below:
+- Atom: [https://atom.io/packages/emmet](https://atom.io/packages/emmet).
+- Sublime Text: [https://github.com/sergeche/emmet-sublime#readme](https://github.com/sergeche/emmet-sublime#readme).
+- Webstorm: [https://www.jetbrains.com/help/webstorm/enabling-emmet-support.html](https://www.jetbrains.com/help/webstorm/enabling-emmet-support.html)
+- IntelliJ: [https://www.jetbrains.com/help/idea/enabling-emmet-support.html](https://www.jetbrains.com/help/idea/enabling-emmet-support.html)
 
 ## VS Code
 
 Details on configuring Emmet for VS Code can be found at
-https://code.visualstudio.com/docs/editor/emmet.
+[https://code.visualstudio.com/docs/editor/emmet.](https://code.visualstudio.com/docs/editor/emmet.)
 VS Code includes Emmet by default, enabled for these file types:
 css, haml, html, jade, jsx, less, sass, scss, slim, stylus, xml, and xsl.
 More file types can be added.
@@ -78,7 +81,7 @@ so you know what will be inserted before selected it.
 The cursor will automatically be moved to
 an insertion point within the expansion.
 For snippets with multiple insertion points,
-after entering a value at one
+after entering a value in one
 press tab to jump to the next one.
 
 ### Vim emulation in VS Code
@@ -98,13 +101,13 @@ To configure Vim emulation
 ## Vim
 
 The Emmet plugin for Vim is available at
-https://github.com/mattn/emmet-vim.
+[https://github.com/mattn/emmet-vim.](https://github.com/mattn/emmet-vim.)
 Instructions for installing it using a variety of
 Vim plugin managers can be found there,
 as are configuration details.
 Configuration is accomplished by modifying your `.vimrc` file.
 
-All keyboard shortcuts for Emmet commands begin with <emmet-leader>.
+All keyboard shortcuts for Emmet commands begin with &lt;emmet-leader>.
 By default this is ctrl-y.
 The most commonly used keyboard shortcut expands a snippet.
 The key sequence that triggers this is <emmet-leader> followed by a comma.
@@ -140,10 +143,10 @@ autocmd FileType html,css,javascript.jsx,scss EmmetInstall
 ## Syntax for HTML snippets
 
 The syntax for specifying HTML snippets is
-mostly like CSS selector syntax with no spaces.
+mostly like CSS selector syntax, with no spaces.
 
-In the examples that follow, the cursor position
-after triggering is shown as `|`.
+In the examples that follow, **I will be showing the cursor position
+after triggering the snippet using the `|` symbol**.
 
 Child elements are specified with the `>` character.
 For example, `foo>bar>baz` expands to
@@ -503,16 +506,16 @@ but none of these are configured by default.
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
-| expand abbreviation | the primary action | enter or tab | &lt;emmet-leader> comma in insert mode |
-| go to next edit point | jumps to next edit point | cmd-opt-right arrow | &lt;emmet-leader> n |
-| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | &lt;emmet-leader> N |
-| wrap with abbreviation | wraps selected text in a snippet for which you will prompted | select lines and cmd-A | &lt;emmet-leader> comma in visual mode |
-| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | &lt;emmet-leader> d |
-| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | &lt;emmet-leader> D, but doesn't work |
-| remove tag | deletes tag under cursor, but not its contents | cmd-k | &lt;emmet-leader> k (incorrectly also deletes contents) |
-| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | &lt;emmet-leader> / |
-| merge lines | merges selected lines into one line | cmd-M | &lt;emmet-leader> m |
-| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | &lt;emmet-leader> j |
+| expand abbreviation | the primary action | enter or tab | <emmet-leader> comma in insert mode |
+| go to next edit point | jumps to next edit point | cmd-opt-right arrow | <emmet-leader> n |
+| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | <emmet-leader> N |
+| wrap with abbreviation | wraps selected text in a snippet for which you will prompted | select lines and cmd-A | <emmet-leader> comma in visual mode |
+| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | <emmet-leader> d |
+| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | <emmet-leader> D, but doesn't work |
+| remove tag | deletes tag under cursor, but not its contents | cmd-k | <emmet-leader> k (incorrectly also deletes contents) |
+| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | <emmet-leader> / |
+| merge lines | merges selected lines into one line | cmd-M | <emmet-leader> m |
+| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | <emmet-leader> j |
 | go to matching pair | jumps between a start and end tag | cmd-T | not supported |
 | select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not supported |
 | select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not supported |
@@ -530,17 +533,17 @@ but none of these are configured by default.
 | evaluate math expression | replaces the math expression under cursor with result | cmd-Y | not supported |
 | encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
 | reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
-| update image size | adds width and height attributes to the img tag under cursor | cmd-U | &lt;emmet-leader> i, but doesn't work |
+| update image size | adds width and height attributes to the img tag under cursor | cmd-U | <emmet-leader> i, but doesn't work |
 
 ### Non-standard Actions
 
-These are actions that are not described at https://docs.emmet.io,
+These are actions that are not described at [https://docs.emmet.io](https://docs.emmet.io),
 but are implemented by either VS Code or vim-emmet.
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
 | update tag | changes tag under cursor; will prompt for new tag | cmd-c | not supported |
-| anchorize URL | changes URL under cursor to an anchor tag using that URL; must start with http:// or https:// | not supported | &lt;emmet-leader> a in insert mode |
+| anchorize URL | changes URL under cursor to an anchor tag using that URL; must start with http:// or https:// | not supported | <emmet-leader> a in insert mode |
 
 ### "split/join tag" example
 
@@ -552,10 +555,10 @@ to `<foo />`.
 
 Many Emmet plugins support user-defined custom snippets.
 For more information about these,
-see https://docs.emmet.io/customization/.
+see [https://docs.emmet.io/customization/](https://docs.emmet.io/customization/).
 
 ## Summary
 
 Emmet can save web developers a lot of time.
-Once you learn the basic syntax, it's easy to use.
+Once you learn the basic syntax, it's pretty easy to use.
 Give it a try in your favorite editor!
