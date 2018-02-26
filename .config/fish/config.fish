@@ -36,6 +36,13 @@ abbr --add hrun stack runghc # runs a Haskell program
 abbr --add log git log
 abbr --add status git status
 
+# For Kubernetes
+abbr --add kapp kubectl apply -f
+abbr --add kdel kubectl delete
+abbr --add kdesc kubectl describe
+abbr --add kget kubectl get
+abbr --add klogs kubectl logs
+
 # For npm
 abbr --add nr npm run
 

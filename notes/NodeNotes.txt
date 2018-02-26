@@ -103,6 +103,23 @@ To get help on an npm command
 To run a custom script defined in package.json
 - enter "npm run {script-name}"
 
+To use a local version of a package in place of the same package in npm
+- this is useful to enable debugging changes to a package
+  without continually republishing to npm
+- cd to local copy of package
+- enter "npm link"
+  * creates a symlink to that directory in `npm -g root`
+- cd to application directory
+- enter "npm link {package-name}"
+  * creates a symlink in node_modules of the application
+    to the previously created symlink in `npm -g root`
+- when finished using
+  * delete symlink in `npm -g root`
+  * reinstall the package in the application
+- if package.json for the package specifies that "main"
+  is a file in a directory of transpiled code,
+  transpile the code after each change in order to use it
+
 NODE_PATH
 - this environment variable is used to locate Node modules
 - a good value for this is .:/usr/local/lib/node_modules
