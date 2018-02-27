@@ -509,7 +509,7 @@ but none of these are configured by default.
 
 ### Commonly Used Actions
 
-| Action | Description | VS Code Key | Vim Key |
+| Action | Description | VS Code Key | Vim Key (preceded by <emmet-leader> |
 | ------ | ----------- | ----------- | ------- |
 | expand abbreviation | the primary action | enter or tab | &lt;emmet-leader> comma in insert mode |
 | go to next edit point | jumps to next edit point | cmd-opt-right arrow | &lt;emmet-leader> n |
