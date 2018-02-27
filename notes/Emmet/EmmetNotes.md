@@ -408,10 +408,9 @@ what a given snippet would be is correct.
 * `c` expands to `color: #000;`
 * `cur:d` expands to `cursor: default;`
 * `cur:p` expands to `cursor: pointer;`
-* `d:n` expands to `display: none;`
 * `d:b` or `d` expands to `display: block;`
 * `d:f` expands to `display: flex;`
-* `d:g` does not give `display: grid`!
+* `d:g` does not give `display: grid;`
 * `d:i` expands to `display: inline;`
 * `d:ib` expands to `display: inline-block;`
 * `d:li` expands to `display: list-item;`
@@ -455,20 +454,19 @@ what a given snippet would be is correct.
 * `t` expands to `top: |;`
 * `ta:c` expands to `text-align: center;`
 * `ta:j` expands to `text-align: justify;`
-* `ta:r` expands to `text-align: right;`
 * `ta:l` or `ta` expands to `text-align: left;`
 * `ta:r` expands to `text-align: right;`
 * `td:l` expands to `text-decoration: line-through;`
-* `td:n` or td expands to `text-decoration: none;`
+* `td:n` or `td` expands to `text-decoration: none;`
 * `td:u` expands to `text-decoration: underline;`
 * `tt:c` expands to `text-transform: capitalize;`
 * `tt:l` expands to `text-transform: lowercase;`
-* `tt:u` or tt expands to `text-transform: uppercase;`
-* `v:h` or v expands to `visibility: hidden;`
+* `tt:u` or `tt` expands to `text-transform: uppercase;`
+* `v:h` or `v` expands to `visibility: hidden;`
 * `v:v` expands to `visibility: visible;`
 * `va:b` expands to `vertical-align: bottom;`
 * `va:m` expands to `vertical-align: middle;`
-* `va:t` or va expands to `vertical-align: top;`
+* `va:t` or `va` expands to `vertical-align: top;`
 * `w` expands to `width: |;`
 * `z` expands to `z-index`
 * `@media` or `@m` expands to `@media screen { | }`
