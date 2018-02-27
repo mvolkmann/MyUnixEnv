@@ -511,16 +511,16 @@ but none of these are configured by default.
 
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
-| expand abbreviation | the primary action | enter or tab | <emmet-leader> comma in insert mode |
-| go to next edit point | jumps to next edit point | cmd-opt-right arrow | <emmet-leader> n |
-| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | <emmet-leader> N |
-| wrap with abbreviation | wraps selected text in a snippet for which you will prompted | select lines and cmd-A | <emmet-leader> comma in visual mode |
-| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | <emmet-leader> d |
-| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | <emmet-leader> D, but doesn't work |
-| remove tag | deletes tag under cursor, but not its contents | cmd-k | <emmet-leader> k (incorrectly also deletes contents) |
-| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | <emmet-leader> / |
-| merge lines | merges selected lines into one line | cmd-M | <emmet-leader> m |
-| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | <emmet-leader> j |
+| expand abbreviation | the primary action | enter or tab | &lt;emmet-leader> comma in insert mode |
+| go to next edit point | jumps to next edit point | cmd-opt-right arrow | &lt;emmet-leader> n |
+| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | &lt;emmet-leader> N |
+| wrap with abbreviation | wraps selected text in a snippet for which you will prompted | select lines and cmd-A | &lt;emmet-leader> comma in visual mode |
+| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | &lt;emmet-leader> d |
+| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | &lt;emmet-leader> D, but doesn't work |
+| remove tag | deletes tag under cursor, but not its contents | cmd-k | &lt;emmet-leader> k (incorrectly also deletes contents) |
+| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | &lt;emmet-leader> / |
+| merge lines | merges selected lines into one line | cmd-M | &lt;emmet-leader> m |
+| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | &lt;emmet-leader> j |
 | go to matching pair | jumps between a start and end tag | cmd-T | not supported |
 | select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not supported |
 | select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not supported |
@@ -538,7 +538,7 @@ but none of these are configured by default.
 | evaluate math expression | replaces the math expression under cursor with result | cmd-Y | not supported |
 | encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
 | reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
-| update image size | adds width and height attributes to the img tag under cursor | cmd-U | <emmet-leader> i, but doesn't work |
+| update image size | adds width and height attributes to the img tag under cursor | cmd-U | &lt;emmet-leader> i, but doesn't work |
 
 ### Non-standard Actions
 
@@ -548,7 +548,7 @@ but are implemented by either VS Code or vim-emmet.
 | Action | Description | VS Code Key | Vim Key |
 | ------ | ----------- | ----------- | ------- |
 | update tag | changes tag under cursor; will prompt for new tag | cmd-c | not supported |
-| anchorize URL | changes URL under cursor to an anchor tag using that URL; must start with http:// or https:// | not supported | <emmet-leader> a in insert mode |
+| anchorize URL | changes URL under cursor to an anchor tag using that URL; must start with http:// or https:// | not supported | &lt;emmet-leader> a in insert mode |
 
 ### "split/join tag" example
 
