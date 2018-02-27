@@ -17,7 +17,7 @@ all the defined snippets and actions.
 
 Emmet is not just a simple snippet manager.
 It parses entered text to extract meaning.
-These kinds of snippets are refered to as "dynamic snippets".
+These kinds of snippets are referred to as "dynamic snippets".
 
 We will see many examples later, but here's one.
 The snippet `div#some-id.class1.class2[attr1=one attr2=2]{some content}`
@@ -226,7 +226,7 @@ and `div[foo="contains space" bar='single quotes']` expands to
 ```
 Note that no commas are used between the listed attributes.
 
-Element content is specified betweeen curly braces.
+Element content is specified between curly braces.
 For example, `div{my content}` expands to
 ```html
 <div>my content|</div>
