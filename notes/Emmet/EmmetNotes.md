@@ -1,4 +1,4 @@
-# Emmet Notes
+# Emmet Editor Plugin for Dynamic HTML/CSS Snippets
 
 ## Overview
 
@@ -352,7 +352,7 @@ The ones show below seem the most useful.
     button, checkbox, color, date, datetime, datetime-local,
     email, file, hidden, image, month, number, password, radio,
     range, search, submit, tel, text, time, url, or week
-  - ex: `input:number` expands to <input id="" type="number" name="">
+  - ex: `input:number` expands to `<input id="" type="number" name="">`
 * `label` expands to `<label for="|"></label>`
 * `link` expands to `<link rel="stylesheet" href="|">`
 * `link:favicon` expands to
