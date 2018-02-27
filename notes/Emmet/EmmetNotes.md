@@ -10,7 +10,8 @@ Emmet was created by Sergey Chikuyonok.
 The original name was "Zen Coding".
 
 Emmet is available for many editors including
-Atom, Eclipse, Emacs, Sublime, Vim, Visual Studio (VS) Code, and WebStorm.
+Atom, Eclipse, Emacs, Notepad++, Sublime, Vim,
+Visual Studio (VS) Code, and WebStorm.
 However, some implementations do not support
 all the defined snippets and actions.
 
@@ -43,6 +44,7 @@ I use Vim, so that is also covered.
 Instructions for other popular editors can be found at the following sites:
 * Atom - https://atom.io/packages/emmet
 * IntelliJ - https://www.jetbrains.com/help/idea/enabling-emmet-support.html
+* Notepad++ - https://github.com/emmetio/npp/#readme
 * Sublime - https://github.com/sergeche/emmet-sublime#readme
 * Webstorm - https://www.jetbrains.com/help/webstorm/enabling-emmet-support.html
 
@@ -110,12 +112,12 @@ Vim plugin managers can be found there,
 as are configuration details.
 Configuration is accomplished by modifying your `.vimrc` file.
 
-All keyboard shortcuts for Emmet commands begin with <emmet-leader>.
+All keyboard shortcuts for Emmet commands begin with `<emmet-leader>`.
 By default this is ctrl-y.
 The most commonly used keyboard shortcut expands a snippet.
-The key sequence that triggers this is <emmet-leader> followed by a comma.
+The key sequence that triggers this is `<emmet-leader>` followed by a comma.
 
-To change the value of <emmet-leader>, set the variable g:user_emmet_leader_key.
+To change the value of `<emmet-leader>`, set the variable g:user_emmet_leader_key.
 For example, to change it to the space key, add the following:
 ```
 let g:user_emmet_leader_key='<space>'
