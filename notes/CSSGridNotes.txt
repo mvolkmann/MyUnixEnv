@@ -13,6 +13,12 @@ Overview
 - flexbox can support having variable width items on each row,
   but grid can only approximate this using span
 
+Browser support
+- no support in IE10 or earlier
+- IE11 only supports an older version of the spec.
+- support is good in Chrome, Edge, Firefox, Safari,
+  iOS Safari, and the common Android browsers
+
 To tell a container to use grid layout
 - display: grid
 - causes direct children to become "grid items"
