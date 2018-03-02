@@ -367,6 +367,9 @@ highlight clear SpellBad
 highlight SpellBad ctermfg=black ctermbg=red
 
 set thesaurus=~/.vim/mthesaur.txt
+
+" TypeScript --- {{{
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 " }}}
 
 " Folding --- {{{
@@ -386,6 +389,7 @@ augroup javaScript
   " Prettier JavaScript formatting
   "autocmd FileType javascript setlocal formatprg=prettier-eslint\ --stdin
   autocmd FileType javascript setlocal formatprg=prettier\ --stdin
+  autocmd FileType typescript setlocal formatprg=prettier\ --stdin
   " Automatically format JavaScript code before it is saved.
   " silent! is needed to avoid message "No write since last change".
   "autocmd BufWritePre *.js exe "silent! normal! gggqG\<C-o>\<C-o>"
@@ -445,7 +449,8 @@ endfunction
 " Limit linters used for JavaScript.
 let g:ale_linters = {
 \  'javascript': ['eslint', 'flow'],
-\  'scss': ['stylelint']
+\  'scss': ['stylelint'],
+\  'typescript': ['tslint']
 \}
 let g:ale_fixers = {
 \  'javascript': ['prettier'],
