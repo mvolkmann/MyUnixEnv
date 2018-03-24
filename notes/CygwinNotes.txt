@@ -1,5 +1,24 @@
 Cygwin Notes
 
+XTerm setup
+- in Cygwin setup program, install xorg-server and xinit
+  * both are in the X11 category
+- create .Xresources file in home directory
+  containing the following:
+  Xft*antialias: true
+  XTerm*background: black
+  XTerm*foreground: white
+  XTerm*faceName: BitStream Vera Sans Mono
+  XTerm*faceSize: 12
+- xrdb -merge ~/.Xresources
+- restart XWin Server from Start menu
+- open a Cygwin window
+- enter "xterm"
+  * if you get "Xt error: Can't open display",
+    maybe you forgot to start the XWin Server
+- select Main Options...Toolbar to hide it
+- make the window full-screen
+
 clearing screen
 - create clear.c containing the following:
   #include <stdio.h>

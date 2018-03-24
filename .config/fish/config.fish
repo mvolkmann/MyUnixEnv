@@ -104,6 +104,7 @@ alias findjs2 'find4 js'
 alias findjson 'find3 json'
 alias findless 'find3 less'
 alias findscss 'find3 scss'
+alias findts 'find3 ts'
 
 # ESLint aliases
 alias esl 'clear; eslint -f codeframe **/*.js'
@@ -120,10 +121,6 @@ alias cdgitroot 'cd (git rev-parse --git-dir); cd ..'
 # Display directories and executables in different colors.
 #alias ls 'ls --color=tty'
 alias ls 'ls -G'
-
-# See MySQLNotes.txt for steps to start mysqld, the daemon.
-alias mysql /usr/local/mysql/bin/mysql
-alias mysqladmin /usr/local/mysql/bin/mysqladmin
 
 # Shows all paths in $PATH on separate lines.
 alias showpath 'printf "%s\n" $PATH'
@@ -237,6 +234,9 @@ set SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
 # Vim settings
 set fish_key_bindings fish_vi_key_bindings
 set VISUAL vim
+
+# VS Code - allows launch from terminal with "code"
+set PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/Mark/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/google-cloud-sdk/path.fish.inc'; end; end

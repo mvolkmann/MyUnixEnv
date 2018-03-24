@@ -85,7 +85,7 @@ alias pgl='psql -d launchpad'
 #export PATH=$PATH:$MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
 
 # MySQL settings
-#export PATH=$PATH:/usr/local/mysql-5.0.51a-osx10.5-x86/bin
+export PATH=$PATH:/usr/local/mysql/bin
 
 # Node.js settings
 export NODE_PATH=.:/usr/local/lib/node_modules # Mocha needs this
@@ -121,14 +121,14 @@ export PATH=$PATH:~/programming/typescript/TypeScript/bin
 # TypeScript settings
 export PATH=$PATH:$LANGUAGES_DIR/TypeScript/ts1.5/bin
 
-# Google Traceur settings
-export PATH=$PATH:$JAVASCRIPT_DIR/traceur-compiler-master
-
 # Vim settings
 set -o vi # for vi-mode command-line editing
 set editing-mode vi # for vi-mode command-line editing and all utilities that use readline
 export EDITOR=vim
 export VISUAL=vim
+
+# VS Code - allows launch from terminal with "code"
+export PATH=$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
 
 # When running multiple bash shells, allow all to write to history
 # without overwriting each other.

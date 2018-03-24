@@ -8,16 +8,18 @@ DOS commands
 
 Keyboard Layout
 - to make Caps Lock key to be a Ctrl and keep existing Ctrl keys
+- need admin rights
 - run regedit
 - navigate to HKEY_LOCAL_MACHINE...SYSTEM...
   CurrentControlSet...Control...Keyboard Layout
 - right-click and select "New" to create a new key
 - enter "Scancode Map" for the key name
 - right-click and select "Modify Binary Data..."
-- enter
+- enter (These codes seem to have changed!)
   00 00 00 00 00 00 00 00
   02 00 00 00 1D 00 3A 00
   00 00 00 00
+- restart
 
 IP Address
 - enter "ipconfig" in a Command Prompt window

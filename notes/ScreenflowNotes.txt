@@ -1,7 +1,20 @@
 ScreenFlow Notes
 
+Free video tutorials
+- https://www.telestream.net/screenflow/resources.htm
+- divided into three groups
+  * Record
+  * Edit
+  * Export & Share
+
 To prepare for creating a screencast
 - adjust screen resolution for best video quality (1280 x 720?)
+- select screen dimensions and framerate
+  * select File ... Document Settings..
+  * select screen dimensions from Preset dropdown or
+    enter a specific width and height
+  * choose a framerate of 30 or 60 frames per second
+  * Do these become the defaults for all future recordings?
 - hide Mac menu bar
   * System Preferences ... General
   * check "Automatically show and hide the menu bar
@@ -22,24 +35,174 @@ To prepare for creating a screencast
   so each run starts with a fresh console
 - consider using console.log to demo non-UI concepts
 
-To create a new screencast
-- method #1: select File ... New ... New Recording and select input sources
-  * computer screen
-  * attached iOS device
-  * video from a camera (including one in laptop)
-  * audio from computer or USB microphone
-- press red circle
-- method #2: select Record from Screenflow menu bar icon or press cmd-@
-  * uses previously selected input sources
-- wait for five second countdown to begin
-  * can adjust this delay in preferences
-- to stop recording
-  * select "Stop Recording" from Screenflow menu bar icon
-    or press cmd-@ (cmd-shift-2)
+To create a new recording from selected video and/or audio sources
+- configure
+  * select File ... New or
+    select "Configure Recording" from ScreenFlow menu bar icon
+  * select "New Recording" (the default)
+  * select input sources
+    - Record Desktop from: Color LCD (for laptop screen) or Cinema Display
+    - Record iOS Device: for attached iOS devices
+      * THIS IS NOT WORKING!
+    - Record Video from: for video from a camera (including one in laptop)
+    - Record Audio from: internal or USB microphone
+      (mine is Yeti Stereo Microphone)
+  * press circle with dashed square to select a screen area
+    instead of recording the entire screen
+- start recording
+  * press red circle
+  * wait for five second countdown to begin
+    - can adjust this delay in preferences
+      under General...Settings...Countdown for
+  * ScreenFlow menu bar icon will have black dot when recording
+    and will be hollow when not recording
+- pause recording by selecting "Pause" from the ScreenFlow menu bar icon
+- stop recording
+  * press cmd-@ (cmd-shift-2) or
+    select "Stop Recording" from Screenflow menu bar icon
   * select "Create New Document" or
     "Add to Document" to add clips to an existing screencast
     - need to drag it into timeline?
-- don't forgot to save it!
+- save recording
+
+To open a recent document
+- select File ... New or
+  select "Configure Recording" from ScreenFlow menu bar icon
+- select "Recent Documents"
+- double-click one
+
+Inspector
+- area on right that contains nine tabs with a unique icon for each
+- when an option seems to be disabled, it is probably
+  because you haven't selected a video or audio clip
+  to which it will be applied
+- Video - to customize properties of a selected video or image asset
+  * scale, position, rotation (in 3D), opacity, cropping,
+    reflection, corner rounding, drop shadow,
+    colors (saturation, brightness, and contrast),
+    and filters (like Gaussian Blur and Stylize - Comic Effect)
+    - can also scale, position, and rotate (Z) by dragging handles
+    - can also crop by ctrl-dragging handles
+    - drop shadows are highly configurable
+    - click + button after "Video Filters" to add one
+- Audio - to customize properties of a selected audio asset
+  * volume, ducking (fade in/out for corcurrent or neighboring audio?),
+    smooth volume levels (none too high or too low)
+    stereo mix, effects (like chamber echo), and
+    filters (ex. removing background noise (try 65%)
+    and more complicated sound filters)
+- Video Motion - to configure animations
+  * effect - Gravity, Spring, or Pulse
+  * apply to scale, position, and/or rotation
+- Screen Recording
+  * show/hide mouse pointer
+    - for entire screencast or just selected parts
+  * pointer zoom
+  * click effect: None, Radar, or Invert
+  * pointer: Default, Circle - Light, Circle - Dark, Square, or Choose Image...
+  * opacity
+  * sound on click
+  * show keystrokes
+    - all or only modifier keys
+    - height, position, width
+- Callout
+  * to focus on certain area of screen
+    during a specified part of timeline
+  * can zoom in on mouse location
+  * can draw one or more circles and/or rectangles
+  * can blur background
+  * can use "build in" and "build out"
+    to animate entry and exit of the callout
+- Touch Callout
+  * ideal for iOS recordings
+  * ADD DETAIL HERE!
+- Annotations
+  * to add boxes and arrows to highlight parts of content
+  * click + button to add immediately after scrubber position
+  * select annotation shape
+    - arrow, line, filled rectangle, hollow rectangle, and ellipse
+  * can adjust duration and drag to a different timeline location
+  * drag out selected annotation type with mouse
+  * to change shape, delete from video, select new shape, and drag out again
+  * drag annotation over video to move
+  * can customize color, opacity, thickness, shadow, and output
+  * can customize line endpoint types
+- Text
+  * to add text over video
+  * click + button to add immediately after scrubber position
+  * double click placeholder over video to enter text
+  * drag to move
+  * drag inner handle to rotate
+  * can change font, size, alignment (for multiline text),
+    fill, outline, backdrop
+  * optional background (called "backdrop")
+    with optional corner rounding
+  * can add build in and build out animations
+    - text will disappear, but will appear when screencast is played
+- Media Library
+  * add/delete audio and video files that can be dragged to timeline
+  * can be associated with current project or global (shared)
+  * can get from file system, Photo Booth, iTunes, GarageBand, and Photos
+    - cannot use audio from Apple Music
+  * can show list of media in selected category in icon or list views
+
+To create a new document from imported resources rather than a new recording
+- to configure
+  * select File ... New or
+    select "Configure Recording" from ScreenFlow menu bar icon
+  * select "New Document"
+  * add media files using last inspector tab
+  * drag media to the timeline
+
+To include video of yourself talking
+- check "Record Video from" and select "FaceTime HD Camera"
+- record the screencast and end with cmd-@
+* to move, drag to desired location
+- to resize, drag any of the video handles
+- to crop, ctrl-drag any of the video handles
+- how can you adjust the internal camera so
+  it doesn't appear that you are looking up or down?
+* how can this video have a transparent background
+  like in ScreenFlow tutorial video?
+  - probably need a green screen behind you
+
+Recording Monitor
+- to display, select "Show Recording Monitor..."
+  from the ScreenFlow menu bar icon
+- move it to a screen that is not being recorded
+- displays audio levels and time elapsed
+- provides "Add Marker" button to add markers during recording
+  * appear at bottom of video timeline and look like small, pink lollipops
+  * can also add markers by selecting "Add Marker"
+    from the ScreenFlow menu bar icon
+
+Keyboard shortcuts
+- select File ... Preferences
+- select Shortcuts
+- select Keyboard Shortcut Set to customize
+  * can override defaults or create a new set to modify
+  * can export and import keyboard shortcut sets
+    for moving between computers
+- great for speeding up common workflows
+- indicates whether there are conflicts
+- my customizations
+  * cmd-p = Pause
+  * cmd-m = Add Marker (was Window Minimize)
+- click "Customized" to see list of customizations
+
+
+To hide all desktop icons during a recording
+- select "Hide Desktop Icons" from the ScreenFlow menu bar icon
+- select "Show Desktop Icons" to make them visible again
+
+To adjust track heights at bottom
+- click up angle to increase or down angle to decrease
+- three sizes: small, medium, and large
+- can select default track height in Preferences...Timeline
+  * doesn't affect current recording; manually change those
+
+To record tracks
+- drag a track handle (on left) up or down
 
 To optimize audio
 * in inspector "Audio" tab
@@ -55,12 +218,14 @@ To optimize video
 * to change the pace of a video (faster or slower),
   adjust its duration in the timeline by dragging its end?
 
-To remove a section from timeline, such as a long pause
-* select a range of time and press delete key
-
-To capture video from an iOS device
-- attached device to Mac with USB cable
-- ...
+To move or delete part of a media clip
+- move scrubber to a location to split
+- click clips to be split (click first and cmd-click others)
+- press t key or click thumb at bottom of scrubber
+- repeat until parts to be moved or deleted are isolated
+- to move a clip, drag it
+- to delete a click, click to select and press delete key
+- to delete a gap between clips, click to select and press delete key
 
 To add a media clip to timeline area
 - select the media icon in the inspector (music note and play button)
@@ -69,27 +234,29 @@ To add a media clip to timeline area
   desktop, camera, and/or microphone
   * can select any number of sources to record from simultaneously
 
-To move or delete part of a media clip
-- move scrubber to a location to split it
-- from the gear dropdown on the clip, select "Split Clip"
-- repeat until parts to be moved or deleted are isolated
-- delete and/or move the remaining pieces
-
-To modify how cursor is shown in video
-- select the video clip to alter in the timeline
-- select the screen recording icon in the inspector (monitor)
-- adjust pointer zoom
-- optionally adjust click effect (None, Radar, or Invert),
-  pointer style (Default, Circle - Light, Circle Dark, Square, or Choose Image...),
-  pointer opacity and "Sound on Click"
-  * disclosure triangle controls volume and sound played
+To modify how mouse cursor is shown in video
+- select video clip to alter in timeline
+- select screen recording icon in the inspector (monitor)
+- can show or hide the mouse pointer with "Show Mouse Pointer" checkbox
+- can change mouse size by adjusting the "Pointer Zoom" slider
+- can set Click Effect to None, Radar (like!), or Invert
+- can set pointer style to Default (like),
+  Circle - Light, Circle Dark, Square, or Choose Image...
+- can set pointer Opacity
+- can set "Sound on Click"
+  * probably too annoying
+  * disclosure triangle reveals controls for volume
+    and selecting a sound file
 
 To display keystrokes pressed in video
-- select the video clip to alter in the timeline
-- select the screen recording icon in the inspector (monitor)
-- select "Show Keystrokes" checkbox
-- specify height and position of keystroke display
-- optionally change font characteristics
+- select video clip to alter in timeline
+- select screen recording icon in the inspector (monitor)
+- check "Show Keystrokes" checkbox
+- can show all keys or only modifier keys
+- can specify height and position of keystroke display
+- can specify width of area where keystrokes are displayed
+- can change font characteristics by click "f" button
+  to right of position
 
 To add an annotation
 - move timeline scrubber to where annotation should begin
@@ -167,6 +334,17 @@ To edit a video clip
   and color (saturation, brightness, and contract)
 - can apply video filters
 
+To add an audio clip
+- click inspector media icon (last one)
+- click "+" in upper-left and select "Add File..."
+- select an audio file
+- drag an audio file the empty strip in the timeline
+- drag and size the audio-clip to control when it begins and ends
+
+To blur selected content
+- for example, passwords
+- how ???
+
 To save a frame of the screencast as a PNG
 - move the timeline scrubber to the frame to be saved
 - File ... Save Frame...
@@ -177,8 +355,13 @@ To preview a screencast
 
 To export a screencast
 - select File ... Export...
-- select a preset for the target format (ex. "Web - High")
+- to customize format, set "Type" to "Manual" and select a preset (ex. "Web - High")
+- select resolution
 - press "Export" button
+
+To publish a screencast
+- select File ...Publish to...{some target}
+- targets include YouTube, Facebook, Vimeo, and Dropbox
 
 To add to YouTube
 - browse YouTube site
