@@ -9,8 +9,12 @@ VS Code Notes
   * can reopen recently edited files with File...Open Recent
   * to open the Command Palette, press cmd-P
   * to edit a file from a terminal, code {file-name}
-    - will launch VS Code if not already running
-    - otherwise will use existing VS Code session
+    * will launch VS Code if not already running
+    * otherwise will use existing VS Code session
+
+* Command Palette
+
+  * cmd-P to open
 
 * Emmet
 
@@ -51,10 +55,21 @@ VS Code Notes
   * Symbol in File - cmd-O
     * only searches in current file
   * Symbol in Workspace - cmd-t
+    * can find names in any file in workspace
+  * cmd-hover over names to see in a popup
+    and click to go to definition
 
 * JavaScript
 
   * under "Customize" on "Welcome" screen, install support for JavaScript
+  * has method name completion with documentation in popups
+  * right-click a name to see a context menu of things than can be done including
+    * Go to Definition
+    * Peek Definition - shows in a dialog that can be dismissed
+    * Go to Type Definition - only for TypeScript, not Flow?
+    * Find All References
+    * Rename Symbol - there and all references
+    * Change All Occurrences - like "Rename Symbol", but live; may be buggy
 
 * Markdown
 
