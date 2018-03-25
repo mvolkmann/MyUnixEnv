@@ -1,0 +1,42 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.formatOnSave": true,
+    "editor.tokenColorCustomizations": {
+        "comments": "#01D787",
+        "functions": "#FF6E62",
+        "keywords": "#e6e38c",
+        "numbers": "#ffffff",
+        "strings": "#ffffff",
+        "types": "#6871FF",
+        "variables": "#ffffff",
+        "textMateRules": [
+            {
+                "name": "Tags",
+                "scope": "entity.name.tag",
+                "settings": {
+                    "foreground": "#9ADCF8"
+                }
+            },
+            {
+                "name": "Attributes",
+                "scope": "entity.other.attribute-name",
+                "settings": {
+                    "foreground": "#539BD9"
+                }
+            },
+        ]
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "sass": "scss"
+    },
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "javascript.validate.enable": false, // for Flow
+    "prettier.bracketSpacing": true,
+    "prettier.singleQuote": true,
+    "prettier.stylelintIntegration": true,
+    "window.zoomLevel": 1,
+    "workbench.sideBar.location": "left",
+}

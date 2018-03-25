@@ -1,0 +1,115 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    {
+        "key": "shift+cmd+t",
+        "command": "editor.emmet.action.matchTag"
+    },
+    {
+        "key": "shift+cmd+d",
+        "command": "editor.emmet.action.balanceIn"
+    },
+    {
+        "key": "cmd+d",
+        "command": "editor.emmet.action.balanceOut"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "editor.emmet.action.decrementNumberByOne"
+    },
+    {
+        "key": "ctrl+shift+down",
+        "command": "editor.emmet.action.decrementNumberByTen"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "editor.emmet.action.incrementNumberByOne"
+    },
+    {
+        "key": "ctrl+shift+up",
+        "command": "editor.emmet.action.incrementNumberByTen"
+    },
+    {
+        "key": "shift+cmd+y",
+        "command": "editor.emmet.action.evaluateMathExpression"
+    },
+    {
+        "key": "alt+cmd+right",
+        "command": "editor.emmet.action.nextEditPoint"
+    },
+    {
+        "key": "alt+cmd+left",
+        "command": "editor.emmet.action.prevEditPoint"
+    },
+    {
+        "key": "shift+cmd+m",
+        "command": "editor.emmet.action.mergeLines"
+    },
+    {
+        "key": "cmd+b",
+        "command": "editor.emmet.action.reflectCSSValue"
+    },
+    {
+        "key": "cmd+k",
+        "command": "editor.emmet.action.removeTag"
+    },
+    {
+        "key": "shift+cmd+.",
+        "command": "editor.emmet.action.selectNextItem"
+    },
+    {
+        "key": "shift+cmd+,",
+        "command": "editor.emmet.action.selectPrevItem"
+    },
+    {
+        "key": "cmd+j",
+        "command": "editor.emmet.action.splitJoinTag"
+    },
+    {
+        "key": "cmd+/",
+        "command": "editor.emmet.action.toggleComment"
+    },
+    {
+        "key": "shift+cmd+u",
+        "command": "editor.emmet.action.updateImageSize"
+    },
+    {
+        "key": "shift+cmd+a",
+        "command": "editor.emmet.action.wrapWithAbbreviation"
+    },
+    {
+        "key": "cmd+c",
+        "command": "editor.emmet.action.updateTag"
+    },
+    {
+        "key": "alt+cmd+down",
+        "command": "editor.emmet.action.decrementNumberByOneTenth"
+    },
+    {
+        "key": "alt+cmd+up",
+        "command": "editor.emmet.action.incrementNumberByOneTenth"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "-workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "workbench.action.previousEditor"
+    },
+    {
+        "key": "alt+cmd+left",
+        "command": "-workbench.action.previousEditor"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "alt+cmd+right",
+        "command": "-workbench.action.nextEditor"
+    }
+]
