@@ -11,6 +11,7 @@ VS Code Notes
   * to edit a file from a terminal, code {file-name}
     * will launch VS Code if not already running
     * otherwise will use existing VS Code session
+  * reopens last set of tabs when restarted
 
 * Color Themes
 
@@ -18,7 +19,9 @@ VS Code Notes
   * to change theme
     * click gear in lower-left and select "Color Theme"
       or select Code...Preferences...Color Theme
-    , and select one from the menu
+      and select one from the menu
+    * use up and down arrow keys to navigate the list of themes
+    * will update to show the theme colors as you navigate
     * will be stored in settings as "workbench.colorTheme"
   * to customize colors for nearly everying in the editor, see
     https://code.visualstudio.com/docs/getstarted/theme-color-reference
@@ -66,6 +69,78 @@ VS Code Notes
   * in Linux and macOS need to add to PATH
     * in macOS add /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
+* Debugging
+  * to debug non-Node applications
+    install a language-specific debugger extension
+  * to debug non-server Node applications
+    * open a source file
+    * add breakpoints (described below)
+    * click Debug button in left nav
+      * don't need special configuration in launch.json for non-server code
+    * click green triangle on left side of dropdown
+    * use buttons in panel at top to Continue,
+      Step Over, Step Into, Step Out,
+      Restart, and Stop (exits debugging)
+    * can drag debugging button panel left and right
+    * panels on left display
+      * all in-scope variables and their values
+        * can right-click a variable and select "Set Value" to change
+      * watch expressions
+        * click + to add them
+        * each will show the current value of the expression
+      * call stack
+      * breakpoints and options for them
+    * enter expressions in the "Debug Console REPL"
+      after > prompt at bottom
+      * can be any JavaScript expression including
+        just variable names that are in scope
+  * breakpoints
+    * to create
+      * click to left of a source line number
+      * adds a red circle
+    * to delete or disable
+      * right-click red circle
+      * select "Remove Breakpoint" or "Disable Breakpoint"
+      * can also delete a breakpoint by clicking red circle
+    * breakpoint types (3)
+      * default - stop of every hit
+      * Hit Count - stop after specific number of hits
+      * Expression - stop when expression evaluates to true
+      * to change type and configure, right-click breakpoint red circle
+        and select type from dropdown
+  * can configure to "Skip Code" that you didn't write
+    * like code from npm packages
+  * can also perform debugging operations from the Debug menu
+  * debugging Chrome web apps
+    * set "type": "chrome" in Launch Configuration
+    * cannot get this to work
+  * debugging Node servers
+    * cannot get this to work when server code is transpiled with Babel
+      * npm script below must refer to transpiled code in build directory
+      * but then the code displayed by the debugger is the transpiled code
+      * can't set breakpoints in original source files
+    * add an npm script like this:
+      "debug": "node --inspect --inspect-brk build/index.js",
+    * npm run debug
+    * create a launch configuration
+      * click gear to right of dropdown and add this configuration object
+      * to debug currently opened file, use
+        "program": "${file}"
+      ```json
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach", // appears in Debug dropdown
+        "port": 9229,
+        "protocol": "inspector"
+      }
+      ```
+    * select "Attach" from dropdown at top
+
+* Editor Tabs
+  * tabs for files containing unsaved changes have a white circle after the file name
+  * Explorer file names have a white circle before the names of files with unsaved changed
+
 * Emmet
 
   * type a snippet and press tab to expand
@@ -87,6 +162,11 @@ VS Code Notes
 
   * to jump to next error in Windows, press Fn-F8
 
+* Find All References
+  * right-click a name and select this from context menu
+  * displays all references in a "Peek" view
+  * press esc to dismiss
+
 * Flow extension
 
   * I disabled it because it uses too much CPU if no .flowconfig file is found
@@ -107,6 +187,35 @@ VS Code Notes
 * Git
 
   * has really strong Git integration that is provided and enabled by default
+  * source control icon in left nav
+    * click to see lists of changes in each active repository
+    * badge on icon shows number of uncommitted changes
+  * current branch is displayed in lower-left
+  * to create a branch
+    * click current branch name in lower-left and click "+ Create new branch"
+    * alternatively, open Command Palette and enter "Git: Create Branch..."
+    * switches to that branch
+  * to switch to a different local branch
+    * click branch name in lower-left
+    * click one in the drop-down
+  * to see a list of the current local branches
+    * click branch name in lower-left
+    * don't click one in the drop-down unless you want to switch to it
+  * to merge a branch
+    * select branch to merge to by clicking branch name in lower-left and selecting it
+    * open Command Palette and enter "Git: Merge Branch..."
+    * when finish, push this branch
+  * to push a branch, open Command Palette and enter "Git: Push"
+  * to delete a branch
+    * switch to a different branch
+    * open Command Palette and enter "Git: Delete Branch..."
+    * select a repository (if files from more than one are open)
+    * select branch to delete
+    * ???
+  * it seems there is no way in VS Code to
+    * view status by running "git status"
+    * delete a remote branch
+    * could do from an integrated terminal
 
 * Go to
 
@@ -129,6 +238,8 @@ VS Code Notes
   * press esc to close input without going to anything
   * cmd-hover over names to see in a popup
     and click to go to definition
+    * can also right-click and select "Go to Definition"
+    * to see definition in a peek view, right-click and select "Peek Definition"
   * to go back press ctrl-minus
   * to go forward press ctrl-underscore
 
@@ -151,6 +262,23 @@ VS Code Notes
   - right-click to copy which allows having
     more than one shortcut for the same command
 
+* Left Nav
+  * contains buttons for major modes
+    * Explorer - for files
+    * Search
+    * Source Control
+    * Debug
+    * Extensions
+  * contains gear icon
+    * click to access Command Palette, Settings, Keyboard Shortcuts,
+      Manage Extensions, User Snippets, Color Theme,
+      File Icon Theme, and Check for Updates... 
+
+* Line Numbers
+  - by default line numbers are on
+  - change by setting "editor.lineNumbers" in user settings
+  - valid values are "on", "off", and "relative"
+
 * Markdown
 
   * stays up to date with changes in tab containing raw Markdown
@@ -170,6 +298,19 @@ VS Code Notes
   * after selecting some text, press cmd-L to "Select All Occurrences"
   * now can edit all occurrences at the same time
   * when finished press esc to get out of multi-cursor moe
+
+* Node.js
+  * no built-in ability to run Node code
+  * open an embedded terminal, cd to code directory, and enter node command
+
+* Peek View
+  * displays results of several commands in an inline popup view
+    * one example is "Find All References"
+  * list of references is on right
+  * source lines for selected reference is on left
+    * can edit here
+  * can resize height of peek view by dragging bottom border
+  * to dismiss, press esc or click "x" in upper-right
 
 * Prettier extension
 
@@ -197,6 +338,33 @@ VS Code Notes
     * red - source line is the source of an error or failed expectation,
       or is in the stack of an error
 
+* Refactoring
+  * to rename a symbol
+    * can rename from any reference, not just definition
+    * right-click and select "Rename Symbol"
+    * enter new name
+    * will change all occurrences
+    * files with changes are not automatically saved; must do manually
+  * to extract code from a function or method into a new function or method
+    * select lines of code
+    * click light blub icon
+    * select one of
+      * "Extract to inner function"
+      * "Extract to function in module scope"
+      * "Extract to constant in enclosing scope"
+    * enter name for new function
+
+* Search
+  * can for a string (default) or
+    regular expression (toggle .* button in popup)
+    * do not surround regular expression with slashes
+  * can be case-sensitive (toggle button in popup)
+  * can only find whole words (toggle button in popup)
+    * ex. when enabled, "class" does not match "className"
+  * to search only in current file, press cmd-f
+  * to search all files in current workspace, press cmd-F of select "View...Search"
+  * click left and right arrows in popup to move to previous and next matches
+
 * Tab Navigation
   * to navigate to tabs to the right - "Open Next Editor",
     press ctrl-right (you added) cmd-{ or ctrl-tab
@@ -218,8 +386,18 @@ VS Code Notes
   * many extensions can be configured by adding to user settings
   * can use /* */ and // comments in this file
     * useful to temporarily disable settings
-  * these are stored in ~/Library/Application\ Support/Code/User
+  * stored in the files settings.json and keybindings.json
+    * in OS-specific locations
+      * Windows: %APPDATA%\Code\User\
+      * macOS: $HOME/Library/Application Support/Code/User/
+      * Linux: $HOME/.config/Code/User/
     * can copy to another machine to share settings
+    * also consider automating synchrononization of settings between computers with
+      https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync
+  * project-specific customizations
+    * stored in project directory in .vscode directory
+      * files are settings.json and keybindings.json
+    * can check into version control so project team can share
 
 * Vim extension
 
