@@ -1,8 +1,13 @@
 // Place your settings in this file to overwrite the default settings
 {
+    "editor.fontFamily": "Fira Code",
     "editor.formatOnSave": true,
+    "editor.lineNumbers": "relative",
     "editor.tokenColorCustomizations": {
-        "comments": "#01D787",
+        "comments": {
+            "fontStyle": "italic",
+            "foreground": "#01D787"
+        },
         "functions": "#FF6E62",
         "keywords": "#e6e38c",
         "numbers": "#ffffff",
@@ -37,6 +42,9 @@
     "prettier.bracketSpacing": true,
     "prettier.singleQuote": true,
     "prettier.stylelintIntegration": true,
+    "vim.easymotion": true,
+    "vim.leader": ",",
+    "vim.surround": true,
     "window.zoomLevel": 1,
     "workbench.sideBar.location": "left",
 }

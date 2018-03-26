@@ -162,6 +162,16 @@ VS Code Notes
 
   * to jump to next error in Windows, press Fn-F8
 
+* File Icon Theme
+  * controls icons displayed for specific file types and folders
+  * can download new themes
+  * to change
+    * click gear in lower-left
+    * select "File Icon Theme"
+    * select one from the list
+  * use up and down arrow keys to navigate the list of themes
+  * will update to show the theme icons as you navigate
+
 * Find All References
   * right-click a name and select this from context menu
   * displays all references in a "Peek" view
@@ -171,9 +181,20 @@ VS Code Notes
 
   * I disabled it because it uses too much CPU if no .flowconfig file is found
 
-* Font size
-  * press cmd-plus or cmd-= (same key) to increase
-  * press cmd-minus to decrease
+* Fonts
+  * family
+    * recommend installing "Fira Code" font
+      * "monospaced font with programming ligatures"
+      * combines many two-character symbols into one
+        * ex. =>, >=, !==
+    * to use in VS Code editors, add these lines to settings.json
+      ```
+      "editor.fontFamily": "Fira Code",
+      "editor.fontLigatures": true,
+      ```
+  * size
+    * press cmd-plus or cmd-= (same key) to increase
+    * press cmd-minus to decrease
 
 * Format Document
 
@@ -254,6 +275,12 @@ VS Code Notes
     * Find All References
     * Rename Symbol - there and all references
     * Change All Occurrences - like "Rename Symbol", but live; may be buggy
+
+* Key Bindings
+  * can install presets such as Vim key bindings as an extension
+    * see "Vim emulation for Visual Studio Code"
+    * supports some popular plugin features including
+       easymotion, surround, commentary, indent-object, and sneak
 
 * Keyboard Shortcuts
   - to view, click gear icon in lower-left and select "Keyboard Shortcuts"
@@ -383,6 +410,7 @@ VS Code Notes
 
   * to open, select Code...Preferences...Settings
     or click gear in lower-right and select Settings
+    or press cmd-,
   * many extensions can be configured by adding to user settings
   * can use /* */ and // comments in this file
     * useful to temporarily disable settings
