@@ -374,3 +374,11 @@ To add to YouTube
 - optionally check boxes to share on Google+ and/or Twitter
 - optionally upload a custom thumbnail
 - press "Publish" button
+
+Tracks
+- vertical list at bottom
+- higher tracks sit on top of lower ones
+- order doesn't matter for audio tracks
+- to see multiple video tracks simultaneously,
+  resize and reposition one or more so
+  they don't occupy the entire screen

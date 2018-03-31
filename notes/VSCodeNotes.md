@@ -143,6 +143,12 @@
       ```
     * select "Attach" from dropdown at top
 
+## Deleting Files
+
+* select in Explorer view and press delete key
+* will ask for confirmation to move to trash / recycle bin
+  unless you check "Do not ask me again" (not advised)
+
 ## Editor Tabs
   * tabs for files containing unsaved changes have a white circle after the file name
   * Explorer file names have a white circle before the names of files with unsaved changed
@@ -252,7 +258,7 @@
 
   * File - cmd-p (ctrl-p in Windows)
     * puts nothing at front of search string
-  * Symbol in File - cmd-O
+  * Symbol in File - cmd-O (ctrl-O in Windows)
     * puts @ at front of search string
     * only searches in current file
   * Symbol in Workspace - cmd-t
