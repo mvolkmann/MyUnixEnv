@@ -10,14 +10,15 @@
   * in Windows, download a .zip file from
     https://github.com/k-takata/the_silver_searcher-win32/releases
 * to use
-  * ag {text} {directory-path}
-  * ag '{regex}' {directory-path}
+  * ag {text} *directory-path*
+  * ag '*regex*' *directory-path*
   * directory-path defaults to current directory
+* by default searches all text files not specified in .gitignore
 * can restrict search to files with certain extensions
   * specified with options that each can
     include multiple actual extensions
     * includes --batch, --css, --html, --java, --js, --json,
       --less, --md, --sql, --sass, --ts, and many more
     * to get list, enter "ag --list-file-types"
-* examples
+* example
   * ag class --js --ts
