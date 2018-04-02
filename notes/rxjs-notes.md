@@ -164,7 +164,9 @@ const subject = new Rx.ReplaySubject(5); // retains last 5 values
 
 ## Operators
 
-* methods called on an `Observable` that return a new Observable
+* static methods on `Observable` or methods on an instance
+  that return a new Observable
+* doesn't find the typical definition of an "operator"
 * do not change the `Observable` on which they are called
 * two categories, instance and static
 * instance operators are methods on `Observable` instances
@@ -219,9 +221,24 @@ const subject = new Rx.ReplaySubject(5); // retains last 5 values
   * creates and returns a new `Observable` that passes
     each value emitted from its source `Observable` and
     emits the result of passing that value to the given function
+  * the most commonly used operator
 * pipe(operations)
   * creates and returns a new `Observable` that applies a series of operators
     to each value emitted by the target `Observable`
+  * only works with "pipeable" (a.k.a. lettable) operators
+    * these are pure functions available in the rxjs.operators package
+      * ex.
+        const (filter, map, reduce} = require('rxjs/operators');
+        const removeEvens = filter(x => x % 2);
+        // A function that returns an operator.
+        const doubleBy = x => map(value => value * 2);
+        const sum = reduce((acc, value) => acc + value, 0);
+    * can also build custom lettable operators
+  * provides an alternative to explicitly chaining operators
+    that can decrease the bundle size
+  * to use operators, these are equivalent
+    * source$.let(op1).let(op2).let(op3).subscribe(result => ...);
+    * source$.pipe(op1, op2, op3).subscribe(result => ...);
   * see http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pipe
 * pluck(key1, key2, ...)
   * takes a path to a property in objects to be emitted
@@ -259,9 +276,11 @@ const subject = new Rx.ReplaySubject(5); // retains last 5 values
   * creates and returns a new `Observable` the emits
     all the values from the target Observable
     followed by all the values from `otherObservable`
-* others include combineAll, combineLatest, concatAll, exhaust,
-  forkJoin, merge, mergeAll, race, startWith, switch,
-  withLatestFrom, zip, zipAll
+* startWith(value)
+  * creates a stream where the first value is the specified one
+    and the remaining values come from the target `Observable`
+* others include combineAll, combineLatest, concatAll, exhaust, forkJoin,
+  merge, mergeAll, race, switch, withLatestFrom, zip, zipAll
 
 ## Multicasting Operators
 * includes cache, multicast, publish publishBehavior,
