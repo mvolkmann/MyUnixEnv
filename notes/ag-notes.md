@@ -20,5 +20,8 @@
     * includes --batch, --css, --html, --java, --js, --json,
       --less, --md, --sql, --sass, --ts, and many more
     * to get list, enter `ag --list-file-types`
-* example
-  * `ag class --js --ts`
+  * example
+    * `ag class --js --ts`
+* to search only files with a name that matches a given pattern,
+  use the -G option
+  * ex. ag build package.json

@@ -111,6 +111,20 @@ observable.subscribe(res => {
   * synchronous, blocking call unless the observable
     uses something like setTimeout or setInterval
 
+## Accessing Observable values in Angular
+
+* can render Observable values using the `async` pipe
+  in the HTML of a component
+* two benefits
+  * less code to write; don't need to subscribe
+  * Angular will automatically
+    subscribe when the component is rendereed and
+    unsubscribe when it is no longer rendered
+* ex. {{myObservable$ | async}}
+* if the observable refers to an object
+  and you want to render one of its properties
+  * {{(myObservable$ | async)?.someProperty}}
+
 ## Subject
 
 * a kind of `Observable` that can send values to multiple observers
@@ -212,8 +226,17 @@ const subject = new Rx.ReplaySubject(5); // retains last 5 values
 * throw(err)
   * creates an `Observable` that doesn't emit any values
     and immediately emits the given error
-* others include bindCallback, bindNodeCallback, combineLatest,
-  defer, forkJoin, fromEventPattern, never, timer, webSocket, zip
+* combineLatest(obs1, obs2, ...)
+  * combines multiple observers into one
+    that delivers the current value from each
+    whenever any of them changes
+  * useful when new objects need to be constructed from
+    the latest version of multiple that come from `Observables`
+  * ex. `Observable` array of users and
+    `Observable` array of cars with owner info
+    where user objects need to hold an array of cars they own
+* others include bindCallback, bindNodeCallback, defer,
+  forkJoin, fromEventPattern, never, timer, webSocket, zip
 
 ## Transformation Operators
 * all are instance and called on an existing `Observable` object

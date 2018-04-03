@@ -8,6 +8,8 @@
   - makes sense for data that is streaming,
     but REST calls that return JSON are not
   - should just use Fetch API and async/await.
+  - way more complicated for DOM event handling
+    than just using event handlers
 * build times are way too slow
 * that Angular Package Format is needed
 * excessive use of classes; should use more plain functions
@@ -68,6 +70,8 @@
 
 ## Custom Components
 * to create, enter `ng generate component {name}`
+  - the name should always start with a prefix followed by a hyphen
+    to avoid conflicting with current and future HTML tag names
   - can be in any project directory, not just top
   - creates {name} directory under src/app containing
     {name}.component.* where * is
@@ -87,13 +91,46 @@
     * can specific the same name as the class
       on the top element in the .html file
       and styling for that class in the .css file
-  - ngOnInit method is a lifecycle hook
-    where initialization logic can be placed
   - define properties inside the class,
     typically before the constructor
     * ex. myProp = 'some value';
-* to use the component in another, add an element
+    * typically the constructor is only used for dependency injection
+      and other setup logic is placed in `ngOnInit`
+  - `ngOnInit` method is a lifecycle hook
+    where initialization logic can be placed
+    * called after constructor when all bindings are available
+* to use the component in another, add an elements
   * ex. <name></name>
+
+## Change Detection
+* default change detection uses a monkey patched
+  version of the DOM to detect changes
+* by default checks the entire DOM tree for changes
+  even if there is no indication that they have changed
+  * checks all properties of all components for changes
+    and re-renders if any have changed
+  * could be slow for large UIs
+* can be changed to "OnPush" for specific components
+  and their descendants
+  * will only check when new data is pushed to a component
+    in order to improve performance
+```js
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component
+} from '@angular/core';
+@Component({
+  ...
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MyComponent {
+  constructor(private cd: ChangeDetectorRef) {}
+
+  // When the component needs to be checked,
+  // this.cd.markForCheck();
+}
+```
 
 ## Decorators
 * a.k.a. annotations
@@ -423,6 +460,20 @@ export class ParentComponent {
   following the pipe name with a colon and a value
   - ex. {{amount | currency:'CAD'}}
 * custom pipes can be defined
+* async pipe
+  * extracts the value of an Observable inside HTML
+  * ex. {{myObservable$ | async}}
+  * ex. with ngFor
+    *ngFor="let user of users$ | async"
+  * automatically unsubsubscribes from the `Observable`
+    if the component is removed from the DOM
+    and resubscribes if it is inserted again later
+    * a primary benefit over just directly subscribing in code
+      and setting a "normal" property on changes
+      rather than an `Observable` property
+  * if the `Observable` value is an object,
+    can get a specific property with
+    {{(myObservable$ | async)?.someProperty}}
 
 ## Computed Attributes
 * to add an attribute to an HTML element with a computed value,
@@ -567,3 +618,77 @@ export class ParentComponent {
     ```js
     StoreModule.forRoot({hello: reducer})
     ```
+* to subscribe to store changes in a component
+  * inject the store into the constructor and
+    create an `Observable` to a store path
+    * ex.
+```js
+export class MyComponent {
+  color$: Observable<string>;
+  constructor(private store: Store<AppState>) {
+    this.color$ = store.select('kite', 'color');
+  }
+  ...
+}
+```
+  * use the `async` pipe in HTML to get `Observable` values
+    * render example: `<div>{{color$ | async}}</div>`
+    * passing example: <foo-bar [color]="color | async"></foo-bar>
+
+## CLI
+
+* ng build
+  * all builds bundle files
+  * artifact files are placed in dist directory
+  * artifact files are deleted when the build completes?
+  * build details for a project can be configured in .angular-cli.json
+  * CSS is inlined if less that 10KB
+  * the primary files produced arer index.html and main.bundle.js
+  * bundle .js files
+    * main.bundle.js
+      * contains your code
+    * inline.bundle.js
+      * contains a webpack loader
+    * polyfills.bundle.js
+      * contains polyfill code you reference in polyfills.ts
+      * looks like developers are responsible for determining what polyfills they need
+        rather than having a tool like babel-preset-env figure it out for them
+    * scripts.bundle.js
+      * contains scripts you declare in the scripts section of .angular-cli.json
+      * at BMX, this includes jQuery and Kendo UI components
+      * why aren't these pulled in where needed with ES6 imports?
+    * vendor.bundle.js
+      * only generated in dev mode
+      * contains Angular libraries and code your code imports
+ 
+* ng serve
+ 
+  * builds application and starts a local web server
+ 
+## .angular-cli.json
+ 
+* configures options for the Angular CLI commands
+ 
+## tsconfig.json
+ 
+* configures TypeScript options for a project
+ 
+## tslint
+ 
+* primary linting tool for TypeScript code
+* rules are configured in tslint.json
+ 
+## for automatic, quick rebuilds after changes
+ 
+* add npm script like the following
+  (works in flex-prep-vitek/3_0_0/web-cassette)
+  "watch": "ng build --no-progress --watch
+  * try modifying text in
+    summary-table/summary-table-view.component.html
+ 
+## to use Browsersync for live reload
+ 
+* npm install -g browser-sync
+* create and run a script that does this:
+  browser-sync start --browser Chrome --proxy 'localhost:8080' \
+   --files 'dist/index.html' 'dist/main.bundle.js'

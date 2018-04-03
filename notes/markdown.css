@@ -1,0 +1,22 @@
+body {
+  background-color: white;
+}
+
+.vscode-body {
+  color: black;
+}
+
+h1 {
+  color: purple;
+  font-weight: bold;
+}
+
+h2 {
+  color: cornflowerblue;
+  font-weight: bold;
+}
+
+h3 {
+  color: green;
+  font-weight: bold;
+}
