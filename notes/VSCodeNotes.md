@@ -409,6 +409,15 @@
 
 * install "Perforce for VS Code" extension
 * add the following to settings
+  "perforce.activationMode": "always",
+  "perforce.addOnFileCreate": true,
+  "perforce.client": "{perforce-user-id}.v2s",
+  "perforce.deleteOnFileDelete": true,
+  "perforce.editOnFileModified": true,
+  "perforce.editOnFileSave": true,
+  "perforce.password": "{perforce-password}",
+  "perforce.port": "ussl017:1666",
+  "perforce.user": "{perforce-user-id}",`
 
 ## Prettier extension
 

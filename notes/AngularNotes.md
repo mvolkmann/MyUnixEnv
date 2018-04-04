@@ -4,10 +4,10 @@
 * proprietary syntax in HTML
 * dependency injected services
   - should just use imported JavaScript functions
-* RxJs
+* excessive use of RxJs
   - makes sense for data that is streaming,
     but REST calls that return JSON are not
-  - should just use Fetch API and async/await.
+  - should just use Fetch API and async/await
   - way more complicated for DOM event handling
     than just using event handlers
 * build times are way too slow
