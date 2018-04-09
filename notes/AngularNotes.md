@@ -2,20 +2,34 @@
 
 ## Things I Don't Like
 * proprietary syntax in HTML
+  * rather than just relying on JavaScript
+  * so more syntax must be learned
 * dependency injected services
-  - should just use imported JavaScript functions
+  * adds complexity and slows the build process
+  * should just use imported JavaScript functions
 * modules just add complexity
   - why not just import JavaScript files where they are needed?
-* excessive use of RxJs
+* excessive use of RxJS
   - makes sense for data that is streaming,
     but REST calls that return JSON are not
-  - should just use Fetch API and async/await
-  - way more complicated for DOM event handling
+  - should just use Fetch API (which is natively supported
+    in modern browsers) and async/await
+  - for DOM event handling, using RxJS is way more complicated
     than just using event handlers
 * build times are way too slow
-* that Angular Package Format is needed
-* excessive use of classes; should use more plain functions
+* the requirement to use the "Angular Package Format"
+  makes it more difficult to deploy and use reusable libraries
+* excessive use of classes
+  * should use more plain functions
 * using `npm link` to debug local libraries is not supported
+* CSS changes require full page refresh
+  * instead of just being applied to current page
+  * contributes to making iterative development slower
+* could still just Angular, but reduce the use of
+  * modules
+  * services
+  * dependency injection
+  * RxJS
 
 ## Setup
 * npm install -g @angular/cli
