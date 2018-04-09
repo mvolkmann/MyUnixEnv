@@ -98,13 +98,16 @@ Inspector
   * show/hide mouse pointer
     - for entire screencast or just selected parts
   * pointer zoom
-  * click effect: None, Radar, or Invert
-  * pointer: Default, Circle - Light, Circle - Dark, Square, or Choose Image...
+    - can make mouse pointer larger
+  * click effect
+    - None, Radar, or Invert
+  * pointer
+    - Default, Circle - Light, Circle - Dark, Square, or Choose Image...
   * opacity
   * sound on click
   * show keystrokes
     - all or only modifier keys
-    - height, position, width
+    - can specify height, position, and width
 - Callout
   * to focus on certain area of screen
     during a specified part of timeline
@@ -284,13 +287,19 @@ To add a callout
 - click "Screen Recording" element in timeline to select it
 - move timeline scrubber to where callout should begin
 - select the callout icon in the inspector (circle w/ arrow inside)
+- press "+ Action" button to add a callout
+- select highlight type
+  * Mouse Cursor (highlights mouse cursor movement with a circle),
+    Foreground Window (doesn't seem useful), or
+    Freehand (popular)
+  * for Freehand, select circle or rectangle
+  * for circle, select position and size
+  * for rectangle, drag out location and size
+    such as surrounding a dialog
 - drag right edge of callout rectangle to adjust duration
-- select a highlight option radio button
-  * "Mouse Cursor" highlights mouse cursor movement with a circle
-    throughout the callout duration
     - optionally adjust opacity, blur, zoom (circle size and content zoom factor),
       border, outline thickness and color, shadow, and build in/out durations
-  * "Foreground Window" doesn't seem useful (What does it do?)
+    - build in/out durations provide gradual addition and removal of callouts
   * "Freehand" highlights an area of the video by zooming in on it
     - select "Blur Background" checkbox to deemphasize it
     - set build in/out durations to gradually zoom in an out (0.5s works well)

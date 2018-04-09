@@ -20,3 +20,20 @@ h3 {
   color: green;
   font-weight: bold;
 }
+
+.hljs > code > div {
+  background-color: linen;
+  color: black;
+}
+
+.hljs-class .hljs-title {
+  color: blue;
+}
+
+.hljs-comment {
+  color: green;
+}
+
+.hljs-keyword {
+  color: orange;
+}

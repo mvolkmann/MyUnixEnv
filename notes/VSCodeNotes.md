@@ -20,6 +20,11 @@
   * otherwise will use existing VS Code session
 * reopens last set of tabs when restarted
 
+## Code Hints
+
+* look for light bulb icon or an ellipsis below code
+* hover over to see hint
+
 ## Color Themes
 
 * default is "Dark+"
@@ -32,7 +37,8 @@
   * will be stored in settings as "workbench.colorTheme"
 * to customize colors for nearly everying in the editor, see
   https://code.visualstudio.com/docs/getstarted/theme-color-reference
-* to customize colors for specific syntax elements (tokens) in editor windows
+* to customize colors for specific syntax elements (tokens)
+  in editor windows
   * modify settings
   * add "editor.tokenColorCustomizations" property
     where the value is an object with these keys:
@@ -148,12 +154,6 @@
     ```
   * select "Attach" from dropdown at top
 
-## Deleting Files
-
-* select in Explorer view and press delete key
-* will ask for confirmation to move to trash / recycle bin
-  unless you check "Do not ask me again" (not advised)
-
 ## Developer Tools
 
 * can inspect elements inside VS Code
@@ -163,12 +163,39 @@
 
 * tabs for files containing unsaved changes have a white circle after the file name
 * Explorer file names have a white circle before the names of files with unsaved changed
+* can horizontally scroll through tabs
+* right-click to get menu containing
+  * Close, Close Others, Close to the Right, Close Saved, Close All
+  * Copy Path
+  * Reveal in Explorer
+    * handle to open in another app that supports printing
+  * Reveal in Side Bar
+* you mapped ctrl-w to workbench.action.closeActiveEditor
 
 ## Emmet
 
 * type a snippet and press tab to expand
 * shows expansion in a popup before tab is pressed
 * in React source files, `.foo` expands to `<div className="foo"></div>`
+* to wrap selected lines with a new tag
+  * open Command Palette and enter "Emmet: Wrap with Abbreviation"
+  * will see preview
+  * press enter to accept or esc to reject
+
+## Error Navigation
+
+* to jump to the next error, press F8
+* to jump to the previous error, press shift-F8
+
+## Explorer
+
+* to delete a file
+  * select and press delete key (cmd-delete in macOS)
+  * will ask for confirmation to move to trash / recycle bin
+    unless you check "Do not ask me again" (not advised)
+* to move a file to a different directory
+  * drag it
+  * will ask for confirmation
 
 ## Extensions - to install
 
@@ -268,6 +295,8 @@
   * view status by running "git status"
   * delete a remote branch
   * could do from an integrated terminal
+* it may sometimes be necessary to click the refresh icon
+  above the list of modified files to update the list
 
 ## Go to
 
@@ -357,6 +386,11 @@
 * can customize CSS used in preview
   * add `markdown.styles": ["markdown.css"],` to settings
     and place the `.css` file in each workspace directory
+* to see CSS classes used
+  * open Command Palette
+  * enter "Developer: Open Webview Developer Tools"
+    which opens a Chrome devtools window
+  * navigate to
 
 ## Moving Lines
 
@@ -394,6 +428,11 @@
 ## Open File
 
 * in Windows, ctrl-o
+
+## Organized Imports
+
+* for JavaScript and TypeScript files
+* open Commannd Palette and enter "Organize Imports"
 
 ## Peek View
 
@@ -453,7 +492,8 @@
   * enter new name
   * will change all occurrences
   * files with changes are not automatically saved; must do manually
-* to extract code from a function or method into a new function or method
+* to extract code from a function or method
+  into a new function or method
   * select lines of code
   * click light blub icon
   * select one of
@@ -521,8 +561,8 @@
 
 * install "Sort lines" extension
 * select lines
-* open Command Palette
-* enter "Sort Lines Ascending" command
+* press F9 or
+  open Command Palette and enter "Sort Lines Ascending" command
 
 ## Synchronize Settings
 
@@ -596,3 +636,4 @@
   under your home directory
   * or a directory that is backed up like One Drive
 * later can reopen with File...Open Workspace...
+  or by double-clicking a `.code-workspace` file

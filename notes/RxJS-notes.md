@@ -302,8 +302,18 @@ const subject = new Rx.ReplaySubject(5); // retains last 5 values
 * startWith(value)
   * creates a stream where the first value is the specified one
     and the remaining values come from the target `Observable`
+* withLatestFrom(otherObs1, otherObs2, ..., [projectionFn])
+  * returns a new Observable that by default emits an array
+    containing the latest values from the source observable
+    (on which this is called) and each Observable passed to this
+  * nothing is emitted until all of these Observables
+    emit at least one value
+  * if projectionFn is specified, it is passed this array
+    and the Observable returned by this operator
+    emits whatever that returns
+
 * others include combineAll, combineLatest, concatAll, exhaust, forkJoin,
-  merge, mergeAll, race, switch, withLatestFrom, zip, zipAll
+  merge, mergeAll, race, switch, zip, zipAll
 
 ## Multicasting Operators
 * includes cache, multicast, publish publishBehavior,

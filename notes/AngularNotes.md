@@ -4,6 +4,8 @@
 * proprietary syntax in HTML
 * dependency injected services
   - should just use imported JavaScript functions
+* modules just add complexity
+  - why not just import JavaScript files where they are needed?
 * excessive use of RxJs
   - makes sense for data that is streaming,
     but REST calls that return JSON are not
@@ -13,6 +15,7 @@
 * build times are way too slow
 * that Angular Package Format is needed
 * excessive use of classes; should use more plain functions
+* using `npm link` to debug local libraries is not supported
 
 ## Setup
 * npm install -g @angular/cli
@@ -136,6 +139,11 @@ export class MyComponent {
 * a.k.a. annotations
 * functions that add functionality to classes, methods, and properties
 
+## DefinitelyTyped
+* to update type definitions obtained from DefinitelyTyped
+  for a given package, enter
+  `npm install -D @types/{package-name}`
+
 ## Modules
 - @NgModule annotation
   * declarations - list of view classes used by this module
@@ -143,6 +151,10 @@ export class MyComponent {
   * exports - list of modules that are provided to importers of this module
   * providers - list of services used by this module
   * bootstrap - only for top-level modules; defines the starting component
+
+## REST Calls
+- see javascript/Angular/rest-demo project on your Mac laptop
+- it uses the HttpClient module
 
 ## Routes
 - maps URL paths to components using an array of objects

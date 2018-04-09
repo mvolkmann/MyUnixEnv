@@ -77,6 +77,7 @@ alias cdsd 'cd $OCI_DIR/SmartDevice_Web_Demo'
 alias cdsett 'cd $SETT_DIR'
 alias cdtalks 'cd $PROGRAMMING_DIR/conferences/talks'
 alias cdtraining 'cd $TRAINING_DIR'
+alias cdts 'cd $TYPESCRIPT_DIR'
 alias cdvim 'cd $PROGRAMMING_DIR/Tools/Vim'
 
 # Git aliases
@@ -170,6 +171,7 @@ set JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
 #set MONGODB_DIR=$DATABASES_DIR/MongoDB
 set SETT_DIR $OCI_DIR/SETT
 set TRAINING_DIR $DOCUMENTS_DIR/training
+set TYPESCRIPT_DIR $LANGUAGES_DIR/typescript
 
 # AsciiDoc settings
 set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
