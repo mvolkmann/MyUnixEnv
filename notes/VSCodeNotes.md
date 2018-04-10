@@ -1,5 +1,8 @@
 # VS Code Notes
 
+Keyboard shortcuts in this notes show the Windows version
+followed by the macOS version in parentheses.
+
 ## Overview
 
 * code editor from Microsoft
@@ -14,7 +17,7 @@
 ## Basics
 
 * can reopen recently edited files with File...Open Recent
-* to open the Command Palette, press cmd-P
+* to open the Command Palette, press ctrl-P (cmd-P)
 * to edit a file from a terminal, code {file-name}
   * will launch VS Code if not already running
   * otherwise will use existing VS Code session
@@ -24,6 +27,13 @@
 
 * look for light bulb icon or an ellipsis below code
 * hover over to see hint
+
+## Code Outline extension
+
+* adds a new section at the bottom of the Explorer left nav
+* lists all the functions, classes, and methods defined
+  in the current editor tab
+* clicking a name scrolls to it in the editor tab
 
 ## Color Themes
 
@@ -75,7 +85,7 @@
 
 ## Command Palette
 
-* cmd-P to open
+* ctrl-P (cmd-P) or F1 to open
 * type any letters in command name to narrow list
 
 ## Command-line launching
@@ -190,7 +200,7 @@
 ## Explorer
 
 * to delete a file
-  * select and press delete key (cmd-delete in macOS)
+  * select and press delete key (cmd-delete)
   * will ask for confirmation to move to trash / recycle bin
     unless you check "Do not ask me again" (not advised)
 * to move a file to a different directory
@@ -251,17 +261,17 @@
     "editor.fontLigatures": true,
     ```
 * size
-  * press cmd-plus or cmd-= (same key) to increase
-  * press cmd-minus to decrease
+  * press ctrl-+ or ctrl-= (cmd-plus or cmd-=) to increase
+  * press ctrl-minus (cmd-minus) to decrease
 
 ## Format Document
 
-* option-F
+* alt-F (option-F)
 * yours is configured to use Prettier
 
 ## Full Screen
 
-* toggle with cmd-ctrl-f (F11 in Windows)
+* toggle with F11 (cmd-ctrl-f)
 
 ## Git
 
@@ -300,29 +310,32 @@
 
 ## Go to
 
-* File - cmd-p (ctrl-p in Windows)
+* File - ctrl-p (cmd-p)
   * puts nothing at front of search string
-* Symbol in File - cmd-O (ctrl-O in Windows)
+* Symbol in File - ctrl-O (cmd-O)
   * puts @ at front of search string
   * only searches in current file
-* Symbol in Workspace - cmd-t
+* Symbol in Workspace - ctrl-t (cmd-t)
   * puts # at front of search string
   * can find names in any file in workspace
-* Line - ctrl-g
+* Line - ctrl-g (cmd-g)
   * puts : at front of search string
   * enter line number and press enter
-* Command Palette - cmd-P
+* Command Palette - ctrl-P or F1 (cmd-P)
   * puts > at front of search string
   * enter or select a command
 * change first character in search input to
   switch between these five types of searches
 * press esc to close input without going to anything
-* cmd-hover over names to see in a popup
+* ctrl-hover (cmd-hover) over names to see in a popup
   and click to go to definition
   * can also right-click and select "Go to Definition"
-  * to see definition in a peek view, right-click and select "Peek Definition"
-* to go back press ctrl-minus
-* to go forward press ctrl-underscore
+  * to see definition in a peek view,
+    right-click and select "Peek Definition"
+  * to go back press alt-left (ctrl-minus?)
+    * I changed to cmd-left on macOS
+  * to go forward press alt-right (ctrl-underscore?)
+    * I changed to cmd-right on macOS
 
 ## Intellisense
 
@@ -401,7 +414,8 @@
 
 ## Multiple Cursors
 
-* after selecting some text, press cmd-L to "Select All Occurrences"
+* after selecting some text, press ctrl-L (cmd-L)
+  to "Select All Occurrences"
 * now can edit all occurrences at the same time
 * when finished press esc to get out of multi-cursor moe
 
@@ -466,6 +480,18 @@
   `"editor.formatOnSave": true`
 * it respects project-specific `.prettierrc` files
 
+## PrintCode extension
+
+* adds PrintCode to Command Pallette
+* I configured keyboard shortcut alt+P (opt+P)
+* opens URL in default browser and invokes print command for you
+  * doesn't work in IE, but can copy URL to another browser
+  * uses the same URL for all requests,
+    so can just refresh other browser
+* can optionally configure print options
+* press "Print" button
+  and print from there
+
 ## Quokka.js extension
 
 * provides useful information about JavaScript and TypeScript code
@@ -510,9 +536,9 @@
 * can be case-sensitive (toggle button in popup)
 * can only find whole words (toggle button in popup)
   * ex. when enabled, "class" does not match "className"
-* to search only in current file, press cmd-f
+* to search only in current file, press ctrl-f (cmd-f)
 * to search all files in current workspace,
-  press cmd-F of select "View...Search"
+  press ctrl-F (cmd-F) of select "View...Search"
 * click left and right arrows in popup
   to move to previous and next matches
 
@@ -587,9 +613,9 @@
 ## Tab Navigation
 
 * to navigate to tabs to the right - "Open Next Editor",
-  press ctrl-right (you added) cmd-{ or ctrl-tab
+  press ctrl-right (I added) or ctrl-tab (cmd-{)
 * to navigate to tabs to the left - "Open Previous Editor",
-  press ctrl-left (you added) cmd-} or ctrl-shift-tab
+  press ctrl-left (I added) or ctrl-shift-tab (cmd-})
 
 ## Terminal
 
@@ -603,7 +629,7 @@
 
 * to open, select Code...Preferences...Settings
   or click gear in lower-right and select Settings
-  or press cmd-,
+  or press ctrl-, (cmd-,)
 * many extensions can be configured by adding to user settings
 * validates all entries so only correct settings
   can be entered without warnings
@@ -624,8 +650,9 @@
 
 ## Vim extension
 
-* under "Customize" on "Welcome" screen, install keyboard shortcuts for Vim
-* can save with cmd-s in addition to :w
+* under "Customize" on "Welcome" screen,
+  install keyboard shortcuts for Vim
+* can save with ctrl-s (cmd-s) in addition to :w
 
 ## Workspaces
 
