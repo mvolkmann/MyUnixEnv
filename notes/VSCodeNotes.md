@@ -100,23 +100,28 @@ followed by the macOS version in parentheses.
 * to debug non-Node applications
   install a language-specific debugger extension
 * to debug non-server Node applications
-  * open a source file
+  * open the folder containing the source file to be tested
+  * open the source file to be tested
   * add breakpoints (described below)
   * click Debug button in left nav
-    * don't need special configuration in launch.json for non-server code
+    * don't need special configuration in launch.json
+      for non-server code
   * click green triangle on left side of dropdown
   * use buttons in panel at top to Continue,
     Step Over, Step Into, Step Out,
     Restart, and Stop (exits debugging)
   * can drag debugging button panel left and right
   * panels on left display
-    * all in-scope variables and their values
+    * VARIABLES
+      * displays all in-scope variables and their values
       * can right-click a variable and select "Set Value" to change
-    * watch expressions
+    * WATCH
+      * displays watch expressions
       * click + to add them
       * each will show the current value of the expression
-    * call stack
-    * breakpoints and options for them
+    * CALL STACK
+    * BREAKPOINTS
+      * displays all breakpoints and options for them
   * enter expressions in the "Debug Console REPL"
     after > prompt at bottom
     * can be any JavaScript expression including
@@ -135,34 +140,24 @@ followed by the macOS version in parentheses.
     * Expression - stop when expression evaluates to true
     * to change type and configure, right-click breakpoint red circle
       and select type from dropdown
-* can configure to "Skip Code" that you didn't write
+* can configure to "Skip Code" you didn't write
   * like code from npm packages
-* can also perform debugging operations from the Debug menu
-* debugging Chrome web apps
-  * set "type": "chrome" in Launch Configuration
-  * cannot get this to work
-* debugging Node servers
-  * cannot get this to work when server code is transpiled with Babel
-    * npm script below must refer to transpiled code in build directory
-    * but then the code displayed by the debugger is the transpiled code
-    * can't set breakpoints in original source files
-  * add an npm script like this:
-    "debug": "node --inspect --inspect-brk build/index.js",
-  * npm run debug
-  * create a launch configuration
-    * click gear to right of dropdown and add this configuration object
-    * to debug currently opened file, use
-      "program": "${file}"
-    ```json
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach", // appears in Debug dropdown
-      "port": 9229,
-      "protocol": "inspector"
-    }
-    ```
-  * select "Attach" from dropdown at top
+* can perform debugging operations from Debug menu
+* to debug server Node applications
+  * suppose we want to debug server.js
+  * open Command Palette and enter "Debug: Toggle Auto Attach"
+    * will say "Auto Attach: On" in lower-left
+  * add this script to package.json
+    "debug": "node --inspect server.js"
+  * open server.js
+  * set breakpoints
+  * click "Debug" icon in left nav
+  * open Command Palette and enter "Task: Run Task"
+    or select Tasks ... Run Task...
+  * select "npm: debug"
+  * select "Continue without scanning ..."
+  * hit the server by enter a URL in a browser
+  * server.js should be stopped at a breakpoint
 
 ## Developer Tools
 
@@ -482,7 +477,7 @@ followed by the macOS version in parentheses.
 
 ## PrintCode extension
 
-* adds PrintCode to Command Pallette
+* adds PrintCode to Command Palette
 * I configured keyboard shortcut alt+P (opt+P)
 * opens URL in default browser and invokes print command for you
   * doesn't work in IE, but can copy URL to another browser
