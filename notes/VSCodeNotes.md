@@ -23,6 +23,33 @@ followed by the macOS version in parentheses.
   * otherwise will use existing VS Code session
 * reopens last set of tabs when restarted
 
+## Auto Close Tag extension
+
+* automatically adds closing tag when an opening tag is entered
+* ex. entering `<span>` adds `</span>` after the cursor
+
+## Auto Rename Tag extension
+
+* automatically renames other side of tag when one is renamed
+* ex. can change "header" to "footer" in either `<header>` or `</header>`
+
+## Code Folding
+
+* works in many kinds of source files including
+  JavaScript, TypeScript, HTML, CSS, and Markdown
+  * really nice for focusing work on specific sections
+    in a Markdown file!
+* to fold all blocks in the current editor,
+  open Command Palette and enter "Fold All"
+  * recommended for Markdown files
+* to unfold all blocks in the current editor,
+  open Command Palette and enter "Unfold All"
+* to fold a specific block of code, click icon
+  with minus in box to the left of the code
+* to open a fold, click icon with plus in box
+* to fold all block comments in the current editor,
+  open Command Palette and enter "Fold All Block Comments"
+
 ## Code Hints
 
 * look for light bulb icon or an ellipsis below code
@@ -140,6 +167,12 @@ followed by the macOS version in parentheses.
     * Expression - stop when expression evaluates to true
     * to change type and configure, right-click breakpoint red circle
       and select type from dropdown
+  * to add a "log point"
+    * right-click to the left of a line number
+      add select "Add Log Point..."
+    * enter a message where expressions are enclosed in curly braces
+    * ex. The sum is {a + b} now!
+    * will display a red diamond icon in the gutter
 * can configure to "Skip Code" you didn't write
   * like code from npm packages
 * can perform debugging operations from Debug menu
@@ -163,6 +196,11 @@ followed by the macOS version in parentheses.
 
 * can inspect elements inside VS Code
 * Help ... Toggle Developer Tools to open Chrome devtools
+
+## Documentation
+
+* hover over a function or method call
+  to get documentation on it, if available
 
 ## Editor Tabs
 
@@ -191,6 +229,13 @@ followed by the macOS version in parentheses.
 
 * to jump to the next error, press F8
 * to jump to the previous error, press shift-F8
+
+## ESLint extension
+
+* runs ESLint on JavaScript files
+* uses version of ESLint in current project directory
+  or global version if not found in project
+* will use project .estingrc.json file if found
 
 ## Explorer
 
@@ -332,6 +377,16 @@ followed by the macOS version in parentheses.
   * to go forward press alt-right (ctrl-underscore?)
     * I changed to cmd-right on macOS
 
+## Import Cost extension
+
+* shows size in red to right of JavaScript imports
+
+## Indenticator
+
+* highlights current indentation depth by drawing a vertical line
+  between the beginnings of the starting and ending lines of the block
+* sensitive to column of cursor
+
 ## Intellisense
 
 * opens automatically in most cases as you type
@@ -438,7 +493,7 @@ followed by the macOS version in parentheses.
 
 * in Windows, ctrl-o
 
-## Organized Imports
+## Organize Imports
 
 * for JavaScript and TypeScript files
 * open Commannd Palette and enter "Organize Imports"
@@ -616,6 +671,12 @@ followed by the macOS version in parentheses.
 
 * press ctrl-` to open an integrated terminal (can run Fish!)
 
+## Todo Highlight extension
+
+* highlights TODO: and FIXME: in comments
+* by default uses white text on a yellow background
+* highly configurable
+
 ## TypeScript
 
 * under "Customize" on "Welcome" screen, install support for TypeScript
@@ -648,6 +709,11 @@ followed by the macOS version in parentheses.
 * under "Customize" on "Welcome" screen,
   install keyboard shortcuts for Vim
 * can save with ctrl-s (cmd-s) in addition to :w
+
+## vscode-icons extension
+
+* adds file type icons in file view
+* I don't see any change!
 
 ## Workspaces
 

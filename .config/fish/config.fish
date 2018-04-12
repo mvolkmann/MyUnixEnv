@@ -79,6 +79,7 @@ alias cdtalks 'cd $PROGRAMMING_DIR/conferences/talks'
 alias cdtraining 'cd $TRAINING_DIR'
 alias cdts 'cd $TYPESCRIPT_DIR'
 alias cdvim 'cd $PROGRAMMING_DIR/Tools/Vim'
+alias cls 'clear'
 
 # Git aliases
 # Note that fish uses parens in place of backticks to execute sub-commands.

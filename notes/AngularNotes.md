@@ -1,35 +1,94 @@
 # Angular Notes
 
 ## Things I Don't Like
+
+* complexity
+  * Angular apps typically makes heavy use of
+    RxJS, ngrx/store, and Effects which introduce
+    a lot of complexity.
+  * I believe the complexity of the current UI code
+    is preventing many developers from
+    being able to help with the development
+    because the learning curve is too high.
+* RxJS
+  * Most Angular apps make heavy use of RxJS.
+  * RxJS makes sense for data that is streaming,
+    but REST calls that return JSON are not.
+  * It would be much simpler to just use Fetch API
+    (which is natively supported in modern browsers)
+    together with JavaScript async/await.
+  * Using RxJS for DOM event handling adds more
+    unnecessary complexity when Angular already
+    has good support for event handling.
+  * The primary reason to use Observables is to allow components
+    to re-render when data they care about changes.
+    React achieves this using only Redux.
 * proprietary syntax in HTML
-  * rather than just relying on JavaScript
-  * so more syntax must be learned
+  * Angular created its own proprietary syntax
+    that is mixed into HTML to add things like
+    conditional logic, iteration, dynamic attributes,
+    and event handling. This is additional syntax
+    that each new Angular developer must learn.
+    React uses JSX which is more similar to HTML.
+    It relies on JavaScript syntax instead of a
+    proprietary syntax for conditional logic and iteration.
 * dependency injected services
-  * adds complexity and slows the build process
-  * should just use imported JavaScript functions
-* modules just add complexity
-  - why not just import JavaScript files where they are needed?
-* excessive use of RxJS
-  - makes sense for data that is streaming,
-    but REST calls that return JSON are not
-  - should just use Fetch API (which is natively supported
-    in modern browsers) and async/await
-  - for DOM event handling, using RxJS is way more complicated
-    than just using event handlers
-* build times are way too slow
-* the requirement to use the "Angular Package Format"
-  makes it more difficult to deploy and use reusable libraries
-* excessive use of classes
-  * should use more plain functions
-* using `npm link` to debug local libraries is not supported
-* CSS changes require full page refresh
-  * instead of just being applied to current page
-  * contributes to making iterative development slower
+  * These add complexity and slow the build process.
+  * The benefits they add over just using imported
+    JavaScript functions is questionable.
+  * React does not use dependency injection.
+* modules
+  * JavaScript already has a module concept which is
+    just a source file from which functions, classes,
+    and variables can be imported.
+  * Angular modules add more complexity.
+  * It's not clear that Angular modules add any benefits.
+  * React just uses JavaScript modules.
+* build times
+  * Angular build times are much slower than React build times.
+  * This negatively impacts iterative development.
+* Angular Package Format
+  * The requirement to use this with creating libraries
+    of reusable components and services makes it
+    more difficult to deploy and use them.
+  * Sharing resuable components and services
+    is much easier in React.
+* use of classes
+  * Typical Angular code makes far more use of classes
+    than JavaScript used in other frameworks.
+  * Other frameworks focus more on functional programming
+    and use more plain functions.
+  * The benefits of functional programming are well-established and
+    include ease of testing and ability to reason about the code.
+* debugging local libraries
+  * Other frameworks can use the `npm link` command to easily
+    cause an application to use code in a local library
+    instead of code downloaded from an npm repository.
+  * This greatly simplifies the debugging of library code.
+  * Due to the Angular Package Format,
+    this approach does not work in Angular.
+* CSS changes
+  * With live reload in Angular, these require a full page refresh.
+  * React is able to apply CSS changes to the current page
+    without refreshing it which speeds up iterative development.
+* finding developers
+  * it is becoming increasingly difficult to find Angular developers
+    while it is much easier to find React developers
 * could still just Angular, but reduce the use of
   * modules
   * services
   * dependency injection
   * RxJS
+
+## Popularity
+
+A good site for learning about the popularity of
+JavaScript tools and frameworks is https://stateofjs.com.
+In the 2017 survey, the "Front-end" section shows
+that 4,449 respondents said they have used Angular
+and would use it again.  For React the number is 13,669.
+2,289 said they have used Angular and would not use it again.
+For React the number is 1,020.
 
 ## Setup
 * npm install -g @angular/cli
