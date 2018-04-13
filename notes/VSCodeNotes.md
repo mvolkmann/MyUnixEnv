@@ -377,6 +377,11 @@ followed by the macOS version in parentheses.
   * to go forward press alt-right (ctrl-underscore?)
     * I changed to cmd-right on macOS
 
+## Images
+
+* when an image file is selected in the Explorer panel
+  it is rendered in an editor tab
+
 ## Import Cost extension
 
 * shows size in red to right of JavaScript imports
