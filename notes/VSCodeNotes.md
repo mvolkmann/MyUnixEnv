@@ -528,7 +528,11 @@ followed by the macOS version in parentheses.
 * I selected "Prettier - Code formatter 1.2.2"
 * to format on save, add the following to user settings
   `"editor.formatOnSave": true`
-* it respects project-specific `.prettierrc` files
+* respects project-specific `.prettierrc` files
+* hover over "Prettier" in the lower-right corner
+  to see the version it is using
+* will use version installed as dev dependency
+  in package.json if present
 
 ## PrintCode extension
 

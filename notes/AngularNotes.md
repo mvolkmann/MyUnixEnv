@@ -582,10 +582,12 @@ export class ParentComponent {
 
 ## Input Properties
 * properties of a component whose value will be supplied
-  with other components use that component
-  must be annotated with @Input
+  by other components use that component
+* must be annotated with @Input
   which must be imported from @angular/core
 * ex. @Input() hero: Hero;
+* other components use this one with
+  <foo-bar hero="someHero"></foo-bar>
 
 ## Services
 * a better place to fetch data than in components
