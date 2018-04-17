@@ -23,7 +23,7 @@ syntax on
 
 set antialias
 set clipboard=unnamed " yank (copy) and delete (cut) also go to system clipboard
-set cursorline " underlines current line so it is easy to see
+"set cursorline " underlines current line so it is easy to see - off for ScreenFlow
 
 " To get word completion using dictionary while in insert mode,
 " type some letters and press c-x c-k.
@@ -45,7 +45,7 @@ set nobackup
 "set nocompatible " running vim, not vi, so don't force vi compatibility
 set noshowmode " since it is already being displayed in the status bar by airline
 set number
-set relativenumber
+" set relativenumber " turn off when creating ScreenFlow videos
 set term=screen-256color
 set updatetime=750
 set wildmode=list:longest,full " gives tab completion lists in ex command area

@@ -8,11 +8,11 @@ followed by the macOS version in parentheses.
 * code editor from Microsoft
 * implemented with the Electron framework
 * mostly implemented in TypeScript
-* mostly open source; see https://github.com/Microsoft/vscode
+* mostly open source; see <https://github.com/Microsoft/vscode>
 
 ## To install
 
-* browse https://code.visualstudio.com/https://code.visualstudio.com/
+* browse <https://code.visualstudio.com/https://code.visualstudio.com/>
 
 ## Basics
 
@@ -73,7 +73,7 @@ followed by the macOS version in parentheses.
   * will update to show the theme colors as you navigate
   * will be stored in settings as "workbench.colorTheme"
 * to customize colors for nearly everying in the editor, see
-  https://code.visualstudio.com/docs/getstarted/theme-color-reference
+  <https://code.visualstudio.com/docs/getstarted/theme-color-reference>
 * to customize colors for specific syntax elements (tokens)
   in editor windows
   * modify settings
@@ -87,7 +87,7 @@ followed by the macOS version in parentheses.
     * hover over these strings to get a color picker popup
   * for additional syntax elements, add "textMateRules" property
     * ex. to set colors of HTML tags and attributes
-      ```
+      ```json
       "textMateRules": [
         {
           "name": "Tags",
@@ -106,9 +106,9 @@ followed by the macOS version in parentheses.
       ]
       ```
   * for more examples of textMateRules see
-    https://github.com/idleberg/vscode-hopscotch/blob/master/themes/hopscotch.json
+    <https://github.com/idleberg/vscode-hopscotch/blob/master/themes/hopscotch.json>
   * for more see
-    https://code.visualstudio.com/docs/getstarted/themes#_customizing-a-color-theme
+    <https://code.visualstudio.com/docs/getstarted/themes#_customizing-a-color-theme>
 
 ## Command Palette
 
@@ -296,7 +296,7 @@ followed by the macOS version in parentheses.
     * combines many two-character symbols into one
       * ex. =>, >=, !==
   * to use in VS Code editors, add these lines to settings.json
-    ```
+    ```json
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     ```
@@ -451,6 +451,7 @@ followed by the macOS version in parentheses.
   side by side rectangles and a magnifying glass
 * when finshed, close the preview tab
 * Prettier formats Markdown if you have it configured to "formatOnSave"
+  * renumbers ordered lists
 * can customize CSS used in preview
   * add `markdown.styles": ["markdown.css"],` to settings
     and place the `.css` file in each workspace directory
@@ -459,6 +460,10 @@ followed by the macOS version in parentheses.
   * enter "Developer: Open Webview Developer Tools"
     which opens a Chrome devtools window
   * navigate to
+
+## mardownlint extension
+
+* lints Markdown files
 
 ## Moving Lines
 
@@ -538,6 +543,10 @@ followed by the macOS version in parentheses.
   to see the version it is using
 * will use version installed as dev dependency
   in package.json if present
+* after using, look for "Prettier:" followed by a checkmark
+  in lower-right to know if it worked
+  * if not, will be followed by an X
+  * click to see errors
 
 ## PrintCode extension
 
@@ -640,7 +649,7 @@ followed by the macOS version in parentheses.
     * perhaps a reason to only have a
       default value for the first placeholder
 * for more detail, see
-  https://code.visualstudio.com/docs/editor/userdefinedsnippets
+  <https://code.visualstudio.com/docs/editor/userdefinedsnippets>
 
 ## Sorting selected lines
 

@@ -43,8 +43,9 @@ To create a new recording from selected video and/or audio sources
   * select input sources
     - Record Desktop from: Color LCD (for laptop screen) or Cinema Display
     - Record iOS Device: for attached iOS devices
-      * THIS IS NOT WORKING!
     - Record Video from: for video from a camera (including one in laptop)
+      * after recording, this can be repositioned, resized, and cropped
+      * doing these things is described later
     - Record Audio from: internal or USB microphone
       (mine is Yeti Stereo Microphone)
   * press circle with dashed square to select a screen area
@@ -94,6 +95,19 @@ Inspector
 - Video Motion - to configure animations
   * effect - Gravity, Spring, or Pulse
   * apply to scale, position, and/or rotation
+  * "curve type" controls acceleration throughout the animation
+    - seven to pick from
+  * can select Actions ... Add Snapback Action ... Video
+    to return to original scale, position, and rotation
+    - also available for Audio
+  * can save an animation as a "template action"
+    so it can be reusd for other video clips
+    - right-click a clip that has the desired animation
+    - select "Create Template Action..."
+    - enter a name
+    - to reuse
+      * right-click a video clip to which it should be applied
+      * select "Add Template Action" and the name of one
 - Screen Recording
   * show/hide mouse pointer
     - for entire screencast or just selected parts
@@ -111,11 +125,13 @@ Inspector
 - Callout
   * to focus on certain area of screen
     during a specified part of timeline
+    using the "Freehand" option
   * can zoom in on mouse location
   * can draw one or more circles and/or rectangles
   * can blur background
   * can use "build in" and "build out"
     to animate entry and exit of the callout
+  * can copy a callout from one clip and paste it in another
 - Touch Callout
   * ideal for iOS recordings
   * ADD DETAIL HERE!
@@ -124,12 +140,15 @@ Inspector
   * click + button to add immediately after scrubber position
   * select annotation shape
     - arrow, line, filled rectangle, hollow rectangle, and ellipse
-  * can adjust duration and drag to a different timeline location
   * drag out selected annotation type with mouse
   * to change shape, delete from video, select new shape, and drag out again
   * drag annotation over video to move
-  * can customize color, opacity, thickness, shadow, and output
+  * can customize color, opacity, thickness, shadow, and outline
+  * can rotate
   * can customize line endpoint types
+  * can add any number of these of varying types
+    to the same "annotation" in the timeline
+  * can adjust duration and drag to a different timeline location
 - Text
   * to add text over video
   * click + button to add immediately after scrubber position
@@ -138,16 +157,78 @@ Inspector
   * drag inner handle to rotate
   * can change font, size, alignment (for multiline text),
     fill, outline, backdrop
-  * optional background (called "backdrop")
+    - for more detailed options,
+      select the text to be modified,
+      select the Size drop-down in the "T" tab of the inspector,
+      and choose "Font Panel..."
+  * fill can use a gradient
+  * can add a background (called "backdrop")
     with optional corner rounding
   * can add build in and build out animations
     - text will disappear, but will appear when screencast is played
 - Media Library
+  * click tab button that contains two small squares,
+    one with a music note and the other with a play triangle
+    * can also click the media button just above the timeline on the left side
+      to display on the left instead of in the inspector
   * add/delete audio and video files that can be dragged to timeline
+    - click "+" to add a file or ScreenFlow recording
+  * can add files from the apps Photos, Photo Booth, iTunes, and GarageBand
+  * can zoom thumbnails in and out
+  * can change thumbnail layout to grid or list views
   * can be associated with current project or global (shared)
   * can get from file system, Photo Booth, iTunes, GarageBand, and Photos
     - cannot use audio from Apple Music
   * can show list of media in selected category in icon or list views
+
+Timeline
+- media in a screencast appears in the timeline at the bottom
+- each media clip is on a row (a.k.a. track)
+- rows can contain any number of media clips
+- higher rows display on top of lower rows
+  * doesn't affect audio files
+- video and images can be resized to allow
+  parts or all of lower ones to be seen
+- to make room for a new row in the timeline,
+  drag the handle (three horizontal lines) on the left of the row down
+- to reorder a row, drag it to different vertical position
+  using its handle
+- to delete a row from the timeline area,
+  drag its handle above the timeline and release it
+- to delete a media clip from a row,
+  select it and press the delete key
+- to delete the gap left behind,
+  right-click it and select "Close Gap"
+- to delete a chunk from a clip,
+  * select the chunk
+    - approach 1
+      * move scrubber to start and press i (Mark ... Mark In Point)
+      * move scrubber to end and press o (Mark ... Mark Out Point)
+    - approach 2 
+      * hold shift key and drag over chunk
+  * to clear these mark points,
+    press option-z (Mark ... Clear In & Out Points)
+  * press cmd-delete (Edit ... Ripple Delete)
+    (deletes and closes the gap)
+- to temporarily disable the video clips in a row,
+  click the eyeball icon to the left of the row
+  * icon is not present at smallest row height
+  * media will dim
+- to temporarily disable the audo clips in a row,
+  click the speaker icon to the left of the row
+  * icon is not present at smallest row height
+  * media will dim
+- each row can be displayed in three heights
+  * click the up and down angles on the left of a row
+    to change its height
+
+Tracks
+- vertical list at bottom
+- higher tracks sit on top of lower ones
+- order doesn't matter for audio tracks
+- to see multiple video tracks simultaneously,
+  resize and reposition one or more so
+  they don't occupy the entire screen
 
 To create a new document from imported resources rather than a new recording
 - to configure
@@ -176,8 +257,10 @@ Recording Monitor
 - displays audio levels and time elapsed
 - provides "Add Marker" button to add markers during recording
   * appear at bottom of video timeline and look like small, pink lollipops
-  * can also add markers by selecting "Add Marker"
-    from the ScreenFlow menu bar icon
+  * can also add a marker to the selected clip by
+    dragging the scrubber to the desired location
+    by right-clicking a clip and selecting "Add Marker"
+    or selecting "Add Marker" from the ScreenFlow menu bar icon
 
 Keyboard shortcuts
 - select File ... Preferences
@@ -193,7 +276,6 @@ Keyboard shortcuts
   * cmd-m = Add Marker (was Window Minimize)
 - click "Customized" to see list of customizations
 
-
 To hide all desktop icons during a recording
 - select "Hide Desktop Icons" from the ScreenFlow menu bar icon
 - select "Show Desktop Icons" to make them visible again
@@ -204,7 +286,16 @@ To adjust track heights at bottom
 - can select default track height in Preferences...Timeline
   * doesn't affect current recording; manually change those
 
-To record tracks
+To reposition a shape
+- select it and drag it by any point inside the shape
+
+To resize a shape
+- select it and drag a handle
+
+To crop a shape
+- select it, hold down the ctrl key, and drag a handle
+
+To reorder tracks
 - drag a track handle (on left) up or down
 
 To optimize audio
@@ -221,6 +312,10 @@ To optimize video
 * to change the pace of a video (faster or slower),
   adjust its duration in the timeline by dragging its end?
 
+To move the scrubber to a specific position on the timeline
+* drag its top handle or, if not visible,
+  click on the time strip above the tracks
+
 To move or delete part of a media clip
 - move scrubber to a location to split
 - click clips to be split (click first and cmd-click others)
@@ -229,6 +324,7 @@ To move or delete part of a media clip
 - to move a clip, drag it
 - to delete a click, click to select and press delete key
 - to delete a gap between clips, click to select and press delete key
+- there should be a way to combine deleting and closing the gap!
 
 To add a media clip to timeline area
 - select the media icon in the inspector (music note and play button)
@@ -384,10 +480,101 @@ To add to YouTube
 - optionally upload a custom thumbnail
 - press "Publish" button
 
-Tracks
-- vertical list at bottom
-- higher tracks sit on top of lower ones
-- order doesn't matter for audio tracks
-- to see multiple video tracks simultaneously,
-  resize and reposition one or more so
-  they don't occupy the entire screen
+To add transitions to a single video or image clip
+- right-clip a video clip
+- select "Add Starting Transition",
+  "Add Ending Transition", or
+  "Add Starting & Ending Transitions"
+- hover over a transition
+- click the dropdown that appears and
+  select a transition (ex. cross-dissolve which is the default)
+- can drag scrubber over transition area
+  to see the transition effect
+
+To add video transitions between two clips
+- place videos next to each other on the same row
+- optionally trim beginning and/end of each adjoining video
+- drag the adjoining edges over each other so they overlap by
+  some number of seconds which will be the transition duration
+  * will see and A/B icon on the overlapping portion
+  * adds to duration of video causing it to
+    start sooner (dragging start to left)
+    or end later (dragging end to right)
+    adding back some of what had been clipped
+- hover over the overlapping portion (the transition)
+- click the dropdown and select a transition
+  as in the previous section
+
+To remove a transition
+- right-click it and select "Remove"
+
+To change video or audio speed
+* double-click a media clip
+* change speed by doing one of these which affects the others
+  * entering a duration
+  * dragging the slider
+  * entering a percentage
+
+To play video or audio in reverse
+* double-click a media clip
+* check the "Play clip in reverse" checkbox
+
+To detach audio from a video clip
+* right-click the video clip
+* select "Detach Audio"
+* now have separate video and audio clips
+  that can be edited independently
+
+To add a freeze frame to a video clip
+* move scrubber to where it should freeze
+* right-click the video clip
+* select "Freeze Frame"
+* a new freeze frame clip will be inserted
+* resize to determine how long the freeze is rendered
+
+To group clips
+* select them
+* right-click one of them and select "Group"
+* now when any clip in the group is moved,
+  the others move with it
+* particularly useful to keep corresponding video and audio clips together
+* to ungroup, right-click and select "Ungroup"
+
+To add a color label to a clip
+* right-click a clip
+* select a label color at the bottom of the context menu
+
+To nest overlapping video clips
+* select all
+* right-click and select "Nest Clips"
+* creates what appears to be a single video clip
+* makes it easier to work with it as a whole
+* double-click to reveal nest clips so they can be edited independently
+* right-click and select "Unnest Clips" to undo
+* only five choices: X to remove, orange, blue, magenta, and green
+
+To change the canvas size (resolution)
+* click the resize button on the left just above the timeline
+* enter a specific size or select a preset size
+* click green circle with checkmark to confirm
+  or white circle with "X" to discard
+
+To change the canvas background color
+* useful with video clips do not completely cover
+* click the resize button on the left just above the timeline
+* click button containing a rectangle showing the current color
+* select a color using the color picker that is displayed
+
+To insert a speech clip (computer-generated)
+* select Insert ... Speech Clip...
+* enter the text to be spoken
+* select a voice from the drop-down (over 30)
+* press the Insert button
+* to edit text or change the voice,
+  right-click and select "Edit Speech Clip"
+
+To create a clickable link
+* it seems this is not supported yet
+* a forum moderator said "Generally that's something that
+  would be built into a webpage over the video using
+  HTML5 code much as how clickable links work on YouTube."
