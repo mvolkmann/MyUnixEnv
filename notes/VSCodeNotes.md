@@ -204,8 +204,10 @@ followed by the macOS version in parentheses.
 
 ## Editor Tabs
 
-* tabs for files containing unsaved changes have a white circle after the file name
-* Explorer file names have a white circle before the names of files with unsaved changed
+* tabs for files containing unsaved changes have a white circle
+   after the file name instead of an "X" for closing the tab:
+* Explorer file names have a white circle before
+  the names of files with unsaved changed
 * can horizontally scroll through tabs
 * right-click to get menu containing
   * Close, Close Others, Close to the Right, Close Saved, Close All
