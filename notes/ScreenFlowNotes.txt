@@ -279,6 +279,8 @@ Keyboard shortcuts
   spacebar - play and pause playback
   i - mark in
   o - mark out
+  e - trim end of selected clip
+  w - trim beginning of selected clip
   cmd-delete - ripple delete
   left-arrow - hold down to move scrubber left
   right-arrow - hold down to move scrubber right
