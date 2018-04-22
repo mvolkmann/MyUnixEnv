@@ -263,7 +263,7 @@ Recording Monitor
     or selecting "Add Marker" from the ScreenFlow menu bar icon
 
 Keyboard shortcuts
-- select File ... Preferences
+- select ScreenFlow ... Preferences
 - select Shortcuts
 - select Keyboard Shortcut Set to customize
   * can override defaults or create a new set to modify
@@ -272,9 +272,18 @@ Keyboard shortcuts
 - great for speeding up common workflows
 - indicates whether there are conflicts
 - my customizations
-  * cmd-p = Pause
+  * cmd-p = Pause Recording
   * cmd-m = Add Marker (was Window Minimize)
 - click "Customized" to see list of customizations
+- useful builtin shortcuts
+  spacebar - play and pause playback
+  i - mark in
+  o - mark out
+  cmd-delete - ripple delete
+  left-arrow - hold down to move scrubber left
+  right-arrow - hold down to move scrubber right
+  cmd-plus or cmd-equal - zoom in
+  cmd-minus - zoom out
 
 To hide all desktop icons during a recording
 - select "Hide Desktop Icons" from the ScreenFlow menu bar icon
@@ -460,13 +469,31 @@ To preview a screencast
 
 To export a screencast
 - select File ... Export...
-- to customize format, set "Type" to "Manual" and select a preset (ex. "Web - High")
+- to customize format, set "Type" to "Manual"
+  and select a preset (ex. "Web - High")
 - select resolution
+  * typically will want 1920 x 1080
 - press "Export" button
+- to export multiple ScreenFlow files with one command
+  * select File ... Batch Export...
+  * choose an "Output Folder"
+  * click "+" in lower-left
+  * select the ScreenFlow files to be exported
+  * press the "Open" button
+  * press the "Begin" button
+ - to export a section of screencast
+  * move scrubber to starting point
+  * press "i" to set the "Mark In" point
+  * move scrubber to ending point
+  * press "o" to set the "Mark Out" point
+  * select File ...Export Selected Range...
+  * press "Export" button
 
 To publish a screencast
 - select File ...Publish to...{some target}
 - targets include YouTube, Facebook, Vimeo, and Dropbox
+- to also save to disk
+  * check the "Save copy to disk" checkbox
 
 To add to YouTube
 - browse YouTube site
@@ -479,6 +506,11 @@ To add to YouTube
 - optionally check boxes to share on Google+ and/or Twitter
 - optionally upload a custom thumbnail
 - press "Publish" button
+
+To create an animated GIF
+- follow steps to export a section of screencast
+  * in the "To export a screencast" section,
+    but for "Preset" choose "Animated GIF"
 
 To add transitions to a single video or image clip
 - right-clip a video clip

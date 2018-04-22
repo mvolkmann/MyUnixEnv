@@ -241,6 +241,8 @@ followed by the macOS version in parentheses.
 
 ## Explorer
 
+* can right-click a section title to decide which sections should be hidden
+  * for example, you may want to hide the "Open Editors" section
 * to delete a file
   * select and press delete key (cmd-delete)
   * will ask for confirmation to move to trash / recycle bin
@@ -260,7 +262,7 @@ followed by the macOS version in parentheses.
   to use in current session
 * click on name of extension for documentation
 
-## ESLint/TSLint extension
+## ESLint and TSLint extensions
 
 * to jump to next error in Windows, press Fn-F8
 
@@ -428,6 +430,7 @@ followed by the macOS version in parentheses.
 
 ## Left Nav
 
+* a thin strip that does not include the "Explorer"
 * contains buttons for major modes
   * Explorer - for files
   * Search
