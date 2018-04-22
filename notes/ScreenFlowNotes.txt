@@ -457,6 +457,18 @@ To add an audio clip
 - drag an audio file the empty strip in the timeline
 - drag and size the audio-clip to control when it begins and ends
 
+To replace a section of audio
+- record new audio following the steps above
+- separate the audio track to be replaced
+  * move scrubber to beginning and press t
+  * move scrubber to end and press t
+  * right-click the new section and select "Detach Audio"
+    to create separate video and audio clips from the combined clip
+- replace the old audio with the new audio
+  * trim the new audio to match the duration of the old audio
+  * delete the old audio
+  * drag the new audio to where the old audio was
+
 To blur selected content
 - for example, passwords
 - how ???
