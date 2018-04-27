@@ -628,6 +628,7 @@ followed by the macOS version in parentheses.
   press ctrl-F (cmd-F) of select "View...Search"
 * click left and right arrows in popup
   to move to previous and next matches
+* search results are live and update as files are modified
 
 ## Sidebar
 
