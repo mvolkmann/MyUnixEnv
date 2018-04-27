@@ -1,6 +1,6 @@
 # VS Code Notes
 
-Keyboard shortcuts in this notes show the Windows version
+Keyboard shortcuts in these notes show the Windows version
 followed by the macOS version in parentheses.
 
 ## Overview
