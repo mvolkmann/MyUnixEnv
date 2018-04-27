@@ -1,6 +1,6 @@
 # VS Code Notes
 
-Keyboard shortcuts in this notes show the Windows version
+Keyboard shortcuts in these notes show the Windows version
 followed by the macOS version in parentheses.
 
 ## Overview
@@ -205,7 +205,7 @@ followed by the macOS version in parentheses.
 ## Editor Tabs
 
 * tabs for files containing unsaved changes have a white circle
-   after the file name instead of an "X" for closing the tab:
+  after the file name instead of an "X" for closing the tab:
 * Explorer file names have a white circle before
   the names of files with unsaved changed
 * can horizontally scroll through tabs
@@ -215,7 +215,12 @@ followed by the macOS version in parentheses.
   * Reveal in Explorer
     * handle to open in another app that supports printing
   * Reveal in Side Bar
-* you mapped ctrl-w to workbench.action.closeActiveEditor
+* keyboard shortcuts
+  * ctrl-\ (cmd-\) to workbench.action.splitEditor
+  * ctrl-w to workbench.action.closeActiveEditor (custom)
+  * ctrl-left workbench.action.previousEditor (custom)
+  * ctrl-right workbench.action.nextEditor (custom)
+  * ctrl-n moves focus to nth editor group or split
 
 ## Emmet
 
@@ -470,6 +475,15 @@ followed by the macOS version in parentheses.
 
 * lints Markdown files
 
+## Minimap
+
+* each editor tab includes a "minimap" on the right side
+  which is a zoomed out view of the file
+* can be useful for navigation and getting a sense of the file size
+* but it takes up horizontal space
+* to disable, add the following to settings:
+  `"editor.minimap.enabled": false,`
+
 ## Moving Lines
 
 * don't have to select current line to move it
@@ -614,6 +628,13 @@ followed by the macOS version in parentheses.
   press ctrl-F (cmd-F) of select "View...Search"
 * click left and right arrows in popup
   to move to previous and next matches
+
+## Sidebar
+
+* where the Explorer, Search, Source Control, Debug, and Extensions panels are displayed
+* to toggle display, ctrl-b (cmd-b)
+  * the Vim extension overrides this keyboard shortcut,
+    so you'll have to delete that shortcut to get the default one
 
 ## Snippets
 
