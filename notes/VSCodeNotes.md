@@ -769,3 +769,10 @@ followed by the macOS version in parentheses.
   * or a directory that is backed up like One Drive
 * later can reopen with File...Open Workspace...
   or by double-clicking a `.code-workspace` file
+
+## Zen Mode
+
+* hides all UI except the current editor panel and goes into full-screen mode
+* ctrl-k z (cmd-k z) toggles
+  * Vim plugin conflicts with this,
+    so you mapped ctrl-z (cmd-z) to this
