@@ -70,7 +70,7 @@ To update all installed npm packages
 To get help on npm
 - enter "npm help"
 
-To install a module/package
+To install a specific module/package
 - if only for current project, enter "npm install {module-name}"
   * installs in subdirectory of current directory named "node_modules"
 - if for all projects to share, enter "npm install -g {module-name}"
@@ -78,6 +78,18 @@ To install a module/package
   * to avoid having to use sudo, enter this once:
     sudo chown -R $USER /usr/local
     - sets you as the owner of that directory
+
+To install all dependencies listed in package.json
+- "npm install" or "npm ci"
+- similar with the following differences
+  * "npm ci" requires package-lock.json or npm-shrinkwrap.json to exist
+  * "npm ci" will exit with an error if the dependencies in
+     package-lock.json do not match those in package.json
+     * "npm install" proceeds and updates package-lock.json
+  * "npm ci" can only install entire projects, not specific packages
+  * "npm ci" will remove the node_modules directory if present,
+    before reinstalling everything
+  * "npm ci" will not write to package.json or package-lock.json
 
 To get a list of installed modules
 - for the current project, enter "npm ls"
@@ -113,12 +125,15 @@ To use a local version of a package in place of the same package in npm
 - enter "npm link {package-name}"
   * creates a symlink in node_modules of the application
     to the previously created symlink in `npm -g root`
-- when finished using
-  * delete symlink in `npm -g root`
-  * reinstall the package in the application
 - if package.json for the package specifies that "main"
   is a file in a directory of transpiled code,
   transpile the code after each change in order to use it
+  * perhaps by running "npm run build"
+- if testing a web app, restart its server
+  * ex. kill "npm start" and rerun
+- when finished using
+  * delete symlink in `npm -g root`
+  * reinstall the package in the application
 
 NODE_PATH
 - this environment variable is used to locate Node modules

@@ -27,6 +27,7 @@ followed by the macOS version in parentheses.
 
 * automatically adds closing tag when an opening tag is entered
 * ex. entering `<span>` adds `</span>` after the cursor
+* not good in JavaScript files that use generics or JSX with empty tags
 
 ## Auto Rename Tag extension
 
@@ -121,6 +122,10 @@ followed by the macOS version in parentheses.
   * by default opens current directory
 * in Linux and macOS need to add to PATH
   * in macOS add /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+
+## Comments
+
+* to toggle comment delimiters around current line or selected lines, ctrl-/
 
 ## Debugging
 
@@ -447,6 +452,13 @@ followed by the macOS version in parentheses.
     Manage Extensions, User Snippets, Color Theme,
     File Icon Theme, and Check for Updates...
 
+## Line Feed Characters
+
+* the type of line feed characters used in the current file
+  are displayed in the lower-right (ex. LF or CRLF)
+* to change, click that and select a different value from a
+  drop-down that will appear at the top-center of the window
+
 ## Line Numbers
 
 * by default line numbers are on
@@ -636,6 +648,7 @@ followed by the macOS version in parentheses.
 * to toggle display, ctrl-b (cmd-b)
   * the Vim extension overrides this keyboard shortcut,
     so you'll have to delete that shortcut to get the default one
+  * I mapped this to ctrl-h (cmd-h) instead
 
 ## Snippets
 
@@ -721,6 +734,9 @@ followed by the macOS version in parentheses.
 * highlights TODO: and FIXME: in comments
 * by default uses white text on a yellow background
 * highly configurable
+* to get a list of all these comments,
+  open the Command Palette and enter
+  "TODO-Highlight: List highlighted annotations"
 
 ## TypeScript
 

@@ -21,6 +21,9 @@ Flexbox Notes
     at multiple levels to specify any kind of layout
 - Flexbox makes it SO much easier to center things horizontally and vertically,
   even groups of things!
+- not supported in
+  * fieldset elements
+  * any others?
 
 - to make a container element use flexbox, set
   display: flex (for block) or display: inline-flex (for inline)
