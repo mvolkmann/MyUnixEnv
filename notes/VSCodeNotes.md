@@ -741,8 +741,12 @@ followed by the macOS version in parentheses.
 * can split editor to see current file in two panes
 * can open any number of files each each pane
 * keyboard shortcuts
-  * ctrl-\ (cmd-\) to workbench.action.splitEditor
-  * ? (cmd-opt-0) toggle between vertical and horizontal splits
+  * to split editor
+    * View ... Split Editor
+    * or press ctrl-\ (cmd-\)
+  * to toggle between vertical and horizontal splits
+    * View ...Toggle Editor Group Layout
+    * or press ? (cmd-opt-0)
 
 ## Synchronize Settings
 
