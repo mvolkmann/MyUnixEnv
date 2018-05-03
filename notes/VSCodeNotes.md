@@ -221,11 +221,11 @@ followed by the macOS version in parentheses.
     * handle to open in another app that supports printing
   * Reveal in Side Bar
 * keyboard shortcuts
-  * ctrl-\ (cmd-\) to workbench.action.splitEditor
   * ctrl-w to workbench.action.closeActiveEditor (custom)
   * ctrl-left workbench.action.previousEditor (custom)
   * ctrl-right workbench.action.nextEditor (custom)
   * ctrl-n moves focus to nth editor group or split
+  * also see Splits
 
 ## Emmet
 
@@ -467,13 +467,13 @@ followed by the macOS version in parentheses.
 
 ## Markdown
 
+* can view source and preview side-by-side with live updating,
+  * click button in tab of the file that shows
+    side by side rectangles and a magnifying glass
 * stays up to date with changes in tab containing raw Markdown
-* to view source and preview side-by-side with live updating,
-  click button in tab of the file that shows
-  side by side rectangles and a magnifying glass
 * when finshed, close the preview tab
 * Prettier formats Markdown if you have it configured to "formatOnSave"
-  * renumbers ordered lists
+  * renumbers ordered lists and more
 * can customize CSS used in preview
   * add `markdown.styles": ["markdown.css"],` to settings
     and place the `.css` file in each workspace directory
@@ -482,6 +482,8 @@ followed by the macOS version in parentheses.
   * enter "Developer: Open Webview Developer Tools"
     which opens a Chrome devtools window
   * navigate to
+* keyboard shortcuts
+  * ? (cmd-opt-0) toggle between vertical and horizontal splits
 
 ## mardownlint extension
 
@@ -538,6 +540,12 @@ followed by the macOS version in parentheses.
 
 * for JavaScript and TypeScript files
 * open Commannd Palette and enter "Organize Imports"
+* can automate on save with
+  ```
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  ```
 
 ## Peek View
 
@@ -697,6 +705,14 @@ followed by the macOS version in parentheses.
 * select lines
 * press F9 or
   open Command Palette and enter "Sort Lines Ascending" command
+
+## Splits
+
+* can split editor to see current file in two panes
+* can open any number of files each each pane
+* keyboard shortcuts
+  * ctrl-\ (cmd-\) to workbench.action.splitEditor
+  * ? (cmd-opt-0) toggle between vertical and horizontal splits
 
 ## Synchronize Settings
 
