@@ -400,11 +400,16 @@ followed by the macOS version in parentheses.
 
 * shows size in red to right of JavaScript imports
 
-## Indenticator
+## Indentation
 
-* highlights current indentation depth by drawing a vertical line
-  between the beginnings of the starting and ending lines of the block
-* sensitive to column of cursor
+* by default, draws vertical lines to indicate beginning and ending of code blocks
+* can customize line color in settings with
+
+  ```json
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.activeBackground": "#0000ff"
+  }
+  ```
 
 ## Intellisense
 
