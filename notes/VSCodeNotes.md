@@ -127,6 +127,10 @@ followed by the macOS version in parentheses.
 
 * to toggle comment delimiters around current line or selected lines, ctrl-/
 
+## CSS
+
+* provides some CSS validate by default
+
 ## Debugging
 
 * to debug non-Node applications
@@ -536,6 +540,24 @@ followed by the macOS version in parentheses.
 * no built-in ability to run Node code
   * could use an extension like "Code Runner"
 * can open an embedded terminal, cd to code directory, and run `node` commands
+* also see npm section
+* also see Debugging ... "to debug server Node applications"
+
+## npm
+
+* to add "NPM SCRIPTS" section to EXPLORER,
+  add the follow user setting
+
+  ```json
+  "npm.enableScriptExplorer": true,
+  ```
+
+* displays a list of all scripts found in package.json for the workspace
+* click a script name to open package.json and scroll to its definition
+* right-click to see context menu containing
+  * "Open" (same as clicking),
+  * "Run"
+  * "Debug" (see Debugging ... "to debug server Node applications")
 
 ## Open File
 
@@ -643,7 +665,7 @@ followed by the macOS version in parentheses.
 
 ## Search
 
-* can for a string (default) or
+* can search for a string (default) or
   regular expression (toggle .\* button in popup)
   * do not surround regular expression with slashes
 * can be case-sensitive (toggle button in popup)
@@ -652,6 +674,8 @@ followed by the macOS version in parentheses.
 * to search only in current file, press ctrl-f (cmd-f)
 * to search all files in current workspace,
   press ctrl-F (cmd-F) of select "View...Search"
+* can specify files to include and exclude
+  using glob patterns
 * click left and right arrows in popup
   to move to previous and next matches
 * search results are live and update as files are modified
