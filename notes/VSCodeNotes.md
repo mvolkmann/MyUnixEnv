@@ -541,7 +541,8 @@ followed by the macOS version in parentheses.
 * for JavaScript and TypeScript files
 * open Commannd Palette and enter "Organize Imports"
 * can automate on save with
-  ```
+
+  ```json
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
