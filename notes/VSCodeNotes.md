@@ -663,6 +663,14 @@ followed by the macOS version in parentheses.
     * "Extract to constant in enclosing scope"
   * enter name for new function
 
+## Reporting Issues
+
+* select Help ... Report Issues
+* fill in the provided template
+* press "Preview on Github"
+* verify contents
+* press "Submit new issue"
+
 ## Search
 
 * can search for a string (default) or
