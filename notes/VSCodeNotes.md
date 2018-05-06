@@ -337,6 +337,11 @@ followed by the macOS version in parentheses.
 * source control icon in left nav
   * click to see lists of changes in each active repository
   * badge on icon shows number of uncommitted changes
+* to commit changes
+  * click name of repo under "SOURCE CONTROL PROVIDERS"
+  * enter commit message in text field containing "Message" placeholder
+  * click checkmark above message or press ctrl-enter (cmd-enter)
+  * to push changes, press ?
 * current branch is displayed in lower-left
 * to create a branch
   * click current branch name in lower-left and click "+ Create new branch"
@@ -754,7 +759,7 @@ followed by the macOS version in parentheses.
     * or press ctrl-\ (cmd-\)
   * to toggle between vertical and horizontal splits
     * View ...Toggle Editor Group Layout
-    * or press ? (cmd-opt-0)
+    * or press alt-shift-0 (cmd-opt-0)
 
 ## Synchronize Settings
 

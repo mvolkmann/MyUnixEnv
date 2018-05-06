@@ -489,6 +489,14 @@ To create a repo that will be used as a "master"
   git clone {master-path}
 - for more, see
   http://www.jedi.be/blog/2009/05/06/8-ways-to-share-your-git-repository/
+- in Windows to add a shared drive remote to an existing local repo
+  * cd R:/some-dir
+  * mkdir repo-dir
+  * cd repo-dir
+  * git init --bare --shared
+  * cd local repo directory
+  * git remote add origin R:/some-dir/repo-dir
+    - where R is the shared drive
 
 To create a new repo
 - mkdir {name}
