@@ -341,7 +341,12 @@ followed by the macOS version in parentheses.
   * click name of repo under "SOURCE CONTROL PROVIDERS"
   * enter commit message in text field containing "Message" placeholder
   * click checkmark above message or press ctrl-enter (cmd-enter)
-  * to push changes, press ?
+* to push changes
+  * click up arrow in lower-left preceded by
+    the number of local commits that haven't been pushed yet
+  * this really syncs with remote which both pulls and pushes
+  * you assigned the keyboard shortcut ctrl-p (cmd-p) to this
+    * STILL NEED TO ADD THIS WINDOWS KEYBOARD SHORTCUT!
 * current branch is displayed in lower-left
 * to create a branch
   * click current branch name in lower-left and click "+ Create new branch"
@@ -833,6 +838,7 @@ followed by the macOS version in parentheses.
 * under "Customize" on "Welcome" screen,
   install keyboard shortcuts for Vim
 * can save with ctrl-s (cmd-s) in addition to :w
+* / search is case-insensitive unlike in real Vim
 
 ## vscode-icons extension
 
