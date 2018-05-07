@@ -345,7 +345,7 @@ followed by the macOS version in parentheses.
   * click up arrow in lower-left preceded by
     the number of local commits that haven't been pushed yet
   * this really syncs with remote which both pulls and pushes
-  * you assigned the keyboard shortcut ctrl-p (cmd-p) to this
+  * you assigned the keyboard shortcut ctrl-y (cmd-y) to this
     * STILL NEED TO ADD THIS WINDOWS KEYBOARD SHORTCUT!
 * current branch is displayed in lower-left
 * to create a branch
@@ -453,6 +453,7 @@ followed by the macOS version in parentheses.
 
 * to view, click gear icon in lower-left and select "Keyboard Shortcuts"
 * can search by text in associated commands
+* can search by keyboard shortcut (ex. "ctrl+y" or "cmd+y")
 * click pencil icon to left of one to change the shortcut
 * right-click to copy which allows having
   more than one shortcut for the same command
