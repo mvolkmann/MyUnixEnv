@@ -540,14 +540,6 @@ followed by the macOS version in parentheses.
 
 ## Node.js
 
-* to execute an npm script in `package.json` at top of workspace
-  * select "Tasks: Run Task" from command palette
-  * select a script from the list, all preceded by "npm:"
-  * output goes in a new terminal window
-  * supposedly can also parse tasks from Gulp and Grunt configuration files
-* can define custom tasks in `tasks.json`
-  * an advanced feature
-  * should probably just use a `package.json` file
 * no built-in ability to run Node code
   * could use an extension like "Code Runner"
 * can open an embedded terminal, cd to code directory, and run `node` commands
@@ -556,19 +548,33 @@ followed by the macOS version in parentheses.
 
 ## npm
 
-* to add "NPM SCRIPTS" section to EXPLORER,
-  add the follow user setting
+* two options to execute an npm script in `package.json` at top of workspace
 
-  ```json
-  "npm.enableScriptExplorer": true,
-  ```
+  * option #1
 
-* displays a list of all scripts found in package.json for the workspace
-* click a script name to open package.json and scroll to its definition
-* right-click to see context menu containing
-  * "Open" (same as clicking),
-  * "Run"
-  * "Debug" (see Debugging ... "to debug server Node applications")
+    * add "NPM SCRIPTS" section to EXPLORER by
+      adding the following in user setting
+
+      ```json
+      "npm.enableScriptExplorer": true,
+      ```
+
+    * displays a list of all scripts found in package.json for the workspace
+    * click a script name to open package.json and scroll to its definition
+    * right-click to see context menu containing
+      * "Open" (same as clicking),
+      * "Run"
+      * "Debug" (see Debugging ... "to debug server Node applications")
+
+  * option #2
+    * select "Tasks: Run Task" from command palette
+    * select a script from the list, all preceded by "npm:"
+    * output goes in a new terminal window
+    * supposedly can also parse tasks from Gulp and Grunt configuration files
+
+* can define custom tasks in `tasks.json`
+  * an advanced feature
+  * should probably just use a `package.json` file
 
 ## Open File
 
