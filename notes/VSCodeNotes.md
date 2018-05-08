@@ -291,6 +291,40 @@ followed by the macOS version in parentheses.
 * use up and down arrow keys to navigate the list of themes
 * will update to show the theme icons as you navigate
 
+## File Operations
+
+* to create a folder
+
+  * right-click parent folder in Explorer and select "New Folder"
+  * enter a folder name
+
+* to create a file
+
+  * right-click a folder in Explorer and select "New File"
+  * enter a file name
+
+* to delete a file or folder
+
+  * select file in Explorer and press delete (cmd-delete)
+  * respond to confirmation dialog
+  * allows deleting folders containing files
+
+* to rename a file
+
+  * select file in Explorer and press F2 (enter)
+    or right-click and select "Rename"
+  * modify name and press enter or press esc to abort:w
+
+* to copy a file
+
+  * right-click file in Explorer and select "Copy"
+
+* to paste a file after copying
+  * right-click destination folder in Explorer and select "Paste"
+
+- to reveal file in Explorer (Finder)
+  * right-click file in Explorer and select "Reveal in \_\_\_"
+
 ## File Paths
 
 * to get the file path of a file in an editor,
