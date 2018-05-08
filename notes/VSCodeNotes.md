@@ -444,6 +444,17 @@ followed by the macOS version in parentheses.
   * to go forward press alt-right (ctrl-underscore?)
     * I changed to cmd-right on macOS
 
+## Hot Exit
+
+* by default when VS Code is exited, all unsaved changes are remembered
+  and are reapplied when the app is restarted
+  * called "hot exit"
+  * no warning about unsaved changes is provided
+* to disable this, add the setting `files.hotExit: "off"`
+  * with this disabled, a warning is provided if there is an attempt
+    to exit the app without saving changes
+  * if you choose to exit anyway, the changes will be lost
+
 ## Images
 
 * when an image file is selected in the Explorer panel
