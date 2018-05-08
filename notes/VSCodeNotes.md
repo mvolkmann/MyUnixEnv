@@ -320,9 +320,10 @@ followed by the macOS version in parentheses.
   * right-click file in Explorer and select "Copy"
 
 * to paste a file after copying
+
   * right-click destination folder in Explorer and select "Paste"
 
-- to reveal file in Explorer (Finder)
+* to reveal file in Explorer (Finder)
   * right-click file in Explorer and select "Reveal in \_\_\_"
 
 ## File Paths
