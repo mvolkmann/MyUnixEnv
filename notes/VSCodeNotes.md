@@ -303,6 +303,10 @@ followed by the macOS version in parentheses.
   * right-click a folder in Explorer and select "New File"
   * enter a file name
 
+* to move a file to a different folder
+
+  * drag it within the Explorer onto a different folder
+
 * to delete a file or folder
 
   * select file in Explorer and press delete (cmd-delete)
