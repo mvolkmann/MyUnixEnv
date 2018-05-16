@@ -58,6 +58,7 @@ abbr --add rm 'rm -i'
 alias bigfiles "find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
 alias bigdirs 'du -sk * | sort -nr | head'
 
+alias cdbmx 'cd $OCI_DIR/clients/bioMerieux'
 alias cddropbox 'cd $DROPBOX_DIR'
 alias cdelm 'cd $PROGRAMMING_DIR/languages/Elm'
 alias cdhaskell 'cd $PROGRAMMING_DIR/languages/Haskell'

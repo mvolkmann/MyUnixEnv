@@ -59,3 +59,41 @@ Reasons why I prefer React over Angular
       and an action object
     - these return the new state
     - very simple to write, understand, and test
+
+Using React with TypeScript
+- create app by running
+  `create-react-app {app-name} --scripts-version=react-scripts-ts`
+  * creates source files with .ts or .tsx extension instead of .js 
+  * supports live reload just like with non-TypeScript apps
+- JSX
+  * source files that use JSX must have a .tsx file extension
+- importing React  
+  * must use `import * as React from 'react';`
+  * components should `extend React.Component`
+- public methods like `render` must be marked as `public`
+  * ex. `public render() { ... }` 
+- declaring component props
+  * define an interface above the component definition
+    - ex.
+    interface Props {
+      someProp: SomeType
+    }
+  * use this as the component type  
+    - ex. class SomeComponent extends React.Component<Props> { 
+- declaring component state
+  * define an interface above the component definition
+    - ex.
+    interface State {
+      someState: SomeType
+    }
+  * use this as the component type  
+    - ex. class SomeComponent extends React.Component<Props, State> { 
+- recommended tslint.json changes
+  "rules": {
+    // Don't require interface names to begin with "I".
+    "interface-name": [false]
+  }
+- recommended npm scripts to add
+  "format": "prettier --write 'src/**/*.{ts,tsx}'", // must "npm install -D prettier"
+  "lint": "tslint 'src/**/*.{ts,tsx}'",
+  Also add scripts to support the use of Sass just like in other React apps.

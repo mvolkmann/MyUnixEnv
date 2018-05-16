@@ -23,6 +23,16 @@ followed by the macOS version in parentheses.
   * otherwise will use existing VS Code session
 * reopens last set of tabs when restarted
 
+## Auto-Closing Brackets
+
+* by default matching delimiters are entered automatically
+* for example, typing { results in {} with the cursor between them
+* to disable this, add the following to settings
+
+```text
+"editor.autoClosingBrackets": false,
+```
+
 ## Auto Close Tag extension
 
 * automatically adds closing tag when an opening tag is entered
@@ -58,7 +68,8 @@ followed by the macOS version in parentheses.
 
 ## Code Outline extension
 
-* adds a new section at the bottom of the Explorer left nav
+* adds a left nav toggle button that displays a code outline
+  in place of the Explorer when toggled on
 * lists all the functions, classes, and methods defined
   in the current editor tab
 * clicking a name scrolls to it in the editor tab
@@ -302,6 +313,9 @@ followed by the macOS version in parentheses.
 
   * right-click a folder in Explorer and select "New File"
   * enter a file name
+  * can enter a path relative to the folder
+    * missing folders will be created
+    * ex. foo/bar/baz.txt
 
 * to move a file to a different folder
 
@@ -813,7 +827,7 @@ followed by the macOS version in parentheses.
 
 ## Splits
 
-* can split editor to see current file in two panes
+* can split editor to see current file in multiple panes
 * can open any number of files each each pane
 * keyboard shortcuts
   * to split editor
@@ -822,6 +836,10 @@ followed by the macOS version in parentheses.
   * to toggle between vertical and horizontal splits
     * View ...Toggle Editor Group Layout
     * or press alt-shift-0 (cmd-opt-0)
+  * to move to a specific pane
+    * ctrl-{pane-number} (cmd-{pane-number})
+  * to move to previous/next editor, even across panes
+    * ctrl-left/right (same in macOS)
 
 ## Synchronize Settings
 
@@ -852,7 +870,9 @@ followed by the macOS version in parentheses.
 
 ## Terminal
 
-* press ctrl-` to open an integrated terminal (can run Fish!)
+* press ctrl-` (even in macOS) to open an integrated terminal (can run Fish!)
+* press ctrl-C (cmd-C) to open a native terminal (Command Prompt in Windows)
+  in the workspace directory
 
 ## Todo Highlight extension
 
@@ -867,7 +887,7 @@ followed by the macOS version in parentheses.
 
 * under "Customize" on "Welcome" screen, install support for TypeScript
 
-## User settings
+## User Settings
 
 * to open, select Code...Preferences...Settings
   or click gear in lower-right and select Settings
@@ -916,6 +936,6 @@ followed by the macOS version in parentheses.
 ## Zen Mode
 
 * hides all UI except the current editor panel and goes into full-screen mode
-* ctrl-k z (cmd-k z) toggles
+* ctrl-k ctrl-z (cmd-k cmd-z) toggles
   * Vim plugin conflicts with this,
     so you mapped ctrl-z (cmd-z) to this
