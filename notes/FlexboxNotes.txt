@@ -30,8 +30,8 @@ Flexbox Notes
   * when parent display is flex, block level children act like inline-block
 
 - item alignment
-  * justify-content is for horizontal
-  * align-items is for vertical
+  * justify-content is for the flex-direction (horizontal by default)
+  * align-items is for the opposite of flex-direction (vertical by default)
 
 - justify-content: aligns items horizontally within container
   * flex-start: aligns items to start

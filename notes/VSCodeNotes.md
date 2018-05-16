@@ -388,8 +388,10 @@ followed by the macOS version in parentheses.
 
 * has really strong Git integration that is provided and enabled by default
 * source control icon in left nav
-  * click to see lists of changes in each active repository
   * badge on icon shows number of uncommitted changes
+  * click to see lists of changes in each active repository
+  * clicking "..." in upper-right of panel shows a context-sensitive menu
+    containing many version control actions
 * to commit changes
   * click name of repo under "SOURCE CONTROL PROVIDERS"
   * enter commit message in text field containing "Message" placeholder

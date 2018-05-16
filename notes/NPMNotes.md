@@ -1,18 +1,19 @@
-NPM Notes
+# NPM Notes
 
 To browse the home page of an npm package
-- npm home {name}
+* npm home {name}
+  * defaults to GitHub README.md
 
 To browse the Github repo of an npm package
-- npm repo {name}
+* npm repo {name}
 
 To list any outdated dependencies in package.json in the current directory
-- npm outdated
+* npm outdated
 
 To list packages in node_modules that are
 not listed as dependencies in package.json
 and delete those directories from node_modules
-- npm prume
+* npm prume
 
 To lock down dependencies to their current version
 * npm shrinkwrap (generates npm-shrinkwrap.json)

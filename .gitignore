@@ -1,7 +1,14 @@
 .*.swp
-.config/fish/fishd.*
-.config/configstore/
 .DS_Store
+.config/configstore/
+.config/fish/fishd.*
+.config/gcloud/
+.config/gcloud/.*.*
+.config/gcloud/*.*
+.config/gcloud/access_tokens.db
+.config/gcloud/active_config
+.config/gcloud/credentials.db
+.config/gcloud/legacy_credentials/volkmannm@objectcomputing.com/adc.json
 .tmux/.tmux
 .vim/.netrwhist
 .vim/.vim
