@@ -7,7 +7,7 @@
 * scroll down to the "Getting Started" section
 * click "Enable APIs"
 * scroll to "Google Cloud SQL" and click "Enable"
-* browse https://cloud.google.com/sdk/docs/
+* browse <https://cloud.google.com/sdk/docs/>
 * click a package link to download "Cloud Tools" for your platform
 * unzip the downloaded zip file
 * open a terminal window
@@ -20,7 +20,9 @@
 * press "Choose MySQL" or "Choose PostgreSQL"
 * select a configuration
 * enter an instance id (a.k.a. instance name) and remember it
+  * mine is `node-rest-demo-db`
 * enter a password and remember it
+  * mine is `password`
 * select a region
 * press "CREATE" button
   * takes around 5 minutes!
@@ -36,7 +38,7 @@
   * otherwise no extra steps are needed
 * to test the application locally
   * install the Cloud SQL Proxy
-    * browse https://cloud.google.com/appengine/docs/flexible/nodejs/using-cloud-sql-postgres
+    * browse <https://cloud.google.com/appengine/docs/flexible/nodejs/using-cloud-sql-postgres>
     * scroll to "Install the Cloud SQL proxy"
     * click the tab for your platform
     * copy the command to download the software
@@ -44,4 +46,12 @@
     * follow the platform-specific instructions
       * for macOS it is `chmod +x cloud_sql_proxy`
   * start the Cloud SQL Proxy
+    * this allows accessing the cloud database from a locally running app
     * enter `./cloud_sql_proxy -instances=node-rest-demo:us-central1:node-rest-demo-db=tcp:5432`
+    * I could not get this to work! I get
+      "google: could not find default credentials"
+* set up the Cloud SQL Instance
+  * create a user
+    * `gcloud sql users create mvolkmann no-host --instance node-rest-demo-db`
+    * I could not get this to work! I get
+      "gcloud sql users create mvolkmann no-host --instance node-rest-demo-db"

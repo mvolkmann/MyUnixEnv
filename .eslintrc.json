@@ -337,6 +337,7 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/jsx-wrap-multilines": "off",
+    "react/no-access-state-in-setstate": "error",
     "react/no-array-index-key": "off",
     "react/no-children-prop": "error",
     "react/no-danger": "off",

@@ -379,6 +379,7 @@ followed by the macOS version in parentheses.
 
 * alt-F (option-F)
 * yours is configured to use Prettier
+  * see "Prettier extension" below
 
 ## Full Screen
 
@@ -560,6 +561,7 @@ followed by the macOS version in parentheses.
 * when finshed, close the preview tab
 * Prettier formats Markdown if you have it configured to "formatOnSave"
   * renumbers ordered lists and more
+  * see "Prettier extension" below
 * can customize CSS used in preview
   * add `markdown.styles": ["markdown.css"],` to settings
     and place the `.css` file in each workspace directory
@@ -696,7 +698,16 @@ followed by the macOS version in parentheses.
 * after using, look for "Prettier:" followed by a checkmark
   in lower-right to know if it worked
   * if not, will be followed by an X
-  * click to see errors
+  * click to see syntax errors in your code that prevented formatting
+
+## Preview Mode
+
+* by default, clicking a file in the Explorer panel
+  will open it in "Preview Mode"
+* if no edits are performed and another file is clicked,
+  it will open in the same tab, replacing the previous file
+* to force always opening in a new tab, add the setting
+  `"workbench.editor.enablePreview": false,`
 
 ## PrintCode extension
 
