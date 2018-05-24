@@ -89,7 +89,7 @@ A good site for learning about the popularity of
 JavaScript tools and frameworks is <https://stateofjs.com>.
 In the 2017 survey, the "Front-end" section shows
 that 4,449 respondents said they have used Angular
-and would use it again.  For React the number is 13,669.
+and would use it again. For React the number is 13,669.
 2,289 said they have used Angular and would not use it again.
 For React the number is 1,020.
 
@@ -105,7 +105,7 @@ For React the number is 1,020.
 
 ## Angular CLI
 
-* npm install -g @angular-cli
+* npm install -g @angular/cli
 * ng new app-name
   * generates a working project
   * sets up lots of tooling including
@@ -295,6 +295,7 @@ export class MyComponent {
   * can pass arguments
   * to pass the event object, use $event
 * `[(ngModel)]="property"` - two-way binding
+
   * typically used on form elements
   * syntax is called "banana in a box"
   * ex. <input [(ngModel)]="hero.name">
@@ -361,7 +362,7 @@ export class MyComponent {
 * `<ng-template #name>...contents</ng-template>`
   * defines some content, but doesn't render it
   * using {{name}} elsewhere renders it
-  * ng-template names are sometimes used for *ngIf else values
+  * ng-template names are sometimes used for \*ngIf else values
 
 ## Lifecycle Hooks
 
@@ -398,6 +399,7 @@ export class MyComponent {
 * maps URL paths to components using an array of objects
   that have "path", "component", and other properties
 * can use the "routerLink" directive to navigate to a route
+
   * uses history.pushState so must set "base-ref" in index.html
     * handled by Angular CLI
 
@@ -425,7 +427,7 @@ export class MyComponent {
 * order of paths matters because first match wins
 * paths can include :name for path parameters
 * path '' only matches an empty path
-* path '&ast;&ast;' is a wildcard that matches any unspecified path
+* path '\*\*' is a wildcard that matches any unspecified path
 * other route properties include
   * data - makes specified data available to the route component
   * icon - ?
@@ -566,7 +568,7 @@ export class ParentComponent {
   * extracts the value of an Observable inside HTML
   * ex. {{myObservable$ | async}}
   * ex. with ngFor
-    *ngFor="let user of users$ | async"
+    \*ngFor="let user of users$ | async"
   * automatically unsubsubscribes from the `Observable`
     if the component is removed from the DOM
     and resubscribes if it is inserted again later
@@ -694,7 +696,7 @@ export class ParentComponent {
     * see imports and exports of the module
   * app.component.html
     * adds a `<nav>` that includes
-     `<a routerLink="{path}}>{link-text}</a>`
+      `<a routerLink="{path}}>{link-text}</a>`
     * include names preceded by colons in path
       for path parameters
     * uses `<router-outlet>`
@@ -749,7 +751,7 @@ export class ParentComponent {
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
       maxAge: 25 // # of states to retain
-    })
+    });
     ```
 * implement a reducer function in src/app/reducer.ts
 * modify src/app/app.module.ts
@@ -760,11 +762,13 @@ export class ParentComponent {
     ```
   * add to array of imports
     ```js
-    StoreModule.forRoot({hello: reducer})
+    StoreModule.forRoot({hello: reducer});
     ```
 * to subscribe to store changes in a component
+
   * inject the store into the constructor and
     create an `Observable` to a store path
+
     * ex.
 
     ```js
@@ -784,6 +788,7 @@ export class ParentComponent {
 ## CLI
 
 * ng build
+
   * all builds bundle files
   * artifact files are placed in dist directory
   * artifact files are deleted when the build completes?
@@ -838,3 +843,7 @@ export class ParentComponent {
 * create and run a script that does this:
   browser-sync start --browser Chrome --proxy 'localhost:8080' \
    --files 'dist/index.html' 'dist/main.bundle.js'
+
+## to use React components in Angular
+
+* see training/React/keynote/ReactInAngular.key
