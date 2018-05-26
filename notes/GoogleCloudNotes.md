@@ -51,15 +51,18 @@
     * I could not get this to work! I get
       "google: could not find default credentials"
 * set up the Cloud SQL Instance
+
   * create a user
     * `gcloud sql users create mvolkmann no-host --instance node-rest-demo-db`
     * I could not get this to work! I get
       "gcloud sql users create mvolkmann no-host --instance node-rest-demo-db"
 
 * web UI
-  * browse https://cloud.google.com
+
+  * browse <https://cloud.google.com>
   * click "CONSOLE" in upper-right
   * consists of many "cards"
+
     * Project info
       * shows the current project name, id, and number
       * click "Go to project settings" to
@@ -117,9 +120,9 @@
   * to return to dashboard from any page,
     click "Google Cloud Platform" in upper-left
 
-
 * gcloud commands
-  * see https://cloud.google.com/sdk/gcloud/reference/
+
+  * see <https://cloud.google.com/sdk/gcloud/reference/>
   * `gcloud {group | command} {options} {arguments}`
   * group is one of:
     * app, auth, components, compute, config, container,
@@ -131,6 +134,7 @@
     * feedback, help, info, init, version
 
 * projects
+
   * to get a list of all current projects,
     `gcloud projects list`
   * to get information about a specific project,
@@ -150,6 +154,7 @@
     `gcloud config set project {project-id}`
 
 * app instances
+
   * to get a list of all current app instances,
     `gcloud app instances list`
     * can determine if it is the default instance
@@ -237,6 +242,7 @@ STOPPED HERE
   copy src/actions.json to build directory # AUTOMATE IN PACKAGE.JSON!
   update app.yaml (one-time)
   npm install (one-time and after package version updates)
+
   * `npm run build`
   * `gcloud app deploy`
     * took eight minutes which is totally ridiculous!!!

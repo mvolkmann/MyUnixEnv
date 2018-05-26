@@ -252,8 +252,16 @@ followed by the macOS version in parentheses.
   * will see preview
   * press enter to accept or esc to reject
 
-## Error Navigation
+## Error/Warning Navigation
 
+* left side of status bar at bottom shows
+  * number of errors prededed by icon with "X" in a circle
+  * number of warnings preceded by icon with "!" in a triangle
+  * click to see details
+    * this is also a way to get the OUTPUT, DEBUG CONSOLE, and TERMINAL tabs
+  * click an error or warning to jump to the corresponding line
+  * if a lightbulb icon appears, clicking it may
+    provide an option to automatically fix the issue
 * to jump to the next error, press F8
 * to jump to the previous error, press shift-F8
 
