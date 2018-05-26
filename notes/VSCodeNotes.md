@@ -69,7 +69,7 @@ followed by the macOS version in parentheses.
 ## Code Outline extension
 
 * adds a left nav toggle button that displays a code outline
-  in place of the Explorer when toggled on
+  in place of the EXPLORER when toggled on
 * lists all the functions, classes, and methods defined
   in the current editor tab
 * clicking a name scrolls to it in the editor tab
@@ -226,13 +226,13 @@ followed by the macOS version in parentheses.
 
 * tabs for files containing unsaved changes have a white circle
   after the file name instead of an "X" for closing the tab:
-* Explorer file names have a white circle before
+* EXPLORER file names have a white circle before
   the names of files with unsaved changed
 * can horizontally scroll through tabs
 * right-click to get menu containing
   * Close, Close Others, Close to the Right, Close Saved, Close All
   * Copy Path
-  * Reveal in Explorer
+  * Reveal in EXPLORER
     * handle to open in another app that supports printing
   * Reveal in Side Bar
 * keyboard shortcuts
@@ -264,7 +264,7 @@ followed by the macOS version in parentheses.
   or global version if not found in project
 * will use project .estingrc.json file if found
 
-## Explorer
+## EXPLORER
 
 * can right-click a section title to decide which sections should be hidden
   * for example, you may want to hide the "Open Editors" section
@@ -306,12 +306,12 @@ followed by the macOS version in parentheses.
 
 * to create a folder
 
-  * right-click parent folder in Explorer and select "New Folder"
+  * right-click parent folder in EXPLORER and select "New Folder"
   * enter a folder name
 
 * to create a file
 
-  * right-click a folder in Explorer and select "New File"
+  * right-click a folder in EXPLORER and select "New File"
   * enter a file name
   * can enter a path relative to the folder
     * missing folders will be created
@@ -319,30 +319,30 @@ followed by the macOS version in parentheses.
 
 * to move a file to a different folder
 
-  * drag it within the Explorer onto a different folder
+  * drag it within the EXPLORER onto a different folder
 
 * to delete a file or folder
 
-  * select file in Explorer and press delete (cmd-delete)
+  * select file in EXPLORER and press delete (cmd-delete)
   * respond to confirmation dialog
   * allows deleting folders containing files
 
 * to rename a file
 
-  * select file in Explorer and press F2 (enter)
+  * select file in EXPLORER and press F2 (enter)
     or right-click and select "Rename"
   * modify name and press enter or press esc to abort:w
 
 * to copy a file
 
-  * right-click file in Explorer and select "Copy"
+  * right-click file in EXPLORER and select "Copy"
 
 * to paste a file after copying
 
-  * right-click destination folder in Explorer and select "Paste"
+  * right-click destination folder in EXPLORER and select "Paste"
 
-* to reveal file in Explorer (Finder)
-  * right-click file in Explorer and select "Reveal in \_\_\_"
+* to reveal file in EXPLORER (Finder)
+  * right-click file in EXPLORER and select "Reveal in \_\_\_"
 
 ## File Paths
 
@@ -432,6 +432,40 @@ followed by the macOS version in parentheses.
 * it may sometimes be necessary to click the refresh icon
   above the list of modified files to update the list
 
+## GitLens extension
+
+* press ctrl-G (cmd-opt-g) to activate
+* adds a "GITLENS HISTORY" section in the EXPLORER pane
+  * shows commit history for current file
+  * click a commit to see the differences it introduced
+* adds a "GITLENS" section in the SOURCE CONTROL pane
+  * shows current branch and its relationship to origin
+  * shows all branches and their commit histories
+  * shows remotes, their branches, and their commit histories
+    * expand a commit to see a list of files added/modified in the commit
+    * click a file to see the diffs
+  * shows all stashes
+    * expand a stash to see a list of files added/modified
+    * click a file to see the diffs
+  * shows all tags
+* adds about 20 new commands to the command palette that start with "GitLens:"
+  * GitLens: Toggle Line Blame Annotations
+    * click a line in a file to see
+      * who modified it last
+      * when it was last modified
+      * the commit message for the last modification
+    * by default, regardless of this setting, the first two items
+      are shown on the right side of the status bar at the bottom
+  * GitLens: Toggle File Blame Annotations
+    * opens panel to left of file that shows (gutter blame)
+      the commit message and how long ago each line was modified
+    * hover over a section in the code or the new panel to see
+      * who made the change
+      * the exact date and time it was made
+      * the commit SHA
+      * and more
+* and many more features
+
 ## Go to
 
 * File - ctrl-p (cmd-p)
@@ -474,7 +508,7 @@ followed by the macOS version in parentheses.
 
 ## Images
 
-* when an image file is selected in the Explorer panel
+* when an image file is selected in the EXPLORER panel
   it is rendered in an editor tab
 
 ## Import Cost extension
@@ -527,9 +561,9 @@ followed by the macOS version in parentheses.
 
 ## Left Nav
 
-* a thin strip that does not include the "Explorer"
+* a thin strip that does not include the "EXPLORER"
 * contains buttons for major modes
-  * Explorer - for files
+  * EXPLORER - for files
   * Search
   * Source Control
   * Debug
@@ -624,7 +658,7 @@ followed by the macOS version in parentheses.
       adding the following in user setting
 
       ```json
-      "npm.enableScriptExplorer": true,
+      "npm.enableScriptEXPLORER": true,
       ```
 
     * displays a list of all scripts found in package.json for the workspace
@@ -702,7 +736,7 @@ followed by the macOS version in parentheses.
 
 ## Preview Mode
 
-* by default, clicking a file in the Explorer panel
+* by default, clicking a file in the EXPLORER panel
   will open it in "Preview Mode"
 * if no edits are performed and another file is clicked,
   it will open in the same tab, replacing the previous file
@@ -784,7 +818,7 @@ followed by the macOS version in parentheses.
 
 ## Sidebar
 
-* where the Explorer, Search, Source Control, Debug, and Extensions panels are displayed
+* where the EXPLORER, Search, Source Control, Debug, and Extensions panels are displayed
 * to toggle display, ctrl-b (cmd-b)
   * the Vim extension overrides this keyboard shortcut,
     so you'll have to delete that shortcut to get the default one
@@ -922,6 +956,13 @@ followed by the macOS version in parentheses.
   * stored in project directory in .vscode directory
     * files are settings.json and keybindings.json
   * can check into version control so project team can share
+
+## Version Lens extension
+
+* "shows the latest version for each package" in package.json
+* look for packages that are not preceded by "Latest"
+* clicking a version link updates `package.json` to refer to that version,
+  but `npm install` must be run to actually install it
 
 ## Vim extension
 

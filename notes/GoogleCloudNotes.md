@@ -212,12 +212,14 @@
       * will output log of each command
   * to verify in database contents interactive mode
     use same command as running DDL with redirection removed
-    * `gcloud sql connect {instance-id} --user=postgres`
-    * enter commands such as
-      * \c {db-name} -- connects to specific database in instance
-      * \d -- lists tables
-      * SQL select statements
-      * press ctrld to exit
+    * from web UI, can't do
+    * from command line
+      * `gcloud sql connect {instance-id} --user=postgres`
+      * enter commands such as
+        * \c {db-name} -- connects to specific database in instance
+        * \d -- lists tables
+        * SQL select statements
+        * press ctrld to exit
   * to delete a database from an instance
     * from command line
       * `gcloud sql databases delete --instance {instance} {db-name}
