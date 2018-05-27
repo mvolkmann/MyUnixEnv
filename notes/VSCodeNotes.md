@@ -272,8 +272,9 @@ followed by the macOS version in parentheses.
   or global version if not found in project
 * will use project .estingrc.json file if found
 
-## EXPLORER
+## Explorer
 
+* to open, click document icon in left nav or press ctrl-E (cmd-E)
 * can right-click a section title to decide which sections should be hidden
   * for example, you may want to hide the "Open Editors" section
 * to delete a file
@@ -287,6 +288,7 @@ followed by the macOS version in parentheses.
 ## Extensions - to install
 
 * click the "Extensions" square in the left button strip
+  or press ctrl-X (cmd-X)
 * search for a name
 * note the number of downloads and number of stars for each option
 * select one
@@ -570,12 +572,12 @@ followed by the macOS version in parentheses.
 ## Left Nav
 
 * a thin strip that does not include the "EXPLORER"
-* contains buttons for major modes
-  * EXPLORER - for files
-  * Search
-  * Source Control
-  * Debug
-  * Extensions
+* contains buttons for major modes (my custom keyboard shortcuts show)
+  * Explorer (for files) - ctrl-E (cmd-E)
+  * Search - ctrl-S (cmd-S)
+  * Source Control - ctrl-G (cmd-G) for "Git"
+  * Debug - no keyboard shortcut
+  * Extensions - ctrl-X (cmd-X)
 * contains gear icon
   * click to access Command Palette, Settings, Keyboard Shortcuts,
     Manage Extensions, User Snippets, Color Theme,
@@ -703,6 +705,14 @@ followed by the macOS version in parentheses.
   },
   ```
 
+## Outline
+
+* shows a list of the functions, classes, and methods in a source file
+* click one to navigate to it
+* to open, click outline icon in left nav
+  * I mapped ctrl+O (cmd+O) to this
+    which was the shortcut for File...Open...
+
 ## Peek View
 
 * displays results of several commands in an inline popup view
@@ -810,6 +820,10 @@ followed by the macOS version in parentheses.
 
 ## Search
 
+* to open, click magnifying glass icon in left nav
+  or press ctrl-F (cmd-F) for "find"
+  * I mapped ctrl-S (cmd-S) to this
+    which was workbench.action.files.saveAs
 * can search for a string (default) or
   regular expression (toggle .\* button in popup)
   * do not surround regular expression with slashes
@@ -880,6 +894,14 @@ followed by the macOS version in parentheses.
 * select lines
 * press F9 or
   open Command Palette and enter "Sort Lines Ascending" command
+
+## Source Control
+
+* works with many version control systems, especially Git
+  * see "Git" section
+* to open, click branch icon in left nav
+  * I mapped ctrl-G (cmd-G) to this
+    which was "Find Next"
 
 ## Splits
 
