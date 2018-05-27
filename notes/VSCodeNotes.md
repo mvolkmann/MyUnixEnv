@@ -607,6 +607,7 @@ followed by the macOS version in parentheses.
 * can customize CSS used in preview
   * add `markdown.styles": ["markdown.css"],` to settings
     and place the `.css` file in each workspace directory
+  * yours is in ~/MyUnixEnv/notes/markdown.css
 * to see CSS classes used
   * open Command Palette
   * enter "Developer: Open Webview Developer Tools"
@@ -918,9 +919,11 @@ followed by the macOS version in parentheses.
   select these commands from the Command Palette
   * "Sync: Advanced Options > Toggle Auto-Download on Startup"
     * adds "sync.autoDownload": true to user settings
+    * false by default
   * "Sync: Advanced Options > Toggle Auto-Upload on Settings Change"
     * adds "sync.autoUpload": true to user settings
-* to request a download without restarting, press alt-D (opt-D)
+    * false by default
+* to request a download of settings without restarting, press alt-D (opt-D)
 * to see the gist it creates, browse <https://gist.github.com/mvolkmann>
   and look for mvolkmann/cloudSettings
 * does it merge changes or overwrite them?
