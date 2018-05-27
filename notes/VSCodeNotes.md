@@ -574,7 +574,7 @@ followed by the macOS version in parentheses.
 * a thin strip that does not include the "EXPLORER"
 * contains buttons for major modes (my custom keyboard shortcuts show)
   * Explorer (for files) - ctrl-E (cmd-E)
-  * Search - ctrl-S (cmd-S)
+  * Search - ctrl-S (cmd-S) and ctrl-F (cmd-F)
   * Source Control - ctrl-G (cmd-G) for "Git"
   * Debug - no keyboard shortcut
   * Extensions - ctrl-X (cmd-X)
@@ -822,7 +822,7 @@ followed by the macOS version in parentheses.
 
 * to open, click magnifying glass icon in left nav
   or press ctrl-F (cmd-F) for "find"
-  * I mapped ctrl-S (cmd-S) to this
+  * I mapped ctrl-S (cmd-S) and ctrl-F (cmd-F) to this
     which was workbench.action.files.saveAs
 * can search for a string (default) or
   regular expression (toggle .\* button in popup)
