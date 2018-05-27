@@ -924,6 +924,7 @@ followed by the macOS version in parentheses.
     * adds "sync.autoUpload": true to user settings
     * false by default
 * to request a download of settings without restarting, press alt-D (opt-D)
+* to request an upload of settings, press alt-U (opt-U)
 * to see the gist it creates, browse <https://gist.github.com/mvolkmann>
   and look for mvolkmann/cloudSettings
 * does it merge changes or overwrite them?
