@@ -456,7 +456,7 @@ followed by the macOS version in parentheses.
     * expand a stash to see a list of files added/modified
     * click a file to see the diffs
   * shows all tags
-* adds about 20 new commands to the command palette that start with "GitLens:"
+* adds about 20 new commands to the Command Palette that start with "GitLens:"
   * GitLens: Toggle Line Blame Annotations
     * click a line in a file to see
       * who modified it last
@@ -677,7 +677,7 @@ followed by the macOS version in parentheses.
       * "Debug" (see Debugging ... "to debug server Node applications")
 
   * option #2
-    * select "Tasks: Run Task" from command palette
+    * select "Tasks: Run Task" from Command Palette
     * select a script from the list, all preceded by "npm:"
     * output goes in a new terminal window
     * supposedly can also parse tasks from Gulp and Grunt configuration files
@@ -898,23 +898,40 @@ followed by the macOS version in parentheses.
 
 ## Synchronize Settings
 
-* COULDN'T GET THIS TO WORK! settings.json never syncs
 * useful when using VS Code from more than one computer
+  or just to have an offline backup of settings
+* saves many things
+
+  * date and time of last upload
+  * list of installed extension and their versions
+  * custom keybindings including Windows and macOS versions
+  * user settings
+  * custom snippets for each language (JavaScript, TypeScript, ...)
+  * custom icons
+
 * install "Settings Sync" extension
 * follow instructions to create a Github personal access token
   named "code-settings-sync"
-* may need to restart VS Code
-* press alt-U
-* enter personal access token
-* enter gist id?
 * repeat on other computers
-* select these commands from the Command Palette
-  to automate uploads and downloads of settings changes
+* may need to restart VS Code
+* to automate uploads and downloads of settings changes
+  select these commands from the Command Palette
   * "Sync: Advanced Options > Toggle Auto-Download on Startup"
-    * adds "sync.autoDownload": true to settings.json
+    * adds "sync.autoDownload": true to user settings
   * "Sync: Advanced Options > Toggle Auto-Upload on Settings Change"
-    * adds "sync.autoUpload": true to settings.json
+    * adds "sync.autoUpload": true to user settings
+* to request a download without restarting, press alt-D (opt-D)
+* to see the gist it creates, browse <https://gist.github.com/mvolkmann>
+  and look for mvolkmann/cloudSettings
 * does it merge changes or overwrite them?
+* to share your settings with others
+  * by default, a secret Gist is created and only you can see it
+  * to create a new, public Gist that can be shared with others,
+    open the Command Palette, select "Sync : Advanced Options"
+    and select "Share Settings with Public GIST"
+    * replaces the private Gist with a public one
+  * other users can download settings from your public Gist,
+    but they can't upload their settings to your Gist
 
 ## Tab Navigation
 

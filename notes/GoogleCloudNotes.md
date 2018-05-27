@@ -238,7 +238,7 @@ STOPPED HERE
 
 * to deploy the current project to the app server
   cd server
-  copy secrets.json to build directory # AUTOMATE IN PACKAGE.JSON!
+  copy src/secrets.json to build directory # AUTOMATE IN PACKAGE.JSON!
   copy src/actions.json to build directory # AUTOMATE IN PACKAGE.JSON!
   update app.yaml (one-time)
   npm install (one-time and after package version updates)
@@ -247,7 +247,7 @@ STOPPED HERE
   * `gcloud app deploy`
     * took eight minutes which is totally ridiculous!!!
     * this was not even the initial deploy!
-  * URL will be https://{project-id}.appspot.com
+  * URL will be <https://{project-id}.appspot.com>
     * Does this imply that project-ids must be globally unique
       or does it choose a different domain if yours conflicts
       with the project of another user?
