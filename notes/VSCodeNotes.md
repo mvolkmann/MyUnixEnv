@@ -44,6 +44,20 @@ followed by the macOS version in parentheses.
 * automatically renames other side of tag when one is renamed
 * ex. can change "header" to "footer" in either `<header>` or `</header>`
 
+## Auto-Save
+
+* to enable, change "files.autoSave" setting from "off"
+  to "afterDelay", "onFocusChange" and "onWindowChange"
+* by default "afterDelay" saves after every delay of 1000 milliseconds
+  * to adjust, change "files.autoSaveDelay"
+
+## Bottom Bar
+
+* panel at bottom used to display tabs for
+  PROBLEMS, OUTPUT, DEBUG CONSOLE, and TERMINAL
+* I configured ctrl-B (cmd-B) to toggle display of this
+* see "Error/Warning Navigation" section below
+
 ## Code Folding
 
 * works in many kinds of source files including
@@ -76,7 +90,9 @@ followed by the macOS version in parentheses.
 
 ## Color Themes
 
-* default is "Dark+"
+* default is "Default Dark+" a.k.a. "Dark+ (default dark)"
+* popular themes include Cobalt2 (by Wes Bos),
+  Night Owl (by Sarah Drasner), and Material (by Mattia Astorino)
 * to change theme
   * click gear in lower-left and select "Color Theme"
     or select Code...Preferences...Color Theme
@@ -86,9 +102,8 @@ followed by the macOS version in parentheses.
   * will be stored in settings as "workbench.colorTheme"
 * to customize colors for nearly everying in the editor, see
   <https://code.visualstudio.com/docs/getstarted/theme-color-reference>
-* to customize colors for specific syntax elements (tokens)
-  in editor windows
-  * modify settings
+* to customize colors for specific syntax elements (tokens) in editor windows
+  * modify user settings
   * add "editor.tokenColorCustomizations" property
     where the value is an object with these keys:
     comments, functions, keywords, numbers,
@@ -239,25 +254,29 @@ followed by the macOS version in parentheses.
   * ctrl-w to workbench.action.closeActiveEditor (custom)
   * ctrl-left workbench.action.previousEditor (custom)
   * ctrl-right workbench.action.nextEditor (custom)
-  * ctrl-n moves focus to nth editor group or split
+  * ctrl-{n} (cmd-{n}) moves focus to nth editor group or split
   * also see Splits
 
 ## Emmet
 
 * type a snippet and press tab to expand
 * shows expansion in a popup before tab is pressed
-* in React source files, `.foo` expands to `<div className="foo"></div>`
+* in React source files
+  * seems to work in JSX by default
+  * `.foo` expands to `<div className="foo"></div>`
 * to wrap selected lines with a new tag
   * open Command Palette and enter "Emmet: Wrap with Abbreviation"
   * will see preview
   * press enter to accept or esc to reject
+* in an empty `.html` file, enter `!` and press tab
+  to get default boilerplate content
 
 ## Error/Warning Navigation
 
 * left side of status bar at bottom shows
   * number of errors prededed by icon with "X" in a circle
   * number of warnings preceded by icon with "!" in a triangle
-  * click to see details
+  * click to see details in the "bottom bar"
     * this is also a way to get the OUTPUT, DEBUG CONSOLE, and TERMINAL tabs
   * click an error or warning to jump to the corresponding line
   * if a lightbulb icon appears, clicking it may
@@ -272,11 +291,14 @@ followed by the macOS version in parentheses.
   or global version if not found in project
 * will use project .estingrc.json file if found
 
-## Explorer
+## Explorer "side bar"
 
+* displays a collection of various kinds of "explorers"
+  * files, npm scripts, GitLens History, ...
 * to open, click document icon in left nav or press ctrl-E (cmd-E)
 * can right-click a section title to decide which sections should be hidden
   * for example, you may want to hide the "Open Editors" section
+    * add user setting `"explorer.openEditors.visible": 0,`
 * to delete a file
   * select and press delete key (cmd-delete)
   * will ask for confirmation to move to trash / recycle bin
@@ -284,6 +306,7 @@ followed by the macOS version in parentheses.
 * to move a file to a different directory
   * drag it
   * will ask for confirmation
+* I configured ctrl-h (cmd+h) to toggle display of this section
 
 ## Extensions - to install
 
@@ -305,6 +328,7 @@ followed by the macOS version in parentheses.
 
 * controls icons displayed for specific file types and folders
 * can download new themes
+  * "Material Icon Theme" is popular
 * to change
   * click gear in lower-left
   * select "File Icon Theme"
@@ -480,8 +504,14 @@ followed by the macOS version in parentheses.
 
 * File - ctrl-p (cmd-p)
   * puts nothing at front of search string
+  * performs a fuzzy search
+    * ex. to see a list of all files in the project with "scss" extension,
+      enter `*.scss`
+  * press p repeatedly to move through list of recently opened files
+    * press enter to select file under cursor
 * Symbol in File - ctrl-O (cmd-O)
   * puts @ at front of search string
+    * add : to gropu symbols by kind
   * only searches in current file
 * Symbol in Workspace - ctrl-t (cmd-t)
   * puts # at front of search string
@@ -519,7 +549,8 @@ followed by the macOS version in parentheses.
 ## Images
 
 * when an image file is selected in the EXPLORER panel
-  it is rendered in an editor tab
+  it is rendered in an editor tab and its width, height, and file size
+  are displayed on the right side of the status bar at the bottom
 
 ## Import Cost extension
 
@@ -540,6 +571,8 @@ followed by the macOS version in parentheses.
 
 * opens automatically in most cases as you type
 * can trigger manually with ctrl-space
+* works in `package.json` files to complete key names,
+  npm package names, and their versions
 
 ## JavaScript
 
@@ -618,7 +651,7 @@ followed by the macOS version in parentheses.
 * keyboard shortcuts
   * ? (cmd-opt-0) toggle between vertical and horizontal splits
 
-## mardownlint extension
+## markdownlint extension
 
 * lints Markdown files
 
@@ -638,12 +671,13 @@ followed by the macOS version in parentheses.
 * press option-up or option-down to move the line(s)
 * sometimes messes up indentation in JavaScript files
 
-## Multiple Cursors
+## Mult-Cursor Editing
 
 * after selecting some text, press ctrl-L (cmd-L)
   to "Select All Occurrences"
 * now can edit all occurrences at the same time
 * when finished press esc to get out of multi-cursor moe
+* I don't understand why this feature is so popular.
 
 ## New Window
 
@@ -696,7 +730,8 @@ followed by the macOS version in parentheses.
 ## Organize Imports
 
 * for JavaScript and TypeScript files
-* open Commannd Palette and enter "Organize Imports"
+* open Command Palette and enter "Organize Imports"
+* doesn't work with Flow type imports
 * can automate on save with
 
   ```json
@@ -839,6 +874,46 @@ followed by the macOS version in parentheses.
   to move to previous and next matches
 * search results are live and update as files are modified
 
+## Settings Sync extension
+
+* useful when using VS Code from more than one computer
+  or just to have an offline backup of settings
+* saves many things
+
+  * date and time of last upload
+  * list of installed extension and their versions
+  * custom keybindings including Windows and macOS versions
+  * user settings
+  * custom snippets for each language (JavaScript, TypeScript, ...)
+  * custom icons
+
+* install "Settings Sync" extension
+* follow instructions to create a Github personal access token
+  named "code-settings-sync"
+* repeat on other computers
+* may need to restart VS Code
+* to automate uploads and downloads of settings changes
+  select these commands from the Command Palette
+  * "Sync: Advanced Options > Toggle Auto-Download on Startup"
+    * adds "sync.autoDownload": true to user settings
+    * false by default
+  * "Sync: Advanced Options > Toggle Auto-Upload on Settings Change"
+    * adds "sync.autoUpload": true to user settings
+    * false by default
+* to request a download of settings without restarting, press alt-D (opt-D)
+* to request an upload of settings, press alt-U (opt-U)
+* to see the gist it creates, browse <https://gist.github.com/mvolkmann>
+  and look for mvolkmann/cloudSettings
+* does it merge changes or overwrite them?
+* to share your settings with others
+  * by default, a secret Gist is created and only you can see it
+  * to create a new, public Gist that can be shared with others,
+    open the Command Palette, select "Sync : Advanced Options"
+    and select "Share Settings with Public GIST"
+    * replaces the private Gist with a public one
+  * other users can download settings from your public Gist,
+    but they can't upload their settings to your Gist
+
 ## Sidebar
 
 * where the EXPLORER, Search, Source Control, Debug, and Extensions panels are displayed
@@ -919,46 +994,6 @@ followed by the macOS version in parentheses.
   * to move to previous/next editor, even across panes
     * ctrl-left/right (same in macOS)
 
-## Synchronize Settings
-
-* useful when using VS Code from more than one computer
-  or just to have an offline backup of settings
-* saves many things
-
-  * date and time of last upload
-  * list of installed extension and their versions
-  * custom keybindings including Windows and macOS versions
-  * user settings
-  * custom snippets for each language (JavaScript, TypeScript, ...)
-  * custom icons
-
-* install "Settings Sync" extension
-* follow instructions to create a Github personal access token
-  named "code-settings-sync"
-* repeat on other computers
-* may need to restart VS Code
-* to automate uploads and downloads of settings changes
-  select these commands from the Command Palette
-  * "Sync: Advanced Options > Toggle Auto-Download on Startup"
-    * adds "sync.autoDownload": true to user settings
-    * false by default
-  * "Sync: Advanced Options > Toggle Auto-Upload on Settings Change"
-    * adds "sync.autoUpload": true to user settings
-    * false by default
-* to request a download of settings without restarting, press alt-D (opt-D)
-* to request an upload of settings, press alt-U (opt-U)
-* to see the gist it creates, browse <https://gist.github.com/mvolkmann>
-  and look for mvolkmann/cloudSettings
-* does it merge changes or overwrite them?
-* to share your settings with others
-  * by default, a secret Gist is created and only you can see it
-  * to create a new, public Gist that can be shared with others,
-    open the Command Palette, select "Sync : Advanced Options"
-    and select "Share Settings with Public GIST"
-    * replaces the private Gist with a public one
-  * other users can download settings from your public Gist,
-    but they can't upload their settings to your Gist
-
 ## Tab Navigation
 
 * to navigate to tabs to the right - "Open Next Editor",
@@ -990,9 +1025,22 @@ followed by the macOS version in parentheses.
 * to open, select Code...Preferences...Settings
   or click gear in lower-right and select Settings
   or press ctrl-, (cmd-,)
+* left side shows available settings
+* right side shows settings that have been customized
+  * has separate tabs for settings that are
+    global, workspace-specific, and folder-specific
 * many extensions can be configured by adding to user settings
 * validates all entries so only correct settings
   can be entered without warnings
+* can search for known settings containing given text
+  using the search field at the top
+  * search is fuzzy
+  * hover over a found setting on the left side
+    and click the pencil icon that appears
+    to select a value and add it to the right side
+    which shows the settings to be saved
+  * ex. enter "lig" to find the setting "editor.fontLigatures"
+    which is false by default
 * can use /\* \*/ and // comments in this file
   * useful to temporarily disable settings
 * stored in the files settings.json and keybindings.json
@@ -1022,6 +1070,10 @@ followed by the macOS version in parentheses.
 * can save with ctrl-s (cmd-s) in addition to :w
 * / search is case-insensitive unlike in real Vim
 
+## vscode-database extension
+
+* for querying MySQL and PostgreSQL databases
+
 ## vscode-icons extension
 
 * adds file type icons in file view
@@ -1043,4 +1095,4 @@ followed by the macOS version in parentheses.
 * hides all UI except the current editor panel and goes into full-screen mode
 * ctrl-k ctrl-z (cmd-k cmd-z) toggles
   * Vim plugin conflicts with this,
-    so you mapped ctrl-z (cmd-z) to this
+    so I mapped ctrl-z (cmd-z) to this
