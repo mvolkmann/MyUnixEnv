@@ -13,6 +13,8 @@ followed by the macOS version in parentheses.
 ## To install
 
 * browse <https://code.visualstudio.com/https://code.visualstudio.com/>
+* can install the stable version and/or the "Insiders" build
+* if both are installed, they do not share settings
 
 ## Basics
 
