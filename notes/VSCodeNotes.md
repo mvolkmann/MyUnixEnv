@@ -255,7 +255,7 @@ followed by the macOS version in parentheses.
 * keyboard shortcuts
   * ctrl-w workbench.action.closeActiveEditor (custom)
   * ctrl-left workbench.action.previousEditor (custom)
-    * I also assigned ctrl-k to this based on the Vim cursor movement key "k".
+    * I also assigned ctrl-h to this based on the Vim cursor movement key "k".
   * ctrl-right workbench.action.nextEditor (custom)
     * I also assigned ctrl-l to this based on the Vim cursor movement key "k".
   * ctrl-{n} (cmd-{n}) moves focus to nth editor group or split
@@ -310,7 +310,7 @@ followed by the macOS version in parentheses.
 * to move a file to a different directory
   * drag it
   * will ask for confirmation
-* I configured ctrl-h (cmd+h) to toggle display of this section
+* I configured ctrl-T (cmd+T) to toggle display of this section
 
 ## Extensions - to install
 
