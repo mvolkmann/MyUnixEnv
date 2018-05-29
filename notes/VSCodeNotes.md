@@ -253,9 +253,11 @@ followed by the macOS version in parentheses.
     * handle to open in another app that supports printing
   * Reveal in Side Bar
 * keyboard shortcuts
-  * ctrl-w to workbench.action.closeActiveEditor (custom)
+  * ctrl-w workbench.action.closeActiveEditor (custom)
   * ctrl-left workbench.action.previousEditor (custom)
+    * I also assigned ctrl-k to this based on the Vim cursor movement key "k".
   * ctrl-right workbench.action.nextEditor (custom)
+    * I also assigned ctrl-l to this based on the Vim cursor movement key "k".
   * ctrl-{n} (cmd-{n}) moves focus to nth editor group or split
   * also see Splits
 
@@ -1071,6 +1073,8 @@ followed by the macOS version in parentheses.
   install keyboard shortcuts for Vim
 * can save with ctrl-s (cmd-s) in addition to :w
 * / search is case-insensitive unlike in real Vim
+* to paste text that was copied to the system clipboard,
+  perhaps in another application, press p, not ctrl-v
 
 ## vscode-database extension
 
