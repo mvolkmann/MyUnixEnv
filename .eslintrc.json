@@ -63,7 +63,7 @@
     "eol-last": "off",
     "eqeqeq": "error",
     "flowtype/boolean-style": ["error", "boolean"],
-    "flowtype/define-flow-type": "error",
+    //"flowtype/define-flow-type": "error",
     "flowtype/delimiter-dangle": ["error", "never"],
     "flowtype/generic-spacing": ["error", "never"],
     "flowtype/no-dupe-keys": "error",

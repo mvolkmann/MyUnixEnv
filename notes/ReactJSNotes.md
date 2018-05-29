@@ -109,3 +109,10 @@ Using React with TypeScript
   "format": "prettier --write 'src/**/\*.{ts,tsx}'", // must "npm install -D prettier"
   "lint": "tslint 'src/**/\*.{ts,tsx}'",
   Also add scripts to support the use of Sass just like in other React apps.
+
+* CORS
+  * apps created with create-react-app can make REST calls
+    to a server at a different domain without configuring CORS
+  * ex. add `"proxy": "http://localhost:8080/",` to `package.json`
+    and don't specify the domain in REST calls
+    so they default to going to `http://localhost:3000`

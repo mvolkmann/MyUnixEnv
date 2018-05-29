@@ -1,7 +1,14 @@
 Steps to setup SSH under Linux
 - open a terminal window
-- from home directory, run "ssh-keygen -t rsa -b1024"
-- this creates a subdirectory named .ssh
-- email ~/.ssh/id_rsa.pub to the OCI administrator
-  and ask them to install it on the firewall
-- also look for instructions on the OCI Wiki
+- approach #1
+  - from home directory, run `ssh-keygen -t rsa -b1024`
+  - this creates a subdirectory named .ssh
+  - email ~/.ssh/id_rsa.pub to the OCI administrator
+    and ask them to install it on the firewall
+  - also look for instructions on the OCI Wiki
+- approach #2
+  - cd to home directory
+  - to make a self-signed certificate with a passphrase,
+    `openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem`
+  - to make a self-signed certificate without a passphrase,
+    `openssl req -x509 -newkey -nodes -new -x509 -keyout key.pem -out cert.pem`
