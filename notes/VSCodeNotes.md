@@ -330,7 +330,7 @@ followed by the macOS version in parentheses.
 
 * controls icons displayed for specific file types and folders
 * can download new themes
-  * "Material Icon Theme" is popular
+  * "Material Icon Theme" and "vscode-icons" (described below) are popular
 * to change
   * click gear in lower-left
   * select "File Icon Theme"
@@ -1079,7 +1079,9 @@ followed by the macOS version in parentheses.
 ## vscode-icons extension
 
 * adds file type icons in file view
-* I don't see any change!
+* open Command Palette and enter "Icons: Activate VSCode Icons" to activate
+* "Material Icon Theme" is also popular, but I prefer this icon set
+  because they stand out a little less
 
 ## Workspaces
 
