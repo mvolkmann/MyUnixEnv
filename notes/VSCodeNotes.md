@@ -25,6 +25,13 @@ followed by the macOS version in parentheses.
   * otherwise will use existing VS Code session
 * reopens last set of tabs when restarted
 
+## Activity Bar
+
+* the vertical strip on the left containing icons for
+  various side bar content including Explorer, Search,
+  Source Control, Debug, Extensions, and Outline (if installed)
+* I mapped ctrl-A (cmd-A) to command to toggle visibility of this.
+
 ## Auto-Closing Brackets
 
 * by default matching delimiters are entered automatically
@@ -334,17 +341,20 @@ followed by the macOS version in parentheses.
   }
   ```
 
-## Extensions - to install
+## Extensions
 
-* click the "Extensions" square in the left button strip
-  or press ctrl-X (cmd-X)
-* search for a name
-* note the number of downloads and number of stars for each option
-* select one
-* press the "Install" button
-* after it finished, press the "Reload" button
-  to use in current session
-* click on name of extension for documentation
+* to install
+  * click the "Extensions" square in the left button strip
+    or press ctrl-X (cmd-X)
+  * search for a name
+  * note the number of downloads and number of stars for each option
+  * select one
+  * press the "Install" button
+  * after it finished, press the "Reload" button
+    to use in current session
+  * click on name of extension for documentation
+* updates
+  * by default, automatically checks for and installs extension updates
 
 ## ESLint and TSLint extensions
 
@@ -628,6 +638,8 @@ followed by the macOS version in parentheses.
 * click pencil icon to left of one to change the shortcut
 * right-click to copy which allows having
   more than one shortcut for the same command
+* right-click a keyboard shortcut and select "Show Same Keybindings"
+  to see if a conflict has been created
 
 ## Left Nav
 
@@ -635,7 +647,7 @@ followed by the macOS version in parentheses.
 * contains buttons for major modes (my custom keyboard shortcuts show)
   * Explorer (for files) - ctrl-E (cmd-E)
   * Search - ctrl-S (cmd-S) and ctrl-F (cmd-F)
-  * Source Control - ctrl-G (cmd-G) for "Git"
+  * Source Control - ctrl-V (cmd-V) for "Version Control"
   * Debug - no keyboard shortcut
   * Extensions - ctrl-X (cmd-X)
 * contains gear icon
@@ -1114,6 +1126,17 @@ followed by the macOS version in parentheses.
 * "Material Icon Theme" is also popular, but I prefer this icon set
   because they stand out a little less
 
+## Windows
+
+* can open multiple VS Code windows, each editing a different workspace
+* to switch windows
+  * the "Switch Window" command opens a dropdown of window names
+    from which one can be selected
+  * the "Quick Switch Window" command
+    * press ctrl-W (cmd-W) to run
+    * I mapped ctrl-W to the workbench.action.quickWindowSwitch command
+      and removed the key mappings for workbench.action.closeWindow.
+
 ## Workspaces
 
 * can save the opened folder as a workspace
@@ -1124,6 +1147,10 @@ followed by the macOS version in parentheses.
   * or a directory that is backed up like One Drive
 * later can reopen with File...Open Workspace...
   or by double-clicking a `.code-workspace` file
+* can switch to another workspace within a window
+  by pressing ctrl-r repeatedly
+  * a dropdown list of workspace names will be displayed
+  * doesn't work when using the Vim plugin and an editor has focus
 
 ## Zen Mode
 
