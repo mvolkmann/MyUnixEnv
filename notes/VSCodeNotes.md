@@ -311,8 +311,19 @@ followed by the macOS version in parentheses.
   * drag it
   * will ask for confirmation
 * I configured ctrl-T (cmd+T) to toggle display of this section
-* I configured the enter key to open the file under the cursor
-  by adding the following to `keybindings.json`
+* use up and down arrow keys to move focus to a file
+
+  * with Vim plugin
+    * can also use "j" and "k" keys to move up and down
+    * can use "gg" and "G" to move to top and bottom
+
+* I configured the following keys in `keybindings.json` related to the Explorer
+
+  * "f" to create a new folder (prompts for name)
+  * "n" to create a new file (prompts for name)
+  * "r" to rename the file under the cursor
+  * "d" to delete the file under the cursor with confirmation.
+  * enter key to open the file under the cursor
 
   ```json
   {
@@ -322,11 +333,6 @@ followed by the macOS version in parentheses.
       "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
   }
   ```
-
-* I configured the "r" key to rename the file under the cursor.
-  * similar to the enter key above
-* I configured the "d" key to delete the file under the cursor with confirmation.
-  * similar to the enter key above
 
 ## Extensions - to install
 
