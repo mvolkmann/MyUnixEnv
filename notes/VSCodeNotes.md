@@ -311,6 +311,22 @@ followed by the macOS version in parentheses.
   * drag it
   * will ask for confirmation
 * I configured ctrl-T (cmd+T) to toggle display of this section
+* I configured the enter key to open the file under the cursor
+  by adding the following to `keybindings.json`
+
+  ```json
+  {
+    "key": "enter",
+    "command": "list.select",
+    "when":
+      "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+  }
+  ```
+
+* I configured the "r" key to rename the file under the cursor.
+  * similar to the enter key above
+* I configured the "d" key to delete the file under the cursor with confirmation.
+  * similar to the enter key above
 
 ## Extensions - to install
 
@@ -600,6 +616,7 @@ followed by the macOS version in parentheses.
 ## Keyboard Shortcuts
 
 * to view, click gear icon in lower-left and select "Keyboard Shortcuts"
+  * I mapped ctrl+K (cmd+K) to open this.
 * can search by text in associated commands
 * can search by keyboard shortcut (ex. "ctrl+y" or "cmd+y")
 * click pencil icon to left of one to change the shortcut
@@ -1029,6 +1046,7 @@ followed by the macOS version in parentheses.
 * to open, select Code...Preferences...Settings
   or click gear in lower-right and select Settings
   or press ctrl-, (cmd-,)
+  * I mapped ctrl-U (cmd-U) to open this.
 * left side shows available settings
 * right side shows settings that have been customized
   * has separate tabs for settings that are
@@ -1075,6 +1093,9 @@ followed by the macOS version in parentheses.
 * / search is case-insensitive unlike in real Vim
 * to paste text that was copied to the system clipboard,
   perhaps in another application, press p, not ctrl-v
+* just like in Vim
+  * z-enter moves current line to top
+  * zz moves current line to center
 
 ## vscode-database extension
 
