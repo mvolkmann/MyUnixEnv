@@ -166,6 +166,10 @@ followed by the macOS version in parentheses.
 
 * provides some CSS validate by default
 
+## Debug
+
+* I mapped ctrl-D (cmd-D) to open this in the side bar.
+
 ## Debugging
 
 * to debug non-Node applications
@@ -634,19 +638,36 @@ followed by the macOS version in parentheses.
 * to view, click gear icon in lower-left and select "Keyboard Shortcuts"
   * I mapped ctrl+K (cmd+K) to open this.
 * can search by text in associated commands
-* can search by keyboard shortcut (ex. "ctrl+y" or "cmd+y")
+* can search by keyboard shortcut (ex. "ctrl+y" or "shift+cmd+x")
 * click pencil icon to left of one to change the shortcut
 * right-click to copy which allows having
   more than one shortcut for the same command
 * right-click a keyboard shortcut and select "Show Same Keybindings"
   to see if a conflict has been created
+* important shortcuts I have configure
+  * also described elsewhere in this document
+  * all are ctrl (cmd) followed by an uppercase letter
+  * A - toggle activity bar
+  * B - toggle bottom bar (Toggle Panel)
+  * D - show Debug
+  * E - show Explorer
+  * F - show Search (Find)
+  * K - show Keyboard Shortcuts
+  * M - toggle minimap
+  * N - new Window (press ctrl-r to select a previous workspace)
+  * O - show Outline
+  * P - open Command Palette
+  * S - toggle side bar
+  * U - show User Settings
+  * W - quick switch window (hold and use arrow keys to move to window name to open)
+  * X - show Extensions
 
 ## Left Nav
 
 * a thin strip that does not include the "EXPLORER"
 * contains buttons for major modes (my custom keyboard shortcuts show)
   * Explorer (for files) - ctrl-E (cmd-E)
-  * Search - ctrl-S (cmd-S) and ctrl-F (cmd-F)
+  * Search - ctrl-F (cmd-F) for "find" (using S for Side Bar)
   * Source Control - ctrl-V (cmd-V) for "Version Control"
   * Debug - no keyboard shortcut
   * Extensions - ctrl-X (cmd-X)
@@ -957,10 +978,7 @@ followed by the macOS version in parentheses.
 ## Sidebar
 
 * where the EXPLORER, Search, Source Control, Debug, and Extensions panels are displayed
-* to toggle display, ctrl-b (cmd-b)
-  * the Vim extension overrides this keyboard shortcut,
-    so you'll have to delete that shortcut to get the default one
-  * I mapped this to ctrl-h (cmd-h) instead
+* to toggle display, ctrl-S (cmd-S)
 
 ## Snippets
 
@@ -1137,6 +1155,7 @@ followed by the macOS version in parentheses.
 * to switch windows
   * the "Switch Window" command opens a dropdown of window names
     from which one can be selected
+    * hold and use arrow keys to move to window name to open
   * the "Quick Switch Window" command
     * press ctrl-W (cmd-W) to run
     * I mapped ctrl-W to the workbench.action.quickWindowSwitch command
