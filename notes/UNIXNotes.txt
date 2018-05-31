@@ -254,6 +254,14 @@ LD_LIBRARY_PATH environment variable
   * see $HOME/Ruby/ld.rb
   * alias set in .bashrc is ld
 
+Line Endings
+- to convert line endings in files from DOS (CRLF) to UNIX (LF)
+  * install dos2unix command (on macOS, brew install dos2unix)
+  * open a bash shell
+  * cd to a directory containing the files to convert
+  * for each file extension to be processed (ex. .js)
+    find . -type f -name '*.js' -exec dos2unix {} \;
+
 List Directory Contents
 - To show hidden files, ls -a
 - To show details, ls -l
