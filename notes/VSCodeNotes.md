@@ -702,6 +702,7 @@ followed by the macOS version in parentheses.
 * but it takes up horizontal space
 * to disable, add the following to settings:
   `"editor.minimap.enabled": false,`
+* I mapped ctrl-M (cmd-M) to toggle display of this.
 
 ## Moving Lines
 
@@ -1129,6 +1130,10 @@ followed by the macOS version in parentheses.
 ## Windows
 
 * can open multiple VS Code windows, each editing a different workspace
+* to open a new window, select File...New Window
+  or press ctrl-N (cmd-N)
+* after opening a new window, the easiest way to
+  load a workspace into it is to press ctrl-r
 * to switch windows
   * the "Switch Window" command opens a dropdown of window names
     from which one can be selected
@@ -1148,7 +1153,7 @@ followed by the macOS version in parentheses.
 * later can reopen with File...Open Workspace...
   or by double-clicking a `.code-workspace` file
 * can switch to another workspace within a window
-  by pressing ctrl-r repeatedly
+  by pressing ctrl-r
   * a dropdown list of workspace names will be displayed
   * doesn't work when using the Vim plugin and an editor has focus
 
