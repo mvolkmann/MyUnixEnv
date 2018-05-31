@@ -107,9 +107,12 @@ followed by the macOS version in parentheses.
 ## Code Spell Checker extension
 
 * green squiggly line appears below misspelled or unknown words
-* sometimes need to click to get light bulb icon
-* click light bulb above beginning of the line to get suggestions
+* move cursor onto word and a light bulb icon
+  will appear at the beginning of the line
   * Why isn't the light bulb next to the word?
+* click light bulb or press ctrl-. (cmd-.) to run "Show Fixes"
+  * will see a list of suggestions and
+    options to add the word to the global, folder, or workspace dictionary
 * number of misspelled/unknown works appears in status bar
   after the information icon (circle with "i" inside)
   * click to see list of unknown words

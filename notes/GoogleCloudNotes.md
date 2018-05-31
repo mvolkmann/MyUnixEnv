@@ -33,7 +33,7 @@
 * set the default password for the Cloud SQL instance
   * `gcloud sql users set-password postgres no-host --instance {instance-id} --password {password}`
 * granting access to other projects
-  * if your App Engine appliation and Cloud SQL instance are in different projects,
+  * if your App Engine application and Cloud SQL instance are in different projects,
     you must use a service account to allow you application to access it
   * otherwise no extra steps are needed
 * to test the application locally
@@ -224,7 +224,7 @@
         * \c {db-name} -- connects to specific database in instance
         * \d -- lists tables
         * SQL select statements
-        * press ctrld to exit
+        * press ctrl-d to exit
   * to delete a database from an instance
     * from command line
       * `gcloud sql databases delete --instance {instance} {db-name}
