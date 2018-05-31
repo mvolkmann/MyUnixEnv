@@ -1200,8 +1200,10 @@ followed by the macOS version in parentheses.
 * can open multiple VS Code windows, each editing a different workspace
 * to open a new window, select File...New Window
   or press ctrl-N (cmd-N)
-* after opening a new window, the easiest way to
-  load a workspace into it is to press ctrl-r
+* after opening a new window,
+  the easiest way to load a workspace into it is to
+  click a link under "Recent" in the "Welcome" page
+  or press ctrl-r
 * to switch windows
   * the "Switch Window" command opens a dropdown of window names
     from which one can be selected
