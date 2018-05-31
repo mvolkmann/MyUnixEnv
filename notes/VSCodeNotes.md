@@ -127,6 +127,16 @@ followed by the macOS version in parentheses.
     in the "cSpell.words" property
 * supports camel-case words by splitting them
   into multiple words and checking each
+* by default, only enabled for these file types,
+  but can add more
+  * AsciiDoc, C, C++, C#, Go, Handlebars, HTML, JavaScript, JSON,
+    LaTex, Markdown, PHP, Python, Text, TypeScript, and YAML
+* indicates on left side of status bar
+  whether the file type is enabled for spell checking
+  and whether the current file has been checked
+* to enable checking of the current file type,
+  click status bar indicator and change the switch for
+  "Spell Checker enabled for file type"
 
 ## Color Themes
 
