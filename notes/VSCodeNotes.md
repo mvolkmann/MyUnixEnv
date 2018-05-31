@@ -1216,6 +1216,8 @@ followed by the macOS version in parentheses.
   click a link under "Recent" in the "Welcome" page
   or press ctrl-r
 * to switch windows
+  * on macOS, press cmd-` to cycle between all the windows of any app,
+    including VS Code
   * the "Switch Window" command opens a dropdown of window names
     from which one can be selected
     * hold and use arrow keys to move to window name to open
