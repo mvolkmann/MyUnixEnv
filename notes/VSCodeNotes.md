@@ -67,6 +67,13 @@ followed by the macOS version in parentheses.
 * I configured ctrl-B (cmd-B) to toggle display of this
 * see "Error/Warning Navigation" section below
 
+## Bracket Pair Colorizer extension
+
+* "allows matching brackets to be identified with colors"
+* "user can define which characters to match, and which colors to use"
+* by default only (), [], and {} are matched
+* by default the colors are yellow, magenta, and cyan
+
 ## Code Folding
 
 * works in many kinds of source files including
@@ -964,6 +971,10 @@ followed by the macOS version in parentheses.
 * verify contents
 * press "Submit new issue"
 
+## Save
+
+* I configure both ctrl-s and cmd-s to save the currrent file.
+
 ## Search
 
 * to open, click magnifying glass icon in left nav
@@ -1071,12 +1082,12 @@ followed by the macOS version in parentheses.
 * for more detail, see
   <https://code.visualstudio.com/docs/editor/userdefinedsnippets>
 
-## Sorting selected lines
+## Sort Lines extension
 
-* install "Sort lines" extension
 * select lines
 * press F9 or
   open Command Palette and enter "Sort Lines Ascending" command
+  or one of the many other sorting options
 
 ## Source Control
 
@@ -1212,6 +1223,11 @@ followed by the macOS version in parentheses.
     * press ctrl-W (cmd-W) to run
     * I mapped ctrl-W to the workbench.action.quickWindowSwitch command
       and removed the key mappings for workbench.action.closeWindow.
+* by default, clicking in a VS Code window also processes
+  the thing in the window that is clicked
+  * ex. clicking a file in the Explorer opens that file
+  * to make it so clicking in a window just moves the focus there
+    add the setting `"window.clickThroughInactive": false,`
 
 ## Workspaces
 
