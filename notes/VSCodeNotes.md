@@ -119,6 +119,12 @@ followed by the macOS version in parentheses.
     that can be clicked to navigate to them
 * can add words to a dictionary
   * global, workspace-specific, or folder-specific
+  * the global dictionary is in user settings
+    in the "cSpell.userWords" property
+  * the workspace dictionary is in workspace settings
+    in the "cSpell.words" property
+  * the folder dictionary is in folder settings
+    in the "cSpell.words" property
 * supports camel-case words by splitting them
   into multiple words and checking each
 
