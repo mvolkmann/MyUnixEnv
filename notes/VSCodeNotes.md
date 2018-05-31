@@ -476,7 +476,6 @@ followed by the macOS version in parentheses.
     the number of local commits that haven't been pushed yet
   * this really syncs with remote which both pulls and pushes
   * you assigned the keyboard shortcut ctrl-y (cmd-y) to this
-    * STILL NEED TO ADD THIS WINDOWS KEYBOARD SHORTCUT!
 * current branch is displayed in lower-left
 * to create a branch
   * click current branch name in lower-left and click "+ Create new branch"
