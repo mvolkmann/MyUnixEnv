@@ -306,7 +306,7 @@ followed by the macOS version in parentheses.
   or global version if not found in project
 * will use project .estingrc.json file if found
 
-## Explorer "side bar"
+## Explorer (a.k.a. "side bar")
 
 * displays a collection of various kinds of "explorers"
   * files, npm scripts, GitLens History, ...
@@ -626,6 +626,55 @@ followed by the macOS version in parentheses.
   * Rename Symbol - there and all references
   * Change All Occurrences - like "Rename Symbol", but live; may be buggy
 
+## JS Refactor extension
+
+* NOT CURRENTLY WORKING!
+  * see <https://github.com/cmstead/js-refactor/issues/69>
+* <https://github.com/cmstead/js-refactor>
+* usage
+  * select code to refactor
+  * open Command Palette
+  * enter name of refactoring (all start with "JS Refactor: ")
+* common refactorings
+  * Extract Method
+  * Extract Variable
+  * Inline Variable
+  * Rename Variable (Alias of VS Code internal command)
+* other utilities
+  * Arrow Function
+  * Async Function
+  * Condition
+  * Convert To Arrow Function
+  * Convert To Function Expression
+  * Convert To Template Literal
+  * Export Function
+  * Function
+  * Generator
+  * IIFE
+  * Introduce Function
+  * Lift and Name Function Expression
+  * Negate Expression
+  * Shift Parameters
+  * Try/Catch
+  * Wrap selection options:
+* snippets
+  * Anonymous Function (anon)
+  * Arrow Function (arrow)
+  * Async Function (async)
+  * Condition Block (cond)
+  * Console Log (log)
+  * Export statement -- single variable (export)
+  * Export statement -- object literal (exportObj)
+  * Function (fn)
+  * Generator (generator)
+  * Lambda function (lfn)
+  * Immediately Invoked Function Expression (iife)
+  * Member Function (mfn)
+  * Prototypal Object Definition (proto)
+  * Require statement (require)
+  * Try/Catch Block (tryCatch)
+  * Use Strict (strict)
+
 ## Key Bindings
 
 * can install presets such as Vim key bindings as an extension
@@ -661,6 +710,8 @@ followed by the macOS version in parentheses.
   * U - show User Settings
   * W - quick switch window (hold and use arrow keys to move to window name to open)
   * X - show Extensions
+  * Z - toggle zen mode
+  * | - split editor
 
 ## Left Nav
 
@@ -1181,4 +1232,4 @@ followed by the macOS version in parentheses.
 * hides all UI except the current editor panel and goes into full-screen mode
 * ctrl-k ctrl-z (cmd-k cmd-z) toggles
   * Vim plugin conflicts with this,
-    so I mapped ctrl-z (cmd-z) to this
+    so I mapped ctrl-Z (cmd-Z) to this
