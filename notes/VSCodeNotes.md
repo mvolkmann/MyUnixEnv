@@ -104,6 +104,21 @@ followed by the macOS version in parentheses.
   in the current editor tab
 * clicking a name scrolls to it in the editor tab
 
+## Code Spell Checker extension
+
+* green squiggly line appears below misspelled or unknown words
+* sometimes need to click to get light bulb icon
+* click light bulb above beginning of the line to get suggestions
+  * Why isn't the light bulb next to the word?
+* number of misspelled/unknown works appears in status bar
+  after the information icon (circle with "i" inside)
+  * click to see list of unknown words
+    that can be clicked to navigate to them
+* can add words to a dictionary
+  * global, workspace-specific, or folder-specific
+* supports camel-case words by splitting them
+  into multiple words and checking each
+
 ## Color Themes
 
 * default is "Default Dark+" a.k.a. "Dark+ (default dark)"
@@ -116,7 +131,7 @@ followed by the macOS version in parentheses.
   * use up and down arrow keys to navigate the list of themes
   * will update to show the theme colors as you navigate
   * will be stored in settings as "workbench.colorTheme"
-* to customize colors for nearly everying in the editor, see
+* to customize colors for nearly everything in the editor, see
   <https://code.visualstudio.com/docs/getstarted/theme-color-reference>
 * to customize colors for specific syntax elements (tokens) in editor windows
   * modify user settings
@@ -296,12 +311,12 @@ followed by the macOS version in parentheses.
 ## Error/Warning Navigation
 
 * left side of status bar at bottom shows
-  * number of errors prededed by icon with "X" in a circle
+  * number of errors preceded by icon with "X" in a circle
   * number of warnings preceded by icon with "!" in a triangle
   * click to see details in the "bottom bar"
     * this is also a way to get the OUTPUT, DEBUG CONSOLE, and TERMINAL tabs
   * click an error or warning to jump to the corresponding line
-  * if a lightbulb icon appears, clicking it may
+  * if a light bulb icon appears, clicking it may
     provide an option to automatically fix the issue
 * to jump to the next error, press F8
 * to jump to the previous error, press shift-F8
@@ -311,7 +326,7 @@ followed by the macOS version in parentheses.
 * runs ESLint on JavaScript files
 * uses version of ESLint in current project directory
   or global version if not found in project
-* will use project .estingrc.json file if found
+* will use project .eslintrc.json file if found
 
 ## Explorer (a.k.a. "side bar")
 
@@ -475,9 +490,9 @@ followed by the macOS version in parentheses.
   * clicking "..." in upper-right of panel shows a context-sensitive menu
     containing many version control actions
 * to commit changes
-  * click name of repo under "SOURCE CONTROL PROVIDERS"
+  * click name of repository under "SOURCE CONTROL PROVIDERS"
   * enter commit message in text field containing "Message" placeholder
-  * click checkmark above message or press ctrl-enter (cmd-enter)
+  * click check mark above message or press ctrl-enter (cmd-enter)
 * to push changes
   * click up arrow in lower-left preceded by
     the number of local commits that haven't been pushed yet
@@ -557,7 +572,7 @@ followed by the macOS version in parentheses.
     * press enter to select file under cursor
 * Symbol in File - ctrl-O (cmd-O)
   * puts @ at front of search string
-    * add : to gropu symbols by kind
+    * add : to group symbols by kind
   * only searches in current file
 * Symbol in Workspace - ctrl-t (cmd-t)
   * puts # at front of search string
@@ -752,7 +767,7 @@ followed by the macOS version in parentheses.
   * click button in tab of the file that shows
     side by side rectangles and a magnifying glass
 * stays up to date with changes in tab containing raw Markdown
-* when finshed, close the preview tab
+* when finished, close the preview tab
 * Prettier formats Markdown if you have it configured to "formatOnSave"
   * renumbers ordered lists and more
   * see "Prettier extension" below
@@ -789,7 +804,7 @@ followed by the macOS version in parentheses.
 * press option-up or option-down to move the line(s)
 * sometimes messes up indentation in JavaScript files
 
-## Mult-Cursor Editing
+## Multi-Cursor Editing
 
 * after selecting some text, press ctrl-L (cmd-L)
   to "Select All Occurrences"
@@ -799,7 +814,7 @@ followed by the macOS version in parentheses.
 
 ## New Window
 
-* to work on multiple sets of files simulatenously
+* to work on multiple sets of files simultaneously
   consider opening each set of tabs in a new window
 * select File...New Window to open a new one
 
@@ -901,7 +916,7 @@ followed by the macOS version in parentheses.
   to see the version it is using
 * will use version installed as dev dependency
   in package.json if present
-* after using, look for "Prettier:" followed by a checkmark
+* after using, look for "Prettier:" followed by a check mark
   in lower-right to know if it worked
   * if not, will be followed by an X
   * click to see syntax errors in your code that prevented formatting
@@ -956,7 +971,7 @@ followed by the macOS version in parentheses.
 * to extract code from a function or method
   into a new function or method
   * select lines of code
-  * click light blub icon
+  * click light bulb icon
   * select one of
     * "Extract to inner function"
     * "Extract to function in module scope"
@@ -973,7 +988,7 @@ followed by the macOS version in parentheses.
 
 ## Save
 
-* I configure both ctrl-s and cmd-s to save the currrent file.
+* I configure both ctrl-s and cmd-s to save the current file.
 
 ## Search
 
@@ -995,6 +1010,20 @@ followed by the macOS version in parentheses.
 * click left and right arrows in popup
   to move to previous and next matches
 * search results are live and update as files are modified
+
+## Selection
+
+* "Expand Select" and "Shrink Select" commands
+  * changes current selection in increments of
+    * inside pair of delimiters
+    * include the delimiters
+    * entire line
+    * enclosing block
+  * to "Expand Select", press cmd-ctrl-shift-right arrow
+  * to "Shrink Select", press cmd-ctrl-shift-left arrow
+* "Expand Bracket Selection" command
+  * similar to "Expand Select" but only moves to inside delimiters
+  * no corresponding shrink command
 
 ## Settings Sync extension
 
@@ -1169,7 +1198,7 @@ followed by the macOS version in parentheses.
     * macOS: $HOME/Library/Application Support/Code/User/
     * Linux: $HOME/.config/Code/User/
   * can copy to another machine to share settings
-  * also consider automating synchrononization of settings
+  * also consider automating synchronization of settings
     (described earlier)
 * project-specific customizations
   * stored in project directory in .vscode directory
