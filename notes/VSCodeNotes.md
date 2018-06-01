@@ -1044,6 +1044,43 @@ followed by the macOS version in parentheses.
   * similar to "Expand Select" but only moves to inside delimiters
   * no corresponding shrink command
 
+## Settings
+
+* to open, select Code...Preferences...Settings
+  or click gear in lower-right and select Settings
+  or press ctrl-, (cmd-,)
+  * I mapped ctrl-U (cmd-U) for "User Settings" to open this.
+* left side shows available settings
+* right side shows settings that have been customized
+  * has separate tabs for settings that are
+    global, workspace-specific, and folder-specific
+* many extensions can be configured by adding to user settings
+* validates all entries so only correct settings
+  can be entered without warnings
+* can search for known settings containing given text
+  using the search field at the top
+  * search is fuzzy
+  * hover over a found setting on the left side
+    and click the pencil icon that appears
+    to select a value and add it to the right side
+    which shows the settings to be saved
+  * ex. enter "lig" to find the setting "editor.fontLigatures"
+    which is false by default
+* can use /\* \*/ and // comments in this file
+  * useful to temporarily disable settings
+* stored in the files settings.json and keybindings.json
+  * in OS-specific locations
+    * Windows: %APPDATA%\Code\User\
+    * macOS: $HOME/Library/Application Support/Code/User/
+    * Linux: $HOME/.config/Code/User/
+  * can copy to another machine to share settings
+  * also consider automating synchronization of settings
+    (described earlier)
+* project-specific customizations
+  * stored in project directory in .vscode directory
+    * files are settings.json and keybindings.json
+  * can check into version control so project team can share
+
 ## Settings Sync extension
 
 * useful when using VS Code from more than one computer
@@ -1186,43 +1223,6 @@ followed by the macOS version in parentheses.
 ## TypeScript
 
 * under "Customize" on "Welcome" screen, install support for TypeScript
-
-## User Settings
-
-* to open, select Code...Preferences...Settings
-  or click gear in lower-right and select Settings
-  or press ctrl-, (cmd-,)
-  * I mapped ctrl-U (cmd-U) to open this.
-* left side shows available settings
-* right side shows settings that have been customized
-  * has separate tabs for settings that are
-    global, workspace-specific, and folder-specific
-* many extensions can be configured by adding to user settings
-* validates all entries so only correct settings
-  can be entered without warnings
-* can search for known settings containing given text
-  using the search field at the top
-  * search is fuzzy
-  * hover over a found setting on the left side
-    and click the pencil icon that appears
-    to select a value and add it to the right side
-    which shows the settings to be saved
-  * ex. enter "lig" to find the setting "editor.fontLigatures"
-    which is false by default
-* can use /\* \*/ and // comments in this file
-  * useful to temporarily disable settings
-* stored in the files settings.json and keybindings.json
-  * in OS-specific locations
-    * Windows: %APPDATA%\Code\User\
-    * macOS: $HOME/Library/Application Support/Code/User/
-    * Linux: $HOME/.config/Code/User/
-  * can copy to another machine to share settings
-  * also consider automating synchronization of settings
-    (described earlier)
-* project-specific customizations
-  * stored in project directory in .vscode directory
-    * files are settings.json and keybindings.json
-  * can check into version control so project team can share
 
 ## Version Lens extension
 
