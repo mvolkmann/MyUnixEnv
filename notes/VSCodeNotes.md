@@ -10,10 +10,11 @@ followed by the macOS version in parentheses.
 * mostly implemented in TypeScript
 * mostly open source; see <https://github.com/Microsoft/vscode>
 
-## To install
+## Installing
 
 * browse <https://code.visualstudio.com/https://code.visualstudio.com/>
-* can install the stable version and/or the "Insiders" build
+* can install the stable version (updated monthly)
+  and/or the less stable "Insiders" build (updated daily)
 * if both are installed, they do not share settings
 
 ## Basics
@@ -205,7 +206,15 @@ followed by the macOS version in parentheses.
 
 ## CSS
 
-* provides some CSS validate by default
+* provides some CSS validation by default
+
+## CSV extensions
+
+* consider "Rainbow CSV"
+  * highlights the data from each column in a different color
+* consider "Excel Viewer"
+  * provides a read-only table view of CSV and Excel files
+  * can sort and filter the data
 
 ## Debug
 
@@ -347,7 +356,7 @@ followed by the macOS version in parentheses.
   or global version if not found in project
 * will use project .eslintrc.json file if found
 
-## Explorer (a.k.a. "side bar")
+## Explorer
 
 * displays a collection of various kinds of "explorers"
   * files, npm scripts, GitLens History, ...
@@ -357,8 +366,11 @@ followed by the macOS version in parentheses.
     * add user setting `"explorer.openEditors.visible": 0,`
 * to delete a file
   * select and press delete key (cmd-delete)
+    * I mapped the d key to this.
   * will ask for confirmation to move to trash / recycle bin
     unless you check "Do not ask me again" (not advised)
+* to rename a file, right click and select "Rename"
+  * I mapped the r key to this.
 * to move a file to a different directory
   * drag it
   * will ask for confirmation
@@ -385,6 +397,19 @@ followed by the macOS version in parentheses.
       "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
   }
   ```
+
+* errors and warnings
+  * by default, names of files
+    * containing no errors or warnings are white
+    * containing errors are red
+    * containing warnings and no errors are yellow
+    * that have been modified are yellow
+  * to the right of the file name
+    * if there are any errors or warnings, the total number is displayed
+    * if the file has been modified, "M" is displayed
+  * names of folders containing files
+    * with errors are red
+    * with warnings and no errors are yellow
 
 ## Extensions
 
@@ -747,6 +772,7 @@ followed by the macOS version in parentheses.
   * O - show Outline
   * P - open Command Palette
   * S - toggle side bar
+  * T - toggle status bar
   * U - show User Settings
   * W - quick switch window (hold and use arrow keys to move to window name to open)
   * X - show Extensions
@@ -779,6 +805,7 @@ followed by the macOS version in parentheses.
 * by default line numbers are on
 * change by setting "editor.lineNumbers" in user settings
 * valid values are "on", "off", and "relative"
+* to toggle this or any setting, see the "Settings Cycler extension" section
 
 ## Markdown
 
@@ -1077,9 +1104,37 @@ followed by the macOS version in parentheses.
   * also consider automating synchronization of settings
     (described earlier)
 * project-specific customizations
+
   * stored in project directory in .vscode directory
     * files are settings.json and keybindings.json
   * can check into version control so project team can share
+
+* Settings Cycler extension
+  * to configure, modify user settings and add a keybinding
+  * for example, to enable toggling of line number display in editors
+    * add the following to user settings
+      ```json
+      "settings.cycle": [
+        {
+          "id": "editor.lineNumbers",
+          "values": [
+            {
+              "editor.lineNumbers": "on"
+            },
+            {
+              "editor.lineNumbers": "off"
+            }
+          ]
+        }
+      ],
+      ```
+    * add the following in `keybindings.json`
+      ```json
+      {
+        "key": "shift+cmd+l",
+        "command": "settings.cycle.editor.lineNumbers"
+      }
+      ```
 
 ## Settings Sync extension
 
@@ -1198,6 +1253,20 @@ followed by the macOS version in parentheses.
   * to move to previous/next editor, even across panes
     * ctrl-left/right (same in macOS)
 
+## Stack Traces
+
+* in macOS, cmd-clicking a stack trace line number
+  in a terminal (integrated or not)
+  opens the source in VS Code
+  * How does it do this?
+  * Is there an equivalent in Windows?
+
+## Status Bar
+
+* single-line section at bottom that displays status information
+* can toggle display with the "Toggle Status Bar Visibility" command
+  * I mapped this to ctrl-T (cmd-T).
+
 ## Tab Navigation
 
 * to navigate to tabs to the right - "Open Next Editor",
@@ -1264,8 +1333,13 @@ followed by the macOS version in parentheses.
   click a link under "Recent" in the "Welcome" page
   or press ctrl-r
 * to switch windows
-  * on macOS, press cmd-` to cycle between all the windows of any app,
-    including VS Code
+  * to cycle between all windows in the same app (not specific to VS Code)
+    * in macOS, press cmd-`
+    * in Windows (pre-10) there are two options
+      * ctrl-click the app task bar icon repeatedly
+      * hold down the Windows key and press the task bar number
+        * drag VS Code to the beginning so the number is
+    * in Windows 10, press alt-`
   * the "Switch Window" command opens a dropdown of window names
     from which one can be selected
     * hold and use arrow keys to move to window name to open

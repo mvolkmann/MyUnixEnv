@@ -11,7 +11,7 @@ Usage
 - custom plug-ins typically also use SWT
 - classes are in the org.eclipse.swt package and subpackages
 
-Class Hierachy
+Class Hierarchy
 - all of these are in the org.eclipse.swt.graphics package
   unless otherwise noted
 - Object
