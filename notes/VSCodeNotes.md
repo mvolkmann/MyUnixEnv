@@ -1333,6 +1333,36 @@ followed by the macOS version in parentheses.
 * "Material Icon Theme" is also popular, but I prefer this icon set
   because they stand out a little less
 
+## VS Live Share extension
+
+* install the extension and press "Reload"
+* click "Sign in" on the left side of the status bar
+  * can sign in with a Microsoft or GitHub account
+  * "Sign in" will be replaced by "Share"
+* click "Share" on the left side of the status bar
+* an invite link will be copied to the system clipboard
+* send this to people with whom you want to share
+* a dialog will appear in the lower-right
+  * click "Security info" to see what will be shared
+  * for details see
+    <https://docs.microsoft.com/en-us/visualstudio/liveshare/reference/security>
+* you will be notified when each guest joins
+  and can remove them at any time if desired
+* require explicit approval before guests can join,
+  add the setting `"liveshare.guestApprovalRequired": true`
+* you and each guest can independently navigate and edit files
+* can exclude certain files from guest access by adding
+  a `.vsls.json` to the top project folder
+* can share access to a local server
+  * ex. express or webpack-dev-server
+  * for details see
+    <https://docs.microsoft.com/en-us/visualstudio/liveshare/use/vscode#share-a-server>
+* can share a terminal
+  * not shared by default
+  * can be read-only or writable
+  * for details see
+    <https://docs.microsoft.com/en-us/visualstudio/liveshare/use/vscode#share-a-terminal>
+
 ## Windows
 
 * can open multiple VS Code windows, each editing a different workspace
