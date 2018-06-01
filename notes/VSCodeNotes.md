@@ -1263,11 +1263,12 @@ followed by the macOS version in parentheses.
 
 ## Stack Traces
 
-* in macOS, cmd-clicking a stack trace line number
-  in a terminal (integrated or not)
-  opens the source in VS Code
+* in macOS, cmd-clicking a stack trace line in a terminal (integrated or not)
+  opens the source in VS Code and scrolls to that line
   * How does it do this?
-  * Is there an equivalent in Windows?
+* in Windows, ctrl-clicking a stack trace line in an integrated terminal
+  does the same
+  * does not work in a Command Prompt window
 
 ## Status Bar
 
