@@ -420,7 +420,7 @@ followed by the macOS version in parentheses.
   * note the number of downloads and number of stars for each option
   * select one
   * press the "Install" button
-  * after it finished, press the "Reload" button
+  * after it finishes, press the "Reload" button
     to use in current session
   * click on name of extension for documentation
 * updates
@@ -767,6 +767,7 @@ followed by the macOS version in parentheses.
   * E - show Explorer
   * F - show Search (Find)
   * K - show Keyboard Shortcuts
+  * L - toggles line numbers between "on", "relative", and "off"
   * M - toggle minimap
   * N - new Window (press ctrl-r to select a previous workspace)
   * O - show Outline
@@ -806,6 +807,8 @@ followed by the macOS version in parentheses.
 * change by setting "editor.lineNumbers" in user settings
 * valid values are "on", "off", and "relative"
 * to toggle this or any setting, see the "Settings Cycler extension" section
+  * I mapped ctrl-L (cmd-L) to toggle line numbers
+    between "on", "relative", and "off".
 
 ## Markdown
 
@@ -1110,6 +1113,8 @@ followed by the macOS version in parentheses.
   * can check into version control so project team can share
 
 * Settings Cycler extension
+  * cycles one or more settings between two or more sets of values
+  * actually modifies settings file
   * to configure, modify user settings and add a keybinding
   * for example, to enable toggling of line number display in editors
     * add the following to user settings
@@ -1120,6 +1125,9 @@ followed by the macOS version in parentheses.
           "values": [
             {
               "editor.lineNumbers": "on"
+            },
+            {
+              "editor.lineNumbers": "relative"
             },
             {
               "editor.lineNumbers": "off"
