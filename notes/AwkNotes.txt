@@ -110,7 +110,7 @@ Special Variables
 - FNR holds the number of records read so far from the current input file
 - FS holds the field separator
   * defaults to " " which is a special case that
-    respresents any number of contiguous whitespace characters
+    represents any number of contiguous whitespace characters
     and trims leading and trailing whitespace from each record
   * commonly changed in BEGIN rule
   * can be a regular expression

@@ -51,7 +51,7 @@
   * The requirement to use this with creating libraries
     of reusable components and services makes it
     more difficult to deploy and use them.
-  * Sharing resuable components and services
+  * Sharing reusable components and services
     is much easier in React.
 * use of classes
   * Typical Angular code makes far more use of classes
@@ -251,10 +251,10 @@ export class MyComponent {
   * ex constructor(private myService: MyService) {}
   * dependency injection makes it easy to mock them out in tests
 * the component lifecycle is exposed through methods
-  described by intefaces that the component class implements
+  described by interfaces that the component class implements
   * OnInit interface describes ngOnInit method
   * see "Lifecycle Hooks" for others
-* templates are HTML that typcially contains binding expressions
+* templates are HTML that typically contains binding expressions
   * don't need a root element
 * CSS for a component is scoped to that component
 * @Component annotation specifies
@@ -464,7 +464,7 @@ export class MyComponent {
       whether all the form elements are valid
   * to have a button that is disabled when the form is invalid,
     <button [disabled]="!myForm.valid">Save</button>
-  * validation atrributes
+  * validation attributes
     * min, max, and step - for input types that accept numbers
       * includes number, range, date, month, week, time, ...
     * minlength and maxlength - for input types that accept text
@@ -569,7 +569,7 @@ export class ParentComponent {
   * ex. {{myObservable$ | async}}
   * ex. with ngFor
     \*ngFor="let user of users$ | async"
-  * automatically unsubsubscribes from the `Observable`
+  * automatically unsubscribes from the `Observable`
     if the component is removed from the DOM
     and resubscribes if it is inserted again later
     * a primary benefit over just directly subscribing in code
@@ -591,14 +591,14 @@ export class ParentComponent {
 
 ## Property Binding
 
-* uses the same syntax as computeed attribues to
+* uses the same syntax as computed attributes to
   pass property values to other components from HTML templates
   * ex. <app-hero-detail [hero]="selectedHero"></app-hero-detail>
 * only a one-way binding
 
 ## Event Handling
 
-* specified on HTML elements with attributes in parens
+* specified on HTML elements with attributes in parentheses
   * ex. (click)="onClick(someObj)"
   * `onClick` must be a method defined in the component .ts file
 
@@ -794,7 +794,7 @@ export class ParentComponent {
   * artifact files are deleted when the build completes?
   * build details for a project can be configured in .angular-cli.json
   * CSS is inlined if less that 10KB
-  * the primary files produced arer index.html and main.bundle.js
+  * the primary files produced are index.html and main.bundle.js
   * bundle .js files
     * main.bundle.js
       * contains your code
