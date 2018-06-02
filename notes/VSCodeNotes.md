@@ -67,6 +67,10 @@ followed by the macOS version in parentheses.
   PROBLEMS, OUTPUT, DEBUG CONSOLE, and TERMINAL
 * I configured ctrl-B (cmd-B) to toggle display of this
 * see "Error/Warning Navigation" section below
+* can move to right side instead of bottom
+  * click 2nd icon from right in bottom bar header
+* can maximize/minimize the space allocated to this area
+  * click "angle bracket" icon in bottom bar header
 
 ## Bracket Pair Colorizer extension
 
@@ -692,6 +696,38 @@ followed by the macOS version in parentheses.
   * Rename Symbol - there and all references
   * Change All Occurrences - like "Rename Symbol", but live; may be buggy
 
+## Jest extension
+
+* couldn't get this to work with Jest v23, but it works with v22
+* starts Jest automatically when in a project with Jest installed
+  is loaded
+* reruns tests after every save
+* shows individual fail/pass statuses inline
+  * puts a colored circle in front of tests,
+    * solid green for pass
+    * solid red for fail
+    * hollow yellow for skipped
+* shows fails in PROBLEMS tab of the bottom bar
+* failed expect calls
+  * underlined with a red squiggly line
+  * have a comment after them explaining the failure
+* adds syntax highlighting to snapshot files
+* provides a button to update failed snapshots
+* shows coverage information in files being tested
+  * requires coverage to be collected by your jest config
+  * command "Jest: Toggle Coverage Overlay"
+    * highlights uncovered source lines with a brown background
+    * probably want to turn this off when some tests are being skipped
+* to show test coverage when a project loads, add setting
+  `"jest.showCoverageOnLoad": true,`
+* suggested Jest configuration in `package.json`
+  ```json
+    "jest": {
+    "collectCoverage": true,
+    "roots": ["src"]
+  },
+  ```
+
 ## JS Refactor extension
 
 * NOT CURRENTLY WORKING!
@@ -954,6 +990,12 @@ followed by the macOS version in parentheses.
   "perforce.password": "{perforce-password}",
   "perforce.port": "ussl017:1666",
   "perforce.user": "{perforce-user-id}",`
+
+## Polacode
+
+* creates nice images from code snippets
+* doesn't seem to work when the Vim extension is installed
+* see <https://github.com/octref/polacode/issues/60>
 
 ## Prettier extension
 
@@ -1287,6 +1329,11 @@ followed by the macOS version in parentheses.
 ## Terminal
 
 * press ctrl-` (even in macOS) to open an integrated terminal (can run Fish!)
+* can split a terminal
+  * click split button in bottom bar header
+* can move the "bottom bar" containing terminals
+  to the right side instead of the bottom
+  * click 2nd icon from right in bottom bar header
 * press ctrl-C (cmd-C) to open a native terminal (Command Prompt in Windows)
   in the workspace directory
 
