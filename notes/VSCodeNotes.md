@@ -702,6 +702,10 @@ followed by the macOS version in parentheses.
 * starts Jest automatically when in a project with Jest installed
   is loaded
 * reruns tests after every save
+* each time tests are run, the bottom bar OUTPUT tab is cleared
+  the test output is written there
+* indicates whether all tests are passing
+  in status bar after "Jest:"
 * shows individual fail/pass statuses inline
   * puts a colored circle in front of tests,
     * solid green for pass
@@ -710,13 +714,15 @@ followed by the macOS version in parentheses.
 * shows fails in PROBLEMS tab of the bottom bar
 * failed expect calls
   * underlined with a red squiggly line
-  * have a comment after them explaining the failure
+  * adds what looks like a comment in white
+    after expect calls explaining failures
 * adds syntax highlighting to snapshot files
 * provides a button to update failed snapshots
 * shows coverage information in files being tested
   * requires coverage to be collected by your jest config
   * command "Jest: Toggle Coverage Overlay"
     * highlights uncovered source lines with a brown background
+    * adds brown strips in right gutter to indicate uncovered source lines
     * probably want to turn this off when some tests are being skipped
 * to show test coverage when a project loads, add setting
   `"jest.showCoverageOnLoad": true,`
