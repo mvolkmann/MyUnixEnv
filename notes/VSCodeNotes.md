@@ -359,7 +359,13 @@ followed by the macOS version in parentheses.
 * runs ESLint on JavaScript files
 * uses version of ESLint in current project directory
   or global version if not found in project
-* will use project .eslintrc.json file if found
+* will use project `.eslintrc.json` file if found
+* add setting `"eslint.autoFixOnSave": true,` to automatically
+  fix violations that ESLint can fix when files are saved
+  * only works if "files.autoSave" is "off", "onFocusChange", or "onWindowChange"
+* when also using the Prettier extension,
+  omit formatting rules from the ESLint configuration file
+  so ESLint won't complain about any formatting that Prettier does
 
 ## Explorer
 
@@ -1374,6 +1380,39 @@ followed by the macOS version in parentheses.
 * just like in Vim
   * z-enter moves current line to top
   * zz moves current line to center
+* the leader key is "\" by default, but can be configured
+  * I changed it to comma by adding the setting `"vim.leader": ",",`
+* supports features of some Vim plugins
+  * easymotion
+    * to enable, add the setting `"vim.easymotion": true,`
+    * there are many commands
+    * to jump to the beginning of a word that is visible
+      * and is forward, type <leader><leader>w
+      * and is backward, type <leader><leader>b
+      * then type the letter(s) displayed at the beginning of a word
+  * surround
+    * enabled by default
+    * to disable, add the setting `"vim.surround": false,`
+    * to surround visually selected text with delimiters, S{delimiter}
+      * ex. S" or S<div> (surrounds with an XML tag)
+    * to change surrounding delimiters, xs{old}{new}
+      * ex. cs'" or cs({
+      * to change <div>foo</div> to <span>foo</span>
+        when cursor is on "foo", cst<span>
+    * to delete surrounding delimiters, ds{delimiter}
+      * ex. ds' or ds(
+      * to change <div>foo</div> to foo
+        when cursor is on "foo", dst
+  * commentary
+    * uses the VS Code "Toggle Line Comment" and "Toggle Block Comment" commands
+    * to toggle a line comment for current line, gcc
+      * TODO: Why is my cmd-/ keyboard shortcut not working?
+    * to toggle a block comment, select lines and press gC
+  * indent-object
+    * FINISH THIS!
+  * sneak
+    * to enable, add the setting `"vim.sneak": true,`
+    * FINISH THIS!
 
 ## vscode-database extension
 
