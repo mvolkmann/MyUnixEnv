@@ -957,6 +957,17 @@ followed by the macOS version in parentheses.
   - an advanced feature
   - should probably just use a `package.json` file
 
+## npm Intellisense extension
+
+- autocompletes module names in require function calls and import statements
+- only uses regular dependencies
+- to also consider devDependencies, add the setting
+  `"npm-intellisense.scanDevDependencies": true,`
+- run Import command from Command Palette to
+  select a package and add an import statement
+  - couldn't get it to list all the dependencies in package.json
+- uninstalled for now
+
 ## Open File
 
 - in Windows, ctrl-o

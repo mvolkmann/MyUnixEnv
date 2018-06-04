@@ -233,6 +233,14 @@
       - click an instance id link
       - click the "DATABASES" tab
       - click trash can to right of database name
+  - to stop an instance temporarily
+    - typically to reduce charges
+    - from web UI
+      - click "Go to the SQL dashboard"
+      - click an instance id link
+      - click "STOP" at the top
+      - "STOP" will change to "START"
+        which can be clicked later to restart it
 
 STOPPED HERE
 
