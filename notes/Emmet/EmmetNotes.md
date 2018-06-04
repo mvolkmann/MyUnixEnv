@@ -42,11 +42,12 @@ Currently VS Code seems to be the most popular editor, so that is covered.
 I use Vim, so that is also covered.
 
 Instructions for other popular editors can be found at the following sites:
-* Atom - https://atom.io/packages/emmet
-* IntelliJ - https://www.jetbrains.com/help/idea/enabling-emmet-support.html
-* Notepad++ - https://github.com/emmetio/npp/#readme
-* Sublime - https://github.com/sergeche/emmet-sublime#readme
-* Webstorm - https://www.jetbrains.com/help/webstorm/enabling-emmet-support.html
+
+- Atom - https://atom.io/packages/emmet
+- IntelliJ - https://www.jetbrains.com/help/idea/enabling-emmet-support.html
+- Notepad++ - https://github.com/emmetio/npp/#readme
+- Sublime - https://github.com/sergeche/emmet-sublime#readme
+- Webstorm - https://www.jetbrains.com/help/webstorm/enabling-emmet-support.html
 
 ## VS Code
 
@@ -58,12 +59,12 @@ More file types can be added.
 
 ### Configuring Emmet in VS Code
 
-* Open Preferences...Settings from the "File" menu in Windows and Linux,
+- Open Preferences...Settings from the "File" menu in Windows and Linux,
   or the "Code" menu in macOS.
-* Enter "Emmet" in the "Search Settings" input at the top.
-* Note the available settings and their defaults on the left.
-* Change settings in "USER SETTINGS" on the right.
-* To enable use in React components in `.js` files
+- Enter "Emmet" in the "Search Settings" input at the top.
+- Note the available settings and their defaults on the left.
+- Change settings in "USER SETTINGS" on the right.
+- To enable use in React components in `.js` files
   change the "emmet.includeLanguages" object
   to include `javascript: 'javascriptreact'`
 
@@ -93,15 +94,17 @@ press tab to jump to the next one.
 
 In case you are interested in enabling Vim emulation in VS Code,
 here are the steps.
-* Select View...Extensions.
-* Enter "vscodevim" in the search input.
-* Press the "Install" button for the vscodevim extension.
+
+- Select View...Extensions.
+- Enter "vscodevim" in the search input.
+- Press the "Install" button for the vscodevim extension.
 
 To configure Vim emulation
-* Select Code...Preferences...Settings.
-* Enter "vim" in the "Search Settings" input at the top.
-* See the available settings and their defaults on the left.
-* Change settings in "USER SETTINGS" on the right.
+
+- Select Code...Preferences...Settings.
+- Enter "vim" in the "Search Settings" input at the top.
+- See the available settings and their defaults on the left.
+- Change settings in "USER SETTINGS" on the right.
 
 ## Vim
 
@@ -119,6 +122,7 @@ The key sequence that triggers this is `<emmet-leader>` followed by a comma.
 
 To change the value of `<emmet-leader>`, set the variable g:user_emmet_leader_key.
 For example, to change it to the space key, add the following:
+
 ```
 let g:user_emmet_leader_key='<space>'
 ```
@@ -133,6 +137,7 @@ and `<emmet-leader>N` to move to previous one.
 
 By default Emmet snippets can be expanded in all file types.
 To restrict usage to specific file types, add the following.
+
 ```
 let g:user_emmet_install_global = 0 " don't enable for all file types
 autocmd FileType html,css,scss EmmetInstall " specifies file types
@@ -140,6 +145,7 @@ autocmd FileType html,css,scss EmmetInstall " specifies file types
 
 To use Emmet in .js or .jsx files that define React components,
 add the following.
+
 ```
 let g:user_emmet_settings = {'javascript.jsx': {'extends': 'jsx'}}
 autocmd FileType html,css,javascript.jsx,scss EmmetInstall
@@ -155,6 +161,7 @@ triggering the snippet is indicated using the `|` character.
 
 Child elements are specified with the `>` character.
 For example, `foo>bar>baz` expands to
+
 ```html
 <foo>
   <bar>
@@ -165,6 +172,7 @@ For example, `foo>bar>baz` expands to
 
 Sibling elements are specified with the `+` character.
 For example, `foo+bar+baz` expands to
+
 ```html
 <foo>|</foo>
 <bar></bar>
@@ -174,6 +182,7 @@ For example, `foo+bar+baz` expands to
 Climb up the element hierarchy within a snippet using the `^` character.
 This adds a sibling to the parent of the last element that was generated.
 For example, `table>tr>th+th^tr>td+td` expands to
+
 ```html
 <table>
   <tr>
@@ -186,6 +195,7 @@ For example, `table>tr>th+th^tr>td+td` expands to
   </tr>
 </table>
 ```
+
 However the same result can be achieved using parentheses instead of `^`.
 The equivalent snippet is<br />
 `table>(tr>th+th)+(tr>td+td)`.
@@ -198,16 +208,20 @@ that results in snippets that are difficult to understand at a glance.
 
 CSS class names are specified with the `.` character.
 For example, `div.my-class` expands to
+
 ```html
 <div class="my-class">|</div>
 ```
+
 and `div.c1.c2` expands to
+
 ```html
 <div class="c1 c2">|</div>
 ```
 
 Element ids are specified with the `#` character.
 For example, `div#my-id` expands to
+
 ```html
 <div id="my-id">|</div>
 ```
@@ -217,23 +231,29 @@ Values with no special characters do not require quotes.
 If special characters are present, enclose attribute values
 in single or double quotes.
 For example, `div[foo=1 bar=two]` expands to
+
 ```html
 <div foo="1" bar="two">|</div>
 ```
+
 and `div[foo="contains space" bar='single quotes']` expands to
+
 ```html
 <div foo="contains space" bar="single quotes"></div>
 ```
+
 Note that no commas are used between the listed attributes.
 
 Element content is specified between curly braces.
 For example, `div{my content}` expands to
+
 ```html
 <div>my content|</div>
 ```
 
 Elements in a snippet can be repeated with the `*` character
-followed by a number.  For example, `td*3` expands to
+followed by a number. For example, `td*3` expands to
+
 ```html
 <td>|</td>
 <td></td>
@@ -244,6 +264,7 @@ Incrementing numbers can be added in repeated content
 with the `$` character.
 This can use for ids, classes, and content.
 For example, `ul>li.item$*3` expands to
+
 ```html
 <ul>
   <li class="item1">|</li>
@@ -251,9 +272,11 @@ For example, `ul>li.item$*3` expands to
   <li class="item3"></li>
 </ul>
 ```
+
 Numbering starts at 1 by default.
 A different starting value can be specified with `@start` and `*times`.
 For example, `div{item $@4}*3` expands to
+
 ```html
 <div>item 4|</div>
 <div>item 5</div>
@@ -263,6 +286,7 @@ For example, `div{item $@4}*3` expands to
 The syntax described above can be combined
 to create more powerful snippets.
 For example, `div#my-id.my-class[foo=1 bar=two]{my content}` expands to
+
 ```html
 <div id="my-id" class="my-class" foo="1" bar="two">my content|</div>
 ```
@@ -270,6 +294,7 @@ For example, `div#my-id.my-class[foo=1 bar=two]{my content}` expands to
 Parts of snippets can be groups using parentheses.
 This is useful for repeating specific sections.
 For example, `table>(thead>tr>th*3)+(tbody>(tr>td*3)*2)` expands to
+
 ```html
 <table>
   <thead>
@@ -297,10 +322,13 @@ For example, `table>(thead>tr>th*3)+(tbody>(tr>td*3)*2)` expands to
 Emmet can sometimes guess desired tag names based on context.
 These are called "implicit tag names".
 For example, `.foo` expands to
+
 ```html
 <div class="foo">|</div>
 ```
+
 and `ul>.foo` expands to
+
 ```html
 <ul>
   <li class="foo">|</li>
@@ -320,6 +348,7 @@ optionally followed by a number.
 For example, `lorem` and `lipsum` expand to 100 words,
 while `lorem3` and `lipsum3` expand to 3 words.
 The words selected are random, but here is an example:
+
 ```
 Sit debitis aliquam.
 ```
@@ -330,6 +359,7 @@ Emmet supports a large number of HTML snippets.
 The ones show below seem the most useful.
 
 `!` expands to a common HTML template.
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -343,30 +373,30 @@ The ones show below seem the most useful.
 </html>
 ```
 
-* `a` expands to `<a href="|"></a>`
-* `a:link` expands to `<a href="http://|"></a>`
-* `a:mail` expands to `<a href="mailto:|"></a>`
-* `btn` or `button` - `<button>|</button>`
-* `c` expands to `<!-- | -->`
-* `img` expands to `<img src="|" alt="">`
-* `input:{type}`
+- `a` expands to `<a href="|"></a>`
+- `a:link` expands to `<a href="http://|"></a>`
+- `a:mail` expands to `<a href="mailto:|"></a>`
+- `btn` or `button` - `<button>|</button>`
+- `c` expands to `<!-- | -->`
+- `img` expands to `<img src="|" alt="">`
+- `input:{type}`
   - type can be one of
     button, checkbox, color, date, datetime, datetime-local,
     email, file, hidden, image, month, number, password, radio,
     range, search, submit, tel, text, time, url, or week
   - ex: `input:number` expands to `<input id="" type="number" name="">`
-* `label` expands to `<label for="|"></label>`
-* `link` expands to `<link rel="stylesheet" href="|">`
-* `link:favicon` expands to
+- `label` expands to `<label for="|"></label>`
+- `link` expands to `<link rel="stylesheet" href="|">`
+- `link:favicon` expands to
   `<link rel="shortcut icon" type="image/x-icon" href="|favicon.ico">`
-  * `ol+` - abbreviation for the snippet `ol>li`
-* `opt` or `option` expands to `<option value="|"></option>`
-* `select+` - abbreviation for the snippet `select>option`
-* `script:src` expands to `<script src="|"></script>`
-* `table+` - abbreviation for the snippet `table>tr>td`
-* `tarea` or `textarea` expands to `<textarea id="|" name="" cols="30" rows="10"></textarea>`
-* `tr+` - abbreviation for the snippet `tr>td`
-* `ul+` - abbreviation for the snippet `ul>li`
+  - `ol+` - abbreviation for the snippet `ol>li`
+- `opt` or `option` expands to `<option value="|"></option>`
+- `select+` - abbreviation for the snippet `select>option`
+- `script:src` expands to `<script src="|"></script>`
+- `table+` - abbreviation for the snippet `table>tr>td`
+- `tarea` or `textarea` expands to `<textarea id="|" name="" cols="30" rows="10"></textarea>`
+- `tr+` - abbreviation for the snippet `tr>td`
+- `ul+` - abbreviation for the snippet `ul>li`
 
 ## CSS snippets
 
@@ -376,100 +406,100 @@ It may seem that there are too many to remember.
 However, in most cases your first guess for
 what a given snippet would be is correct.
 
-* `ac` expands to `align-content: |;`
-* `ac:c` expands to `align-content: center;`
-* `ac:fe` expands to `align-content: flex-end;`
-* `ac:fs` expands to `align-content: flex-start;`
-* `ac:s` expands to `align-content: stretch;`
-* `ac:sa` expands to `align-content: space-around;`
-* `ac:sb` expands to `align-content: space-between;`
-* `ai` expands to `align-items: |;`
-* `ai:b` expands to `align-items: baseline;`
-* `ai:c` expands to `align-items: center;`
-* `ai:fe` expands to `align-items: flex-end;`
-* `ai:fs` expands to `align-items: flex-start;`
-* `ai:s` expands to `align-items: stretch;`
-* `as` expands to `align-self: |;`
-* `as:b` expands to `align-self: baseline;`
-* `as:c` expands to `align-self: center;`
-* `as:fe` expands to `align-self: flex-end;`
-* `as:fs` expands to `align-self: flex-start;`
-* `as:s` expands to `align-self: stretch;`
-* `b` expands to `bottom: |;`
-* `bd` expands to `border: |;`
-* `bd:n` expands to `border: none;`
-* `bdb` or `bb` expands to `border-bottom: |;`
-* `bdl` or `bl` expands to `border-left: |;`
-* `bdr` or `br` expands to `border-right: |;`
-* `bdt` or `bt` expands to `border-top: |;`
-* `bg` expands to `background: #000;`
-* `bgc` expands to `background-color: #fff;`
-* `bgc:t` expands to `background-color: transparent;`
-* `c` expands to `color: #000;`
-* `cur:d` expands to `cursor: default;`
-* `cur:p` expands to `cursor: pointer;`
-* `d:b` or `d` expands to `display: block;`
-* `d:f` expands to `display: flex;`
-* `d:g` does not give `display: grid;`
-* `d:i` expands to `display: inline;`
-* `d:ib` expands to `display: inline-block;`
-* `d:li` expands to `display: list-item;`
-* `d:n` expands to `display: none;`
-* `d:t` expands to `display: table;`
-* `fxd` expands to `flex-direction: |;`
-* `fxd:c` expands to `flex-direction: column;`
-* `fxd:r` expands to `flex-direction: row;`
-* `ff` expands to `font-family: |;`
-* `ff:m` expands to `font-family: monospace;`
-* `ff:s` expands to `font-family: serif;`
-* `ff:ss` expands to `font-family: sans-serif;`
-* `fs` expands to `font-style: |;`
-* `fs:i` expands to `font-style: italic;`
-* `fs:n` expands to `font-style: normal;`
-* `fw` expands to `font-weight: |;`
-* `fw:b` expands to `font-weight: bold;`
-* `fw:n` expands to `font-weight: normal;`
-* `fz` expands to `font-size: |;`
-* `h` expands to `height: |;`
-* `jc` expands to `justify-content: |;`
-* `jc:c` expands to `justify-content: center;`
-* `jc:fe` expands to `justify-content: flex-end;`
-* `jc:fs` expands to `justify-content: flex-start;`
-* `jc:sa` expands to `justify-content: space-around;`
-* `jc:sb` expands to `justify-content: space-between;`
-* `l` expands to `left: |;`
-* `lh` expands to `line-height: |;`
-* `m` expands to `margin: |;`
-* `mb` expands to `margin-bottom: |;`
-* `ml` expands to `margin-left: |;`
-* `mr` expands to `margin-right: |;`
-* `mt` expands to `margin-top: |;`
-* `o` expands to `outline: |;`
-* `p` expands to `padding: |;`
-* `pb` expands to `padding-bottom: |;`
-* `pl` expands to `padding-left: |;`
-* `pr` expands to `padding-right: |;`
-* `pt` expands to `padding-top: |;`
-* `r` expands to `right: |;`
-* `t` expands to `top: |;`
-* `ta:c` expands to `text-align: center;`
-* `ta:j` expands to `text-align: justify;`
-* `ta:l` or `ta` expands to `text-align: left;`
-* `ta:r` expands to `text-align: right;`
-* `td:l` expands to `text-decoration: line-through;`
-* `td:n` or `td` expands to `text-decoration: none;`
-* `td:u` expands to `text-decoration: underline;`
-* `tt:c` expands to `text-transform: capitalize;`
-* `tt:l` expands to `text-transform: lowercase;`
-* `tt:u` or `tt` expands to `text-transform: uppercase;`
-* `v:h` or `v` expands to `visibility: hidden;`
-* `v:v` expands to `visibility: visible;`
-* `va:b` expands to `vertical-align: bottom;`
-* `va:m` expands to `vertical-align: middle;`
-* `va:t` or `va` expands to `vertical-align: top;`
-* `w` expands to `width: |;`
-* `z` expands to `z-index`
-* `@media` or `@m` expands to `@media screen { | }`
+- `ac` expands to `align-content: |;`
+- `ac:c` expands to `align-content: center;`
+- `ac:fe` expands to `align-content: flex-end;`
+- `ac:fs` expands to `align-content: flex-start;`
+- `ac:s` expands to `align-content: stretch;`
+- `ac:sa` expands to `align-content: space-around;`
+- `ac:sb` expands to `align-content: space-between;`
+- `ai` expands to `align-items: |;`
+- `ai:b` expands to `align-items: baseline;`
+- `ai:c` expands to `align-items: center;`
+- `ai:fe` expands to `align-items: flex-end;`
+- `ai:fs` expands to `align-items: flex-start;`
+- `ai:s` expands to `align-items: stretch;`
+- `as` expands to `align-self: |;`
+- `as:b` expands to `align-self: baseline;`
+- `as:c` expands to `align-self: center;`
+- `as:fe` expands to `align-self: flex-end;`
+- `as:fs` expands to `align-self: flex-start;`
+- `as:s` expands to `align-self: stretch;`
+- `b` expands to `bottom: |;`
+- `bd` expands to `border: |;`
+- `bd:n` expands to `border: none;`
+- `bdb` or `bb` expands to `border-bottom: |;`
+- `bdl` or `bl` expands to `border-left: |;`
+- `bdr` or `br` expands to `border-right: |;`
+- `bdt` or `bt` expands to `border-top: |;`
+- `bg` expands to `background: #000;`
+- `bgc` expands to `background-color: #fff;`
+- `bgc:t` expands to `background-color: transparent;`
+- `c` expands to `color: #000;`
+- `cur:d` expands to `cursor: default;`
+- `cur:p` expands to `cursor: pointer;`
+- `d:b` or `d` expands to `display: block;`
+- `d:f` expands to `display: flex;`
+- `d:g` does not give `display: grid;`
+- `d:i` expands to `display: inline;`
+- `d:ib` expands to `display: inline-block;`
+- `d:li` expands to `display: list-item;`
+- `d:n` expands to `display: none;`
+- `d:t` expands to `display: table;`
+- `fxd` expands to `flex-direction: |;`
+- `fxd:c` expands to `flex-direction: column;`
+- `fxd:r` expands to `flex-direction: row;`
+- `ff` expands to `font-family: |;`
+- `ff:m` expands to `font-family: monospace;`
+- `ff:s` expands to `font-family: serif;`
+- `ff:ss` expands to `font-family: sans-serif;`
+- `fs` expands to `font-style: |;`
+- `fs:i` expands to `font-style: italic;`
+- `fs:n` expands to `font-style: normal;`
+- `fw` expands to `font-weight: |;`
+- `fw:b` expands to `font-weight: bold;`
+- `fw:n` expands to `font-weight: normal;`
+- `fz` expands to `font-size: |;`
+- `h` expands to `height: |;`
+- `jc` expands to `justify-content: |;`
+- `jc:c` expands to `justify-content: center;`
+- `jc:fe` expands to `justify-content: flex-end;`
+- `jc:fs` expands to `justify-content: flex-start;`
+- `jc:sa` expands to `justify-content: space-around;`
+- `jc:sb` expands to `justify-content: space-between;`
+- `l` expands to `left: |;`
+- `lh` expands to `line-height: |;`
+- `m` expands to `margin: |;`
+- `mb` expands to `margin-bottom: |;`
+- `ml` expands to `margin-left: |;`
+- `mr` expands to `margin-right: |;`
+- `mt` expands to `margin-top: |;`
+- `o` expands to `outline: |;`
+- `p` expands to `padding: |;`
+- `pb` expands to `padding-bottom: |;`
+- `pl` expands to `padding-left: |;`
+- `pr` expands to `padding-right: |;`
+- `pt` expands to `padding-top: |;`
+- `r` expands to `right: |;`
+- `t` expands to `top: |;`
+- `ta:c` expands to `text-align: center;`
+- `ta:j` expands to `text-align: justify;`
+- `ta:l` or `ta` expands to `text-align: left;`
+- `ta:r` expands to `text-align: right;`
+- `td:l` expands to `text-decoration: line-through;`
+- `td:n` or `td` expands to `text-decoration: none;`
+- `td:u` expands to `text-decoration: underline;`
+- `tt:c` expands to `text-transform: capitalize;`
+- `tt:l` expands to `text-transform: lowercase;`
+- `tt:u` or `tt` expands to `text-transform: uppercase;`
+- `v:h` or `v` expands to `visibility: hidden;`
+- `v:v` expands to `visibility: visible;`
+- `va:b` expands to `vertical-align: bottom;`
+- `va:m` expands to `vertical-align: middle;`
+- `va:t` or `va` expands to `vertical-align: top;`
+- `w` expands to `width: |;`
+- `z` expands to `z-index`
+- `@media` or `@m` expands to `@media screen { | }`
 
 A number can be added after many CSS snippets
 to specify a value.
@@ -482,7 +512,7 @@ The tables below describe Emmet actions and
 the keys to trigger them in VS Code and Vim.
 For Windows and Linux, substitute "ctrl" wherever you see "cmd".
 
-In VS Code all Emmet actions can be selected from the "Command Pallete"
+In VS Code all Emmet actions can be selected from the "Command Palette"
 which is opened by pressing cmd-P.
 None of these commands have a default keybinding.
 
@@ -507,45 +537,45 @@ but none of these are configured by default.
 
 ### Commonly Used Actions
 
-| Action | Description | VS Code Key | Vim Key |
-| ------ | ----------- | ----------- | ------- |
-| expand abbreviation | the primary action | enter or tab | &lt;emmet-leader> comma in insert mode |
-| go to next edit point | jumps to next edit point | cmd-opt-right arrow | &lt;emmet-leader> n |
-| go to previous edit point | jumps to previous edit point | cmd-opt-left arrow | &lt;emmet-leader> N |
-| wrap with abbreviation | wraps selected text in a snippet for which you will prompted | select lines and cmd-A | &lt;emmet-leader> comma in visual mode |
-| balance tag outward | selects all of element under cursor; repeat to expand outward | cmd-d | &lt;emmet-leader> d |
-| balance tag inward | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D | &lt;emmet-leader> D, but doesn't work |
-| remove tag | deletes tag under cursor, but not its contents | cmd-k | &lt;emmet-leader> k (incorrectly also deletes contents) |
-| toggle comment | toggles whether the tag under the cursor is commented out | cmd-/ | &lt;emmet-leader> / |
-| merge lines | merges selected lines into one line | cmd-M | &lt;emmet-leader> m |
-| split/join tag | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content) | cmd-j | &lt;emmet-leader> j |
-| go to matching pair | jumps between a start and end tag | cmd-T | not supported |
-| select next item | moves to next start tag, attribute name, or attribute value and selects it | cmd-> | not supported |
-| select previous item | moves to previous start tag, attribute name, or attribute value and selects it | cmd-< | not supported |
-| increment number by 1 | adds to number under cursor | ctrl-up arrow | not supported |
-| decrement number by 1| subtracts from number under cursor | ctrl-down arrow | not supported |
-| increment number by 10 | adds to number under cursor | ctrl-shift-up arrow | not supported |
-| decrement number by 10 | subtracts from number under cursor | ctrl-shift-down arrow | not supported |
-| increment number by .1 | adds to number under cursor | ctrl-opt-up arrow | not supported |
-| decrement number by .1 | subtracts from number under cursor | ctrl-opt-down arrow | not supported |
+| Action                    | Description                                                                                             | VS Code Key            | Vim Key                                                 |
+| ------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------- |
+| expand abbreviation       | the primary action                                                                                      | enter or tab           | &lt;emmet-leader> comma in insert mode                  |
+| go to next edit point     | jumps to next edit point                                                                                | cmd-opt-right arrow    | &lt;emmet-leader> n                                     |
+| go to previous edit point | jumps to previous edit point                                                                            | cmd-opt-left arrow     | &lt;emmet-leader> N                                     |
+| wrap with abbreviation    | wraps selected text in a snippet for which you will prompted                                            | select lines and cmd-A | &lt;emmet-leader> comma in visual mode                  |
+| balance tag outward       | selects all of element under cursor; repeat to expand outward                                           | cmd-d                  | &lt;emmet-leader> d                                     |
+| balance tag inward        | selects all of element under cursor, but one level less than current selection; repeat to expand inward | cmd-D                  | &lt;emmet-leader> D, but doesn't work                   |
+| remove tag                | deletes tag under cursor, but not its contents                                                          | cmd-k                  | &lt;emmet-leader> k (incorrectly also deletes contents) |
+| toggle comment            | toggles whether the tag under the cursor is commented out                                               | cmd-/                  | &lt;emmet-leader> /                                     |
+| merge lines               | merges selected lines into one line                                                                     | cmd-M                  | &lt;emmet-leader> m                                     |
+| split/join tag            | toggles tag under cursor from having a closing tag to closing in shorthand way (deletes content)        | cmd-j                  | &lt;emmet-leader> j                                     |
+| go to matching pair       | jumps between a start and end tag                                                                       | cmd-T                  | not supported                                           |
+| select next item          | moves to next start tag, attribute name, or attribute value and selects it                              | cmd->                  | not supported                                           |
+| select previous item      | moves to previous start tag, attribute name, or attribute value and selects it                          | cmd-<                  | not supported                                           |
+| increment number by 1     | adds to number under cursor                                                                             | ctrl-up arrow          | not supported                                           |
+| decrement number by 1     | subtracts from number under cursor                                                                      | ctrl-down arrow        | not supported                                           |
+| increment number by 10    | adds to number under cursor                                                                             | ctrl-shift-up arrow    | not supported                                           |
+| decrement number by 10    | subtracts from number under cursor                                                                      | ctrl-shift-down arrow  | not supported                                           |
+| increment number by .1    | adds to number under cursor                                                                             | ctrl-opt-up arrow      | not supported                                           |
+| decrement number by .1    | subtracts from number under cursor                                                                      | ctrl-opt-down arrow    | not supported                                           |
 
 ### Less Commonly Used Actions
 
-| Action | Description | VS Code Key | Vim Key |
-| ------ | ----------- | ----------- | ------- |
-| evaluate math expression | replaces the math expression under cursor with result | cmd-Y | not supported |
-| encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL | cmd-I | not supported |
-| reflect CSS value | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b | not supported |
-| update image size | adds width and height attributes to the img tag under cursor | cmd-U | &lt;emmet-leader> i, but doesn't work |
+| Action                          | Description                                                                  | VS Code Key | Vim Key                               |
+| ------------------------------- | ---------------------------------------------------------------------------- | ----------- | ------------------------------------- |
+| evaluate math expression        | replaces the math expression under cursor with result                        | cmd-Y       | not supported                         |
+| encode/decode image to data:URL | toggles CSS url function value between a file path and a data: URL           | cmd-I       | not supported                         |
+| reflect CSS value               | copies CSS value under cursor to all vendor-prefixed variations in same rule | cmd-b       | not supported                         |
+| update image size               | adds width and height attributes to the img tag under cursor                 | cmd-U       | &lt;emmet-leader> i, but doesn't work |
 
 ### Non-standard Actions
 
 These are actions that are not described at https://docs.emmet.io,
 but are implemented by either VS Code or vim-emmet.
 
-| Action | Description | VS Code Key | Vim Key |
-| ------ | ----------- | ----------- | ------- |
-| update tag | changes tag under cursor; will prompt for new tag | cmd-c | not supported |
+| Action        | Description                                                                                   | VS Code Key   | Vim Key                            |
+| ------------- | --------------------------------------------------------------------------------------------- | ------------- | ---------------------------------- |
+| update tag    | changes tag under cursor; will prompt for new tag                                             | cmd-c         | not supported                      |
 | anchorize URL | changes URL under cursor to an anchor tag using that URL; must start with http:// or https:// | not supported | &lt;emmet-leader> a in insert mode |
 
 ### "split/join tag" example

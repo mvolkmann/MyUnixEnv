@@ -2,9 +2,9 @@
 
 ## Setup
 
-* `npm install -g prisma`
-* `prisma init {server-name}`
-  * displays these options
+- `npm install -g prisma`
+- `prisma init {server-name}`
+  - displays these options
 
 ```text
    ? Set up a new Prisma server or deploy to an existing server?
@@ -18,14 +18,14 @@
   Use other server           Manually provide endpoint of a running Prisma server
 ```
 
-* if "Use existing database" is selected ...
-  * choose "MySQL" or "PostgreSQL"
-  * for "Does your database contain existing data?" select "No" or "Yes"
+- if "Use existing database" is selected ...
+  - choose "MySQL" or "PostgreSQL"
+  - for "Does your database contain existing data?" select "No" or "Yes"
 
 ## For help
 
-* browse <https://www.graph.cool/forum>
-* to get more detailed output in bash, run `set -x DEBUG "*"`
+- browse <https://www.graph.cool/forum>
+- to get more detailed output in bash, run `set -x DEBUG "*"`
 
 ## Connecting to an existing database
 

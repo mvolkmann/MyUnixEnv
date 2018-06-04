@@ -124,6 +124,9 @@ followed by the macOS version in parentheses.
     that can be clicked to navigate to them
 - can add words to a dictionary
   - global, workspace-specific, or folder-specific
+    - I added keyboard shortcuts
+    - to add to folder dictionary, ctrl-W f (cmd-W f)
+    - to add to global dictionary, ctrl-W g (cmd-W g)
   - sometimes asks for confirmation at top
   - the global dictionary is in user settings
     in the "cSpell.userWords" property
@@ -824,7 +827,7 @@ followed by the macOS version in parentheses.
   - S - toggle side bar
   - T - toggle status bar
   - U - show User Settings
-  - W - quick switch window (hold and use arrow keys to move to window name to open)
+  - W - add word to spell check dictionary; follow with f (folder) or g (global)
   - X - show Extensions
   - Z - toggle zen mode
   - | - split editor
