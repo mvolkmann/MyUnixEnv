@@ -1371,17 +1371,27 @@ followed by the macOS version in parentheses.
 
 ## Vim extension
 
-* under "Customize" on "Welcome" screen,
-  install keyboard shortcuts for Vim
-* can save with ctrl-s (cmd-s) in addition to :w
-* / search is case-insensitive unlike in real Vim
+* supports most standard Vim features
+* the current mode (NORMAL, INSERT, VISUAL, VISUAL BLOCK, ...) is displayed
+  in the status bar if there is enough room for it
+* can save with ctrl-s (cmd-s) in addition to entering ":w"
+* by default, / search is case-insensitive unlike in real Vim
+  * but can configure to be case-sensitive
+    by adding the setting `"vim.ignorecase": false,`
 * to paste text that was copied to the system clipboard,
   perhaps in another application, press p, not ctrl-v
+* the leader key is "\" by default, but can be configured
+  * I changed it to comma by adding the setting `"vim.leader": ",",`
 * just like in Vim
   * z-enter moves current line to top
   * zz moves current line to center
-* the leader key is "\" by default, but can be configured
-  * I changed it to comma by adding the setting `"vim.leader": ",",`
+* to go to the definition of the symbol under the cursor, type "gd"
+* to cause VS Code to think the mouse is hovering over the cursor position
+  in order to see a message, type "gh"
+* to reflow the text within a visually selected comment
+  so it utilizes the desired line width (ex. 80), type "gq"
+* to cause yanking to copy to the system clipboard,
+  add the setting `"vim.useSystemClipboard": true`
 * supports features of some Vim plugins
   * easymotion
     * to enable, add the setting `"vim.easymotion": true,`
@@ -1406,13 +1416,18 @@ followed by the macOS version in parentheses.
   * commentary
     * uses the VS Code "Toggle Line Comment" and "Toggle Block Comment" commands
     * to toggle a line comment for current line, gcc
-      * TODO: Why is my cmd-/ keyboard shortcut not working?
-    * to toggle a block comment, select lines and press gC
+    * two ways to toggle a block comment around multiple lines or partial lines
+      * select lines or text to comment out and press gC
+      * don't select anything and specify what to comment with a text object
+        * ex. gCi( comments out everything inside the surrounding parentheses
   * indent-object
-    * FINISH THIS!
+    * this may only be useful for programming languages that
+      indicate blocks of code with indentation (like Python)
   * sneak
+    * searches for a pair of characters and enables easily jumping to other instances
     * to enable, add the setting `"vim.sneak": true,`
-    * FINISH THIS!
+    * I don't find this to be particularly useful
+      and just use the standard Vim find command (/)
 
 ## vscode-database extension
 
