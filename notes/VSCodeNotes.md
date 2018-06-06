@@ -326,6 +326,8 @@ followed by the macOS version in parentheses.
     - handle to open in another app that supports printing
   - Reveal in Side Bar
 - keyboard shortcuts
+  - ctrl-tab - Open Next Recently Used Editor in Group
+  - ctrl-shift-tab - Open Previous Recently Used Editor in Group
   - ctrl-w workbench.action.closeActiveEditor (custom)
   - ctrl-left workbench.action.previousEditor (custom)
     - I also assigned ctrl-h to this based on the Vim cursor movement key "k".
@@ -825,6 +827,7 @@ followed by the macOS version in parentheses.
   - D - show Debug
   - E - show Explorer
   - F - show Search (Find)
+  - G - toggle focus between editor and terminal (think "Go")
   - I - toggle status bar (think "info")
   - K - show Keyboard Shortcuts
   - L - toggles line numbers between "on", "relative", and "off"
@@ -1380,6 +1383,20 @@ followed by the macOS version in parentheses.
   - click 2nd icon from right in bottom bar header
 - press ctrl-C (cmd-C) to open a native terminal (Command Prompt in Windows)
   in the workspace directory
+- to toggle focus between an editor and a terminal,
+  add this to `keybindings.json`
+  ```json
+  {
+    "key": "ctrl+shift+g", // or cmd in macOS
+    "command": "workbench.action.terminal.focus",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+g", // or cmd in macOS
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
+  },
+  ```
 
 ## Todo Highlight extension
 

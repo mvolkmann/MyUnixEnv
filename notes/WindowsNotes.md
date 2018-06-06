@@ -57,40 +57,6 @@
 - to copy a directory recursively,
   enter `xcopy /s {src} {dest}`
 
-## Help
-
-- to get help on a command, enter `{command-name} /?`
-
-## List Files
-
-- to list files recursively
-
-  - `dir /s {file-pattern}`
-    - ex. `dir /s \*.ts`
-  - your `ls` alias can be used in place of `dir`
-  - to exclude files in node_modules directories,
-    pipe `dir` command to `findstr /v /i node_modules`
-  - to page the output, pipe to more command
-
-## Kill Listening Process
-
-- create `klp.bat` in a directory in PATH containing:
-
-  ```text
-  @echo off
-  REM This is not working yet!
-  REM for /F "delims=\n" %%i in ('netstat -ano') do echo %%i
-  for /F "tokens=4" %%i in ('netstat -ano') do echo %%i
-  ```
-
-- to kill the process listening on a given port
-
-  - open a cygwin terminal as administrator
-  - enter `klpw {port-number}`
-  - this uses `netstat -ano`
-    greps for the port number preceded by a colon,
-    and finds the process number in the 5th token
-
 ## File Readability
 
 - to make a file read-only, `attrib +r {file-name}`
@@ -98,6 +64,10 @@
 - to view whether files are writable, `attrib -r {file-name}`
   - second column will be "R" if read-only and empty if writable
 - file-name can contain wildcards to process multiple files
+
+## Help
+
+- to get help on a command, enter `{command-name} /?`
 
 ## IP Address
 
@@ -121,6 +91,36 @@
   02 00 00 00 1D 00 3A 00
   00 00 00 00
 - restart
+
+## Kill Listening Process
+
+- create `klp.bat` in a directory in PATH containing:
+
+  ```text
+  @echo off
+  REM This is not working yet!
+  REM for /F "delims=\n" %%i in ('netstat -ano') do echo %%i
+  for /F "tokens=4" %%i in ('netstat -ano') do echo %%i
+  ```
+
+- to kill the process listening on a given port
+
+  - open a cygwin terminal as administrator
+  - enter `klpw {port-number}`
+  - this uses `netstat -ano`
+    greps for the port number preceded by a colon,
+    and finds the process number in the 5th token
+
+## List Files
+
+- to list files recursively
+
+  - `dir /s {file-pattern}`
+    - ex. `dir /s \*.ts`
+  - your `ls` alias can be used in place of `dir`
+  - to exclude files in node_modules directories,
+    pipe `dir` command to `findstr /v /i node_modules`
+  - to page the output, pipe to more command
 
 ## Screen Capture
 
