@@ -335,6 +335,27 @@ followed by the macOS version in parentheses.
     - I also assigned ctrl-l to this based on the Vim cursor movement key "k".
   - ctrl-{n} (cmd-{n}) moves focus to nth editor group or split
   - also see Splits
+- to increase/decrease font since in all editor panels,
+  add the following to `keybindings.json`
+
+  ```js
+  {
+    "key": "ctrl+=", // cmd for macOS
+    "command": "editor.action.fontZoomIn"
+  },
+  {
+    "key": "shift+ctrl+-", // cmd for macOS
+    "command": "editor.action.fontZoomOut"
+  },
+  {
+    "key": "ctrl+-", // cmd for macOS
+    "command": "editor.action.fontZoomOut"
+  },
+  {
+    "key": "ctrl+0", // cmd for macOS
+    "command": "editor.action.fontZoomReset"
+  }
+  ```
 
 ## Emmet
 
