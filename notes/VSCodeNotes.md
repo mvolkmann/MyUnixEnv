@@ -516,6 +516,8 @@ followed by the macOS version in parentheses.
 ## Flow extension
 
 - I disabled it because it uses too much CPU if no .flowconfig file is found
+- I added the setting `"javascript.validate.enable": false,`
+  to stop it from complaining about Flow types in `.js` files
 
 ## Fonts
 
@@ -717,6 +719,7 @@ followed by the macOS version in parentheses.
 - reruns tests after every save
 - each time tests are run, the bottom bar OUTPUT tab is cleared
   the test output is written there
+  - need to run "Jest: Show Output Channel" to get this?
 - indicates whether all tests are passing
   in status bar after "Jest:"
 - shows individual fail/pass statuses inline
@@ -829,6 +832,7 @@ followed by the macOS version in parentheses.
   - N - new Window (press ctrl-r to select a previous workspace)
   - O - show Outline
   - P - open Command Palette
+  - R - toggle maximized panel (think "resize")
   - S - toggle side bar
   - T - toggle terminal
   - U - show User Settings
@@ -1354,6 +1358,10 @@ followed by the macOS version in parentheses.
 - single-line section at bottom that displays status information
 - can toggle display with the "Toggle Status Bar Visibility" command
   - I mapped this to ctrl-T (cmd-T).
+- by default a smiley face icon appears near the right side
+  that can be clicked to send feedback via Twitter
+  - to hide, add the setting `"workbench.statusBar.feedback.visible": false,"
+  - useful to save a bit of space for other information
 
 ## Tab Navigation
 
