@@ -49,3 +49,9 @@
       ex. <div>Speed: {{speed}}</div>
 
   - What is the purpose of the store.pipe methods?
+
+## Effects
+
+- effects subscribe to an action
+- when the Action is dispatched, the effect function will run
+- an effect can dispatch additional actions

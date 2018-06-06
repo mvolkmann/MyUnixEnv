@@ -124,9 +124,11 @@ followed by the macOS version in parentheses.
     that can be clicked to navigate to them
 - can add words to a dictionary
   - global, workspace-specific, or folder-specific
+    - can press ctrl-. (cmd-.) to see word suggestions
+      and options to add to each of the dictionaries
     - I added keyboard shortcuts
-    - to add to folder dictionary, ctrl-W f (cmd-W f)
-    - to add to global dictionary, ctrl-W g (cmd-W g)
+      - to add to folder dictionary, ctrl-W f (cmd-W f)
+      - to add to global dictionary, ctrl-W g (cmd-W g)
   - sometimes asks for confirmation at top
   - the global dictionary is in user settings
     in the "cSpell.userWords" property
@@ -314,6 +316,8 @@ followed by the macOS version in parentheses.
   after the file name instead of an "X" for closing the tab:
 - EXPLORER file names have a white circle before
   the names of files with unsaved changed
+- to see a list of all editor tabs and select one to edit,
+  click the ellipsis in the upper-right and select "Show Open Editors"
 - can horizontally scroll through tabs
 - right-click to get menu containing
   - Close, Close Others, Close to the Right, Close Saved, Close All
@@ -818,6 +822,7 @@ followed by the macOS version in parentheses.
   - D - show Debug
   - E - show Explorer
   - F - show Search (Find)
+  - I - toggle status bar (think "info")
   - K - show Keyboard Shortcuts
   - L - toggles line numbers between "on", "relative", and "off"
   - M - toggle minimap
@@ -825,7 +830,7 @@ followed by the macOS version in parentheses.
   - O - show Outline
   - P - open Command Palette
   - S - toggle side bar
-  - T - toggle status bar
+  - T - toggle terminal
   - U - show User Settings
   - W - add word to spell check dictionary; follow with f (folder) or g (global)
   - X - show Extensions
