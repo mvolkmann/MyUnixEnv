@@ -17,17 +17,17 @@
 - Echo
 
   - on by default
-  - turn on with "echo on"
-  - turn off with "echo off"
-  - when off, can echo with "echo:on some text"
+  - turn on with `echo on`
+  - turn off with `echo off`
+  - when off, can echo with `echo:on some text`
 
-- Running other .bat files
+- Running other `.bat` files
 
-  - call {name}.bat
+  - `call {name}.bat`
 
 - Changing directories
 
-  - use pushd {dir} and popd
+  - use `pushd {dir}` and `popd`
 
 - Clearing screen
 
@@ -35,4 +35,4 @@
 
 - Computer name
   - stored in COMPUTERNAME environment variable
-  - output with echo %COMPUTERNAME%
+  - output with `echo %COMPUTERNAME%`
