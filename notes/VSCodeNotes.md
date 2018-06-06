@@ -836,10 +836,32 @@ followed by the macOS version in parentheses.
 - can search by text in associated commands
 - can search by keyboard shortcut (ex. "ctrl+y" or "shift+cmd+x")
 - click pencil icon to left of one to change the shortcut
-- right-click to copy which allows having
-  more than one shortcut for the same command
+- key modifiers supported are ctrl+, shift+, alt+,
+  plus these OS-specific keys
+  - macOS: cmd+, Windows: win+, Linux: meta+
+- can click link for `keybindings.json` specify in JSON
+  - required for advanced key bindings that have "when" conditions
+    that specify the conditions under which the key binding is active
+  - to add a key binding, enter manually
+    or press ctrl-k ctrl-k (cmd-k cmd-k) which prompts
+    for a key and adds the "rule snippet" for a new binding
+    before the rule snippet under the cursor
+- from the docs, when a key is pressed:
+  - rules are evaluated from bottom to top
+  - the first rule that matches both the key and the "when" is accepted
+  - no additional rules are considered
+  - if the selected rule has command, it is executed
+- right-click a keyboard shortcut to copy which allows
+  having more than one shortcut for the same command
 - right-click a keyboard shortcut and select "Show Same Keybindings"
   to see if a conflict has been created
+- custom key bindings appear in the Code UI
+  - ex. in menus and the Command Palette
+- for more details, see
+  <https://code.visualstudio.com/docs/getstarted/keybindings>
+  - see "'when' clause contexts"
+  - can have language specific key bindings
+    by checking editorLangId in a when clause
 - important shortcuts I have configure
   - also described elsewhere in this document
   - all are ctrl (cmd) followed by an uppercase letter
