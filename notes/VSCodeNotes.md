@@ -839,6 +839,7 @@ followed by the macOS version in parentheses.
 - key modifiers supported are ctrl+, shift+, alt+,
   plus these OS-specific keys
   - macOS: cmd+, Windows: win+, Linux: meta+
+  - on macOS, alt is the option key
 - can click link for `keybindings.json` specify in JSON
   - required for advanced key bindings that have "when" conditions
     that specify the conditions under which the key binding is active
@@ -862,29 +863,31 @@ followed by the macOS version in parentheses.
   - see "'when' clause contexts"
   - can have language specific key bindings
     by checking editorLangId in a when clause
-- important shortcuts I have configure
-  - also described elsewhere in this document
-  - all are ctrl (cmd) followed by an uppercase letter
-  - A - toggle activity bar
-  - B - toggle bottom bar (Toggle Panel)
-  - D - show Debug
-  - E - show Explorer
-  - F - show Search (Find)
-  - G - toggle focus between editor and terminal (think "Go")
-  - I - toggle status bar (think "info")
-  - K - show Keyboard Shortcuts
-  - L - toggles line numbers between "on", "relative", and "off"
-  - M - toggle minimap
-  - N - new Window (press ctrl-r to select a previous workspace)
-  - O - show Outline
-  - P - open Command Palette
-  - R - toggle maximized panel (think "resize")
-  - S - toggle side bar
-  - T - toggle terminal
-  - U - show User Settings
-  - W - add word to spell check dictionary; follow with f (folder) or g (global)
-  - X - show Extensions
-  - Z - toggle zen mode
+- important shortcuts I have configured
+  - some are also described elsewhere in this document
+  - all are alt (option) followed by a letter
+  - a - toggle activity bar
+  - b - toggle bottom bar (Toggle Panel)
+  - d - show Debug
+  - e - show Explorer
+  - f - show Search (Find)
+  - g - toggle focus between editor and terminal (think "Go")
+  - i - toggle status bar (think "info")
+  - k - show Keyboard Shortcuts
+  - l - toggles line numbers between "on", "relative", and "off"
+  - m - toggle minimap
+  - n - new Window (press ctrl-r to select a previous workspace)
+  - o - show Outline
+  - p - open Command Palette
+  - r - toggle maximized panel (think "resize")
+  - s - toggle side bar
+  - t - toggle terminal
+  - u - show User Settings
+  - v - show Source Code Management (think "version control")
+  - y - git sync
+  - w - add word to spell check dictionary; follow with f (folder) or g (global)
+  - x - show Extensions
+  - z - toggle zen mode
   - | - split editor
 
 ## Left Nav
