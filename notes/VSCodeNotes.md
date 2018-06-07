@@ -767,7 +767,7 @@ followed by the macOS version in parentheses.
   `"jest.showCoverageOnLoad": true,`
 - suggested Jest configuration in `package.json`
   ```json
-    "jest": {
+  "jest": {
     "collectCoverage": true,
     "roots": ["src"]
   },
