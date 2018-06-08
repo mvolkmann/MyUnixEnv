@@ -87,6 +87,19 @@
 
 ## GraphQL Schemas
 
+- define what is available to queries
+- queries are validated against the schema
+- types are defined with
+  ```text
+  type {name} {
+    {field-name}: {type}
+    ...
+  }
+  ```
+- note the lack of commas and semicolons
+- each field can specify named arguments
+  with their types and optional default values
+
 ## GraphQL Mutations
 
 - modify server data
@@ -103,6 +116,12 @@
   - seems like this would never be the case in a relational database
     where all records in a table have the same columns
   - maybe this is useful with NoSQL databases
+
+## GraphQL Services
+
+- each must define a query type
+- each can optionally define a mutation type
+- both are defined similarly to object types
 
 ## Downloads
 
