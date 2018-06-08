@@ -200,7 +200,9 @@ followed by the macOS version in parentheses.
 
 ## Command Palette
 
-- ctrl-P (cmd-P) or F1 to open
+- displays a list of commands that can be executed,
+  starting with the most recent to make repeated execution easier
+- alt-p or F1 to open
 - type any letters in command name to narrow list
 
 ## Command-line launching
@@ -889,6 +891,9 @@ followed by the macOS version in parentheses.
   - x - show Extensions
   - z - toggle zen mode
   - | - split editor
+- in Windows when focus is in an integrated terminal running a
+  Command Prompt, many alt key combinations just enter a letter
+  rather than run the command to which they are mapped
 
 ## Left Nav
 
