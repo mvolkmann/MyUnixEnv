@@ -468,6 +468,15 @@ followed by the macOS version in parentheses.
   - click on name of extension for documentation
 - updates
   - by default, automatically checks for and installs extension updates
+- CPU time
+  - to determine if an extension is consuming too much CPU time
+    - brew install htop
+    - htop
+    - press F4 to filter
+    - enter "extension"
+    - look at top entries that start with
+      "/Applications/Visual Studio Code.app/Contents/Frameworks/"
+    - "Code Helper.app" was a culprit for me
 
 ## ESLint and TSLint extensions
 
@@ -540,7 +549,8 @@ followed by the macOS version in parentheses.
 
 ## Flow extension
 
-- I disabled it because it uses too much CPU if no .flowconfig file is found
+- I disabled it because it uses too much CPU
+  if no `.flowconfig` file is found
 - I added the setting `"javascript.validate.enable": false,`
   to stop it from complaining about Flow types in `.js` files
 

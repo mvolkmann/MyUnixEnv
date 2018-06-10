@@ -9,6 +9,7 @@
 .config/gcloud/active_config
 .config/gcloud/credentials.db
 .config/gcloud/legacy_credentials/volkmannm@objectcomputing.com/adc.json
+.config/htop/htoprc
 .tmux/.tmux
 .vim/.netrwhist
 .vim/.vim

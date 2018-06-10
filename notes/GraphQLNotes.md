@@ -139,9 +139,15 @@
   - I COULD NOT GET THIS TO WORK!
     See https://github.com/graphql/graphiql/issues/504
 - Apollo
-  - TODO: ADD DETAIL HERE!
   - Apollo Client
+    - npm install apollo-boost
+      - starter kit that configures Apollo Client with recommended settings
+    - npm install react-apollo
+      - integration with React
+    - npm install graphql graphql-tag
+      - for parsing GraphQL queries
   - Apollo Server
+    - TODO: Finish this!
 - Join Monster
   - "a query planner between GraphQL and SQL
     for the Node.js graphql-js reference implementation"
