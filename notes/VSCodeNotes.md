@@ -1448,16 +1448,28 @@ followed by the macOS version in parentheses.
   add this to `keybindings.json`
   ```json
   {
-    "key": "ctrl+shift+g", // or cmd in macOS
+    "key": "alt+g",
     "command": "workbench.action.terminal.focus",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+g", // or cmd in macOS
+    "key": "alt+g", // or cmd in macOS
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "terminalFocus"
   },
   ```
+- keyboard shortcut issue
+  - some keys are interpreted by the shell in a terminal, not by VS Code
+  - to allow them to be interpreted first by VS Code, add a setting
+    like the following where the value is an array of
+    command names that have associated keyboard shortcuts
+  ```json
+  "terminal.integrated.commandsToSkipShell": [
+    "workbench.action.focusActiveEditorGroup"
+  ]
+  ```
+  - I used this to allow alt+g to be used in a terminal
+    running a Windows Command Prompt
 
 ## Todo Highlight extension
 

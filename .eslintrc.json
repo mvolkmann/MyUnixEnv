@@ -289,7 +289,7 @@
     "one-var": "off",
     "one-var-declaration-per-line": "off",
     "operator-assignment": ["error", "always"],
-    "operator-linebreak": ["error", "after"],
+    "operator-linebreak": "off",
     "padded-blocks": "off",
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
