@@ -338,6 +338,7 @@ followed by the macOS version in parentheses.
   - View: Focus Below Editor Group
     - I mapped alt-down to this
 - can drag editor tabs to a different grid position
+- try this in combination with zen mode!
 
 ## Editor Tabs
 
@@ -1292,7 +1293,7 @@ followed by the macOS version in parentheses.
   - useful to temporarily disable settings
 - stored in several files
   - in OS-specific locations
-    - Windows: %APPDATA%\Code\User\
+    - Windows: %APPDATA%\Code\User\ or %APPDATA%\Roaming\Code\User\
     - macOS: $HOME/Library/Application Support/Code/User/
     - Linux: $HOME/.config/Code/User/
   - see these files and folders
