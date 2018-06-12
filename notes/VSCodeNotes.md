@@ -946,7 +946,12 @@ followed by the macOS version in parentheses.
   - w - add word to spell check dictionary; follow with f (folder) or g (global)
   - x - show Extensions
   - z - toggle zen mode
-  - | - split editor
+  - | - split editor right
+  - _ - split editor bottom
+  - left - focus left editor group
+  - right - focus right editor group
+  - up - focus above editor group
+  - down - focus below editor group
 - in Windows when focus is in an integrated terminal running a
   Command Prompt, many alt key combinations just enter a letter
   rather than run the command to which they are mapped
