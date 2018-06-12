@@ -312,6 +312,33 @@ followed by the macOS version in parentheses.
 - hover over a function or method call
   to get documentation on it, if available
 
+## Editor Grid Layout
+
+- added to Insiders build in May 2018
+- allows editor panes to be split horizontally and vertically
+  using these new commands
+  - View: Split Editor Left
+    - splits pane vertically with focus on new left grid
+  - View: Split Editor Right
+    - splits pane vertically with focus on new right grid
+    - I mapped alt-| to this
+  - View: Split Editor Up
+    - splits pane horizontally with focus on new top grid
+  - View: Split Editor Down
+    - splits pane horizontally with focus on new bottom grid
+    - I mapped alt-_ to this
+  - View: Grid Editor Layout (2x2)
+    - changes layout to 2x2 regardless of current layout
+  - View: Focus Left Editor Group
+    - I mapped alt-left to this
+  - View: Focus Right Editor Group
+    - I mapped alt-right to this
+  - View: Focus Above Editor Group
+    - I mapped alt-up to this
+  - View: Focus Below Editor Group
+    - I mapped alt-down to this
+- can drag editor tabs to a different grid position
+
 ## Editor Tabs
 
 - tabs for files containing unsaved changes have a white circle
@@ -859,13 +886,7 @@ followed by the macOS version in parentheses.
     or press ctrl-k ctrl-k (cmd-k cmd-k) which prompts
     for a key and adds the "rule snippet" for a new binding
     before the rule snippet under the cursor
-- from the docs, when a key is pressed:
-  - rules are evaluated from bottom to top
-  - the first rule that matches both the key and the "when" is accepted
-  - no additional rules are considered
-  - if the selected rule has command, it is executed
-- right-click a keyboard shortcut to copy which allows
-  having more than one shortcut for the same command
+    having more than one shortcut for the same command
 - right-click a keyboard shortcut and select "Show Same Keybindings"
   to see if a conflict has been created
 - custom key bindings appear in the Code UI
@@ -875,6 +896,30 @@ followed by the macOS version in parentheses.
   - see "'when' clause contexts"
   - can have language specific key bindings
     by checking editorLangId in a when clause
+- default function key mappings
+  - the ones I find most useful are preceded by \*
+  - \* F1 - Show All Commands (command palette)
+  - F2 - Rename Symbol
+  - F3 - Find Next
+  - shift-F3 - Find Previous
+  - F4 - Find Next Search Result
+  - shift-F4 - Find Previous Search Result
+  - F5 - Start Debugging / Continue
+  - F6 - Pause
+  - \* F7 - Go to Next Difference
+    - good when looking at a git diff
+  - \* shift-F7 - Go to Previous Difference
+    - good when looking at a git diff
+  - \* F8 - Go to Next Problem
+  - \* shift-F8 - Go to Previous Problem
+  - F9 - Toggle Breakpoint / Sort Lines
+  - F10 - Step Over
+  - shift-F10 - Show Editor Context Menu
+  - F11 - Toggle Full Screen / Step Into
+    - doesn't work correctly on macOS
+  - shift-F11 - Step Out
+  - F12 - Go to Definition
+  - shift-F12 - Find All References
 - important shortcuts I have configured
   - some are also described elsewhere in this document
   - all are alt (option) followed by a letter
@@ -1245,14 +1290,20 @@ followed by the macOS version in parentheses.
     which is false by default
 - can use /\* \*/ and // comments in this file
   - useful to temporarily disable settings
-- stored in the files settings.json and keybindings.json
+- stored in several files
   - in OS-specific locations
     - Windows: %APPDATA%\Code\User\
     - macOS: $HOME/Library/Application Support/Code/User/
     - Linux: $HOME/.config/Code/User/
+  - see these files and folders
+    - keybindings.json
+    - settings.json
+    - snippets
+    - vsicon.settings.json
   - can copy to another machine to share settings
-  - also consider automating synchronization of settings
-    (described earlier)
+  - to use same settings in Insiders build,
+    copy these files and folders to the same location
+    under the "Code - Insiders" directory
 - project-specific customizations
 
   - stored in project directory in .vscode directory
