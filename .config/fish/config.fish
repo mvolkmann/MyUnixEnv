@@ -243,4 +243,4 @@ set VISUAL vim
 set PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/Mark/Downloads/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Downloads/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Downloads/google-cloud-sdk/path.fish.inc'; end; end
+if [ -f '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; end; end

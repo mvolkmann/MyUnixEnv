@@ -16,6 +16,7 @@ followed by the macOS version in parentheses.
 - can install the stable version (updated monthly)
   and/or the less stable "Insiders" build (updated daily)
 - if both are installed, they do not share settings
+- must install extensions in both
 
 ## Basics
 
@@ -1551,6 +1552,14 @@ followed by the macOS version in parentheses.
 ## Vim extension
 
 - supports most standard Vim features
+- if key repeat doesn't work, run these and restart VS Code
+
+```text
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false # for VS Code
+defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false # for Insiders build
+defaults delete -g ApplePressAndHoldEnabled # if necessary to reset global default
+```
+
 - the current mode (NORMAL, INSERT, VISUAL, VISUAL BLOCK, ...) is displayed
   in the status bar if there is enough room for it
 - can save with ctrl-s (cmd-s) in addition to entering ":w"

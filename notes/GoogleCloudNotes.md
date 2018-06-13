@@ -211,9 +211,9 @@
       - click the "Create database" button
   - to run DDL against the database instance
     - create a file containing SQL statements (ex. ddl.sql)
-      - must start with "\c {db-name}" to select the target database
+      - must start with `\c {db-name}` to select the target database
       - follow with SQL to create and populate tables
-      - `gcloud sql connect {instance-id} --user=postgres < ddl.sql
+      - `gcloud sql connect {instance-id} --user=postgres < ddl.sql`
       - will output log of each command
   - to verify in database contents interactive mode
     use same command as running DDL with redirection removed
