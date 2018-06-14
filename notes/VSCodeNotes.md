@@ -499,7 +499,7 @@ followed by the macOS version in parentheses.
   - by default, automatically checks for and installs extension updates
 - CPU time
   - two approaches to determine if an extension is consuming too much CPU time
-    1. Help ... Process Explorer
+    1. Help ... Open Process Explorer
     2. htop
       - brew install htop
       - htop
