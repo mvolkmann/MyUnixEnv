@@ -40,7 +40,7 @@ followed by the macOS version in parentheses.
 - for example, typing { results in {} with the cursor between them
 - to disable this, add the following to settings
 
-```text
+```json
 "editor.autoClosingBrackets": false,
 ```
 
@@ -498,14 +498,16 @@ followed by the macOS version in parentheses.
 - updates
   - by default, automatically checks for and installs extension updates
 - CPU time
-  - to determine if an extension is consuming too much CPU time
-    - brew install htop
-    - htop
-    - press F4 to filter
-    - enter "extension"
-    - look at top entries that start with
-      "/Applications/Visual Studio Code.app/Contents/Frameworks/"
-    - "Code Helper.app" was a culprit for me
+  - two approaches to determine if an extension is consuming too much CPU time
+    1. Help ... Process Explorer
+    2. htop
+      - brew install htop
+      - htop
+      - press F4 to filter
+      - enter "extension"
+      - look at top entries that start with
+        "/Applications/Visual Studio Code.app/Contents/Frameworks/"
+      - "Code Helper.app" was a culprit for me
 
 ## ESLint and TSLint extensions
 
@@ -1554,7 +1556,7 @@ followed by the macOS version in parentheses.
 - supports most standard Vim features
 - if key repeat doesn't work, run these and restart VS Code
 
-```text
+```bash
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false # for VS Code
 defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false # for Insiders build
 defaults delete -g ApplePressAndHoldEnabled # if necessary to reset global default
