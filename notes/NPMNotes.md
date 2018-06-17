@@ -24,9 +24,27 @@ To lock down dependencies to their current version
 - `npm shrinkwrap` (generates `npm-shrinkwrap.json`)
 - probably better to use yarn!
 
+To install all dependencies
+
+- `npm install`
+
 To install only regular dependencies, excluding devDependencies
 
 - `npm install --production`
+
+To do a clean install of all dependencies
+
+- `npm ci`
+- primary differences from `npm install`
+  - must have package-lock.json (or npm-shrinkwrap.json) file
+  - if dependencies in this file do not match those in `package.json`, will exit with an error
+  - only installs all dependencies listed in `package.json`, not specified dependencies
+  - if `node_modules` directory exists, it is deleted before installs begin
+  - does not modify package.json or package-lock.json
+- cannot use this after updating versions in `package.json`
+  using VS Code "Version Lens" extension
+  because versions in `package-lock.json` will not match
+  - need to delete `package-lock.json` and run `npm install`
 
 To list globally installed packages
 
@@ -49,3 +67,13 @@ for debugging purposes
 To create a new React app using create-react-app
 
 - `npm init react-app {app-name}`
+
+To run a security audit
+
+- `npm audit`
+  - "will produce a report of security vulnerabilities with
+    the affected package name, vulnerability severity and description,
+    path, and other information, and, if available,
+    commands to apply patches to resolve vulnerabilities"
+- to attempt to fix issues, `npm audit fix`
+  - "automatically install compatible updates to vulnerable dependencies"
