@@ -327,7 +327,7 @@ followed by the macOS version in parentheses.
     - splits pane horizontally with focus on new top grid
   - View: Split Editor Down
     - splits pane horizontally with focus on new bottom grid
-    - I mapped alt-_ to this
+    - I mapped alt-\_ to this
   - View: Grid Editor Layout (2x2)
     - changes layout to 2x2 regardless of current layout
   - View: Focus Left Editor Group
@@ -499,15 +499,15 @@ followed by the macOS version in parentheses.
   - by default, automatically checks for and installs extension updates
 - CPU time
   - two approaches to determine if an extension is consuming too much CPU time
-    1. Help ... Open Process Explorer
-    2. htop
-      - brew install htop
-      - htop
-      - press F4 to filter
-      - enter "extension"
-      - look at top entries that start with
-        "/Applications/Visual Studio Code.app/Contents/Frameworks/"
-      - "Code Helper.app" was a culprit for me
+    1.  Help ... Open Process Explorer
+    2.  htop
+        - brew install htop
+        - htop
+        - press F4 to filter
+        - enter "extension"
+        - look at top entries that start with
+          "/Applications/Visual Studio Code.app/Contents/Frameworks/"
+        - "Code Helper.app" was a culprit for me
 
 ## ESLint and TSLint extensions
 
@@ -809,6 +809,7 @@ followed by the macOS version in parentheses.
 - to show test coverage when a project loads, add setting
   `"jest.showCoverageOnLoad": true,`
 - suggested Jest configuration in `package.json`
+
   ```json
   "jest": {
     "collectCoverage": true,
@@ -950,7 +951,7 @@ followed by the macOS version in parentheses.
   - x - show Extensions
   - z - toggle zen mode
   - | - split editor right
-  - _ - split editor bottom
+  - \_ - split editor bottom
   - left - focus left editor group
   - right - focus right editor group
   - up - focus above editor group
@@ -1506,6 +1507,7 @@ followed by the macOS version in parentheses.
   in the workspace directory
 - to toggle focus between an editor and a terminal,
   add this to `keybindings.json`
+
   ```json
   {
     "key": "alt+g",
@@ -1518,16 +1520,20 @@ followed by the macOS version in parentheses.
     "when": "terminalFocus"
   },
   ```
+
 - keyboard shortcut issue
+
   - some keys are interpreted by the shell in a terminal, not by VS Code
   - to allow them to be interpreted first by VS Code, add a setting
     like the following where the value is an array of
     command names that have associated keyboard shortcuts
+
   ```json
   "terminal.integrated.commandsToSkipShell": [
     "workbench.action.focusActiveEditorGroup"
   ]
   ```
+
   - I used this to allow alt+g to be used in a terminal
     running a Windows Command Prompt
 
@@ -1587,21 +1593,21 @@ defaults delete -g ApplePressAndHoldEnabled # if necessary to reset global defau
     - to enable, add the setting `"vim.easymotion": true,`
     - there are many commands
     - to jump to the beginning of a word that is visible
-      - and is forward, type <leader><leader>w
-      - and is backward, type <leader><leader>b
+      - and is forward, type `<leader><leader>w`
+      - and is backward, type `<leader><leader>b`
       - then type the letter(s) displayed at the beginning of a word
   - surround
     - enabled by default
     - to disable, add the setting `"vim.surround": false,`
     - to surround visually selected text with delimiters, S{delimiter}
-      - ex. S" or S<div> (surrounds with an XML tag)
+      - ex. `S"` or `S<div>` (surrounds with an XML tag)
     - to change surrounding delimiters, xs{old}{new}
       - ex. cs'" or cs({
-      - to change <div>foo</div> to <span>foo</span>
-        when cursor is on "foo", cst<span>
+      - to change `<div>foo</div>` to `<span>foo</span>`
+        when cursor is on "foo", `cst<span>`
     - to delete surrounding delimiters, ds{delimiter}
       - ex. ds' or ds(
-      - to change <div>foo</div> to foo
+      - to change `<div>foo</div>` to foo
         when cursor is on "foo", dst
   - commentary
     - uses the VS Code "Toggle Line Comment" and "Toggle Block Comment" commands
