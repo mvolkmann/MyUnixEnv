@@ -1354,6 +1354,8 @@ followed by the macOS version in parentheses.
 
 ## Settings Sync extension
 
+- I have had lots of trouble getting this to work consistently.
+  - maybe skip using this for now
 - useful when using VS Code from more than one computer
   or just to have an offline backup of settings
 - saves many things
