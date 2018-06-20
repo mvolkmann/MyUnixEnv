@@ -77,3 +77,12 @@ To run a security audit
     commands to apply patches to resolve vulnerabilities"
 - to attempt to fix issues, `npm audit fix`
   - "automatically install compatible updates to vulnerable dependencies"
+
+Versions
+
+- can have these prefixes
+  - ~ locks to minor; ex. ^1.2 means 1.2.0, 1.2.1, and 1.2.2, but not 1.3.0
+  - ^ locks to major; ex. ~1.2 means 1.2.0, 1.2.1, and 1.3.0, but not 2.0.0
+  - = locks to specific version; same as having no prefix
+  - > , >=, <, <= lock to a version range
+- can specify a wildcard for part of a version with X, x, or \*
