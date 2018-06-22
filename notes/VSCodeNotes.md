@@ -313,6 +313,27 @@ followed by the macOS version in parentheses.
 - hover over a function or method call
   to get documentation on it, if available
 
+## Dropbox Sync
+
+- can move setting files to Dropbox and reference with a symbolic link
+- provides backup of settings
+- enables sharing between computers
+- steps to set up
+  - learn about the OS-specific location where setting files are stored
+    - see "stored in several files" in the Settings section of this document
+  - quit out of VS Code
+  - copy User directory from the OS-specific location
+    to Dropbox and rename the new directory to VSCodeSettings
+    - if using the Insiders build, get this from the
+      "Code - Insiders" directory instead of the "Code" directory
+  - rename the User directory to User-backup
+    - can delete after verifying that everything is working
+  - in macOS and Linux systems
+    - cd to the OS-specific location of the settings files
+      (the directory that contains the User directory)
+    - create the symbolic link by entered
+      `ln -s ~/Dropbox/VSCodeSettings User`
+
 ## Editor Grid Layout
 
 - added to Insiders build in May 2018
@@ -1355,7 +1376,7 @@ followed by the macOS version in parentheses.
 ## Settings Sync extension
 
 - I have had lots of trouble getting this to work consistently.
-  - maybe skip using this for now
+  - see "Dropbox Sync" section for an alternative
 - useful when using VS Code from more than one computer
   or just to have an offline backup of settings
 - saves many things
@@ -1626,6 +1647,9 @@ defaults delete -g ApplePressAndHoldEnabled # if necessary to reset global defau
     - to enable, add the setting `"vim.sneak": true,`
     - I don't find this to be particularly useful
       and just use the standard Vim find command (/)
+- vscode-go-to-file extension
+  - when this is installed, place the cursor on a file reference
+    and press `gf` to go to the file
 
 ## vscode-database extension
 
