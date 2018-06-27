@@ -209,7 +209,10 @@ followed by the macOS version in parentheses.
 ## Command-line launching
 
 - enter "code" optionally followed by a file or directory name
-  - by default opens current directory
+  - by default no directory is selected
+  - `code .` opens a new window for the current directory
+- to open in the most recently used Code window, add the `-r` option
+- to open a diff view for two files, `code --diff {file1} {file2}`
 - in Linux and macOS need to add to PATH
   - in macOS add /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
