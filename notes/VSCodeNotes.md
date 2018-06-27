@@ -334,6 +334,13 @@ followed by the macOS version in parentheses.
     - create the symbolic link by entered
       `ln -s ~/Dropbox/VSCodeSettings User`
 
+## Duplicate action Extension
+
+- right-click a file or directory in Explorer
+  and select "Duplicate file or directory"
+  to copy it
+- prompts for new name, suggesting the original plus "-copy"
+
 ## Editor Grid Layout
 
 - added to Insiders build in May 2018
@@ -1479,7 +1486,12 @@ followed by the macOS version in parentheses.
 ## Splits
 
 - can split editor to see current file in multiple panes
+- can drag an editor tab to produce a new vertical or horizontal split
 - can open any number of files each each pane
+- see options under View ... Editor Layout
+  - provides split commands
+  - provides predefined editor layouts
+  - provides ability to toggle between vertical and horizontal layouts
 - keyboard shortcuts
   - to split editor
     - View ... Split Editor
