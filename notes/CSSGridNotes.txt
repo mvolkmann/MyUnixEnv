@@ -61,7 +61,7 @@ To specify number of rows and size of each:
   * can name grid lines by preceding sizes with [name]
 - if there are more items than will fit
   in the specified columns and rows,
-  the specified row sizes will repeat to accomodate them
+  the specified row sizes will repeat to accommodate them
 - to specify another size for any implicit rows, add
   grid-auto-rows: {some-height}
   * can specify multiple heights to cycle through
@@ -203,7 +203,7 @@ Placing Items
     - specify different grid-template-areas for each
 
 Aligning items
-- use these six propeties:
+- use these six properties:
   * justify-items, justify-content, justify-self
     - always affect rows (horizontal),
       regardless of grid-auto-flow direction unlike in flexbox

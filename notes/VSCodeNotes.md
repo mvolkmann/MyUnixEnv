@@ -487,7 +487,11 @@ followed by the macOS version in parentheses.
 - I configured the following keys in `keybindings.json` related to the Explorer
 
   - "f" to create a new folder (prompts for name)
+    - can enter foo/bar/baz to create foo directory
+      containing bar directory containing baz directory
   - "n" to create a new file (prompts for name)
+    - can enter foo/bar/baz.txt to create foo directory
+      containing bar directory containing baz.txt file
   - "r" to rename the file under the cursor
   - "d" to delete the file under the cursor with confirmation.
   - enter key to open the file under the cursor
@@ -1181,6 +1185,20 @@ followed by the macOS version in parentheses.
 - creates nice images from code snippets
 - doesn't seem to work when the Vim extension is installed
 - see <https://github.com/octref/polacode/issues/60>
+
+## Popups
+
+- there are several kinds of popups that appear by default
+  when hovering over certain kinds of code in an editor panel
+- quick suggestions can be disabled with the setting
+  `"editor.quickSuggestions": false,`
+- parameter hints can be disabled with the setting
+  `"editor.parameterHints": false,`
+- may also want `"editor.suggestOnTriggerCharacters": false,`
+- when these are disabled, they can be displayed by
+  pressing ctrl-space when the cursor is over code of interest
+- it seems these don't disable all popups,
+  so maybe there are more settings I haven't found yet
 
 ## Prettier extension
 
