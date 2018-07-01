@@ -102,14 +102,6 @@ followed by the macOS version in parentheses.
 - look for light bulb icon or an ellipsis below code
 - hover over to see hint
 
-## Code Outline extension
-
-- adds a left nav toggle button that displays a code outline
-  in place of the EXPLORER when toggled on
-- lists all the functions, classes, and methods defined
-  in the current editor tab
-- clicking a name scrolls to it in the editor tab
-
 ## Code Spell Checker extension
 
 - green squiggly line appears below misspelled or unknown words
@@ -1150,11 +1142,13 @@ followed by the macOS version in parentheses.
 
 ## Outline
 
-- shows a list of the functions, classes, and methods in a source file
-- click one to navigate to it
-- to open, click outline icon in left nav
-  - I mapped ctrl+O (cmd+O) to this
-    which was the shortcut for File...Open...
+- shows a list of the functions, classes, and methods
+  in the file in the current editor
+  - for Markdown files, shows headers
+- to open outline in Explorer, press alt-o
+- type in filter input to filter the items listed
+- to navigate to an item click it or
+  use up and down arrow keys to highlight an item and press enter
 
 ## Peek View
 
