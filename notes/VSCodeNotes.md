@@ -1256,7 +1256,7 @@ followed by the macOS version in parentheses.
     (branch code coverage level)
   - red - source line is the source of an error or failed expectation,
     or is in the stack of an error
-- not overly impressed
+- not overly impressed; could just use browser console
 
 ## Refactoring
 
