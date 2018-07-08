@@ -3,6 +3,7 @@ CSS Grid Layout
 Resources
 - https://css-tricks.com/snippets/css/complete-guide-grid/
 - free Wes Bos course https://cssgrid.io/
+- free CSS Grid Builder tool at https://www.coffeecup.com
 
 Overview
 - for the most part grid can do everything flexbox can do

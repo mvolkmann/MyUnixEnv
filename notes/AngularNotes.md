@@ -93,44 +93,34 @@ and would use it again. For React the number is 13,669.
 2,289 said they have used Angular and would not use it again.
 For React the number is 1,020.
 
-## Setup
-
-- npm install -g @angular/cli
-- ng new my-app
-- cd my-app
-- ng serve --open
-  - opens app in default browser
-    and provides live reload
-- by default the URL is <http://localhost:4200>
-
 ## Angular CLI
 
-- npm install -g @angular/cli
-- ng new app-name
+- `npm install -g @angular/cli`
+- `ng new app-name`
   - generates a working project
   - sets up lots of tooling including
     linting, CSS preprocessing, and test runners
   - app deployment to GitHub Pages?
-- cd app-name
+- `cd app-name`
   - run all the following commands from this directory
-- ng serve
+- `ng serve`
   - takes several minutes
   - browse localhost:4200
-- ng generate component {component-name}
-  - can abbreviate: ng g c {component-name}
+- `ng generate component {component-name}`
+  - can abbreviate: `ng g c {component-name}`
   - to add to "declarations" in main module,
     include -m app.module.ts
-- ng generate service {service-name}
+- `ng generate service {service-name}`
   - can abbreviate: ng g s {service-name}
-- ng lint
+- `ng lint`
   - lints code
-- ng test
+- `ng test`
   - runs unit tests
-- ng e2e
+- `ng e2e`
   - runs end-to-end tests
-- ng build
+- `ng build`
   - generates a production build
-- ng github-pages:deploy
+- `ng github-pages:deploy`
   - deploys to GitHub Pages
 
 ## Customizing
@@ -237,6 +227,68 @@ export class MyComponent {
   - exports - list of modules that are provided to importers of this module
   - providers - list of services used by this module
   - bootstrap - only for top-level modules; defines the starting component
+
+## Libraries
+
+- to build a library with the Angular CLI
+
+  - `ng new ng-lib-demo`
+    - takes several minutes
+  - `cd ng-lib-demo`
+  - `ng generate library math`
+  - create the file ng-lib-demo/projects/math/src/lib/math.ts
+    containing simple JavaScript functions that are exported
+
+    ```js
+    export function add(n1, n2) {
+      return n1 + n2;
+    }
+    ```
+
+  - edit ng-lib-demo/projects/math/src/public_api.ts and add:
+
+    ```js
+    export * from './lib/math';
+    ```
+
+  - `ng build math`
+
+- to publish the library to an npm repository
+
+  - `cd dist/math`
+
+  - if publishing to a private repository
+    add the following to package.json in this directory
+
+    ```json
+    "publishConfig": {
+      "registry": {
+        "the registry URL goes here"
+      }
+    }
+    ```
+
+  - `npm publish`
+
+- to use a library in an app
+
+  - cd to top application directory
+  - `npm install math`
+  - modify source files use the library
+
+    - in src/app/app.component.ts
+
+      ```js
+      import {add} from 'math';
+      // inside class AppComponent
+      sum = add(1, 2);
+      ```
+
+    - in src/app/app.component.html
+
+      ```html
+      <div>sum = {{ sum }}</div>
+      ```
 
 ## REST Calls
 

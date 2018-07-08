@@ -1240,8 +1240,11 @@ followed by the macOS version in parentheses.
 
 - provides useful information about JavaScript and TypeScript code
 - just using free community version for now
-- doesn't seem to work when Flow types are present
-- Command Palette commands that start with "Quokka" include
+- enter a variable name to see its value at the end of the line
+- enter log statements to see their output at the end of the line
+- may have issues when Flow types are present
+- Command Palette commands that start with "Quokka.js" include
+  - New JavaScript File - mostly for a scratchpad to try things
   - Start On Current File
   - Stop Current
   - Stop All
@@ -1253,6 +1256,7 @@ followed by the macOS version in parentheses.
     (branch code coverage level)
   - red - source line is the source of an error or failed expectation,
     or is in the stack of an error
+- not overly impressed
 
 ## Refactoring
 
