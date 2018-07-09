@@ -72,8 +72,8 @@ public class HelloController {
 - `./gradlew run`
   - on first run this downloads gradle which takes a long time
 - listens on a random port
-- to specify the port, edit src/main/resources/application.yml
-  and uncomment these lines
+- to specify the port, edit `src/main/resources/application.yml`
+  and uncomment these lines:
 
   ```yml
   //    server:
@@ -81,6 +81,6 @@ public class HelloController {
   ```
 
 - outputs "Server Running:" followed by the URL to browse
-- browse that URL plus "/hello"
-- after changes, restart the server
-  - should be ready in about two seconds
+- browse that URL plus "/hello" which is the controller path
+- after code changes, restart the server
+  - should be ready in under two seconds
