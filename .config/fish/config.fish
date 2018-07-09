@@ -170,6 +170,7 @@ set CSS_DIR $LANGUAGES_DIR/CSS
 set HTML_DIR $LANGUAGES_DIR/html
 set JAVA_DIR $LANGUAGES_DIR/java
 set JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
+set MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
 #set MONGODB_DIR=$DATABASES_DIR/MongoDB
 set SETT_DIR $OCI_DIR/SETT
 set TRAINING_DIR $DOCUMENTS_DIR/training
@@ -209,6 +210,9 @@ set JS_DIR $LANGUAGES_DIR/javascript
 #set M2_HOME $MAVEN_HOME
 #set PATH $PATH $MAVEN_HOME/bin
 #set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
+
+# Micronaut settings
+set PATH $PATH $MICRONAUT_DIR/bin
 
 # MongoDB settings
 #set PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin

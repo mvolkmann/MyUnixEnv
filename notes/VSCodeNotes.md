@@ -526,15 +526,15 @@ followed by the macOS version in parentheses.
   - by default, automatically checks for and installs extension updates
 - CPU time
   - two approaches to determine if an extension is consuming too much CPU time
-    1.  Help ... Open Process Explorer
-    2.  htop
-        - brew install htop
-        - htop
-        - press F4 to filter
-        - enter "extension"
-        - look at top entries that start with
-          "/Applications/Visual Studio Code.app/Contents/Frameworks/"
-        - "Code Helper.app" was a culprit for me
+    1. Help ... Open Process Explorer
+    2. htop
+       - brew install htop
+       - htop
+       - press F4 to filter
+       - enter "extension"
+       - look at top entries that start with
+         "/Applications/Visual Studio Code.app/Contents/Frameworks/"
+       - "Code Helper.app" was a culprit for me
 
 ## ESLint and TSLint extensions
 
