@@ -88,3 +88,8 @@ public class HelloController {
 - browse that URL plus "/hello" which is the controller path
 - after code changes, restart the server
   - should be ready in under two seconds
+
+## Hot Reloading
+
+- not supported out of the box
+- can add with Spring-Loaded at <https://github.com/spring-projects/spring-loaded>
