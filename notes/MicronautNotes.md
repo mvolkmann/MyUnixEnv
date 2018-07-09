@@ -4,14 +4,17 @@
 
 - a microservice framework that supports code written in Java, Groovy, and Kotlin
 - <http://micronaut.io/>
+- implementing REST services with Micronaut is very easy
+- build times and server startup times are very fast
 
 ## Setup
 
 - install JDK 8 or higher
-- browse <http://micronaut.io/> and click the "DOWNLOAD" link
+- browse <http://micronaut.io/>
+- click the "DOWNLOAD" link
 - click the "Binary" link
 - unzip the downloaded file
-- add the bin directory in the unzipped directory to path
+- add the bin directory in the unzipped directory to PATH
 - verify setup by running `mn -v`
 - `mn` is the Micronaut CLI
 
@@ -21,14 +24,15 @@
   - `mn create-app com.mycompany.myapp
   - `cd myapp`
 - by default a Gradle build is supplied
-- the main method is defined in the generated file
+- the `main` method is defined in the generated file
   `src/main/java/com/mycompany/Application.java`
 
 ## Create a controller that defines REST services
 
 - create the file `src/main/java/com/mycompany/HelloController.java`
-  - Java loves deeply nested directory structures!
   - all these directories should already exist
+  - each method in the controller with an annotation for an HTTP method
+    such as `@Get` is a different REST service
 
 ```java
 package com.mycompany;
