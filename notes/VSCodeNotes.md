@@ -1184,6 +1184,8 @@ followed by the macOS version in parentheses.
 
 - there are several kinds of popups that appear by default
   when hovering over certain kinds of code in an editor panel
+- to disable all popups, add the setting
+  `"editor.hover.enabled": false,`
 - quick suggestions can be disabled with the setting
   `"editor.quickSuggestions": false,`
 - parameter hints can be disabled with the setting
