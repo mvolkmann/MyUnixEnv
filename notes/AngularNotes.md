@@ -232,26 +232,85 @@ export class MyComponent {
 
 - to build a library with the Angular CLI
 
-  - `ng new ng-lib-demo`
-    - takes several minutes
-  - `cd ng-lib-demo`
-  - `ng generate library math`
-  - create the file ng-lib-demo/projects/math/src/lib/math.ts
-    containing simple JavaScript functions that are exported
+  - create a workspace for the library if one hasn't already been created
+    - `ng new {workspace-name}`
+      - ex. `ng new web-components`
+      - takes several minutes
+  - create the library within the workspace
+    - `cd {workspace-name}`
+    - `ng generate library {library-name} --prefix={library-prefix}`
+      - ex `ng generate library bio-common --prefix=bc`
+  - implement the library
+    - the simplest approach is to add methods to the `{library-name}.service.ts` file
+      in the `{library-prefix}/projects/{library-name}/rc/lib` directory
+    - ex.
+      ```js
+      joinList(arr, separator, transformFn) {
+        return arr.map(transformFn).join(separator);
+      }
+      ```
+    - can also copy existing source files into the `src/lib` directory
+  - add dependencies
+    - either `npm install` them or
+      manually edit the `package.json` for the project and run `npm install`
+  - add an export
+    - edit `projects/{library-name}/src/public_api.ts` and add `export * from './lib/index';`
+  - use the library in the top-level app to test it
 
-    ```js
-    export function add(n1, n2) {
-      return n1 + n2;
-    }
-    ```
+    - edit `src/app/app.module.ts`
+      - add `import { {camel-library-name}Module } from '{library-name}`;
+        - ex. `import { BioCommonModule } from 'bio-common'`;
+      - in the imports array add `{camel-library-name}Module`
+        - ex. `BioCommonModule`
+    - edit `src/app/app.component.ts`
+      - import the service
+        - ex. `import { BioCommonService } from 'bio-common'`;
+      - inject the service into the constructor
+        - ex. `constructor(bioCommonService: BioCommonService) {`
+      - use the library methods in the constructor
+        - ex. `const result = bioCommonService.joinList([1, 2, 3], '-', n => n \* 2);
+      - use `console.log` so the results can be verified
+        - ex. console.log('result =', result);
 
-  - edit ng-lib-demo/projects/math/src/public_api.ts and add:
+  - test it
 
-    ```js
-    export * from './lib/math';
-    ```
+    - from the top workspace directory enter `ng serve`
+    - browse localhost:4200
+    - verify the expected output in devtools console
 
-  - `ng build math`
+  - publish the library
+
+    - add the following to `projects/bio-common/package.json`
+      ```json
+      "publishConfig": {
+        "registry": "{url-of-private-npm-repository}"
+      }
+      ```
+    - add the following npm scripts to the top-level `package.json` file
+      - `"build-bc": "ng build --prod bio-common",`
+      - `"pack-bc": "cd dist/bio-common && npm pack",`
+      - `"package-bc": "npm run build-bc && npm run pack-bc",`
+      - `"publish-bc": "npm run package-bc && cd dist/bio-common && npm publish",`
+    - build, package, and publish the library by running `npm run publish-bc`
+    - after building a project, if another project in the same workspace uses it
+      - `cd dist`
+      - `npm install`
+      - this fixed issues in bio-common when building bio-kendo-ui-jquery!
+
+  - common errors
+    - "Property 'finally' does not exist on type 'Promise<any>'"
+      - The Promise finally method is currently a stage 4 ECMAScript proposal.
+      - Major browser except for IE already support it.
+      - TypeScript does not recognize it and I haven't found a polyfill for it.
+      - For now, add `// @ts-ignore` before lines that use it
+    - "angular dependency {some-name} must be explicitly whitelisted"
+      - fixed by added the following to `ng-package.json` and `ng-package.prod.json`
+      ```json
+      "whitelistedNonPeerDependencies": {
+        "{some-name}"
+      }
+      ```
+      - Is this stupid? Yes it is!
 
 - to publish the library to an npm repository
 

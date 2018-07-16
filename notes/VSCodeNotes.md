@@ -80,6 +80,12 @@ followed by the macOS version in parentheses.
 - by default only (), [], and {} are matched
 - by default the colors are yellow, magenta, and cyan
 
+## Breadcrumbs
+- add a row below the current tab containing breadcrumbs
+- can use to navigate to any other file in the project
+  and to specific symbols (such as functions) in the current file
+- to enable, add `"breadcrumbs.enabled" = true,` to user settings
+
 ## Code Folding
 
 - works in many kinds of source files including
@@ -125,6 +131,7 @@ followed by the macOS version in parentheses.
   - sometimes asks for confirmation at top
   - the global dictionary is in user settings
     in the "cSpell.userWords" property
+    - can edit user settings to manually add or remove words
   - the workspace dictionary is in workspace settings
     in the "cSpell.words" property
   - the folder dictionary is in folder settings
