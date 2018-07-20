@@ -30,8 +30,7 @@
   "plugins": [
     "flowtype",
     "html",
-    "react",
-    "volkmann"
+    "react"
   ],
 
   "rules": {
@@ -63,7 +62,7 @@
     "eol-last": "off",
     "eqeqeq": "error",
     "flowtype/boolean-style": ["error", "boolean"],
-    //"flowtype/define-flow-type": "error",
+    "flowtype/define-flow-type": "error",
     "flowtype/delimiter-dangle": ["error", "never"],
     "flowtype/generic-spacing": ["error", "never"],
     "flowtype/no-dupe-keys": "error",
@@ -140,7 +139,6 @@
     "max-nested-callbacks": ["error", 4],
     "max-params": "off",
     "max-statements": ["warn", 50],
-    "max-statements-per-line": "off", // doesn't work
     "multiline-ternary": "off",
     "new-cap": "off",
     "new-parens": "error",
@@ -337,7 +335,6 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/jsx-wrap-multilines": "off",
-    "react/no-access-state-in-setstate": "error",
     "react/no-array-index-key": "off",
     "react/no-children-prop": "error",
     "react/no-danger": "off",
@@ -348,7 +345,6 @@
     "react/no-direct-mutation-state": "error",
     "react/no-find-dom-node": "error",
     "react/no-is-mounted": "error",
-    "react/no-multi-comp": "off", // thinks nested functions are components!
     "react/no-render-return-value": "error",
     "react/no-set-state": "off",
     "react/no-string-refs": "off",
@@ -356,7 +352,6 @@
     "react/no-unknown-property": "error",
     "react/no-unused-prop-types": "error",
     "react/prefer-es6-class": "error",
-    //"react/prefer-stateless-function": "warn",
     "react/prefer-stateless-function": "off",
     "react/prop-types": "error",
     "react/react-in-jsx-scope": "error",
@@ -383,7 +378,6 @@
     "space-before-function-paren": ["error", {"anonymous": "always", "named": "never"}],
     "space-in-parens": ["error", "never"],
     "space-infix-ops": ["error"],
-    //"space-infix-ops": ["error", {"**": "never"}],
     "space-unary-ops": ["error", { "words": true, "nonwords": false }],
     "spaced-comment": "off",
     "strict": "off",
@@ -398,8 +392,6 @@
     "wrap-iife": "error",
     "wrap-regex": "off",
     "yield-star-spacing": ["error", "after"],
-    "yoda": "off",
-    "volkmann/embrace-booleans": "error",
-    "volkmann/exponentiation-operator": ["error"]
+    "yoda": "off"
   }
 }

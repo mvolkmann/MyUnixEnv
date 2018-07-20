@@ -81,6 +81,7 @@ followed by the macOS version in parentheses.
 - by default the colors are yellow, magenta, and cyan
 
 ## Breadcrumbs
+
 - add a row below the current tab containing breadcrumbs
 - can use to navigate to any other file in the project
   and to specific symbols (such as functions) in the current file

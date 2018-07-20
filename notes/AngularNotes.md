@@ -236,6 +236,8 @@ export class MyComponent {
     - `ng new {workspace-name}`
       - ex. `ng new web-components`
       - takes several minutes
+  - if the workspace already exists, make sure these files are writable
+    - angular.json, package.json, tsconfig.json
   - create the library within the workspace
     - `cd {workspace-name}`
     - `ng generate library {library-name} --prefix={library-prefix}`
@@ -255,6 +257,11 @@ export class MyComponent {
       manually edit the `package.json` for the project and run `npm install`
   - add an export
     - edit `projects/{library-name}/src/public_api.ts` and add `export * from './lib/index';`
+  - build the library
+    - add an npm script to package.json for the workspace similar to this:
+    ```json
+    "build-{library-prefix}": "ng build --prod {library-name}",
+    ```
   - use the library in the top-level app to test it
 
     - edit `src/app/app.module.ts`
