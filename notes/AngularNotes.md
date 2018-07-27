@@ -305,7 +305,7 @@ export class MyComponent {
       - this fixed issues in bio-common when building bio-kendo-ui-jquery!
 
   - common errors
-    - "Property 'finally' does not exist on type 'Promise<any>'"
+    - "Property 'finally' does not exist on type `Promise<any>`"
       - The Promise finally method is currently a stage 4 ECMAScript proposal.
       - Major browser except for IE already support it.
       - TypeScript does not recognize it and I haven't found a polyfill for it.

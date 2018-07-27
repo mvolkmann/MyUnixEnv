@@ -63,6 +63,8 @@ for debugging purposes
 - `npm link`
 - cd to directory of code that has that as a dependency
 - `npm link {dependency-name}`
+- after making local changes to the package being tested,
+  run `npm run build`
 
 To create a new React app using create-react-app
 

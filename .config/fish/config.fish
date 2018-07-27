@@ -77,7 +77,7 @@ alias cdrga 'cd $RGA_DIR'
 alias cdsd 'cd $OCI_DIR/SmartDevice_Web_Demo'
 alias cdsett 'cd $SETT_DIR'
 alias cdtalks 'cd $PROGRAMMING_DIR/conferences/talks'
-alias cdtesla 'cd $OCI_DIR/clients/Purina/tesla'
+alias cdtesla 'cd $OCI_DIR/clients/Purina/tesla-client'
 alias cdtraining 'cd $TRAINING_DIR'
 alias cdts 'cd $TYPESCRIPT_DIR'
 alias cdvim 'cd $PROGRAMMING_DIR/Tools/Vim'
@@ -188,6 +188,10 @@ set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
 # Git settings
 set GITHUB_USER mvolkmann
 #set GITHUB_PASS ?
+
+# Go settings
+set GOBIN $HOME/go/bin
+#set PATH $PATH $GOBIN
 
 # grep settings
 # This setting may interfere with fink scripts!

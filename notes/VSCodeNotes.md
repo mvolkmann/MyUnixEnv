@@ -734,7 +734,8 @@ followed by the macOS version in parentheses.
     - ex. to see a list of all files in the project with "scss" extension,
       enter `*.scss`
   - press p repeatedly to move through list of recently opened files
-    - press enter to select file under cursor
+  - press enter to open the file under cursor in current editor group
+  - press ctrl-enter (cmd-enter) to open the file under cursor in a new editor group
 - Symbol in File - ctrl-O (cmd-O)
   - puts @ at front of search string
     - add : to group symbols by kind
