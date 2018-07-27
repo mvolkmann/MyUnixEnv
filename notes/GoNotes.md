@@ -17,6 +17,10 @@
 - performs garbage collection
 - supports networking operations
 - supports concurrency
+- minimal support for object-oriented programming
+  - through structs with methods
+- no support for functional programming
+  - for example, no builtin map, filter, and reduce functions for arrays
 
 ## Reasons to use
 
@@ -44,6 +48,7 @@
 
 - `go` command has many sub-commands
 - most commonly used commands
+
   - `go help [command|topic]`
     - outputs help
     - run with no argument to see a list of commands and topics
@@ -62,11 +67,25 @@
   - `go test`
     - runs all the tests in the current package?
   - `go generate`
+
     - creates or updates Go source files
     - TODO: learn more about this
 
+## Code Formatting
+
+- gofmt tool
+  - uses tabs for indentation and spaces for alignment
+
 ## VS Code Go Extension
 
+- may need to
+  - set GOPATH environment variable and restart VS Code before installing this
+  - run `go get -u github.com/mdempsky/gocode`
+  - run `go get -u golang.org/x/lint/golint`
+  - set GOPATH to ~/go
+  - create a `bin` subdirectory
+  - set GOBIN to $GOPATH/bin
+  - add $GOBIN to PATH
 - why isn't "format on save" working?
 - for a description of how this extension can use GOPATH see
   <https://github.com/Microsoft/vscode-go/wiki/GOPATH-in-the-VS-Code-Go-extension>
@@ -140,6 +159,15 @@
 - can do both, but that is redundant
   - `var x int = 3`
 - `var` can be used inside or outside of a function
+- can define multiple variables with one `var`
+
+  ```go
+  var (
+    alpha = 1
+    beta = 2
+  )
+  ```
+
 - can assign a value to an already defined variable
   - `x = 4`
   - it's an error if the variable has not already been defined
@@ -153,7 +181,14 @@
   - false for bool
   - 0 for numbers
   - "" for strings
-  - nil for pointers
+  - nil for pointers and slices
+  - TODO: What is the zero value for an array? An empty array?
+
+## Constants
+
+- defined with `const` keyword
+- must be initialized
+- ex. const BLACKJACK = 21
 
 ## Pointers
 
@@ -167,22 +202,133 @@
 
 ## Output
 
+- supported by the "fmt" package
+
 ```go
 import "fmt"
 fmt.Println(expression)
 ```
 
+## If Statement
+
+- parentheses are not required around the condition being tested
+- ex.
+  ```go
+  if x > 7 {
+  } else {
+  }
+  ```
+
+## Switch Statement
+
+## For Statement
+
+- the only looping statement
+- syntax is `for init; cond; post { ... }`
+- ex.
+
+  ```go
+  for i: 0; i < 10; i++ {
+    ...
+  }
+  ```
+
+- init and post are optional
+
+  - so a while loop in other languages looks like this in go
+
+  ```go
+  for ; i < 10; {
+    ...
+  }
+  ```
+
+  - or drop the semicolons because when only one part is present it is assumed to be the condition
+
+  ```go
+  for i < 10 {
+    ...
+  }
+  ```
+
+  - omit the condition for an endless loop
+
+  ```go
+  for {
+    ...
+  }
+  ```
+
 ## Structs
 
 ## Arrays
 
+- indexes are zero-based
 - have a fixed length
+- declare with `[length]type`
+  - ex. `var rgb [3]int`
+- can initialize with values in curly braces
+  - ex. `rgb := [3]int{100, 50, 234}`
+- can get the value at an index
+  - ex. `fmt.Println(rgb[1])`
+- can change the value at an index
+  - ex. `rgb[1] = 75`
+- array elements can be arrays
+- to iterate over the elements in an array
+
+  ```go
+  for index, value := range myArr {
+    ...
+  }
+  ```
 
 ## Slices
 
-- like an array with a variable length
+- a view into an array with a variable length
+- create by specifying the start (inclusive) and end (exclusive) indexes of an array
+  - ex. `mySlice = myArr[start:end]`
+  - if `start` is omitted, it defaults to 0
+  - if `end` is omitted, it defaults to the array length
+  - so `myArr[:]` creates a slice over the entire array
+- modifying elements of a slice modifies the underlying array
+- multiple slices on the same array see the same data
+- a slice literal creates a slice and an underlying array
+  - ex. `mySlice = []int{2, 4, 6}`
+- `len(mySlice)` returns the number of elements it contains (length)
+- `cap(mySlice)` returns the number of elements in the underlying array (capacity)
+- to extend a slice, recreated it with different bounds
+  - ex. `mySlice = mySlice[newStart:newEnd]`
+- the zero value is nil
+- `make` function
+  - can create a "dynamically-sized array"
+  - ex. `mySlice := make([]int, 5)`
+    - creates an underlying array of size 5
+      and a slice of length 5 and capacity of 5
+  - ex. `mySlice := make([]int, 0, 5)`
+    - creates an underlying array of size 5
+      and a slice of length 0 and capacity of 5
+  - to expand the size of the slice
+    `mySlice = mySlice[newStart:newEnd]`
+- slice elements can be slices
+- to append new elements to a slice
+  - this is where it really gets dynamic!
+  - `mySlice = append(mySlice, 8, 10)`
+  - appends the values 8 and 10
+  - if the underlying array is too small,
+    a larger array is automatically allocated
+    and the returned slice will refer to it
+    - since this can be inefficient, try to
+      estimate the largest size needed at the start
 
 ## Maps
+
+- to iterate over the key/value pairs in a map
+
+  ```go
+  for key, value := range myMap {
+    ...
+  }
+  ```
 
 ## Channels
 
@@ -198,6 +344,30 @@ func myFunctionName(args) return-type {
   ...
 }
 ```
+
+- anonymous functions have the same syntax, but omit the name
+  - ex. `func(v int) int { return v * 2 }`
+
+## Not Functional
+
+- Go doesn't support functional programming out of the box
+- can simulate some features like this
+
+  ```go
+  type intToIntFn = func(int) int
+
+  func mapOverInts(arr []int, fn intToIntFn) []int {
+    result := make([]int, len(arr))
+    for i, v := range(arr) {
+      result[i] = fn(v)
+    }
+    return result
+  }
+
+  rgb := [3]int{100, 50, 234}
+  		double := func(v int) int { return v * 2 }
+  		log(mapOverInts(rgb[:], double))
+  ```
 
 ## Packages
 
