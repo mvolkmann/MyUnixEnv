@@ -274,6 +274,7 @@ fmt.Println(expression)
   - ex. `fmt.Println(rgb[1])`
 - can change the value at an index
   - ex. `rgb[1] = 75`
+- get length with `len(myArr)`
 - array elements can be arrays
 - to iterate over the elements in an array
 
