@@ -213,6 +213,7 @@ fmt.Println(expression)
 
 - parentheses are not required around the condition being tested
 - ex.
+
   ```go
   if x > 7 {
   } else {
@@ -365,8 +366,8 @@ func myFunctionName(args) return-type {
   }
 
   rgb := [3]int{100, 50, 234}
-  		double := func(v int) int { return v * 2 }
-  		log(mapOverInts(rgb[:], double))
+  double := func(v int) int { return v * 2 }
+  log(mapOverInts(rgb[:], double))
   ```
 
 ## Packages
