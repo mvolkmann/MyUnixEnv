@@ -22,6 +22,8 @@
 - compiled
 - provides type inference
 - performs garbage collection
+- supports asynchronous processing with lightweight threads via goroutines
+- provides communication between goroutines using channels
 - supports networking operations
 - supports concurrency
 - supports JSON marshalling and unmarshalling
@@ -349,11 +351,63 @@ fmt.Println(expression)
   - by default, blocks until the channel retrieves it (unbuffered)
 - to retrieve a value from a channel, `value := <-channel`
   - by default, blocks until the channel sends it (unbuffered)
+- channel direction
+
+  - the type `chan` can send and receive values
+  - to only allow sending, use `chan<-`
+  - to only allow receiving, use `<-chan`
+
 - buffered channels
   - accept a limited number of values with a corresponding receiver
   - to create, add size as second argument to make
     - ex. `myChannel := make(chan string, 5)`
+  - there is probably no way to create a buffered channel with no size limit
 - can use channels for synchronizing goroutine execution
+
+  - to wait for a value to be sent to a channel, `<-myChannel`
+  - to wait for a goroutine to complete, do something like this
+
+  ```go
+  import "time"
+
+  func myAsync(done chan<- bool) { // can send, but not receive
+    // Do some asynchronous thing.
+  		  time.Sleep(time.Second * 3)
+    // When it completes, do this:
+    done <- true
+  }
+
+  done := make(chan bool, 1)
+  go myAsync(done)
+  <-done
+  ```
+
+- can wait on multiple channels using a select statement
+
+  - ex.
+
+    ```go
+    c1 := make(chan string)
+    c2 := make(chan string)
+
+    go func() {
+      time.Sleep(1 * time.Second)
+      c1 <- "one"
+    }()
+    go func() {
+      time.Sleep(2 * time.Second)
+      c2 <- "two"
+    }()
+
+    for i := 0; i < 2; i++ {
+      select {
+      case msg1 := <-c1:
+        fmt.Println("received", msg1)
+      case msg2 := <-c2:
+        fmt.Println("received", msg2)
+      }
+    }
+    ```
 
 ## Functions
 
