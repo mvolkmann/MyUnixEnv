@@ -4,7 +4,14 @@
 
 - announced by Google in 2009
 - originally designed to be a systems programming language
+  - aims to be a better C
   - but most developers use C, C++, or Rust for that
+- simplicity and performance are major goals
+  so many features found in other programming languages
+  are not present in Go
+  - ex. generic types
+- does not compete with scripting languages like
+  JavaScript, Perl, Python, and Ruby
 - currently the most common uses are for
   the server side of web application and dev ops tooling
 
@@ -17,10 +24,13 @@
 - performs garbage collection
 - supports networking operations
 - supports concurrency
+- supports JSON marshalling and unmarshalling
 - minimal support for object-oriented programming
   - through structs with methods
-- no support for functional programming
+- no builtin support for functional programming
   - for example, no builtin map, filter, and reduce functions for arrays
+  - hard to implement due to lack of generics
+- supports composition, but not inheritance of types
 
 ## Reasons to use
 
@@ -38,7 +48,8 @@
 
 ## Syntax
 
-- no semicolons
+- semicolons are not required,
+  but can use to place multiple statements on the same line
 - types follow parameters
 - exported variables and struct members have names that start uppercase
 - outside of functions, every line begins with a keyword
@@ -124,25 +135,11 @@
 - GOROOT
   - what Go tools are installed
 
-## Primitive Types
+## Comments
 
-- bool
-  - can use with the operators &&, ||, and !
-- byte - alias for uint8
-- int int8 int16 int32 int64
-- uint uint8 uint16 uint32 uint64 uintptr
-- rune - alias for int32; used for unicode
-- float32 float64
-- complex64 complex128
-- string
-  - literal values are surrounded by " or `
-  - "" strings cannot contain newlines and can contain escape sequences like \n
-  - '' strings can contain newline characters
-  - indexed from zero
-  - to get the 3rd character, `str[2]`
-- the size of int, uint, and uintptr are usually
-  - 32 bits on 32-bit systems
-  - 64 bits on 64-bit systems
+- same a C
+- `//` for single-line comments
+- `/* ... */` for multi-line comments
 
 ## Variables
 
@@ -268,6 +265,7 @@ fmt.Println(expression)
 - have a fixed length
 - declare with `[length]type`
   - ex. `var rgb [3]int`
+  - placing the square brackets BEFORE the type comes from Algol 68
 - can initialize with values in curly braces
   - ex. `rgb := [3]int{100, 50, 234}`
 - can get the value at an index
@@ -321,6 +319,8 @@ fmt.Println(expression)
     and the returned slice will refer to it
     - since this can be inefficient, try to
       estimate the largest size needed at the start
+- to use all the elements in a slice as separate arguments to a function
+  follow the variable name holding the slice with an ellipsis
 
 ## Maps
 
@@ -332,7 +332,28 @@ fmt.Println(expression)
   }
   ```
 
+## Goroutines
+
+- a lightweight thread of execution
+- to create one, proceed any function call with `go`
+- without using `go` the call is synchronous
+- with using `go` the call is asynchronous
+
 ## Channels
+
+- pipes that connect concurrent goroutines
+- can send values to them and receive values from them
+- to create a channel, `myChannel := make(chan type)`
+  where type is a real type like `string`
+- to send a value to a channel, `myChannel <- value`
+  - by default, blocks until the channel retrieves it (unbuffered)
+- to retrieve a value from a channel, `value := <-channel`
+  - by default, blocks until the channel sends it (unbuffered)
+- buffered channels
+  - accept a limited number of values with a corresponding receiver
+  - to create, add size as second argument to make
+    - ex. `myChannel := make(chan string, 5)`
+- can use channels for synchronizing goroutine execution
 
 ## Functions
 
@@ -348,7 +369,128 @@ func myFunctionName(args) return-type {
 ```
 
 - anonymous functions have the same syntax, but omit the name
+
   - ex. `func(v int) int { return v * 2 }`
+
+- variadic functions
+  - accept a variable number of arguments
+  - precede last argument type with an ellipsis
+  - ex.
+    ```go
+    func log(args ...any) {
+    	fmt.Println(args)
+    }
+    ```
+- spreading a slice
+  - to pass all the elements in a slice as separate arguments
+    follow the argument with an ellipsis
+  - ex. `log(mySlice...)`
+
+## Interfaces
+
+- `interface{}` can be used to represent any type
+
+## Builtin Constants
+
+- listed as being in a package named "builtin" for documentation purposes,
+  but no such package actually exists
+- boolean literals `true` and `false`
+- `iota` - an untyped int whose value is zero
+  - TODO: when is this typically used?
+
+## Builtin Variables
+
+- listed as being in a package named "builtin" for documentation purposes,
+  but no such package actually exists
+- `nil` - the zero value for a pointer, channel, func, interface, map, or slice
+
+## Documentation Types
+
+- these types appear in documentation, but are not real types
+- `Type` - represents a specific type for a given function invocation
+- `Type1` - like `Type`, but for a different type than it
+- `ComplexType` - represents a complex64 or complex128
+- `FloatType` - represents a float32 or float64
+- `IntegerType` - represents any int type
+
+## Builtin Types
+
+- float32 float64
+- complex64 complex128
+- string
+  - literal values are surrounded by " or `
+  - "" strings cannot contain newlines and can contain escape sequences like \n
+  - '' strings can contain newline characters
+  - indexed from zero
+  - to get the 3rd character, `str[2]`
+- the size of int, uint, and uintptr are usually
+
+  - 32 bits on 32-bit systems
+  - 64 bits on 64-bit systems
+
+- `bool` - values are the builtin constants `true` and `false`
+  - can use with the operators &&, ||, and !
+- `byte` - alias for uint8
+- `complex64` and `complex128` - complex numbers
+- `float32` and `float64` floating-point numbers
+- `int`, `int8`, `int16`, `int32`, `int64` - signed integers
+  - `int` is at least 32 bits
+- `uint`, `uint16`, `uint32`, `uint64` - unsigned integers
+  - `uint` is at least 32 bits
+- `uintptr` - holds any kind of pointer
+- `rune` - alias for int32; used for unicode characters
+  - literal values are surrounded by '
+- `string` - a sequence of 8-bit bytes, not unicode characters
+
+## Builtin Functions
+
+- these are listed as being in a package named "builtin"
+  for documentation purposes, but no such package actually exists
+
+### for complex numbers
+
+- `complex` - constructs a complex value from two floating-point values
+- `imag(c ComplexType) FloatType` - returns the imaginary part of a complex number
+- `real` - returns the real part of a complex number
+
+### for output
+
+- `print(args ...Type)` - writes to stderr;
+  useful for debugging; may be dropped from language
+- `println(args ...Type)` - like `print` but adds newline
+
+### for data structures
+
+- `append(slice []Type, elems ...Type) []Type` -
+  appends elements to the end of a slice and returns the updated slice
+- `cap(v Type) int` - returns the capacity of v
+- `copy(dst, src []Type) int` - copies elements from a source slice
+  to a destination slice and returns the number off elements copied
+- `delete(m map[Type]Type1, key Type)` - deletes the element at a key from a map
+- `len(v Type) int` - returns the length of v where v is a string, array, slice, or map?
+- `make(t Type, size ...IntegerType) Type` -
+  allocates and initializes a slice, map, or chan;
+  if Type is Slice, pass the length, and optional capacity;
+  if Type is Map, optionally specify number of key/value pairs for which to allocate space
+- `new(Type) *Type` - allocates memory for a given type and returns pointer to it
+
+### for channels
+
+- `close(c chan<-)` - closes a channel after the last sent value is received
+- `make(Channel, [buffer-capacity])` - unbuffered if buffer-capacity is omitted
+
+### for error handling
+
+- `panic(v interface{})` - stops normal execution of the current goroutine;
+  cascades upward through call stack;
+  terminates program and reports an error condition;
+  can be controlled by the `recover` function
+  - similar to `throw` in other languages
+- `recover` - call inside a deferred function to
+  stop the panic sequence and restore normal execution
+  - similar to `catch` in other languages
+- `error` - type that represents an error condition
+  - has value `nil` when there is no error
 
 ## Not Functional
 

@@ -1247,6 +1247,14 @@ followed by the macOS version in parentheses.
 - press "Print" button
   and print from there
 
+## Quit Control extension
+
+- when ctrl-q (cmd-q) is pressed, will prompt for confirmation before quitting
+- when no editors are open and ctrl-w (cmd-w) is pressed,
+  will prompt for confirmation before quitting
+- very useful when multiple VS Code windows are open and
+  you just want to close the current window, not quit the application
+
 ## Quokka.js extension
 
 - provides useful information about JavaScript and TypeScript code
