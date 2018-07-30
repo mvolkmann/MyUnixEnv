@@ -38,6 +38,13 @@
 
 - type safety
 - performance
+- network library
+
+## Resources
+
+- spec: <https://golang.org/ref/spec>
+- tour: <https://tour.golang.org/>
+- playground: <https://play.golang.org/>
 
 ## Installing
 
@@ -48,11 +55,11 @@
   - GOPATH is set to this by default
   - to use another directory, set GOPATH to it
 
-## Syntax
+## Syntax Highlights
 
 - semicolons are not required,
-  but can use to place multiple statements on the same line
-- types follow parameters
+  but can be used to place multiple statements on the same line
+- types follow parameters, separated by a space
 - exported variables and struct members have names that start uppercase
 - outside of functions, every line begins with a keyword
   - this explains why the `:=` operator is not allowed outside of functions
@@ -180,7 +187,7 @@
   - false for bool
   - 0 for numbers
   - "" for strings
-  - nil for pointers and slices
+  - nil for pointers, slices, maps, functions, interfaces, and channels
   - TODO: What is the zero value for an array? An empty array?
 
 ## Constants
@@ -188,6 +195,66 @@
 - defined with `const` keyword
 - must be initialized
 - ex. const BLACKJACK = 21
+
+## Operators
+
+- arithmetic: `+`, `-`, `\*`, `/`, `%` (mod)
+- arithmetic assignment: `+=`, `-=`, `\*=`, `/=`, `%=`
+- increment: `++`
+- decrement: `--`
+- assignment: `=` (existing variable), `:=` (new variable)
+- comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
+- logical: `&&` (and), `||` (or), `!` (not)
+- bitwise: `&`, `|`, `^`, `&^` (bit clear)
+- bitwise assignment: `&=`, `|=`, `^=`, `&^=`
+- bit shift: `<<`, `>>`
+- bit shift assignment: `<<=`, `>>=`
+- channel direction: `<-`
+- variadic parameter: `...paramName`
+- slice spread: `sliceName...`
+- pointer creation: `&varName`
+- pointer dereference: `\*pointerName`
+- block delimiters: `{ }`
+- expression grouping: `( )`
+- function calling: `fnName(args)`
+- create array: `[elements]`
+- struct member reference: `structName.memberName`
+- statement separator: `;`
+- array element separator: `,`
+- define label: `someLabel:` (see `goto` keyword)
+
+## Keywords
+
+- `break` - breaks out of a `for` loop, `select`, or `switch`
+- `case` - used in a `select` or `switch`
+- `chan` - channel type
+- `const` - declares a constant
+- `continue` - advances to the next iteration of a for loop
+- `default` - the default case in a `select` or `switch`
+- `defer` - defers execution of a given function until the containing function exits
+  - TODO: When is this useful? Why not move the call to the end of the function?
+- `else` - part of an `if`
+- `fallthrough` - used as last statement in a `case` to execute code in next `case`
+- `for` - only loop syntax; C-style (init, condition, and post) or just condition
+- `func` - defines a named or anonymous function
+- `go` - precedes a function call to execute it asynchronously as a goroutine
+- `goto` - jumps to a given label (see `:` operator)
+- `if` - for conditional logic; also see `else`
+- `import` - imports all the exports in given package(s); can't import a subset
+  - will get an error if no symbols from an import are used
+- `interface` - defines a set of methods
+  - defines a type where all implementing structs are compatible
+  - structs do not state the interfaces they implement,
+    they just implement all the methods
+- `map` - type for a collection of key/value pairs where the keys and values can be any type
+- `package` - specifies the package to which the current source file belongs
+- `range` - used in a `for` loop to iterate over a string, array, slice, map, or receiving channel
+- `return` - terminates the containing function and returns zero or more values
+- `select` - chooses from a set of channel send or receive operations; see "Select" section
+- `struct` -
+- `switch` - similar to other languages; see "Switch" section
+- `type` -
+- `var` -
 
 ## Pointers
 
@@ -221,9 +288,56 @@ fmt.Println(expression)
 
 ## Switch Statement
 
+- similar to other languages
+- can switch on expressions of any type
+- case values can be literal values or expressions
+- case blocks do not fall through by default so `break` is not needed
+- can use `fallthrough` to get this
+- ex.
+
+  ```go
+  switch name {
+    case "Mark":
+      // handle Mark
+    case "Tami":
+      // handle Tami
+    default:
+      // handle all other names
+  }
+  ```
+
+- omit expression after `switch` to run the first `case` block that evaluates to true
+
+  - ex.
+
+    ```go
+    switch {
+      case name == "Mark":
+        // handle Mark
+      case age < 20:
+        // handle youngsters
+      default:
+        // handle all other cases
+    }
+    ```
+
+- to switch on the type of an expression
+
+  ```go
+  switch value := expression.(type) {
+    case int, float:
+      // handle int or float
+    case string:
+      // handle string
+    default:
+      // handle all other types
+  }
+  ```
+
 ## For Statement
 
 - the only looping statement
+- can use `break` and `continue` inside
 - syntax is `for init; cond; post { ... }`
 - ex.
 
@@ -258,6 +372,16 @@ fmt.Println(expression)
     ...
   }
   ```
+
+## Strings
+
+- immutable sequences of bytes representing UTF-8 characters
+- literal values are delimited with double quotes or back-ticks (to include newlines)
+- to declare and initialize, `name := "Mark"`
+- to retrieve a character, `char := name[index]`
+- it iterate over, `for _, char := range name { ... }`
+- can concatenate with the `+` and `+=` operators
+- the `string` type has no methods; use functions in the `strings` package
 
 ## Structs
 
@@ -326,13 +450,17 @@ fmt.Println(expression)
 
 ## Maps
 
-- to iterate over the key/value pairs in a map
-
-  ```go
-  for key, value := range myMap {
-    ...
-  }
-  ```
+- collections of key/value pairs where keys and values can be any type
+- to declare, `map[keyType]valueType`
+  - ex. `var myMap map[string]int`
+- to declare and initialize,
+  `var myMap = map[keyType]valueType{k1: v1, k2: v2, ...}`
+  or
+  `myMap := map[keyType]valueType{k1: v1, k2: v2, ...}`
+- to add a key/value pair, `myMap[key] = value`
+- to get the value for a given key, `myMap[key]`
+- to delete a key/value pair, `delete(myMap, key)`
+- to iterate over, `for key, value := range myMap { ... }`
 
 ## Goroutines
 
@@ -372,7 +500,7 @@ fmt.Println(expression)
 
   func myAsync(done chan<- bool) { // can send, but not receive
     // Do some asynchronous thing.
-  		  time.Sleep(time.Second * 3)
+    time.Sleep(time.Second * 3)
     // When it completes, do this:
     done <- true
   }
@@ -382,7 +510,16 @@ fmt.Println(expression)
   <-done
   ```
 
-- can wait on multiple channels using a select statement
+## Select
+
+- can wait on multiple channels
+- blocks until one of the channels is ready
+- chooses randomly if multiple channels are ready
+- `default` block, if present, is run if no channels are ready
+- when using `break` in a `select` `case` that is inside a `for` loop,
+  to jump out of the loop add a label before the loop and break to it
+
+  - alternatively use `return` to exit the containing function
 
   - ex.
 
@@ -432,7 +569,7 @@ func myFunctionName(args) return-type {
   - ex.
     ```go
     func log(args ...any) {
-    	fmt.Println(args)
+      fmt.Println(args)
     }
     ```
 - spreading a slice
@@ -441,6 +578,43 @@ func myFunctionName(args) return-type {
   - ex. `log(mySlice...)`
 
 ## Interfaces
+
+- an interface defines a set of methods and a type
+- all structs that implement all the methods are compatible
+- structs do not state the interfaces they implement,
+  they just implement all the methods
+- ex.
+
+  ```go
+  package main
+  import "fmt"
+  import "math"
+
+  type geometry interface {
+    area() float64
+  }
+
+  type rect struct {
+    width, height float64
+  }
+  func (r rect) area() float64 {
+    return r.width * r.height
+  }
+
+  type circle struct {
+    radius float64
+  }
+  func (c circle) area() float64 {
+    return math.Pi * c.radius * c.radius
+  }
+
+  func main() {
+    r := rect{width: 3, height: 4}
+    c := circle{radius: 5}
+    fmt.Println(r.area())
+    fmt.Println(c.area())
+  }
+  ```
 
 - `interface{}` can be used to represent any type
 
@@ -493,6 +667,7 @@ func myFunctionName(args) return-type {
   - `uint` is at least 32 bits
 - `uintptr` - holds any kind of pointer
 - `rune` - alias for int32; used for unicode characters
+  that range in size from 1 to 4 bytes
   - literal values are surrounded by '
 - `string` - a sequence of 8-bit bytes, not unicode characters
 
