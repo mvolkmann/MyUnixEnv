@@ -100,6 +100,7 @@ alias ens 'enscript --borders --columns=2 --fancy-header --landscape --line-numb
 alias ens1 'enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63'
 
 alias findcss 'find3 css'
+alias findgo 'find3 go'
 alias findhtml 'find3 html'
 alias findhtml1 'find-depth-1 html'
 alias findjava 'find3 java'

@@ -15,6 +15,16 @@
 - currently the most common uses are for
   the server side of web application and dev ops tooling
 
+## Future
+
+- large, frequently requested features that may be added at some point include
+  - generics
+    - would allow generic functions like `map`, `filter`, and `reduce`
+  - immutability
+    - would provide guarantees to prevent accidental data mutations
+  - modules
+    - would support managing package versions used in a library or application
+
 ## Characteristics
 
 - high performance
@@ -66,6 +76,27 @@
   - can share code with others, but not sure how long they are retained
 - "Go Time" podcast: <https://changelog.com/gotime>
 
+## Editor Support
+
+- this is a partial list
+- Atom
+  - Go-Plus package
+- Eclipse
+  - GoClipse plugin
+- Emacs
+  - go-mode.el
+  - go-playground
+  - GoFlyMake
+- GoLand from JetBrains
+  - standalone editor and plugin for IDEA
+- Sublime Text
+  - GoSubline plugin
+  - Golang Build
+- Vim
+  - vim-go plugin
+- VS Code
+  - Go extension from Microsoft
+
 ## Installing
 
 - approach #1
@@ -77,6 +108,19 @@
 - create a "go" directory in your home directory
   - GOPATH is set to this by default
   - to use another directory, set GOPATH to it
+
+## Alternative Go Implementations
+
+- gccgo <https://gcc.gnu.org/onlinedocs/gccgo/>
+  - GNU compiler for Go
+- gopherjs <https://github.com/gopherjs/gopherjs>
+  - compiles Go to JavaScript
+- llgo <https://github.com/go-llvm/llgo>
+  - LLVM-based compiler for Go
+- mgo? - can't find this, but heard it mentioned on "Go Time" podcast
+  - for small processors like Arduino?
+- WASM support coming soon
+  - <https://react-etc.net/entry/webassembly-support-lands-in-go-language-golang-wasm-js>
 
 ## Syntax Highlights
 
@@ -100,6 +144,10 @@
   - `go doc {pkg}`
     - outputs documentation for a given package
     - ex. `go doc json`
+  - `go fix {file-or-directory-path}`
+    - "finds Go programs that use old APIs and rewrites them to use newer ones."
+    - "After you update to a new Go release,
+      fix helps make the necessary changes to your programs."
   - `go get {pkg1} {pkg2} ...`
     - downloads and installs packages and their dependencies
   - `go build {file-name}.go`
@@ -442,6 +490,14 @@ fmt.Println(expression)
 - it iterate over, `for _, char := range name { ... }`
 - can concatenate with the `+` and `+=` operators
 - the `string` type has no methods; use functions in the `strings` package
+  - ex. to split a string on whitespace characters
+    ```go
+    s := "This is a test."
+    words := strings.Fields(s)
+    for _, word := range(words) {  
+      fmt.Println(word) // outputs "This", "is", "a", and "test."
+    }
+    ```
 
 ## Structs
 
@@ -467,6 +523,37 @@ fmt.Println(p2) // {Mark 58}
 // Print all struct keys and values for debugging.
 fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
 ```
+
+- can add methods to structs
+
+  ```go
+  // Add a method to the type "pointer to a Person struct".
+  // Note how the receiver and its type appear
+  // in parentheses before the method name.
+  func (person *Person) birthday() {
+  		  person.age++
+  }
+
+  		p := &Person{name: "Mark", age: 57}
+  		p.birthday()
+  		fmt.Printf("%#v\n", p) // &main.Person{name:"Mark", age:58}
+  ```
+
+- can also add methods to primitive types if a type alias is created
+
+  - otherwise get "cannot define new methods on non-local type"
+
+  ```go
+  type number int
+
+  func (receiver number) double() number {
+    return receiver * 2
+  }
+
+  // must use var instead of := to specify the type that has the method
+  var n number = 3
+  fmt.Println(n.double())
+  ```
 
 ## Arrays
 
@@ -506,6 +593,8 @@ fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
 - a slice literal creates a slice and an underlying array
   - ex. `mySlice := []int{2, 4, 6}`
   - looks like an array literal, but without a specified length
+  - can also specify values at specific indices
+    - ex. `mySlice := []int{2: 6, 1: 4, 0: 2} // same as above`
 - `len(mySlice)` returns the number of elements it contains (length)
 - `cap(mySlice)` returns the number of elements in the underlying array (capacity)
 - to extend a slice, recreated it with different bounds
@@ -520,11 +609,23 @@ fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
     - creates an underlying array of size 5
       and a slice of length 5 and capacity of 5
   - ex. `mySlice := make([]int, 0, 5)`
-    - creates an underlying array of size 5
-      and a slice of length 0 and capacity of 5
+    - creates an underlying array of size 5 and
+      a slice with initial length 0 and initial capacity of 5
   - to expand the size of the slice
     `mySlice = mySlice[newStart:newEnd]`
-- slice elements can be slices
+- slice elements can be slices (multidimensional slices)
+
+```go
+ticTacToe := [][]string{
+  []string{" ", " ", " "},
+  []string{" ", " ", " "},
+  []string{" ", " ", " "}}
+  // If the last } is placed on a new line then a
+  // comma is required at the end of the previous line.
+}
+ticTacToe[1][2] = "X"
+```
+
 - to append new elements to a slice
   - this is where it really gets dynamic!
   - `mySlice = append(mySlice, 8, 10)`
@@ -534,8 +635,24 @@ fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
     and the returned slice will refer to it
     - since this can be inefficient, try to
       estimate the largest size needed at the start
+  - cannot append to arrays which is a reason why slices are used more
 - to use all the elements in a slice as separate arguments to a function
   follow the variable name holding the slice with an ellipsis
+- slice of structs example
+
+  ```go
+  type Person struct {
+    name string
+    age  int8
+  }
+
+  func main() {
+    // Note how we do not need to precede each struct with Person.
+    people := []Person{{"Mark", 57}, {"Jeremy", 31}}
+    fmt.Printf("%#v\n", people)
+    // []main.Person{main.Person{name:"Mark", age:57}, main.Person{name:"Jeremy", age:31}}
+  }
+  ```
 
 ## Maps
 
@@ -547,7 +664,15 @@ fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
   or
   `myMap := map[keyType]valueType{k1: v1, k2: v2, ...}`
 - to add a key/value pair, `myMap[key] = value`
-- to get the value for a given key, `myMap[key]`
+- to get the value for a given key, `value := myMap[key]`
+- to get the value for a given key and verify that the key was present,
+  as opposed to just getting the zero value because it wasn't
+
+  ```go
+  value, found := myMap[key]
+  if found { ... }
+  ```
+
 - to delete a key/value pair, `delete(myMap, key)`
 - to iterate over, `for key, value := range myMap { ... }`
 
@@ -645,14 +770,17 @@ fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
 - defined with `func` keyword
 
 ```go
-func myFunctionName(args) return-type {
+func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   ...
 }
 ```
 
+- act as closures over all in-scope variables
 - arguments are passed by value so copies are made of arrays, slices, and structs
 - to avoid creating copies of structs, arrays, and slices,
   pass and accept pointers
+- can pass functions to a function
+- can return functions from a function
 
 - anonymous functions have the same syntax, but omit the name
 
@@ -680,6 +808,10 @@ func myFunctionName(args) return-type {
 
   - when there is more than one return value, the types
     must be surrounded by parentheses and separated by commas
+    - why are parentheses required?
+    - the return types are already guaranteed to be
+      between the closing ) of the parameter list
+      and the opening { of the code block
 
   ```go
   func GetStats(numbers []int) (int, float32) {
@@ -891,6 +1023,7 @@ func myFunctionName(args) return-type {
 - `import`
   - used to import all exported symbols (names that start uppercase) from given packages
   - can't import just a subset
+  - refer to exported symbols with `pkgName.symbol`
   - the strings given to `import` are slash-separated paths
     where the last part is the package name
     - ex. in `import "math/rand"` the package name is "rand"
@@ -902,6 +1035,12 @@ func myFunctionName(args) return-type {
     and then reference exported names with `alias.exportedName`
   - package implementations must be in a directory whose name matches the package name
   - files that define the package must be in that directory, but can have any name
+  - for community packages the string after `import`
+    is the package URL without the "https://" prefix
+- currently there is no support for package versioning
+  - nothing like npm and package.json in JavaScript
+  - future module support should add this
+    - see <https://research.swtch.com/vgo-module>
 
 ## Error Handling
 
@@ -992,6 +1131,8 @@ func myFunctionName(args) return-type {
     // sum is 6
   }
   ```
+
+- run by entering `go test` in the directory of the tests
 
 ## Not Functional
 
