@@ -68,9 +68,12 @@
 
 ## Installing
 
-- browse <https://golang.org/dl/>
-- download a platform-specific installer
-- double-click to run it
+- approach #1
+  - browse <https://golang.org/dl/>
+  - download a platform-specific installer
+  - double-click to run it
+- approach #2 (Mac-only)
+  - `brew install go`
 - create a "go" directory in your home directory
   - GOPATH is set to this by default
   - to use another directory, set GOPATH to it
@@ -220,7 +223,8 @@
 ## Constants
 
 - defined with `const` keyword
-- must be initialized
+- must be initialized to a primitive literal or an expression
+  that can be computed at compile-time and results in a primitive value
 - ex. const BLACKJACK = 21
 
 ## Operators
@@ -289,12 +293,21 @@
 ## Pointers
 
 - hold the address of a variable or `nil
+- `*Type` is the type for a pointer to a value of type `Type`
 - to get the address of a variable
   - myPtr = &myVar
 - to get the value at a pointer
   - myValue = \*myPtr
 - to modify the value at a pointer
   - \*myPtr = newValue
+- pointer arithmetic is not supported
+
+```go
+var ptr *Person // initialized to nil
+ptr = &person // pointer to previously created Person struct
+var name1 = (*ptr).name
+var name2 = ptr.name // shorthand for above, automatically dereferenced
+```
 
 ## Output
 
@@ -307,12 +320,26 @@ fmt.Println(expression)
 
 ## If Statement
 
-- parentheses are not required around the condition being tested
+- parentheses are not needed around the condition being tested
+- braces around body are required
 - ex.
 
   ```go
   if x > 7 {
+    ...
   } else {
+    ...
+  }
+  ```
+
+- can include a single initialization statement before the condition
+
+  - the scope of the variable is the if statement,
+    including the else block if present
+
+  ```go
+  if y := x * 2; y < 10 {
+    ...
   }
   ```
 
@@ -320,6 +347,7 @@ fmt.Println(expression)
 
 - similar to other languages
 - can switch on expressions of any type
+- braces around body are required
 - case values can be literal values or expressions
 - case blocks do not fall through by default so `break` is not needed
 - can use `fallthrough` to get this
@@ -367,12 +395,14 @@ fmt.Println(expression)
 ## For Statement
 
 - the only looping statement
+- braces around body are required
 - can use `break` and `continue` inside
 - syntax is `for init; cond; post { ... }`
+  - no parentheses are allowed
 - ex.
 
   ```go
-  for i: 0; i < 10; i++ {
+  for i := 0; i < 10; i++ {
     ...
   }
   ```
@@ -415,6 +445,29 @@ fmt.Println(expression)
 
 ## Structs
 
+- a collection of fields defined with the `struct` keyword
+- often will want to defined a type name for a struct
+- use the dot operator to get and set fields
+
+```go
+type Person struct {
+  name string
+  age int8
+}
+
+var p1 = Person{name: "Mark", age: 57} // initialize by field name
+var p2 = Person{"Mark", 57} // initialize by field position
+// Uninitialized fields are initialized to their zero value.
+fmt.Println(p1.name) // Mark
+p2.age++
+
+// Print just the field values
+fmt.Println(p2) // {Mark 58}
+
+// Print all struct keys and values for debugging.
+fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
+```
+
 ## Arrays
 
 - indexes are zero-based
@@ -422,6 +475,8 @@ fmt.Println(expression)
 - declare with `[length]type`
   - ex. `var rgb [3]int`
   - placing the square brackets BEFORE the type comes from Algol 68
+  - if anything other than a single integer is inside []
+    it is a slice (see the "Slices" section)
 - can initialize with values in curly braces
   - ex. `rgb := [3]int{100, 50, 234}`
 - can get the value at an index
@@ -442,14 +497,15 @@ fmt.Println(expression)
 
 - a view into an array with a variable length
 - create by specifying the start (inclusive) and end (exclusive) indexes of an array
-  - ex. `mySlice = myArr[start:end]`
+  - ex. `mySlice := myArr[start:end]`
   - if `start` is omitted, it defaults to 0
   - if `end` is omitted, it defaults to the array length
   - so `myArr[:]` creates a slice over the entire array
 - modifying elements of a slice modifies the underlying array
 - multiple slices on the same array see the same data
 - a slice literal creates a slice and an underlying array
-  - ex. `mySlice = []int{2, 4, 6}`
+  - ex. `mySlice := []int{2, 4, 6}`
+  - looks like an array literal, but without a specified length
 - `len(mySlice)` returns the number of elements it contains (length)
 - `cap(mySlice)` returns the number of elements in the underlying array (capacity)
 - to extend a slice, recreated it with different bounds
@@ -457,6 +513,9 @@ fmt.Println(expression)
 - the zero value is nil
 - `make` function
   - can create a "dynamically-sized array"
+  - this is the most common way to create a slice,
+    rather than manually creating the underlying array
+    and then creating the slice
   - ex. `mySlice := make([]int, 5)`
     - creates an underlying array of size 5
       and a slice of length 5 and capacity of 5
@@ -656,6 +715,15 @@ func myFunctionName(args) return-type {
     ```
 
   - seems bad for readability
+
+- deferred functions
+  - inside a function, function calls preceded by `defer`
+    will have their arguments evaluated,
+    but will not execute until the containing function exits
+  - all deferred calls are placed on a stack and
+    executed in the reverse order from which they are evaluated
+  - typically used for resource cleanup such as closing files that
+    must occur regardless of the code path taken in the function
 
 ## Interfaces
 
