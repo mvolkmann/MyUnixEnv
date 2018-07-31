@@ -54,9 +54,14 @@
 
 ## Resources
 
-- spec: <https://golang.org/ref/spec>
-- tour: <https://tour.golang.org/>
-- playground: <https://play.golang.org/>
+- "The Go Programming Language Specification": <https://golang.org/ref/spec>
+- "A Tour of Go": <https://tour.golang.org/>
+  - built on "The Go Playground"
+  - can use on web or download and run locally
+  - when used on web
+    - uploads code to golang.org servers and displays result
+    - uses latest stable version of Go
+- "The Go Playground": <https://play.golang.org/>
   - can enter and test code online
   - can share code with others, but not sure how long they are retained
 - "Go Time" podcast: <https://changelog.com/gotime>
@@ -76,6 +81,8 @@
   but can be used to place multiple statements on the same line
 - types follow parameters, separated by a space
 - exported variables and struct members have names that start uppercase
+  - but only those at the top level of a source file,
+    not those defined inside a function
 - outside of functions, every line begins with a keyword
   - this explains why the `:=` operator is not allowed outside of functions
 
@@ -174,18 +181,22 @@
 - local to their package unless name starts uppercase
 - can define a variable without initializing
   - `var x int`
+  - will be initialized to the zero value for the type
   - it's an error if the variable has already been defined
 - can define a variable with initial value
+  and take advantage of type inference
   - `var x = 3`
-- can do both, but that is redundant
+- can provide type and initial value, but that is redundant
   - `var x int = 3`
 - `var` can be used inside or outside of a function
-- can define multiple variables with one `var`
+- can define multiple variables with one `var` in two ways
 
   ```go
+  var alpha, beta = 1, 2
   var (
-    alpha = 1
-    beta = 2
+    gamma = 3
+    delta = 4
+    name string // initialized to empty string
   )
   ```
 
@@ -194,6 +205,7 @@
   - it's an error if the variable has not already been defined
 - `:=` can only be used inside a function
   - defines and initializes a new variable
+    without specifying the type which is inferred
   - `x := 5` is shorthand for `var x = 5`
   - particularly useful for capturing function return values
     and creating multiple variables in a single line
@@ -587,9 +599,14 @@ func myFunctionName(args) return-type {
 
   - ex. `func(v int) int { return v * 2 }`
 
+- parameter types
+  - when consecutive parameters have the same type,
+    can omit the type from all but the last
+  - ex. `func foo(p1 int, p2 int, p3 string, p4 string)`
+    is equivalent to `func foo(p1, p2 int, p3, p4 string)`
 - variadic functions
-  - accept a variable number of arguments
-  - precede last argument type with an ellipsis
+  - to accept a variable number of arguments
+    precede last argument type with an ellipsis
   - ex.
     ```go
     func log(args ...any) {
@@ -601,6 +618,9 @@ func myFunctionName(args) return-type {
     follow the argument with an ellipsis
   - ex. `log(mySlice...)`
 - can return zero or more values
+
+  - when there is more than one return value, the types
+    must be surrounded by parentheses and separated by commas
 
   ```go
   func GetStats(numbers []int) (int, float32) {
@@ -616,6 +636,26 @@ func myFunctionName(args) return-type {
     sum, avg := GetStats(someNumbers)
   }
   ```
+
+- named return values
+
+  - if names are given to return types,
+    a "naked return" will return them
+  - ex.
+
+    ```go
+    func mult(n int) (times2, times3 int) {
+      times2 = n * 2
+      times3 = n * 3
+      //return times2 times3 // don't need to specify return values
+      return
+    }
+
+    // In some other function
+    n2, n3 := mult(3) // n2 is 6 and n3 is 9
+    ```
+
+  - seems bad for readability
 
 ## Interfaces
 
@@ -760,6 +800,20 @@ func myFunctionName(args) return-type {
   - similar to `catch` in other languages
 - `error` - type that represents an error condition
   - has value `nil` when there is no error
+
+## Type Conversions
+
+- no conversions are performed implicitly
+- builtin types can be used as conversion functions
+- ex. `var f = float32(i)`
+- will get an error if conversion cannot be done
+  - for example attempting to convert a string to an int
+  - will not convert a string containing a valid number to a number
+    - use `strconv` package for this
+    ```go
+    s := "19"
+    n, err := strconv.ParseInt(s, 10, 32) // base 10, bitsize 32
+    ```
 
 ## Packages
 
