@@ -33,6 +33,7 @@
   - for example, no builtin map, filter, and reduce functions for arrays
   - hard to implement due to lack of generics
 - supports composition, but not inheritance of types
+- no equivalent of the ternary operator found in other languages
 
 ## Reasons to use
 
@@ -40,11 +41,25 @@
 - performance
 - network library
 
+## Notable Things Implemented in Go
+
+- Docker - assembles container-based systems
+  (open source version is now called "Moby")
+- Kubernetes - production-grade container scheduling and management
+  <http://kubernetes.io>
+- Revel - full-stack web framework <https://github.com/revel/revel>
+- InfluxDB - scalable datastore for metrics, events, and real-time analytics
+  <https://github.com/influxdata/influxdb>
+- any more you have probably not heard of
+
 ## Resources
 
 - spec: <https://golang.org/ref/spec>
 - tour: <https://tour.golang.org/>
 - playground: <https://play.golang.org/>
+  - can enter and test code online
+  - can share code with others, but not sure how long they are retained
+- "Go Time" podcast: <https://changelog.com/gotime>
 
 ## Installing
 
@@ -204,6 +219,9 @@
 - decrement: `--`
 - assignment: `=` (existing variable), `:=` (new variable)
 - comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
+  - arrays are compared by comparing their elements
+  - structs are compared by comparing their fields
+  - slices, maps, and functions cannot be compared
 - logical: `&&` (and), `||` (or), `!` (not)
 - bitwise: `&`, `|`, `^`, `&^` (bit clear)
 - bitwise assignment: `&=`, `|=`, `^=`, `&^=`
@@ -240,8 +258,8 @@
 - `go` - precedes a function call to execute it asynchronously as a goroutine
 - `goto` - jumps to a given label (see `:` operator)
 - `if` - for conditional logic; also see `else`
-- `import` - imports all the exports in given package(s); can't import a subset
-  - will get an error if no symbols from an import are used
+- `import` - imports all the exports in given package(s)
+  - see "Packages" section for more detail
 - `interface` - defines a set of methods
   - defines a type where all implementing structs are compatible
   - structs do not state the interfaces they implement,
@@ -462,12 +480,17 @@ fmt.Println(expression)
 - to delete a key/value pair, `delete(myMap, key)`
 - to iterate over, `for key, value := range myMap { ... }`
 
+## Concurrency
+
+- see Goroutines, Channels, and Select
+
 ## Goroutines
 
 - a lightweight thread of execution
 - to create one, proceed any function call with `go`
 - without using `go` the call is synchronous
 - with using `go` the call is asynchronous
+- the `main` function runs in a goroutine
 
 ## Channels
 
@@ -549,15 +572,16 @@ fmt.Println(expression)
 ## Functions
 
 - defined with `func` keyword
-- arguments are passed by value
-- to avoid creating copies of structs, arrays, and slices,
-  pass pointers
 
 ```go
 func myFunctionName(args) return-type {
   ...
 }
 ```
+
+- arguments are passed by value so copies are made of arrays, slices, and structs
+- to avoid creating copies of structs, arrays, and slices,
+  pass and accept pointers
 
 - anonymous functions have the same syntax, but omit the name
 
@@ -576,6 +600,22 @@ func myFunctionName(args) return-type {
   - to pass all the elements in a slice as separate arguments
     follow the argument with an ellipsis
   - ex. `log(mySlice...)`
+- can return zero or more values
+
+  ```go
+  func GetStats(numbers []int) (int, float32) {
+    sum := 0
+    for _, number := range numbers {
+      sum += number
+    }
+    average := float32(sum) / float32(len(numbers))
+    return sum, average
+  }
+
+  func main() {
+    sum, avg := GetStats(someNumbers)
+  }
+  ```
 
 ## Interfaces
 
@@ -721,6 +761,116 @@ func myFunctionName(args) return-type {
 - `error` - type that represents an error condition
   - has value `nil` when there is no error
 
+## Packages
+
+- all code is in some package
+- the `main` function is the starting point of all Go applications
+  and must in the `main` package
+- `import`
+  - used to import all exported symbols (names that start uppercase) from given packages
+  - can't import just a subset
+  - the strings given to `import` are slash-separated paths
+    where the last part is the package name
+    - ex. in `import "math/rand"` the package name is "rand"
+  - to import one package, `import "pkgName"`
+  - to import multiple packages, `import ("pkgName1" "pkgName2" ...)`
+  - will get an error if no symbols from an import are used
+  - exported names must be referenced with `pkgName.exportedName`
+  - can alias a package name with `import alias pkgName`
+    and then reference exported names with `alias.exportedName`
+  - package implementations must be in a directory whose name matches the package name
+  - files that define the package must be in that directory, but can have any name
+
+## Error Handling
+
+- exceptions are not supported
+- instead functions that may encounter errors have an
+  additional return value of type `error` that callers must check
+
+  ```go
+  package main
+  import (
+    "errors"
+    "fmt"
+  )
+
+  func divide(a, b float32) (float32, error) {
+  if b == 0 {
+    return 0, errors.New("divide by zero")
+  }
+    return a / b, nil
+  }
+
+  func main() {
+    q, err = divide(7, 0)
+    if err != nil {
+      fmt.Print(err) // prints error message
+    } else {
+      fmt.Print(q)
+    }
+  }
+  ```
+
+## Tests
+
+- implement tests in files whose name ends with `_test.go`
+- `import "testing"` - a standard package
+- write test functions whose names begin with `Test`
+- these functions take one argument, `t \*testing.T`
+- if a test assertion fails
+  - call `t.Error(message)`
+  - call `t.Errorf(formatString, values)`
+  - can call `t.Fail()`, but that fails with no message
+- to log a message in a test
+  - call `t.Log(message)`
+- "examples" are another way to write test functions
+  - example function names begin with `Example`,
+    followed by the name of the function or type being tested
+    - when testing a method, end the function name with
+      the type name followed by an underscore and the method name
+  - example functions end with the comment `// Output:`
+    followed by comment lines containing the expected output
+- also see "benchmark" tests which are only run when the `-bench` flag is used
+- ex. in src/statistics.go
+
+  ```go
+  package statistics
+
+  func Sum(numbers []int) int {
+    sum := 0
+    for _, number := range numbers {
+      sum += number
+    }
+    return sum
+  }
+  ```
+
+- ex. in src/statistics_test.go
+
+  ```go
+  package statistics
+
+  import (
+    "fmt"
+    "testing"
+  )
+
+  func TestSum(t *testing.T) {
+    nums := []int{1, 2, 3}
+    sum := Sum(nums)
+    if (sum != 6) {
+      t.Error("expected sum to be 6")
+    }
+  }
+
+  func ExampleSun() {
+    nums := []int{1, 2, 3}
+    fmt.Println("sum is", Sum(nums))
+    // Output:
+    // sum is 6
+  }
+  ```
+
 ## Not Functional
 
 - Go doesn't support functional programming out of the box
@@ -742,6 +892,65 @@ func myFunctionName(args) return-type {
   log(mapOverInts(rgb[:], double))
   ```
 
-## Packages
+## Debugging Tips
 
-## Concurrency
+- to print a struct including keys and values,
+  `fmt.Printf("%#v\n", obj)`
+
+## Packaging Versioning
+
+- still an open issue in the Go community
+- one current solution is to use vGo from Rus Cox at <https://research.swtch.com/vgo>
+  - will be included in Go 1.11
+
+## Important Standard Packages
+
+- Go provides many packages in the standard library
+- these are some of the more commonly used packages
+- bufio - implements buffered I/O with Reader and Writer types
+- builtin - not a real package, but a place to document
+  builtin constants, variables, functions, and types
+- container.list - implements doubly linked lists
+- database - defines interfaces implemented by database-specific drivers
+- encoding - defines interfaces for reading and writing
+  various data formats such as csv, json, and xml
+- errors - defines `New` function to create error structs with a string
+  description and a method to get those strings from an error struct
+- flag - implements command-line flag parsing
+- fmt - implements formatted I/O similar to C's `printf` and `scanf`
+- go - subpackages implement all the standard go tooling
+  such as source file parsing to ASTs and code formatting
+- html - implements functions to parse and create HTML
+- image - implements functions to parse (decode) and create (encode) images
+- io - implements functions to read and write buffers and files
+- log - implements simple logging
+- math - implements many math functions
+- mime - encodes and decodes multimedia formats
+- net - implements network I/O including TCP and UDP
+- net/http - implements functions to send and listen for HTTP and HTTPS requests
+- os - provides access to operating system functionality
+  like that provided by UNIX shell commands
+  - exposes the constants PathSeparator ('/' on UNIX)
+    and PathListSeparator (':' on UNIX)
+- path - implements functions for working with UNIX-style file paths and URLs
+- reflect - implements run-time reflection to work with types determined at run-time
+- sort - implements functions for sorting slices and other collections
+- strconv - implements conversions to and from string representations of primitive types
+- strings - implements many functions on strings
+  - includes `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
+    `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
+  - defines `Builder`, `Reader`, and `Replacer` types
+- sync - provides synchronization primitives such as mutual exclusion locks
+  - typically will use channels and `select` instead
+- testing - supports automated tests run by `go test`
+  - quick sub-package implements fuzz testing
+- text - provides functions for parsing text,
+  writing tabbed columns, and data-driven templates
+- time - provides functions to measure and display time and dates
+- unicode - provides functions for working with Unicode characters
+- also see "sub-repositories" that are part of the Go project,
+  but maintained outside the main repository
+
+## HTTP Servers
+
+- consider using
