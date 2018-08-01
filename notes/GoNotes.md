@@ -90,7 +90,7 @@
 - GoLand from JetBrains
   - standalone editor and plugin for IDEA
 - Sublime Text
-  - GoSubline plugin
+  - GoSublime plugin
   - Golang Build
 - Vim
   - vim-go plugin
@@ -501,7 +501,7 @@ fmt.Println(expression)
     ```go
     s := "This is a test."
     words := strings.Fields(s)
-    for _, word := range(words) {  
+    for _, word := range words {  
       fmt.Println(word) // outputs "This", "is", "a", and "test."
     }
     ```
@@ -550,7 +550,7 @@ fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age
   // Note how the receiver and its type appear
   // in parentheses before the method name.
   func (p *person) birthday() {
-  		  p.age++
+    p.age++
   }
 
   p := person{name: "Mark", age: 57}
@@ -713,11 +713,16 @@ ticTacToe[1][2] = "X"
 
 ## Goroutines
 
-- a lightweight thread of execution
+- a lightweight thread of execution managed by the Go runtime
 - to create one, proceed any function call with `go`
+  - arguments are evaluated in the current goroutine
+  - function execution occurs in the new goroutine
 - without using `go` the call is synchronous
 - with using `go` the call is asynchronous
 - the `main` function runs in a goroutine
+- goroutines share memory, so access should be synchronized
+- `time.Sleep(duration)` pauses the current goroutine for the given duration
+  - duration is in nanoseconds (1 nanosecond = 1,000,000 milliseconds)
 
 ## Channels
 
@@ -727,7 +732,7 @@ ticTacToe[1][2] = "X"
   where type is a real type like `string`
 - to send a value to a channel, `myChannel <- value`
   - by default, blocks until the channel retrieves it (unbuffered)
-- to retrieve a value from a channel, `value := <-channel`
+- to receive a value from a channel, `value := <-channel`
   - by default, blocks until the channel sends it (unbuffered)
 - channel direction
 
@@ -736,10 +741,13 @@ ticTacToe[1][2] = "X"
   - to only allow receiving, use `<-chan`
 
 - buffered channels
-  - accept a limited number of values with a corresponding receiver
-  - to create, add size as second argument to make
+
+  - senders block if the buffer is full
+  - receivers block if the buffer is empty
+  - to create, add buffer size as second argument to make
     - ex. `myChannel := make(chan string, 5)`
-  - there is probably no way to create a buffered channel with no size limit
+    - there is probably no way to create a buffered channel without a size limit
+
 - can use channels for synchronizing goroutine execution
 
   - to wait for a value to be sent to a channel, `<-myChannel`
@@ -760,12 +768,62 @@ ticTacToe[1][2] = "X"
   <-done
   ```
 
+  - senders can close a channel
+    - not required
+    - only close when receivers need to be notified that no more values will be sent
+    - sending a value to a closed channel will trigger a panic
+  - receivers can determine if the channel is closed
+    by capturing a second return value that is a boolean
+    indicating whether the channel is open
+  - ex.
+
+    ```go
+    package main
+
+    import "fmt"
+
+    func getNumbers(start int, c chan<- int) {
+      for n := start; n < 10; n += 2 {
+        c <- n
+      }
+      close(c)
+    }
+
+    func main() {
+      c1 := make(chan int)
+      c2 := make(chan int)
+
+      go getNumbers(1, c1) // odd numbers
+      go getNumbers(2, c2) // even numbers
+
+      n := 0
+      moreEvens, moreOdds := true, true
+
+      for {
+        select {
+        case n, moreOdds = <-c1:
+          if moreOdds {
+            fmt.Println(n, moreOdds)
+          }
+        case n, moreEvens = <-c2:
+          if moreEvens {
+            fmt.Println(n, moreEvens)
+          }
+        }
+        if !moreEvens && !moreOdds {
+          break
+        }
+      }
+    }
+    ```
+
 ## Select
 
 - can wait on multiple channels
 - blocks until one of the channels is ready
+  unless the `select` contains a `default` block
+  which is run if none of the channels are ready
 - chooses randomly if multiple channels are ready
-- `default` block, if present, is run if no channels are ready
 - when using `break` in a `select` `case` that is inside a `for` loop,
   to jump out of the loop add a label before the loop and break to it
 
@@ -1130,12 +1188,12 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   - import like any other package
 - community packages
   - need to be installed, typically using `go get package-name`
-  - the string after `import` is the package URL without the "https://" prefix
+  - the string after `import` is the package URL without the <https://> prefix
   - ex. `go get github.com/julienschmidt/httprouter`
-    - installs in `$GOPATH/src/github.com/juleienschmit/httprouter`
+    - installs in `$GOPATH/src/github.com/julienschmidt/httprouter`
     - `go get` will install under `$GOPATH/src`
       regardless of the directory from which it is run
-    - to use in a .go file, `import "github.com/juleienschmit/httprouter"`
+    - to use in a .go file, `import "github.com/julienschmidt/httprouter"`
       and refer to the names it exports by preceding the names with `httprouter`
 - currently there is no support for package versioning
   - nothing like npm and package.json in JavaScript
@@ -1194,6 +1252,14 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
       return a / b, nil
     }
     ```
+
+- the `log` package provides methods that help with writing error messages to stderr
+  - `log.Fatal(message)` outputs a line containing the date, time, and message,
+    and exits with a status code of 1
+  - `log.Panic(message)` outputs a line containing the date, time, and message,
+    followed by a line containing "panic:" and the message again,
+    followed by a stack trace,
+    and exits with a status code of 2
 
 ## Tests
 
@@ -1267,7 +1333,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
   func mapOverInts(arr []int, fn intToIntFn) []int {
     result := make([]int, len(arr))
-    for i, v := range(arr) {
+    for i, v := range arr {
       result[i] = fn(v)
     }
     return result
@@ -1304,7 +1370,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   description and a method to get those strings from an error struct
 - flag - implements command-line flag parsing
 - fmt - implements formatted I/O similar to C's `printf` and `scanf`
-- go - subpackages implement all the standard go tooling
+- go - sub-packages implement all the standard go tooling
   such as source file parsing to ASTs and code formatting
 - html - implements functions to parse and create HTML
 - image - implements functions to parse (decode) and create (encode) images
@@ -1373,7 +1439,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 - `io` package defines the `Reader` interface
   that has a single method `Read`
-  - populates a byte slide and returns the number of bytes read
+  - populates a byte slice and returns the number of bytes read
     or an error (io.EOF if end of stream is reached)
 - there are many implementations in the standard library
   including ones for reading from strings, files, and network connections
@@ -1384,11 +1450,158 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   - ex.
 
   ```go
+  package main
 
+  import (
+    "fmt"
+    "io/ioutil"
+    "log"
+  )
+
+  func main() {
+    // Read entire file into a newly created byte array.
+    bytes, err := ioutil.ReadFile("haiku.txt")
+    if err != nil {
+      log.Fatal(err)
+    } else {
+      fmt.Println(string(bytes))
+    }
+  }
   ```
 
 ## Writers
 
+- `io` package defines the `Writer` interface
+  that has a single method `Write`
+  - writes a byte slide to an underlying data stream
+    and returns the number of bytes written or an error
+- there are many implementations in the standard library
+  including ones for writing to strings, files, and network connections
+- to write to a string, see ?
+- to write to a file
+
+  - the package `io/ioutil` defines a `WriteFile` function
+  - ex.
+
+  ```go
+  package main
+
+  import (
+    "io/ioutil"
+    "log"
+  )
+
+  func main() {
+    data := []byte("Line #1\nLine #2")
+    mode := os.FileMode(0644)
+    err := ioutil.WriteFile("new-file.txt", data, mode)
+    if err != nil {
+      log.Fatal(err)
+    }
+  }
+  ```
+
+- to write data a little at time
+
+  ```go
+  package main
+
+  import (
+    "fmt"
+    "log"
+    "os"
+  )
+
+  func check(e error) {
+    if e != nil {
+      log.Fatal(e)
+    }
+  }
+
+  func writeLine(file *os.File, text string) {
+    bytes, err := file.Write([]byte(text + "\n"))
+    check(err)
+    fmt.Printf("wrote %v bytes\n", bytes)
+  }
+
+  func main() {
+    var (
+      file *os.File
+      err error
+    )
+
+    file, err = os.Create("out-file.txt")
+    check(err)
+    defer file.Close()
+
+    writeLine(file, "Line #1")
+    writeLine(file, "Line #2")
+  }
+  ```
+
+## Mutexes
+
+- the `sync` package defines the `Mutex` and `WaitGroup` structs
+- using a `Mutex` is one way to prevent concurrent access
+  to shared data from multiple goroutines
+- to create a mutex, declare a variable of type `sync.Mutex`
+  - ex. `var myMutex sync.Mutex`
+- to lock a mutex, `myMutex.Lock`
+- to unlock a mutex, `myMutex.Unlock`
+- a `WaitGroup` can be used to wait for multiple goroutines to complete
+- to create a WaitGroup, declare a variable of type `sync.WaitGroup`
+  - ex `var wg sync.WaitGroup`
+- to increment the number of items in a WaitGroup, `wg.Add(n)`
+  - call repeatedly to add more if necessary
+- to mark a WaitGroup item as done, `wg.Done()`
+- to wait for all items in a WaitGroup to be done, `wg.Wait()`
+- ex.
+
+  ```go
+  package main
+
+  import (
+    "fmt"
+    "math/rand"
+    "sync"
+    "time"
+  )
+
+  var mutex sync.Mutex
+  var slice = make([]string, 0)
+  var wg sync.WaitGroup
+
+  func addString(s string) {
+    mutex.Lock() // prevent concurrent access to the slice
+
+    // Generate a random duration from zero to 500 milliseconds.
+    duration := time.Duration(rand.Int63n(500)) * time.Millisecond
+    fmt.Println("duration =", duration)
+    time.Sleep(duration)
+
+    slice = append(slice, s)
+    fmt.Println("appended", s)
+
+    mutex.Unlock() // finished using slice
+  }
+
+  // This adds a string to the slice a given number of times.
+  func addStrings(s string, count int) {
+    for n := 0; n < count; n++ {
+      addString(s)
+    }
+    wg.Done() // mark this goroutine as done
+  }
+
+  func main() {
+    wg.Add(2) // we will create two new goroutines
+    go addStrings("X", 5) // starts first goroutine
+    go addStrings("O", 3) // starts second goroutine
+    wg.Wait() // wait for the two goroutines to be done
+    fmt.Printf("%v\n", slice)
+  }
+  ```
+
 ## HTTP Servers
 
-- consider using
+- consider using httprouter
