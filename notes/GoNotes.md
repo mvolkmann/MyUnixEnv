@@ -144,6 +144,11 @@
   - `go doc {pkg}`
     - outputs documentation for a given package
     - ex. `go doc json`
+    - `godoc {pkg}` (no space) outputs even more documentation
+      - add `-src` to see source code
+    - to get documentation on a single member of a package
+      add a space and the name after the package name
+      - ex. `godoc math/Rand Int31`
   - `go fix {file-or-directory-path}`
     - "finds Go programs that use old APIs and rewrites them to use newer ones."
     - "After you update to a new Go release,
@@ -509,33 +514,52 @@ fmt.Println(expression)
 ## Structs
 
 - a collection of fields defined with the `struct` keyword
-- often will want to defined a type name for a struct
+- values of fields can be other structs, nested to any depth
+- often will want to define a type name for a struct
 - use the dot operator to get and set fields
+- can be anonymous or assigned to a type
+- anonymous struct example
 
-```go
-type person struct {
-  name string
-  age int8
-}
+  ```go
+  var me = struct{
+    name string
+    age int8
+  }{
+    "Mark",
+    57,
+  }
+  fmt.Println(me.name) // Mark
+  me.age++
+  fmt.Println(me.age) // 58
+  ```
 
-var p1 = person{name: "Mark", age: 57} // initialize by field name
-var p2 = person{"Mark", 57} // initialize by field position
-// Uninitialized fields are initialized to their zero value.
-fmt.Println(p1.name) // Mark
-p2.age++
+- struct type example
 
-// Print the struct for debugging.
-// Formatting strings are documented at <https://golang.org/pkg/fmt/>.
-// Can use %v for most things.
-fmt.Printf("%v\n", p2) // just field values: {Mark 58}
-fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
-fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age:58}
-```
+  ```go
+  type person struct {
+    name string
+    age int8
+  }
+
+  var p1 = person{name: "Mark", age: 57} // initialize by field name
+  var p2 = person{"Mark", 57} // initialize by field position
+  // Uninitialized fields are initialized to their zero value.
+  fmt.Println(p1.name) // Mark
+  p2.age++
+
+  // Print the struct for debugging.
+  // Formatting strings are documented at <https://golang.org/pkg/fmt/>.
+  // Can use %v for most things.
+  fmt.Printf("%v\n", p2) // just field values: {Mark 58}
+  fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
+  fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age:58}
+  ```
 
 - struct names must start uppercase if they
   should be accessible outside the current package
 - field names must also start uppercase
   if they should be accessible outside the current package
+- there is no support for destructuring like in JavaScript
 
 ## Methods
 
@@ -736,7 +760,7 @@ ticTacToe[1][2] = "X"
   - by default, blocks until the channel sends it (unbuffered)
 - channel direction
 
-  - the type `chan` can send and receive values
+  - the type `chan` can both send and receive values
   - to only allow sending, use `chan<-`
   - to only allow receiving, use `<-chan`
 
@@ -1546,6 +1570,8 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   to shared data from multiple goroutines
 - to create a mutex, declare a variable of type `sync.Mutex`
   - ex. `var myMutex sync.Mutex`
+  - often mutexes are held in the field of a struct
+    that requires exclusive access
 - to lock a mutex, `myMutex.Lock`
 - to unlock a mutex, `myMutex.Unlock`
 - a `WaitGroup` can be used to wait for multiple goroutines to complete
