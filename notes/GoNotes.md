@@ -74,6 +74,12 @@
 - "The Go Playground": <https://play.golang.org/>
   - can enter and test code online
   - can share code with others, but not sure how long they are retained
+- "The Go Play Space" at <https://goplay.space/>
+  - a better alternative to "The Go Playground"
+  - provides syntax highlighting, configurable indentation,
+    use of Fira Code font, auto-indenting, help on double-click,
+    ability to highlight lines (useful when sharing snippets),
+    and more
 - "Go Time" podcast: <https://changelog.com/gotime>
 
 ## Editor Support
