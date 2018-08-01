@@ -524,11 +524,12 @@ var p2 = person{"Mark", 57} // initialize by field position
 fmt.Println(p1.name) // Mark
 p2.age++
 
-// Print just the field values
-fmt.Println(p2) // {Mark 58}
-
-// Print all struct keys and values for debugging.
-fmt.Printf("%#v\n", p2) // main.person{name:"Mark", age:58}
+// Print the struct for debugging.
+// Formatting strings are documented at <https://golang.org/pkg/fmt/>.
+// Can use %v for most things.
+fmt.Printf("%v\n", p2) // just field values: {Mark 58}
+fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
+fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age:58}
 ```
 
 - struct names must start uppercase if they
@@ -813,6 +814,9 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - cannot specify default values for parameters
 - cannot overload functions to create different implementations
   for different parameter types
+- can assign a function to a variable and
+  call the function using that variable
+  - ex. `fn := someFunction; fn()`
 - can pass functions to a function
 - can return functions from a function
 
@@ -947,11 +951,37 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 - a type assertion verifies that an interface variable refers to a specific type
   - ex. `myShape := g.(Rectangle)`
-  - triggers a panic if it does not (TODO: It doesn't for me!)
+  - triggers a runtime panic if it does not
+    - when using `go run` this won't happen if there are compile errors
+      since the code will never run
 - a type test determines whether an interface variable refers to a specific type
+
   - ex. `myShape, ok := g.(circle)`
   - `ok` will be set to `true` or `false` to indicate whether `g` refers to a `circle`
   - a panic will not be triggered
+
+- `fmt` package defines the `Stringer` interface
+
+  - defines one method named `String`
+  - many packages check whether values implement this interface
+    in order to convert values to strings
+  - define the `String` method on a type to control this conversion
+  - ex.
+
+  ```go
+  type person struct {
+    name string
+    age int8
+  }
+
+  // Note how the receiver is a person struct, not a pointer to one.
+  func (p person) String() string {
+    return fmt.Sprintf("%v is %v years old.", p.name, p.age)
+  }
+
+  me := person{"Mark", 57}
+  fmt.Println(me)
+  ```
 
 ## Builtin Constants
 
@@ -1022,6 +1052,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - `print(args ...Type)` - writes to stderr;
   useful for debugging; may be dropped from language
 - `println(args ...Type)` - like `print` but adds newline
+- see `fmt` package to write to stdout
 
 ### for data structures
 
@@ -1134,12 +1165,35 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   func main() {
     q, err = divide(7, 0)
     if err != nil {
-      fmt.Print(err) // prints error message
+      fmt.Println(err) // prints error message
     } else {
       fmt.Print(q)
     }
   }
   ```
+
+  - `error` is an interface that defines the `Error` function
+  - can define custom errors that implement the Error method
+    to convert to a string
+
+    - ex.
+
+    ```go
+    type DivideByZero struct {
+      numerator float32
+    }
+
+    func (err DivideByZero) Error() string {
+      return fmt.Sprintf("tried to divide %v by zero", err.numerator)
+    }
+
+    func divide2(a, b float32) (float32, error) {
+      if b == 0 {
+        return 0, DivideByZero{a}
+      }
+      return a / b, nil
+    }
+    ```
 
 ## Tests
 
@@ -1314,6 +1368,26 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 - to run, enter `go run greet.go Mark Volkmann`
 - to build and run, enter `go build greet.go; ./greet Mark Volkmann`
+
+## Readers
+
+- `io` package defines the `Reader` interface
+  that has a single method `Read`
+  - populates a byte slide and returns the number of bytes read
+    or an error (io.EOF if end of stream is reached)
+- there are many implementations in the standard library
+  including ones for reading from strings, files, and network connections
+- to read from a string, see <https://tour.golang.org/methods/21>
+- to read from a file
+
+  - the package `io/ioutil` defines a `ReadFile` function
+  - ex.
+
+  ```go
+
+  ```
+
+## Writers
 
 ## HTTP Servers
 
