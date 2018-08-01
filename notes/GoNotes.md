@@ -214,6 +214,7 @@
   - target operating system when compiling
 - GOPATH
   - where source files are located
+  - change this when switching projects?
 - GOROOT
   - what Go tools are installed
 
@@ -344,6 +345,7 @@
 - `*Type` is the type for a pointer to a value of type `Type`
 - to get the address of a variable
   - myPtr = &myVar
+  - cannot get the address of a constant
 - to get the value at a pointer
   - myValue = \*myPtr
 - to modify the value at a pointer
@@ -351,8 +353,8 @@
 - pointer arithmetic is not supported
 
 ```go
-var ptr *Person // initialized to nil
-ptr = &person // pointer to previously created Person struct
+var ptr *person // initialized to nil
+ptr = &person // pointer to previously created person struct
 var name1 = (*ptr).name
 var name2 = ptr.name // shorthand for above, automatically dereferenced
 ```
@@ -440,6 +442,11 @@ fmt.Println(expression)
   }
   ```
 
+  - the variable `value` will have the actual type
+  - `value :=` can be omitted if not needed
+  - expression can be an interface type and
+    the actual type can be type that implements the interface
+
 ## For Statement
 
 - the only looping statement
@@ -506,13 +513,13 @@ fmt.Println(expression)
 - use the dot operator to get and set fields
 
 ```go
-type Person struct {
+type person struct {
   name string
   age int8
 }
 
-var p1 = Person{name: "Mark", age: 57} // initialize by field name
-var p2 = Person{"Mark", 57} // initialize by field position
+var p1 = person{name: "Mark", age: 57} // initialize by field name
+var p2 = person{"Mark", 57} // initialize by field position
 // Uninitialized fields are initialized to their zero value.
 fmt.Println(p1.name) // Mark
 p2.age++
@@ -521,24 +528,47 @@ p2.age++
 fmt.Println(p2) // {Mark 58}
 
 // Print all struct keys and values for debugging.
-fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
+fmt.Printf("%#v\n", p2) // main.person{name:"Mark", age:58}
 ```
 
-- can add methods to structs
+- struct names must start uppercase if they
+  should be accessible outside the current package
+- field names must also start uppercase
+  if they should be accessible outside the current package
+
+## Methods
+
+- methods can be associated with a struct
+- cannot overload methods to create different implementations
+  for different parameter types
+- an instance of a struct is referred to as the "receiver" for the method
+- ex.
 
   ```go
-  // Add a method to the type "pointer to a Person struct".
+  // Add a method to the type "pointer to a person struct".
   // Note how the receiver and its type appear
   // in parentheses before the method name.
-  func (person *Person) birthday() {
-  		  person.age++
+  func (p *person) birthday() {
+  		  p.age++
   }
 
-  		p := &Person{name: "Mark", age: 57}
-  		p.birthday()
-  		fmt.Printf("%#v\n", p) // &main.Person{name:"Mark", age:58}
+  p := person{name: "Mark", age: 57}
+  (&p).birthday() // invoked on a pointer to a struct
+  p.birthday() // invoked on a struct
+  fmt.Printf("%#v\n", p) // main.person{name:"Mark", age:58}
   ```
 
+- in the previous example the receiver is a pointer to a struct
+- allows the method to modify the struct and avoids making a copy of the struct
+  - for these reasons, most methods take a pointer
+- when the receiver is a struct and not a pointer to a struct
+  the method receives a copy and cannot modify the original
+- when a function has a parameter with a pointer type,
+  it must be passed a pointer
+- when a method has a pointer receiver,
+  it can be invoked on a pointer to a struct or a struct
+  - if invoked on a struct, it will automatically
+    pass a pointer to the struct to the method
 - can also add methods to primitive types if a type alias is created
 
   - otherwise get "cannot define new methods on non-local type"
@@ -550,8 +580,8 @@ fmt.Printf("%#v\n", p2) // main.Person{name:"Mark", age:58}
     return receiver * 2
   }
 
-  // must use var instead of := to specify the type that has the method
   var n number = 3
+  // or could use: n := number(3)
   fmt.Println(n.double())
   ```
 
@@ -641,16 +671,16 @@ ticTacToe[1][2] = "X"
 - slice of structs example
 
   ```go
-  type Person struct {
+  type person struct {
     name string
     age  int8
   }
 
   func main() {
-    // Note how we do not need to precede each struct with Person.
-    people := []Person{{"Mark", 57}, {"Jeremy", 31}}
+    // Note how we do not need to precede each struct with "person".
+    people := []person{{"Mark", 57}, {"Jeremy", 31}}
     fmt.Printf("%#v\n", people)
-    // []main.Person{main.Person{name:"Mark", age:57}, main.Person{name:"Jeremy", age:31}}
+    // []main.person{main.person{name:"Mark", age:57}, main.person{name:"Jeremy", age:31}}
   }
   ```
 
@@ -779,6 +809,10 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - arguments are passed by value so copies are made of arrays, slices, and structs
 - to avoid creating copies of structs, arrays, and slices,
   pass and accept pointers
+- parameters cannot be optional
+- cannot specify default values for parameters
+- cannot overload functions to create different implementations
+  for different parameter types
 - can pass functions to a function
 - can return functions from a function
 
@@ -863,6 +897,13 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - all structs that implement all the methods are compatible
 - structs do not state the interfaces they implement,
   they just implement all the methods
+- calling a method on a variable with an interface type
+  calls the method on the underlying struct type
+- if a value has not be assigned to the variable,
+  calling a method on it results in an error
+- an interface with no methods, referred to as the "empty interface")
+  matches every type
+  - may want to give this a name using `type any interface{}`
 - ex.
 
   ```go
@@ -888,15 +929,29 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
     return math.Pi * c.radius * c.radius
   }
 
+  func printArea(g geometry) {
+    fmt.Println("area =", g.area())
+  }
+
   func main() {
     r := rect{width: 3, height: 4}
     c := circle{radius: 5}
-    fmt.Println(r.area())
-    fmt.Println(c.area())
+    var g geometry
+    //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
+    g = r
+    printArea(g)
+    g = c
+    printArea(g)
   }
   ```
 
-- `interface{}` can be used to represent any type
+- a type assertion verifies that an interface variable refers to a specific type
+  - ex. `myShape := g.(Rectangle)`
+  - triggers a panic if it does not (TODO: It doesn't for me!)
+- a type test determines whether an interface variable refers to a specific type
+  - ex. `myShape, ok := g.(circle)`
+  - `ok` will be set to `true` or `false` to indicate whether `g` refers to a `circle`
+  - a panic will not be triggered
 
 ## Builtin Constants
 
@@ -1023,20 +1078,34 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - `import`
   - used to import all exported symbols (names that start uppercase) from given packages
   - can't import just a subset
-  - refer to exported symbols with `pkgName.symbol`
   - the strings given to `import` are slash-separated paths
     where the last part is the package name
     - ex. in `import "math/rand"` the package name is "rand"
   - to import one package, `import "pkgName"`
   - to import multiple packages, `import ("pkgName1" "pkgName2" ...)`
-  - will get an error if no symbols from an import are used
-  - exported names must be referenced with `pkgName.exportedName`
   - can alias a package name with `import alias pkgName`
     and then reference exported names with `alias.exportedName`
-  - package implementations must be in a directory whose name matches the package name
-  - files that define the package must be in that directory, but can have any name
-  - for community packages the string after `import`
-    is the package URL without the "https://" prefix
+- will get an error if no symbols from an import are used
+- exported names must be referenced with `pkgName.exportedName`
+- package implementations must be in a directory whose name matches the package name
+- files that define the package must be in that directory,
+  but can have any name that ends with `.go`
+  - ex. if the package "baz" is defined by files in `$GOPATH/src/foo/bar/baz`
+    then it is imported with `import "foo/bar/baz"` and
+    the symbols it exports are references with `baz.exportedName`
+- standard library packages
+  - always available and do not need to be installed
+  - documented at <https://golang.org/pkg/>
+  - import like any other package
+- community packages
+  - need to be installed, typically using `go get package-name`
+  - the string after `import` is the package URL without the "https://" prefix
+  - ex. `go get github.com/julienschmidt/httprouter`
+    - installs in `$GOPATH/src/github.com/juleienschmit/httprouter`
+    - `go get` will install under `$GOPATH/src`
+      regardless of the directory from which it is run
+    - to use in a .go file, `import "github.com/juleienschmit/httprouter"`
+      and refer to the names it exports by preceding the names with `httprouter`
 - currently there is no support for package versioning
   - nothing like npm and package.json in JavaScript
   - future module support should add this
@@ -1213,6 +1282,38 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - unicode - provides functions for working with Unicode characters
 - also see "sub-repositories" that are part of the Go project,
   but maintained outside the main repository
+
+## Command-Line Arguments
+
+- a slice of the command-line arguments is stored in os.Args
+  which is accessible via `import "os"'
+- index 0 holds the path to the executable
+  which is dynamically created when "go run" is used
+- index 1 holds the first command-line-argument
+- ex. in file named `greet.go`
+
+  ```go
+  package main
+
+  import (
+    "fmt"
+    "os"
+  )
+
+  func main() {
+    args := os.Args[1:]
+    if len(args) != 2 {
+      fmt.Println("usage: greet {first-name} {last-name}")
+      os.Exit(1)
+    }
+    firstName := args[0]
+    lastName := args[1]
+    fmt.Printf("Hello %s %s!\n", firstName, lastName)
+  }
+  ```
+
+- to run, enter `go run greet.go Mark Volkmann`
+- to build and run, enter `go build greet.go; ./greet Mark Volkmann`
 
 ## HTTP Servers
 
