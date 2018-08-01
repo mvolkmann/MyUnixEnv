@@ -1648,3 +1648,4 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - cd to the `src` which should contain one `.go` file
   in the `main` package with a `main` function
 - enter `watcher`
+  - can also specify command-line arguments to be passed to the app
