@@ -1637,3 +1637,14 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 ## HTTP Servers
 
 - consider using httprouter
+
+## go-watcher
+
+- starts the application in the current directory
+- watches all `.go` files in and below current directory and restarts the app if any are modified
+- ideal for working on servers such as HTTP servers
+- see <https://github.com/canthefason/go-watcher>
+- GOPATH must be set to point to the directory containing the `src` directory of the app
+- cd to the `src` which should contain one `.go` file
+  in the `main` package with a `main` function
+- enter `watcher`
