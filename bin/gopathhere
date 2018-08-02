@@ -1,4 +1,0 @@
-#!/bin/bash
-# Sets the GOPATH environment variable to the current path.
-. envhere GOPATH
-echo GOPATH is now $GOPATH

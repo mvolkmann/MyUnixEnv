@@ -87,6 +87,10 @@
   - "hosts documentation for Go packages on Bitbucket, GitHub,
     Launchpad and Google Project Hosting"
   - can search for a package and see its documentation
+- Awesome Go: <https://awesome-go.com>
+  - "A curated list of awesome Go frameworks, libraries and software"
+- Golang Weekly: <https://golangweekly.com/>
+  - "a weekly newsletter about the Go programming language"
 
 ## Editor Support
 
@@ -108,6 +112,9 @@
   - vim-go plugin
 - VS Code
   - Go extension from Microsoft
+    - alphabetizes imports
+    - runs "gofmt" on code
+    - and much more (DOCUMENT MORE)
 
 ## Installing
 
@@ -122,7 +129,7 @@
   - to use another directory, set GOPATH to it
     - to set GOPATH to current directory
       - in Bash shell, `export GOPATH=`pwd`
-      - in Fish shell, `set GOPATH (pwd)`
+      - in Fish shell, `set -x GOPATH (pwd)`
 
 ## Alternative Go Implementations
 
@@ -776,6 +783,17 @@ ticTacToe[1][2] = "X"
   - by default, blocks until the channel retrieves it (unbuffered)
 - to receive a value from a channel, `value := <-channel`
   - by default, blocks until the channel sends it (unbuffered)
+- a channel can be closed by passing it to the `close` function
+  - a channel should only be closed by a sending goroutine,
+    not be a receiving goroutine
+  - a channel should only be closed when only a single goroutine sends to it
+  - once a channel has been closed, a panic will be triggered
+    if there is an attempt to send to it or close it again
+  - when reading from a channel, a second return value
+    indicates whether the channel is still open
+    - ex. `data, open = <-myChannel`
+  - see <https://go101.org/article/channel-closing.html>
+    for details and more options
 - channel direction
 
   - the type `chan` can both send and receive values
@@ -809,16 +827,20 @@ ticTacToe[1][2] = "X"
   func main() {
     c := make(chan string)
     go getWords(c)
+    // This loop terminates when the channel is closed
+    // without explicitly checking for that.
     for word := range c {
       fmt.Println(word)
     }
   }
   ```
 
-- can use channels for synchronizing goroutine execution
+- can use an additional, non-data channel to synchronize goroutine execution
 
-  - to wait for a value to be sent to a channel, `<-myChannel`
   - to wait for a goroutine to complete, do something like this
+    - this is a good approach when the receiving code gets data
+      from multiple channels and there needs to be a way to know
+      when to stop trying to receive data from any of them
 
   ```go
   import "time"
@@ -1229,8 +1251,16 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 ## Packages
 
 - all code is in some package
+- all `.go` files must start with a `package` statement and
+  the package name must match the name of the directory that holds the file
+  - ex. if the file `foo.go` is in a directory named `bar`,
+    the first non-comment line in the file must be `package bar`
+  - changing a package name requires renaming the directory
+    and modifying the `package` statement in all the files
+  - why isn't the package name just inferred from the directory name?
 - the `main` function is the starting point of all Go applications
   and must in the `main` package
+  - this is the only package that does not need to match the name of the directory
 - `import`
   - used to import all exported symbols (names that start uppercase) from given packages
   - can't import just a subset
@@ -1246,9 +1276,10 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - package implementations must be in a directory whose name matches the package name
 - files that define the package must be in that directory,
   but can have any name that ends with `.go`
-  - ex. if the package "baz" is defined by files in `$GOPATH/src/foo/bar/baz`
+  - ex. if the package `baz` is defined by files in `$GOPATH/src/foo/bar/baz`
     then it is imported with `import "foo/bar/baz"` and
-    the symbols it exports are references with `baz.exportedName`
+    the symbols it exports are references with `baz.exportedName` and
+    the files that define the package must start with `package baz`
 - standard library packages
   - always available and do not need to be installed
   - documented at <https://golang.org/pkg/>
@@ -1669,6 +1700,37 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
     wg.Wait() // wait for the two goroutines to be done
     fmt.Printf("%v\n", slice)
   }
+  ```
+
+## JSON
+
+- the `encoding/json` package supports marshalling and unmarshalling of JSON
+- to marshal data to JSON use the `json.Marshal` function
+
+  - ex.
+
+  ```go
+  import "encoding/json"
+
+  // Note that the field names must start uppercase
+  // so the json package can see them.
+  type person struct {
+    Name string
+    Age number
+  }
+  p := person{Name: "Mark", Age: 57}
+  jsonData, err := json.Marshal(person)
+  // jsonData will have the type []byte.
+  // To get a string from it, use string(jsonData).
+  ```
+
+- to unmarshal data from JSON use the `json.Unmarshal` function
+
+  - ex.
+
+  ```go
+  var p person
+  err := json.Unmarshal(jsonData, @p)
   ```
 
 ## HTTP Servers

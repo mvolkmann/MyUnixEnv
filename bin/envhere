@@ -1,7 +1,0 @@
-#!/bin/bash
-# Sets a given environment variable to the current path.
-if [ $# -ne 1 ]; then
-  echo usage: envhere {env-var-name}
-  exit 1
-fi
-export $1=`pwd`
