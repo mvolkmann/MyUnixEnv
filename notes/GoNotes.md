@@ -616,6 +616,10 @@ fmt.Println(expression)
 - cannot overload methods to create different implementations
   for different parameter types
 - an instance of a struct is referred to as the "receiver" for the method
+- the syntax for defining a method is
+  `func (receiver-info) name(parameter-list) (return-types) { body }`
+  - note that there are three sets of parentheses
+    if the method has more than one return value
 - ex.
 
   ```go
@@ -1849,3 +1853,50 @@ func main() {
   in the `main` package with a `main` function
 - enter `watcher`
   - can also specify command-line arguments to be passed to the app
+
+## SQL Databases
+
+- see <http://go-database-sql.org/>
+- install a database-specific driver
+  - for MySQL, enter `go get github.com/go-sql-driver/mysql`
+- ex.
+
+  ```go
+  package main
+
+  import (
+    "database/sql"
+    "fmt"
+    "log"
+
+    _ "github.com/go-sql-driver/mysql" // anonymous import
+  )
+
+  func check(err error) {
+    if err != nil {
+      log.Fatal(err)
+    }
+  }
+
+  func main() {
+    db, err := sql.Open("mysql",
+      "root:root@tcp(127.0.0.1:3306)/tour_of_heroes")
+    check(err)
+    defer db.Close()
+
+    rows, err := db.Query("select name from hero")
+    check(err)
+    defer rows.Close()
+
+    var name string
+    for rows.Next() {
+      err := rows.Scan(&name)
+      if err != nil {
+        log.Fatal(err)
+      }
+      log.Println("name =", name)
+    }
+    err = rows.Err()
+    check(err)
+  }
+  ```
