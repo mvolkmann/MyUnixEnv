@@ -47,8 +47,10 @@
 
 ## Reasons to use
 
-- type safety
 - performance
+- asynchronous support with goroutines and channels
+- type safety
+- relatively small language that is easy to learn (May 9, 2018 spec. is 78 pages)
 - network library
 
 ## Notable Things Implemented in Go
@@ -81,6 +83,10 @@
     ability to highlight lines (useful when sharing snippets),
     and more
 - "Go Time" podcast: <https://changelog.com/gotime>
+- GoDoc: <https://godoc.org>
+  - "hosts documentation for Go packages on Bitbucket, GitHub,
+    Launchpad and Google Project Hosting"
+  - can search for a package and see its documentation
 
 ## Editor Support
 
@@ -114,6 +120,9 @@
 - create a "go" directory in your home directory
   - GOPATH is set to this by default
   - to use another directory, set GOPATH to it
+    - to set GOPATH to current directory
+      - in Bash shell, `export GOPATH=`pwd`
+      - in Fish shell, `set GOPATH (pwd)`
 
 ## Alternative Go Implementations
 
@@ -147,8 +156,8 @@
   - `go help [command|topic]`
     - outputs help
     - run with no argument to see a list of commands and topics
-  - `go doc {pkg}`
-    - outputs documentation for a given package
+  - `go doc {package} [function|type]`
+    - outputs brief documentation for a given package, constant, function, or type
     - ex. `go doc json`
     - `godoc {pkg}` (no space) outputs even more documentation
       - add `-src` to see source code
@@ -465,6 +474,9 @@ fmt.Println(expression)
 - can use `break` and `continue` inside
 - syntax is `for init; cond; post { ... }`
   - no parentheses are allowed
+  - note that the three parts are separated by semicolons
+  - the "init" and "post" parts, if present, must be a single statement,
+    but multiple variables can be assigned in a single statement
 - ex.
 
   ```go
@@ -777,6 +789,31 @@ ticTacToe[1][2] = "X"
   - to create, add buffer size as second argument to make
     - ex. `myChannel := make(chan string, 5)`
     - there is probably no way to create a buffered channel without a size limit
+
+- can iterate over channel values with a `for` loop
+
+  - ex.
+
+  ```go
+  package main
+
+  import "fmt"
+
+  func getWords(c chan string) {
+    c <- "alpha"
+    c <- "beta"
+    c <- "gamma"
+    close(c)
+  }
+
+  func main() {
+    c := make(chan string)
+    go getWords(c)
+    for word := range c {
+      fmt.Println(word)
+    }
+  }
+  ```
 
 - can use channels for synchronizing goroutine execution
 
