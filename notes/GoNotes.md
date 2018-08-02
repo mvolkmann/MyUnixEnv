@@ -1764,8 +1764,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 ## HTTP Servers
 
 - can test REST service performance using the "RESTful Stress" Chrome extension
-- consider using the :w
-  gghttprouter package
+- consider using the httprouter package
 
   - ex.
 
