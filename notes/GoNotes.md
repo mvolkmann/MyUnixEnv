@@ -53,6 +53,17 @@
 - relatively small language that is easy to learn (May 9, 2018 spec. is 78 pages)
 - network library
 
+## Annoyances
+
+- gofmt uses tabs for indentation
+- can't have single line if statements
+- syntax for defining methods on structs is messy
+- forces some names to be all uppercase
+  - includes ID, JSON, and URL
+- GOPATH environment variable must be changed when switching between projects
+- in struct values a comma is required after the last field
+  if the closing brace is on a new line
+
 ## Notable Things Implemented in Go
 
 - Docker - assembles container-based systems
@@ -244,6 +255,11 @@
   - change this when switching projects?
 - GOROOT
   - what Go tools are installed
+
+## Names
+
+- Go requires some variable, function, and struct field names to be all uppercase
+- includes ID, JSON, and URL
 
 ## Comments
 
@@ -1735,7 +1751,84 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 ## HTTP Servers
 
+- can test REST service performance using a Chrome extension
+  - see <https://chrome.google.com/webstore/detail/restful-stress/lljgneahfmgjmpglpbhmkangancgdgeb?hl=en>
 - consider using httprouter
+
+  - ex.
+
+  ```go
+  package main
+
+  import (
+    "encoding/json"
+    "fmt"
+    "log"
+    "net/http"
+
+    "github.com/julienschmidt/httprouter"
+  )
+
+  type any interface{}
+
+  func getImageURL(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+    imageURL := "http://some-domain/some-image.jpg"
+    sendText(res, imageURL)
+  }
+
+  func hello(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+    fmt.Fprintf(res, "hello, %s!\n", params.ByName("name"))
+  }
+
+  // Can"t just omit the unused parameters.
+  func index(res http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+    fmt.Fprint(res, "Welcome!\n")
+  }
+
+  func notFound(res http.ResponseWriter, _ *http.Request) {
+    fmt.Fprintf(res, "Sorry, I could not find that.")
+  }
+
+  func postFindPerson(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+    type person struct {
+      Name string
+      Age number
+    }
+    output := person{Name: "Mark", Age: 57}
+    sendJSON(res, output)
+  }
+
+  func sendJSON(res http.ResponseWriter, obj any) {
+    jsonData, err := json.Marshal(obj)
+    if err != nil {
+      msg := fmt.Sprintf("error marshaling %+v to JSON", obj)
+      http.Error(res, msg, http.StatusBadRequest)
+    } else {
+      res.Header().Set("Content-Type", "application/json")
+      res.Write(jsonData)
+    }
+  }
+
+  func sendText(res http.ResponseWriter, text string) {
+    res.Write([]byte(text))
+  }
+
+  func main() {
+    router := httprouter.New()
+
+    router.GET("/", index)
+    router.GET("/hello/:name", hello)
+    router.GET("/image/:id", getImageUrl)
+    router.POST("/person", postFindPerson)
+
+    // To get the file foo.html in the public directory,
+    // browse localhost:8080/public/foo.html.
+    router.ServeFiles("/public/*filepath", http.Dir("public"))
+    router.NotFound = http.HandlerFunc(notFound)
+
+    log.Fatal(http.ListenAndServe(":8080", router))
+  }
+  ```
 
 ## go-watcher
 
