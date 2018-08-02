@@ -104,7 +104,7 @@
   - "a weekly newsletter about the Go programming language"
 - list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
   - includes Adobe, AgileBits (1Password), Bitbucket, CircleCI, CloudFlare,
-    Cloud Foundry, Comcast, Dell, DigitalOcian, Docker, Dropbox, eBay,
+    Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
     Facebook, General Electric, GitHub, GitLab, Google, Heroku, Honeywell,
     IBM, Intel, Lyft, Medium, Mesosphere, MongoDB, Mozilla, Netflix,
     New York Times, Oracle, Pinterest, Pivotal, Rackspace, Reddit,
@@ -1855,9 +1855,13 @@ func main() {
 
 ## SQL Databases
 
-- see <http://go-database-sql.org/>
-- install a database-specific driver
-  - for MySQL, enter `go get github.com/go-sql-driver/mysql`
+- see <http://go-database-sql.org/> for
+  more detail than what is provided here
+- can use the standard library `database/sql`
+  but also need database-specific drivers
+  - to install the MySQL driver, enter `go get github.com/go-sql-driver/mysql`
+  - to install the PostgreSQL driver, enter `go get github.com/lib/pq`
+  - for other drivers, see <https://github.com/golang/go/wiki/SQLDrivers>
 - ex.
 
   ```go
