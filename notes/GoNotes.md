@@ -73,7 +73,7 @@
 - Revel - full-stack web framework <https://github.com/revel/revel>
 - InfluxDB - scalable datastore for metrics, events, and real-time analytics
   <https://github.com/influxdata/influxdb>
-- any more you have probably not heard of
+- many more you have probably not heard of
 
 ## Resources
 
@@ -102,6 +102,14 @@
   - "A curated list of awesome Go frameworks, libraries and software"
 - Golang Weekly: <https://golangweekly.com/>
   - "a weekly newsletter about the Go programming language"
+- list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
+  - includes Adobe, AgileBits (1Password), Bitbucket, CircleCI, CloudFlare,
+    Cloud Foundry, Comcast, Dell, DigitalOcian, Docker, Dropbox, eBay,
+    Facebook, General Electric, GitHub, GitLab, Google, Heroku, Honeywell,
+    IBM, Intel, Lyft, Medium, Mesosphere, MongoDB, Mozilla, Netflix,
+    New York Times, Oracle, Pinterest, Pivotal, Rackspace, Reddit,
+    Riot Games, Shutterfly, Slack, Square, Stripe, Tumblr, Twitch, Twitter,
+    Uber, VMware, Yahoo
 
 ## Editor Support
 
@@ -1751,84 +1759,84 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 ## HTTP Servers
 
-- can test REST service performance using a Chrome extension
-  - see <https://chrome.google.com/webstore/detail/restful-stress/lljgneahfmgjmpglpbhmkangancgdgeb?hl=en>
-- consider using httprouter
+- can test REST service performance using the "RESTful Stress" Chrome extension
+- consider using the :w
+  gghttprouter package
 
   - ex.
 
-  ```go
-  package main
+```go
+package main
 
-  import (
-    "encoding/json"
-    "fmt"
-    "log"
-    "net/http"
+import (
+  "encoding/json"
+  "fmt"
+  "log"
+  "net/http"
 
-    "github.com/julienschmidt/httprouter"
-  )
+  "github.com/julienschmidt/httprouter"
+)
 
-  type any interface{}
+type any interface{}
 
-  func getImageURL(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
-    imageURL := "http://some-domain/some-image.jpg"
-    sendText(res, imageURL)
+func getImageURL(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+  imageURL := "http://some-domain/some-image.jpg"
+  sendText(res, imageURL)
+}
+
+func hello(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+  fmt.Fprintf(res, "hello, %s!\n", params.ByName("name"))
+}
+
+// Can"t just omit the unused parameters.
+func index(res http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+  fmt.Fprint(res, "Welcome!\n")
+}
+
+func notFound(res http.ResponseWriter, _ *http.Request) {
+  fmt.Fprintf(res, "Sorry, I could not find that.")
+}
+
+func postFindPerson(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
+  type person struct {
+    Name string
+    Age number
   }
+  output := person{Name: "Mark", Age: 57}
+  sendJSON(res, output)
+}
 
-  func hello(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
-    fmt.Fprintf(res, "hello, %s!\n", params.ByName("name"))
+func sendJSON(res http.ResponseWriter, obj any) {
+  jsonData, err := json.Marshal(obj)
+  if err != nil {
+    msg := fmt.Sprintf("error marshaling %+v to JSON", obj)
+    http.Error(res, msg, http.StatusBadRequest)
+  } else {
+    res.Header().Set("Content-Type", "application/json")
+    res.Write(jsonData)
   }
+}
 
-  // Can"t just omit the unused parameters.
-  func index(res http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-    fmt.Fprint(res, "Welcome!\n")
-  }
+func sendText(res http.ResponseWriter, text string) {
+  res.Write([]byte(text))
+}
 
-  func notFound(res http.ResponseWriter, _ *http.Request) {
-    fmt.Fprintf(res, "Sorry, I could not find that.")
-  }
+func main() {
+  router := httprouter.New()
 
-  func postFindPerson(res http.ResponseWriter, _ *http.Request, params httprouter.Params) {
-    type person struct {
-      Name string
-      Age number
-    }
-    output := person{Name: "Mark", Age: 57}
-    sendJSON(res, output)
-  }
+  router.GET("/", index)
+  router.GET("/hello/:name", hello)
+  router.GET("/image/:id", getImageUrl)
+  router.POST("/person", postFindPerson)
 
-  func sendJSON(res http.ResponseWriter, obj any) {
-    jsonData, err := json.Marshal(obj)
-    if err != nil {
-      msg := fmt.Sprintf("error marshaling %+v to JSON", obj)
-      http.Error(res, msg, http.StatusBadRequest)
-    } else {
-      res.Header().Set("Content-Type", "application/json")
-      res.Write(jsonData)
-    }
-  }
+  // To get the file foo.html in the public directory,
+  // browse localhost:8080/public/foo.html.
+  router.ServeFiles("/public/*filepath", http.Dir("public"))
+  router.NotFound = http.HandlerFunc(notFound)
 
-  func sendText(res http.ResponseWriter, text string) {
-    res.Write([]byte(text))
-  }
-
-  func main() {
-    router := httprouter.New()
-
-    router.GET("/", index)
-    router.GET("/hello/:name", hello)
-    router.GET("/image/:id", getImageUrl)
-    router.POST("/person", postFindPerson)
-
-    // To get the file foo.html in the public directory,
-    // browse localhost:8080/public/foo.html.
-    router.ServeFiles("/public/*filepath", http.Dir("public"))
-    router.NotFound = http.HandlerFunc(notFound)
-
-    log.Fatal(http.ListenAndServe(":8080", router))
-  }
-  ```
+  log.Fatal(http.ListenAndServe(":8080", router))
+}
+```
 
 ## go-watcher
 
