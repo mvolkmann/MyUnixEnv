@@ -128,6 +128,7 @@
   - can search for a package and see its documentation
 - Awesome Go: <https://awesome-go.com>
   - "A curated list of awesome Go frameworks, libraries and software"
+- Gophers Slack channel: <https://invite.slack.golangbridge.org/>
 - Golang Weekly: <https://golangweekly.com/>
   - "a weekly newsletter about the Go programming language"
 - list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
@@ -245,21 +246,93 @@
 
 ## VS Code Go Extension
 
-- may need to
-  - set GOPATH environment variable and restart VS Code before installing this
-  - run `go get -u github.com/mdempsky/gocode`
-  - run `go get -u golang.org/x/lint/golint`
-  - set GOPATH to ~/go
-  - create a `bin` subdirectory
-  - set GOBIN to $GOPATH/bin
-  - add $GOBIN to PATH
-- why isn't "format on save" working?
+- provides auto complete of functions in packages
+  and members of the current package
+- hover over a name to see information about it in a popup
+- ctrl-click (cmd-click) a name to jump to its definition,
+  even names from a standard library package
+- after typing the opening ( of a function call
+  a popup describing the expected arguments appears
+- invalid argument types are described in the PROBLEMS tab
+- can find all references to a function by right-clicking and selected "Find All References"
+- by default, when changes are saved
+  - runs golint on the package of the `.go` file
+  - runs go build on the application
+  - runs go vet on all `.go` files in the project
+- add user setting `"go.inferGopath": true,`
+  - "will try to infer the GOPATH from the path of the workspace
+    i.e. the directory opened in vscode. It searches upwards in the
+    path for the src directory, and sets GOPATH to one level above that."
+- "Go:" command Palette commands
+  - "Add Import" displays a list of standard library packages
+    - select one to add it
+    - alphabetizes all current imports
+  - "Browse Packages" displays a drop-down list of standard library packages
+    - select one to see a list of files in the package
+    - select a file to view the source code
+  - "Current GOPATH" shows current GOPATH in a popup in lower right
+  - "Generate Unit Tests for File" generates a `_test.go` file for the current file
+    that provides a good starting point for implementing tests
+  - "Run on Go Playground" loads current file into the web-based Go Playground
+    where it can be run by pressing the "Run" button
+  - "Test Function At Cursor" runs only the test function under the cursor
+    - cursor must be over a test function, not the function to be tested
+  - "Test File" runs all tests for the current file
+  - "Test Package" runs all tests for the current package
+  - "Test All Packages in Workspace" runs all tests under the `src` directory
+    - includes running tests for all installed packages
 - for a description of how this extension can use GOPATH see
   <https://github.com/Microsoft/vscode-go/wiki/GOPATH-in-the-VS-Code-Go-extension>
 
 ## Standard Library Packages
 
+- Go provides many packages in the "standard library"
 - to see a list of them, browse <https://golang.org/pkg/>
+- highlights include
+  - bufio - implements buffered I/O with Reader and Writer types
+  - builtin - not a real package, but a place to document
+    builtin constants, variables, functions, and types
+  - container.list - implements doubly linked lists
+  - database - defines interfaces implemented by database-specific drivers
+  - encoding - defines interfaces for reading and writing
+    various data formats such as csv, json, and xml
+  - errors - defines `New` function to create error structs with a string
+    description and a method to get those strings from an error struct
+  - flag - implements command-line flag parsing
+  - fmt - implements formatted I/O similar to C's `printf` and `scanf`
+  - go - sub-packages implement all the standard go tooling
+    such as source file parsing to ASTs and code formatting
+  - html - implements functions to parse and create HTML
+  - image - implements functions to parse (decode) and create (encode) images
+  - io - implements functions to read and write buffers and files
+  - log - implements simple logging
+  - math - implements many math functions
+  - mime - encodes and decodes multimedia formats
+  - net - implements network I/O including TCP and UDP
+  - net/http - implements functions to send and listen for HTTP and HTTPS requests
+  - os - provides access to operating system functionality
+    like that provided by UNIX shell commands
+    - exposes the constants PathSeparator ('/' on UNIX)
+      and PathListSeparator (':' on UNIX)
+  - os/exec - runs external (operating system) commands
+  - path - implements functions for working with UNIX-style file paths and URLs
+  - reflect - implements run-time reflection to work with types determined at run-time
+  - sort - implements functions for sorting slices and other collections
+  - strconv - implements conversions to and from string representations of primitive types
+  - strings - implements many functions on strings
+    - includes `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
+      `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
+    - defines `Builder`, `Reader`, and `Replacer` types
+  - sync - provides synchronization primitives such as mutual exclusion locks
+    - typically will use channels and `select` instead
+  - testing - supports automated tests run by `go test`
+    - quick sub-package implements fuzz testing
+  - text - provides functions for parsing text,
+    writing tabbed columns, and data-driven templates
+  - time - provides functions to measure and display time and dates
+  - unicode - provides functions for working with Unicode characters
+  - also see "sub-repositories" that are part of the Go project,
+    but maintained outside the main repository
 
 ## Community Packages
 
@@ -578,7 +651,9 @@ fmt.Println(expression)
 - to retrieve a character, `char := name[index]`
 - it iterate over, `for _, char := range name { ... }`
 - can concatenate with the `+` and `+=` operators
-- the `string` type has no methods; use functions in the `strings` package
+- the `string` type has no methods
+- the standard library package `strings` provides
+  many functions for operating on strings
   - ex. to split a string on whitespace characters
     ```go
     s := "This is a test."
@@ -594,7 +669,7 @@ fmt.Println(expression)
 - values of fields can be other structs, nested to any depth
 - often will want to define a type name for a struct
 - use the dot operator to get and set fields
-- can be anonymous or assigned to a type
+- can be anonymous (less common) or assigned to a type (more common)
 - anonymous struct example
 
   ```go
@@ -637,10 +712,37 @@ fmt.Println(expression)
 - field names must also start uppercase
   if they should be accessible outside the current package
 - there is no support for destructuring like in JavaScript
+- if a struct field name is omitted, it is assumed to be the same as the type
+
+  - ex.
+
+  ```go
+  package main
+
+  import (
+    "fmt"
+    "time"
+  )
+
+  func main() {
+    type myType struct {
+      name string // named field
+      int // get name from a primitive type
+      time.Month // get name from a library type
+    }
+    //myStruct := myType{name: "Mark", int: 7, Month: time.April}
+    myStruct := myType{"Mark", 7, time.April}
+    fmt.Printf("name = %v\n", myStruct.name)
+    fmt.Printf("int = %v\n", myStruct.int)
+    fmt.Printf("Month = %v\n", myStruct.Month)
+  }
+  ```
 
 ## Methods
 
 - methods can be associated with a struct
+  - particularly useful for structs that implement interfaces
+  - otherwise can just write functions that take a struct as an argument
 - cannot overload methods to create different implementations
   for different parameter types
 - an instance of a struct is referred to as the "receiver" for the method
@@ -1104,11 +1206,14 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - all structs that implement all the methods are compatible
 - structs do not state the interfaces they implement,
   they just implement all the methods
+- when a struct is assigned to a variable or parameter with an interface type,
+  if the struct doesn't implement all the methods then an error
+  will be reported that identifies one of the missing methods
 - calling a method on a variable with an interface type
   calls the method on the underlying struct type
 - if a value has not be assigned to the variable,
   calling a method on it results in an error
-- an interface with no methods, referred to as the "empty interface")
+- an interface with no methods, referred to as the "empty interface",
   matches every type
   - may want to give this a name using `type any interface{}`
 - ex.
@@ -1120,6 +1225,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
   type geometry interface {
     area() float64
+    name() string
   }
 
   type rect struct {
@@ -1128,12 +1234,18 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   func (r rect) area() float64 {
     return r.width * r.height
   }
+  func (r rect) name() string {
+    return "rect"
+  }
 
   type circle struct {
     radius float64
   }
   func (c circle) area() float64 {
     return math.Pi * c.radius * c.radius
+  }
+  func (c circle) name() string {
+    return "circle"
   }
 
   func printArea(g geometry) {
@@ -1518,54 +1630,6 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - one current solution is to use vGo from Rus Cox at <https://research.swtch.com/vgo>
   - will be included in Go 1.11
 
-## Important Standard Packages
-
-- Go provides many packages in the standard library
-- these are some of the more commonly used packages
-- bufio - implements buffered I/O with Reader and Writer types
-- builtin - not a real package, but a place to document
-  builtin constants, variables, functions, and types
-- container.list - implements doubly linked lists
-- database - defines interfaces implemented by database-specific drivers
-- encoding - defines interfaces for reading and writing
-  various data formats such as csv, json, and xml
-- errors - defines `New` function to create error structs with a string
-  description and a method to get those strings from an error struct
-- flag - implements command-line flag parsing
-- fmt - implements formatted I/O similar to C's `printf` and `scanf`
-- go - sub-packages implement all the standard go tooling
-  such as source file parsing to ASTs and code formatting
-- html - implements functions to parse and create HTML
-- image - implements functions to parse (decode) and create (encode) images
-- io - implements functions to read and write buffers and files
-- log - implements simple logging
-- math - implements many math functions
-- mime - encodes and decodes multimedia formats
-- net - implements network I/O including TCP and UDP
-- net/http - implements functions to send and listen for HTTP and HTTPS requests
-- os - provides access to operating system functionality
-  like that provided by UNIX shell commands
-  - exposes the constants PathSeparator ('/' on UNIX)
-    and PathListSeparator (':' on UNIX)
-- path - implements functions for working with UNIX-style file paths and URLs
-- reflect - implements run-time reflection to work with types determined at run-time
-- sort - implements functions for sorting slices and other collections
-- strconv - implements conversions to and from string representations of primitive types
-- strings - implements many functions on strings
-  - includes `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
-    `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
-  - defines `Builder`, `Reader`, and `Replacer` types
-- sync - provides synchronization primitives such as mutual exclusion locks
-  - typically will use channels and `select` instead
-- testing - supports automated tests run by `go test`
-  - quick sub-package implements fuzz testing
-- text - provides functions for parsing text,
-  writing tabbed columns, and data-driven templates
-- time - provides functions to measure and display time and dates
-- unicode - provides functions for working with Unicode characters
-- also see "sub-repositories" that are part of the Go project,
-  but maintained outside the main repository
-
 ## Command-Line Arguments
 
 - a slice of the command-line arguments is stored in os.Args
@@ -1938,5 +2002,65 @@ func main() {
     }
     err = rows.Err()
     check(err)
+  }
+  ```
+
+## Calling other languages from Go
+
+- can use the `cgo` tool to create Go packages that call C code
+  - see <https://golang.org/cmd/cgo/>
+  - the C code can use the Java Native Interface (JNI)
+    to call Java code
+
+## Calling Go from other languages
+
+- can use `gobind` to generate language bindings
+  for calling Go functions from Java and Objective-C
+- can build Go code with the `-buildmode=c-shared` flag
+  to create a C shared library (in a shared object binary file)
+  that can be used by C, Java, Node, Python, and Ruby code
+  - see <https://medium.com/learning-the-go-programming-language/calling-go-functions-from-other-languages-4c7d8bcc69bf>
+
+## Executing Shell Commands
+
+- can execute shell commands using the standard library package `os/exec`
+  - may not work in Windows
+  - does not work in The Go Playground
+- does not create a system shell
+- does not expand glob patterns
+  - to get this use a command that starts a shell like "bash"
+- the `Command` function takes a command name and arguments
+  and returns a struct describing the command
+- this struct has many methods
+  - the `Output` method runs a command,
+    waits for it to complete, and returns a byte array
+    containing everything the command writes to stdout
+  - the `CombinedOutput` method runs a command,
+    waits for it complete, and returns a byte array
+    containing everything the command writes to stdout and stderr
+  - the `Run` method runs a command, waits for it to complete,
+    but doesn't capture what it writes to stdout or stderr
+  - the `Start` method runs a command, but doesn't wait for it to complete,
+    and doesn't capture what it writes to stdout or stderr
+    - use the methods `StdinPipe`, `StdoutPipe`, and `StderrPipe` with this
+  - the `Wait` method wait for a command that was
+    started with the `Start` method to complete
+- ex.
+
+  ```go
+  package main
+
+  import (
+    "fmt"
+    "log"
+    "os/exec"
+  )
+
+  func main() {
+    date, err := exec.Command("date").Output()
+    if err != nil {
+      log.Fatal(err)
+    }
+    fmt.Printf("date = %s\n", date) // date = Fri Aug  3 13:32:22 CDT 2018
   }
   ```
