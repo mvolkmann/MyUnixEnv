@@ -110,6 +110,11 @@
   - when used on web
     - uploads code to golang.org servers and displays result
     - uses latest stable version of Go
+- "How to Write Go Code": <https://golang.org/doc/code.html>
+  - free, online resource
+  - "demonstrates the development of a simple Go package and introduces the go tool"
+- "Effective Go": <https://golang.org/doc/effective_go.html>
+  - free, online "book"
 - "The Go Playground": <https://play.golang.org/>
   - can enter and test code online
   - can share code with others, but not sure how long they are retained
