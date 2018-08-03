@@ -71,16 +71,10 @@
 - Is Rust mature enough to be considered along side C and C++?
 - currently there are more developers with C and C++ experience than Go experience
 - C and C++ libraries are currently more mature than Go libraries
-- need pointer arithmetic
-- need to control allocation/deallocation of memory for
-  real-time guarantees that can't be achieved with garbage collection
+- Go does not support pointer arithmetic
+- Go provides garbage collection and does not allow control of
+  memory allocation/deallocation this is needed for real-time guarantees
 - you object to community standards for Go like using gofmt to format code
-- from Charles Sharp
-  "I would separate Rust out and have three groups. To me, Rust is still very immature. While it have invariants (a big plus) it is still very immature and that is a real minus.
-
-  So, by moving to C and C++, the big sell there would be the zero-cost abstraction. If you don't use it, there is no time spent on it (doesn't really apply to C since it doesn't have the class abstraction this typically applies to). It's a bit strange in Go in that you can't include something you don't use, but things can get included when they ride along -- in other words, the init() will run on a package even if you imported it for just one function. How big this plays out in real life is way beyond my understanding at this point.
-
-  And finally, the constraints of the languages are lacking -- you can have all the arguments you want on bracing, tabs vs spaces, spacing around parens, and so on and so on. The communities and committees that maintain the languages are not authoritarian unlike Go where Google is solving Google's problems in a way that the Google team finds productive. If that's useful for you, well, then fine."
 
 ## Annoyances
 
