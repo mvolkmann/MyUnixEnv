@@ -71,7 +71,7 @@
 - need pointer arithmetic
 - need to control allocation/deallocation of memory for
   real-time guarantees that can't be achieved with garbage collection
-- from Charles
+- from Charles Sharp
   "I would separate Rust out and have three groups. To me, Rust is still very immature. While it have invariants (a big plus) it is still very immature and that is a real minus.
   So, by moving to C and C++, the big sell there would be the zero-cost abstraction. If you don't use it, there is no time spent on it (doesn't really apply to C since it doesn't have the class abstraction this typically applies to). It's a bit strange in Go in that you can't include something you don't use, but things can get included when they ride along -- in other words, the init() will run on a package even if you imported it for just one function. How big this plays out in real life is way beyond my understanding at this point.
   C and C++ both find a more ready developer base. While it is very quick for a developer to come up to speed on Go, the chances of finding C++ folk to maintain your code are much better.
