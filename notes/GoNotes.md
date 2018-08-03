@@ -273,6 +273,9 @@
     - select one to see a list of files in the package
     - select a file to view the source code
   - "Current GOPATH" shows current GOPATH in a popup in lower right
+  - "Generate Interface Stubs" is supposed to generate method stubs for
+    all the methods in a given interface for a given receiver type,
+    but I haven't been able to get it to work
   - "Generate Unit Tests for File" generates a `_test.go` file for the current file
     that provides a good starting point for implementing tests
   - "Run on Go Playground" loads current file into the web-based Go Playground
