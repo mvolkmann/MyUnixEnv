@@ -68,14 +68,18 @@
 
 ## Reasons to use C/C++/Rust
 
+- Is Rust mature enough to be considered along side C and C++?
+- currently there are more developers with C and C++ experience than Go experience
+- C and C++ libraries are currently more mature than Go libraries
 - need pointer arithmetic
 - need to control allocation/deallocation of memory for
   real-time guarantees that can't be achieved with garbage collection
+- you object to community standards for Go like using gofmt to format code
 - from Charles Sharp
   "I would separate Rust out and have three groups. To me, Rust is still very immature. While it have invariants (a big plus) it is still very immature and that is a real minus.
+
   So, by moving to C and C++, the big sell there would be the zero-cost abstraction. If you don't use it, there is no time spent on it (doesn't really apply to C since it doesn't have the class abstraction this typically applies to). It's a bit strange in Go in that you can't include something you don't use, but things can get included when they ride along -- in other words, the init() will run on a package even if you imported it for just one function. How big this plays out in real life is way beyond my understanding at this point.
-  C and C++ both find a more ready developer base. While it is very quick for a developer to come up to speed on Go, the chances of finding C++ folk to maintain your code are much better.
-  And along that line, C and C++ libraries are extremely mature. While C++ continues to see changes, the fundamentals of the language have been proven by zillions of lines of code.
+
   And finally, the constraints of the languages are lacking -- you can have all the arguments you want on bracing, tabs vs spaces, spacing around parens, and so on and so on. The communities and committees that maintain the languages are not authoritarian unlike Go where Google is solving Google's problems in a way that the Google team finds productive. If that's useful for you, well, then fine."
 
 ## Annoyances
@@ -238,6 +242,10 @@
 
     - creates or updates Go source files
     - TODO: learn more about this
+
+  - `go version`
+    - outputs the version of Go that is installed
+    - to get this in code, call `runtime.Version()`
 
 ## Code Formatting
 
@@ -927,6 +935,11 @@ ticTacToe[1][2] = "X"
 - without using `go` the call is synchronous
 - with using `go` the call is asynchronous
 - the `main` function runs in a goroutine
+- to get the number of currently running goroutines,
+  call `runtime.NumGoRoutine()`
+- to get the number of CPUs in the computer,
+  call `runtime.NumCPU()`
+  - may be useful to decide at runtime how many goroutines to start
 - goroutines share memory, so access should be synchronized
 - `time.Sleep(duration)` pauses the current goroutine for the given duration
   - duration is in nanoseconds (1 nanosecond = 1,000,000 milliseconds)
@@ -1521,13 +1534,31 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
     }
     ```
 
-- the `log` package provides methods that help with writing error messages to stderr
+## Logging
+
+- the standard library `log` package provides methods that
+  help with writing error messages to stderr
   - `log.Fatal(message)` outputs a line containing the date, time, and message,
     and exits with a status code of 1
   - `log.Panic(message)` outputs a line containing the date, time, and message,
     followed by a line containing "panic:" and the message again,
     followed by a stack trace,
     and exits with a status code of 2
+- to write messages that include a file name and line number,
+  write a function like this and call it from other functions
+
+  ```go
+  func logValue(name string, value interface{}) {
+    // Passing 1 causes it to get the information
+    // from one level higher in the call stack.
+    _, file, line, ok := runtime.Caller(1)
+    if ok {
+      fmt.Printf("%s:%d %s=%v\n", file, line, name, value)
+    } else {
+      fmt.Printf("%s=%v\n", name, value)
+    }
+  }
+  ```
 
 ## Tests
 
