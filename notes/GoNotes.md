@@ -3,17 +3,30 @@
 ## Overview
 
 - announced by Google in 2009
-- originally designed to be a systems programming language
-  - aims to be a better C
-  - but most developers use C, C++, or Rust for that
+- goals (many are in comparison to languages like C++ and Java)
+
+  - address software issues at Google
+  - speed up software development
+  - speed up build times
+  - make code easier to understand, partly by having fewer features
+  - have a less cumbersome type system that provides type inference
+    and use composition instead of type hierarchies
+  - provide garbage collection
+  - support parallel computation, taking advantage of multi-core computers
+  - support concurrent execution and communication
+  - make dependency analysis easy
+  - make it easier to write tools that analyze and process the code
+
 - simplicity and performance are major goals
   so many features found in other programming languages
   are not present in Go
   - ex. generic types
+- originally designed to be a systems programming language,
+  but most developers use C, C++, or Rust for that
 - does not compete with scripting languages like
   JavaScript, Perl, Python, and Ruby
 - currently the most common uses are for
-  the server side of web application and dev ops tooling
+  the server side of web applications and dev ops tooling
 
 ## Future
 
@@ -27,9 +40,9 @@
 
 ## Characteristics
 
-- high performance
-- statically typed
 - compiled
+- statically typed
+- high performance
 - provides type inference
 - performs garbage collection
 - supports asynchronous processing with lightweight threads via goroutines
@@ -53,10 +66,25 @@
 - relatively small language that is easy to learn (May 9, 2018 spec. is 78 pages)
 - network library
 
+## Reasons to use C/C++/Rust
+
+- need pointer arithmetic
+- need to control allocation/deallocation of memory for
+  real-time guarantees that can't be achieved with garbage collection
+- from Charles
+  "I would separate Rust out and have three groups. To me, Rust is still very immature. While it have invariants (a big plus) it is still very immature and that is a real minus.
+  So, by moving to C and C++, the big sell there would be the zero-cost abstraction. If you don't use it, there is no time spent on it (doesn't really apply to C since it doesn't have the class abstraction this typically applies to). It's a bit strange in Go in that you can't include something you don't use, but things can get included when they ride along -- in other words, the init() will run on a package even if you imported it for just one function. How big this plays out in real life is way beyond my understanding at this point.
+  C and C++ both find a more ready developer base. While it is very quick for a developer to come up to speed on Go, the chances of finding C++ folk to maintain your code are much better.
+  And along that line, C and C++ libraries are extremely mature. While C++ continues to see changes, the fundamentals of the language have been proven by zillions of lines of code.
+  And finally, the constraints of the languages are lacking -- you can have all the arguments you want on bracing, tabs vs spaces, spacing around parens, and so on and so on. The communities and committees that maintain the languages are not authoritarian unlike Go where Google is solving Google's problems in a way that the Google team finds productive. If that's useful for you, well, then fine."
+
 ## Annoyances
 
-- gofmt uses tabs for indentation
+- gofmt uses tabs for indentation which is bad for printing code
 - can't have single line if statements
+- no ternary operator
+- no destructuring of arrays or structs (like in JavaScript)
+- no support for generic types when prevents functional programming
 - syntax for defining methods on structs is messy
 - forces some names to be all uppercase
   - includes ID, JSON, and URL
@@ -1291,6 +1319,8 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   - this is the only package that does not need to match the name of the directory
 - `import`
   - used to import all exported symbols (names that start uppercase) from given packages
+  - unused imports are treated as errors
+  - circular imports are treated as errors
   - can't import just a subset
   - the strings given to `import` are slash-separated paths
     where the last part is the package name
@@ -1469,6 +1499,13 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   double := func(v int) int { return v * 2 }
   log(mapOverInts(rgb[:], double))
   ```
+
+## Stack vs. Heap Memory Allocation
+
+- the spec does not indicate when each is used
+- the primary implementation makes some choices
+- allocating on the stack is generally faster than the heap
+- `new` always allocates on the heap
 
 ## Debugging Tips
 
