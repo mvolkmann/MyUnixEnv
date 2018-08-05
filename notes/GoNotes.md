@@ -33,6 +33,8 @@
 - currently the most common uses are for
   the server side of web applications and dev ops tooling
 
+The primary Go compiler and runtime are implemented in Go and assembler.
+
 ## Go Lineage
 
 Many previous programming languages inspired the design of Go.
@@ -437,50 +439,93 @@ To delete the installed executable, enter `go clean -i`.
 - `//` for single-line comments
 - `/* ... */` for multi-line comments
 
+## Zero Values
+
+Every type as a "zero value" which is the value it takes on when it is not initialized.
+
+| Type            | Zero Value |
+| --------------- | ---------- |
+| bool            | false      |
+| number          | 0          |
+| rune            | 0          |
+| string          | ""         |
+| all other types | nil        |
+
 ## Variables
+
+Variables in Go have the following characteristics:
 
 - mutable unless defined with `const`
 - block-scoped
 - names must start with a letter and
   can contain letters, digits, and underscores
 - local to their package unless name starts uppercase
-- can define a variable without initializing
-  - `var x int`
-  - will be initialized to the zero value for the type
-  - it's an error if the variable has already been defined
-- can define a variable with initial value
-  and take advantage of type inference
-  - `var x = 3`
-- can provide type and initial value, but that is redundant
-  - `var x int = 3`
-- `var` can be used inside or outside of a function
-- can define multiple variables with one `var` in two ways
 
-  ```go
-  var alpha, beta = 1, 2
-  var (
-    gamma = 3
-    delta = 4
-    name string // initialized to empty string
-  )
-  ```
+Go distinguishes between declaring, initializing, and assigning variables.
 
-- can assign a value to an already defined variable
-  - `x = 4`
-  - it's an error if the variable has not already been defined
-- `:=` can only be used inside a function
-  - defines and initializes a new variable
-    without specifying the type which is inferred
-  - `x := 5` is shorthand for `var x = 5`
-  - particularly useful for capturing function return values
-    and creating multiple variables in a single line
-- the variable "\_" is used to discard a function return value
-- uninitialized variables are set to their "zero value"
-  - false for bool
-  - 0 for numbers
-  - "" for strings
-  - nil for pointers, slices, maps, functions, interfaces, and channels
-  - TODO: What is the zero value for an array? An empty array?
+Variables that are declared outside of functions have package scope
+which means they are accessible by all files in the package,
+but not outside the package.
+However, giving them a name that starts uppercase makes them
+accessible anywhere the package is imported.
+
+Variables outside of functions must be declared with a `var` statement.
+This accepts a type and/or initial value. Examples include:
+
+```go
+var name string // defaults to zero value for the type
+var name = "Mark"
+var name string = "Mark"
+```
+
+While both a type and initial value can be provided,
+that is redundant since the type can be inferred from the value
+and some editor plugins/extensions will warn about this.
+
+Multiple variables can be declared with one `var` statement.
+
+```go
+var name, age = "Mark", 57 // must initialize all
+var (
+  name string = "Mark"
+  age number // not initializes, so will use zero value
+)
+```
+
+When multiple consecutive variables have the same type,
+the type can be omitted from all but the last.
+For example, these are equivalent:
+
+```go
+var n1 string, n2 string, a1 int8, a2 int8, a3 int8
+var n1, n2 string, a1, a2, a3 int8
+```
+
+Variables that are declared inside a function are local to that function.
+There are two ways to declare variables inside a function.
+One is to use a `var` statement just like when outside a function.
+Another is to use the `:=` shorthand operator which does not allow a
+type to be specified and instead infers it from the value on the right.
+For example, `name := "Mark"`.
+
+Multiple variables can be declared with one `:=` operator.
+For example, `name, age := "Mark", 57`.
+
+It is an error to attempt to declare a variable that has already been declared,
+whether is with a `var` statement or using the `:=` operator.
+
+Variables that have already been declared can be assigned new values
+with the `=` operator. For example, `name = "Tami"`.
+Multiple variables can be assigned with one `=` operator.
+For example, `name, age = "Tami", 56`.
+
+It is an error to attempt to assign to a variable that has not been defined.
+
+The `:=` operator is particularly useful for capturing function return values.
+
+Functions can return an number of values.
+Sometimes the caller is only interested in a subset of them.
+The variable "\_" can be used to discard a specific return value.
 
 ## Constants
 
@@ -1545,10 +1590,6 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
       regardless of the directory from which it is run
     - to use in a .go file, `import "github.com/julienschmidt/httprouter"`
       and refer to the names it exports by preceding the names with `httprouter`
-- currently there is no support for package versioning
-  - nothing like npm and package.json in JavaScript
-  - future module support should add this
-    - see <https://research.swtch.com/vgo-module>
 
 ## Error Handling
 
@@ -1719,16 +1760,14 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - allocating on the stack is generally faster than the heap
 - `new` always allocates on the heap
 
-## Debugging Tips
-
-- to print a struct including keys and values,
-  `fmt.Printf("%#v\n", obj)`
-
 ## Packaging Versioning
 
-- still an open issue in the Go community
-- one current solution is to use vGo from Rus Cox at <https://research.swtch.com/vgo>
-  - will be included in Go 1.11
+Support for package versioning is still an open issue.
+The leading contenders are
+vgo from Russ Cox at <https://github.com/golang/go/wiki/vgo>
+and dep from Sam Boyer at <https://golang.github.io/dep/>.
+vgo will be included in Go 1.11.
+Note to self: Try vgo!
 
 ## Command-Line Arguments
 
