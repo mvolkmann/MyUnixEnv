@@ -819,6 +819,7 @@ fmt.Println(expression)
 - can change the value at an index
   - ex. `rgb[1] = 75`
 - get length with `len(myArr)`
+- for an array, `cap(myArr)` returns the same
 - array elements can be arrays
 - to iterate over the elements in an array
 
@@ -831,36 +832,61 @@ fmt.Println(expression)
 ## Slices
 
 - a view into an array with a variable length
-- create by specifying the start (inclusive) and end (exclusive) indexes of an array
+- the zero value is nil
+- a distinct type from arrays
+  - [3]int is an array
+  - []int is a slice
+  - functions that take an argument that is a slice cannot be passed an array
+  - many functions prefer slices over arrays
+  - nearly always you should create slices instead of arrays
+- can create a slice by specifying the
+  start (inclusive) and end (exclusive) indexes of an array
   - ex. `mySlice := myArr[start:end]`
   - if `start` is omitted, it defaults to 0
   - if `end` is omitted, it defaults to the array length
   - so `myArr[:]` creates a slice over the entire array
 - modifying elements of a slice modifies the underlying array
 - multiple slices on the same array see the same data
-- a slice literal creates a slice and an underlying array
-  - ex. `mySlice := []int{2, 4, 6}`
-  - looks like an array literal, but without a specified length
-  - can also specify values at specific indices
-    - ex. `mySlice := []int{2: 6, 1: 4, 0: 2} // same as above`
 - `len(mySlice)` returns the number of elements it contains (length)
 - `cap(mySlice)` returns the number of elements in the underlying array (capacity)
-- to extend a slice, recreated it with different bounds
-  - ex. `mySlice = mySlice[newStart:newEnd]`
-- the zero value is nil
+- a slice literal creates a slice and an underlying array
+  - ex. `mySlice := []int{}` creates a slice where length and capacity are 0
+  - ex. `mySlice := []int{2, 4, 6}` creates a slice where length and capacity are 3
+  - looks like an array literal, but without a specified length
+  - can also specify values at specific indices
+    - ex. `mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example
+    - ex. `mySlice := []int{3: 7, 0: 2}` creates a slice where
+      length and capacity are 4 (one more than the highest specified index)
+- to append new elements to a slice
+  - `mySlice = append(mySlice, 8, 10)`
+    - appends the values 8 and 10
+  - if the underlying array is too small,
+    a larger array is automatically allocated
+    (doubling the current capacity)
+    and the returned slice will refer to it
+  - cannot append to arrays which is a reason why slices are used more
 - `make` function
-  - can create a "dynamically-sized array"
-  - this is the most common way to create a slice,
-    rather than manually creating the underlying array
-    and then creating the slice
+  - can be used to create a slice and underlying array
+    where the length and capacity are set
+    without specifying initial elements
+    - avoids reallocating space when elements are added later
+      which is somewhat inefficient
+  - if it is anticipated that many elements will be appended later,
+    try to estimate the largest size needed at the start
+    and use `make` to create the slice
   - ex. `mySlice := make([]int, 5)`
     - creates an underlying array of size 5
       and a slice of length 5 and capacity of 5
   - ex. `mySlice := make([]int, 0, 5)`
     - creates an underlying array of size 5 and
       a slice with initial length 0 and initial capacity of 5
-  - to expand the size of the slice
-    `mySlice = mySlice[newStart:newEnd]`
+- the most common ways to create a slice are to use
+  a slice literal or the `make` function
+- manually creating an array and then creating a slice over it
+  is far less common
+- to change the view of a slice into its underlying array,
+  recreate it with different bounds
+  - ex. `mySlice = mySlice[newStart:newEnd]`
 - slice elements can be slices (multidimensional slices)
 
 ```go
@@ -874,16 +900,6 @@ ticTacToe := [][]string{
 ticTacToe[1][2] = "X"
 ```
 
-- to append new elements to a slice
-  - this is where it really gets dynamic!
-  - `mySlice = append(mySlice, 8, 10)`
-  - appends the values 8 and 10
-  - if the underlying array is too small,
-    a larger array is automatically allocated
-    and the returned slice will refer to it
-    - since this can be inefficient, try to
-      estimate the largest size needed at the start
-  - cannot append to arrays which is a reason why slices are used more
 - to use all the elements in a slice as separate arguments to a function
   follow the variable name holding the slice with an ellipsis
 - slice of structs example
