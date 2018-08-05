@@ -76,6 +76,14 @@
   memory allocation/deallocation this is needed for real-time guarantees
 - you object to community standards for Go like using gofmt to format code
 
+## Largest Issues
+
+- lack of a standardized approach for handling package versions
+- lack of support for generic types
+  - needed for truly functional programming
+    with generic functions like map, filter, and reduce
+- lack of support for immutable data types
+
 ## Annoyances
 
 - gofmt uses tabs for indentation which is bad for printing code
