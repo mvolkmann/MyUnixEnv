@@ -53,6 +53,11 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export GITHUB_USER=mvolkmann
 #export GITHUB_PASS=
 
+# Go settings
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
+
 # grep settings
 # This setting may interfere with fink scripts!
 #export GREP_OPTIONS="--color=ALWAYS"
@@ -128,7 +133,7 @@ export EDITOR=vim
 export VISUAL=vim
 
 # VS Code - allows launch from terminal with "code"
-export PATH=$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
+export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
 # When running multiple bash shells, allow all to write to history
 # without overwriting each other.

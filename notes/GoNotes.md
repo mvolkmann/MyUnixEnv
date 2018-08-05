@@ -2,19 +2,24 @@
 
 ## Overview
 
-- announced by Google in 2009
+- created by Robert Griesemer, Rob Pike, and Ken Thompson,
+  all working at Google, starting in September 2007
+- announced in November 2009
 - goals (many are in comparison to languages like C++ and Java)
 
   - address software issues at Google
-  - speed up software development
-  - speed up build times
-  - make code easier to understand, partly by having fewer features
+  - simplicity, indicated by having a small specification
+    and fewer features compared to other programming languages
+  - safety in terms of memory utilization
+  - readability
+  - faster software development
+  - faster build times
   - have a less cumbersome type system that provides type inference
     and use composition instead of type hierarchies
   - provide garbage collection
   - support parallel computation, taking advantage of multi-core computers
   - support concurrent execution and communication
-  - make dependency analysis easy
+  - enable easier dependency analysis
   - make it easier to write tools that analyze and process the code
 
 - simplicity and performance are major goals
@@ -27,6 +32,11 @@
   JavaScript, Perl, Python, and Ruby
 - currently the most common uses are for
   the server side of web applications and dev ops tooling
+
+## Go Lineage
+
+Many previous programming languages inspired the design of Go.
+![Go Lineage](go-lineage.png)
 
 ## Future
 
@@ -79,6 +89,7 @@
 ## Largest Issues
 
 - lack of a standardized approach for handling package versions
+  - leading contenders are vgo and dep
 - lack of support for generic types
   - needed for truly functional programming
     with generic functions like map, filter, and reduce
@@ -142,6 +153,8 @@
 - Gophers Slack channel: <https://invite.slack.golangbridge.org/>
 - Golang Weekly: <https://golangweekly.com/>
   - "a weekly newsletter about the Go programming language"
+- GopherCon 2015: Robert Griesemer - The Evolution of Go:
+  <https://www.youtube.com/watch?v=0ReKdcpNyQg>
 - list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
   - includes Adobe, AgileBits (1Password), Bitbucket, CircleCI, CloudFlare,
     Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
@@ -236,11 +249,18 @@
       fix helps make the necessary changes to your programs."
   - `go get {pkg1} {pkg2} ...`
     - downloads and installs packages and their dependencies
-  - `go build {file-name}.go`
-    - builds an executable that includes everything needed to run
+  - `go build`
+    - builds an executable for the package in the current directory
+      that includes everything needed to run
+      and places it in the current directory
+    - the executable can be moved anywhere
     - Go tools do not need to be installed in order to execute the result
   - `go install {pkg-name}`
-    - builds a package and installs it in the directory in GOBIN
+    - builds a package and installs it in $GOBIN which must be set
+    - can omit pkg-name if if the package directory
+  - `go clean -i {pkg-name}`
+    - deletes the executable for the package from $GOBIN
+    - can omit pkg-name if if the package directory
   - `go run {file-name}.go`
     - runs a program without producing an executable
   - `go test`
@@ -362,12 +382,35 @@
 
 ## Getting Started
 
-- initial file must contain
-  - `package main`
-  - `func main() { ... }`
-- can run with
-  - `go run file-name.go`
-  - `go build file-name.go; ./file-name`
+The initial file must contain:
+
+```go
+package main
+
+func main() {
+  ...
+}
+```
+
+Each package can only have one `.go` file that defines a `main` function.
+
+To run a Go program without building an executable,
+enter `go run file-name.go`.
+
+To build an executable in the current directory, enter `go build`.
+This names the executable it creates using the name of the file that
+contains the `main` function, so naming this file `main.go` is not desirable.
+
+To execute it, enter `./file-name`.
+
+To delete the local executable, enter `go clean`.
+
+To build an executable and install it in the $GOBIN directory,
+enter `go install`.
+Assuming `$GOBIN` is listed in the `PATH` environment variable,
+this can be executed by just entering the executable name.
+
+To delete the installed executable, enter `go clean -i`.
 
 ## Important Environment Variables
 
@@ -1241,20 +1284,20 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 ## Interfaces
 
-- an interface defines a set of methods and a type
-- all structs that implement all the methods are compatible
-- structs do not state the interfaces they implement,
+- an interface defines a set of methods
+- any type can implement an interface, even primitive types
+- types do not state the interfaces they implement,
   they just implement all the methods
-- when a struct is assigned to a variable or parameter with an interface type,
-  if the struct doesn't implement all the methods then an error
+- when a value is assigned to a variable or parameter with an interface type,
+  if its type does not implement all the interface methods then an error
   will be reported that identifies one of the missing methods
 - calling a method on a variable with an interface type
-  calls the method on the underlying struct type
+  calls the method on the underlying type
 - if a value has not be assigned to the variable,
   calling a method on it results in an error
 - an interface with no methods, referred to as the "empty interface",
   matches every type
-  - may want to give this a name using `type any interface{}`
+  - can give this a name using `type any interface{}`
 - ex.
 
   ```go

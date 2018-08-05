@@ -39,6 +39,7 @@ export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[0m\]\n🏃  '
 
 alias bigfiles="find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
 alias bigdirs='du -sk * | sort -nr | head'
+alias cls=clear
 
 alias cddropbox='cd $DROPBOX_DIR'
 alias cdelm='cd $PROGRAMMING_DIR/languages/Elm'
