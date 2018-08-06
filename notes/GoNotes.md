@@ -1258,7 +1258,6 @@ Channels are "pipes" that connect concurrent goroutines.
   }
   ```
 
-````
 - can use an additional, non-data channel to synchronize goroutine execution
 
   - to wait for a goroutine to complete, do something like this
@@ -2389,4 +2388,3 @@ func main() {
     fmt.Printf("date = %s\n", date) // date = Fri Aug  3 13:32:22 CDT 2018
   }
   ```
-````
