@@ -644,7 +644,8 @@ The variable "\_" can be used to discard a specific return value.
     they just implement all the methods
 - `map` - type for a collection of key/value pairs where the keys and values can be any type
 - `package` - specifies the package to which the current source file belongs
-- `range` - used in a `for` loop to iterate over a string, array, slice, map, or receiving channel
+- `range` - used in a `for` loop to iterate over a
+  string, array, slice, map, or receiving channel
 - `return` - terminates the containing function and returns zero or more values
 - `select` - chooses from a set of channel send or receive operations; see "Select" section
 - `struct` -
@@ -2163,6 +2164,46 @@ Note to self: Try vgo!
     go addStrings("O", 3) // starts second goroutine
     wg.Wait() // wait for the two goroutines to be done
     fmt.Printf("%v\n", slice)
+  }
+  ```
+## Reflection
+
+- the standard library package `reflect` provides run-time reflection
+  for determining the type of a value and
+  manipulating it in a type-safe way.
+  - ex.
+
+  ```go
+  package main
+
+  import (
+    "fmt"
+    "reflect"
+  )
+
+  type any interface{}
+
+  func whatAmI(value any) {
+    kind := reflect.TypeOf(value).Kind()
+    switch kind {
+    case reflect.Array:
+      fmt.Println("I am an array.")
+    case reflect.Slice:
+      fmt.Println("I am a slice.")
+    default:
+      fmt.Println("I am something else.")
+    }
+  }
+
+  func main() {
+    s := []int{1, 2, 3}
+    whatAmI(s)
+
+    a := [3]int{1, 2, 3}
+    whatAmI(a)
+
+    i := 1
+    whatAmI(i)
   }
   ```
 
