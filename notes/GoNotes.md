@@ -1413,6 +1413,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - variadic functions
   - to accept a variable number of arguments
     precede last argument type with an ellipsis
+  - the argument will be a slice of that type, not an array
   - ex.
     ```go
     func log(args ...any) {
@@ -2166,11 +2167,13 @@ Note to self: Try vgo!
     fmt.Printf("%v\n", slice)
   }
   ```
+
 ## Reflection
 
 - the standard library package `reflect` provides run-time reflection
   for determining the type of a value and
   manipulating it in a type-safe way.
+
   - ex.
 
   ```go
