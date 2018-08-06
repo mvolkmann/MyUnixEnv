@@ -32,13 +32,17 @@ The third beta release of Go 1.11 was released in August 2018.
 - simplicity and performance are major goals
   so many features found in other programming languages
   are not present in Go
-  - ex. generic types
+  - ex. classes, annotations, exceptions, and generic types
+  - although generic types may be added later
 - originally designed to be a systems programming language,
   but most developers use C, C++, or Rust for that
 - does not compete with scripting languages like
   JavaScript, Perl, Python, and Ruby
 - currently the most common uses are for
   the server side of web applications and dev ops tooling
+- compiled to platform-specific machine code,
+  not bytecode for a virtual machine
+  that must be interpreted at runtime
 
 The primary Go compiler and runtime are implemented in Go and assembler.
 
@@ -82,7 +86,7 @@ Many previous programming languages inspired the design of Go.
 - C and C++ libraries are currently more mature than Go libraries
 - Go does not support pointer arithmetic
 - Go provides garbage collection and does not allow control of
-  memory allocation/deallocation this is needed for real-time guarantees
+  memory allocation/deallocation that is needed for real-time guarantees
 - you object to community standards for Go like using gofmt to format code
 
 ## Largest Issues
@@ -163,7 +167,7 @@ Many previous programming languages inspired the design of Go.
   - "A series of walkthroughs to help you understand the Go standard library better"
   - seems to have stopped after seven, with the last in September 2016
 - list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
-  - includes Adobe, AgileBits (1Password), Bitbucket, CircleCI, CloudFlare,
+  - includes Adobe, AgileBits (1Password), BBC, Bitbucket, CircleCI, CloudFlare,
     Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
     Facebook, General Electric, GitHub, GitLab, Google, Heroku, Honeywell,
     IBM, Intel, Lyft, Medium, Mesosphere, MongoDB, Mozilla, Netflix,
@@ -625,7 +629,6 @@ The variable "\_" can be used to discard a specific return value.
 - `continue` - advances to the next iteration of a for loop
 - `default` - the default case in a `select` or `switch`
 - `defer` - defers execution of a given function until the containing function exits
-  - TODO: When is this useful? Why not move the call to the end of the function?
 - `else` - part of an `if`
 - `fallthrough` - used as last statement in a `case` to execute code in next `case`
 - `for` - only loop syntax; C-style (init, condition, and post) or just condition
@@ -1145,12 +1148,19 @@ ticTacToe[1][2] = "X"
 ## Goroutines
 
 - a lightweight thread of execution managed by the Go runtime
-- to create one, proceed any function call with `go`
+  that run a specific function call
+  - each consumes about 2K of memory compared to 1MB for a Java thread
+  - use more memory only when needed
+  - start up faster than threads
+  - not mapped 1-1 with threads, but multiplexed across them
+- run until the function exits or the application terminates
+- the `main` function runs in a goroutine,
+  so there is always at least one
+- to create another, proceed any function call with `go`
   - arguments are evaluated in the current goroutine
   - function execution occurs in the new goroutine
 - without using `go` the call is synchronous
 - with using `go` the call is asynchronous
-- the `main` function runs in a goroutine
 - to get the number of currently running goroutines,
   call `runtime.NumGoRoutine()`
 - to get the number of CPUs in the computer,
@@ -1464,6 +1474,7 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
     executed in the reverse order from which they are evaluated
   - typically used for resource cleanup such as closing files that
     must occur regardless of the code path taken in the function
+    - an alternative to try/finally in other languages
 
 ## Interfaces
 
@@ -2388,3 +2399,8 @@ func main() {
     fmt.Printf("date = %s\n", date) // date = Fri Aug  3 13:32:22 CDT 2018
   }
   ```
+
+## Internet of Things (IOT) Support
+
+- see GOBOT at <https://gobot.io/> which supports many platforms including
+  Arduino, Beaglebone, Intel Edison, MQTT, Pebble, and Raspberry Pi
