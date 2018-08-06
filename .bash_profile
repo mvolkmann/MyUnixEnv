@@ -157,6 +157,6 @@ export SOURCED_PROFILE=1
 
 # Added for OCI NRG project
 export HOST_IP="10.201.200.63"
-export DOCKER_IP="192.168.65.2"
+export DOCKER_IP="172.21.0.1"
 
 . ~/.bashrc
