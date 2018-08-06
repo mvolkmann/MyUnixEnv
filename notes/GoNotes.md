@@ -473,8 +473,12 @@ To delete the installed executable, enter `go clean -i`.
 ## Comments
 
 - same a C
-- `//` for single-line comments
 - `/* ... */` for multi-line comments
+  - primarily used for the comment at the top of a package
+    and to temporarily comment out sections of code
+- `//` for single-line comments
+  - used for all other kinds of comments,
+    even those above functions
 
 ## Zero Values
 
@@ -1158,15 +1162,19 @@ ticTacToe[1][2] = "X"
 
 ## Channels
 
-- pipes that connect concurrent goroutines
+Channels are "pipes" that connect concurrent goroutines.
+
 - can send values to them and receive values from them
 - to create a channel, `myChannel := make(chan type)`
   where type is a real type like `string`
+- by default values can be sent to and received from channels
+- to make a channel that
 - to send a value to a channel, `myChannel <- value`
   - by default, blocks until the channel retrieves it (unbuffered)
 - to receive a value from a channel, `value := <-channel`
   - by default, blocks until the channel sends it (unbuffered)
 - a channel can be closed by passing it to the `close` function
+
   - a channel should only be closed by a sending goroutine,
     not be a receiving goroutine
   - a channel should only be closed when only a single goroutine sends to it
@@ -1177,11 +1185,43 @@ ticTacToe[1][2] = "X"
     - ex. `data, open = <-myChannel`
   - see <https://go101.org/article/channel-closing.html>
     for details and more options
+
 - channel direction
 
   - the type `chan` can both send and receive values
-  - to only allow sending, use `chan<-`
-  - to only allow receiving, use `<-chan`
+  - when a channel is passed to a function,
+    the argument type can state that the function
+    will only write to or read from the channel
+    - to only write, use `chan<- type`
+    - to only read, use `<-chan type`
+    - can pass a read/write channel to a function
+      that accepts a read-only or write-only channel,
+      but not vice-versa
+  - ex.
+
+    ```go
+    package main
+
+    import "fmt"
+
+    func writer(c chan<- int) { // only writes
+      c <- 2
+      c <- 7
+    }
+
+    func reader(c <-chan int) { // only reads
+      n := <-c
+      fmt.Println("got", n)
+      n = <-c
+      fmt.Println("got", n)
+    }
+
+    func main() {
+      c := make(chan int) // works buffered or not
+      go writer(c) // runs in a new goroutine
+      reader(c) // runs in current goroutine
+    }
+    ```
 
 - buffered channels
 
@@ -1218,6 +1258,7 @@ ticTacToe[1][2] = "X"
   }
   ```
 
+````
 - can use an additional, non-data channel to synchronize goroutine execution
 
   - to wait for a goroutine to complete, do something like this
@@ -1588,19 +1629,6 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
 ## Builtin Types
 
-- float32 float64
-- complex64 complex128
-- string
-  - literal values are surrounded by " or `
-  - "" strings cannot contain newlines and can contain escape sequences like \n
-  - '' strings can contain newline characters
-  - indexed from zero
-  - to get the 3rd character, `str[2]`
-- the size of int, uint, and uintptr are usually
-
-  - 32 bits on 32-bit systems
-  - 64 bits on 64-bit systems
-
 - `bool` - values are the builtin constants `true` and `false`
   - can use with the operators &&, ||, and !
 - `byte` - alias for uint8
@@ -1608,6 +1636,8 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 - `float32` and `float64` floating-point numbers
 - `int`, `int8`, `int16`, `int32`, `int64` - signed integers
   - `int` is at least 32 bits
+    - 32 bits on 32-bit systems
+    - 64 bits on 64-bit systems
 - `uint`, `uint16`, `uint32`, `uint64` - unsigned integers
   - `uint` is at least 32 bits
 - `uintptr` - holds any kind of pointer
@@ -1615,6 +1645,11 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   that range in size from 1 to 4 bytes
   - literal values are surrounded by '
 - `string` - a sequence of 8-bit bytes, not unicode characters
+  - literal values are surrounded by " or `
+  - "" strings cannot contain newlines and can contain escape sequences like \n
+  - '' strings can contain newline characters
+  - indexed from zero
+  - to get the 3rd character, `str[2]`
 
 ## Builtin Functions
 
@@ -2354,3 +2389,4 @@ func main() {
     fmt.Printf("date = %s\n", date) // date = Fri Aug  3 13:32:22 CDT 2018
   }
   ```
+````
