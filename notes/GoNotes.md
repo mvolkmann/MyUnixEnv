@@ -431,13 +431,14 @@ func main() {
 ```
 
 Each package can only have one `.go` file that defines a `main` function.
+It is reasonable, but not required, to name this file `main.go`.
 
 To run a Go program without building an executable,
 enter `go run file-name.go`.
 
 To build an executable in the current directory, enter `go build`.
-This names the executable it creates using the name of the file that
-contains the `main` function, so naming this file `main.go` is not desirable.
+This names the executable it creates using the name of the directory that
+contains the `.go` file that contains the `main` function.
 
 To execute it, enter `./file-name`.
 
@@ -653,7 +654,8 @@ The variable "\_" can be used to discard a specific return value.
   - cannot get the address of a constant
 - to create a value can get a pointer to it
   - `myPtr := new(type)`
-  - How does this differ from `var myThing type; myPtr := &myThing`?
+  - another way is `var myThing type; myPtr := &myThing`
+    - note that the assembly code generate for these is identical
 - to get the value at a pointer
   - myValue = \*myPtr
 - to modify the value at a pointer
@@ -822,7 +824,8 @@ fmt.Println(expression)
 ## Structs
 
 - a collection of fields defined with the `struct` keyword
-- values of fields can be other structs, nested to any depth
+- field values can have any type,
+  including other structs nested to any depth
 - often will want to define a type name for a struct
 - use the dot operator to get and set fields
 - can be anonymous (less common) or assigned to a type (more common)
@@ -893,6 +896,12 @@ fmt.Println(expression)
     fmt.Printf("Month = %v\n", myStruct.Month)
   }
   ```
+
+- empty structs
+  - written as `struct{}`
+  - do not take up memory
+  - ideal for values in maps used to represent sets,
+    rather than boolean which does take up space
 
 ## Methods
 
@@ -1607,6 +1616,18 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   - changing a package name requires renaming the directory
     and modifying the `package` statement in all the files
   - why isn't the package name just inferred from the directory name?
+- community packages
+  - have paths that reflect their repository URL
+  - ex. github.com/julienschmidt/httprouter
+  - when installed, these use the URL to determine
+    their path under the `src` directory
+  - avoids path conflicts
+- it is recommended that your own packages go in directories that
+  reflect their eventual URL should they be publish in the future
+  - ex. my packages should be in src/github.com/mvolkmann/my-package-name
+  - other packages would import this with
+    `import "github.com/mvolkmann/mypkg"`
+    and refer to names it exports with a prefix of `mypkg.`
 - the `main` function is the starting point of all Go applications
   and must in the `main` package
   - this is the only package that does not need to match the name of the directory
@@ -1659,18 +1680,19 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   )
 
   func divide(a, b float32) (float32, error) {
-  if b == 0 {
-    return 0, errors.New("divide by zero")
-  }
-    return a / b, nil
+    if b == 0 {
+      return 0, errors.New("divide by zero")
+    }
+    return a / b, nil // no error
   }
 
   func main() {
-    q, err = divide(7, 0)
-    if err != nil {
-      fmt.Println(err) // prints error message
-    } else {
+    // A common idiom for error checking using
+    // the optional assignment of an "if"
+    if q, err = divide(7, 0); err == nil {
       fmt.Print(q)
+    } else {}
+      fmt.Println(err) // prints error message
     }
   }
   ```
