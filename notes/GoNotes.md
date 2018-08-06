@@ -2,9 +2,16 @@
 
 ## Overview
 
-- created by Robert Griesemer, Rob Pike, and Ken Thompson,
-  all working at Google, starting in September 2007
-- announced in November 2009
+Go was conceived by Robert Griesemer, Rob Pike, and Ken Thompson,
+all working at Google, starting in September 2007.
+About a year later Russ Cox and Ian Taylor joined the team.
+
+Go was officially announced in November 2009.
+Go 1.0 was released in March 2012.
+Currently (as of August 2018) the latest version is
+Go 1.10 which was released in February 2016.
+The third beta release of Go 1.11 was released in August 2018.
+
 - goals (many are in comparison to languages like C++ and Java)
 
   - address software issues at Google
@@ -39,16 +46,6 @@ The primary Go compiler and runtime are implemented in Go and assembler.
 
 Many previous programming languages inspired the design of Go.
 ![Go Lineage](go-lineage.png)
-
-## Future
-
-- large, frequently requested features that may be added at some point include
-  - generics
-    - would allow generic functions like `map`, `filter`, and `reduce`
-  - immutability
-    - would provide guarantees to prevent accidental data mutations
-  - modules
-    - would support managing package versions used in a library or application
 
 ## Characteristics
 
@@ -91,11 +88,16 @@ Many previous programming languages inspired the design of Go.
 ## Largest Issues
 
 - lack of a standardized approach for handling package versions
+  used by a library or application
   - leading contenders are vgo and dep
 - lack of support for generic types
   - needed for truly functional programming
-    with generic functions like map, filter, and reduce
+    with generic functions like `map`, `filter`, and `reduce`
 - lack of support for immutable data types
+  - needed to provide guarantees that prevent accidental data mutations
+- arrow functions
+  - would provide more concise syntax and
+    are expected in functional programming languages
 
 ## Annoyances
 
@@ -220,14 +222,40 @@ Many previous programming languages inspired the design of Go.
 
 ## Syntax Highlights
 
-- semicolons are not required,
-  but can be used to place multiple statements on the same line
-- types follow parameters, separated by a space
-- exported variables and struct members have names that start uppercase
-  - but only those at the top level of a source file,
-    not those defined inside a function
-- outside of functions, every line begins with a keyword
-  - this explains why the `:=` operator is not allowed outside of functions
+Semicolons are not required,
+but can be used to place multiple statements on the same line.
+
+Types follow parameters, separated by a space.
+
+Top-level names (not declared inside a function)
+are exported (made visible outside their package)
+if their names start uppercase.
+
+A Go source file contains a package clause,
+zero or more import declarations,
+and zero or more top-level declarations.
+
+A top-level declaration is a declaration of a
+constant, type, variable, function, or method.
+
+Control statements like `if` and `for` cannot appear outside of functions.
+
+Outside of functions, every statement begins with a keyword.
+This precludes the `:=` operator from being used outside of functions.
+
+## Package Initialization
+
+Initialization of top-level variables that require logic,
+not just a literal values or results of function calls,
+must be done in `init` functions.
+A package can have any number of `init` functions
+in any of its source files.
+These functions are run in the order they appear,
+and alphabetically by source file name within a package.
+The `init` functions of all imported packages
+are run before those of a given package.
+All the `init` functions of all imported packages are run
+before the `main` function of a application is run.
 
 ## Tooling
 
@@ -275,6 +303,10 @@ Many previous programming languages inspired the design of Go.
   - `go version`
     - outputs the version of Go that is installed
     - to get this in code, call `runtime.Version()`
+
+Many sub-commands support the `-race` flag which
+adds detection and reporting of data races.
+These include `test`, `run`, `build`, and `install`.
 
 ## Code Formatting
 
@@ -443,20 +475,25 @@ To delete the installed executable, enter `go clean -i`.
 
 Every type as a "zero value" which is the value it takes on when it is not initialized.
 
-| Type            | Zero Value |
-| --------------- | ---------- |
-| bool            | false      |
-| number          | 0          |
-| rune            | 0          |
-| string          | ""         |
-| all other types | nil        |
+| Type            | Zero Value                                                      |
+| --------------- | --------------------------------------------------------------- |
+| bool            | false                                                           |
+| number          | 0                                                               |
+| rune            | 0                                                               |
+| string          | ""                                                              |
+| array           | array of proper length where all elements have their zero value |
+| slice           | empty slice with length 0 and capacity 0                        |
+| map             | empty map                                                       |
+| struct          | struct where all fields have their zero value                   |
+| all other types | nil                                                             |
 
 ## Variables
 
 Variables in Go have the following characteristics:
 
 - mutable unless defined with `const`
-- block-scoped
+- block-scoped within functions, so those in
+  inner scopes can shadow those in outer scopes
 - names must start with a letter and
   can contain letters, digits, and underscores
 - local to their package unless name starts uppercase
@@ -522,6 +559,12 @@ For example, `name, age = "Tami", 56`.
 It is an error to attempt to assign to a variable that has not been defined.
 
 The `:=` operator is particularly useful for capturing function return values.
+
+There is an exception to the rule that existing variables cannot be re-declared.
+As long as at least one variable on the left of `:=` has not yet been declared,
+the other variables can already exist.
+A common use case is when the variable `err` is used
+to capture possible errors from a function call.
 
 Functions can return an number of values.
 Sometimes the caller is only interested in a subset of them.
@@ -1017,10 +1060,10 @@ ticTacToe[1][2] = "X"
 ## Maps
 
 - collections of key/value pairs where keys and values can be any type
-- to declare, `map[keyType]valueType`
+- a map type looks like `map[keyType]valueType`
   - ex. `var myMap map[string]int`
-- to declare and initialize,
-  `var myMap = map[keyType]valueType{k1: v1, k2: v2, ...}`
+- two ways to create
+  `myMap := make(map[keyType]valueType)`
   or
   `myMap := map[keyType]valueType{k1: v1, k2: v2, ...}`
 - to add a key/value pair, `myMap[key] = value`
