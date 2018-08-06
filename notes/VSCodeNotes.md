@@ -1026,6 +1026,12 @@ followed by the macOS version in parentheses.
   - I mapped ctrl-L (cmd-L) to toggle line numbers
     between "on", "relative", and "off".
 
+## LintLens Extension
+
+- "Adds details and a documentation link beside each ESLint rule
+  in your configuration file (including plugins) located anywhere
+  in your workspace folders (supports multiple config files)."
+
 ## Markdown
 
 - can view source and preview side-by-side with live updating,

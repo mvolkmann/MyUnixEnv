@@ -901,16 +901,16 @@ To embed a struct within another, include just its name to get a field with the 
 
 ```go
 type address struct {
-	street string
-	city   string
-	state  string
-	zip    string
+  street string
+  city   string
+  state  string
+  zip    string
 }
 
 type person struct {
-	name        string
-	address     // home
-	workAddress address
+  name        string
+  address     // home
+  workAddress address
 }
 
 me := person{
@@ -938,16 +938,18 @@ me := person{
 
 ## Methods
 
-- methods can be associated with a struct
-  - particularly useful for structs that implement interfaces
-  - otherwise can just write functions that take a struct as an argument
+- methods can be associated with any type
+  - particularly useful for types that implement interfaces
+  - otherwise can just write functions that take a value of the type as an argument
 - cannot overload methods to create different implementations
   for different parameter types
-- an instance of a struct is referred to as the "receiver" for the method
+- an instance of the type is referred to as the "receiver" for the method
 - the syntax for defining a method is
   `func (receiver-info) name(parameter-list) (return-types) { body }`
   - note that there are three sets of parentheses
     if the method has more than one return value
+- to call a method, add a dot, method name, and argument list
+  after a variable that holds a value
 - ex.
 
   ```go
@@ -967,7 +969,7 @@ me := person{
 - in the previous example the receiver is a pointer to a struct
 - allows the method to modify the struct and avoids making a copy of the struct
   - for these reasons, most methods take a pointer
-- when the receiver is a struct and not a pointer to a struct
+- when the receiver is a type value and not a pointer to a type value
   the method receives a copy and cannot modify the original
 - when a function has a parameter with a pointer type,
   it must be passed a pointer
@@ -1519,6 +1521,14 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 
   me := person{"Mark", 57}
   fmt.Println(me)
+  ```
+
+- interfaces can be nested to add the methods of one interface to another
+
+  - ex.
+
+  ```go
+
   ```
 
 ## Builtin Constants
