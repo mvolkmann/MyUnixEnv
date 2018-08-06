@@ -159,6 +159,9 @@ Many previous programming languages inspired the design of Go.
   - "a weekly newsletter about the Go programming language"
 - GopherCon 2015: Robert Griesemer - The Evolution of Go:
   <https://www.youtube.com/watch?v=0ReKdcpNyQg>
+- Go Walkthrough: <https://medium.com/go-walkthrough>
+  - "A series of walkthroughs to help you understand the Go standard library better"
+  - seems to have stopped after seven, with the last in September 2016
 - list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
   - includes Adobe, AgileBits (1Password), Bitbucket, CircleCI, CloudFlare,
     Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
@@ -232,11 +235,12 @@ are exported (made visible outside their package)
 if their names start uppercase.
 
 A Go source file contains a package clause,
-zero or more import declarations,
-and zero or more top-level declarations.
+followed by zero or more import declarations,
+followed by zero or more top-level declarations.
 
 A top-level declaration is a declaration of a
 constant, type, variable, function, or method.
+These declarations can be intermixed in any order.
 
 Control statements like `if` and `for` cannot appear outside of functions.
 
@@ -647,6 +651,9 @@ The variable "\_" can be used to discard a specific return value.
 - to get the address of a variable
   - myPtr = &myVar
   - cannot get the address of a constant
+- to create a value can get a pointer to it
+  - `myPtr := new(type)`
+  - How does this differ from `var myThing type; myPtr := &myThing`?
 - to get the value at a pointer
   - myValue = \*myPtr
 - to modify the value at a pointer
@@ -971,7 +978,8 @@ fmt.Println(expression)
 ## Slices
 
 - a view into an array with a variable length
-- the zero value is nil
+- indexes are zero-based
+- the zero value is nil (This seems wrong!)
 - a distinct type from arrays
   - [3]int is an array
   - []int is a slice
@@ -1078,6 +1086,9 @@ ticTacToe[1][2] = "X"
 
 - to delete a key/value pair, `delete(myMap, key)`
 - to iterate over, `for key, value := range myMap { ... }`
+- supports concurrent reads, but not concurrent writes
+  or a concurrent read and write
+  - can avoid with channels or mutexes
 
 ## Concurrency
 
