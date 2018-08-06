@@ -155,4 +155,8 @@ export TERM=xterm-256color
 # so .bashrc knows whether it should source this.
 export SOURCED_PROFILE=1
 
+# Added for OCI NRG project
+export HOST_IP="10.201.200.63"
+export DOCKER_IP="192.168.65.2"
+
 . ~/.bashrc
