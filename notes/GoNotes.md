@@ -517,7 +517,9 @@ package statistics
 We already have good comments above the exported functions
 in `average.go` and `maximum.go`.
 
-Enter `go doc` in the `statistics` directory
+The `go doc` command provides a quick overview of a package.
+For an overview of our `statistics` package,
+enter `go doc` in the `statistics` directory
 or `go doc statistics` if in another directory.
 This produces the following output:
 
@@ -534,7 +536,8 @@ func Max(numbers []float64) float64
 Note this tells us how to import the package and the
 purpose of the package, but does not output the function comments.
 
-To get more detailed documentation, enter `godoc` followed by a package path.
+The `godoc` command produces more detailed documentation.
+Enter `godoc` followed by a package path.
 For example, `godoc github.com/mvolkmann/statistics` produces the following output:
 
 ```text
@@ -602,17 +605,27 @@ and verify that the correct output is produced.
 Using community packages is similar to using our own custom packages.
 They just need to be installed.
 
-For example, to install the package "NEED-EXAMPLE",
-enter `go get NEED-EXAMPLE`.
-This will add the source files for the package
+For example, to install the package "github.com/ttacon/chalk",
+enter `go get github.com/ttacon/chalk`.
+This package is similar to the Node package "chalk"
+which outputs ANSI escape sequences to color and style text
+that is written to the terminal.
+Installing this will add the source files for the package
 in the appropriate directory below `$GOPATH/src` and
 install it by building a `.a` object file under `$GOPATH/pkg`.
 
-To use this package in our app, edit `main.go`
+To use this package in our app, edit `main.go`,
+add an import for this package,
 and add the following in the `main` function.
 
 ```go
-TODO: Add this
+  fmt.Printf("%s%s%s\n", chalk.Magenta, "So pretty!", chalk.Reset)
+
+  red := chalk.Red.Color
+  yellow := chalk.Yellow.Color
+  blue := chalk.Blue.Color
+  fmt.Println(red("Hello,"), yellow("my name is"), blue("Mark!"), chalk.Reset)
+}
 ```
 
 ### Publish Package or App to GitHub
@@ -685,7 +698,7 @@ TODO: Add this section?
 - GoDoc: <https://godoc.org>
   - "hosts documentation for Go packages on Bitbucket, GitHub,
     Launchpad and Google Project Hosting"
-  - can search for a package and see its documentation
+  - can search for packages by import path or keyword and see their documentation
 - Awesome Go: <https://awesome-go.com>
   - "A curated list of awesome Go frameworks, libraries and software"
 - Gophers Slack channel: <https://invite.slack.golangbridge.org/>
