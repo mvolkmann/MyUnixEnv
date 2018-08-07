@@ -217,7 +217,7 @@ We could define both functions in the same file, but we are using
 two files to show that a package can be defined by multiple source files.
 Note that both files begin with the same `package` statement.
 
-The code below contains many comments to explain certain Go features.
+The code below contains several comments to explain certain Go features.
 These will be described in more detail later.
 
 Add the following to `maximum.go`.
@@ -292,28 +292,6 @@ This is an object file.
 When other packages that use this package are installed,
 this file is used rather than compiling the code again
 to speed up build times.
-
-Edit `$GOPATH/src/github.com/mvolkmann/hello/main.go`.
-
-Change the import statement to the following.
-
-```go
-import (
-  "fmt"
-  "github.com/mvolkmann/statistics"
-)
-```
-
-Add the following to the `main` function.
-
-```go
-  numbers := []float64{1, 2, 7}
-  fmt.Println("maximum =", statistics.Max(numbers))
-  fmt.Println("average =", statistics.Avg(numbers))
-```
-
-Run the code by entering `go run main.go` from the `hello` directory
-and verify that the correct output is produced.
 
 ### Add Tests
 
@@ -594,10 +572,52 @@ To see example code for the `Max` function and its output
 expand the "Example" section at the bottom of its documentation.
 ![Statistics Package Example](go-statistics-pkg-example.png)
 
-Use the package from main
-Install first community package
-Use the community package from app
-Publish app to GitHub
+### Use Package
+
+Now we're ready to use our statistics package
+in our application.
+Edit `$GOPATH/src/github.com/mvolkmann/hello/main.go`.
+Change the import statement to the following.
+
+```go
+import (
+  "fmt"
+  "github.com/mvolkmann/statistics"
+)
+```
+
+Add the following to the `main` function.
+
+```go
+  numbers := []float64{1, 2, 7}
+  fmt.Println("maximum =", statistics.Max(numbers))
+  fmt.Println("average =", statistics.Avg(numbers))
+```
+
+Run the code by entering `go run main.go` from the `hello` directory
+and verify that the correct output is produced.
+
+### Community packages
+
+Using community packages is similar to using our own custom packages.
+They just need to be installed.
+
+For example, to install the package "NEED-EXAMPLE",
+enter `go get NEED-EXAMPLE`.
+This will add the source files for the package
+in the appropriate directory below `$GOPATH/src` and
+install it by building a `.a` object file under `$GOPATH/pkg`.
+
+To use this package in our app, edit `main.go`
+and add the following in the `main` function.
+
+```go
+TODO: Add this
+```
+
+### Publish Package or App to GitHub
+
+TODO: Add this section?
 
 ## Largest Issues
 
