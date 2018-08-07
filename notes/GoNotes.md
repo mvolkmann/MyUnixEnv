@@ -474,6 +474,10 @@ Note that test coverage for example tests is not currently tracked accurately.
 For example, failing to test the empty slice case of the `Max` function
 reports that none of the code in the `Max` function is covered.
 
+While example tests are a kind of test,
+their main purpose is to provide example code for using a package
+in generated documentation, which is covered next.
+
 Another form of tests not covered here is benchmark tests.
 
 For more detail on Go tests, see <https://golang.org/pkg/testing/>.
