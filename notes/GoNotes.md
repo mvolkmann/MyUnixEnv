@@ -538,7 +538,14 @@ purpose of the package, but does not output the function comments.
 
 The `godoc` command produces more detailed documentation.
 Enter `godoc` followed by a package path.
-For example, `godoc github.com/mvolkmann/statistics` produces the following output:
+This can also be used to view documentation on standard library packages.
+In addition to specifying a package name, a name the package exports
+can be specified to limit the output to just that documentation.
+For example, `godoc strings Join`.
+
+To see documentation for our "statistics" package,
+enter `godoc github.com/mvolkmann/statistics`
+which produces the following output:
 
 ```text
 PACKAGE DOCUMENTATION
