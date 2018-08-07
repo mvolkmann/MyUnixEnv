@@ -569,7 +569,7 @@ To browse an HTML version of this documentation,
 enter `godoc -http=:1234` where 1234 is a port.
 Any available, non-privileged port can be used.
 Browse localhost:1234 to see a local version of all the official Go documentation
-including documentation found in your packages.
+including documentation on your packages.
 To see documentation for our `statistics` package,
 press the "Packages" button at the top,
 search the page for "statistics", and click that link.
