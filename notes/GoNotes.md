@@ -89,6 +89,197 @@ Many previous programming languages inspired the design of Go.
   memory allocation/deallocation that is needed for real-time guarantees
 - you object to community standards for Go like using gofmt to format code
 
+## Zero to Hero
+
+Let's walk through the steps to create a Go application.
+If you don't already have a GitHub (<https://github.com>)
+or Bitbucket (<https://bitbucket.org>) account,
+I recommend creating one now so you can experience publishing an app.
+
+This article uses the term "terminal" to refer to
+a Windows Command Prompt or a Linux/Mac Terminal window.
+
+### Install Go
+
+One way to install Go is to browse <https://golang.org/dl/>,
+download a platform-specific installer, and double-click it.
+If you are using a Mac and have Homebrew (<https://brew.sh/>) installed,
+you can instead just run `brew install go`.
+To verify that this worked, open a terminal and enter `go version`
+which should output the version of Go you have installed.
+
+### Create Workspace
+
+Go projects live in a workspace.
+You can have a separate workspace for each project
+or one workspace that contains all your projects.
+Either way the environment variable `GOPATH` must be set to point
+to the top directory of the workspace you are currently using.
+
+Create a `go` directory in your home directory.
+Set `GOPATH` to point to this directory.
+In the future if you decide to switch to a different workspace,
+don't forget to change this environment variable to point to it.
+
+## Create First App
+
+Create a `src` directory inside your `go` directory.
+
+When a Go package or application is installed in a workspace it is
+placed in a directory that corresponds to the URL where it is published.
+For example, if you enter `go get github.com/julienschmidt/httprouter`
+it will download the code and place the `.go` files for the package
+in the `$GOPATH/src/github.com/julienschmidt/httprouter` directory.
+It is recommended that you use the same approach for placing
+your own code in a workspace to avoid naming collisions and
+leave you ready for publishing the code in the future.
+
+Determine your preferred repository domain, such as `github.com`
+and make sure you know your repository username, such as `mvolkmann`.
+Create the directory `{repo-domain}/{repo-username}/{app-name}` inside your `src` directory.
+For me this would be `github.com/mvolkmann/hello`.
+Create the file `main.go` inside this directory.
+
+Go source files begin with a `package` statement.
+That is followed by imports of other packages if any are needed.
+The imports are followed by top-level declarations of
+package-scoped constants, variables, types, methods, and functions.
+Each of these will be described in detail later.
+
+Each application has a single function named `main`
+that must be in a package named `main`.
+
+The primary way of writing output to the standard output (stdout) stream
+is to use functions in the `fmt` package.
+
+Add the following to `main.go`.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("Hello, World!")
+}
+```
+
+## Run First App
+
+Open a terminal and cd to your application directory.
+Enter `go run main.go` to run the app.
+This should output "Hello, World!".
+
+## Build First App
+
+To build an executable for this app, enter `go build`
+while in the directory containing the file that defines the `main` func.
+This will create an executable file in the current directory
+that has the same name as the directory, `hello` in this case.
+In Windows this file will have a `.exe` file extension.
+
+To run this app, enter `./hello` (just `hello` in Windows).
+
+## Install First App
+
+When Go installs an app it creates the executable
+in the `bin` subdirectory of the current workspace.
+If this directory doesn't exist, it is created.
+It is convenient to have this directory listed
+in your `PATH` environment variable so that these executables
+can be run from anywhere by just entering their names.
+Go ahead and add `$HOME/go/bin` to your `PATH` environment variable now.
+In Windows, use ??? in place of `$HOME`.
+
+To install the app, enter `go install`
+while in the directory containing the file that defines the `main` func.
+Assuming that your `PATH` environment variable is set correctly
+you can now run the app by just entering `hello`
+regardless of your current working directory.
+
+## Create First Package
+
+Non-trivial Go applications divide the code into several packages.
+A package is a collection of `.go` files in the same directory
+that all begin with the same `package` statement.
+By convention, the directory name of a package should match the package name.
+We will cover packages in more detail later.
+
+To keep things simple so we can focus on the mechanics of Go we will
+create a package that just provides a couple of basic functions.
+The first will return the largest number in a set of numbers.
+The second will return the average of a set of numbers.
+
+Create the directory `$GOPATH/src/github.com/mvolkmann/statistics`,
+substituting your repo domain and username.
+Create the files `max.go` and `average.go` in this directory.
+We could define both functions in the same file, but we are using
+two files to show that a package can be defined by multiple source files.
+
+Add the following to `max.go`.
+
+```go
+package statistics
+
+// Max returns the maximum of slice of float64 values.
+func Max(numbers []float64) float64 {
+  if len(numbers) == 0 {
+    return 0
+  }
+
+  max := numbers[0]
+  for _, number := range numbers {
+    if number > max {
+      max = number
+    }
+  }
+
+  return max
+}
+```
+
+Add the following to `average.go`.
+
+```go
+package statistics
+
+func sum(numbers []float64) float64 {
+  result := 0.0
+  for _, number := range numbers {
+    result += number
+  }
+  return result
+}
+
+// Avg returns the average of slice of float64 values.
+func Avg(numbers []float64) float64 {
+  if len(numbers) == 0 {
+    return 0
+  }
+  return sum(numbers) / float64(len(numbers))
+}
+```
+
+Add the following to the `main` function inside
+`$GOPATH/src/github.com/mvolkmann/hello/main.go`.
+
+```go
+  numbers := []float64{1, 2, 7}
+  fmt.Println("maximum =", statistics.Max(numbers))
+  fmt.Println("average =", statistics.Avg(numbers))
+```
+
+Run the code by entering `go run main.go` from the `hello` directory
+and verify that the correct output is produced.
+
+Add tests to the package
+Add examples to the package
+Generate docs for the package
+Use the package from main
+Install first community package
+Use the community package from app
+Publish app to GitHubti
+
 ## Largest Issues
 
 - lack of a standardized approach for handling package versions
@@ -198,21 +389,6 @@ Many previous programming languages inspired the design of Go.
     - alphabetizes imports
     - runs "gofmt" on code
     - and much more (DOCUMENT MORE)
-
-## Installing
-
-- approach #1
-  - browse <https://golang.org/dl/>
-  - download a platform-specific installer
-  - double-click to run it
-- approach #2 (Mac-only)
-  - `brew install go`
-- create a "go" directory in your home directory
-  - GOPATH is set to this by default
-  - to use another directory, set GOPATH to it
-    - to set GOPATH to current directory
-      - in Bash shell, `export GOPATH=`pwd`
-      - in Fish shell, `set -x GOPATH (pwd)`
 
 ## Alternative Go Implementations
 
