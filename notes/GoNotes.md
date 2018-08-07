@@ -216,18 +216,36 @@ Create the files `max.go` and `average.go` in this directory.
 We could define both functions in the same file, but we are using
 two files to show that a package can be defined by multiple source files.
 
+The code below contains many comments to explain certain Go features.
+These will be described in more detail later.
+
 Add the following to `max.go`.
 
 ```go
 package statistics
 
 // Max returns the maximum of slice of float64 values.
+// Functions are only available to be used in other packages
+// if they are "exported" which is indicated by
+// starting their names with an uppercase letter.
+// The type of the parameter "numbers" is a "slice"
+// of double-precision floating point numbers.
+// For now think of a slice as being like an array.
+// The return type follows the parameter list.
 func Max(numbers []float64) float64 {
   if len(numbers) == 0 {
     return 0
   }
 
+  // The := operator declares the variable on the left
+  // and initializes it to the value on the right.
   max := numbers[0]
+
+  // "range" is a keyword that is used to iterate over many kinds of sequences,
+  // one of which is a slice.  In each iteration it returns two values.
+  // For slices it returns an index and the value at that index.
+  // In this example we do not need the index.
+  // That is indicated by placing it in the special underscore variable.
   for _, number := range numbers {
     if number > max {
       max = number
@@ -243,6 +261,8 @@ Add the following to `average.go`.
 ```go
 package statistics
 
+// This function is for internal use by this package
+// so it is not exported (name starts lowercase).
 func sum(numbers []float64) float64 {
   result := 0.0
   for _, number := range numbers {
@@ -256,12 +276,26 @@ func Avg(numbers []float64) float64 {
   if len(numbers) == 0 {
     return 0
   }
+  // Go is very picky about types!
+  // The "len" function returns an int.
+  // We cannot divide a float64 by an int,
+  // so we must cast the int to float64.
   return sum(numbers) / float64(len(numbers))
 }
 ```
 
-Add the following to the `main` function inside
-`$GOPATH/src/github.com/mvolkmann/hello/main.go`.
+Edit `$GOPATH/src/github.com/mvolkmann/hello/main.go`.
+
+Change the import statement to the following.
+
+```go
+import (
+	"fmt"
+	"github.com/mvolkmann/statistics"
+)
+```
+
+Add the following to the `main` function.
 
 ```go
   numbers := []float64{1, 2, 7}
@@ -272,7 +306,10 @@ Add the following to the `main` function inside
 Run the code by entering `go run main.go` from the `hello` directory
 and verify that the correct output is produced.
 
-Add tests to the package
+### Add Tests
+
+Let's add tests to the "statistics" package.
+
 Add examples to the package
 Generate docs for the package
 Use the package from main
