@@ -37,3 +37,8 @@ h3 {
 .hljs-keyword {
   color: orange;
 }
+
+img {
+  margin-top: 10px;
+  outline: solid lightgray 2px;
+}

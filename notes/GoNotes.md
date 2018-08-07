@@ -121,7 +121,7 @@ Set `GOPATH` to point to this directory.
 In the future if you decide to switch to a different workspace,
 don't forget to change this environment variable to point to it.
 
-## Create First App
+### Create First App
 
 Create a `src` directory inside your `go` directory.
 
@@ -164,13 +164,13 @@ func main() {
 }
 ```
 
-## Run First App
+### Run First App
 
 Open a terminal and cd to your application directory.
 Enter `go run main.go` to run the app.
 This should output "Hello, World!".
 
-## Build First App
+### Build First App
 
 To build an executable for this app, enter `go build`
 while in the directory containing the file that defines the `main` func.
@@ -180,7 +180,7 @@ In Windows this file will have a `.exe` file extension.
 
 To run this app, enter `./hello` (just `hello` in Windows).
 
-## Install First App
+### Install First App
 
 When Go installs an app it creates the executable
 in the `bin` subdirectory of the current workspace.
@@ -197,7 +197,7 @@ Assuming that your `PATH` environment variable is set correctly
 you can now run the app by just entering `hello`
 regardless of your current working directory.
 
-## Create First Package
+### Create First Package
 
 Non-trivial Go applications divide the code into several packages.
 A package is a collection of `.go` files in the same directory
@@ -285,6 +285,14 @@ func Avg(numbers []float64) float64 {
 }
 ```
 
+Running `go install` from the `statistics` package directory
+creates is a `statistics.a` file in the directory
+`$GOPATH/pkg/{platform}/github.com/mvolkmann` directory.
+This is an object file.
+When other packages that use this package are installed,
+this file is used rather than compiling the code again
+to speed up build times.
+
 Edit `$GOPATH/src/github.com/mvolkmann/hello/main.go`.
 
 Change the import statement to the following.
@@ -309,6 +317,7 @@ and verify that the correct output is produced.
 
 ### Add Tests
 
+The Go standard library provides a `testing` package.
 Let's add tests to the "statistics" package.
 The VS Code Go extension provides the "Go: Generate Unit Tests For Package" command
 that does what its name implies.
@@ -447,8 +456,12 @@ and run the tests again to see failing output.
 This includes the test function name, file name,
 assertion name, and line number of each failure.
 
-## Test Coverage
+TODO: Learn how to run tests for all packages below the current directory.
+Try `go test ./*`
 
+### Test Coverage
+
+Go has builtin test coverage.
 To merely see the percentage of code in the current package
 that is covered by tests, enter `go test -cover`.
 To capture test coverage details in file,
@@ -460,12 +473,131 @@ comment out the assertion for an empty slice in the `TestAvg` function.
 
 ![Test Coverage](go-test-coverage-html.png)
 
-Add examples to the package
-Generate docs for the package
+The dropdown menu in the upper left can be used to
+view coverage for a different source file.
+It shows the percentage of coverage for each file.
+
+### Example Tests
+
+The test tool also supports a form of tests called "examples".
+These tests write to stdout and provide a special comment
+that describes the expected output.
+The test fails if the expected output is not produced.
+These test function names must begin with `Example`.
+
+Here is an example of such a test for our `Maximum` function that can be
+added to `$GOPATH/src/github.com/mvolkmann/statistics/maximum_test.go`.
+
+```go
+
+```
+
+Note that test coverage for example tests is not currently tracked accurately.
+For example, failing to test the empty slice case of the `Max` function
+reports that none of the code in the `Max` function is covered.
+
+Another form of tests not covered here is benchmark tests.
+
+For more detail on Go tests, see <https://golang.org/pkg/testing/>.
+
+### Generate Documentation
+
+The `go doc` and `godoc` tools generates package documentation.
+They parse `.go` source files, looking for
+comments that follow certain conventions.
+
+To add documentation to any top-level declaration
+(package, type, constant, variable, function, or method)
+add a comment directly before it.
+Godoc will render the comment to the right of the item to which it pertains.
+
+Paragraphs must be separated by blank line.
+
+When HTML documentation is generated, URLs in documentation comments
+converted to hyperlinks.
+
+Text to be output in a monospace font, such as code examples,
+should be indented farther than the other comment text.
+
+The comment preceding a package statement can appear in any source file
+for the package. If the package has more than one source file,
+this comment does not need to be repeated in each of them.
+One approach for multi-file packages is to create a file named `doc.go`
+that only contains the comment followed by a `package` statement.
+Package comments should begin with the name of the package,
+followed by a description of its purpose.
+
+Create the file `doc.go` in the `statistics` directory
+with the following content:
+
+```go
+// statistics provides functions that compute statistical values
+// for a slice of float64 values.
+package statistics
+```
+
+We already have good comments above the exported functions
+in `average.go` and `maximum.go`.
+
+Enter `go doc` in the `statistics` directory
+or `go doc statistics` if in another directory.
+This produces the following output:
+
+```text
+package statistics // import "github.com/mvolkmann/statistics"
+
+statistics provides functions that compute statistical values for a slice of
+float64 values.
+
+func Avg(numbers []float64) float64
+func Max(numbers []float64) float64
+```
+
+Note this tells us how to import the package and the
+purpose of the package, but does not output the function comments.
+
+To get more detailed documentation, enter `godoc` followed by a package path.
+For example, `godoc github.com/mvolkmann/statistics` produces the following output:
+
+```text
+PACKAGE DOCUMENTATION
+
+package statistics
+    import "github.com/mvolkmann/statistics"
+
+    statistics provides functions that compute statistical values for a
+    slice of float64 values.
+
+FUNCTIONS
+
+func Avg(numbers []float64) float64
+    Avg returns the average of slice of float64 values.
+
+func Max(numbers []float64) float64
+    Max returns the maximum of slice of float64 values.
+```
+
+To browse an HTML version of this documentation,
+enter `godoc -http=:1234` where 1234 is a port.
+Any available, non-privileged port can be used.
+Browse localhost:1234 to see a local version of all the official Go documentation
+including documentation found in your packages.
+To see documentation for our `statistics` package,
+press the "Packages" button at the top,
+search the page for "statistics", and click that link.
+The following will be displayed:
+
+![Statistics Package Doc](go-statistics-pkg-doc.png)
+![Statistics Package Functions](go-statistics-pkg-functions.png)
+
+To see example code for the `Max` function and its output
+expand the "Example" section at the bottom of its documentation.
+![Statistics Package Example](go-statistics-pkg-example.png)
+
 Use the package from main
 Install first community package
 Use the community package from app
-Publish app to GitHubt
+Publish app to GitHub
 
 ## Largest Issues
 
