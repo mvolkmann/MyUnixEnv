@@ -215,11 +215,12 @@ substituting your repo domain and username.
 Create the files `max.go` and `average.go` in this directory.
 We could define both functions in the same file, but we are using
 two files to show that a package can be defined by multiple source files.
+Note that both files begin with the same `package` statement.
 
 The code below contains many comments to explain certain Go features.
 These will be described in more detail later.
 
-Add the following to `max.go`.
+Add the following to `maximum.go`.
 
 ```go
 package statistics
@@ -290,8 +291,8 @@ Change the import statement to the following.
 
 ```go
 import (
-	"fmt"
-	"github.com/mvolkmann/statistics"
+  "fmt"
+  "github.com/mvolkmann/statistics"
 )
 ```
 
@@ -309,13 +310,162 @@ and verify that the correct output is produced.
 ### Add Tests
 
 Let's add tests to the "statistics" package.
+The VS Code Go extension provides the "Go: Generate Unit Tests For Package" command
+that does what its name implies.
+It generates files with names that end in `_test.go`
+for each `.go` file in the current package.
+You could of course manually create these files.
+Here is what it generates in `maximum_test.go` for our `maximum.go` file.
+
+```go
+package statistics
+
+import "testing"
+
+func TestMax(t *testing.T) {
+  type args struct {
+    numbers []float64
+  }
+  tests := []struct {
+    name string
+    args args
+    want float64
+  }{
+    // TODO: Add test cases.
+  }
+  for _, tt := range tests {
+    t.Run(tt.name, func(t *testing.T) {
+      if got := Max(tt.args.numbers); got != tt.want {
+        t.Errorf("Max() = %v, want %v", got, tt.want)
+      }
+    })
+  }
+}
+```
+
+This uses the `testing` package from the Go standard library.
+Each test function has a name that begins with `Test`.
+These functions create a slice of structs called `tests`
+that each describe an individual test assertion.
+Each test assertion has a name, a set of arguments to be passed
+to the function being tested, and the expected result (called "want").
+The loop that follows iterates through the "tests"
+and fails if the actual value returned from the
+function being tested does not match the "want" value.
+All that is left for us to do is replace the `TODO` comment
+with some test data.
+
+Replace the `TODO` comment with the following:
+
+```go
+    {"empty slice", args{[]float64{}}, 0.0},
+    {"single value", args{[]float64{3.1}}, 3.1},
+    {"multiple values", args{[]float64{3.1, 7.2, 5.0}}, 7.2},
+```
+
+The tests for `average.go` in `average_test.go` are a little tricker.
+When comparing computed floating point values,
+we need to test whether they are "close", not exact, due to the
+well-known issue of representing floating point numbers in binary.
+
+We can add import the "math" package in the test file
+and add a function like this:
+
+```go
+func close(n1 float64, n2 float64) bool {
+  return math.Abs(n1-n2) < 1e-9
+}
+```
+
+Then we can change `got != tt.want` in the tests to
+`!close(got, tt.want)`.
+
+The `average_test` file ends up as follows:
+
+```go
+package statistics
+
+import (
+  "math"
+  "testing"
+)
+
+func close(n1 float64, n2 float64) bool {
+  return math.Abs(n1-n2) < 1e-9
+}
+
+func Test_sum(t *testing.T) {
+  type args struct {
+    numbers []float64
+  }
+  tests := []struct {
+    name string
+    args args
+    want float64
+  }{
+    {"empty slice", args{[]float64{}}, 0.0},
+    {"single value", args{[]float64{3.1}}, 3.1},
+    {"multiple values", args{[]float64{3.1, 7.2, 5.0}}, 15.3},
+  }
+  for _, tt := range tests {
+    t.Run(tt.name, func(t *testing.T) {
+      if got := sum(tt.args.numbers); !close(got, tt.want) {
+        t.Errorf("sum() = %v, want %v", got, tt.want)
+      }
+    })
+  }
+}
+
+func TestAvg(t *testing.T) {
+  type args struct {
+    numbers []float64
+  }
+  tests := []struct {
+    name string
+    args args
+    want float64
+  }{
+    {"empty slice", args{[]float64{}}, 0.0},
+    {"single value", args{[]float64{3.1}}, 3.1},
+    {"multiple values", args{[]float64{3.1, 7.2, 5.0}}, 5.1},
+  }
+  for _, tt := range tests {
+    t.Run(tt.name, func(t *testing.T) {
+      if got := Avg(tt.args.numbers); !close(got, tt.want) {
+        t.Errorf("Avg() = %v, want %v", got, tt.want)
+      }
+    })
+  }
+}
+```
+
+Note that this includes tests for both exported and non-exported functions.
+
+To run the tests, cd to the `statistics` directory
+and enter `go test`. Try changing an assertion so it fails
+and run the tests again to see failing output.
+This includes the test function name, file name,
+assertion name, and line number of each failure.
+
+## Test Coverage
+
+To merely see the percentage of code in the current package
+that is covered by tests, enter `go test -cover`.
+To capture test coverage details in file,
+enter `go test -coverprofile=cover.out`.
+To open an HTML presentation of this data in the default browser,
+enter `go tool cover -html=cover.out`.
+For example, here is a screenshot of the result if we
+comment out the assertion for an empty slice in the `TestAvg` function.
+
+![Test Coverage](go-test-coverage-html.png)
 
 Add examples to the package
 Generate docs for the package
 Use the package from main
 Install first community package
 Use the community package from app
-Publish app to GitHubti
+Publish app to GitHubt
 
 ## Largest Issues
 
@@ -549,6 +699,8 @@ These include `test`, `run`, `build`, and `install`.
   - runs golint on the package of the `.go` file
   - runs go build on the application
   - runs go vet on all `.go` files in the project
+- can run individual test functions by clicking on the
+  "run test" link that appears above every test function
 - add user setting `"go.inferGopath": true,`
   - "will try to infer the GOPATH from the path of the workspace
     i.e. the directory opened in vscode. It searches upwards in the
