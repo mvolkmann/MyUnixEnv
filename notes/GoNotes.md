@@ -33,7 +33,9 @@ Go aims to:
 Because simplicity and performance are major goals,
 many features found in other programming languages
 are not present in Go.  These include classes (and inheritance),
-annotations, exceptions, and generic types.
+annotations, exceptions, the ternary operator, and generic types.
+The lack of support for generic types means that there can be no
+generic `map`, `filter`, and `reduce` functions for collections.
 It is possible that generic types may be added in a future version
 and that is an area of active debate.
 
@@ -59,23 +61,18 @@ Many previous programming languages inspired the design of Go.
 
 ## Characteristics
 
-- compiled
+Go's characteristics at a glance include:
+
+- compiled to native binaries and libraries
 - statically typed
 - high performance
 - provides type inference
 - performs garbage collection
-- supports asynchronous processing with lightweight threads via goroutines
+- supports concurrency with lightweight "threads" via goroutines
 - provides communication between goroutines using channels
 - supports networking operations
-- supports concurrency
-- supports JSON marshalling and unmarshalling
 - minimal support for object-oriented programming
-  - through structs with methods
-- no builtin support for functional programming
-  - for example, no builtin map, filter, and reduce functions for arrays
-  - hard to implement due to lack of generics
-- supports composition, but not inheritance of types
-- no equivalent of the ternary operator found in other languages
+  through structs with methods
 
 ## Reasons to use Go
 
@@ -1435,6 +1432,8 @@ switch value := expression.(type) {
 A struct is a collection of fields defined with the `struct` keyword.
 Field values can have any type,
 including other structs nested to any depth.
+A struct cannot inherit from another struct,
+but can utilize composition of structs.
 
 Fields are either "public" (accessible in all packages)
 or "protected" (accessible in a files within the current package),
@@ -2935,34 +2934,36 @@ Note to self: Try vgo!
 
 ## JSON
 
-- the `encoding/json` package supports marshalling and unmarshalling of JSON
-- to marshal data to JSON use the `json.Marshal` function
+The `encoding/json` standard library package
+supports marshalling and unmarshalling of JSON.
 
-  - ex.
+To marshal data to JSON use the `json.Marshal` function.
+For example,
 
-  ```go
-  import "encoding/json"
+```go
+import "encoding/json"
 
-  // Note that the field names must start uppercase
-  // so the json package can see them.
-  type person struct {
-    Name string
-    Age number
-  }
-  p := person{Name: "Mark", Age: 57}
-  jsonData, err := json.Marshal(person)
-  // jsonData will have the type []byte.
-  // To get a string from it, use string(jsonData).
-  ```
+// Note that the field names must start uppercase
+// so the json package can see them.
+type person struct {
+  Name string
+  Age number
+}
+p := person{Name: "Mark", Age: 57}
+jsonData, err := json.Marshal(person)
+// Check `err` to verify that this was successful.
+// jsonData will have the type []byte.
+// To get a string from it, use string(jsonData).
+```
 
-- to unmarshal data from JSON use the `json.Unmarshal` function
+To unmarshal data from JSON use the `json.Unmarshal` function.
+For example,
 
-  - ex.
-
-  ```go
-  var p person
-  err := json.Unmarshal(jsonData, @p)
-  ```
+```go
+var p person
+err := json.Unmarshal(jsonData, @p)
+// Check `err` to verify that this was successful.
+```
 
 ## HTTP Servers
 
