@@ -12,37 +12,43 @@ Currently (as of August 2018) the latest version is
 Go 1.10 which was released in February 2016.
 The third beta release of Go 1.11 was released in August 2018.
 
-- goals (many are in comparison to languages like C++ and Java)
+Many of Go's goals are in comparison to languages like C++ and Java.
+Go aims to:
 
-  - address software issues at Google
-  - simplicity, indicated by having a small specification
-    and fewer features compared to other programming languages
-  - safety in terms of memory utilization
-  - readability
-  - faster software development
-  - faster build times
-  - have a less cumbersome type system that provides type inference
-    and use composition instead of type hierarchies
-  - provide garbage collection
-  - support parallel computation, taking advantage of multi-core computers
-  - support concurrent execution and communication
-  - enable easier dependency analysis
-  - make it easier to write tools that analyze and process the code
+- address software issues at Google
+- be simple, indicated by having a small specification
+  and fewer features compared to other programming languages
+- be safe in terms of memory utilization
+- be readability
+- enable faster software development
+- enable faster build times
+- have a less cumbersome type system that provides type inference
+  and use composition instead of type hierarchies
+- provide garbage collection
+- support parallel computation, taking advantage of multi-core computers
+- support concurrent execution and communication
+- enable easier dependency analysis
+- make it easier to write tools that analyze and process the code
 
-- simplicity and performance are major goals
-  so many features found in other programming languages
-  are not present in Go
-  - ex. classes, annotations, exceptions, and generic types
-  - although generic types may be added later
-- originally designed to be a systems programming language,
-  but most developers use C, C++, or Rust for that
-- does not compete with scripting languages like
-  JavaScript, Perl, Python, and Ruby
-- currently the most common uses are for
-  the server side of web applications and dev ops tooling
-- compiled to platform-specific machine code,
-  not bytecode for a virtual machine
-  that must be interpreted at runtime
+Because simplicity and performance are major goals,
+many features found in other programming languages
+are not present in Go.  These include classes (and inheritance),
+annotations, exceptions, and generic types.
+It is possible that generic types may be added in a future version
+and that is an area of active debate.
+
+Go is compiled to platform-specific machine code,
+not bytecode for a virtual machine
+that must be interpreted at runtime.
+
+While Go can be used as a systems programming language,
+currently most developers use C, C++, or Rust for that.
+
+Go does not compete with scripting languages like
+JavaScript, Perl, Python, and Ruby.
+
+Currently the most common uses for Go are dev ops tooling
+and server side web application development.
 
 The primary Go compiler and runtime are implemented in Go and assembler.
 
