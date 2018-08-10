@@ -71,7 +71,7 @@ Many previous programming languages inspired the design of Go.
 - supports composition, but not inheritance of types
 - no equivalent of the ternary operator found in other languages
 
-## Reasons to use
+## Reasons to use Go
 
 - performance
 - asynchronous support with goroutines and channels
@@ -79,15 +79,33 @@ Many previous programming languages inspired the design of Go.
 - relatively small language that is easy to learn (May 9, 2018 spec. is 78 pages)
 - network library
 
-## Reasons to use C/C++/Rust
+## Reasons to use C/C++/Rust instead of Go
 
 - Is Rust mature enough to be considered along side C and C++?
 - currently there are more developers with C and C++ experience than Go experience
 - C and C++ libraries are currently more mature than Go libraries
 - Go does not support pointer arithmetic
 - Go provides garbage collection and does not allow control of
-  memory allocation/deallocation that is needed for real-time guarantees
+  memory allocation/deallocation that is needed for real-time guarantees.
+  Some developers will reject the use of Go on this basis alone.
 - you object to community standards for Go like using gofmt to format code
+
+## Functional Programming
+
+Go is not a true functional programming language.
+
+It does support first-class functions which allows them
+to be held in variables, passed to other functions,
+and returned from functions.
+However, it does not support generic types.
+This precludes writing functions like the `Array`
+`map`, `filter`, and `reduce` methods in JavaScript.
+Functions similar to these can be implemented,
+but only for specific types.
+
+Go does not provide an immutability guarantees.
+Many consider this to be a fundamental feature
+of functional programming languages.
 
 ## Zero to Hero
 
@@ -757,7 +775,7 @@ TODO: Add this section?
 
 - gccgo <https://gcc.gnu.org/onlinedocs/gccgo/>
   - GNU compiler for Go
-- gopherjs <https://github.com/gopherjs/gopherjs>
+- GopherJS <https://github.com/gopherjs/gopherjs>
   - compiles Go to JavaScript
 - llgo <https://github.com/go-llvm/llgo>
   - LLVM-based compiler for Go
@@ -870,6 +888,10 @@ These include `test`, `run`, `build`, and `install`.
 - after typing the opening ( of a function call
   a popup describing the expected arguments appears
 - invalid argument types are described in the PROBLEMS tab
+- snippets
+  - currently none are predefined, so you must add them
+  - select Code...Preferences...User Snippets
+  - select Go
 - can find all references to a function by right-clicking and selected "Find All References"
 - by default, when changes are saved
   - runs golint on the package of the `.go` file
@@ -954,6 +976,12 @@ These include `test`, `run`, `build`, and `install`.
   - unicode - provides functions for working with Unicode characters
   - also see "sub-repositories" that are part of the Go project,
     but maintained outside the main repository
+
+## fmt Standard Library
+
+- defines many functions for ...
+- fmt.Println(...)
+- fmt.Printf(...)
 
 ## Community Packages
 
@@ -1196,27 +1224,30 @@ The variable "\_" can be used to discard a specific return value.
 
 ## Pointers
 
-- hold the address of a variable or `nil
-- `*Type` is the type for a pointer to a value of type `Type`
-- to get the address of a variable
-  - myPtr = &myVar
-  - cannot get the address of a constant
-- to create a value can get a pointer to it
-  - `myPtr := new(type)`
-  - another way is `var myThing type; myPtr := &myThing`
-    - note that the assembly code generate for these is identical
-- to get the value at a pointer
-  - myValue = \*myPtr
-- to modify the value at a pointer
-  - \*myPtr = newValue
-- pointer arithmetic is not supported
+Pointers hold the address of a variable or `nil`.
+Pointer types begin with an asterisk.
+`*Type` is the type for a pointer to a value of type `Type`.
 
-```go
-var ptr *person // initialized to nil
-ptr = &person // pointer to previously created person struct
-var name1 = (*ptr).name
-var name2 = ptr.name // shorthand for above, automatically dereferenced
-```
+To get a pointer to a variable, `myPtr = &myVar`.
+It is not possible to get the address of a constant.
+
+To create a value and get a pointer to it in one line,
+`myPtr := new(type)`.
+Another way to do this which is preferred by many is
+`var myThing type; myPtr := &myThing`.
+The assembly code generated for these two approaches is identical.
+
+To get the value at a pointer, `myValue = \*myPtr`.
+
+To modify the value at a pointer, `\*myPtr = newValue`.
+
+Pointer arithmetic, as seen in C and C++, is not supported in Go.
+
+Suppose `person` is a struct containing a `name` field
+and we have a pointer to that struct in the variable `ptr`.
+To get the value of the name field, `var name1 = (*ptr).name`.
+This can also be done with shorthand syntax that automatically
+dereferences the pointer with `var name2 = ptr.name`.
 
 ## Output
 
@@ -1241,41 +1272,64 @@ fmt.Println(expression)
   }
   ```
 
-- can include a single initialization statement before the condition
+Almost any single statement can precede the condition,
+separated from it by a semicolon.
+However, typically an assignment statement is used.
+The scope of the assigned variable is the if statement,
+including the else block if present
 
-  - the scope of the variable is the if statement,
-    including the else block if present
-
-  ```go
-  if y := x * 2; y < 10 {
-    ...
-  }
-  ```
+```go
+if y := x * 2; y < 10 {
+  ...
+}
+```
 
 ## Switch Statement
 
-- similar to other languages
-- can switch on expressions of any type
-- braces around body are required
-- case values can be literal values or expressions
-- case blocks do not fall through by default so `break` is not needed
-- can use `fallthrough` to get this
-- ex.
+Go's `switch` statement is similar to that in other languages,
+but it can switch on expressions of any type.
+Braces around body are required.
+Case values can be literal values or expressions.
+The `case` keyword can be followed by any number of
+comma separated expressions. Matching any of them
+causes the statements for that case to be executed.
+Case blocks do not fall through by default
+so `break` statements are not needed.
+If it is desirable to fall through from one case to the next,
+the `fallthrough` keyword enables this.
 
-  ```go
-  switch name {
-    case "Mark":
-      // handle Mark
-    case "Tami":
-      // handle Tami
-    default:
-      // handle all other names
-  }
-  ```
+A basic `switch` statement looks like:
 
-- omit expression after `switch` to run the first `case` block that evaluates to true
+```go
+switch name {
+  case "Mark":
+    // handle Mark
+  case "Tami":
+    // handle Tami
+  case "Amanda", "Jeremy":
+    // handle Amanda or Jeremy
+  default:
+    // handle all other names
+}
+```
 
-  - ex.
+A switch statement can include an initialization statement
+just like an if statement. For example,
+
+```go
+switch name := buildName(person); name {
+  case "Mark":
+    // handle Mark
+  case "Tami":
+    // handle Tami
+  default:
+    // handle all other names
+}
+```
+
+A `switch` statement with no expression executes the
+first `case` block whose expression evaluates to true.
+For example,
 
     ```go
     switch {
@@ -1288,23 +1342,23 @@ fmt.Println(expression)
     }
     ```
 
-- to switch on the type of an expression
+To switch on the type of an expression,
 
-  ```go
-  switch value := expression.(type) {
-    case int, float:
-      // handle int or float
-    case string:
-      // handle string
-    default:
-      // handle all other types
-  }
-  ```
+```go
+switch value := expression.(type) {
+  case int, float:
+    // handle int or float
+  case string:
+    // handle string
+  default:
+    // handle all other types
+}
+```
 
-  - the variable `value` will have the actual type
-  - `value :=` can be omitted if not needed
-  - expression can be an interface type and
-    the actual type can be type that implements the interface
+- the variable `value` will have the actual type
+- `value :=` can be omitted if not needed
+- expression can be an interface type and
+  the actual type can be type that implements the interface
 
 ## For Statement
 
@@ -1365,19 +1419,30 @@ fmt.Println(expression)
     ```go
     s := "This is a test."
     words := strings.Fields(s)
-    for _, word := range words {  
+    for _, word := range words {
       fmt.Println(word) // outputs "This", "is", "a", and "test."
     }
     ```
 
 ## Structs
 
-- a collection of fields defined with the `struct` keyword
-- field values can have any type,
-  including other structs nested to any depth
-- often will want to define a type name for a struct
-- use the dot operator to get and set fields
-- can be anonymous (less common) or assigned to a type (more common)
+A struct is a collection of fields defined with the `struct` keyword.
+Field values can have any type,
+including other structs nested to any depth.
+
+Fields are either "public" (accessible in all packages)
+or "protected" (accessible in a files within the current package),
+never "private" (only accessible in methods of the struct).
+But note that the terms "public", "protected", and "private"
+are not used when describing Go.
+
+It is often desirable to define a type alias for a struct to
+make it easy to refer to in variable and parameter declarations.
+Otherwise the struct is anonymous and
+can only be referred to where it is defined.
+
+The dot operator is used to get and set fields within a struct.
+
 - anonymous struct example
 
   ```go
@@ -1487,11 +1552,13 @@ me := person{
 
 ## Methods
 
-- methods can be associated with any type
-  - particularly useful for types that implement interfaces
-  - otherwise can just write functions that take a value of the type as an argument
-- cannot overload methods to create different implementations
-  for different parameter types
+Methods can be associated with any type.
+This is particularly useful for types that implement interfaces.
+Otherwise we can just write functions that take a value of the type as an argument.
+
+It is not possible to create overloaded methods on a type
+to create different implementations for different parameter types.
+
 - an instance of the type is referred to as the "receiver" for the method
 - the syntax for defining a method is
   `func (receiver-info) name(parameter-list) (return-types) { body }`
@@ -1544,90 +1611,155 @@ me := person{
 
 ## Arrays
 
-- indexes are zero-based
-- have a fixed length
-- declare with `[length]type`
-  - ex. `var rgb [3]int`
-  - placing the square brackets BEFORE the type comes from Algol 68
-  - if anything other than a single integer is inside []
-    it is a slice (see the "Slices" section)
-- can initialize with values in curly braces
-  - ex. `rgb := [3]int{100, 50, 234}`
-- can get the value at an index
-  - ex. `fmt.Println(rgb[1])`
-- can change the value at an index
-  - ex. `rgb[1] = 75`
-- get length with `len(myArr)`
-- for an array, `cap(myArr)` returns the same
-- array elements can be arrays
-- to iterate over the elements in an array
+Arrays hold a sequence of values, a.k.a. elements.
+The values can be of any type,
+including other arrays to create multidimensional arrays.
+They have a fixed length and the length is part of their type.
+Their indexes are zero-based.
 
-  ```go
-  for index, value := range myArr {
-    ...
-  }
-  ```
+The syntax for declaring an array is `[length]type`.
+For example, `var rgb [3]int`.
+
+Placing the square brackets before the type was inspired by Algol 68.
+
+An array can be created with an "array literal".
+This uses curly braces to specify initial elements.
+For example, `rgb := [5]int{100, 50, 234}`.
+This creates an array with a length of five
+where only the first three elements are explicitly initialized.
+The remaining elements are initialized to their zero value.
+
+To create an array whose length is the same as the number of
+supplied initial values, place an ellipsis inside the square brackets.
+For example, `rgb := [...]int{100, 50, 234}`.
+This creates an array with a length of three.
+
+If anything other than a single integer or ellipsis is inside the
+square brackets, a "slice" is created (discussed in the next section).
+
+Square brackets are also used to get and set the value at an index.
+To get the second element, `rgb[1]`.
+To set the second element, `rgb[1] = 75`.
+
+To get the length of an array, `len(myArr)`.
+For arrays, the capacity is the same as the length,
+so `cap(myArr)` returns the same value.
+
+One way to iterate over the elements of an array
+is to use a C-style `for` loop.
+For example,
+
+```go
+for i := 0; i < len(myArr); i++ {
+  value := myArr[i]
+  // Do something with value.
+}
+```
+
+The `range` keyword can be also used to iterate over the elements,
+and this is typically preferred. For example,
+
+```go
+for index, value := range myArr {
+  // Do something with value, and possibly index.
+}
+```
 
 ## Slices
 
-- a view into an array with a variable length
-- indexes are zero-based
-- the zero value is nil (This seems wrong!)
-- a distinct type from arrays
-  - [3]int is an array
-  - []int is a slice
-  - functions that take an argument that is a slice cannot be passed an array
-  - many functions prefer slices over arrays
-  - nearly always you should create slices instead of arrays
-- can create a slice by specifying the
-  start (inclusive) and end (exclusive) indexes of an array
-  - ex. `mySlice := myArr[start:end]`
-  - if `start` is omitted, it defaults to 0
-  - if `end` is omitted, it defaults to the array length
-  - so `myArr[:]` creates a slice over the entire array
-- modifying elements of a slice modifies the underlying array
-- multiple slices on the same array see the same data
-- `len(mySlice)` returns the number of elements it contains (length)
-- `cap(mySlice)` returns the number of elements in the underlying array (capacity)
-- a slice literal creates a slice and an underlying array
-  - ex. `mySlice := []int{}` creates a slice where length and capacity are 0
-  - ex. `mySlice := []int{2, 4, 6}` creates a slice where length and capacity are 3
-  - looks like an array literal, but without a specified length
-  - can also specify values at specific indices
-    - ex. `mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example
-    - ex. `mySlice := []int{3: 7, 0: 2}` creates a slice where
-      length and capacity are 4 (one more than the highest specified index)
-- to append new elements to a slice
-  - `mySlice = append(mySlice, 8, 10)`
-    - appends the values 8 and 10
-  - if the underlying array is too small,
-    a larger array is automatically allocated
-    (doubling the current capacity)
-    and the returned slice will refer to it
-  - cannot append to arrays which is a reason why slices are used more
-- `make` function
-  - can be used to create a slice and underlying array
-    where the length and capacity are set
-    without specifying initial elements
-    - avoids reallocating space when elements are added later
-      which is somewhat inefficient
-  - if it is anticipated that many elements will be appended later,
-    try to estimate the largest size needed at the start
-    and use `make` to create the slice
-  - ex. `mySlice := make([]int, 5)`
-    - creates an underlying array of size 5
-      and a slice of length 5 and capacity of 5
-  - ex. `mySlice := make([]int, 0, 5)`
-    - creates an underlying array of size 5 and
-      a slice with initial length 0 and initial capacity of 5
-- the most common ways to create a slice are to use
-  a slice literal or the `make` function
-- manually creating an array and then creating a slice over it
-  is far less common
-- to change the view of a slice into its underlying array,
-  recreate it with different bounds
-  - ex. `mySlice = mySlice[newStart:newEnd]`
-- slice elements can be slices (multidimensional slices)
+Slices are a distinct type from arrays.
+They are a view into an array with a variable length.
+Like with arrays, indexes are zero-based.
+
+Functions that take an argument that is a slice cannot be passed an array.
+Many functions prefer slices over arrays.
+Unless having a fixed length is appropriate, use a slice instead of an array.
+
+A slice type is declared with nothing inside square brackets.
+For example, `[]int` is a slice of int values
+that is not yet associated with an array.
+
+There are three ways to create a slice, using a "slice literal",
+the `make` function, or basing on an existing array.
+
+The most common way to create a slice is with a "slice literal"
+which creates a slice and its underlying array.
+These look like an array literals, but without a specified length.
+`mySlice := []int{}` creates a slice with an empty underlying array
+where the length and capacity are 0.
+`mySlice := []int{2, 4, 6}` creates a slice where the
+length and capacity are 3 with the provided initial values.
+
+It is also possible, but not common, to specify values at specific indices.
+`mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example
+`mySlice := []int{3: 7, 0: 2}` creates a slice where length and capacity
+are 4 which is one more than the highest specified index.
+
+The `make` function provides another way to create a slice and underlying array.
+Rather than specifying initial values, the length and capacity are specified.
+This can avoid reallocating space when elements are added later,
+which is somewhat inefficient.
+If it is anticipated that many elements will be appended later,
+try to estimate the largest size needed at the start
+and use `make` to create the slice.
+For example, `mySlice := make([]int, 5)`
+creates an underlying array of size 5
+and a slice of length 5 and capacity of 5.
+`mySlice := make([]int, 0, 5)`
+creates an underlying array of size 5 and
+a slice with initial length 0 and initial capacity of 5.
+
+The final way to create a slice is to base it on an existing array,
+specifying the start (inclusive) and end (exclusive) indexes.
+For example, `mySlice := myArr[start:end]`
+If `start` is omitted, it defaults to 0.
+If `end` is omitted, it defaults to the array length.
+So `myArr[:]` creates a slice over the entire array.
+
+The most common ways to create a slice are to use
+a slice literal or the `make` function.
+Manually creating an array and then creating a slice over it
+is far less common.
+
+Modifying elements of a slice modifies the underlying array.
+Multiple slices on the same array see the same data.
+
+The builtin `append` function takes a slice
+and returns a new slice containing additional elements.
+For example, `mySlice = append(mySlice, 8, 10)`
+appends the values 8 and 10.
+If the underlying array is too small to accommodate the new elements,
+a larger array is automatically allocated
+(doubling the current capacity after the length exceeds 4)
+and the returned slice will refer to it.
+It is not possible to append elements to arrays
+which is one reason why slices are used more often.
+
+`len(mySlice)` returns the number of elements in the slice
+which is its length.
+`cap(mySlice)` returns the number of elements in the underlying array
+which is its capacity.
+If `append` is used to increase the number of elements beyond this,
+a larger underlying array will be allocated
+and the returned slice will refer to it.
+
+Just like with arrays, square brackets used to
+get and set the value of a slice at an index.
+If the index is greater than or equal to the slice capacity,
+a panic will be triggered that says "runtime error: index out of range".
+To get the second element, `rgb[1]`.
+To set the second element, `rgb[1] = 75`.
+
+The same approaches for iterating over the elements of an array
+can be used to iterate over the elements of a slice.
+
+To change the view of a slice into its underlying array,
+recreate it with different bounds
+For example, `mySlice = mySlice[newStart:newEnd]`.
+
+Slice elements can be other slices to create multidimensional slices.
+
+TODO: Is the zero value of a slice really nil?
 
 ```go
 ticTacToe := [][]string{
@@ -1640,8 +1772,19 @@ ticTacToe := [][]string{
 ticTacToe[1][2] = "X"
 ```
 
-- to use all the elements in a slice as separate arguments to a function
-  follow the variable name holding the slice with an ellipsis
+To use all the elements in a slice as separate arguments to a function
+follow the variable name holding the slice with an ellipsis.
+For example, TODO: IS THIS CORRECT?
+
+```go
+func processColors(...colors string) {
+  // colors is a slice
+}
+processColors("white", "black")
+colors := []string{"red", "green", "blue"}
+processColors(colors...)
+```
+
 - slice of structs example
 
   ```go
@@ -1660,28 +1803,44 @@ ticTacToe[1][2] = "X"
 
 ## Maps
 
-- collections of key/value pairs where keys and values can be any type
-- a map type looks like `map[keyType]valueType`
-  - ex. `var myMap map[string]int`
-- two ways to create
-  `myMap := make(map[keyType]valueType)`
-  or
-  `myMap := map[keyType]valueType{k1: v1, k2: v2, ...}`
-- to add a key/value pair, `myMap[key] = value`
-- to get the value for a given key, `value := myMap[key]`
-- to get the value for a given key and verify that the key was present,
-  as opposed to just getting the zero value because it wasn't
+A map is a collection of key/value pairs where keys and values can be any type.
+A map type looks like `map[keyType]valueType`.
+For example, `var myMap map[string]int`.
+A type alias can be created for this type which is
+useful when the type will be referred to in many places.
+For example, `type playerScoreMap map[string]int`.
 
-  ```go
-  value, found := myMap[key]
-  if found { ... }
-  ```
+One way to create a map is with a "map literal"
+which allows specifying initial key/value pairs.
+For example,
+`scores := map[string]int{"Mark": 90, "Tami": 92}`.
+or using the type alias,
+`scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}`.
 
-- to delete a key/value pair, `delete(myMap, key)`
-- to iterate over, `for key, value := range myMap { ... }`
-- supports concurrent reads, but not concurrent writes
-  or a concurrent read and write
-  - can avoid with channels or mutexes
+Another way to create a map is using the `make` function.
+For example, `scoreMap := make(map[string]int)`
+or `scoreMap := make(playerScoreMap)`.
+
+To add a key/value pair, `myMap[key] = value`.
+
+To get the value for a given key, `value := myMap[key]`.
+
+To get the value for a given key and verify that the key was present,
+as opposed to just getting the zero value because it wasn't,
+
+```go
+value, found := myMap[key]
+if found { ... }
+```
+
+To delete a key/value pair, `delete(myMap, key)`.
+
+To iterate over the key/value pairs in a map,
+`for key, value := range myMap { ... }`.
+
+Maps support concurrent reads, but not concurrent writes
+or a concurrent read and write.
+Issues with these can avoided using channels or mutexes.
 
 ## Concurrency
 
@@ -1689,25 +1848,32 @@ ticTacToe[1][2] = "X"
 
 ## Goroutines
 
-- a lightweight thread of execution managed by the Go runtime
-  that run a specific function call
-  - each consumes about 2K of memory compared to 1MB for a Java thread
-  - use more memory only when needed
-  - start up faster than threads
-  - not mapped 1-1 with threads, but multiplexed across them
-- run until the function exits or the application terminates
-- the `main` function runs in a goroutine,
-  so there is always at least one
-- to create another, proceed any function call with `go`
-  - arguments are evaluated in the current goroutine
-  - function execution occurs in the new goroutine
-- without using `go` the call is synchronous
-- with using `go` the call is asynchronous
-- to get the number of currently running goroutines,
-  call `runtime.NumGoRoutine()`
-- to get the number of CPUs in the computer,
-  call `runtime.NumCPU()`
-  - may be useful to decide at runtime how many goroutines to start
+A goroutine is a lightweight thread of execution
+managed by the Go runtime that run a specific function call.
+Each goroutine consumes about 2K of memory compared to 1MB for a Java thread.
+They use more memory only when needed.
+
+Goroutines start up faster than threads.
+They not mapped one-to-one with threads, but are multiplexed across them.
+
+A goroutine runs until its function exits or the application terminates.
+
+The `main` function of an application runs in a goroutine,
+so there is always at least one.
+
+To create a new goroutine, proceed any function call,
+named or anonymous, with `go`.
+Arguments to the function are evaluated in the current goroutine.
+The function is executed asynchronously inside the new goroutine
+when it is scheduled to run in a thread.
+When a function is called without using `go` the call is synchronous.
+
+To get the number of currently running goroutines,
+call `runtime.NumGoRoutine()`.
+
+To get the number of CPUs in the computer, call `runtime.NumCPU()`.
+This may be useful to decide at runtime how many goroutines to start.
+
 - goroutines share memory, so access should be synchronized
 - `time.Sleep(duration)` pauses the current goroutine for the given duration
   - duration is in nanoseconds (1 nanosecond = 1,000,000 milliseconds)
@@ -1715,10 +1881,11 @@ ticTacToe[1][2] = "X"
 ## Channels
 
 Channels are "pipes" that connect concurrent goroutines.
+Values can be sent to a channel and be received from them.
 
-- can send values to them and receive values from them
-- to create a channel, `myChannel := make(chan type)`
-  where type is a real type like `string`
+To create a channel, `myChannel := make(chan type)`
+where type is a real type like `string`.
+
 - by default values can be sent to and received from channels
 - to make a channel that
 - to send a value to a channel, `myChannel <- value`
@@ -1730,13 +1897,22 @@ Channels are "pipes" that connect concurrent goroutines.
   - a channel should only be closed by a sending goroutine,
     not be a receiving goroutine
   - a channel should only be closed when only a single goroutine sends to it
-  - once a channel has been closed, a panic will be triggered
-    if there is an attempt to send to it or close it again
-  - when reading from a channel, a second return value
-    indicates whether the channel is still open
-    - ex. `data, open = <-myChannel`
-  - see <https://go101.org/article/channel-closing.html>
-    for details and more options
+
+Once a channel has been closed, a panic will be triggered
+if there is an attempt to send to it or close it again.
+Attempts to send data to or retrieve data from a nil channel
+will block forever.
+Attempts to send data to a closed channel will trigger a panic.
+Attempts to receive data from a closed channel will get the zero value,
+but it is recommended to check whether the channel is closed
+since it is not possible to distinguish between getting a zero value
+because the channel is closed versus that value actually being in the channel.
+
+- when reading from a channel, a second return value
+  indicates whether the channel is still open
+  - ex. `data, open = <-myChannel`
+- see <https://go101.org/article/channel-closing.html>
+  for details and more options
 
 - channel direction
 
@@ -2789,6 +2965,34 @@ Note to self: Try vgo!
 
   - ex.
 
+### REST Server Using Standard Library
+
+The net/http package in the standard library can be used to implement REST services.
+Here is an example of a simple HTTP server in a file named `main.go`.
+To run it, enter `go run main.go` and browse localhost:1234.
+
+```go
+package main
+
+import (
+  "fmt"
+  "net/http"
+)
+
+type myHandler struct{}
+
+func (handler myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+  fmt.Fprint(w, "Hello, World!")
+}
+
+func main() {
+  var handler myHandler
+  http.ListenAndServe("localhost:1234", handler)
+}
+```
+
+### REST Server Using httprouter
+
 ```go
 package main
 
@@ -2989,3 +3193,40 @@ func main() {
 
 - see GOBOT at <https://gobot.io/> which supports many platforms including
   Arduino, Beaglebone, Intel Edison, MQTT, Pebble, and Raspberry Pi
+
+## GopherJS
+
+- can try online at <https://gopherjs.github.io/playground/>
+- compiles Go code to JavaScript
+
+## Popular Go Packages
+
+- Bolt <https://github.com/boltdb/bolt>
+
+  - "An embedded key/value database for Go."
+
+- Buffalo web framework <https://gobuffalo.io/en>
+
+  - "Buffalo is a Go web development eco-system.
+    Designed to make the life of a Go web developer easier.
+
+    Buffalo starts by generating a web project for you that
+    already has everything from front-end (JavaScript, SCSS, etc...)
+    to back-end (database, routing, etc...) already hooked up
+    and ready to run. From there it provides easy APIs to
+    build your web application quickly in Go."
+
+- CockroachDB <https://www.cockroachlabs.com>
+
+  - the open source, cloud-native SQL database
+
+- Kubernetes <https://kubernetes.io/>
+
+  - "an open-source system for automating deployment, scaling, and management of containerized applications"
+
+- mongo-go-driver <https://github.com/mongodb/mongo-go-driver>
+
+  - "MongoDB Driver for Go"
+
+- Testify testing library <https://github.com/stretchr/testify>
+  - "A toolkit with common assertions and mocks that plays nicely with the standard library"
