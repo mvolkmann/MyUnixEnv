@@ -24,6 +24,10 @@ set -U fish_greeting ''
 # Abbreviations
 #---------------------------------------------------------------------------
 
+# For Go
+
+abbr --add grm go run main.go
+
 # For git
 abbr --add add git add
 abbr --add br git branch

@@ -32,7 +32,7 @@ Go aims to:
 
 Because simplicity and performance are major goals,
 many features found in other programming languages
-are not present in Go.  These include classes (and inheritance),
+are not present in Go. These include classes (and inheritance),
 annotations, exceptions, the ternary operator, and generic types.
 The lack of support for generic types means that there can be no
 generic `map`, `filter`, and `reduce` functions for collections.
@@ -131,7 +131,11 @@ which should output the version of Go you have installed.
 
 ### Create Workspace
 
-Go projects live in a workspace.
+Go projects live in a workspace
+which is home to one or more packages.
+A package is defined by one or more `.go` source files
+that reside in the same directory within a workspace.
+
 You can have a separate workspace for each project
 or one workspace that contains all your projects.
 Either way the environment variable `GOPATH` must be set to point
@@ -139,8 +143,13 @@ to the top directory of the workspace you are currently using.
 
 Create a `go` directory in your home directory.
 Set `GOPATH` to point to this directory.
-In the future if you decide to switch to a different workspace,
+In the future if you decide to
+create an additional workspace and switch to it,
 don't forget to change this environment variable to point to it.
+
+One way to see the current value of `GOPATH` is to enter `go env GOPATH`.
+This works on any platform, unlike entering `echo $GOPATH`
+which only works on UNIX-like systems.
 
 ### Create First App
 
@@ -148,17 +157,28 @@ Create a `src` directory inside your `go` directory.
 
 When a Go package or application is installed in a workspace it is
 placed in a directory that corresponds to the URL where it is published.
+That URL, minus the leading `https://` is used to install the package.
 For example, if you enter `go get github.com/julienschmidt/httprouter`
-it will download the code and place the `.go` files for the package
-in the `$GOPATH/src/github.com/julienschmidt/httprouter` directory.
+it will download the package and place its `.go` files in the
+`$GOPATH/src/github.com/julienschmidt/httprouter` directory.
+It will also build the package and place its object file,
+`httprouter.a` in the
+`$GOPATH/pkg/{platform}/github.com/julienschmidt` directory.
+
 It is recommended that you use the same approach for placing
-your own code in a workspace to avoid naming collisions and
+your own packages in a workspace to avoid naming collisions and
 leave you ready for publishing the code in the future.
+
+Note that there can be many local version control repositories
+under the `src` directory.
 
 Determine your preferred repository domain, such as `github.com`
 and make sure you know your repository username, such as `mvolkmann`.
-Create the directory `{repo-domain}/{repo-username}/{app-name}` inside your `src` directory.
+Create the directory `{repo-domain}/{repo-username}/{name}`
+inside your `src` directory where `name` is the name
+of an application or package name you wish to create.
 For me this would be `github.com/mvolkmann/hello`.
+
 Create the file `main.go` inside this directory.
 
 Go source files begin with a `package` statement.
@@ -170,8 +190,11 @@ Each of these will be described in detail later.
 Each application has a single function named `main`
 that must be in a package named `main`.
 
-The primary way of writing output to the standard output (stdout) stream
+The primary way of writing output to the standard output stream (stdout)
 is to use functions in the `fmt` package.
+
+All Go applications must have one file when a package of `main`
+that defines a `main` function that is its starting point.
 
 Add the following to `main.go`.
 
@@ -189,17 +212,24 @@ func main() {
 
 Open a terminal and cd to your application directory.
 Enter `go run main.go` to run the app.
+Consider creating an alias for this, perhaps `grm`,
+because you'll be running this command often.
 This should output "Hello, World!".
 
 ### Build First App
 
-To build an executable for this app, enter `go build`
-while in the directory containing the file that defines the `main` func.
+To build an executable for this app, enter `go build` while in
+the directory containing the file that defines the `main` function.
 This will create an executable file in the current directory
 that has the same name as the directory, `hello` in this case.
 In Windows this file will have a `.exe` file extension.
 
-To run this app, enter `./hello` (just `hello` in Windows).
+To run this app, enter `./hello`, or just `hello` in Windows.
+
+Go executables are statically linked which means
+that can be run without any other supporting files.
+They can be copied to a machine with the same architecture
+and be run without installing anything related to Go.
 
 ### Install First App
 
@@ -212,15 +242,16 @@ can be run from anywhere by just entering their names.
 Go ahead and add `$HOME/go/bin` to your `PATH` environment variable now.
 In Windows, use ??? in place of `$HOME`.
 
-To install the app, enter `go install`
-while in the directory containing the file that defines the `main` func.
+To install the app, enter `go install` while in
+the directory containing the file that defines the `main` function.
+This will create an executable file in the `$GOPATH/bin` directory.
 Assuming that your `PATH` environment variable is set correctly
 you can now run the app by just entering `hello`
 regardless of your current working directory.
 
 ### Create First Package
 
-Non-trivial Go applications divide the code into several packages.
+Non-trivial Go applications divide their code into several packages.
 A package is a collection of `.go` files in the same directory
 that all begin with the same `package` statement.
 By convention, the directory name of a package should match the package name.
@@ -236,7 +267,7 @@ substituting your repo domain and username.
 Create the files `max.go` and `average.go` in this directory.
 We could define both functions in the same file, but we are using
 two files to show that a package can be defined by multiple source files.
-Note that both files begin with the same `package` statement.
+Note that both files must begin with the same `package` statement.
 
 The code below contains several comments to explain certain Go features.
 These will be described in more detail later.
@@ -246,7 +277,8 @@ Add the following to `maximum.go`.
 ```go
 package statistics
 
-// Max returns the maximum of slice of float64 values.
+// Max returns the maximum of "slice" of float64 values.
+// For now think of a slice as being like an array.
 // Functions are only available to be used in other packages
 // if they are "exported" which is indicated by
 // starting their names with an uppercase letter.
@@ -309,14 +341,17 @@ func Avg(numbers []float64) float64 {
 Running `go install` from the `statistics` package directory
 creates is a `statistics.a` file in the directory
 `$GOPATH/pkg/{platform}/github.com/mvolkmann` directory.
-This is an object file.
+If any of these directories below `$GOPATH` do not yet exist,
+they will be created.
+The file `statistics.a` is an object file.
 When other packages that use this package are installed,
 this file is used rather than compiling the code again
 to speed up build times.
 
 ### Add Tests
 
-The Go standard library provides a `testing` package.
+The Go standard library provides a
+lightweight testing package called `testing`.
 Let's add tests to the "statistics" package.
 The VS Code Go extension provides the "Go: Generate Unit Tests For Package" command
 that does what its name implies.
@@ -339,7 +374,7 @@ func TestMax(t *testing.T) {
     args args
     want float64
   }{
-    // TODO: Add test cases.
+    //TODO: Add some test data here.
   }
   for _, tt := range tests {
     t.Run(tt.name, func(t *testing.T) {
@@ -352,17 +387,19 @@ func TestMax(t *testing.T) {
 ```
 
 This uses the `testing` package from the Go standard library.
-Each test function has a name that begins with `Test`.
+Each test function must have a name that begins with `Test`
+and take a pointer to a `testing.T` object.
 These functions create a slice of structs called `tests`
 that each describe an individual test assertion.
 Each test assertion has a name, a set of arguments to be passed
-to the function being tested, and the expected result (called "want").
+to the function being tested (called "args"),
+and the expected result (called "want").
 The loop that follows iterates through the "tests"
 and fails if the actual value returned from the
 function being tested does not match the "want" value.
+
 All that is left for us to do is replace the `TODO` comment
 with some test data.
-
 Replace the `TODO` comment with the following:
 
 ```go
@@ -449,14 +486,47 @@ func TestAvg(t *testing.T) {
 
 Note that this includes tests for both exported and non-exported functions.
 
-To run the tests, cd to the `statistics` directory
-and enter `go test`. Try changing an assertion so it fails
+To run the tests, cd to the `statistics` directory and enter `go test`.
+Try changing an assertion so it fails
 and run the tests again to see failing output.
 This includes the test function name, file name,
 assertion name, and line number of each failure.
 
-TODO: Learn how to run tests for all packages below the current directory.
-Try `go test ./*`
+If the tests in a file require
+setup before any of its test functions run
+or teardown after all of its test functions run,
+define a `TestMain` function. For example,
+
+```go
+func TestMain(m *testing.M) {
+  // Do setup here.
+
+  // Run all the test functions in this file.
+  result := m.Run()
+
+  // Do teardown here.
+
+  // This MUST be done to complete the tests in this file!
+  os.Exit(result)
+}
+```
+
+To run tests for multiple packages,
+cd to `$GOPATH` and enter `go test` followed by
+the import paths of all the packages to be tested.
+Wildcards in these import paths are not supported.
+
+When `go test` is given package paths to run,
+it remembers (caches) successful tests.
+Later when a package is tested again in this way, if its last
+test was successful and there have been no related code changes
+the tests run are not run again in order to save time.
+When this happens "(cached)" will appear after the test
+in place of the elapsed time.
+Note that tests never skipped in this way when
+`go test` is run with no package names
+inside the package directory.
+
 
 ### Test Coverage
 
@@ -726,6 +796,14 @@ TODO: Add this section?
     use of Fira Code font, auto-indenting, help on double-click,
     ability to highlight lines (useful when sharing snippets),
     and more
+- golang.org articles: <https://golang.org/doc/#articles>
+  - a curated list of articles about Go
+- golang-announce mailing list: <https://groups.google.com/forum/#!forum/golang-announce>
+  - subscribe to receive emails about major events in Go such as new releases
+- Go Nuts mailing list: <https://groups.google.com/forum/#!forum/golang-nuts>
+  - official mailing list
+- #go-nuts channel on the Freenode IRC server
+  - for real-time help
 - "Go Time" podcast: <https://changelog.com/gotime>
 - GoDoc: <https://godoc.org>
   - "hosts documentation for Go packages on Bitbucket, GitHub,
@@ -854,7 +932,9 @@ before the `main` function of a application is run.
     - the executable can be moved anywhere
     - Go tools do not need to be installed in order to execute the result
   - `go install {pkg-name}`
-    - builds a package and installs it in $GOBIN which must be set
+    - builds a given package and installs it in $GOBIN which must be set
+    - also builds all the dependencies of the package,
+      and recursively all of their dependencies
     - can omit pkg-name if if the package directory
   - `go clean -i {pkg-name}`
     - deletes the executable for the package from $GOBIN
@@ -1564,55 +1644,69 @@ Otherwise we can just write functions that take a value of the type as an argume
 It is not possible to create overloaded methods on a type
 to create different implementations for different parameter types.
 
-- an instance of the type is referred to as the "receiver" for the method
-- the syntax for defining a method is
-  `func (receiver-info) name(parameter-list) (return-types) { body }`
-  - note that there are three sets of parentheses
-    if the method has more than one return value
-- to call a method, add a dot, method name, and argument list
-  after a variable that holds a value
-- ex.
+The syntax for defining a method is
+`func (receiver-info) name(parameter-list) (return-types) { body }`.
+Note that there are three sets of parentheses.
+If the method has only one return value, the last pair can be omitted.
 
-  ```go
-  // Add a method to the type "pointer to a person struct".
-  // Note how the receiver and its type appear
-  // in parentheses before the method name.
-  func (p *person) birthday() {
-    p.age++
-  }
+An instance of the type is referred to as the "receiver" for the method.
 
-  p := person{name: "Mark", age: 57}
-  (&p).birthday() // invoked on a pointer to a struct
-  p.birthday() // invoked on a struct
-  fmt.Printf("%#v\n", p) // main.person{name:"Mark", age:58}
-  ```
+To call a method, add a dot, the method name, and the argument list
+after a variable that holds the receiver.
+For example,
 
-- in the previous example the receiver is a pointer to a struct
-- allows the method to modify the struct and avoids making a copy of the struct
-  - for these reasons, most methods take a pointer
-- when the receiver is a type value and not a pointer to a type value
-  the method receives a copy and cannot modify the original
-- when a function has a parameter with a pointer type,
-  it must be passed a pointer
-- when a method has a pointer receiver,
-  it can be invoked on a pointer to a struct or a struct
-  - if invoked on a struct, it will automatically
-    pass a pointer to the struct to the method
-- can also add methods to primitive types if a type alias is created
+```go
+// Add a method to the type "pointer to a person struct".
+// Note how the receiver and its type appear
+// in parentheses before the method name.
+func (p *person) birthday() {
+  p.age++
+}
 
-  - otherwise get "cannot define new methods on non-local type"
+p := person{name: "Mark", age: 57}
+(&p).birthday() // The method can be invoked on a pointer to a person.
+p.birthday() // It can also be invoked on a person.
+fmt.Printf("%#v\n", p) // main.person{name:"Mark", age:59}
+```
 
-  ```go
-  type number int
+In the previous example the receiver is a pointer to a struct.
+This allows the method to modify the struct
+and avoids making a copy of the struct.
+When the receiver is a type value and not a pointer to a type value
+the method receives a copy and cannot modify the original.
+For these reasons, most methods on structs take a pointer.
 
-  func (receiver number) double() number {
-    return receiver * 2
-  }
+When a function has a parameter with a pointer type,
+it must be passed a pointer
+However, when a method has a pointer receiver,
+it can be invoked on a pointer to a struct or a struct.
+When invoked on a struct, it will automatically
+pass a pointer to the struct to the method.
 
-  var n number = 3
-  // or could use: n := number(3)
-  fmt.Println(n.double())
-  ```
+Methods can also be added to primitive types if a type alias is created.
+If an attempt is made to add a method to a built-in type
+an error with the message "cannot define new methods on non-local type"
+will be triggered.
+
+Here is an example of adding a method to a type alias for the `int` type.
+
+```go
+type number int
+
+func (receiver number) double() number {
+  return receiver * 2
+}
+
+n := number(3)
+// or could use var n number = 3
+// or could use: n := number(3)
+fmt.Println(n.double()) // 6
+```
+
+It may seem that struct methods should be defined inside the struct.
+However, the ability to define methods outside the type definition
+is required in order to add methods to non-struct types.
+So Go chooses to only support that same approach for all types.
 
 ## Arrays
 
@@ -2460,6 +2554,8 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
   - changing a package name requires renaming the directory
     and modifying the `package` statement in all the files
   - why isn't the package name just inferred from the directory name?
+- package names used within an application or library are not required
+  to be unique, but their import paths must be unique
 - community packages
   - have paths that reflect their repository URL
   - ex. github.com/julienschmidt/httprouter
