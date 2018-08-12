@@ -1085,7 +1085,6 @@ In addition to that functionality
 it adds missing values to `return` statements using
 the zero-values of the corresponding declared return types.
 
-
 ## Code Formatting
 
 The `gofmt` tool formats source files in a standard way.
@@ -1193,67 +1192,117 @@ These include:
 
 ## Standard Library Packages
 
-- Go provides many packages in the "standard library"
-- to see a list of them, browse <https://golang.org/pkg/>
-- highlights include
-  - bufio - implements buffered I/O with Reader and Writer types
-  - builtin - not a real package, but a place to document
-    builtin constants, variables, functions, and types
-  - container.list - implements doubly linked lists
-  - database - defines interfaces implemented by database-specific drivers
-  - encoding - defines interfaces for reading and writing
-    various data formats such as csv, json, and xml
-  - errors - defines `New` function to create error structs with a string
-    description and a method to get those strings from an error struct
-  - flag - implements command-line flag parsing
-  - fmt - implements formatted I/O similar to C's `printf` and `scanf`
-  - go - sub-packages implement all the standard go tooling
-    such as source file parsing to ASTs and code formatting
-  - html - implements functions to parse and create HTML
-  - image - implements functions to parse (decode) and create (encode) images
-  - io - implements functions to read and write buffers and files
-  - log - implements simple logging
-  - math - implements many math functions
-  - mime - encodes and decodes multimedia formats
-  - net - implements network I/O including TCP and UDP
-  - net/http - implements functions to send and listen for HTTP and HTTPS requests
-  - os - provides access to operating system functionality
-    like that provided by UNIX shell commands
-    - exposes the constants PathSeparator ('/' on UNIX)
-      and PathListSeparator (':' on UNIX)
-  - os/exec - runs external (operating system) commands
-  - path - implements functions for working with UNIX-style file paths and URLs
-  - reflect - implements run-time reflection to work with types determined at run-time
-  - sort - implements functions for sorting slices and other collections
-  - strconv - implements conversions to and from string representations of primitive types
-  - strings - implements many functions on strings
-    - includes `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
-      `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
-    - defines `Builder`, `Reader`, and `Replacer` types
-  - sync - provides synchronization primitives such as mutual exclusion locks
-    - typically will use channels and `select` instead
-  - testing - supports automated tests run by `go test`
-    - quick sub-package implements fuzz testing
-  - text - provides functions for parsing text,
-    writing tabbed columns, and data-driven templates
-  - time - provides functions to measure and display time and dates
-  - unicode - provides functions for working with Unicode characters
-  - also see "sub-repositories" that are part of the Go project,
-    but maintained outside the main repository
+Go provides many packages in the "standard library".
+To see a list of them, browse <https://golang.org/pkg/>.
+Highlights include:
+
+- bufio\
+  This implements buffered I/O with `Reader` and `Writer` types.
+- builtin\
+  This not a real package, just a place to document
+  builtin constants, variables, types, and functions.
+- container.list\
+  This implements doubly linked lists.
+- database/sql\
+  This defines interfaces implemented by relational database-specific drivers.
+  For example, there are drivers for MySQL and PostgreSQL.
+- encoding\
+  This defines interfaces for reading and writing
+  various data formats such as csv, json, and xml.
+- errors\
+  This defines the `New` function for creating `error` structs with a string
+  description and a method to get those strings from an `error` struct.
+- flag\
+  This implements command-line flag parsing.
+- fmt\
+  This implements formatted I/O similar to C's `printf` and `scanf`.
+- go\
+  The sub-packages implement all the standard go tooling
+  such as source file parsing to ASTs and code formatting.
+- html\
+  This implements functions to parse and create HTML.
+- image\
+  This implements functions to parse (decode) and create (encode) images.
+- io\
+  This implements functions to read and write buffers and files.
+- log\
+  This implements simple logging.
+- math\
+  This implements many math functions.
+- mime\
+  This encodes and decodes multimedia formats.
+- net\
+  This implements network I/O including TCP and UDP.
+- net/http\
+  This implements functions to send and listen for HTTP and HTTPS requests.
+- os\
+  This provides access to operating system functionality
+  like that provided by UNIX shell commands.
+  It exposes the constants `PathSeparator` ('/' on UNIX)
+  and `PathListSeparator` (':' on UNIX).
+- os/exec\
+  This runs external (operating system) commands.
+- path\
+  This implements functions for working with UNIX-style file paths and URLs.
+- reflect\
+  This implements reflection to work with types determined at run-time.
+- sort\
+  This implements functions for sorting slices and other collections.
+- strconv\
+  This implements conversions to and from
+  string representations of primitive types.
+- strings\
+  This implements many functions on strings including
+  `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
+  `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
+  It also defines the `Builder`, `Reader`, and `Replacer` types.
+- sync\
+  This provides synchronization primitives such as mutual exclusion locks.
+  Often code will use channels and `select` instead.
+- testing\
+  This supports automated tests run by `go test`.
+  The `quick` sub-package implements fuzz testing.
+- text\
+  This provides functions for parsing text,
+  writing tabbed columns, and data-driven templates.
+- time\
+  This provides functions to measure and display time and dates.
+- unicode\
+  This provides functions for working with Unicode characters.
+
+In addition to the standard library, also see "sub-repositories" that are
+part of the Go project, but maintained outside the main repository.
 
 ## fmt Standard Library
 
-- defines many functions for ...
-- fmt.Println(...)
-- fmt.Printf(...)
+The `fmt` standard library defines many functions
+for reading and writing formatted messages.
+
+Functions that read have names that start with `Scan`.
+Functions that write have names that start with `Print`.
+
+The most commonly used functions in this package include:
+
+- `fmt.Errorf(format string, args ...interface{}) error`\
+   This creates an error object containing a formatted message.
+  
+- `fmt.Printf(format string, args ...interface{})`\
+  This writes a formatted string to stdout.
+
+- `fmt.Println(args ...interface{})`\
+  This writes the string representation of each of the arguments
+  to stdout, followed by a newline.
+
+- TODO: ADD MORE!:
 
 ## Community Packages
 
-- to see a list of them with links to documentation,
-  browse one of these
-  - <https://godoc.org/>
-  - <https://go-search.org/>
-  - <https://github.com/golang/go/wiki/Projects>
+To see a list of community contributed packages
+with links to documentation, browse one of these:
+
+- <https://godoc.org/>
+- <https://go-search.org/>
+- <https://github.com/golang/go/wiki/Projects>
 
 ## Getting Started
 
