@@ -76,39 +76,37 @@ Go's characteristics at a glance include:
 
 ## Reasons to use Go
 
-- performance
-- asynchronous support with goroutines and channels
-- type safety
-- relatively small language that is easy to learn (May 9, 2018 spec. is 78 pages)
-- network library
+Some of the primary reasons developers choose to use Go include:
+
+- Go is a relatively small language that is easy to learn
+  (the May 9, 2018 spec. is only 78 pages).
+- Go provides good type safety.
+- Go provides excellent support for asynchronous programming
+  with goroutines and channels.
+- The Go standard library supports writing networking applications.
+- The Go compiler is fast.
+- Go generates native executables, not code that requires a virtual machine.
+- Executables produced by Go have good performance.
+- Go does not support pointer arithmetic and that contributes to simpler code.
 
 ## Reasons to use C/C++/Rust instead of Go
 
-- Is Rust mature enough to be considered along side C and C++?
-- currently there are more developers with C and C++ experience than Go experience
-- C and C++ libraries are currently more mature than Go libraries
-- Go does not support pointer arithmetic
+Some of the primary reasons developers choose not to use Go include:
+
+- TODO: Is Rust mature enough to be considered along side C and C++?
+- Go does not yet have a mature solution to manage
+  package dependency versions for a project.
+- Go does not support generic types which precludes
+  some aspects of functional programming.
+- Some developers feel that the C and C++ libraries are
+  currently more mature than Go libraries.
+- Currently it is easier to find developers that have C and C++ experience
+  than finding Go developers.
 - Go provides garbage collection and does not allow control of
   memory allocation/deallocation that is needed for real-time guarantees.
-  Some developers will reject the use of Go on this basis alone.
-- you object to community standards for Go like using gofmt to format code
-
-## Functional Programming
-
-Go is not a true functional programming language.
-
-It does support first-class functions which allows them
-to be held in variables, passed to other functions,
-and returned from functions.
-However, it does not support generic types.
-This precludes writing functions like the `Array`
-`map`, `filter`, and `reduce` methods in JavaScript.
-Functions similar to these can be implemented,
-but only for specific types.
-
-Go does not provide an immutability guarantees.
-Many consider this to be a fundamental feature
-of functional programming languages.
+- Go does not support pointer arithmetic.
+- Some developers object to community standards for Go
+  like using gofmt to format code.
 
 ## Zero to Hero
 
@@ -353,8 +351,8 @@ to speed up build times.
 The Go standard library provides a
 lightweight testing package called `testing`.
 Let's add tests to the "statistics" package.
-The VS Code Go extension provides the "Go: Generate Unit Tests For Package" command
-that does what its name implies.
+The VS Code Go extension provides the "Go: Generate Unit Tests For Package"
+command that does what its name implies.
 It generates files with names that end in `_test.go`
 for each `.go` file in the current package.
 You could of course manually create these files.
@@ -526,7 +524,6 @@ in place of the elapsed time.
 Note that tests never skipped in this way when
 `go test` is run with no package names
 inside the package directory.
-
 
 ### Test Coverage
 
@@ -736,33 +733,123 @@ TODO: Add this section?
 
 ## Largest Issues
 
-- lack of a standardized approach for handling package versions
-  used by a library or application
-  - leading contenders are vgo and dep
-- lack of support for generic types
-  - needed for truly functional programming
-    with generic functions like `map`, `filter`, and `reduce`
-- lack of support for immutable data types
-  - needed to provide guarantees that prevent accidental data mutations
-- arrow functions
-  - would provide more concise syntax and
-    are expected in functional programming languages
+Currently the primary issues with using Go include:
+
+- Go lacks a standardized approach for handling package versions
+  used by a library or application.
+  The leading contenders are vgo and dep.
+  The Go core team is actively addressing this and it is
+  likely that Go 1.12 will include a recommended solution.
+- Go lacks support for generic types.
+  This is needed for truly functional programming
+  so that generic functions like `map`, `filter`, and `reduce`
+  that operate on a collection cannot be written.
+- Go lacks support for immutable data types.
+  This is needed to provide guarantees that prevent accidental data mutations.
+  Immutable types have come to be an expected feature
+  in functional programming languages.
+- Go lacks support for arrow functions.
+  These would provide a more concise syntax,
+  especially for simple callback functions
+  that are passed to other functions.
+  Arrow functions have come to be an expected feature
+  in functional programming languages.
 
 ## Annoyances
 
-- gofmt uses tabs for indentation which is bad for printing code
-- can't have single line if statements
-- no ternary operator
-- no destructuring of arrays or structs (like in JavaScript)
-- no support for generic types when prevents functional programming
-- syntax for defining methods on structs is messy
-- forces some names to be all uppercase
-  - includes ID, JSON, and URL
-- GOPATH environment variable must be changed when switching between projects
-- in struct values a comma is required after the last field
-  if the closing brace is on a new line
+There are several features or lack of features in Go
+that I find annoying. These include:
+
+- The `gofmt` tool uses tabs for indentation.
+  This makes it difficult to print code will reasonable indentation
+  because printers use eight spaces for tabs.
+- Go does not support single line `if` statements.
+  Simple statements like `if temperature > 100 return`
+  must be written in a way that takes up three lines.
+
+  ```go
+  if temperature > 100 {
+    return
+  }
+  ```
+
+- Go does not support the ternary operator.
+  Rather than writing a like like
+  `color := temperature > 100 ? "red" : "blue"`
+  we must write something like the following:
+
+  ```go
+  var color
+  if temperature > 100 {
+    color = "red"
+  } else {
+    color = "blue"
+  }
+  ```
+
+- Go does not support destructuring of arrays, slices, or structs.
+  JavaScript supports this.
+  The following JavaScript code
+
+  ```js
+  const colors = ['red', 'green', 'blue'];
+  const [color1, color3] = colors;
+  ```
+
+  in Go must be written like
+
+  ```go
+  colors := []string{"red", "green", "blue"}
+  color1 := colors[0]
+  color3 := colors[2]
+  ```
+
+  The following JavaScript code
+
+  ```js
+  const address = {
+    street: '123 Some Street',
+    city: 'Somewhere',
+    state: 'MO',
+    zip: 63304
+  };
+  const [city, zip] = address;
+  ```
+
+  in Go must be written like
+
+  ```go
+  address := Address{ // assumes an Address type
+    street: '123 Some Street',
+    city: 'Somewhere',
+    state: 'MO',
+    zip: 63304
+  };
+  city := address.city // repeats the name
+  zip := address.zip // repeats the name
+  ```
+
+- As described earlier, Go does not support generic types.
+- Go's syntax for defining methods on structs a bit odd.
+- The `gofmt` tool forces some words in names to be all uppercase.
+  These includes ID, JSON, and URL.
+  TODO: Is it really `gofmt` that is doing this?
+- The `GOPATH` environment variable must be changed when switching between projects.
+- In struct values, a comma is required after the last field
+  if the closing brace is on a new line. For example,
+
+  ```go
+  address := Address{
+    street: "123 Some Street",
+    city:   "Somewhere",
+    state:  "MO",
+    zip:    "63304", // note the comma here
+  },
+  ```
 
 ## Notable Things Implemented in Go
+
+The following popular applications and libraries have been implemented in Go.
 
 - Docker - assembles container-based systems
   (open source version is now called "Moby")
@@ -772,6 +859,7 @@ TODO: Add this section?
 - InfluxDB - scalable datastore for metrics, events, and real-time analytics
   <https://github.com/influxdata/influxdb>
 - many more you have probably not heard of
+- TODO: Find more!
 
 ## Resources
 
@@ -830,29 +918,26 @@ TODO: Add this section?
 
 ## Editor Support
 
-- this is a partial list
-- Atom
-  - Go-Plus package
-- Eclipse
-  - GoClipse plugin
-- Emacs
-  - go-mode.el
-  - go-playground
-  - GoFlyMake
-- GoLand from JetBrains
-  - standalone editor and plugin for IDEA
-- Sublime Text
-  - GoSublime plugin
-  - Golang Build
-- Vim
-  - vim-go plugin
-- VS Code
-  - Go extension from Microsoft
-    - alphabetizes imports
-    - runs "gofmt" on code
-    - and much more (DOCUMENT MORE)
+Many editors and IDEs have support for Go,
+often through plugins or extensions.
+For example,
+
+- Atom has the Go-Plus package.
+- Eclipse has the GoClipse plugin.
+- Emacs has many Go plugins (TODO: Is this what emacs calls them?)
+  that include go-mode.el, go-playground, and GoFlyMake
+- GoLand from JetBrains is standalone editor and a plugin for IDEA.
+- Sublime Text has the GoSublime plugin and Golang Build.
+- Vim has the vim-go plugin.
+  This is a popular options in the Go community.
+- VS Code has the Go extension from Microsoft.
+  This is another popular option in the Go community.
 
 ## Alternative Go Implementations
+
+Besides the primary Go implementation at <https://golang.org/>,
+there are several alternative implementations.
+These include:
 
 - gccgo <https://gcc.gnu.org/onlinedocs/gccgo/>
   - GNU compiler for Go
@@ -860,34 +945,46 @@ TODO: Add this section?
   - compiles Go to JavaScript
 - llgo <https://github.com/go-llvm/llgo>
   - LLVM-based compiler for Go
-- mgo? - can't find this, but heard it mentioned on "Go Time" podcast
-  - for small processors like Arduino?
-- WASM support coming soon
-  - <https://react-etc.net/entry/webassembly-support-lands-in-go-language-golang-wasm-js>
+- mgo? - TODO: can't find this,
+  but heard it mentioned on "Go Time" podcast
+  - Is it for small processors like Arduino?
+- WASM (Web Assembly)
+  - early support is available now,
+    but it is not yet ready for serious use
+  - see <https://react-etc.net/entry/webassembly-support-lands-in-go-language-golang-wasm-js>
 
 ## Syntax Highlights
 
-Semicolons are not required,
-but can be used to place multiple statements on the same line.
-
-Types follow parameters, separated by a space.
-
-Top-level names (not declared inside a function)
-are exported (made visible outside their package)
-if their names start uppercase.
+This section presents some ways that Go syntax differs
+from the syntax of other programming languages.
 
 A Go source file contains a package clause,
 followed by zero or more import declarations,
 followed by zero or more top-level declarations.
 
-A top-level declaration is a declaration of a
-constant, type, variable, function, or method.
+A top-level declaration is a declaration of a package-level
+constant, variable, type, function, or method.
+All of these begin with a keyword which is one of
+`const`, `var`, `type`, or `func`.
 These declarations can be intermixed in any order.
+Only declarations can appear outside of functions.
+This precludes use of the `:=` operator outside of functions.
 
-Control statements like `if` and `for` cannot appear outside of functions.
+Non-declaration statements, like `if` and `for`,
+cannot appear outside of functions.
 
-Outside of functions, every statement begins with a keyword.
-This precludes the `:=` operator from being used outside of functions.
+Package-level names are exported (made visible outside their package)
+if their names start uppercase.
+
+Types follow variables and parameters, separated by a space.
+
+Semicolons are not required,
+but can be used to place multiple statements on the same line.
+
+In some languages `string[]` is an array of strings.
+In a GraphQL schema, this would be written as `[string]`.
+But Go chooses a third option, `[]string`
+which was inspired by Algol 68.
 
 ## Package Initialization
 
@@ -898,6 +995,7 @@ A package can have any number of `init` functions
 in any of its source files.
 These functions are run in the order they appear,
 and alphabetically by source file name within a package.
+
 The `init` functions of all imported packages
 are run before those of a given package.
 All the `init` functions of all imported packages are run
@@ -905,52 +1003,54 @@ before the `main` function of a application is run.
 
 ## Tooling
 
-- `go` command has many sub-commands
-- most commonly used commands
+The `go` command has many sub-commands.
+The most commonly used sub-commands are summarized below.
 
-  - `go help [command|topic]`
-    - outputs help
-    - run with no argument to see a list of commands and topics
-  - `go doc {package} [function|type]`
-    - outputs brief documentation for a given package, constant, function, or type
-    - ex. `go doc json`
-    - `godoc {pkg}` (no space) outputs even more documentation
-      - add `-src` to see source code
-    - to get documentation on a single member of a package
-      add a space and the name after the package name
-      - ex. `godoc math/Rand Int31`
-  - `go fix {file-or-directory-path}`
-    - "finds Go programs that use old APIs and rewrites them to use newer ones."
-    - "After you update to a new Go release,
-      fix helps make the necessary changes to your programs."
-  - `go get {pkg1} {pkg2} ...`
-    - downloads and installs packages and their dependencies
-  - `go build`
-    - builds an executable for the package in the current directory
-      that includes everything needed to run
-      and places it in the current directory
-    - the executable can be moved anywhere
-    - Go tools do not need to be installed in order to execute the result
-  - `go install {pkg-name}`
-    - builds a given package and installs it in $GOBIN which must be set
-    - also builds all the dependencies of the package,
-      and recursively all of their dependencies
-    - can omit pkg-name if if the package directory
-  - `go clean -i {pkg-name}`
-    - deletes the executable for the package from $GOBIN
-    - can omit pkg-name if if the package directory
-  - `go run {file-name}.go`
-    - runs a program without producing an executable
-  - `go test`
-    - runs all the tests in the current package?
-  - `go generate`
-
-    - creates or updates Go source files
-    - TODO: learn more about this
-
-  - `go version`
-    - outputs the version of Go that is installed
-    - to get this in code, call `runtime.Version()`
+- `go help [command|topic]`
+  This outputs help.
+  Run this with no arguments to see a list of commands and topics.
+- `go doc {package} [function|type]`
+  This outputs brief documentation for a given package, constant, function, or type.
+  For example, `go doc json` where `json` is a standard library package.
+- `godoc {pkg}`
+  This is a different command that outputs even more documentation.
+  Add `-src` to see source code for a package.
+  To get documentation on a single member of a package,
+  add a space and the name after the package name.
+  For example, `godoc math/Rand Int31`
+- `go fix {file-or-directory-path}`
+  This "finds Go programs that use old APIs and rewrites them to use newer ones."
+  "After you update to a new Go release,
+  fix helps make the necessary changes to your programs."
+- `go get {pkg1} {pkg2} ...`
+  This downloads and installs packages and their dependencies.
+- `go build`
+  This builds an executable for the package in the current directory
+  that includes everything needed to run
+  and places it in the current directory.
+  The executable can be moved anywhere.
+  Go tools do not need to be installed in order to execute the result.
+- `go install {pkg-name}`
+  This builds a given package and installs it in `GOBIN` which must be set.
+  It also builds all the dependencies of the package,
+  and recursively all of their dependencies.
+  If run from the package directory, the package name can be omitted.
+- `go clean -i {pkg-name}`
+  This deletes the executable for the package from `GOBIN`.
+  If run from the package directory, the package name can be omitted.
+- `go run {file-name}.go`
+  This runs a program without producing an executable.
+- `go test`
+  This runs all the tests in the current package.
+  To run tests in multiple packages,
+  cd to the `GOPATH` directory and
+  specify a space-separated list of package import paths.
+- `go generate`
+  This creates or updates Go source files.
+  TODO: Learn more about this!
+- `go version`
+  This outputs the version of Go that is installed.
+  To get the verison in code, call `runtime.Version()`.
 
 Many sub-commands support the `-race` flag which
 adds detection and reporting of data races.
@@ -958,8 +1058,8 @@ These include `test`, `run`, `build`, and `install`.
 
 ## Code Formatting
 
-- gofmt tool
-  - uses tabs for indentation and spaces for alignment
+The `gofmt` tool formats source files in a standard way.
+It uses tabs for indentation and spaces for alignment.
 
 ## VS Code Go Extension
 
@@ -975,7 +1075,10 @@ These include `test`, `run`, `build`, and `install`.
   - currently none are predefined, so you must add them
   - select Code...Preferences...User Snippets
   - select Go
-- can find all references to a function by right-clicking and selected "Find All References"
+- runs the `gofmt` tool on code
+- alphabetizes imports
+- can find all references to a function by right-clicking
+  and selecting "Find All References"
 - by default, when changes are saved
   - runs golint on the package of the `.go` file
   - runs go build on the application
