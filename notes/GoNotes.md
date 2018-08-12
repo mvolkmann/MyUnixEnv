@@ -1063,9 +1063,13 @@ It uses tabs for indentation and spaces for alignment.
 
 ## VS Code Go Extension
 
-- provides auto complete of functions in packages
-  and members of the current package
-- hover over a name to see information about it in a popup
+There are many extensions for the VS Code editor.
+The Go extension from Microsoft is very popular in the Go community.
+
+It provides auto complete of functions in packages
+and members of the current package.
+Hover over a name to see information about it in a popup.
+
 - ctrl-click (cmd-click) a name to jump to its definition,
   even names from a standard library package
 - after typing the opening ( of a function call
