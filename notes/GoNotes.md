@@ -758,58 +758,6 @@ TODO: Add this section?
   Set this to the directory where Go tools are installed.
   TODO: What happens when this is not set?
 
-## Resources
-
-There are many Go resources on the web,
-but these are some of the most important,
-listed roughly in the order they should be visited.
-
-- "A Tour of Go": <https://tour.golang.org/>
-  - built on "The Go Playground"
-  - can use on web or download and run locally
-  - when used on web
-    - uploads code to golang.org servers and displays result
-    - uses latest stable version of Go
-- "The Go Playground": <https://play.golang.org/>
-  - can enter and test code online
-  - can share code with others, but not sure how long they are retained
-- "The Go Play Space" at <https://goplay.space/>
-  - a better alternative to "The Go Playground"
-  - provides syntax highlighting, configurable indentation,
-    use of Fira Code font, auto-indenting, help on double-click,
-    ability to highlight lines (useful when sharing snippets),
-    and more
-- "How to Write Go Code": <https://golang.org/doc/code.html>
-  - free, online resource
-  - "demonstrates the development of a simple Go package and introduces the go tool"
-- "Effective Go": <https://golang.org/doc/effective_go.html>
-  - free, online "book"
-- "The Go Programming Language Specification": <https://golang.org/ref/spec>
-- golang.org articles: <https://golang.org/doc/#articles>
-  - a curated list of articles about Go
-- GoDoc: <https://godoc.org>
-  - "hosts documentation for Go packages on Bitbucket, GitHub,
-    Launchpad and Google Project Hosting"
-  - can search for packages by import path or keyword and see their documentation
-- Awesome Go: <https://awesome-go.com>
-  - "A curated list of awesome Go frameworks, libraries and software"
-- Go Walkthrough: <https://medium.com/go-walkthrough>
-  - "A series of walkthroughs to help you understand the Go standard library better"
-  - seems to have stopped after seven, with the last in September 2016
-- Gophers Slack channel: <https://invite.slack.golangbridge.org/>
-- #go-nuts channel on the Freenode IRC server
-  - for real-time help
-- Go Nuts mailing list: <https://groups.google.com/forum/#!forum/golang-nuts>
-  - official mailing list
-- golang-announce mailing list:
-  <https://groups.google.com/forum/#!forum/golang-announce>
-  - subscribe to receive emails about major events in Go such as new releases
-- "Go Time" podcast: <https://changelog.com/gotime>
-- Golang Weekly: <https://golangweekly.com/>
-  - "a weekly newsletter about the Go programming language"
-- GopherCon 2015: Robert Griesemer - The Evolution of Go:
-  <https://www.youtube.com/watch?v=0ReKdcpNyQg>
-
 ## Companies Using Go
 
 A long list of companies currently using Go is maintained at
@@ -3454,6 +3402,9 @@ Currently the primary issues with using Go include:
   This is needed for truly functional programming
   so that generic functions like `map`, `filter`, and `reduce`
   that operate on a collection cannot be written.
+  One reason these are supported in Go is that they encourage
+  writing code that is less efficient than hand-written for loops.
+  Each iteration with these requires a function call.
 - Go lacks support for immutable data types.
   This is needed to provide guarantees that prevent accidental data mutations.
   Immutable types have come to be an expected feature
@@ -3496,6 +3447,11 @@ that I find annoying. These include:
     color = "blue"
   }
   ```
+
+  One reason the ternary operator is not supported
+  is that it is easily abused.  In languages that support
+  the ternary operator it is not uncommon to see
+  deeply nested uses that are difficult to understand.
 
 - Go does not support destructuring of arrays, slices, or structs.
   JavaScript supports this.
@@ -3560,3 +3516,55 @@ that I find annoying. These include:
 ## Summmary
 
 TODO: Write this.
+
+## Resources
+
+There are many Go resources on the web,
+but these are some of the most important,
+listed roughly in the order they should be visited.
+
+- "A Tour of Go": <https://tour.golang.org/>
+  - built on "The Go Playground"
+  - can use on web or download and run locally
+  - when used on web
+    - uploads code to golang.org servers and displays result
+    - uses latest stable version of Go
+- "The Go Playground": <https://play.golang.org/>
+  - can enter and test code online
+  - can share code with others, but not sure how long they are retained
+- "The Go Play Space" at <https://goplay.space/>
+  - a better alternative to "The Go Playground"
+  - provides syntax highlighting, configurable indentation,
+    use of Fira Code font, auto-indenting, help on double-click,
+    ability to highlight lines (useful when sharing snippets),
+    and more
+- "How to Write Go Code": <https://golang.org/doc/code.html>
+  - free, online resource
+  - "demonstrates the development of a simple Go package and introduces the go tool"
+- "Effective Go": <https://golang.org/doc/effective_go.html>
+  - free, online "book"
+- "The Go Programming Language Specification": <https://golang.org/ref/spec>
+- golang.org articles: <https://golang.org/doc/#articles>
+  - a curated list of articles about Go
+- GoDoc: <https://godoc.org>
+  - "hosts documentation for Go packages on Bitbucket, GitHub,
+    Launchpad and Google Project Hosting"
+  - can search for packages by import path or keyword and see their documentation
+- Awesome Go: <https://awesome-go.com>
+  - "A curated list of awesome Go frameworks, libraries and software"
+- Go Walkthrough: <https://medium.com/go-walkthrough>
+  - "A series of walkthroughs to help you understand the Go standard library better"
+  - seems to have stopped after seven, with the last in September 2016
+- Gophers Slack channel: <https://invite.slack.golangbridge.org/>
+- #go-nuts channel on the Freenode IRC server
+  - for real-time help
+- Go Nuts mailing list: <https://groups.google.com/forum/#!forum/golang-nuts>
+  - official mailing list
+- golang-announce mailing list:
+  <https://groups.google.com/forum/#!forum/golang-announce>
+  - subscribe to receive emails about major events in Go such as new releases
+- "Go Time" podcast: <https://changelog.com/gotime>
+- Golang Weekly: <https://golangweekly.com/>
+  - "a weekly newsletter about the Go programming language"
+- GopherCon 2015: Robert Griesemer - The Evolution of Go:
+  <https://www.youtube.com/watch?v=0ReKdcpNyQg>

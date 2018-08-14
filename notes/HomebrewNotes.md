@@ -1,0 +1,25 @@
+# Homebrew Notes
+
+- to install
+  - mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+- to see the version installed
+  - brew -v
+- to update Homebrew to the latest version
+  - brew update
+- to list packages that have been installed
+  - brew list
+- to get information about a package
+  - brew info {name}
+- to install a package
+  - brew install {name}
+- to uninstall a package
+  - brew uninstall {name}
+- to see what packages are out-of-date on your machine
+  - brew outdated
+- to update a package
+  - brew upgrade {name}
+- to update every package that is out-of-date
+  - brew upgrade
+- to free up space from outdated software versions
+  - brew cleanup -s 
+  - run this periodically!
