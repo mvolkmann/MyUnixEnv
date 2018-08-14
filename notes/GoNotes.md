@@ -187,6 +187,8 @@ Each of these will be described in detail later.
 
 Each application has a single function named `main`
 that must be in a package named `main`.
+The one file that defines the `main` function
+is often named `main.go`, but that is not required.
 
 The primary way of writing output to the standard output stream (stdout)
 is to use functions in the `fmt` package.
@@ -250,6 +252,9 @@ This will create an executable file in the `$GOPATH/bin` directory.
 Assuming that your `PATH` environment variable is set correctly
 you can now run the app by just entering `hello`
 regardless of your current working directory.
+
+To delete the installed executable,
+enter `go clean -i`.
 
 ### Create First Package
 
@@ -735,6 +740,24 @@ and add the following in the `main` function.
 
 TODO: Add this section?
 
+## Important Environment Variables
+
+- `GOARCH`\
+  Set this to the target architecture to use when compiling.  When not set, the current architecture is assumed.
+- `GOBIN`\
+  Set this to the directory where packages should be installed.
+  TODO: What happens when this is not set?
+- `GOOS`\
+  Set this to the target operating system to be targeted by the Go compiler.
+  When not set, the current operating system is assumed.
+- `GOPATH`\
+  Set this to the current workspace directory
+  which is where source files are located.
+  Change this when switching workspaces.
+- `GOROOT`\
+  Set this to the directory where Go tools are installed.
+  TODO: What happens when this is not set?
+
 ## Resources
 
 There are many Go resources on the web,
@@ -814,23 +837,6 @@ the more popular ones that have been implemented in Go.
   <https://github.com/influxdata/influxdb>
 - TODO: Find more!
 
-## Editor Support
-
-Many editors and IDEs have support for Go,
-often through plugins or extensions.
-For example,
-
-- Atom has the Go-Plus package.
-- Eclipse has the GoClipse plugin.
-- Emacs has many Go plugins (TODO: Is this what emacs calls them?)
-  that include go-mode.el, go-playground, and GoFlyMake
-- GoLand from JetBrains is standalone editor and a plugin for IDEA.
-- Sublime Text has the GoSublime plugin and Golang Build.
-- Vim has the vim-go plugin.
-  This is a popular options in the Go community.
-- VS Code has the Go extension from Microsoft.
-  This is another popular option in the Go community.
-
 ## Alternative Go Implementations
 
 Besides the primary Go implementation at <https://golang.org/>,
@@ -905,52 +911,52 @@ before the `main` function of an application is run.
 The `go` command has many sub-commands.
 The most commonly used sub-commands are summarized below.
 
-- `go help [command|topic]`
+- `go help [command|topic]`\
   This outputs help.
   Run this with no arguments to see a list of commands and topics.
-- `go doc {package} [function|type]`
+- `go doc {package} [function|type]`\
   This outputs brief documentation for a given package, constant, function, or type.
   For example, `go doc json` where `json` is a standard library package.
-- `godoc {pkg}`
+- `godoc {pkg}`\
   This is a different command that outputs even more documentation.
   Add `-src` to see source code for a package.
   To get documentation on a single member of a package,
   add a space and the name after the package name.
   For example, `godoc math/Rand Int31`
-- `go fix {file-or-directory-path}`
+- `go fix {file-or-directory-path}`\
   This "finds Go programs that use old APIs and rewrites them to use newer ones."
   "After you update to a new Go release,
   fix helps make the necessary changes to your programs."
-- `go get {pkg1} {pkg2} ...`
+- `go get {pkg1} {pkg2} ...`\
   This downloads and installs packages and their dependencies.
-- `go build`
+- `go build`\
   This builds an executable for the package in the current directory
   that includes everything needed to run
   and places it in the current directory.
   The executable can be moved anywhere.
   Go tools do not need to be installed in order to execute the result.
-- `go install {pkg-name}`
+- `go install {pkg-name}`\
   This builds a given package and installs it in `GOBIN` which must be set.
   It also builds all the dependencies of the package,
   and recursively all of their dependencies.
   If run from the package directory, the package name can be omitted.
-- `go clean -i {pkg-name}`
+- `go clean -i {pkg-name}`\
   This deletes the executable for the package from `GOBIN`.
   If run from the package directory, the package name can be omitted.
-- `go run {file-name}.go`
+- `go run {file-name}.go`\
   This runs a program without producing an executable.
-- `go test`
+- `go test`\
   This runs all the tests in the current package.
   To run tests in multiple packages,
   cd to the `GOPATH` directory and
   specify a space-separated list of package import paths.
-- `go generate`
+- `go generate`\
   This creates or updates Go source files.
   TODO: Learn more about this!
-- `go version`
+- `go version`\
   This outputs the version of Go that is installed.
   To get the version in code, call `runtime.Version()`.
-- `go vet`
+- `go vet`\
   This "examines Go source code and reports suspicious constructs,
   such as Printf calls whose arguments do not align with the format string.
   It "uses heuristics that do not guarantee all reports are genuine problems,
@@ -961,37 +967,51 @@ adds detection and reporting of data races.
 These include `test`, `run`, `build`, and `install`.
 
 There are many Go tools that are not sub-commands of the `go` command.
+Some of the more popular ones include:
 
-`golint` is a linter for `.go` files that just focuses on coding style.
-Unlike `gofmt` which corrects some issues, `golint` just reports them.
+- `golint`\
+  This is a linter for `.go` files that just focuses on coding style.
+  Unlike `gofmt` which corrects some issues, `golint` just reports them.
+- `gometalinter`\
+  This concurrently runs many other Go tools
+  and collects and reports their output.
+  For a list of support tools, see
+  <https://github.com/alecthomas/gometalinter#supported-linters>.
+  `golint` is one of the supported tools.
+- `gofmt`\
+  This formats code in the standard format.
+  It uses tabs for indentation and spaces for alignment.
+  It also alphabetizes imports.
+- `goimports`\
+  This does what `gofmt` does and also
+  adds missing imports and removes unused imports.
+  In addition, it reorders the imports into two groups,
+  standard library packages and all other packages.
+- `goreturns`\
+  This is based on `goimports`.
+  In addition to that functionality
+  it adds missing values to `return` statements using
+  the zero-values of the corresponding declared return types.
 
-`gometalinter` concurrently runs many other Go tools
-and collects and reports their output.
-For a list of support tools, see
-<https://github.com/alecthomas/gometalinter#supported-linters>.
-`golint` is one of the supported tools.
+## Editor Support
 
-`gofmt` formats all the code in the standard format.
-It also alphabetizes imports.
+Many editors and IDEs have support for Go,
+often through plugins or extensions.
+For example,
 
-`goimports` does what `gofmt` does and also
-adds missing imports and removes unused imports.
-In addition, it reorders the imports into two groups,
-standard library packages and all other packages.
-
-`goreturns` is based on `goimports`.
-In addition to that functionality
-it adds missing values to `return` statements using
-the zero-values of the corresponding declared return types.
-
-## Code Formatting
-
-The `gofmt` tool formats source files in a standard way.
-It uses tabs for indentation and spaces for alignment.
+- Atom has the Go-Plus package.
+- Eclipse has the GoClipse plugin.
+- Emacs has many Go plugins (TODO: Is this what emacs calls them?)
+  that include go-mode.el, go-playground, and GoFlyMake
+- GoLand from JetBrains is standalone editor and a plugin for IDEA.
+- Sublime Text has the GoSublime plugin and Golang Build.
+- Vim has the vim-go plugin.
+  This is a popular options in the Go community.
+- VS Code has the Go extension from Microsoft.
+  This is another popular option in the Go community.
 
 ## VS Code Go Extension
 
-There are many extensions for the VS Code editor.
 The VS Code Go extension from Microsoft is very popular in the Go community.
 
 It provides auto complete of local and imported functions.
@@ -1202,53 +1222,6 @@ with links to documentation, browse one of these:
 - <https://godoc.org/>
 - <https://go-search.org/>
 - <https://github.com/golang/go/wiki/Projects>
-
-## Getting Started
-
-The initial file must contain:
-
-```go
-package main
-
-func main() {
-  ...
-}
-```
-
-Each package can only have one `.go` file that defines a `main` function.
-It is reasonable, but not required, to name this file `main.go`.
-
-To run a Go program without building an executable,
-enter `go run file-name.go`.
-
-To build an executable in the current directory, enter `go build`.
-This names the executable it creates using the name of the directory that
-contains the `.go` file that contains the `main` function.
-
-To execute it, enter `./file-name`.
-
-To delete the local executable, enter `go clean`.
-
-To build an executable and install it in the $GOBIN directory,
-enter `go install`.
-Assuming `$GOBIN` is listed in the `PATH` environment variable,
-this can be executed by just entering the executable name.
-
-To delete the installed executable, enter `go clean -i`.
-
-## Important Environment Variables
-
-- GOARCH
-  - target architecture to use when compiling
-- GOBIN
-  - where packages are installed
-- GOOS
-  - target operating system when compiling
-- GOPATH
-  - where source files are located
-  - change this when switching projects?
-- GOROOT
-  - what Go tools are installed
 
 ## Names
 
@@ -2982,93 +2955,100 @@ Note to self: Try vgo!
 
 ## Writers
 
-- `io` package defines the `Writer` interface
-  that has a single method `Write`
-  - writes a byte slide to an underlying data stream
-    and returns the number of bytes written or an error
-- there are many implementations in the standard library
-  including ones for writing to strings, files, and network connections
-- to write to a string, see ?
-- to write to a file
+The `io` package defines the `Writer` interface
+that has a single method `Write`.
+This writes a byte slice to an underlying data stream
+and returns the number of bytes written or an error.
+There are many implementations in the standard library
+including ones for writing to strings, files, and network connections.
 
-  - the package `io/ioutil` defines a `WriteFile` function
-  - ex.
+To write to a string, see TODO.
 
-  ```go
-  package main
+The package `io/ioutil` defines a `WriteFile` function.
+Here is an example of code that writes to a file.
 
-  import (
-    "io/ioutil"
-    "log"
+```go
+package main
+
+import (
+  "io/ioutil"
+  "log"
+)
+
+func main() {
+  data := []byte("Line #1\nLine #2")
+  mode := os.FileMode(0644)
+  err := ioutil.WriteFile("new-file.txt", data, mode)
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+```
+
+To write data a little at time,
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "os"
+)
+
+func check(e error) {
+  if e != nil {
+    log.Fatal(e)
+  }
+}
+
+func writeLine(file *os.File, text string) {
+  bytes, err := file.Write([]byte(text + "\n"))
+  check(err)
+  fmt.Printf("wrote %v bytes\n", bytes)
+}
+
+func main() {
+  var (
+    file *os.File
+    err error
   )
 
-  func main() {
-    data := []byte("Line #1\nLine #2")
-    mode := os.FileMode(0644)
-    err := ioutil.WriteFile("new-file.txt", data, mode)
-    if err != nil {
-      log.Fatal(err)
-    }
-  }
-  ```
+  file, err = os.Create("out-file.txt")
+  check(err)
+  defer file.Close()
 
-- to write data a little at time
-
-  ```go
-  package main
-
-  import (
-    "fmt"
-    "log"
-    "os"
-  )
-
-  func check(e error) {
-    if e != nil {
-      log.Fatal(e)
-    }
-  }
-
-  func writeLine(file *os.File, text string) {
-    bytes, err := file.Write([]byte(text + "\n"))
-    check(err)
-    fmt.Printf("wrote %v bytes\n", bytes)
-  }
-
-  func main() {
-    var (
-      file *os.File
-      err error
-    )
-
-    file, err = os.Create("out-file.txt")
-    check(err)
-    defer file.Close()
-
-    writeLine(file, "Line #1")
-    writeLine(file, "Line #2")
-  }
-  ```
+  writeLine(file, "Line #1")
+  writeLine(file, "Line #2")
+}
+```
 
 ## Mutexes
 
-- the `sync` package defines the `Mutex` and `WaitGroup` structs
-- using a `Mutex` is one way to prevent concurrent access
-  to shared data from multiple goroutines
-- to create a mutex, declare a variable of type `sync.Mutex`
-  - ex. `var myMutex sync.Mutex`
-  - often mutexes are held in the field of a struct
-    that requires exclusive access
-- to lock a mutex, `myMutex.Lock`
-- to unlock a mutex, `myMutex.Unlock`
-- a `WaitGroup` can be used to wait for multiple goroutines to complete
-- to create a WaitGroup, declare a variable of type `sync.WaitGroup`
-  - ex `var wg sync.WaitGroup`
-- to increment the number of items in a WaitGroup, `wg.Add(n)`
-  - call repeatedly to add more if necessary
-- to mark a WaitGroup item as done, `wg.Done()`
-- to wait for all items in a WaitGroup to be done, `wg.Wait()`
-- ex.
+The `sync` package defines the `Mutex` and `WaitGroup` structs.
+Using a `Mutex` is one way to prevent concurrent access
+to shared data from multiple goroutines.
+
+To create a mutex, declare a variable of type `sync.Mutex`.
+For example, `var myMutex sync.Mutex`.
+Often mutexes are held in the field of a struct
+that requires exclusive access.
+
+To lock a mutex, `myMutex.Lock`.
+
+To unlock a mutex, `myMutex.Unlock`.
+
+A `WaitGroup` can be used to wait for multiple goroutines to complete.
+To create a WaitGroup, declare a variable of type `sync.WaitGroup`.
+For example, `var wg sync.WaitGroup`.
+
+To increment the number of items in a WaitGroup, `wg.Add(n)`.
+Call this repeatedly to add more if necessary.
+
+To mark a `WaitGroup` item as done, `wg.Done()`.
+
+To wait for all items in a WaitGroup to be done, `wg.Wait()`.
+For example,
 
   ```go
   package main
@@ -3117,9 +3097,8 @@ Note to self: Try vgo!
 
 ## Reflection
 
-- the standard library package `reflect` provides run-time reflection
-  for determining the type of a value and
-  manipulating it in a type-safe way.
+The standard library package `reflect` provides run-time reflection
+for determining the type of a value and manipulating it in a type-safe way.
 
   - ex.
 
@@ -3426,11 +3405,6 @@ func main() {
 - see GOBOT at <https://gobot.io/> which supports many platforms including
   Arduino, Beaglebone, Intel Edison, MQTT, Pebble, and Raspberry Pi
 
-## GopherJS
-
-- can try online at <https://gopherjs.github.io/playground/>
-- compiles Go code to JavaScript
-
 ## Popular Go Packages
 
 - Bolt <https://github.com/boltdb/bolt>
@@ -3462,6 +3436,11 @@ func main() {
 
 - Testify testing library <https://github.com/stretchr/testify>
   - "A toolkit with common assertions and mocks that plays nicely with the standard library"
+
+## GopherJS
+
+- can try online at <https://gopherjs.github.io/playground/>
+- compiles Go code to JavaScript
 
 ## Largest Issues
 
@@ -3578,3 +3557,7 @@ that I find annoying. These include:
     zip:    "63304", // note the comma here
   },
   ```
+
+## Summmary
+
+TODO: Write this.
