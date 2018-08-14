@@ -3099,42 +3099,41 @@ For example,
 
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
+For example,
 
-  - ex.
+```go
+package main
 
-  ```go
-  package main
+import (
+  "fmt"
+  "reflect"
+)
 
-  import (
-    "fmt"
-    "reflect"
-  )
+type any interface{}
 
-  type any interface{}
-
-  func whatAmI(value any) {
-    kind := reflect.TypeOf(value).Kind()
-    switch kind {
-    case reflect.Array:
-      fmt.Println("I am an array.")
-    case reflect.Slice:
-      fmt.Println("I am a slice.")
-    default:
-      fmt.Println("I am something else.")
-    }
+func whatAmI(value any) {
+  kind := reflect.TypeOf(value).Kind()
+  switch kind {
+  case reflect.Array:
+    fmt.Println("I am an array.")
+  case reflect.Slice:
+    fmt.Println("I am a slice.")
+  default:
+    fmt.Println("I am something else.")
   }
+}
 
-  func main() {
-    s := []int{1, 2, 3}
-    whatAmI(s)
+func main() {
+  s := []int{1, 2, 3}
+  whatAmI(s)
 
-    a := [3]int{1, 2, 3}
-    whatAmI(a)
+  a := [3]int{1, 2, 3}
+  whatAmI(a)
 
-    i := 1
-    whatAmI(i)
-  }
-  ```
+  i := 1
+  whatAmI(i)
+}
+```
 
 ## JSON
 
