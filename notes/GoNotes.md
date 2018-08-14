@@ -206,6 +206,10 @@ func main() {
 }
 ```
 
+As you experiment with various features of Go,
+you'll likely want to create additional directories
+like `hello` that each contain a `main.go` file.
+
 ### Run First App
 
 Open a terminal and cd to your application directory.
@@ -576,7 +580,7 @@ The `go doc` and `godoc` tools generates package documentation.
 They parse `.go` source files, looking for
 comments that follow certain conventions.
 
-To add documentation to any top-level declaration
+To add documentation to any package-level declaration
 (package, type, constant, variable, function, or method)
 add a comment directly before it.
 Godoc will render the comment to the right of the item to which it pertains.
@@ -731,150 +735,18 @@ and add the following in the `main` function.
 
 TODO: Add this section?
 
-## Largest Issues
-
-Currently the primary issues with using Go include:
-
-- Go lacks a standardized approach for handling package versions
-  used by a library or application.
-  The leading contenders are vgo and dep.
-  The Go core team is actively addressing this and it is
-  likely that Go 1.12 will include a recommended solution.
-- Go lacks support for generic types.
-  This is needed for truly functional programming
-  so that generic functions like `map`, `filter`, and `reduce`
-  that operate on a collection cannot be written.
-- Go lacks support for immutable data types.
-  This is needed to provide guarantees that prevent accidental data mutations.
-  Immutable types have come to be an expected feature
-  in functional programming languages.
-- Go lacks support for arrow functions.
-  These would provide a more concise syntax,
-  especially for simple callback functions
-  that are passed to other functions.
-  Arrow functions have come to be an expected feature
-  in functional programming languages.
-
-## Annoyances
-
-There are several features or lack of features in Go
-that I find annoying. These include:
-
-- The `gofmt` tool uses tabs for indentation.
-  This makes it difficult to print code will reasonable indentation
-  because printers use eight spaces for tabs.
-- Go does not support single line `if` statements.
-  Simple statements like `if temperature > 100 return`
-  must be written in a way that takes up three lines.
-
-  ```go
-  if temperature > 100 {
-    return
-  }
-  ```
-
-- Go does not support the ternary operator.
-  Rather than writing a like like
-  `color := temperature > 100 ? "red" : "blue"`
-  we must write something like the following:
-
-  ```go
-  var color
-  if temperature > 100 {
-    color = "red"
-  } else {
-    color = "blue"
-  }
-  ```
-
-- Go does not support destructuring of arrays, slices, or structs.
-  JavaScript supports this.
-  The following JavaScript code
-
-  ```js
-  const colors = ['red', 'green', 'blue'];
-  const [color1, color3] = colors;
-  ```
-
-  in Go must be written like
-
-  ```go
-  colors := []string{"red", "green", "blue"}
-  color1 := colors[0]
-  color3 := colors[2]
-  ```
-
-  The following JavaScript code
-
-  ```js
-  const address = {
-    street: '123 Some Street',
-    city: 'Somewhere',
-    state: 'MO',
-    zip: 63304
-  };
-  const [city, zip] = address;
-  ```
-
-  in Go must be written like
-
-  ```go
-  address := Address{ // assumes an Address type
-    street: '123 Some Street',
-    city: 'Somewhere',
-    state: 'MO',
-    zip: 63304
-  };
-  city := address.city // repeats the name
-  zip := address.zip // repeats the name
-  ```
-
-- As described earlier, Go does not support generic types.
-- Go's syntax for defining methods on structs a bit odd.
-- The `gofmt` tool forces some words in names to be all uppercase.
-  These includes ID, JSON, and URL.
-  TODO: Is it really `gofmt` that is doing this?
-- The `GOPATH` environment variable must be changed when switching between projects.
-- In struct values, a comma is required after the last field
-  if the closing brace is on a new line. For example,
-
-  ```go
-  address := Address{
-    street: "123 Some Street",
-    city:   "Somewhere",
-    state:  "MO",
-    zip:    "63304", // note the comma here
-  },
-  ```
-
-## Notable Things Implemented in Go
-
-The following popular applications and libraries have been implemented in Go.
-
-- Docker - assembles container-based systems
-  (open source version is now called "Moby")
-- Kubernetes - production-grade container scheduling and management
-  <http://kubernetes.io>
-- Revel - full-stack web framework <https://github.com/revel/revel>
-- InfluxDB - scalable datastore for metrics, events, and real-time analytics
-  <https://github.com/influxdata/influxdb>
-- many more you have probably not heard of
-- TODO: Find more!
-
 ## Resources
 
-- "The Go Programming Language Specification": <https://golang.org/ref/spec>
+There are many Go resources on the web,
+but these are some of the most important,
+listed roughly in the order they should be visited.
+
 - "A Tour of Go": <https://tour.golang.org/>
   - built on "The Go Playground"
   - can use on web or download and run locally
   - when used on web
     - uploads code to golang.org servers and displays result
     - uses latest stable version of Go
-- "How to Write Go Code": <https://golang.org/doc/code.html>
-  - free, online resource
-  - "demonstrates the development of a simple Go package and introduces the go tool"
-- "Effective Go": <https://golang.org/doc/effective_go.html>
-  - free, online "book"
 - "The Go Playground": <https://play.golang.org/>
   - can enter and test code online
   - can share code with others, but not sure how long they are retained
@@ -884,37 +756,63 @@ The following popular applications and libraries have been implemented in Go.
     use of Fira Code font, auto-indenting, help on double-click,
     ability to highlight lines (useful when sharing snippets),
     and more
+- "How to Write Go Code": <https://golang.org/doc/code.html>
+  - free, online resource
+  - "demonstrates the development of a simple Go package and introduces the go tool"
+- "Effective Go": <https://golang.org/doc/effective_go.html>
+  - free, online "book"
+- "The Go Programming Language Specification": <https://golang.org/ref/spec>
 - golang.org articles: <https://golang.org/doc/#articles>
   - a curated list of articles about Go
-- golang-announce mailing list: <https://groups.google.com/forum/#!forum/golang-announce>
-  - subscribe to receive emails about major events in Go such as new releases
-- Go Nuts mailing list: <https://groups.google.com/forum/#!forum/golang-nuts>
-  - official mailing list
-- #go-nuts channel on the Freenode IRC server
-  - for real-time help
-- "Go Time" podcast: <https://changelog.com/gotime>
 - GoDoc: <https://godoc.org>
   - "hosts documentation for Go packages on Bitbucket, GitHub,
     Launchpad and Google Project Hosting"
   - can search for packages by import path or keyword and see their documentation
 - Awesome Go: <https://awesome-go.com>
   - "A curated list of awesome Go frameworks, libraries and software"
+- Go Walkthrough: <https://medium.com/go-walkthrough>
+  - "A series of walkthroughs to help you understand the Go standard library better"
+  - seems to have stopped after seven, with the last in September 2016
 - Gophers Slack channel: <https://invite.slack.golangbridge.org/>
+- #go-nuts channel on the Freenode IRC server
+  - for real-time help
+- Go Nuts mailing list: <https://groups.google.com/forum/#!forum/golang-nuts>
+  - official mailing list
+- golang-announce mailing list:
+  <https://groups.google.com/forum/#!forum/golang-announce>
+  - subscribe to receive emails about major events in Go such as new releases
+- "Go Time" podcast: <https://changelog.com/gotime>
 - Golang Weekly: <https://golangweekly.com/>
   - "a weekly newsletter about the Go programming language"
 - GopherCon 2015: Robert Griesemer - The Evolution of Go:
   <https://www.youtube.com/watch?v=0ReKdcpNyQg>
-- Go Walkthrough: <https://medium.com/go-walkthrough>
-  - "A series of walkthroughs to help you understand the Go standard library better"
-  - seems to have stopped after seven, with the last in September 2016
-- list of companies using Go: <https://github.com/golang/go/wiki/GoUsers>
-  - includes Adobe, AgileBits (1Password), BBC, Bitbucket, CircleCI, CloudFlare,
-    Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
-    Facebook, General Electric, GitHub, GitLab, Google, Heroku, Honeywell,
-    IBM, Intel, Lyft, Medium, Mesosphere, MongoDB, Mozilla, Netflix,
-    New York Times, Oracle, Pinterest, Pivotal, Rackspace, Reddit,
-    Riot Games, Shutterfly, Slack, Square, Stripe, Tumblr, Twitch, Twitter,
-    Uber, VMware, Yahoo
+
+## Companies Using Go
+
+A long list of companies currently using Go is maintained at
+<https://github.com/golang/go/wiki/GoUsers>.  The list includes:
+
+Adobe, AgileBits (1Password), BBC, Bitbucket, CircleCI, CloudFlare,
+Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
+Facebook, General Electric, GitHub, GitLab, Google, Heroku, Honeywell,
+IBM, Intel, Lyft, Medium, Mesosphere, MongoDB, Mozilla, Netflix,
+New York Times, Oracle, Pinterest, Pivotal, Rackspace, Reddit,
+Riot Games, Shutterfly, Slack, Square, Stripe, Tumblr, Twitch, Twitter,
+Uber, VMware, Yahoo
+
+## Implemented in Go
+
+The following applications and libraries are some of
+the more popular ones that have been implemented in Go.
+
+- Docker - assembles container-based systems
+  (open source version is now called "Moby")
+- Kubernetes - production-grade container scheduling and management
+  <http://kubernetes.io>
+- Revel - full-stack web framework <https://github.com/revel/revel>
+- InfluxDB - scalable datastore for metrics, events, and real-time analytics
+  <https://github.com/influxdata/influxdb>
+- TODO: Find more!
 
 ## Editor Support
 
@@ -939,19 +837,19 @@ Besides the primary Go implementation at <https://golang.org/>,
 there are several alternative implementations.
 These include:
 
-- gccgo <https://gcc.gnu.org/onlinedocs/gccgo/>
-  - GNU compiler for Go
-- GopherJS <https://github.com/gopherjs/gopherjs>
-  - compiles Go to JavaScript
-- llgo <https://github.com/go-llvm/llgo>
-  - LLVM-based compiler for Go
-- mgo? - TODO: can't find this,
-  but heard it mentioned on "Go Time" podcast
-  - Is it for small processors like Arduino?
-- WASM (Web Assembly)
-  - early support is available now,
-    but it is not yet ready for serious use
-  - see <https://react-etc.net/entry/webassembly-support-lands-in-go-language-golang-wasm-js>
+- gccgo <https://gcc.gnu.org/onlinedocs/gccgo/>\
+  GNU compiler for Go
+- GopherJS <https://github.com/gopherjs/gopherjs>\
+  This compiles Go to JavaScript.
+- llgo <https://github.com/go-llvm/llgo>\
+  LLVM-based compiler for Go
+- WASM (Web Assembly)\
+  Early support is available now,
+  but it is not yet ready for serious use.
+  See <https://react-etc.net/entry/webassembly-support-lands-in-go-language-golang-wasm-js>
+- mgo?\
+  TODO: I can't find this, but heard it mentioned on "Go Time" podcast.
+  Is it for small processors like Arduino?
 
 ## Syntax Highlights
 
@@ -960,26 +858,27 @@ from the syntax of other programming languages.
 
 A Go source file contains a package clause,
 followed by zero or more import declarations,
-followed by zero or more top-level declarations.
+followed by zero or more package-level declarations.
 
-A top-level declaration is a declaration of a package-level
+A package-level declaration is a declaration of a package
 constant, variable, type, function, or method.
 All of these begin with a keyword which is one of
 `const`, `var`, `type`, or `func`.
-These declarations can be intermixed in any order.
-Only declarations can appear outside of functions.
-This precludes use of the `:=` operator outside of functions.
+These declarations can appear in any order.
+Only these can appear outside of functions.
+This precludes use of the `:=` operator and
+non-declaration statements, like `if` and `for`,
+outside of functions.
 
-Non-declaration statements, like `if` and `for`,
-cannot appear outside of functions.
-
-Package-level names are exported (made visible outside their package)
-if their names start uppercase.
+Package-level names that start uppercase are "exported".
+This means that other packages that import their package
+can access them.
 
 Types follow variables and parameters, separated by a space.
+For example, `var score int8`.
 
-Semicolons are not required,
-but can be used to place multiple statements on the same line.
+Semicolons are not required, but can be used
+to place multiple statements on the same line.
 
 In some languages `string[]` is an array of strings.
 In a GraphQL schema, this would be written as `[string]`.
@@ -988,8 +887,8 @@ which was inspired by Algol 68.
 
 ## Package Initialization
 
-Initialization of top-level variables that require logic,
-not just a literal values or results of function calls,
+Initialization of package-level variables that require logic,
+not just literal values or results of function calls,
 must be done in `init` functions.
 A package can have any number of `init` functions
 in any of its source files.
@@ -998,8 +897,8 @@ and alphabetically by source file name within a package.
 
 The `init` functions of all imported packages
 are run before those of a given package.
-All the `init` functions of all imported packages are run
-before the `main` function of a application is run.
+All `init` functions of all imported packages are run
+before the `main` function of an application is run.
 
 ## Tooling
 
@@ -3563,3 +3462,119 @@ func main() {
 
 - Testify testing library <https://github.com/stretchr/testify>
   - "A toolkit with common assertions and mocks that plays nicely with the standard library"
+
+## Largest Issues
+
+Currently the primary issues with using Go include:
+
+- Go lacks a standardized approach for handling package versions
+  used by a library or application.
+  The leading contenders are vgo and dep.
+  The Go core team is actively addressing this and it is
+  likely that Go 1.12 will include a recommended solution.
+- Go lacks support for generic types.
+  This is needed for truly functional programming
+  so that generic functions like `map`, `filter`, and `reduce`
+  that operate on a collection cannot be written.
+- Go lacks support for immutable data types.
+  This is needed to provide guarantees that prevent accidental data mutations.
+  Immutable types have come to be an expected feature
+  in functional programming languages.
+- Go lacks support for arrow functions.
+  These would provide a more concise syntax,
+  especially for simple callback functions
+  that are passed to other functions.
+  Arrow functions have come to be an expected feature
+  in functional programming languages.
+
+## Annoyances
+
+There are several features or lack of features in Go
+that I find annoying. These include:
+
+- The `gofmt` tool uses tabs for indentation.
+  This makes it difficult to print code will reasonable indentation
+  because printers use eight spaces for tabs.
+- Go does not support single line `if` statements.
+  Simple statements like `if temperature > 100 return`
+  must be written in a way that takes up three lines.
+
+  ```go
+  if temperature > 100 {
+    return
+  }
+  ```
+
+- Go does not support the ternary operator.
+  Rather than writing a like like
+  `color := temperature > 100 ? "red" : "blue"`
+  we must write something like the following:
+
+  ```go
+  var color
+  if temperature > 100 {
+    color = "red"
+  } else {
+    color = "blue"
+  }
+  ```
+
+- Go does not support destructuring of arrays, slices, or structs.
+  JavaScript supports this.
+  The following JavaScript code
+
+  ```js
+  const colors = ['red', 'green', 'blue'];
+  const [color1, color3] = colors;
+  ```
+
+  in Go must be written like
+
+  ```go
+  colors := []string{"red", "green", "blue"}
+  color1 := colors[0]
+  color3 := colors[2]
+  ```
+
+  The following JavaScript code
+
+  ```js
+  const address = {
+    street: '123 Some Street',
+    city: 'Somewhere',
+    state: 'MO',
+    zip: 63304
+  };
+  const [city, zip] = address;
+  ```
+
+  in Go must be written like
+
+  ```go
+  address := Address{ // assumes an Address type
+    street: '123 Some Street',
+    city: 'Somewhere',
+    state: 'MO',
+    zip: 63304
+  };
+  city := address.city // repeats the name
+  zip := address.zip // repeats the name
+  ```
+
+- As described earlier, Go does not support generic types.
+- Go's syntax for defining methods on structs a bit odd.
+- The `gofmt` tool forces some words in names to be all uppercase.
+  These includes ID, JSON, and URL.
+  TODO: Is it really `gofmt` that is doing this?
+- The `GOPATH` environment variable must be changed when switching between projects.
+- In struct values, a comma is required after the last field
+  if the closing brace is on a new line. For example,
+
+  ```go
+  address := Address{
+    street: "123 Some Street",
+    city:   "Somewhere",
+    state:  "MO",
+    zip:    "63304", // note the comma here
+  },
+  ```
