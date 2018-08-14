@@ -743,7 +743,7 @@ TODO: Add this section?
 ## Important Environment Variables
 
 - `GOARCH`\
-  Set this to the target architecture to use when compiling.  When not set, the current architecture is assumed.
+  Set this to the target architecture to use when compiling. When not set, the current architecture is assumed.
 - `GOBIN`\
   Set this to the directory where packages should be installed.
   TODO: What happens when this is not set?
@@ -761,7 +761,7 @@ TODO: Add this section?
 ## Companies Using Go
 
 A long list of companies currently using Go is maintained at
-<https://github.com/golang/go/wiki/GoUsers>.  The list includes:
+<https://github.com/golang/go/wiki/GoUsers>. The list includes:
 
 Adobe, AgileBits (1Password), BBC, Bitbucket, CircleCI, CloudFlare,
 Cloud Foundry, Comcast, Dell, DigitalOcean, Docker, Dropbox, eBay,
@@ -1152,7 +1152,7 @@ The most commonly used functions in this package include:
 
 - `fmt.Errorf(format string, args ...interface{}) error`\
    This creates an error object containing a formatted message.
-  
+
 - `fmt.Printf(format string, args ...interface{})`\
   This writes a formatted string to stdout.
 
@@ -1287,10 +1287,10 @@ The variable "\_" can be used to discard a specific return value.
 
 ## Constants
 
-- defined with `const` keyword
-- must be initialized to a primitive literal or an expression
-  that can be computed at compile-time and results in a primitive value
-- ex. const BLACKJACK = 21
+Go constants are defined using the `const` keyword.
+They must be initialized to a primitive literal or an expression
+that can be computed at compile-time and results in a primitive value.
+For example, `const HOT = 100`.
 
 ## Operators
 
@@ -2029,7 +2029,7 @@ This may be useful to decide at runtime how many goroutines to start.
 
 ## Channels
 
-Channels are "pipes" that connect concurrent goroutines.
+Channels are "pipes" that allow concurrent goroutines to communicate.
 Values can be sent to a channel and be received from them.
 
 To create a channel, `myChannel := make(chan type)`
@@ -2208,44 +2208,97 @@ because the channel is closed versus that value actually being in the channel.
 
 ## Select
 
-- can wait on multiple channels
-- blocks until one of the channels is ready
-  unless the `select` contains a `default` block
-  which is run if none of the channels are ready
-- chooses randomly if multiple channels are ready
-- when using `break` in a `select` `case` that is inside a `for` loop,
-  to jump out of the loop add a label before the loop and break to it
+The `select` statement attempts to receive data
+from one of a number of channels.
+It is frequent used inside a `for` loop
+so multiple values from each channel can be read.
 
-  - alternatively use `return` to exit the containing function
+If multiple channels are ready, one is chosen randomly and read.
 
-  - ex.
+If none of the channels are ready, there are two possibilities.
+If a `default` block is present, that code will run.
+If no `default` block is present, the `select` blocks
+until one of the channels is ready.
 
-    ```go
-    c1 := make(chan string)
-    c2 := make(chan string)
+When using `break` in a `select` `case` that is inside a `for` loop,
+to jump out of the loop add a label before the loop and `break` to it.
+Alternatively use `return` to exit the containing function.
 
-    go func() {
-      time.Sleep(1 * time.Second)
-      c1 <- "one"
-    }()
-    go func() {
-      time.Sleep(2 * time.Second)
-      c2 <- "two"
-    }()
+For example,
 
-    for i := 0; i < 2; i++ {
-      select {
-      case msg1 := <-c1:
-        fmt.Println("received", msg1)
-      case msg2 := <-c2:
-        fmt.Println("received", msg2)
-      }
+```go
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func finite() {
+  c1 := make(chan string)
+  c2 := make(chan string)
+
+  go func() {
+    time.Sleep(1 * time.Second)
+    c1 <- "one"
+  }() // calling the function
+  go func() {
+    time.Sleep(2 * time.Second)
+    c2 <- "two"
+  }() // calling the function
+
+  for i := 0; i < 2; i++ { // only expecting one message from each channel
+    select {
+    case msg1 := <-c1:
+      fmt.Println("received", msg1)
+    case msg2 := <-c2:
+      fmt.Println("received", msg2)
     }
-    ```
+  }
+}
+
+func numbers(c chan int, start int, delta int, sleep int) {
+  n := start
+  for {
+    time.Sleep(time.Duration(sleep) * time.Second)
+    c <- n
+    n += delta
+  }
+}
+
+func infinite() {
+  c1 := make(chan int)
+  c2 := make(chan int)
+  go numbers(c1, 1, 2, 1)
+  go numbers(c2, 2, 2, 2)
+
+loop:
+  for { // expecting an infinite number of messages from each channel
+    select {
+    case n := <-c1:
+      if n > 10 {
+        break loop
+      }
+      fmt.Println("received", n)
+    case n := <-c2:
+      if n > 10 {
+        break loop
+      }
+      fmt.Println("received", n)
+    }
+  }
+}
+
+func main() {
+  finite()
+  infinite() // doesn't start until finite finishes
+}
+```
 
 ## Functions
 
-- defined with `func` keyword
+Go functions are defined with `func` keyword.
+The syntax is:
 
 ```go
 func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
@@ -2253,86 +2306,112 @@ func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
 }
 ```
 
-- act as closures over all in-scope variables
-- arguments are passed by value so copies are made of arrays, slices, and structs
-- to avoid creating copies of structs, arrays, and slices,
-  pass and accept pointers
-- parameters cannot be optional
-- cannot specify default values for parameters
-- cannot overload functions to create different implementations
-  for different parameter types
-- can assign a function to a variable and
-  call the function using that variable
-  - ex. `fn := someFunction; fn()`
-- can pass functions to a function
-- can return functions from a function
+Functions act as closures over all in-scope variables.
 
-- anonymous functions have the same syntax, but omit the name
+Function arguments are passed by value
+so copies are made of arrays, slices, and structs.
+To avoid creating copies of these, pass and accept pointers.
 
-  - ex. `func(v int) int { return v * 2 }`
+It is not possible to specify default values for function parameters
+and they cannot be optional.
 
-- parameter types
-  - when consecutive parameters have the same type,
-    can omit the type from all but the last
-  - ex. `func foo(p1 int, p2 int, p3 string, p4 string)`
-    is equivalent to `func foo(p1, p2 int, p3, p4 string)`
-- variadic functions
-  - to accept a variable number of arguments
-    precede last argument type with an ellipsis
-  - the argument will be a slice of that type, not an array
-  - ex.
-    ```go
-    func log(args ...any) {
-      fmt.Println(args)
-    }
-    ```
+Functions cannot be overload based on their parameter types
+in order to create different implementations.
+
+A function can be assigned to variable
+and be called using that variable.
+For example, `fn := someFunction; fn()`.
+
+Functions can be passed as arguments to other functions
+and a function can return a function.
+
+Anonymous functions have the same syntax, but omit the name.
+For example, `func(v int) int { return v * 2 }`.
+
+When consecutive parameters have the same type,
+the type can be omitted from all but the last parameter.
+For example, `func foo(p1 int, p2 int, p3 string, p4 string)`
+is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
+
+Functions can accept a variable number of arguments.
+These are referred to as variadic functions.
+To do this, the type of the last named parameter
+must be preceded by an ellipsis.
+The parameter value will be a slice of the declared type, not an array.
+For example,
+
+```go
+package main
+
+import (
+  "fmt"
+  "strings"
+)
+
+func log(args ...interface{}) {
+  fmt.Println(args...)
+}
+
+func report(name string, colors ...string) {
+  text := strings.Join(colors, " and ") + "."
+  fmt.Println(name, "likes the colors", text)
+}
+
+func main() {
+  log("red", 7, true)
+  report("Mark", "yellow", "orange")
+}
+```
+
 - spreading a slice
-  - to pass all the elements in a slice as separate arguments
-    follow the argument with an ellipsis
-  - ex. `log(mySlice...)`
-- can return zero or more values
+  To pass all the elements in a slice as separate arguments,
+  follow the argument with an ellipsis.
+  For example, `log(mySlice...)`.
 
-  - when there is more than one return value, the types
-    must be surrounded by parentheses and separated by commas
-    - why are parentheses required?
-    - the return types are already guaranteed to be
-      between the closing ) of the parameter list
-      and the opening { of the code block
+Functions can return zero or more values.
+When there is more than one return value, the types
+must be surrounded by parentheses and separated by commas
+For example,
 
-  ```go
-  func GetStats(numbers []int) (int, float32) {
-    sum := 0
-    for _, number := range numbers {
-      sum += number
-    }
-    average := float32(sum) / float32(len(numbers))
-    return sum, average
+```go
+// This returns an int and a float32.
+func GetStats(numbers []int) (int, float32) {
+  sum := 0
+  for _, number := range numbers {
+    sum += number
   }
+  average := float32(sum) / float32(len(numbers))
+  return sum, average
+}
 
-  func main() {
-    sum, avg := GetStats(someNumbers)
-  }
-  ```
+func main() {
+  sum, avg := GetStats(someNumbers)
+  // Do something with sum and avg.
+}
+```
 
-- named return values
+The return types can have associated names.
+This enables a "naked return" where a
+return will no specified values will return
+the values of variables with the given names.
+For example,
 
-  - if names are given to return types,
-    a "naked return" will return them
-  - ex.
+```go
+func mult(n int) (times2, times3 int) {
+  times2 = n * 2
+  times3 = n * 3
+  //return times2 times3 // don't need to specify return values
+  return
+}
 
-    ```go
-    func mult(n int) (times2, times3 int) {
-      times2 = n * 2
-      times3 = n * 3
-      //return times2 times3 // don't need to specify return values
-      return
-    }
+// In some other function
+n2, n3 := mult(3) // n2 is 6 and n3 is 9
+```
 
-    // In some other function
-    n2, n3 := mult(3) // n2 is 6 and n3 is 9
-    ```
-
-  - seems bad for readability
+Unless the function is very short,
+using this feature is frowned upon
+because the code is less readable
+than explicitly returning values.
 
 - deferred functions
   - inside a function, function calls preceded by `defer`
@@ -2998,50 +3077,50 @@ To mark a `WaitGroup` item as done, `wg.Done()`.
 To wait for all items in a WaitGroup to be done, `wg.Wait()`.
 For example,
 
-  ```go
-  package main
+```go
+package main
 
-  import (
-    "fmt"
-    "math/rand"
-    "sync"
-    "time"
-  )
+import (
+  "fmt"
+  "math/rand"
+  "sync"
+  "time"
+)
 
-  var mutex sync.Mutex
-  var slice = make([]string, 0)
-  var wg sync.WaitGroup
+var mutex sync.Mutex
+var slice = make([]string, 0)
+var wg sync.WaitGroup
 
-  func addString(s string) {
-    mutex.Lock() // prevent concurrent access to the slice
+func addString(s string) {
+  mutex.Lock() // prevent concurrent access to the slice
 
-    // Generate a random duration from zero to 500 milliseconds.
-    duration := time.Duration(rand.Int63n(500)) * time.Millisecond
-    fmt.Println("duration =", duration)
-    time.Sleep(duration)
+  // Generate a random duration from zero to 500 milliseconds.
+  duration := time.Duration(rand.Int63n(500)) * time.Millisecond
+  fmt.Println("duration =", duration)
+  time.Sleep(duration)
 
-    slice = append(slice, s)
-    fmt.Println("appended", s)
+  slice = append(slice, s)
+  fmt.Println("appended", s)
 
-    mutex.Unlock() // finished using slice
+  mutex.Unlock() // finished using slice
+}
+
+// This adds a string to the slice a given number of times.
+func addStrings(s string, count int) {
+  for n := 0; n < count; n++ {
+    addString(s)
   }
+  wg.Done() // mark this goroutine as done
+}
 
-  // This adds a string to the slice a given number of times.
-  func addStrings(s string, count int) {
-    for n := 0; n < count; n++ {
-      addString(s)
-    }
-    wg.Done() // mark this goroutine as done
-  }
-
-  func main() {
-    wg.Add(2) // we will create two new goroutines
-    go addStrings("X", 5) // starts first goroutine
-    go addStrings("O", 3) // starts second goroutine
-    wg.Wait() // wait for the two goroutines to be done
-    fmt.Printf("%v\n", slice)
-  }
-  ```
+func main() {
+  wg.Add(2) // we will create two new goroutines
+  go addStrings("X", 5) // starts first goroutine
+  go addStrings("O", 3) // starts second goroutine
+  wg.Wait() // wait for the two goroutines to be done
+  fmt.Printf("%v\n", slice)
+}
+```
 
 ## Reflection
 
@@ -3449,7 +3528,7 @@ that I find annoying. These include:
   ```
 
   One reason the ternary operator is not supported
-  is that it is easily abused.  In languages that support
+  is that it is easily abused. In languages that support
   the ternary operator it is not uncommon to see
   deeply nested uses that are difficult to understand.
 
