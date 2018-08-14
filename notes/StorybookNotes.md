@@ -6,6 +6,7 @@
 - "runs outside of your app,
   so you can develop UI components in isolation without
   worrying about app specific dependencies and requirements"
+- provides watch and live-reload by default
 - works with React, Vue, and Angular
 - these notes only describe using it with React
 
@@ -26,6 +27,8 @@
     require('../stories/index.js');
     // Require as many stories as you need.
   }
+
+  configure(loadStories, module);
   ```
 
 - create `stories` directory at top of project
@@ -38,12 +41,13 @@
   import {storiesOf} from '@storybook/react';
   //import {action} from '@storybook/addon-actions';
   import Slider from '../src/slider/slider';
+
+  storiesOf('Slider', module)
+    .add('default', () => <Slider path="" />)
+    .add('custom', () => <Slider min={1} max={9} step={2} path="" />);
   ```
 
-storiesOf('Slider', module)
-.add('default', () => <Slider path="" />)
-.add('custom', () => <Slider min={1} max={9} step={2} path="" />);
+## Running Storybook
 
-```
-
-```
+- `npm run storybook`
+- browse localhost:9001
