@@ -2651,47 +2651,82 @@ const (
 
 ## Builtin Variables
 
-- listed as being in a package named "builtin" for documentation purposes,
-  but no such package actually exists
-- `nil` - the zero value for a pointer, channel, func, interface, map, or slice
+Variables provided by Go are listed as being in a
+package named "builtin" for documentation purposes,
+but no such package actually exists.
+There is only one, `nil`, which is the zero value for a
+pointer, channel, func, interface, map, or slice.
+For example,
+the current value of all the variables below is nil.
+
+```go
+var ptr *string         // pointer
+var c chan string       // channel
+type stringToString func(string) string
+var f stringToString    // function
+var i error             // interface
+var m map[string]string // map
+var s []string          // slice
+```
+
+## Builtin Types
+
+Go defines the following builtin types.
+
+- `bool`\
+  The only values are the builtin constants `true` and `false`.
+  These can use with the operators `&&`, `||`, and `!`.
+- `byte`\
+  This is an alias for the type `uint8`.
+- `complex64` and `complex128`\
+   These are used to represent complex numbers
+   with a specified number of bits.
+- `float32` and `float64`\
+  These are used to represent floating-point numbers
+  with a specified number of bits.
+- `int`, `int8`, `int16`, `int32`, `int64`:
+  These are used to represent signed integers
+  with a specified number of bits.
+  The type `int` is at least 32 bits,
+  32 bits on 32-bit systems and
+  64 bits on 64-bit systems.
+- `uint`, `uint16`, `uint32`, `uint64`\
+  These are used to represent unsigned integers
+  with a specified number of bits.
+  The type `uint` is at least 32 bits.
+- `uintptr`\
+  This type holds any kind of pointer.
+- `rune`\
+  This is an alias for int32.
+  It is used for unicode characters
+  that range in size from 1 to 4 bytes.
+  Literal values of this type are surrounded by single quotes.
+- `string`\
+  This is a sequence of 8-bit bytes, not unicode characters.
+  Literal values are surrounded by double quotes or backticks.
+  Double quoted strings cannot contain newlines
+  and can contain escape sequences like `\n`.
+  Backtick strings can contain newline characters.
+  Both are indexed from zero.
+  For example, to get the 3rd character use `str[2]`.
 
 ## Documentation Types
 
-- these types appear in documentation, but are not real types
+Despite Go not currently supporting generic types,
+the following "type" names that are not real types
+appear in the Go documentation.
+
 - `Type` - represents a specific type for a given function invocation
-- `Type1` - like `Type`, but for a different type than it
+- `Type1` - like `Type`, but for a different type
 - `ComplexType` - represents a complex64 or complex128
 - `FloatType` - represents a float32 or float64
 - `IntegerType` - represents any int type
 
-## Builtin Types
-
-- `bool` - values are the builtin constants `true` and `false`
-  - can use with the operators &&, ||, and !
-- `byte` - alias for uint8
-- `complex64` and `complex128` - complex numbers
-- `float32` and `float64` floating-point numbers
-- `int`, `int8`, `int16`, `int32`, `int64` - signed integers
-  - `int` is at least 32 bits
-    - 32 bits on 32-bit systems
-    - 64 bits on 64-bit systems
-- `uint`, `uint16`, `uint32`, `uint64` - unsigned integers
-  - `uint` is at least 32 bits
-- `uintptr` - holds any kind of pointer
-- `rune` - alias for int32; used for unicode characters
-  that range in size from 1 to 4 bytes
-  - literal values are surrounded by '
-- `string` - a sequence of 8-bit bytes, not unicode characters
-  - literal values are surrounded by " or `
-  - "" strings cannot contain newlines and can contain escape sequences like \n
-  - '' strings can contain newline characters
-  - indexed from zero
-  - to get the 3rd character, `str[2]`
-
 ## Builtin Functions
 
-- these are listed as being in a package named "builtin"
-  for documentation purposes, but no such package actually exists
+Functions provided by Go are listed as being in a
+package named "builtin" for documentation purposes,
+but no such package actually exists.
 
 ### for complex numbers
 
