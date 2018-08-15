@@ -2363,10 +2363,32 @@ func main() {
 }
 ```
 
-- spreading a slice
-  To pass all the elements in a slice as separate arguments,
-  follow the argument with an ellipsis.
-  For example, `log(mySlice...)`.
+To pass all the elements in a slice as separate arguments,
+follow the argument with an ellipsis.
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "strings"
+)
+
+func log(args ...interface{}) {
+  fmt.Println(args...)
+}
+
+func report(name string, colors ...string) {
+  text := strings.Join(colors, " and ") + "."
+  fmt.Println(name, "likes the colors", text)
+}
+
+func main() {
+  log("red", 7, true)
+  report("Mark", "yellow", "orange")
+}
+```
 
 Functions can return zero or more values.
 When there is more than one return value, the types
@@ -2425,149 +2447,207 @@ than explicitly returning values.
 
 ## Interfaces
 
-- an interface defines a set of methods
-- any type can implement an interface, even primitive types
-- types do not state the interfaces they implement,
-  they just implement all the methods
-- when a value is assigned to a variable or parameter with an interface type,
-  if its type does not implement all the interface methods then an error
-  will be reported that identifies one of the missing methods
-- calling a method on a variable with an interface type
-  calls the method on the underlying type
-- if a value has not be assigned to the variable,
-  calling a method on it results in an error
-- an interface with no methods, referred to as the "empty interface",
-  matches every type
-  - can give this a name using `type any interface{}`
-- ex.
+An interface defines a set of methods.
+Any type can implement an interface, even primitive types.
+Types do not state the interfaces they implement,
+they just implement all the methods.
 
-  ```go
-  package main
-  import "fmt"
-  import "math"
+When a value is assigned to a variable or parameter with an interface type,
+if its type does not implement all the interface methods then an error
+is reported that identifies one of the missing methods.
 
-  type geometry interface {
-    area() float64
-    name() string
-  }
+Calling a method on a variable with an interface type
+calls the method on the underlying type.
+If a value has not be assigned to the variable,
+calling a method on it results in an error.
 
-  type rect struct {
-    width, height float64
-  }
-  func (r rect) area() float64 {
-    return r.width * r.height
-  }
-  func (r rect) name() string {
-    return "rect"
-  }
+An interface with no methods, referred to as the "empty interface",
+matches every type.
+This can be given a name using `type any interface{}`.
 
-  type circle struct {
-    radius float64
-  }
-  func (c circle) area() float64 {
-    return math.Pi * c.radius * c.radius
-  }
-  func (c circle) name() string {
-    return "circle"
-  }
+The following code defines an interface and two types that implement it:
 
-  func printArea(g geometry) {
-    fmt.Println("area =", g.area())
-  }
+```go
+package main
+import "fmt"
+import "math"
 
-  func main() {
-    r := rect{width: 3, height: 4}
-    c := circle{radius: 5}
-    var g geometry
-    //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
-    g = r
-    printArea(g)
-    g = c
-    printArea(g)
-  }
-  ```
+type geometry interface {
+  area() float64
+  name() string
+}
 
-- a type assertion verifies that an interface variable refers to a specific type
-  - ex. `myShape := g.(Rectangle)`
-  - triggers a runtime panic if it does not
-    - when using `go run` this won't happen if there are compile errors
-      since the code will never run
-- a type test determines whether an interface variable refers to a specific type
+type rectangle struct {
+  width, height float64
+}
+func (r rectangle) area() float64 {
+  return r.width * r.height
+}
+func (r rectangle) name() string {
+  return "rectangle"
+}
 
-  - ex. `myShape, ok := g.(circle)`
-  - `ok` will be set to `true` or `false` to indicate whether `g` refers to a `circle`
-  - a panic will not be triggered
+type circle struct {
+  radius float64
+}
+func (c circle) area() float64 {
+  return math.Pi * c.radius * c.radius
+}
+func (c circle) name() string {
+  return "circle"
+}
 
-- `fmt` package defines the `Stringer` interface
+func printArea(g geometry) {
+  fmt.Println("area =", g.area())
+}
 
-  - defines one method named `String`
-  - many packages check whether values implement this interface
-    in order to convert values to strings
-  - define the `String` method on a type to control this conversion
-  - ex.
+func main() {
+  r := rectangle{width: 3, height: 4}
+  c := circle{radius: 5}
+  var g geometry
+  //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
+  g = r
+  printArea(g)
+  g = c
+  printArea(g)
+}
+```
 
-  ```go
-  type person struct {
-    name string
-    age int8
-  }
+Aa "type assertion" verifies that the value of
+an interface variable refers to a specific type.
+For example, `myShape := g.(rectangle)`.
+This triggers a runtime panic if the variable `g`
+does not currently refer to a `rectangle` object.
+Keep in mind that When running a program using `go run`,
+if there are compile errors, the panic will not be
+triggered since the code won't begin running.
 
-  // Note how the receiver is a person struct, not a pointer to one.
-  func (p person) String() string {
-    return fmt.Sprintf("%v is %v years old.", p.name, p.age)
-  }
+A "type test" determines whether an interface variable
+refers to a specific type.
+For example, `myShape, ok := g.(circle)`.
+The variable `ok` will be set to `true` or `false`
+to indicate whether `g` refers to a `circle` object.
+If it does not, a panic will not be triggered.
 
-  me := person{"Mark", 57}
-  fmt.Println(me)
-  ```
+The standard library packages define many interfaces.
+For example, the `fmt` package defines the `Stringer` interface.
+It contains one method named `String`.
+Many other packages check whether values implement this interface
+in order to convert values to strings.
 
-- interfaces can be nested to add the methods of one interface to another
+Any type can choose to implement this interface
+by defining the `String` method.
+For example:
 
-  - ex.
+```go
+type person struct {
+  name string
+  age int8
+}
 
-  ```go
-  package main
+// Note that the receiver is a person struct, not a pointer to one.
+// This is typical for methods that do not modify the receiver.
+func (p person) String() string {
+  return fmt.Sprintf("%v is %v years old.", p.name, p.age)
+}
 
-  type shape2d interface {
-    area() float32
-  }
+me := person{"Mark", 57}
+fmt.Println(me)
+```
 
-  type shape3d interface {
-    shape2d
-    volume() float32
-  }
+Interfaces can be nested to add the methods of one interface to another.
+For example:
 
-  type box struct {
-    d float32
-    h float32
-    w float32
-  }
+```go
+package main
 
-  // Implements shape2d interface.
-  // Accepting a pointer so a copy is not made.
-  func (b *box) area() float32 {
-    return b.w * b.h
-  }
+type shape2d interface {
+  area() float32
+}
 
-  // Implements shape3d interface.
-  func (b *box) volume() float32 {
-    return b.area() * b.d
-  }
+type shape3d interface {
+  shape2d // shape3d objects also support shape2d methods
+  volume() float32
+}
 
-  func main() {
-    myBox := box{d: 2, h: 3, w: 4}
-    fmt.Println("area =", myBox.area())
-    fmt.Println("volume =", myBox.volume())
-  }
-  ```
+type box struct {
+  d float32
+  h float32
+  w float32
+}
+
+// Implements shape2d interface.
+// Accepting a pointer so a copy is not made.
+func (b *box) area() float32 {
+  return b.w * b.h
+}
+
+// Implements shape3d interface.
+func (b *box) volume() float32 {
+  return b.area() * b.d
+}
+
+func main() {
+  myBox := box{d: 2, h: 3, w: 4}
+  fmt.Println("area =", myBox.area())
+  fmt.Println("volume =", myBox.volume())
+}
+```
 
 ## Builtin Constants
 
-- listed as being in a package named "builtin" for documentation purposes,
-  but no such package actually exists
-- boolean literals `true` and `false`
-- `iota` - an untyped int whose value is zero
-  - TODO: when is this typically used?
+Constants provided by Go are listed as being in a
+package named "builtin" for documentation purposes,
+but no such package actually exists.
+These include the boolean literals `true` and `false`,
+and `iota`.
+
+`iota` is not actually a constant.
+It is a global counter that is set to zero
+at the beginning of every `const` definition,
+which is the only place it can be used.
+The value of `iota` is incremented by one after each line in the
+`const` definition, except for blank lines and comment lines.
+It is typically used to define enumerated values.
+The last expression involving `iota` is repeated for subsequent
+constant values, but using an incremented value of `iota`.
+For example:
+
+```go
+const (
+  red   = iota // 0
+  green        // 1
+  blue         // 2
+)
+
+const (
+  apple  = 9        // iota = 0
+  banana = 8        // iota = 1
+  cherry = iota + 3 // iota = 2, value = 2 + 3 = 5
+  date              // iota = 3, value = 3 + 6 = 6
+)
+
+const (
+  north = iota + 1 // iota = 0, value = 0 + 1 = 1
+  south            // iota = 1, value = 1 + 1 = 2
+  east             // iota = 2, value = 2 + 1 = 3  
+  west             // iota = 3, value = 3 + 1 = 4
+)
+
+const (
+  t1 = iota * 3 // iota = 0, value = 0 * 3 = 0
+  t2            // iota = 1, value = 1 * 3 = 3
+  t3            // iota = 2, value = 2 * 3 = 6
+)
+
+const (
+  _        = iota             // iota = 0, ignore first value
+  kb int64 = 1 << (10 * iota) // iota = 1, value = 1 shifted left 10 places
+  mb                          // iota = 2, value = 1 shifted left 20 places
+  gb                          // iota = 3, value = 1 shifted left 30 places
+  tb                          // iota = 4, value = 1 shifted left 40 places
+)
+```
 
 ## Builtin Variables
 
