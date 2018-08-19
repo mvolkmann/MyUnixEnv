@@ -19,7 +19,7 @@ Go aims to:
 - be simple, indicated by having a small specification
   and fewer features compared to other programming languages
 - be safe in terms of memory utilization
-- be readability
+- be very easy to read
 - enable faster software development
 - enable faster build times
 - have a less cumbersome type system that provides type inference
