@@ -13,3 +13,4 @@
 .tmux/.tmux
 .vim/.netrwhist
 .vim/.vim
+.config/gcloud/credentials.db
