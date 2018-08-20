@@ -76,6 +76,20 @@
   }
   ```
 
+- add code to automatically download a new version of the app
+  if it is available when the app is started or refreshed
+
+  - edit `src/registerServiceWorker.js`
+  - in the function `registerValidSW` replace
+    ```js
+    console.log('New content is available; please refresh.');
+    ```
+    with
+    ```js
+    window.location.reload(true);
+    ```
+  - for large apps, this could cause the startup time to be slow
+
 - to build and serve the app as a PWA
 
 - `npm install -g serve`
@@ -103,8 +117,45 @@
 - in macOS, apps are installed in Desktop/Chrome Apps
 
 - after making changes and rebuilding the app, in order to see the changes
+  - without the call to `window.location.reload(true)` suggested above ...
   - if the app is already running, the user must refresh twice
+    - the first refresh downloads new versions of the files
+    - the second refresh loads the new files
   - if the app is not running, the user must start it and refresh once
+    - running the app launches with the old versions of the files,
+      but downloads new versions in the background?
+    - refreshing loads the new files
+
+## Updating on Version Changes
+
+To check for updates at some interval and
+allow the user to download a new version of the app,
+add the following code at the bottom of `src/index.js`.
+
+```js
+function checkForUpdate() {
+  fetch('version.txt')
+    .then(res => res.text())
+    .then(version => {
+      const currentVersion = sessionStorage.getItem('app-version');
+      if (
+        version !== currentVersion &&
+        window.confirm(
+          'A new version of this app is available.  ' +
+            'It will take a few seconds to download it.  ' +
+            'Download now?'
+        )
+      ) {
+        window.location.reload();
+        sessionStorage.setItem('app-version', version);
+      }
+    })
+    // Will get an error if the server is down.
+    .catch(() => {}); // Ignore these errors.
+}
+
+setInterval(checkForUpdate, 5000);
+```
 
 ## In Chrome
 
