@@ -131,16 +131,17 @@ function checkForUpdate() {
     .then(res => res.text())
     .then(version => {
       const currentVersion = sessionStorage.getItem('app-version');
-      if (
-        version !== currentVersion &&
-        window.confirm(
+      if (version !== currentVersion) {
+        console.info('version changed from', currentVersion, 'to', version);
+        const download = window.confirm(
           'A new version of this app is available.  ' +
-            'It will take a few seconds to download it.  ' +
+            'It will take a few seconds to download.  ' +
             'Download now?'
-        )
-      ) {
-        window.location.reload();
-        sessionStorage.setItem('app-version', version);
+        );
+        if (download) {
+          window.location.reload();
+          sessionStorage.setItem('app-version', version);
+        }
       }
     })
     // Will get an error if the server is down.
@@ -181,18 +182,27 @@ enter `npm run serve`.
 To run the app in the new browser tab, browse localhost:{port}
 where port is output by the previous command.
 
-## In Chrome
+After a PWA is installed, it will appear at <chrome://apps>.
+Browse that, right-click a PWA, and select "Remove from Chrome..."
+to delete it.
+This is especially useful for testing the ability to install an app.
 
-- to enable PWAs in Chrome (Are these steps really required?)
+It seems that PWAs cannot currently be installed from desktop Firefox or Safari,
+but they can run inside those browser.
+See <https://bugzilla.mozilla.org/show_bug.cgi?id=1407202>.
+This only work in desktop Chrome if you enable PWAs.
+To do this,
 
-- browse chrome://flags
+- browse <chrome://flags>
 - change the dropdown for the following to "Enabled":
-  "App Banners", "Experimental App Banners", and "Desktop PWAs"
+  - "Desktop PWAs"
+  - "App Banners" (seems to be optional)
+  - "Experimental App Banners" (seems to be optional)
 - press the "RELAUNCH NOW" button so changes will take effect
 
-- to find public PWAs
+To find public PWAs, browse <https://pwa.rocks>
 
-- browse <https://pwa.rocks>
+## In Chrome
 
 - criteria for installing
 
@@ -221,8 +231,6 @@ where port is output by the previous command.
   - does work yet for Tesla app
   - says "no matching service worker detected"
 
-- to install a PWA
-
 - browse to site in Chrome
   - ex. app.ft.com which is the Financial Times app
 - click the vertical ellipsis in upper-right
@@ -231,17 +239,3 @@ where port is output by the previous command.
   - but that is not where it will be placed
 - will be installed in `~/Applications/Chrome Apps`
   in a file with a `.app` extension
-
-- to run an installed PWA
-
-- double-click it
-
-- to uninstall a PWA
-
-- delete the `.app` file from the `~/Applications/Chrome Apps` directory
-- but Chrome will still think it is installed
-  and will not allow it to be installed again!
-
-```
-
-```
