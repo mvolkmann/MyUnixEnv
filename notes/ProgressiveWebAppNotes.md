@@ -93,14 +93,7 @@
 - to build and serve the app as a PWA
 
 - `npm install -g serve`
-- `npm run build`
-  - run this again every time the code is changed,
-    including changes to `manifest.json`!
-- `cd build`
-- `serve`
-- browse localhost:8080
-- for repeated rebuilds, run this:
-  `cd ..; npm run build; cd build; serve`
+- see steps in "Update on Version Changes" below for more
 
 - to test for issues
 
@@ -156,6 +149,33 @@ function checkForUpdate() {
 
 setInterval(checkForUpdate, 5000);
 ```
+
+This relies on the file `public/version.txt` being updated
+before every new version is served. To automate this,
+create `src/version.js` with the following content:
+
+```js
+const fs = require('fs');
+fs.writeFileSync('public/version.txt', Date.now());
+```
+
+Add the following npm scripts in `package.json`:
+
+```json
+"build": "react-scripts build && npm run version",
+"serve": "npm run build && cd build && serve",
+"version": "node src/version.js"
+```
+
+To rebuild the latest code changes, update `public/version.txt`,
+and serve the application from the `build` directory,
+enter `npm run serve`.
+
+After every code change, to deploy a new version of the app
+kill the server and enter `npm run serve` again.
+
+To run the app in the new browser tab, browse localhost:{port}
+where port is output by the previous command.
 
 ## In Chrome
 
