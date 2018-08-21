@@ -162,17 +162,21 @@ fs.writeFileSync('public/version.txt', Date.now());
 Add the following npm scripts in `package.json`:
 
 ```json
+"bs": "npm-run-all build serve",
 "build": "react-scripts build && npm run version",
-"serve": "npm run build && cd build && serve",
+"serve": "cd build && serve",
 "version": "node src/version.js"
 ```
 
 To rebuild the latest code changes, update `public/version.txt`,
 and serve the application from the `build` directory,
-enter `npm run serve`.
+enter `npm run bs`.
 
 After every code change, to deploy a new version of the app
-kill the server and enter `npm run serve` again.
+kill the server and enter `npm run bs` again.
+
+To just start the server again with no code changes,
+enter `npm run serve`.
 
 To run the app in the new browser tab, browse localhost:{port}
 where port is output by the previous command.
