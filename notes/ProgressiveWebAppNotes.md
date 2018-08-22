@@ -131,7 +131,7 @@ function checkForUpdate() {
     .then(res => res.text())
     .then(version => {
       const currentVersion = sessionStorage.getItem('app-version');
-      if (version !== currentVersion) {
+      if (currentVersion && version !== currentVersion) {
         console.info('version changed from', currentVersion, 'to', version);
         const download = window.confirm(
           'A new version of this app is available.  ' +
