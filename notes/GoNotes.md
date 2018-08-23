@@ -743,7 +743,8 @@ TODO: Add this section?
 ## Important Environment Variables
 
 - `GOARCH`\
-  Set this to the target architecture to use when compiling. When not set, the current architecture is assumed.
+  Set this to the target architecture to use when compiling.
+  When not set, the current architecture is assumed.
 - `GOBIN`\
   Set this to the directory where packages should be installed.
   TODO: What happens when this is not set?
@@ -1294,15 +1295,17 @@ For example, `const HOT = 100`.
 
 ## Operators
 
+Go supports the following operators:
+
 - arithmetic: `+`, `-`, `\*`, `/`, `%` (mod)
 - arithmetic assignment: `+=`, `-=`, `\*=`, `/=`, `%=`
 - increment: `++`
 - decrement: `--`
 - assignment: `=` (existing variable), `:=` (new variable)
 - comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
-  - arrays are compared by comparing their elements
-  - structs are compared by comparing their fields
-  - slices, maps, and functions cannot be compared
+  - Arrays are compared by comparing their elements.
+  - Structs are compared by comparing their fields.
+  - Slices, maps, and functions cannot be compared using these operators.
 - logical: `&&` (and), `||` (or), `!` (not)
 - bitwise: `&`, `|`, `^`, `&^` (bit clear)
 - bitwise assignment: `&=`, `|=`, `^=`, `&^=`
@@ -1324,6 +1327,8 @@ For example, `const HOT = 100`.
 
 ## Keywords
 
+Go supports the following keywords:
+
 - `break` - breaks out of a `for` loop, `select`, or `switch`
 - `case` - used in a `select` or `switch`
 - `chan` - channel type
@@ -1339,21 +1344,22 @@ For example, `const HOT = 100`.
 - `goto` - jumps to a given label (see `:` operator)
 - `if` - for conditional logic; also see `else`
 - `import` - imports all the exports in given package(s)
-  - see "Packages" section for more detail
+  - See the "Packages" section for more detail.
 - `interface` - defines a set of methods
-  - defines a type where all implementing structs are compatible
-  - structs do not state the interfaces they implement,
-    they just implement all the methods
+  - This defines a type where all implementing structs are compatible.
+  - Structs do not state the interfaces they implement,
+    they just implement all the methods.
 - `map` - type for a collection of key/value pairs where the keys and values can be any type
 - `package` - specifies the package to which the current source file belongs
 - `range` - used in a `for` loop to iterate over a
   string, array, slice, map, or receiving channel
 - `return` - terminates the containing function and returns zero or more values
 - `select` - chooses from a set of channel send or receive operations; see "Select" section
-- `struct` -
+- `struct` - a collection of fields that each have a specific type
 - `switch` - similar to other languages; see "Switch" section
-- `type` -
-- `var` -
+- `type` - creates an alias for other type
+  - This is often used to give a name to a struct or function signature.
+- `var` - defines a variable, its type, and optionally an initial value
 
 ## Pointers
 
@@ -1488,59 +1494,63 @@ switch value := expression.(type) {
 }
 ```
 
-- the variable `value` will have the actual type
-- `value :=` can be omitted if not needed
-- expression can be an interface type and
-  the actual type can be type that implements the interface
+The variable `value` will hold the actual type.
+`value :=` can be omitted if the type is not needed.
+`expression` can be an interface type and
+the actual type can be type that implements the interface.
 
 ## For Statement
 
-- the only looping statement
-- braces around body are required
-- can use `break` and `continue` inside
-- syntax is `for init; cond; post { ... }`
-  - no parentheses are allowed
-  - note that the three parts are separated by semicolons
-  - the "init" and "post" parts, if present, must be a single statement,
-    but multiple variables can be assigned in a single statement
-- ex.
+The `for` statement is the only looping statement in Go.
+Braces around the body are required.
+The `break` and `continue` keywords can be used inside the body.
+`break` exits the inner-most loop.
+`continue` skips the remainder of the body and
+continues at the top of the loop, testing the condition again.
 
-  ```go
-  for i := 0; i < 10; i++ {
-    ...
-  }
-  ```
+The syntax is `for init; cond; post { ... }`.
+No parentheses are allowed around the the init, cond, and post portions.
+These three parts are separated by semicolons.
+The init and post parts, if present, must be single statements,
+but multiple variables can be assigned in a single statement.
+For example,
 
-- init and post are optional
+```go
+for i := 0; i < 10; i++ {
+  ...
+}
+```
 
-  - so a while loop in other languages looks like this in go
+The init and post parts are optional, so
+a while loop in other languages looks like the following in Go:
 
-  ```go
-  for ; i < 10; {
-    ...
-  }
-  ```
+```go
+for ; i < 10; {
+  ...
+}
+```
 
-  - or drop the semicolons because when only one part is present it is assumed to be the condition
+The semicolons can be omitted when only the condition is specified.
 
-  ```go
-  for i < 10 {
-    ...
-  }
-  ```
+```go
+for i < 10 {
+  ...
+}
+```
 
-  - omit the condition for an endless loop
+For an endless loop, omit the condition.
 
-  ```go
-  for {
-    ...
-  }
-  ```
+```go
+for {
+  ...
+}
+```
 
 ## Strings
 
-- immutable sequences of bytes representing UTF-8 characters
-- literal values are delimited with double quotes or back-ticks (to include newlines)
+Go strings are immutable sequences of bytes representing UTF-8 characters.
+Literal values are delimited with double quotes or back-ticks.
+When back-ticks are used, the string can include newlines.
 - to declare and initialize, `name := "Mark"`
 - to retrieve a character, `char := name[index]`
 - it iterate over, `for _, char := range name { ... }`
