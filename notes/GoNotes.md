@@ -1551,21 +1551,33 @@ for {
 Go strings are immutable sequences of bytes representing UTF-8 characters.
 Literal values are delimited with double quotes or back-ticks.
 When back-ticks are used, the string can include newlines.
-- to declare and initialize, `name := "Mark"`
-- to retrieve a character, `char := name[index]`
-- it iterate over, `for _, char := range name { ... }`
-- can concatenate with the `+` and `+=` operators
-- the `string` type has no methods
-- the standard library package `strings` provides
-  many functions for operating on strings
-  - ex. to split a string on whitespace characters
-    ```go
-    s := "This is a test."
-    words := strings.Fields(s)
-    for _, word := range words {
-      fmt.Println(word) // outputs "This", "is", "a", and "test."
-    }
-    ```
+
+An example of declaring and initializing a string
+inside a function is `name := "Mark"`.
+To retrieve a character, `char := name[index]`.
+To iterate over the characters in string,
+
+```go
+for _, char := range name {
+  // Use char here.
+}
+```
+
+To create a new string by concatenating a string to another,
+use the `+` and `+=` operators.
+The `string` type has no methods.
+The standard library package `strings` provides
+many functions for operating on strings.
+For example, to split a string on whitespace characters
+and print each "word" on a separate line:
+
+```go
+s := "This is a test."
+words := strings.Fields(s)
+for _, word := range words {
+  fmt.Println(word) // outputs "This", "is", "a", and "test."
+}
+```
 
 ## Structs
 
@@ -1588,75 +1600,83 @@ can only be referred to where it is defined.
 
 The dot operator is used to get and set fields within a struct.
 
-- anonymous struct example
+Here is an example of using an anonymous struct
+that is not assigned to a type name:
 
-  ```go
-  var me = struct{
-    name string
-    age int8
-  }{
-    "Mark",
-    57,
+```go
+var me = struct{
+  name string
+  age int8
+}{
+  "Mark",
+  57,
+}
+fmt.Println(me.name) // Mark
+me.age++
+fmt.Println(me.age) // 58
+```
+
+Assigning a type name makes the code cleaner and easier to understand.
+For example,
+
+```go
+type person struct {
+  name string
+  age int8
+}
+
+var p1 = person{name: "Mark", age: 57} // initialize by field name
+var p2 = person{"Mark", 57} // initialize by field position
+// Uninitialized fields are initialized to their zero value.
+fmt.Println(p1.name) // Mark
+p2.age++
+
+// Print the struct for debugging.
+// Formatting strings are documented at <https://golang.org/pkg/fmt/>.
+// %v can be used for most types.
+fmt.Printf("%v\n", p2) // just field values: {Mark 58}
+fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
+fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age:58}
+```
+
+Type names must start uppercase if they
+should be accessible outside the current package.
+Struct field names must also start uppercase
+if they should be accessible outside the current package.
+
+There is no support for destructuring like in JavaScript
+to extract field values from a struct.
+
+If a struct field name is omitted, it is assumed to be the same as the type.
+For example,
+
+```go
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func main() {
+  type age int
+  type myType struct {
+    name string // named field
+    age // get field name from a primitive type
+    time.Month // get field name from a library type
   }
-  fmt.Println(me.name) // Mark
-  me.age++
-  fmt.Println(me.age) // 58
-  ```
+  //myStruct := myType{name: "Mark", int: 7, Month: time.April}
+  myStruct := myType{"Mark", 7, time.April}
+  fmt.Printf("name = %v\n", myStruct.name)
+  fmt.Printf("age = %v\n", myStruct.age)
+  fmt.Printf("Month = %v\n", myStruct.Month)
+}
+```
 
-- struct type example
-
-  ```go
-  type person struct {
-    name string
-    age int8
-  }
-
-  var p1 = person{name: "Mark", age: 57} // initialize by field name
-  var p2 = person{"Mark", 57} // initialize by field position
-  // Uninitialized fields are initialized to their zero value.
-  fmt.Println(p1.name) // Mark
-  p2.age++
-
-  // Print the struct for debugging.
-  // Formatting strings are documented at <https://golang.org/pkg/fmt/>.
-  // Can use %v for most things.
-  fmt.Printf("%v\n", p2) // just field values: {Mark 58}
-  fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
-  fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age:58}
-  ```
-
-- struct names must start uppercase if they
-  should be accessible outside the current package
-- field names must also start uppercase
-  if they should be accessible outside the current package
-- there is no support for destructuring like in JavaScript
-- if a struct field name is omitted, it is assumed to be the same as the type
-
-  - ex.
-
-  ```go
-  package main
-
-  import (
-    "fmt"
-    "time"
-  )
-
-  func main() {
-    type myType struct {
-      name string // named field
-      int // get name from a primitive type
-      time.Month // get name from a library type
-    }
-    //myStruct := myType{name: "Mark", int: 7, Month: time.April}
-    myStruct := myType{"Mark", 7, time.April}
-    fmt.Printf("name = %v\n", myStruct.name)
-    fmt.Printf("int = %v\n", myStruct.int)
-    fmt.Printf("Month = %v\n", myStruct.Month)
-  }
-  ```
-
-To embed a struct within another, include just its name to get a field with the same name or preceded the struct name with a field name. For example,
+To embed a struct within another,
+precede the struct name with a field name or
+include just its name to get a field with the same name.
+For example,
 
 ```go
 type address struct {
@@ -1689,13 +1709,80 @@ me := person{
 }
 ```
 
-- empty structs
-  - written as `struct{}`
-  - do not take up memory
-  - ideal for values in maps used to represent sets,
-    rather than boolean which does take up space
+## Sets
+
+Empty structs are useful for representing values in set data structures
+because they do not take up memory, unlike boolean values.
+They are written as `struct{}`.
+
+The following simple package defines a set data structure for strings.
+
+```go
+package set
+
+type empty struct{} // memory-efficient value for sets
+
+// Strings is a set of strings.
+type Strings map[string]empty
+
+var present = empty{}
+
+// Add adds a given value to the set.
+func (set Strings) Add(value string) {
+  set[value] = present
+}
+
+// Contains determines if a given value is in the set.
+func (set Strings) Contains(value string) bool {
+  _, ok := set[value]
+  return ok
+}
+
+// Remove removes a given value from the set.
+func (set Strings) Remove(value string) {
+  delete(set, value)
+}
+```
+
+Here's an example of using the "set" package.
+
+```go
+package main
+
+import (
+  "fmt"
+
+  "github.com/mvolkmann/set"
+)
+
+func main() {
+  colorSet := set.Strings{}
+  colorSet.Add("red")
+  colorSet.Add("yellow")
+  colorSet.Add("blue")
+  colorSet.Remove("yellow")
+
+  colors := []string{"red", "yellow", "blue"}
+  for _, color := range colors {
+    if colorSet.Contains(color) {
+      fmt.Println("have", color) // prints "red" and "blue"
+    }
+  }
+
+  fmt.Printf("%+v\n", colorSet) // map[red:{} yellow:{}]
+  fmt.Println("length =", len(colorSet))
+}
+```
+
+A recommended community library that supports many data structures
+is "gods" at <https://github.com/emirpasic/gods>.
+It supports several kinds of lists, sets, stacks, map, and trees
+that hold values of any type.
+Compare the `gods.HashSet` type to the `set.Strings` type defined above.
 
 ## Methods
+
+GRONK
 
 Methods can be associated with any type.
 This is particularly useful for types that implement interfaces.
@@ -1983,6 +2070,20 @@ or `scoreMap := make(playerScoreMap)`.
 To add a key/value pair, `myMap[key] = value`.
 
 To get the value for a given key, `value := myMap[key]`.
+
+For example,
+
+```go
+type playerScoreMap map[string]int
+
+scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}
+scoreMap["Amanda"] = 83
+scoreMap["Jeremy"] = 95
+
+myScore := scoreMap["Mark"]
+fmt.Println("my score =", myScore) // 90
+fmt.Printf("scoreMap = %+v\n", scoreMap) // map[Tami:92 Amanda:83 Jeremy:95 Mark:90]
+```
 
 To get the value for a given key and verify that the key was present,
 as opposed to just getting the zero value because it wasn't,
