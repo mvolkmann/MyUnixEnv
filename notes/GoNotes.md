@@ -1577,6 +1577,23 @@ for _, word := range words {
 }
 ```
 
+## `type` Keyword
+
+The `type` keyword defines a new type.
+It does not define an alias for an existing type.
+
+For example `type score int` defines the type `score`,
+but it cannot be used interchangeably with the type `int`.
+
+```go
+type score int
+var s score = 1
+var i int = 
+sum : = s + i // invalid operation - mismatched types
+```
+
+The `type` keyword is most often used to define a type for struct, slice, map, or function.
+
 ## Structs
 
 A struct is a collection of fields defined with the `struct` keyword.
@@ -3026,6 +3043,7 @@ but no such package actually exists.
 - no conversions are performed implicitly
 - builtin types can be used as conversion functions
 - ex. `var f = float32(i)`
+- How does this differ from `var f = i.(float32)`?
 - will get an error if conversion cannot be done
   - for example attempting to convert a string to an int
   - will not convert a string containing a valid number to a number
