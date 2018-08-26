@@ -4138,7 +4138,7 @@ The checksum for each dependency is stored in the file `go.sum`.
 The command `go mod verify` reports all directories that hold
 downloaded module code and contain files that have been modified.
 
-## Proxies
+### Proxies
 
 It is possible to configure a proxy server that hosts Go modules
 so they are installed from there instead of
