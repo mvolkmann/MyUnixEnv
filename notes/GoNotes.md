@@ -1588,7 +1588,7 @@ but it cannot be used interchangeably with the type `int`.
 ```go
 type score int
 var s score = 1
-var i int = 
+var i int = 2
 sum : = s + i // invalid operation - mismatched types
 ```
 
@@ -4096,6 +4096,15 @@ This means that each time a new dependency version is desired,
  Specifying a version like "v2" will not automatically get the
  latest version that starts with "v2" every time `go build` is run
  since "v2" will be replaced by an actual version.
+
+ Sam Boyer is the lead maintainer of Dep, a dependency management tool for Go.
+ He feels that this feature of Go modules loses information
+ about the minimum versions that were deemed compatible.
+ Further, he feels this makes it hard to resolve diamond-shaped
+ dependencies where multiple modules needed by an app
+ depend on different minor versions of some other module.
+ See his talk "We need to talk about Go modules" at
+ <https://www.youtube.com/watch?v=7GGr3S41gjM&feature=youtu.be&t=14m55s>.
 
  No automatic version updates are ever performed.
  This means that checking `go.mod` files into a version control repository
