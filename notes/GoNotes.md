@@ -3949,7 +3949,7 @@ require github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31
 In addition, this creates the file `go.sum` which stores checksum information
 that is used to verify ...
 
-### Dependency Code
+### Dependency Source Code
 
 The source files for dependencies are not stored in
 the module root directories of modules that use them.
@@ -3992,7 +3992,9 @@ To change to a different major version, all dependencies that specify this must 
 Presumably there will be tooling to automate this in the future.
 
 The actual versions of dependencies that are used depends on what is found in `go.mod`.
-There are several ways to specify a version.
+There are several ways to specify a version, called "module queries".
+To add a module query to a require path,
+add a space and one of the following after a path.
 
 Version Approach     | Example    | Notes
 -------------------- | ---------- | -------------------------
@@ -4004,6 +4006,39 @@ latest               | latest     |
 commit hash          | A1B2C3D    |
 tag                  | my-tag     |
 branch name          | my-branch  |
+
+In all cases but using a fully-specified version,
+running a command such as `go build` finds a matching version
+and updates `go.mod` with the result.
+This means that each time you wish to use a new dependency version,
+`go.mod` must be updated again.
+ You cannot specify a version like "v2" and automatically get the
+ latest version that starts with "v2" every time `go build` is run
+ since "v2" will be replaced by an actual version.
+ No automatic version updates are ever performed.
+
+"Version comparison" gets the nearest version to what is requested,
+not the latest version that matches.  For example, if the query is ">=1.2.3"
+and the existing versions include 1.2.2, 1.2.3, and 1.2.4,
+this will use version 1.2.3.
+
+### Stable Versions
+
+Modules that are tagged with versions that
+start with "v0" or "v1" are considered unstable.
+Versions that start with "v2" or higher are considered stable.
+
+To publish a stable version of a module,
+the module name in `go.mod` must be modified to end with the major version.
+For example `module github.com/mvolkmann/samplegomodule/v2`.
+
+Other modules that have a dependency on a module
+can import unstable versions without specifying a version.
+For example, `import github.com/mvolkmann/samplegomodule`.
+Stable major versions must be specified in import statements.
+For example, `import github.com/mvolkmann/samplegomodule/v2`.
+Note that only the major version is specified,
+not minor or patch version.
 
 ### Transition to Module Support
 
