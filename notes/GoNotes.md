@@ -8,9 +8,8 @@ About a year later Russ Cox and Ian Taylor joined the team.
 
 Go was officially announced in November 2009.
 Go 1.0 was released in March 2012.
-Currently (as of August 2018) the latest version is
 Go 1.10 which was released in February 2016.
-The third beta release of Go 1.11 was released in August 2018.
+Go 1.11, the latest version, was released in August 2018.
 
 Many of Go's goals are in comparison to languages like C++ and Java.
 Go aims to:
@@ -733,7 +732,6 @@ and add the following in the `main` function.
   yellow := chalk.Yellow.Color
   blue := chalk.Blue.Color
   fmt.Println(red("Hello,"), yellow("my name is"), blue("Mark!"), chalk.Reset)
-}
 ```
 
 ### Publish Package or App to GitHub
@@ -3884,6 +3882,145 @@ that I find annoying. These include:
   },
   ```
 
+## Modules
+
+Go 1.11 includes experimental support for "modules".
+This eliminates the need to have code under GOPATH
+and adds support for dependency versioning.
+
+A module is defined by a directory referred to as "module root"
+that contains a `go.mod` file and a set of source files.
+While `go.mod` can be created and updated manually,
+there is no need to do either.
+The easiest way to create `go.mod` for a new module
+is to cd to module root and run `go mod init {module-name}`
+where module-name is the import path other modules will use to import this one.
+Typically this is a GitHub path such as `github.com/mvolkmann/my-module`,
+but can be a simple name for modules that will not be published.
+
+After running `go mod init github.com/mvolkmann/my-module`,
+the content of `go.mod` will be:
+
+```go
+module github.com/mvolkmann/my-module
+```
+
+The easiest way to add dependencies to `go.mod` is to
+create source files that contain `import` statements
+for the dependencies and run a `go` command
+such as `go build`, `go test`, or `go list`.
+These trigger a lookup of all the dependencies.
+The results are used to update `go.mod`.
+
+### Simple Example
+
+Create a new directory anywhere (except under GOPATH)
+with any name and cd to the directory.
+Enter `go mod init my-simple-module`.
+Note that a GitHub path is not specified because
+we are not planning to share this module with others.
+
+Create a file named `main.go` with the following content:
+
+```go
+package main
+
+import (
+  "fmt"
+
+  "github.com/ttacon/chalk"
+)
+
+func main() {
+  fmt.Printf("%s%s%s\n", chalk.Magenta, "So pretty!", chalk.Reset)
+}
+```
+
+The code above imports a single community package
+that is not yet listed in `go.mod`.
+To build this and update `go.mod` with dependency information,
+run `go build`.  This creates the executable file `my-simple-module`.
+It also adds the following to `go.mod`:
+
+```go
+require github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31
+```
+
+In addition, this creates the file `go.sum` which stores checksum information
+that is used to verify ...
+
+### Dependency Code
+
+The source files for dependencies are not stored in
+the module root directories of modules that use them.
+Instead they are stored in `$GOPATH/pkg/mod`.
+This allows multiple modules to share them.
+
+Multiple versions of each module dependency
+can be stored here.
+This allows using modules to use different versions.
+
+### Explicit Installs
+
+It is also possible to install dependencies with `go get`.
+This updates `go.mod`, but adds the comment `// indirect`
+after the require for the new dependency.
+This indicates that no code in the using module
+has been seen yet that uses the dependency.
+
+These "indirect" comments are removed
+after uses of the dependencies are added to source files
+in the module and a command such as `go build` is run.
+Since such commands can add dependencies to `go.mod` on their own
+and they will be run eventually, there is no real incentive
+to use `go get` to install dependencies.
+
+### Versions
+
+Go modules expect the use of semantic versioning where version numbers
+have three parts referred to as major, minor, and patch.
+For example, "1.2.3" represents a major version of 1,
+a minor version of 2, and a patch version of 3.
+The patch number is incremented when backward-compatible bug fixes are made.
+The minor number is incremented when backward-compatible new features are added.
+The major number is increment when incompatible changes are made.
+
+Go `import` statements can specify the major version to be used
+for each dependency.
+When no major version is specified, the latest version that is less than v2.0.0 is used.
+To change to a different major version, all dependencies that specify this must be modified.
+Presumably there will be tooling to automate this in the future.
+
+The actual versions of dependencies that are used depends on what is found in `go.mod`.
+There are several ways to specify a version.
+
+Version Approach     | Example    | Notes
+-------------------- | ---------- | -------------------------
+fully-specified      | v1.2.3     |
+major version prefix | v1         | latest starting with v1
+minor version prefix | v1.2       | latest starting with v1.2
+version comparison   | >=v1.2.3   | can also use >, <, and <=
+latest               | latest     |
+commit hash          | A1B2C3D    |
+tag                  | my-tag     |
+branch name          | my-branch  |
+
+### Transition to Module Support
+
+For Go 1.11 it is possible to use both the old GOPATH approach
+to dependencies and the new module approach.
+The environment variable `GO111MODULE` specifies whether
+one or both of these approaches should be allowed.
+When set to "off", only GOPATH can be used.
+When set to "on", only modules can be used.
+When set to "auto" or not set, either can be used
+and the choice is based on whether commands are run from a directory
+that contains a `go.mod` file or a descendant of such a directory.
+
+If you have existing code that relies on GOPATH and
+you want to try module support in some new or existing packages,
+not setting `GO111MODULE` is a good option.
+
 ## Summmary
 
 TODO: Write this.
@@ -3912,7 +4049,7 @@ listed roughly in the order they should be visited.
 - "How to Write Go Code": <https://golang.org/doc/code.html>
   - free, online resource
   - "demonstrates the development of a simple Go package and introduces the go tool"
-- "Effective Go": <https://golang.org/doc/effective_go.html>
+- "Effective Gto o": <https://golang.org/doc/effective_go.html>
   - free, online "book"
 - "The Go Programming Language Specification": <https://golang.org/ref/spec>
 - golang.org articles: <https://golang.org/doc/#articles>
