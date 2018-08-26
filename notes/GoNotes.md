@@ -3892,29 +3892,30 @@ A module is defined by a directory referred to as "module root"
 that contains a `go.mod` file and a set of source files.
 While `go.mod` can be created and updated manually,
 there is no need to do either.
+
 The easiest way to create `go.mod` for a new module
-is to cd to module root and run `go mod init {module-name}`
+is to cd to its module root and run `go mod init {module-name}`
 where module-name is the import path other modules will use to import this one.
-Typically this is a GitHub path such as `github.com/mvolkmann/my-module`,
+Typically this is a GitHub path such as `github.com/mvolkmann/mymodule`,
 but can be a simple name for modules that will not be published.
 
-After running `go mod init github.com/mvolkmann/my-module`,
+After running `go mod init github.com/mvolkmann/mymodule`,
 the content of `go.mod` will be:
 
 ```go
-module github.com/mvolkmann/my-module
+module github.com/mvolkmann/mymodule
 ```
 
 The easiest way to add dependencies to `go.mod` is to
 create source files that contain `import` statements
 for the dependencies and run a `go` command
-such as `go build`, `go test`, or `go list`.
+such as `go build`, `go test`, `go list`, or `go vet`.
 These trigger a lookup of all the dependencies.
 The results are used to update `go.mod`.
 
 ### Semantic Versioning
 
-Go modules expect the use of semantic versioning where version numbers
+Go modules prefer the use of semantic versioning where version numbers
 have three parts referred to as major, minor, and patch.
 For example, "1.2.3" represents a major version of 1,
 a minor version of 2, and a patch version of 3.
@@ -3930,7 +3931,7 @@ Enter `go mod init mymodule`.
 Note that a GitHub path is not specified because
 we are not planning to share this module with others.
 
-Create a file named `main.go` with the following content:
+Create the file `main.go` with the following content:
 
 ```go
 package main
@@ -3948,16 +3949,19 @@ func main() {
 
 The code above imports a single community package
 that is not yet listed in `go.mod`.
-To build this and update `go.mod` with dependency information,
-run `go build`.  This creates the executable file `mymodule`.
+To build this application and update `go.mod` with dependency information,
+enter `go build`.  This creates the executable file `mymodule`.
 It also adds the following to `go.mod`:
 
 ```go
 require github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31
 ```
 
-In addition, this creates the file `go.sum` which stores checksum information
-for all dependencies.  See the section "Checksum" below.
+The version string that follows the dependency path will be explained later.
+
+Running `go build` also creates the file `go.sum`
+which stores checksum information for all dependencies.
+See the section "Checksum" below.
 
 ### Module code layout
 
@@ -3975,15 +3979,14 @@ the module root directories of modules that use them.
 Instead they are stored in `$GOPATH/pkg/mod`.
 This allows multiple modules to share them.
 
-Multiple versions of each module dependency
-can be stored here.
-This allows using modules to use different versions.
+Multiple versions of each dependency can be stored here.
+This allows the modules that depend on them to use different versions.
 
 ### Explicit Installs
 
 It is also possible to install dependencies with `go get`.
 This updates `go.mod`, but adds the comment `// indirect`
-after the require for the new dependency.
+after the path for the new dependency.
 This indicates that no code in the current module
 has been seen yet that uses the dependency.
 
@@ -3997,9 +4000,9 @@ it is not necessary to use `go get` to install dependencies.
 The primary reason to use `go get` with modules
 is to specify a specific version to be installed.
 Alternatively once some version is installed,
-perhaps by running `go build`, the version to use
-can be modified by editing `go.mod`
-and running a command like `go build`.
+perhaps by running `go build`,
+the version to use can be modified by editing `go.mod`
+and running the command again.
 
 Changing the version of a direct dependency can
 change the versions of its dependencies that are used.
@@ -4027,39 +4030,36 @@ To add a tag from the command-line,
 enter `git tag {tag-name}`
 and `git push origin {tag-name}`.
 
-To release a new stable version of a module (major version is 2 or higher),
+To release a new stable version of a module (major version 2 or higher),
 modify the module name in `go.mod` to end with the major version.
-For example `module github.com/mvolkmann/samplegomodule/v2`.
+For example `module github.com/mvolkmann/mymodule/v2`.
+Then push and tag this change along with other changes.
 
 In other modules that wish to use this module,
 unstable versions can be imported without specifying the major version.
-For example, `import github.com/mvolkmann/samplegomodule`.
+For example, `import github.com/mvolkmann/mymodule`.
+The latest version that is less than v2 will be used.
 
 To use a stable version, add the major version to import paths
 in all source files that import it.
-For example `import github.com/mvolkmann/samplegomodule/v2`.
+For example `import github.com/mvolkmann/mymodule/v2`.
 Note that only the major version is specified,
-not minor or patch version.
+not the minor or patch version.
 This is referred to as "semantic import versioning".
+Presumably there will be tooling to automate this in the future.
 
 Since each version is stored separately, it is possible to use
 multiple major versions of a dependency in the same application.
 
 ### Using Module Versions
 
-Go `import` statements can specify the major version to be used
-for each dependency.
-When no major version is specified, the latest version that is less than v2.0.0 is used.
-To change to a different major version,
-all import statements for the dependency must be modified.
-Presumably there will be tooling to automate this in the future.
-
-The actual versions of dependencies that are used depends on what is found in `go.mod`.
+The actual versions of dependencies that are used
+is determined based on what is found in `go.mod`.
 There are several ways to specify a version, called "module queries".
 To add a module query to a require path,
-add a space and one of the following after a path.
+add a space and one of the following after the path.
 
-Version Approach     | Example    | Notes
+Module Query Type    | Example    | Notes
 -------------------- | ---------- | -------------------------
 fully-specified      | v1.2.3     |
 major version prefix | v1         | latest starting with v1
@@ -4073,12 +4073,15 @@ branch name          | my-branch  |
 In all cases but using a fully-specified version,
 running a command such as `go build` finds a matching version
 and updates `go.mod` with the result.
-This means that each time you wish to use a new dependency version,
-`go.mod` must be updated again.
- You cannot specify a version like "v2" and automatically get the
+This means that each time a new dependency version is desired,
+`go.mod` must be updated.
+ Specifying a version like "v2" will not automatically get the
  latest version that starts with "v2" every time `go build` is run
  since "v2" will be replaced by an actual version.
+
  No automatic version updates are ever performed.
+ This means that checking `go.mod` files into a version control repository
+ provides a way to produce repeatable builds.
 
 "Version comparison" gets the nearest version to what is requested,
 not the latest version that matches.  For example, if the query is ">=1.2.3"
@@ -4095,27 +4098,24 @@ Pseudo versions provide this.
 Pseudo versions are strings that have three parts.
 The first is a version in the form "v{major}.{minor}.{something}".
 The second is the commit time in UTC.
-The third is the commit hash prefix (first 12 characters).
+The third is the first 12 characters of the commit hash.
 These parts are separated by dashes.
 
 The "something" in the first part is a bit complicated.
 Fortunately it's not necessary to think about this
-because pseudo version strings are automatically generated.
+because pseudo version strings are automatically generated
+when dependencies that lack semantic versioning tags are installed.
 
-Pseudo versions are automatically generated
-when dependencies that lack semantic versioning tags
-are installed.
+### Other `go.mod` Directives
 
-### More on `go.mod` files
-
-Besides `module` and `require` directives,
+Besides the `module` and `require` directives,
 `go.mod` files can also contain
 `exclude` and `replace` directives.
 `exclude` directives specify versions of dependencies that cannot be used.
 `replace` directives specify versions of dependencies
 that should be replaced by another version.
-These can be used to avoid using versions that have known bugs
-or security issues.
+These can be specified to avoid using versions that have
+known bugs or security issues.
 
 ### Tidying `go.mod` Files
 
@@ -4128,7 +4128,7 @@ and removes unused dependencies from `go.mod`.
 Of course many other commands such as `go build`
 take care of adding missing dependencies,
 so the primary purpose of `go mod tidy`
-is removing unused dependencies.
+is to remove unused dependencies.
 
 ### Checksums
 
@@ -4143,13 +4143,13 @@ downloaded module code and contain files that have been modified.
 It is possible to configure a proxy server that hosts Go modules
 so they are installed from there instead of
 connecting to public source control repositories.
-One reason to use a proxy server is to restrict access
+One reason to do this is to restrict access
 to only modules that have been vetted.
 
 A Go proxy server is a web server that
 responds to GET requests for module URLs.
 To use one, set the `GOPROXY` environment variable
-to point to the proxy server.
+to point to the server.
 
 For more information, enter `go help goproxy`.
 
