@@ -1855,6 +1855,13 @@ If the method has only one return value, the last pair can be omitted.
 
 An instance of the type is referred to as the "receiver" for the method.
 
+In most programming languages that support methods,
+the method body refers to the receiver
+using a keyword like `this` or `self`.
+In Go the method signature specifies the name
+by which the receiver will be referenced.
+In the example that follows, the name is `p`.
+
 To call a method, add a dot, the method name, and the argument list
 after a variable that holds the receiver.
 For example,
