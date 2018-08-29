@@ -1552,7 +1552,12 @@ When back-ticks are used, the string can include newlines.
 
 An example of declaring and initializing a string
 inside a function is `name := "Mark"`.
-To retrieve a character, `char := name[index]`.
+
+To get the length of a string, use the `len` function.
+For example, `len(name)` returns `4`.
+
+To retrieve a character from a string, `char := name[index]`.
+
 To iterate over the characters in string,
 
 ```go
