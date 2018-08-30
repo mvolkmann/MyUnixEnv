@@ -3141,57 +3141,63 @@ This only works if the value actually has a type of `float32`.
 
 ## Error Handling
 
-- exceptions are not supported
-- instead functions that may encounter errors have an
-  additional return value of type `error` that callers must check
+Go does not support exceptions.
+Instead functions that may encounter errors have an
+additional return value of type `error` that callers must check.
+The type `error` is an interface that defines a single method `Error`
+that returns a string description of the error.
+The standard library creates and exports many instances.
+It is also possible to define custom implementations of the
+`error` interface that hold additional data describing the error.
 
-  ```go
-  package main
-  import (
-    "errors"
-    "fmt"
-  )
+The `errors` package defines a `New` method
+that can be used to create error instances from a string.
+For example,
 
-  func divide(a, b float32) (float32, error) {
-    if b == 0 {
-      return 0, errors.New("divide by zero")
-    }
-    return a / b, nil // no error
+```go
+package main
+import (
+  "errors"
+  "fmt"
+)
+
+func divide(a, b float32) (float32, error) {
+  if b == 0 {
+    return 0, errors.New("divide by zero")
   }
+  return a / b, nil // no error
+}
 
-  func main() {
-    // A common idiom for error checking using
-    // the optional assignment of an "if"
-    if q, err = divide(7, 0); err == nil {
-      fmt.Print(q)
-    } else {}
-      fmt.Println(err) // prints error message
-    }
+func main() {
+  // A common idiom for error checking using
+  // the optional assignment of an "if"
+  if q, err = divide(7, 0); err == nil {
+    fmt.Print(q)
+  } else {}
+    fmt.Println(err) // prints error message
   }
-  ```
+}
+```
 
-  - `error` is an interface that defines the `Error` function
-  - can define custom errors that implement the Error method
-    to convert to a string
+Here is an example of defining a custom error type, `DivideByZero`,
+that holds an error message and the numerator value.
 
-    - ex.
+```go
+type DivideByZero struct {
+  numerator float32
+}
 
-    ```go
-    type DivideByZero struct {
-      numerator float32
-    }
+func (err DivideByZero) Error() string {
+  return fmt.Sprintf("tried to divide %v by zero", err.numerator)
+}
 
-    func (err DivideByZero) Error() string {
-      return fmt.Sprintf("tried to divide %v by zero", err.numerator)
-    }
-
-    func divide2(a, b float32) (float32, error) {
-      if b == 0 {
-        return 0, DivideByZero{a}
-      }
-      return a / b, nil
-    }
-    ```
+func divide2(a, b float32) (float32, error) {
+  if b == 0 {
+    return 0, DivideByZero{a}
+  }
+  return a / b, nil
+}
+```
 
 ## Logging
 
