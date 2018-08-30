@@ -3052,18 +3052,30 @@ but no such package actually exists.
 
 ## Type Conversions
 
-- no conversions are performed implicitly
-- builtin types can be used as conversion functions
-- ex. `var f = float32(i)`
-- How does this differ from `var f = i.(float32)`?
-- will get an error if conversion cannot be done
-  - for example attempting to convert a string to an int
-  - will not convert a string containing a valid number to a number
-    - use `strconv` package for this
-    ```go
-    s := "19"
-    n, err := strconv.ParseInt(s, 10, 32) // base 10, bitsize 32
-    ```
+No type conversions are performed implicitly.
+Builtin types can be used as conversion functions.
+For example, `f := float32(i)` converts an `int` to a `float32`
+and `i := int(f)` converts an `float32` to an `int`,
+truncating the fractional part.
+
+An error will be triggered if the conversion cannot be performed.
+For example, attempting to convert a string to an int is an error,
+even if the string contains a valid number.
+
+To convert the string representation of a number to a number,
+use the `strconv` package.  For example,
+
+```go
+s := "19"
+n, err := strconv.ParseInt(s, 10, 32) // base 10, bitsize 32
+```
+
+When a value is held in an interface type,
+including the "any" type `interface{}`,
+a type assertion can be used to convert it to a non-interface type.
+For example, `var f = value.(float32)` converts
+a value with an interface type to a `float32`.
+This only works if the value actually has a type of `float32`.
 
 ## Packages
 
@@ -3446,6 +3458,38 @@ func main() {
 
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
+
+To get the type of an expression, `typ := reflect.TypeOf(expression)`.
+This returns a `Type` object that has many methods.
+The `Type` method `Name` returns the type as a string.
+The `Type` method `Kind` returns the type
+as a enumerated value of type `reflect.Kind`.
+The `Type` method `PkgPath` returns the import path for the type.
+The `Type` method `Implements` returns a boolean indicating
+whether the type implements a given interface type.
+
+For function types, it is possible to iterate
+over its parameters and return types.
+The `Type` method `NumIn` returns the number of parameters in the function.
+The `Type` method `In` returns a `Type` object
+describing the parameter at a given index.
+The `Type` method `NumOut` returns the number of return types in the function.
+The `Type` method `Out` returns a `Type` object
+describing the return type at a given index.
+
+For struct types, it is possible to iterate over its fields.
+The `Type` method `NumMethod` returns the number of fields in the struct.
+The `Type` method `FieldByIndex` returns a `StructField` object
+describing the field at a given index.
+
+For interface types, it is possible to iterate over its methods.
+The `Type` method `NumMethod` returns the number of methods in the interface.
+The `Type` method `Method` returns a `Method` object
+describing the method at a given index.
+
+For map types, it is possible to obtain the key and value types.
+The `Type` method `Key` returns a `Type` object describing the key type.
+
 For example,
 
 ```go
