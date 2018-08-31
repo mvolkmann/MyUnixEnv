@@ -3467,36 +3467,10 @@ for determining the type of a value and manipulating it in a type-safe way.
 
 To get the type of an expression, `typ := reflect.TypeOf(expression)`.
 This returns a `Type` object that has many methods.
+
 The `Type` method `Name` returns the type as a string.
-The `Type` method `Kind` returns the type
-as a enumerated value of type `reflect.Kind`.
-The `Type` method `PkgPath` returns the import path for the type.
-The `Type` method `Implements` returns a boolean indicating
-whether the type implements a given interface type.
-
-For function types, it is possible to iterate
-over its parameters and return types.
-The `Type` method `NumIn` returns the number of parameters in the function.
-The `Type` method `In` returns a `Type` object
-describing the parameter at a given index.
-The `Type` method `NumOut` returns the number of return types in the function.
-The `Type` method `Out` returns a `Type` object
-describing the return type at a given index.
-
-For struct types, it is possible to iterate over its fields.
-The `Type` method `NumMethod` returns the number of fields in the struct.
-The `Type` method `FieldByIndex` returns a `StructField` object
-describing the field at a given index.
-
-For interface types, it is possible to iterate over its methods.
-The `Type` method `NumMethod` returns the number of methods in the interface.
-The `Type` method `Method` returns a `Method` object
-describing the method at a given index.
-
-For map types, it is possible to obtain the key and value types.
-The `Type` method `Key` returns a `Type` object describing the key type.
-
-For example,
+The `Type` method `Kind` returns the type as an
+enumerated value of type `reflect.Kind`.  For example,
 
 ```go
 package main
@@ -3531,6 +3505,35 @@ func main() {
   whatAmI(i)
 }
 ```
+
+The `Type` method `PkgPath` returns the import path for the type.
+The `Type` method `Implements` returns a boolean indicating
+whether the type implements a given interface type.
+
+For function types, it is possible to iterate
+over its parameters and return types.
+The `Type` method `NumIn` returns the number of parameters in the function.
+The `Type` method `In` returns a `Type` object
+describing the parameter at a given index.
+The `Type` method `NumOut` returns the number of return types in the function.
+The `Type` method `Out` returns a `Type` object
+describing the return type at a given index.
+
+For struct types, it is possible to iterate over its fields.
+The `Type` method `NumMethod` returns the number of fields in the struct.
+The `Type` method `FieldByIndex` returns a `StructField` object
+describing the field at a given index.
+
+For interface types, it is possible to iterate over its methods.
+The `Type` method `NumMethod` returns the number of methods in the interface.
+The `Type` method `Method` returns a `Method` object
+describing the method at a given index.
+
+For map types, it is possible to obtain the key and value types.
+The `Type` method `Key` returns a `Type` object describing the key type.
+The `Type` method `Elem` returns a `Type` object describing the value type.
+This method can also be used to get the element type of an
+`Array`, `Chan`, pointer, or `Slice`.
 
 ## JSON
 
