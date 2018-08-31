@@ -2877,9 +2877,9 @@ func main() {
   for !list.isEmpty() {
     value := list.pop()
     sum += value.(int)
-    fmt.Println("value =", value)
+    fmt.Println("value =", value) // 5 and 7
   }
-  fmt.Println("sum =", sum)
+  fmt.Println("sum =", sum) // 12
 }
 ```
 
