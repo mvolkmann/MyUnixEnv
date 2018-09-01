@@ -1844,21 +1844,26 @@ func main() {
 
 ## Methods
 
-GRONK
+Methods are functions that are invoked on a "receiver" value.
+They can be associated with any type.
+The receiver is an instance of this type.
 
-Methods can be associated with any type.
-This is particularly useful for types that implement interfaces.
+Methods are particularly useful for types that implement interfaces.
 Otherwise we can just write functions that take a value of the type as an argument.
 
 It is not possible to create overloaded methods on a type
 to create different implementations for different parameter types.
+Methods are distinguished only by the receiver type and their name.
 
 The syntax for defining a method is
 `func (receiver-info) name(parameter-list) (return-types) { body }`.
+`receiver-info` is a name followed by a type.
 Note that there are three sets of parentheses.
-If the method has only one return value, the last pair can be omitted.
+If the method has only one return value,
+the last pair of parentheses can be omitted.
 
-An instance of the type is referred to as the "receiver" for the method.
+When there are methods that modify the receiver,
+the receiver type should be pointer.
 
 In most programming languages that support methods,
 the method body refers to the receiver
@@ -1867,8 +1872,8 @@ In Go the method signature specifies the name
 by which the receiver will be referenced.
 In the example that follows, the name is `p`.
 
-To call a method, add a dot, the method name, and the argument list
-after a variable that holds the receiver.
+To call a method, specify the receiver followed by a dot,
+the method name, and the argument list.
 For example,
 
 ```go
@@ -1887,10 +1892,9 @@ fmt.Printf("%#v\n", p) // main.person{name:"Mark", age:59}
 
 In the previous example the receiver is a pointer to a struct.
 This allows the method to modify the struct
-and avoids making a copy of the struct.
+and avoids making a copy of the struct when it is invoked.
 When the receiver is a type value and not a pointer to a type value
 the method receives a copy and cannot modify the original.
-For these reasons, most methods on structs take a pointer.
 
 When a function has a parameter with a pointer type,
 it must be passed a pointer
@@ -1899,7 +1903,12 @@ it can be invoked on a pointer to a struct or a struct.
 When invoked on a struct, it will automatically
 pass a pointer to the struct to the method.
 
-Methods can also be added to primitive types if a type alias is created.
+When a type has multiple methods, `golint`
+wants all the receivers to have the same name.
+However, `golint` does not complain if
+some receivers are a pointer and others are values.
+
+Methods can be added to primitive types if a type alias is created.
 If an attempt is made to add a method to a built-in type
 an error with the message "cannot define new methods on non-local type"
 will be triggered.
@@ -1913,9 +1922,7 @@ func (receiver number) double() number {
   return receiver * 2
 }
 
-n := number(3)
-// or could use var n number = 3
-// or could use: n := number(3)
+n := number(3) // or could use var n number = 3
 fmt.Println(n.double()) // 6
 ```
 
@@ -2711,15 +2718,20 @@ using this feature is frowned upon
 because the code is less readable
 than explicitly returning values.
 
-- deferred functions
-  - inside a function, function calls preceded by `defer`
-    will have their arguments evaluated,
-    but will not execute until the containing function exits
-  - all deferred calls are placed on a stack and
-    executed in the reverse order from which they are evaluated
-  - typically used for resource cleanup such as closing files that
-    must occur regardless of the code path taken in the function
-    - an alternative to try/finally in other languages
+## Deferred Functions
+
+Inside a function, function calls preceded by `defer`
+will have their arguments evaluated immediately,
+but the function will not execute until the containing function exits.
+
+All deferred calls are placed on a stack and
+executed in the reverse order from which they are evaluated.
+
+Deferred functions are typically used for resource cleanup
+that must occur regardless of the code path taken in the function.
+Examples include closing files or network connections.
+
+This is an alternative to the `try`/`finally` syntax found in other languages.
 
 ## Interfaces
 
@@ -4367,7 +4379,7 @@ listed roughly in the order they should be visited.
 - "How to Write Go Code": <https://golang.org/doc/code.html>
   - free, online resource
   - "demonstrates the development of a simple Go package and introduces the go tool"
-- "Effective Gto o": <https://golang.org/doc/effective_go.html>
+- "Effective Go": <https://golang.org/doc/effective_go.html>
   - free, online "book"
 - "The Go Programming Language Specification": <https://golang.org/ref/spec>
 - golang.org articles: <https://golang.org/doc/#articles>
