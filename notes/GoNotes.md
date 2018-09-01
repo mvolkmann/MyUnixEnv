@@ -3169,65 +3169,79 @@ This only works if the value actually has a type of `float32`.
 
 ## Packages
 
-- all code is in some package
-- all `.go` files must start with a `package` statement and
-  the package name must match the name of the directory that holds the file
-  - ex. if the file `foo.go` is in a directory named `bar`,
-    the first non-comment line in the file must be `package bar`
-  - changing a package name requires renaming the directory
-    and modifying the `package` statement in all the files
-  - why isn't the package name just inferred from the directory name?
-- package names used within an application or library are not required
-  to be unique, but their import paths must be unique
-- community packages
-  - have paths that reflect their repository URL
-  - ex. github.com/julienschmidt/httprouter
-  - when installed, these use the URL to determine
-    their path under the `src` directory
-  - avoids path conflicts
-- it is recommended that your own packages go in directories that
-  reflect their eventual URL should they be publish in the future
-  - ex. my packages should be in src/github.com/mvolkmann/my-package-name
-  - other packages would import this with
-    `import "github.com/mvolkmann/mypkg"`
-    and refer to names it exports with a prefix of `mypkg.`
-- the `main` function is the starting point of all Go applications
-  and must in the `main` package
-  - this is the only package that does not need to match the name of the directory
-- `import`
-  - used to import all exported symbols (names that start uppercase) from given packages
-  - unused imports are treated as errors
-  - circular imports are treated as errors
-  - can't import just a subset
-  - the strings given to `import` are slash-separated paths
-    where the last part is the package name
-    - ex. in `import "math/rand"` the package name is "rand"
-  - to import one package, `import "pkgName"`
-  - to import multiple packages, `import ("pkgName1" "pkgName2" ...)`
-  - can alias a package name with `import alias pkgName`
-    and then reference exported names with `alias.exportedName`
-- will get an error if no symbols from an import are used
-- exported names must be referenced with `pkgName.exportedName`
-- package implementations must be in a directory whose name matches the package name
-- files that define the package must be in that directory,
-  but can have any name that ends with `.go`
-  - ex. if the package `baz` is defined by files in `$GOPATH/src/foo/bar/baz`
-    then it is imported with `import "foo/bar/baz"` and
-    the symbols it exports are references with `baz.exportedName` and
-    the files that define the package must start with `package baz`
-- standard library packages
-  - always available and do not need to be installed
-  - documented at <https://golang.org/pkg/>
-  - import like any other package
-- community packages
-  - need to be installed, typically using `go get package-name`
-  - the string after `import` is the package URL without the <https://> prefix
-  - ex. `go get github.com/julienschmidt/httprouter`
-    - installs in `$GOPATH/src/github.com/julienschmidt/httprouter`
-    - `go get` will install under `$GOPATH/src`
-      regardless of the directory from which it is run
-    - to use in a .go file, `import "github.com/julienschmidt/httprouter"`
-      and refer to the names it exports by preceding the names with `httprouter`
+All Go code resides in some package.
+
+All Go source files must start with a `package` statement.
+The package name must match the name of the directory that holds the file,
+unless the package name is "main".
+The source files that define the package
+can have any file name that ends in `.go`.
+
+For example, if the file `foo.go` is in a directory named `bar`,
+the first non-comment line in the file must be `package bar`.
+
+Changing a package name requires renaming the directory
+and modifying the `package` statement in all the files.
+It seems Go missed an opportunity to
+infer the package name from the directory name.
+
+Package names used within an application or library are
+not required to be unique, but their import paths must be unique.
+For example, the import paths `alpha/one` and `beta/one` can coexist
+even though the package name for both is `one`.
+
+GRONK
+Packages contributed by the community, not in the standard library,
+must be installed, typically using `go get package-url`.
+The `go get` command installs packages under `$GOPATH/src`
+regardless of the directory from which it is run.
+For example, `go get github.com/julienschmidt/httprouter`
+installs the package in `$GOPATH/src/github.com/julienschmidt/httprouter`.
+This avoids path conflicts.
+
+To import the package, use an `import` statement with a
+string that is the package URL without the <https://> prefix.
+To use this package in a .go file, `import "github.com/julienschmidt/httprouter"`
+and refer to the names it exports by preceding them with `httprouter.`.
+
+It is recommended that your own packages reside in directories that
+reflect their eventual URL should they be publish in the future.
+For example, if I created a package named `mypkg`
+it should be in the directory `src/github.com/mvolkmann/mypkg`.
+Other packages would import this with
+`import "github.com/mvolkmann/mypkg"`
+and refer to names it exports with a prefix of `mypkg.`
+
+The `main` function is the starting point of all Go applications
+and must in the `main` package.
+This is the only package that does not need to match the name of its directory.
+
+The `import` keyword is used to import all exported symbols
+(names that start uppercase) from given packages.
+Unused imports are treated as errors and some editors automatically remove them.
+
+To import one package, `import "pkgName"`.
+To import multiple packages, `import ("pkgName1" "pkgName2" ...)`.
+
+The strings given to `import` are simple names for standard library packages
+or slash-separated paths where the last part
+is the package name for community packages.
+For example, in `import "math/rand"` the package name is "rand".
+
+Exported names must be referenced with `pkgName.ExportedName`.
+There is not a way to add the exported names to the current namespace
+to avoid using the `pkgName.` prefix.
+
+An alias for a package name can be defined with `import alias "pkgName"`.
+Note that the alias name is not surrounded by quotes, but the package name is.
+When an alias is defined, exported names in the package are referenced with
+`alias.ExportedName`.
+
+An `import` imports all the exported symbols in a given package.
+It is not possible to import just a subset of the exported symbols.
+
+Circular imports where an import triggers the import of the current package
+are also treated as errors.
 
 ## Error Handling
 
