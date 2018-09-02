@@ -3407,6 +3407,10 @@ in the file `src/statistics_test.go`.
   }
 ```
 
+Examples are more than just another way to write tests.
+The "go doc" tool (CORRECT?) incorporates them into its output.
+TODO: Show an example of this!
+
 Also see "benchmark" tests which are only run when the `-bench` flag is used.
 TODO: Add more detail on these!
 
