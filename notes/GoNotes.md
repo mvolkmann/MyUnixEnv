@@ -3351,12 +3351,12 @@ Another option is to call `t.Fail()`, but that fails with no message.
 To log a message in a test, call `t.Log(message)`.
 
 Here is an example of Go code to be tested
-in the file `src/statistics.go`.
+in the file `src/github.com/mvolkmann/statistics/sum.go`.
 
 ```go
 package statistics
 
-func Sum(numbers []int) int {
+func Sum(numbers []float64) float64 {
   sum := 0
   for _, number := range numbers {
     sum += number
@@ -3377,7 +3377,7 @@ import (
 )
 
 func TestSum(t *testing.T) {
-  nums := []int{1, 2, 3}
+  nums := []float64{1, 2, 3}
   sum := Sum(nums)
   if (sum != 6) {
     t.Error("expected sum to be 6")
@@ -3400,7 +3400,7 @@ in the file `src/statistics_test.go`.
 
 ```go
   func ExampleSum() {
-    nums := []int{1, 2, 3}
+    nums := []float64{1, 2, 3}
     fmt.Println("sum is", Sum(nums))
     // Output:
     // sum is 6
@@ -3408,8 +3408,27 @@ in the file `src/statistics_test.go`.
 ```
 
 Examples are more than just another way to write tests.
-The "go doc" tool (CORRECT?) incorporates them into its output.
-TODO: Show an example of this!
+The "godoc" tool incorporates them into its output.
+There are two modes for using this tool, command-line and web server.
+
+For command-line usage, enter `godoc pkg-name [symbol-names]`.
+For example, to get documentation on all exported symbols
+in the `strings` package, enter `godoc strings`.
+To get documentation for only the `Contains` and `Join` functions,
+enter `godoc strings Contains Join`.
+To include example code in the output (if provided), add the `-ex` option
+
+For web server usage, enter `godoc -http=:port`.
+For example, enter `godoc -http=:1234` and browse `localhost:1234`.
+This will provide a locally running version of all the standard Go help,
+including help on all standard library packages,
+community packages that have been installed,
+all local packages you have created.
+
+For packages with example tests, an "Example" link
+will be rendered.  When clicked, example code is displayed.
+
+![Example screenshot](/images/statistics-sum-example.png)
 
 Also see "benchmark" tests which are only run when the `-bench` flag is used.
 TODO: Add more detail on these!
