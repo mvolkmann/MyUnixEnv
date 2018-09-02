@@ -3430,120 +3430,285 @@ will be rendered.  When clicked, example code is displayed.
 
 ![Example screenshot](/images/statistics-sum-example.png)
 
+To enable running example code from the godoc web UI,
+include the `-play` option.  This will cause example code
+to be rendered in a playground that includes a "Run" button.
+TODO: Why does this only work for standard library packages?
+TODO: It doesn't work for github.com/mvolkmann/statistics/Sum.
+
+To index all the code so it is searchable using the
+"Search" input in the web UI, include the `-index` option.
+This takes quite a while to build the index,
+so your code will not be searchable for several minutes.
+
 Also see "benchmark" tests which are only run when the `-bench` flag is used.
 TODO: Add more detail on these!
 
 ## Not Functional
 
-GRONK
 Go doesn't support some aspects of functional programming out of the box.
 While go supports first-class functions that can be stored in variables,
 passed to functions, and returned from functions,
 it does not support concise function definitions (like arrow functions in other languages)
-or generics for writing functions that allow functions to work with multiple types.
-In particular, writing generic collection functions
-such as `map`, `filter`, and `reduce`
-is difficult.
+or generics for writing functions that work with multiple types.
 
-can simulate some features like this
+Writing generic collection functions such as
+`map`, `filter`, and `reduce` is somewhat difficult in Go.
+It's easy to write type-specific versions of these.
+For example,
 
 ```go
-type intToIntFn = func(int) int
-
-func mapOverInts(arr []int, fn intToIntFn) []int {
-  result := make([]int, len(arr))
-  for i, v := range arr {
+func mapOverInts(slice []int, fn func(int) int) []int {
+  result := make([]int, len(slice))
+  for i, v := range slice {
     result[i] = fn(v)
   }
   return result
 }
 
-rgb := [3]int{100, 50, 234}
-double := func(v int) int { return v * 2 }
-log(mapOverInts(rgb[:], double))
+func main() {
+  values := []int{1, 2, 4}
+  double := func(v int) int { return v * 2 }
+  doubled := mapOverInts(values, double) // [2 4 8]
+  fmt.Println(doubled)
+}
 ```
 
-## Stack vs. Heap Memory Allocation
+Versions of these functions that work with slices of any value types
+can be written using the standard library `reflect` package
+along with the "any" type `interface{}`.
+This is a kind of substitute for generics.
+However, the downside is that type errors become
+runtime errors instead of compile-time errors.
 
-- the spec does not indicate when each is used
-- the primary implementation makes some choices
-- allocating on the stack is generally faster than the heap
-- `new` always allocates on the heap
+Here is an example of how `map`, `filter`, and `reduce`
+can be written.
 
-## Packaging Versioning
+```go
+package functional
 
-Support for package versioning is still an open issue.
-The leading contenders are
-vgo from Russ Cox at <https://github.com/golang/go/wiki/vgo>
-and dep from Sam Boyer at <https://golang.github.io/dep/>.
-vgo will be included in Go 1.11.
-Note to self: Try vgo!
+import (
+  "log"
+  "reflect"
+)
+
+// assertFunc asserts the parameter and return types of a given function.
+func assertFunc(fn interface{}, in []reflect.Kind, out []reflect.Kind) {
+  assertKind(fn, reflect.Func)
+
+  fnType := reflect.TypeOf(fn)
+
+  actualNumIn := fnType.NumIn()
+  expectedNumIn := len(in)
+  if actualNumIn != expectedNumIn {
+    log.Fatalf("expected func with %d parameters but had %d\n", expectedNumIn, actualNumIn)
+  }
+
+  actualNumOut := fnType.NumOut()
+  expectedNumOut := len(out)
+  if actualNumOut != expectedNumOut {
+    log.Fatalf("expected func with %d return types but had %d\n", expectedNumOut, actualNumOut)
+  }
+
+  for i := 0; i < expectedNumIn; i++ {
+    expectedKind := in[i]
+    actualKind := fnType.In(i).Kind()
+    if actualKind != expectedKind {
+      log.Fatalf("expected parameter %d to have kind %s but was %s\n", i+1, expectedKind, actualKind)
+    }
+  }
+
+  for i := 0; i < expectedNumOut; i++ {
+    expectedKind := out[i]
+    actualKind := fnType.Out(i).Kind()
+    if actualKind != expectedKind {
+      log.Fatalf("expected result type %d to have kind %s but was %s\n", i+1, expectedKind, actualKind)
+    }
+  }
+}
+
+// assertKind asserts the kind of a given value.
+func assertKind(value interface{}, kind reflect.Kind) {
+  valueType := reflect.TypeOf(value)
+  valueKind := valueType.Kind()
+  if valueKind != kind {
+    log.Fatalf("expected %s value but got %s\n", kind, valueKind)
+  }
+}
+
+// Filter creates a new slice from the elements in an existing slice
+// that pass a given predicate function.
+func Filter(slice interface{}, predicate interface{}) interface{} {
+  assertKind(slice, reflect.Slice)
+  sliceType := reflect.TypeOf(slice)
+  elementKind := sliceType.Elem().Kind()
+  assertFunc(predicate, []reflect.Kind{elementKind}, []reflect.Kind{reflect.Bool})
+
+  // Create result slice with same type as first argument.
+  result := reflect.New(sliceType).Elem()
+
+  predicateValue := reflect.ValueOf(predicate)
+  sliceValue := reflect.ValueOf(slice)
+
+  // Can "range" be used here?
+  for i := 0; i < sliceValue.Len(); i++ {
+    element := sliceValue.Index(i).Interface()
+    elementValue := reflect.ValueOf(element)
+
+    in := make([]reflect.Value, 1)
+    in[0] = elementValue
+    out := predicateValue.Call(in)
+
+    if out[0].Bool() {
+      result = reflect.Append(result, elementValue)
+    }
+  }
+
+  return result.Interface()
+}
+
+// Map creates a new slice from the elements in an existing slice where
+// the new elements are the results of calling fn on each existing element.
+func Map(slice interface{}, fn interface{}) interface{} {
+  assertKind(slice, reflect.Slice)
+  sliceType := reflect.TypeOf(slice)
+  elementKind := sliceType.Elem().Kind()
+  assertFunc(fn, []reflect.Kind{elementKind}, []reflect.Kind{elementKind})
+
+  // Create result slice with same type as first argument.
+  result := reflect.New(sliceType).Elem()
+
+  fnValue := reflect.ValueOf(fn)
+  sliceValue := reflect.ValueOf(slice)
+
+  // Can "range" be used here?
+  for i := 0; i < sliceValue.Len(); i++ {
+    element := sliceValue.Index(i).Interface()
+    elementValue := reflect.ValueOf(element)
+
+    in := make([]reflect.Value, 1)
+    in[0] = elementValue
+    out := fnValue.Call(in)
+    result = reflect.Append(result, out[0])
+  }
+
+  return result.Interface()
+}
+
+// Reduce reduces the elements in a slice to a single value.
+func Reduce(slice interface{}, fn interface{}, initial interface{}) interface{} {
+  assertKind(slice, reflect.Slice)
+
+  initialKind := reflect.TypeOf(initial).Kind()
+
+  sliceType := reflect.TypeOf(slice)
+  elementKind := sliceType.Elem().Kind()
+  assertFunc(fn, []reflect.Kind{initialKind, elementKind}, []reflect.Kind{elementKind})
+
+  // Create result slice with same type as first argument.
+  result := reflect.ValueOf(initial)
+
+  fnValue := reflect.ValueOf(fn)
+  sliceValue := reflect.ValueOf(slice)
+
+  for i := 0; i < sliceValue.Len(); i++ {
+    element := sliceValue.Index(i).Interface()
+    elementValue := reflect.ValueOf(element)
+
+    in := make([]reflect.Value, 2)
+    in[0] = result
+    in[1] = elementValue
+    out := fnValue.Call(in)
+    result = out[0]
+  }
+
+  return result.Interface()
+}
+```
+
+## Memory Allocation
+
+The Go specification does not indicate the situations under which
+stack memory or heap memory are used.
+The primary Go implementation makes some choices based on the fact that
+allocating on the stack is generally faster than allocation on the heap.
+The builtin `new` function always allocates on the heap.
 
 ## Command-Line Arguments
 
-- a slice of the command-line arguments is stored in os.Args
-  which is accessible via `import "os"'
-- index 0 holds the path to the executable
-  which is dynamically created when "go run" is used
-- index 1 holds the first command-line-argument
-- ex. in file named `greet.go`
+GRONK
+A slice of the command-line arguments is stored in `os.Args`
+Index 0 holds the path to the executable
+which is dynamically created when "go run" is used.
+Index 1 holds the first command-line-argument.
 
-  ```go
-  package main
+For example, suppose the file `greet.go` contains the following:
 
-  import (
-    "fmt"
-    "os"
-  )
+```go
+package main
 
-  func main() {
-    args := os.Args[1:]
-    if len(args) != 2 {
-      fmt.Println("usage: greet {first-name} {last-name}")
-      os.Exit(1)
-    }
-    firstName := args[0]
-    lastName := args[1]
-    fmt.Printf("Hello %s %s!\n", firstName, lastName)
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  // Get a slice containing only the command-line arguments.
+  args := os.Args[1:]
+
+  // If the required number of arguments are not present ...
+  if len(args) != 2 {
+    fmt.Println("usage: greet {first-name} {last-name}")
+    os.Exit(1)
   }
-  ```
 
-- to run, enter `go run greet.go Mark Volkmann`
-- to build and run, enter `go build greet.go; ./greet Mark Volkmann`
+  firstName := args[0]
+  lastName := args[1]
+  fmt.Printf("Hello %s %s!\n", firstName, lastName)
+}
+```
+
+To run this, enter `go run greet.go Mark Volkmann`.
+
+To build an executable and run it,
+enter `go build greet.go; ./greet Mark Volkmann`
 
 ## Readers
 
-- `io` package defines the `Reader` interface
-  that has a single method `Read`
-  - populates a byte slice and returns the number of bytes read
-    or an error (io.EOF if end of stream is reached)
-- there are many implementations in the standard library
-  including ones for reading from strings, files, and network connections
-- to read from a string, see <https://tour.golang.org/methods/21>
-- to read from a file
+The `io` package defines the `Reader` interface
+that has a single method `Read`.
+This populates a byte slice and returns the number of bytes read
+or an error (io.EOF if end of stream is reached).
 
-  - the package `io/ioutil` defines a `ReadFile` function
-  - ex.
+There are many implementations of this interface in the standard library,
+including ones for reading from strings, files, and network connections.
 
-  ```go
-  package main
+To read from a string, see <https://tour.golang.org/methods/21>.
 
-  import (
-    "fmt"
-    "io/ioutil"
-    "log"
-  )
+To read from a file, use the package `io/ioutil`
+which defines a `ReadFile` function.
 
-  func main() {
-    // Read entire file into a newly created byte array.
-    bytes, err := ioutil.ReadFile("haiku.txt")
-    if err != nil {
-      log.Fatal(err)
-    } else {
-      fmt.Println(string(bytes))
-    }
+For example,
+
+```go
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+  "log"
+)
+
+func main() {
+  // Read entire file into a newly created byte array.
+  bytes, err := ioutil.ReadFile("haiku.txt")
+  if err != nil {
+    log.Fatal(err)
+  } else {
+    fmt.Println(string(bytes))
   }
-  ```
+}
+```
 
 ## Writers
 
@@ -3690,6 +3855,11 @@ The `Type` method `Elem` returns a `Type` object describing the value type.
 This method can also be used to get the element type of an
 `Array`, `Chan`, pointer, or `Slice`.
 
+For array and slice types ...
+To get a `Value` for a slice, `reflect.Value(slice)`.
+To get the length, `value.Len()`
+To get the element at index i, `value.Index(i)`.
+
 ## JSON
 
 The `encoding/json` standard library package
@@ -3725,6 +3895,7 @@ err := json.Unmarshal(jsonData, @p)
 
 ## HTTP Servers
 
+GRONK
 - can test REST service performance using the "RESTful Stress" Chrome extension
 - consider using the httprouter package
 
@@ -4122,7 +4293,12 @@ that I find annoying. These include:
 
 ## Modules
 
-Go 1.11 includes experimental support for "modules".
+Lack of support for package versioning was a major issue in Go
+before version 1.11.  The leading contenders were
+vgo from Russ Cox at <https://github.com/golang/go/wiki/vgo>
+and dep from Sam Boyer at <https://golang.github.io/dep/>.
+
+Go 1.11 includes experimental support for "modules" that is mostly based on vgo.
 This eliminates the need to have code under GOPATH
 and adds support for dependency versioning.
 
