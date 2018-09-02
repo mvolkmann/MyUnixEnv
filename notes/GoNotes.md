@@ -3309,113 +3309,136 @@ func divide2(a, b float32) (float32, error) {
 
 ## Logging
 
-GRONK
-- the standard library `log` package provides methods that
-  help with writing error messages to stderr
-  - `log.Fatal(message)` outputs a line containing the date, time, and message,
-    and exits with a status code of 1
-  - `log.Panic(message)` outputs a line containing the date, time, and message,
-    followed by a line containing "panic:" and the message again,
-    followed by a stack trace,
-    and exits with a status code of 2
-- to write messages that include a file name and line number,
-  write a function like this and call it from other functions
+The standard library `log` package provides methods that
+help with writing error messages to stderr.
 
-  ```go
-  func logValue(name string, value interface{}) {
-    // Passing 1 causes it to get the information
-    // from one level higher in the call stack.
-    _, file, line, ok := runtime.Caller(1)
-    if ok {
-      fmt.Printf("%s:%d %s=%v\n", file, line, name, value)
-    } else {
-      fmt.Printf("%s=%v\n", name, value)
-    }
+`log.Fatal(message)` outputs a line containing the date, time, and message,
+and exits with a status code of 1.
+
+`log.Panic(message)` outputs a line containing the date, time, and message,
+followed by a line containing "panic:" and the message again,
+followed by a stack trace,
+and exits with a status code of 2.
+
+To write messages that include a file name and line number,
+write a function like the following and call it from other functions.
+
+```go
+func logValue(name string, value interface{}) {
+  // Passing 1 causes it to get the information
+  // from one level higher in the call stack.
+  _, file, line, ok := runtime.Caller(1)
+  if ok {
+    fmt.Printf("%s:%d %s=%v\n", file, line, name, value)
+  } else {
+    fmt.Printf("%s=%v\n", name, value)
   }
-  ```
+}
+```
 
 ## Tests
 
-- implement tests in files whose name ends with `_test.go`
-- `import "testing"` - a standard package
-- write test functions whose names begin with `Test`
-- these functions take one argument, `t \*testing.T`
-- if a test assertion fails
-  - call `t.Error(message)`
-  - call `t.Errorf(formatString, values)`
-  - can call `t.Fail()`, but that fails with no message
-- to log a message in a test
-  - call `t.Log(message)`
-- "examples" are another way to write test functions
-  - example function names begin with `Example`,
-    followed by the name of the function or type being tested
-    - when testing a method, end the function name with
-      the type name followed by an underscore and the method name
-  - example functions end with the comment `// Output:`
-    followed by comment lines containing the expected output
-- also see "benchmark" tests which are only run when the `-bench` flag is used
-- ex. in src/statistics.go
+Tests should be implemented in files whose name ends with `_test.go`.
+These files should import the "testing" package from the standard library.
 
-  ```go
-  package statistics
+Write test functions whose names begin with `Test`.
+These functions take one argument, `t \*testing.T`.
 
-  func Sum(numbers []int) int {
-    sum := 0
-    for _, number := range numbers {
-      sum += number
-    }
-    return sum
+If a test assertion fails, call
+`t.Error(message)` or `t.Errorf(formatString, values)`.
+Another option is to call `t.Fail()`, but that fails with no message.
+
+To log a message in a test, call `t.Log(message)`.
+
+Here is an example of Go code to be tested
+in the file `src/statistics.go`.
+
+```go
+package statistics
+
+func Sum(numbers []int) int {
+  sum := 0
+  for _, number := range numbers {
+    sum += number
   }
-  ```
+  return sum
+}
+```
 
-- ex. in src/statistics_test.go
+Here is an example of a test for the "statistics" package
+in the file `src/statistics_test.go`.
 
-  ```go
-  package statistics
+```go
+package statistics
 
-  import (
-    "fmt"
-    "testing"
-  )
+import (
+  "fmt"
+  "testing"
+)
 
-  func TestSum(t *testing.T) {
-    nums := []int{1, 2, 3}
-    sum := Sum(nums)
-    if (sum != 6) {
-      t.Error("expected sum to be 6")
-    }
+func TestSum(t *testing.T) {
+  nums := []int{1, 2, 3}
+  sum := Sum(nums)
+  if (sum != 6) {
+    t.Error("expected sum to be 6")
   }
+}
+```
 
-  func ExampleSun() {
+To run tests, enter `go test` in the directory of the tests.
+
+"Examples" are another way to write test functions.
+Example function names begin with `Example`,
+followed by the name of the function or type being tested.
+When testing a method, end the function name with
+the type name followed by an underscore and the method name.
+Example functions end with the comment `// Output:`
+followed by comment lines containing the expected output.
+
+Here is an example of an example that can be added
+in the file `src/statistics_test.go`.
+
+```go
+  func ExampleSum() {
     nums := []int{1, 2, 3}
     fmt.Println("sum is", Sum(nums))
     // Output:
     // sum is 6
   }
-  ```
+```
 
-- run by entering `go test` in the directory of the tests
+Also see "benchmark" tests which are only run when the `-bench` flag is used.
+TODO: Add more detail on these!
 
 ## Not Functional
 
-- Go doesn't support functional programming out of the box
-- can simulate some features like this
+GRONK
+Go doesn't support some aspects of functional programming out of the box.
+While go supports first-class functions that can be stored in variables,
+passed to functions, and returned from functions,
+it does not support concise function definitions (like arrow functions in other languages)
+or generics for writing functions that allow functions to work with multiple types.
+In particular, writing generic collection functions
+such as `map`, `filter`, and `reduce`
+is difficult.
 
-  ```go
-  type intToIntFn = func(int) int
+can simulate some features like this
 
-  func mapOverInts(arr []int, fn intToIntFn) []int {
-    result := make([]int, len(arr))
-    for i, v := range arr {
-      result[i] = fn(v)
-    }
-    return result
+```go
+type intToIntFn = func(int) int
+
+func mapOverInts(arr []int, fn intToIntFn) []int {
+  result := make([]int, len(arr))
+  for i, v := range arr {
+    result[i] = fn(v)
   }
+  return result
+}
 
-  rgb := [3]int{100, 50, 234}
-  double := func(v int) int { return v * 2 }
-  log(mapOverInts(rgb[:], double))
-  ```
+rgb := [3]int{100, 50, 234}
+double := func(v int) int { return v * 2 }
+log(mapOverInts(rgb[:], double))
+```
 
 ## Stack vs. Heap Memory Allocation
 
