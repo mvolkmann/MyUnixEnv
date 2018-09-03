@@ -574,7 +574,27 @@ While example tests are a kind of test,
 their main purpose is to provide example code for using a package
 in generated documentation, which is covered next.
 
-Another form of tests not covered here is benchmark tests.
+Another form of tests is benchmark tests.
+Benchmark test functions have names that start with "Bench".
+They have a single parameter of type `*testing.B`.
+This parameter is a struct with a field named `N`
+that holds the number of times to run the function being benchmarked.
+For example,
+
+```go
+func BenchmarkMap(b *testing.B) {
+  values := []int{1, 2, 7}
+  fn := func(n int) int { return n * 2 }
+  for i := 0; i < b.N; i++ {
+    Map(values, fn)
+  }
+}
+```
+
+To run all the benchmark tests in the current directory, `go test -bench=.`.
+This outputs how long it took to run each benchmarked function 1,000,000 times.
+The tests never fail, they just provide information
+that can indicate performance issues.
 
 For more detail on Go tests, see <https://golang.org/pkg/testing/>.
 
