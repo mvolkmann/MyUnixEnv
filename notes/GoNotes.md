@@ -3512,8 +3512,9 @@ import (
   "reflect"
 )
 
-// assertFunc asserts the parameter and return types of a given function.
-func assertFunc(fn interface{}, in []reflect.Kind, out []reflect.Kind) {
+// AssertFunc asserts that a given value is a func and
+// the parameter and return types are the expected types.
+func AssertFunc(fn interface{}, in []reflect.Type, out []reflect.Type) {
   assertKind(fn, reflect.Func)
 
   fnType := reflect.TypeOf(fn)
@@ -3531,38 +3532,46 @@ func assertFunc(fn interface{}, in []reflect.Kind, out []reflect.Kind) {
   }
 
   for i := 0; i < expectedNumIn; i++ {
-    expectedKind := in[i]
-    actualKind := fnType.In(i).Kind()
-    if actualKind != expectedKind {
-      log.Fatalf("expected parameter %d to have kind %s but was %s\n", i+1, expectedKind, actualKind)
+    expectedType := in[i]
+    actualType := fnType.In(i)
+    if actualType != expectedType {
+      panicF("expected parameter %d to have type %s but was %s\n", i+1, expectedType, actualType)
     }
   }
 
   for i := 0; i < expectedNumOut; i++ {
-    expectedKind := out[i]
-    actualKind := fnType.Out(i).Kind()
-    if actualKind != expectedKind {
-      log.Fatalf("expected result type %d to have kind %s but was %s\n", i+1, expectedKind, actualKind)
+    expectedType := out[i]
+    actualType := fnType.Out(i)
+    if actualType != expectedType {
+      panicF("expected result type %d to have type %s but was %s\n", i+1, expectedType, actualType)
     }
   }
 }
 
-// assertKind asserts the kind of a given value.
-func assertKind(value interface{}, kind reflect.Kind) {
-  valueType := reflect.TypeOf(value)
-  valueKind := valueType.Kind()
+// AssertKind asserts the kind of a given value.
+func AssertKind(value interface{}, kind reflect.Kind) {
+  valueKind := reflect.TypeOf(value).Kind()
   if valueKind != kind {
-    log.Fatalf("expected %s value but got %s\n", kind, valueKind)
+    panicF("expected kind %s but got %s\n", kind, valueKind)
   }
 }
 
-// Filter creates a new slice from the elements in an existing slice
-// that pass a given predicate function.
+// AssertType asserts the type of a given value.
+// Note that this does not currently detect mismatched struct types.
+// It just verifies that some kind of struct is received if one is required.
+//TODO: Define an assertStruct function that verifies all the struct fields!
+func AssertType(value interface{}, typ reflect.Type) {
+  valueType := reflect.TypeOf(value)
+  if valueType != typ {
+    panicF("expected type %s but got %s\n", typ, valueType)
+  }
+}
+
 func Filter(slice interface{}, predicate interface{}) interface{} {
-  assertKind(slice, reflect.Slice)
+  AssertKind(slice, reflect.Slice)
   sliceType := reflect.TypeOf(slice)
-  elementKind := sliceType.Elem().Kind()
-  assertFunc(predicate, []reflect.Kind{elementKind}, []reflect.Kind{reflect.Bool})
+  elementType := sliceType.Elem()
+  AssertFunc(predicate, []reflect.Type{elementType}, []reflect.Type{boolType})
 
   // Create result slice with same type as first argument.
   result := reflect.New(sliceType).Elem()
@@ -3590,10 +3599,10 @@ func Filter(slice interface{}, predicate interface{}) interface{} {
 // Map creates a new slice from the elements in an existing slice where
 // the new elements are the results of calling fn on each existing element.
 func Map(slice interface{}, fn interface{}) interface{} {
-  assertKind(slice, reflect.Slice)
+  AssertKind(slice, reflect.Slice)
   sliceType := reflect.TypeOf(slice)
-  elementKind := sliceType.Elem().Kind()
-  assertFunc(fn, []reflect.Kind{elementKind}, []reflect.Kind{elementKind})
+  elementType := sliceType.Elem()
+  AssertFunc(fn, []reflect.Type{elementType}, []reflect.Type{elementType})
 
   // Create result slice with same type as first argument.
   result := reflect.New(sliceType).Elem()
@@ -3617,13 +3626,13 @@ func Map(slice interface{}, fn interface{}) interface{} {
 
 // Reduce reduces the elements in a slice to a single value.
 func Reduce(slice interface{}, fn interface{}, initial interface{}) interface{} {
-  assertKind(slice, reflect.Slice)
+  AssertKind(slice, reflect.Slice)
 
-  initialKind := reflect.TypeOf(initial).Kind()
+  initialType := reflect.TypeOf(initial)
 
   sliceType := reflect.TypeOf(slice)
-  elementKind := sliceType.Elem().Kind()
-  assertFunc(fn, []reflect.Kind{initialKind, elementKind}, []reflect.Kind{elementKind})
+  elementType := sliceType.Elem()
+  AssertFunc(fn, []reflect.Type{initialType, elementType}, []reflect.Type{elementType})
 
   // Create result slice with same type as first argument.
   result := reflect.ValueOf(initial)
@@ -3860,7 +3869,7 @@ The `Type` method `Out` returns a `Type` object
 describing the return type at a given index.
 
 For struct types, it is possible to iterate over its fields.
-The `Type` method `NumMethod` returns the number of fields in the struct.
+The `Type` method `NumField` returns the number of fields in the struct.
 The `Type` method `FieldByIndex` returns a `StructField` object
 describing the field at a given index.
 

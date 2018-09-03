@@ -189,8 +189,7 @@ set TYPESCRIPT_DIR $LANGUAGES_DIR/typescript
 set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
 
 # bat settings (better version of cat command)
-//set BAT_PAGER ~/bin/myless
-set PAGER "less --tabs 2"
+set BAT_PAGER myless
 
 # Clojure settings
 #set CLOJURE_HOME $LANGUAGES_DIR/clojure/clojure-1.2.1
