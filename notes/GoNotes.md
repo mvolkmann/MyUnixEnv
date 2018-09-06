@@ -3935,7 +3935,7 @@ For example,
 import "encoding/json"
 
 // Note that the field names must start uppercase
-// so the json package can see them.
+// so the json package can access them.
 type person struct {
   Name string
   Age number
@@ -3996,7 +3996,7 @@ send an HTTP request and receive the HTTP response.
 For example, here is an application that uses an iTunes REST service
 to get a list of albums by a given artist.
 For more details on this service, see
-https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#lookup.
+<https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#lookup>.
 
 ```go
 package main
@@ -4161,18 +4161,26 @@ func main() {
 
 ## go-watcher
 
-- starts the application in the current directory
-- watches all `.go` files in and below current directory and restarts the app if any are modified
-- ideal for working on servers such as HTTP servers
-- see <https://github.com/canthefason/go-watcher>
-- GOPATH must be set to point to the directory containing the `src` directory of the app
-- cd to the `src` which should contain one `.go` file
-  in the `main` package with a `main` function
-- enter `watcher`
-  - can also specify command-line arguments to be passed to the app
+The go-watcher application starts another application in the current directory
+watches all the `.go` files in and below current directory,
+and restarts the app when any are modified.
+It is ideal for working on servers such as HTTP servers.
+
+`GOPATH` must be set to point to the directory
+containing the `src` directory of the app.
+To use this,
+cd to the directory that contains the `.go` file containing
+the application `main` function and enter `watcher`.
+(This works in bash, but not in the Fish shell.)
+
+It is also possible to specify command-line arguments
+to be passed to the app.
+
+For more information, see <https://github.com/canthefason/go-watcher>.
 
 ## SQL Databases
 
+GRONK
 - see <http://go-database-sql.org/> for
   more detail than what is provided here
 - can use the standard library `database/sql`
