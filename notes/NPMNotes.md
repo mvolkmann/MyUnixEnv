@@ -57,14 +57,24 @@ To change the log level for npm
 
 To change a package directory under node_modules to be a
 symbolic link to a local directory for that package
-for debugging purposes
+for debugging purposes:
 
-- cd to directory with code to be debugged
-- `npm link`
+- cd to local package directory with code to be debugged
+- `npm run build; npm link`
 - cd to directory of code that has that as a dependency
-- `npm link {dependency-name}`
+- `npm link {package-name}`
 - after making local changes to the package being tested,
-  run `npm run build`
+  run `npm run build; npm link` again
+- when finished making changes to the package
+  - if changes should be retained
+    - bump package.json version
+    - check-in and push changes
+    - `npm publish`
+  - `npm unlink`
+  - cd to application directory
+  - `npm unlink {package-name}`
+  - `rm package-lock.json`
+  - `npm install {package-name}`
 
 To create a new React app using create-react-app
 

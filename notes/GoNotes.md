@@ -126,6 +126,10 @@ you can instead just run `brew install go`.
 To verify that this worked, open a terminal and enter `go version`
 which should output the version of Go you have installed.
 
+In Unix and macOS Go is installed in the `/usr/local/go` directory.
+The `src` directory contains the source code
+for the standard library packages.
+
 ### Create Workspace
 
 Go projects live in a workspace
@@ -359,6 +363,7 @@ to speed up build times.
 The Go standard library provides a
 lightweight testing package called `testing`.
 Let's add tests to the "statistics" package.
+
 The VS Code Go extension provides the "Go: Generate Unit Tests For Package"
 command that does what its name implies.
 It generates files with names that end in `_test.go`
@@ -498,6 +503,13 @@ and run the tests again to see failing output.
 This includes the test function name, file name,
 assertion name, and line number of each failure.
 
+When the Go extension is used in VS Code, the Command Palette
+will contain additional commands whose names begin with "Go:".
+Several of these are related to running tests including
+"Generate Unit Tests For File", "Generate Unit Tests For Package",
+"Test Function At Cursor", "Test File", "Test Package",
+and "Test All Packages In Workspace".
+
 If the tests in a file require
 setup before any of its test functions run
 or teardown after all of its test functions run,
@@ -563,7 +575,15 @@ Here is an example of such a test for our `Maximum` function that can be
 added to `$GOPATH/src/github.com/mvolkmann/statistics/maximum_test.go`.
 
 ```go
-
+func ExampleMax() {
+  fmt.Println(Max([]float64{}))
+  fmt.Println(Max([]float64{3.1}))
+  fmt.Println(Max([]float64{3.1, 7.2, 5.0}))
+  // Output:
+  // 0
+  // 3.1
+  // 7.2
+}
 ```
 
 Note that test coverage for example tests is not currently tracked accurately.
@@ -3361,6 +3381,13 @@ func logValue(name string, value interface{}) {
 Tests should be implemented in files whose name ends with `_test.go`.
 These files should import the "testing" package from the standard library.
 
+It is recommended to put tests a package whose name
+starts with the name of the package being tested
+and ends with "_test".  Doing this requires the test
+to call the functions being tested in the same way
+as real code because the package being tested must be imported
+and the functions must be called using the package name.
+
 Write test functions whose names begin with `Test`.
 These functions take one argument, `t \*testing.T`.
 
@@ -3389,16 +3416,18 @@ Here is an example of a test for the "statistics" package
 in the file `src/statistics_test.go`.
 
 ```go
-package statistics
+package statistics_test
 
 import (
   "fmt"
   "testing"
+
+  "github.com/mvolkmann/statistics"
 )
 
 func TestSum(t *testing.T) {
   nums := []float64{1, 2, 3}
-  sum := Sum(nums)
+  sum := statistics.Sum(nums)
   if (sum != 6) {
     t.Error("expected sum to be 6")
   }
@@ -3408,6 +3437,8 @@ func TestSum(t *testing.T) {
 To run tests, enter `go test` in the directory of the tests.
 
 "Examples" are another way to write test functions.
+It is recommended to place these tests
+in a file named `example_test.go`.
 Example function names begin with `Example`,
 followed by the name of the function or type being tested.
 When testing a method, end the function name with
@@ -3665,11 +3696,12 @@ The builtin `new` function always allocates on the heap.
 
 ## Command-Line Arguments
 
-GRONK
-A slice of the command-line arguments is stored in `os.Args`
-Index 0 holds the path to the executable
-which is dynamically created when "go run" is used.
+Command-line arguments are held in a slice stored in `os.Args`.
+Index 0 holds the path to the executable.
+An executable is created dynamically when "go run" is used.
 Index 1 holds the first command-line-argument.
+Often `os.Args[1:]` is used to obtain a slice
+that only contains the command-line arguments.
 
 For example, suppose the file `greet.go` contains the following:
 
@@ -3889,6 +3921,8 @@ To get a `Value` for a slice, `reflect.Value(slice)`.
 To get the length, `value.Len()`
 To get the element at index i, `value.Index(i)`.
 
+There is much more to reflection in Go!
+
 ## JSON
 
 The `encoding/json` standard library package
@@ -3924,11 +3958,12 @@ err := json.Unmarshal(jsonData, @p)
 
 ## HTTP Servers
 
-GRONK
-- can test REST service performance using the "RESTful Stress" Chrome extension
-- consider using the httprouter package
+HTTP servers can be implemented using the standard library package `net/http`.
+There are also many community packages that make this easier and add many features.
+A popular example is the `httprouter` package at <https://github.com/julienschmidt/httprouter>.
 
-  - ex.
+The following sections provide examples of implementing an HTTP REST server
+using `net\http` and `httprouter`.
 
 ### REST Server Using Standard Library
 
@@ -3953,6 +3988,99 @@ func (handler myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
   var handler myHandler
   http.ListenAndServe("localhost:1234", handler)
+}
+```
+
+The `net/http` package can also be used to
+send an HTTP request and receive the HTTP response.
+For example, here is an application that uses an iTunes REST service
+to get a list of albums by a given artist.
+For more details on this service, see
+https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#lookup.
+
+```go
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "io/ioutil"
+  "log"
+  "net/http"
+  "os"
+  "sort"
+  "strings"
+  "time"
+)
+
+// Album describes a single album.
+// This will be used by json.Unmarshall which
+// requires all the fields to be exported (uppercase).
+// It matches JSON property names to these case-insensitive.
+type Album struct {
+  ArtistID         int
+  CollectionID     int
+  ArtistName       string
+  CollectionName   string
+  ReleaseDate      string
+  PrimaryGenreName string
+}
+
+// Albums describes a collection of albums.
+// This will also be used by json.Unmarshall.
+type Albums struct {
+  ResultCount int
+  Results     []Album
+}
+
+func check(err error) {
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+
+func main() {
+  // An artist name must be supplied as a command-line argument.
+  if len(os.Args) < 2 {
+    log.Fatal("usage: albums {artist}")
+  }
+
+  // Form the artist name from all the command-line arguments.
+  artist := strings.Join(os.Args[1:], " ")
+  urlPrefix := "https://itunes.apple.com/search?term="
+  getURL := urlPrefix + strings.Replace(artist, " ", "+", -1) + "&entity=album"
+
+  // Get all the albums by the artist.
+  resp, err := http.Get(getURL)
+  check(err)
+  defer resp.Body.Close()
+
+  // Read the entire response body into a slice of bytes.
+  body, err := ioutil.ReadAll(resp.Body)
+  check(err)
+  //fmt.Println("body =", string(body))
+
+  // Parse the bytes as JSON.
+  // Using json.Unmarshall is preferred over json.NewDecoder
+  // for JSON in HTTP response bodies.  JSON properties that
+  // don't match a field in the struct being populated are ignored.
+  var albums Albums
+  err = json.Unmarshal(body, &albums)
+  check(err)
+  //fmt.Printf("albums = %+v\n", albums)
+
+  // Sort albums by release date.
+  results := albums.Results
+  sort.Slice(results, func(i, j int) bool {
+    return results[i].ReleaseDate < results[j].ReleaseDate
+  })
+
+  fmt.Println("Albums by " + artist)
+  for _, album := range albums.Results {
+    t, err := time.Parse(time.RFC3339, album.ReleaseDate)
+    check(err)
+    fmt.Printf("%s - %d/%d/%d\n", album.CollectionName, t.Month(), t.Day(), t.Year())
+  }
 }
 ```
 
