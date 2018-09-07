@@ -4352,18 +4352,17 @@ To try it online, browse
 
 Currently the primary issues with using Go include:
 
-- Go lacks a standardized approach for handling package versions
+- Go lacks a finalized approach for handling package versions
   used by a library or application.
-  The leading contenders are vgo and dep.
-  The Go core team is actively addressing this and it is
-  likely that Go 1.12 will include a recommended solution.
+  An experimental approach based on vgo is included in Go 1.11.
+  Feedback is being gathered now and
+  perhaps this will be finalized in Go 1.12.
 - Go lacks support for generic types.
   This is needed for truly functional programming
   so that generic functions like `map`, `filter`, and `reduce`
-  that operate on a collection cannot be written.
-  One reason these are supported in Go is that they encourage
-  writing code that is less efficient than hand-written for loops.
-  Each iteration with these requires a function call.
+  can be implemented.
+  Generics are on the roadmap for Go 2.0.
+
 - Go lacks support for immutable data types.
   This is needed to provide guarantees that prevent accidental data mutations.
   Immutable types have come to be an expected feature
