@@ -82,10 +82,12 @@ followed by the macOS version in parentheses.
 
 ## Breadcrumbs
 
-- add a row below the current tab containing breadcrumbs
+- adds a row below the current tab containing breadcrumbs
 - can use to navigate to any other file in the project
   and to specific symbols (such as functions) in the current file
 - to enable, add `"breadcrumbs.enabled" = true,` to user settings
+- press ctrl-: (cmd-:) followed by arrow keys to navigate breadcrumbs
+- press enter to select breadcrumb under cursor
 
 ## Code Folding
 
@@ -500,8 +502,7 @@ followed by the macOS version in parentheses.
   {
     "key": "enter",
     "command": "list.select",
-    "when":
-      "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
   }
   ```
 

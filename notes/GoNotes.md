@@ -4180,115 +4180,131 @@ For more information, see <https://github.com/canthefason/go-watcher>.
 
 ## SQL Databases
 
-GRONK
-- see <http://go-database-sql.org/> for
-  more detail than what is provided here
-- can use the standard library `database/sql`
-  but also need database-specific drivers
-  - to install the MySQL driver, enter `go get github.com/go-sql-driver/mysql`
-  - to install the PostgreSQL driver, enter `go get github.com/lib/pq`
-  - for other drivers, see <https://github.com/golang/go/wiki/SQLDrivers>
-- ex.
+The standard library package `database/sql` defines
+interfaces that are implemented by database-specific drivers.
+This allows many databases to be accessed using the same API.
 
-  ```go
-  package main
+Database drivers can be installed using `go get`.
+For MySQL, `go get github.com/go-sql-driver/mysql`.
+For PostgreSQL, `go get github.com/lib/pq`
+For other databases, see <https://github.com/golang/go/wiki/SQLDrivers>.
 
-  import (
-    "database/sql"
-    "fmt"
-    "log"
+For more detail on accessing databases from Go,
+see <http://go-database-sql.org/>.
 
-    _ "github.com/go-sql-driver/mysql" // anonymous import
-  )
+Here is an example of an application that uses a MySQL database.
+It selects the `name` column for all rows in the `hero` table
+and writes them to stdout.
 
-  func check(err error) {
-    if err != nil {
-      log.Fatal(err)
-    }
+```go
+package main
+
+import (
+  "database/sql"
+  "fmt"
+  "log"
+
+  _ "github.com/go-sql-driver/mysql" // anonymous import
+)
+
+func check(err error) {
+  if err != nil {
+    log.Fatal(err)
   }
+}
 
-  func main() {
-    db, err := sql.Open("mysql",
-      "root:root@tcp(127.0.0.1:3306)/tour_of_heroes")
-    check(err)
-    defer db.Close()
+func main() {
+  db, err := sql.Open("mysql",
+    "root:root@tcp(127.0.0.1:3306)/tour_of_heroes")
+  check(err)
+  defer db.Close()
 
-    rows, err := db.Query("select name from hero")
-    check(err)
-    defer rows.Close()
+  rows, err := db.Query("select name from hero")
+  check(err)
+  defer rows.Close()
 
-    var name string
-    for rows.Next() {
-      err := rows.Scan(&name)
-      if err != nil {
-        log.Fatal(err)
-      }
-      log.Println("name =", name)
-    }
-    err = rows.Err()
+  var name string
+  for rows.Next() {
+    err := rows.Scan(&name)
     check(err)
+    fmt.Println(name)
   }
-  ```
+  err = rows.Err()
+  check(err)
+}
+```
 
 ## Calling other languages from Go
 
-- can use the `cgo` tool to create Go packages that call C code
-  - see <https://golang.org/cmd/cgo/>
-  - the C code can use the Java Native Interface (JNI)
-    to call Java code
+The `cgo` tool allows Go code to call C code.
+For more detail, see <https://golang.org/cmd/cgo/>.
+
+If needed, the C code can use the Java Native Interface (JNI)
+to call Java code.
 
 ## Calling Go from other languages
 
-- can use `gobind` to generate language bindings
-  for calling Go functions from Java and Objective-C
-- can build Go code with the `-buildmode=c-shared` flag
-  to create a C shared library (in a shared object binary file)
-  that can be used by C, Java, Node, Python, and Ruby code
-  - see <https://medium.com/learning-the-go-programming-language/calling-go-functions-from-other-languages-4c7d8bcc69bf>
+The `gobind` tool generates language bindings
+for calling Go functions from Java and Objective-C.
+
+Go code can be built with the `-buildmode=c-shared` flag
+to create a C shared library (in a shared object binary file)
+that can be used by C, Java, Node, Python, and Ruby code.
+
+For more detail see
+<https://medium.com/learning-the-go-programming-language/calling-go-functions-from-other-languages-4c7d8bcc69bf>.
 
 ## Executing Shell Commands
 
-- can execute shell commands using the standard library package `os/exec`
-  - may not work in Windows
-  - does not work in The Go Playground
-- does not create a system shell
-- does not expand glob patterns
-  - to get this use a command that starts a shell like "bash"
-- the `Command` function takes a command name and arguments
-  and returns a struct describing the command
-- this struct has many methods
-  - the `Output` method runs a command,
-    waits for it to complete, and returns a byte array
-    containing everything the command writes to stdout
-  - the `CombinedOutput` method runs a command,
-    waits for it complete, and returns a byte array
-    containing everything the command writes to stdout and stderr
-  - the `Run` method runs a command, waits for it to complete,
-    but doesn't capture what it writes to stdout or stderr
-  - the `Start` method runs a command, but doesn't wait for it to complete,
-    and doesn't capture what it writes to stdout or stderr
-    - use the methods `StdinPipe`, `StdoutPipe`, and `StderrPipe` with this
-  - the `Wait` method wait for a command that was
-    started with the `Start` method to complete
-- ex.
+Go can execute shell commands using the standard library package `os/exec`.
+Note that this may not work in Windows
+and does not work in "The Go Playground".
 
-  ```go
-  package main
+Executing a shell command in this way
+does not create a system shell
+and does not expand glob patterns.
+To get this functionality,
+use a command that starts a shell like `bash`.
 
-  import (
-    "fmt"
-    "log"
-    "os/exec"
-  )
+The `Command` function takes a command name and arguments
+and returns a struct describing the command.
+This struct has many methods including:
 
-  func main() {
-    date, err := exec.Command("date").Output()
-    if err != nil {
-      log.Fatal(err)
-    }
-    fmt.Printf("date = %s\n", date) // date = Fri Aug  3 13:32:22 CDT 2018
+- `Output`\
+  runs a command, waits for it to complete, and returns a byte array
+  containing everything the command writes to stdout
+- `CombinedOutput`\
+  runs a command, waits for it complete, and returns a byte array
+  containing everything the command writes to stdout and stderr
+- `Run`\
+  runs a command, waits for it to complete,
+  but doesn't capture what it writes to stdout or stderr
+- `Start`\
+  method runs a command, but doesn't wait for it to complete,
+  and doesn't capture what it writes to stdout or stderr;
+  use the methods `StdinPipe`, `StdoutPipe`, and `StderrPipe` with this
+- `Wait`\
+  wait for a command that was started with the `Start` method to complete
+
+For example,
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "os/exec"
+)
+
+func main() {
+  date, err := exec.Command("date").Output()
+  if err != nil {
+    log.Fatal(err)
   }
-  ```
+  fmt.Printf("date = %s\n", date) // date = Fri Aug  3 13:32:22 CDT 2018
+}
+```
 
 ## Internet of Things (IOT) Support
 

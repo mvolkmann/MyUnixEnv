@@ -19,7 +19,7 @@ Tidbits
 
 Installing
 - easy way
-  * download a precompiled package from http://git-scm.com
+  * download a pre-compiled package from http://git-scm.com
   * double-click the installer
 - another way for Linux
   * sudo apt-get build-dep git-core git-doc
