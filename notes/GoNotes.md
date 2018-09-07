@@ -4308,45 +4308,45 @@ func main() {
 
 ## Internet of Things (IOT) Support
 
-- see GOBOT at <https://gobot.io/> which supports many platforms including
-  Arduino, Beaglebone, Intel Edison, MQTT, Pebble, and Raspberry Pi
+The community package GOBOT at <https://gobot.io/>
+supports many platforms including
+Arduino, Beaglebone, Intel Edison, MQTT, Pebble, and Raspberry Pi.
 
 ## Popular Go Packages
 
-- Bolt <https://github.com/boltdb/bolt>
+- **Bolt** <https://github.com/boltdb/bolt>\
+  "An embedded key/value database for Go."
 
-  - "An embedded key/value database for Go."
+- **Buffalo** web framework <https://gobuffalo.io/en>`
+  "Buffalo is a Go web development eco-system.
+  Designed to make the life of a Go web developer easier.
 
-- Buffalo web framework <https://gobuffalo.io/en>
+  Buffalo starts by generating a web project for you that
+  already has everything from front-end (JavaScript, SCSS, etc...)
+  to back-end (database, routing, etc...) already hooked up
+  and ready to run. From there it provides easy APIs to
+  build your web application quickly in Go."
 
-  - "Buffalo is a Go web development eco-system.
-    Designed to make the life of a Go web developer easier.
+- **CockroachDB** <https://www.cockroachlabs.com>`
+  "the open source, cloud-native SQL database"
 
-    Buffalo starts by generating a web project for you that
-    already has everything from front-end (JavaScript, SCSS, etc...)
-    to back-end (database, routing, etc...) already hooked up
-    and ready to run. From there it provides easy APIs to
-    build your web application quickly in Go."
+- **Kubernetes** <https://kubernetes.io/>\
+  "an open-source system for automating deployment, scaling,
+  and management of containerized applications"
 
-- CockroachDB <https://www.cockroachlabs.com>
+- **mongo-go-driver** <https://github.com/mongodb/mongo-go-driver>`
+  "MongoDB Driver for Go"
 
-  - the open source, cloud-native SQL database
-
-- Kubernetes <https://kubernetes.io/>
-
-  - "an open-source system for automating deployment, scaling, and management of containerized applications"
-
-- mongo-go-driver <https://github.com/mongodb/mongo-go-driver>
-
-  - "MongoDB Driver for Go"
-
-- Testify testing library <https://github.com/stretchr/testify>
-  - "A toolkit with common assertions and mocks that plays nicely with the standard library"
+- **Testify** testing library <https://github.com/stretchr/testify>\
+  "A toolkit with common assertions and mocks
+  that plays nicely with the standard library"
 
 ## GopherJS
 
-- can try online at <https://gopherjs.github.io/playground/>
-- compiles Go code to JavaScript
+GopherJS compiles Go code to JavaScript.
+See <https://github.com/gopherjs/gopherjs>.
+To try it online, browse
+<https://gopherjs.github.io/playground/>.
 
 ## Largest Issues
 
