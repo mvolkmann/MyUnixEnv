@@ -33,10 +33,7 @@ Because simplicity and performance are major goals,
 many features found in other programming languages
 are not present in Go. These include classes (and inheritance),
 annotations, exceptions, the ternary operator, and generic types.
-The lack of support for generic types means that there can be no
-generic `map`, `filter`, and `reduce` functions for collections.
-It is possible that generic types may be added in a future version
-and that is an area of active debate.
+Generic types are being considered for Go 2.0.
 
 Go is compiled to platform-specific machine code,
 not bytecode for a virtual machine
@@ -3533,7 +3530,7 @@ However, the downside is that type errors become
 runtime errors instead of compile-time errors.
 
 Here is an example of how `map`, `filter`, and `reduce`
-can be written.
+can be written using the "any" type.
 
 ```go
 package functional
@@ -4348,28 +4345,34 @@ See <https://github.com/gopherjs/gopherjs>.
 To try it online, browse
 <https://gopherjs.github.io/playground/>.
 
-## Largest Issues
+## Missing Features
 
-Currently the primary issues with using Go include:
+Currently the primary missing features in Go include:
 
-- Go lacks a finalized approach for handling package versions
-  used by a library or application.
+- package version management
+
   An experimental approach based on vgo is included in Go 1.11.
   Feedback is being gathered now and
   perhaps this will be finalized in Go 1.12.
-- Go lacks support for generic types.
-  This is needed for truly functional programming
-  so that generic functions like `map`, `filter`, and `reduce`
-  can be implemented.
-  Generics are on the roadmap for Go 2.0.
 
-- Go lacks support for immutable data types.
-  This is needed to provide guarantees that prevent accidental data mutations.
-  Immutable types have come to be an expected feature
+- generics
+
+  Generic types are needed for truly functional programming
+  so generic functions like `map`, `filter`, and `reduce`
+  can be implemented.
+  Generics are on the road map for Go 2.0.
+
+- immutable data types
+
+  Immutable data types are needed to provide
+  guarantees that prevent accidental data mutations.
+  This has come to be an expected feature
   in functional programming languages.
-- Go lacks support for arrow functions.
-  These would provide a more concise syntax,
-  especially for simple callback functions
+
+- concise function definitions
+
+  Go lacks support for function shorthand syntax like arrow functions.
+  These are especially useful for simple callback functions
   that are passed to other functions.
   Arrow functions have come to be an expected feature
   in functional programming languages.
@@ -4377,12 +4380,16 @@ Currently the primary issues with using Go include:
 ## Annoyances
 
 There are several features or lack of features in Go
-that I find annoying. These include:
+that I find somewhat annoying. These include:
 
-- The `gofmt` tool uses tabs for indentation.
-  This makes it difficult to print code will reasonable indentation
+- tabs
+
+  The `gofmt` code formatting tool uses tabs for indentation.
+  This makes it difficult to print code with reasonable indentation
   because printers use eight spaces for tabs.
-- Go does not support single line `if` statements.
+
+- no single-line `if` statements
+
   Simple statements like `if temperature > 100 return`
   must be written in a way that takes up three lines.
 
@@ -4392,8 +4399,9 @@ that I find annoying. These include:
   }
   ```
 
-- Go does not support the ternary operator.
-  Rather than writing a like like
+- no ternary operator
+
+  Rather than writing a line like
   `color := temperature > 100 ? "red" : "blue"`
   we must write something like the following:
 
@@ -4407,20 +4415,24 @@ that I find annoying. These include:
   ```
 
   One reason the ternary operator is not supported
-  is that it is easily abused. In languages that support
+  is that it is easily abused.  In languages that support
   the ternary operator it is not uncommon to see
   deeply nested uses that are difficult to understand.
+  However, `gofmt` could format nested ternaries
+  in a way that is easy to read.
 
-- Go does not support destructuring of arrays, slices, or structs.
-  JavaScript supports this.
-  The following JavaScript code
+- no destructuring
+
+  Go does not support destructuring of arrays, slices, or structs.
+
+  Consider the following JavaScript code that uses array destructuring.
 
   ```js
   const colors = ['red', 'green', 'blue'];
   const [color1, color3] = colors;
   ```
 
-  in Go must be written like
+  In Go must be written like:
 
   ```go
   colors := []string{"red", "green", "blue"}
@@ -4428,7 +4440,7 @@ that I find annoying. These include:
   color3 := colors[2]
   ```
 
-  The following JavaScript code
+  Consider the following JavaScript code that uses object destructuring.
 
   ```js
   const address = {
@@ -4440,7 +4452,7 @@ that I find annoying. These include:
   const [city, zip] = address;
   ```
 
-  in Go must be written like
+  In Go must be written like:
 
   ```go
   address := Address{ // assumes an Address type
@@ -4453,13 +4465,31 @@ that I find annoying. These include:
   zip := address.zip // repeats the name
   ```
 
-- As described earlier, Go does not support generic types.
-- Go's syntax for defining methods on structs a bit odd.
-- The `gofmt` tool forces some words in names to be all uppercase.
-  These includes ID, JSON, and URL.
-  TODO: Is it really `gofmt` that is doing this?
-- The `GOPATH` environment variable must be changed when switching between projects.
-- In struct values, a comma is required after the last field
+- no generic types (described in the "Not Functional" section)
+
+- `golint` uppercase acronyms
+
+  Many programming languages use a convention where acronyms in
+  variable and function names have only the first letter capitalized.
+  For example, a name containing "is", "JSON", "or", and "XML"
+  would be written as `isJsonOrXml`.
+
+  The `golint` tool wants all acronyms it recognizes to be all uppercase.
+  So this name would be `isJSONOrXML`.
+  This is especially bad when there are consecutive acronyms in a name.
+
+  The `golint` tool recognizes almost 40 acronyms.
+  For a list of them, search for `commonInitialisms` at
+  <https://github.com/golang/lint/blob/master/lint.go>.
+
+- `GOPATH` environment variable
+
+  This must be changed when switching between projects
+  unless the module support introduced in Go 1.11 is used.
+
+- comma required after last struct field
+
+  In struct values, a comma is required after the last field
   if the closing brace is on a new line. For example,
 
   ```go
@@ -4669,22 +4699,22 @@ running a command such as `go build` finds a matching version
 and updates `go.mod` with the result.
 This means that each time a new dependency version is desired,
 `go.mod` must be updated.
- Specifying a version like "v2" will not automatically get the
- latest version that starts with "v2" every time `go build` is run
- since "v2" will be replaced by an actual version.
+Specifying a version like "v2" will not automatically get the
+latest version that starts with "v2" every time `go build` is run
+since "v2" will be replaced by an actual version.
 
- Sam Boyer is the lead maintainer of Dep, a dependency management tool for Go.
- He feels that this feature of Go modules loses information
- about the minimum versions that were deemed compatible.
- Further, he feels this makes it hard to resolve diamond-shaped
- dependencies where multiple modules needed by an app
- depend on different minor versions of some other module.
- See his talk "We need to talk about Go modules" at
- <https://www.youtube.com/watch?v=7GGr3S41gjM&feature=youtu.be&t=14m55s>.
+Sam Boyer is the lead maintainer of Dep, a dependency management tool for Go.
+He feels that this feature of Go modules loses information
+about the minimum versions that were deemed compatible.
+Further, he feels this makes it hard to resolve diamond-shaped
+dependencies where multiple modules needed by an app
+depend on different minor versions of some other module.
+See his talk "We need to talk about Go modules" at
+<https://www.youtube.com/watch?v=7GGr3S41gjM&feature=youtu.be&t=14m55s>.
 
- No automatic version updates are ever performed.
- This means that checking `go.mod` files into a version control repository
- provides a way to produce repeatable builds.
+No automatic version updates are ever performed.
+This means that checking `go.mod` files into a version control repository
+provides a way to produce repeatable builds.
 
 "Version comparison" gets the nearest version to what is requested,
 not the latest version that matches.  For example, if the query is ">=1.2.3"
