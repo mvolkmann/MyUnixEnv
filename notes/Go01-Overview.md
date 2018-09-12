@@ -68,6 +68,14 @@ Go's characteristics at a glance include:
 - minimal support for object-oriented programming
   through structs with methods
 
+## Memory Allocation
+
+The Go specification does not indicate the situations under which
+stack memory or heap memory are used.
+The primary Go implementation makes some choices based on the fact that
+allocating on the stack is generally faster than allocation on the heap.
+The builtin `new` function always allocates on the heap.
+
 ## Reasons to use Go
 
 Some of the primary reasons developers choose to use Go include:
