@@ -8,13 +8,18 @@ I recommend creating one now so you can experience publishing an app.
 This article uses the term "terminal" to refer to
 a Windows Command Prompt or a Linux/Mac Terminal window.
 
+The support for "modules" added in Go 1.11 is
+considered experimental and will not be used here.
+When using modules, some of the steps described
+in this section are performed in a different way.
+
 ### Install Go
 
 One way to install Go is to browse <https://golang.org/dl/>,
 download a platform-specific installer, and double-click it.
 If you are using a Mac and have Homebrew (<https://brew.sh/>) installed,
 you can instead just run `brew install go`.
-To verify that this worked, open a terminal and enter `go version`
+To verify that Go is installed, open a terminal and enter `go version`
 which should output the version of Go you have installed.
 
 In Unix and macOS Go is installed in the `/usr/local/go` directory.
@@ -28,16 +33,14 @@ which is home to one or more packages.
 A package is defined by one or more `.go` source files
 that reside in the same directory within a workspace.
 
-You can have a separate workspace for each project
-or one workspace that contains all your projects.
+A workspace can host any number of projects.
+It's not uncommon to have a single workspace
+that hosts every project.
 Either way the environment variable `GOPATH` must be set to point
-to the top directory of the workspace you are currently using.
+to the top directory of the workspace currently being used.
 
 Create a `go` directory in your home directory.
-Set `GOPATH` to point to this directory.
-In the future if you decide to
-create an additional workspace and switch to it,
-don't forget to change this environment variable to point to it.
+Set the `GOPATH` environment variable to point to this directory.
 
 One way to see the current value of `GOPATH` is to enter `go env GOPATH`.
 This works on any platform, unlike entering `echo $GOPATH`
@@ -56,20 +59,23 @@ it will download the package and place its `.go` files in the
 It will also build the package and place its object file,
 `httprouter.a` in the
 `$GOPATH/pkg/{platform}/github.com/julienschmidt` directory.
+An example value for `{platform}` on a Mac is `darwin_amd64`.
 
 It is recommended that you use the same approach for placing
-your own packages in a workspace to avoid naming collisions and
-leave you ready for publishing the code in the future.
+your own packages in a workspace to avoid name collisions
+and prepare for publishing the code in the future.
 
 Note that there can be many local version control repositories
-under the `src` directory.
+under the `src` directory. It's not necessary for the `GOPATH`
+directory to correspond to a single repository.
 
-Determine your preferred repository domain, such as `github.com`
-and make sure you know your repository username, such as `mvolkmann`.
+Determine your preferred repository domain, such as `github.com`,
+and your repository username, such as `mvolkmann`.
 Create the directory `{repo-domain}/{repo-username}/{name}`
 inside your `src` directory where `name` is the name
 of an application or package name you wish to create.
-For me this would be `github.com/mvolkmann/hello`.
+For an application named `hello`,
+I would use `github.com/mvolkmann/hello`.
 
 Create the file `main.go` inside this directory.
 
@@ -81,14 +87,12 @@ Each of these will be described in detail later.
 
 Each application has a single function named `main`
 that must be in a package named `main`.
+This is the starting point of the application.
 The one file that defines the `main` function
 is often named `main.go`, but that is not required.
 
 The primary way of writing output to the standard output stream (stdout)
-is to use functions in the `fmt` package.
-
-All Go applications must have one file when a package of `main`
-that defines a `main` function that is its starting point.
+is to use functions in the standard library package `fmt`.
 
 Add the following to `main.go`.
 
@@ -116,39 +120,36 @@ This should output "Hello, World!".
 
 ### Build First App
 
-To build an executable for this app, enter `go build` while in
+To build an executable for this application, enter `go build` while in
 the directory containing the file that defines the `main` function.
 This will create an executable file in the current directory
 that has the same name as the directory, `hello` in this case.
 In Windows this file will have a `.exe` file extension.
 
-To run this app, enter `./hello`, or just `hello` in Windows.
+To run the application, enter `./hello`, or in Window just `hello`.
 
 Go executables are statically linked which means
 that can be run without any other supporting files.
 They can be copied to a machine with the same architecture
-and be run without installing anything related to Go.
+and be run without installing anything else.
 
 ### Install First App
 
 When Go installs an app it creates the executable
 in the `bin` subdirectory of the current workspace.
 If this directory doesn't exist, it is created.
-It is convenient to have this directory listed
+It is convenient to have this directory included
 in your `PATH` environment variable so that these executables
 can be run from anywhere by just entering their names.
-Go ahead and add `$HOME/go/bin` to your `PATH` environment variable now.
-In Windows, use ??? in place of `$HOME`.
+Go ahead and add `$GOPATH/bin` to your `PATH` environment variable now.
 
-To install the app, enter `go install` while in
+To install the application, enter `go install` while in
 the directory containing the file that defines the `main` function.
-This will create an executable file in the `$GOPATH/bin` directory.
 Assuming that your `PATH` environment variable is set correctly
-you can now run the app by just entering `hello`
+you can now run the application by just entering `hello`
 regardless of your current working directory.
 
-To delete the installed executable,
-enter `go clean -i`.
+To delete the installed executable, enter `go clean -i`.
 
 ### Create First Package
 
@@ -160,12 +161,12 @@ We will cover packages in more detail later.
 
 To keep things simple so we can focus on the mechanics of Go we will
 create a package that just provides a couple of basic functions.
-The first will return the largest number in a set of numbers.
-The second will return the average of a set of numbers.
+The first will return the largest number in a collection of numbers.
+The second will return the average of a collection of numbers.
 
 Create the directory `$GOPATH/src/github.com/mvolkmann/statistics`,
 substituting your repo domain and username.
-Create the files `max.go` and `average.go` in this directory.
+Create the files `maximum.go` and `average.go` in this directory.
 We could define both functions in the same file, but we are using
 two files to show that a package can be defined by multiple source files.
 Note that both files must begin with the same `package` statement.
@@ -178,14 +179,13 @@ Add the following to `maximum.go`.
 ```go
 package statistics
 
-// Max returns the maximum of "slice" of float64 values.
+// Max returns the maximum of a "slice" of float64 values.
 // For now think of a slice as being like an array.
 // Functions are only available to be used in other packages
 // if they are "exported" which is indicated by
 // starting their names with an uppercase letter.
 // The type of the parameter "numbers" is a "slice"
 // of double-precision floating point numbers.
-// For now think of a slice as being like an array.
 // The return type follows the parameter list.
 func Max(numbers []float64) float64 {
   if len(numbers) == 0 {
@@ -239,8 +239,8 @@ func Avg(numbers []float64) float64 {
 }
 ```
 
-Running `go install` from the `statistics` package directory
-creates is a `statistics.a` file in the directory
+Run `go install` from the `statistics` package directory
+to create the file `statistics.a` in the directory
 `$GOPATH/pkg/{platform}/github.com/mvolkmann` directory.
 If any of these directories below `$GOPATH` do not yet exist,
 they will be created.
@@ -251,8 +251,6 @@ to speed up build times.
 
 ### Add Tests
 
-The Go standard library provides a
-lightweight testing package called `testing`.
 Let's add tests to the "statistics" package.
 
 The VS Code Go extension provides the "Go: Generate Unit Tests For Package"
@@ -260,7 +258,7 @@ command that does what its name implies.
 It generates files with names that end in `_test.go`
 for each `.go` file in the current package.
 You could of course manually create these files.
-Here is what it generates in `maximum_test.go` for our `maximum.go` file.
+Here is what it generates in `maximum_test.go`:
 
 ```go
 package statistics
@@ -288,17 +286,17 @@ func TestMax(t *testing.T) {
 }
 ```
 
-This uses the `testing` package from the Go standard library.
+This uses the standard library package `testing`.
 Each test function must have a name that begins with `Test`
 and take a pointer to a `testing.T` object.
 These functions create a slice of structs called `tests`
-that each describe an individual test assertion.
+that each describe a test assertion.
 Each test assertion has a name, a set of arguments to be passed
 to the function being tested (called "args"),
 and the expected result (called "want").
 The loop that follows iterates through the "tests"
-and fails if the actual value returned from the
-function being tested does not match the "want" value.
+and fails if for any assertion the actual value returned from
+the function being tested does not match the "want" value.
 
 All that is left for us to do is replace the `TODO` comment
 with some test data.
@@ -310,12 +308,12 @@ Replace the `TODO` comment with the following:
     {"multiple values", args{[]float64{3.1, 7.2, 5.0}}, 7.2},
 ```
 
-The tests for `average.go` in `average_test.go` are a little tricker.
+The tests in `average_test.go` are a little tricker.
 When comparing computed floating point values,
 we need to test whether they are "close", not exact, due to the
 well-known issue of representing floating point numbers in binary.
 
-We can add import the "math" package in the test file
+We can import the standard library package "math" in the test file
 and add a function like this:
 
 ```go
@@ -327,11 +325,13 @@ func close(n1 float64, n2 float64) bool {
 Then we can change `got != tt.want` in the tests to
 `!close(got, tt.want)`.
 
-The `average_test` file ends up as follows:
+The resulting `average_test.go` file contains the following:
 
 ```go
 package statistics
 
+// Note how multiple packages can be imported
+// in a single "import" statement.
 import (
   "math"
   "testing"
@@ -391,18 +391,17 @@ Note that this includes tests for both exported and non-exported functions.
 To run the tests, cd to the `statistics` directory and enter `go test`.
 Try changing an assertion so it fails
 and run the tests again to see failing output.
-This includes the test function name, file name,
+The output includes the test function name, file name,
 assertion name, and line number of each failure.
 
-When the Go extension is used in VS Code, the Command Palette
+When using VS Code with the Go extension, the Command Palette
 will contain additional commands whose names begin with "Go:".
-Several of these are related to running tests including
+Several of these are related to tests including
 "Generate Unit Tests For File", "Generate Unit Tests For Package",
 "Test Function At Cursor", "Test File", "Test Package",
 and "Test All Packages In Workspace".
 
-If the tests in a file require
-setup before any of its test functions run
+If the tests in a file require setup before any of its test functions run
 or teardown after all of its test functions run,
 define a `TestMain` function. For example,
 
@@ -420,7 +419,7 @@ func TestMain(m *testing.M) {
 }
 ```
 
-To run tests for multiple packages,
+To run tests for multiple packages in the current workspace,
 cd to `$GOPATH` and enter `go test` followed by
 the import paths of all the packages to be tested.
 Wildcards in these import paths are not supported.
@@ -429,19 +428,19 @@ When `go test` is given package paths to run,
 it remembers (caches) successful tests.
 Later when a package is tested again in this way, if its last
 test was successful and there have been no related code changes
-the tests run are not run again in order to save time.
+the tests are not run again in order to save time.
 When this happens "(cached)" will appear after the test
 in place of the elapsed time.
-Note that tests never skipped in this way when
-`go test` is run with no package names
-inside the package directory.
+Note that tests are never skipped in this way when
+`go test` is run without listing package names
+or run from inside a package directory.
 
 ### Test Coverage
 
 Go has builtin test coverage.
 To merely see the percentage of code in the current package
 that is covered by tests, enter `go test -cover`.
-To capture test coverage details in file,
+To capture test coverage details in a file,
 enter `go test -coverprofile=cover.out`.
 To open an HTML presentation of this data in the default browser,
 enter `go tool cover -html=cover.out`.
@@ -452,15 +451,15 @@ comment out the assertion for an empty slice in the `TestAvg` function.
 
 The dropdown menu in the upper left can be used to
 view coverage for a different source file.
-It shows the percentage of coverage for each file.
+It includes the percentage of coverage for each file.
 
 ### Example Tests
 
-The test tool also supports a form of tests called "examples".
-These tests write to stdout and provide a special comment
+The Go test tool also supports a form of tests called "examples".
+These test function names must begin with "Example".
+They write to stdout and provide a special comment
 that describes the expected output.
-The test fails if the expected output is not produced.
-These test function names must begin with `Example`.
+Examples fail if the expected output is not produced.
 
 Here is an example of such a test for our `Maximum` function that can be
 added to `$GOPATH/src/github.com/mvolkmann/statistics/maximum_test.go`.
@@ -486,26 +485,28 @@ their main purpose is to provide example code for using a package
 in generated documentation, which is covered next.
 
 Another form of tests is benchmark tests.
-Benchmark test functions have names that start with "Bench".
+Benchmark test functions have names that begin with "Bench".
 They have a single parameter of type `*testing.B`.
 This parameter is a struct with a field named `N`
 that holds the number of times to run the function being benchmarked.
 For example,
 
 ```go
-func BenchmarkMap(b *testing.B) {
-  values := []int{1, 2, 7}
-  fn := func(n int) int { return n * 2 }
+func BenchmarkMax(b *testing.B) {
+  values := []float64{3.1, 7.2, 5.0}
+
   for i := 0; i < b.N; i++ {
-    Map(values, fn)
+    Max(values)
   }
 }
 ```
 
 To run all the benchmark tests in the current directory, `go test -bench=.`.
-This outputs how long it took to run each benchmarked function 1,000,000 times.
-The tests never fail, they just provide information
-that can indicate performance issues.
+This outputs how long it took to run each
+benchmarked function a large number of times.
+Assuming the functions being tested do not trigger errors,
+these tests never fail.
+They just provide information that can indicate performance issues.
 
 For more detail on Go tests, see <https://golang.org/pkg/testing/>.
 
@@ -520,10 +521,10 @@ To add documentation to any package-level declaration
 add a comment directly before it.
 Godoc will render the comment to the right of the item to which it pertains.
 
-Paragraphs must be separated by blank line.
+Paragraphs must be separated by blank lines.
 
-When HTML documentation is generated, URLs in documentation comments
-converted to hyperlinks.
+When HTML documentation is generated,
+URLs in documentation comments are converted to hyperlinks.
 
 Text to be output in a monospace font, such as code examples,
 should be indented farther than the other comment text.
@@ -550,7 +551,7 @@ in `average.go` and `maximum.go`.
 
 The `go doc` command provides a quick overview of a package.
 For an overview of our `statistics` package,
-enter `go doc` in the `statistics` directory
+enter `go doc` while in the `statistics` directory
 or `go doc statistics` if in another directory.
 This produces the following output:
 
@@ -572,7 +573,8 @@ Enter `godoc` followed by a package path.
 This can also be used to view documentation on standard library packages.
 In addition to specifying a package name, a name the package exports
 can be specified to limit the output to just that documentation.
-For example, `godoc strings Join`.
+For example, the standard library package "strings" exports a "Join" function.
+To see its documentation, enter `godoc strings Join`.
 
 To see documentation for our "statistics" package,
 enter `godoc github.com/mvolkmann/statistics`
@@ -597,10 +599,11 @@ func Max(numbers []float64) float64
 ```
 
 To browse an HTML version of this documentation,
-enter `godoc -http=:1234` where 1234 is a port.
+enter `godoc -http=:1234` where 1234 is a port number.
 Any available, non-privileged port can be used.
-Browse localhost:1234 to see a local version of all the official Go documentation
-including documentation on your packages.
+Browse localhost:1234 to see a local version
+of all the official Go documentation
+combined with documentation on your packages.
 To see documentation for our `statistics` package,
 press the "Packages" button at the top,
 search the page for "statistics", and click that link.
@@ -652,7 +655,7 @@ Installing this will add the source files for the package
 in the appropriate directory below `$GOPATH/src` and
 install it by building a `.a` object file under `$GOPATH/pkg`.
 
-To use this package in our app, edit `main.go`,
+To use this package in our "hello" app, edit `main.go`,
 add an import for this package,
 and add the following in the `main` function.
 

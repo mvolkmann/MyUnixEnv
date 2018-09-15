@@ -8,7 +8,7 @@ About a year later Russ Cox and Ian Taylor joined the team.
 
 Go was officially announced in November 2009.
 Go 1.0 was released in March 2012.
-Go 1.10 which was released in February 2016.
+Go 1.10 was released in February 2016.
 Go 1.11, the latest version, was released in August 2018.
 
 Many of Go's goals are in comparison to languages like C++ and Java.
@@ -59,50 +59,37 @@ Many previous programming languages inspired the design of Go.
 
 Go's characteristics at a glance include:
 
-- compiled to native binaries and libraries
-- statically typed
-- high performance
+- a relatively small language that is easy to learn
+  (the May 9, 2018 spec. is only 78 pages)
+- statically typed which catches many errors at compile-time
 - provides type inference
 - performs garbage collection
 - supports concurrency with lightweight threads called "goroutines"
 - provides communication between goroutines using channels
-- supports networking operations
+- supports networking operations in the standard library
 - minimal support for object-oriented programming
   through structs with methods
-
-## Reasons to use Go
-
-Some of the primary reasons developers choose to use Go include:
-
-- Go is a relatively small language that is easy to learn
-  (the May 9, 2018 spec. is only 78 pages).
-- Go provides good type safety.
-- Go provides excellent support for asynchronous programming
-  with goroutines and channels.
-- The Go standard library supports writing networking applications.
-- The Go compiler is fast.
-- Go generates native executables, not code that requires a virtual machine.
-- Executables produced by Go have good performance.
-- Go does not support pointer arithmetic and that contributes to simpler code.
+- does not support pointer arithmetic which contributes to simpler code
+- compiles quickly to native executables and libraries,
+  not code that requires a virtual machine
+- high performance
 
 ## Reasons to use C/C++/Rust instead of Go
 
 Some of the primary reasons developers choose not to use Go include:
 
-- TODO: Is Rust mature enough to be considered along side C and C++?
-- Go does not yet have a mature solution to manage
-  package dependency versions for a project.
-- Go does not support generic types which precludes
-  some aspects of functional programming.
-- Some developers feel that the C and C++ libraries are
+- Go does not currently support generic types which
+  precludes some aspects of functional programming.
+- Some developers feel that C and C++ libraries are
   currently more mature than Go libraries.
-- Currently it is easier to find developers that have C and C++ experience
-  than finding Go developers.
+- Currently it is easier to find developers that have
+  C and C++ experience than finding Go developers.
 - Go provides garbage collection and does not allow control of
   memory allocation/deallocation that is needed for real-time guarantees.
-- Go does not support pointer arithmetic.
-- Some developers object to community standards for Go
-  like using gofmt to format code.
+- Go does not support pointer arithmetic
+  which is needed for some types of applications.
+- Some developers dislike the community standards for Go
+  such as using gofmt to format code.
 
 ## Zero to Hero
 

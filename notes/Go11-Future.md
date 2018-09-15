@@ -12,7 +12,7 @@ Some popular Go packages include:
 - **Bolt** <https://github.com/boltdb/bolt>\
   "An embedded key/value database for Go."
 
-- **Buffalo** web framework <https://gobuffalo.io/en>`
+- **Buffalo** web framework <https://gobuffalo.io/en>\
   "Buffalo is a Go web development eco-system.
   Designed to make the life of a Go web developer easier.
 
@@ -22,14 +22,17 @@ Some popular Go packages include:
   and ready to run. From there it provides easy APIs to
   build your web application quickly in Go."
 
-- **CockroachDB** <https://www.cockroachlabs.com>`
+- **CockroachDB** <https://www.cockroachlabs.com>\
   "the open source, cloud-native SQL database"
+
+- **Fyne** <https://github.com/fyne-io/fyne>\
+  "cross-platform GUIs in Go based on Enlightenment Foundation Libraries (EFL)"
 
 - **Kubernetes** <https://kubernetes.io/>\
   "an open-source system for automating deployment, scaling,
   and management of containerized applications"
 
-- **mongo-go-driver** <https://github.com/mongodb/mongo-go-driver>`
+- **mongo-go-driver** <https://github.com/mongodb/mongo-go-driver>\
   "MongoDB Driver for Go"
 
 - **Testify** testing library <https://github.com/stretchr/testify>\
@@ -106,7 +109,7 @@ that some find annoying. These include:
   ```
 
   One reason the ternary operator is not supported
-  is that it is easily abused.  In languages that support
+  is that it is easily abused. In languages that support
   the ternary operator it is not uncommon to see
   deeply nested uses that are difficult to understand.
   However, `gofmt` could format nested ternaries

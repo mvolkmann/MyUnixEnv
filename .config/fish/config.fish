@@ -201,9 +201,9 @@ set GITHUB_USER mvolkmann
 #set GITHUB_PASS ?
 
 # Go settings
-set GOBIN $HOME/go/bin
-set PATH $PATH $GOBIN
 set GOPATH $HOME/go
+set GOBIN $GOPATH/bin
+set PATH $PATH $GOBIN
 
 # grep settings
 # This setting may interfere with fink scripts!

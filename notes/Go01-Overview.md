@@ -6,7 +6,7 @@ About a year later Russ Cox and Ian Taylor joined the team.
 
 Go was officially announced in November 2009.
 Go 1.0 was released in March 2012.
-Go 1.10 which was released in February 2016.
+Go 1.10 was released in February 2016.
 Go 1.11, the latest version, was released in August 2018.
 
 Many of Go's goals are in comparison to languages like C++ and Java.
@@ -14,39 +14,40 @@ Go aims to:
 
 - address software issues at Google
 - be simple, indicated by having a small specification
-  and fewer features compared to other programming languages
-- be safe in terms of memory utilization
+  and fewer features that most other programming languages
 - be very easy to read
 - enable faster software development
 - enable faster build times
 - have a less cumbersome type system that provides type inference
   and use composition instead of type hierarchies
 - provide garbage collection
-- support parallel computation, taking advantage of multi-core computers
+- be safe in terms of memory utilization
 - support concurrent execution and communication
+- support parallel computation, taking advantage of multi-core computers
 - enable easier dependency analysis
 - make it easier to write tools that analyze and process the code
 
 Because simplicity and performance are major goals,
 many features found in other programming languages
-are not present in Go. These include classes (and inheritance),
-annotations, exceptions, the ternary operator, and generic types.
+are not present in Go.
+These include classes (and inheritance), annotations,
+exceptions, the ternary operator, and generic types.
 Generic types are being considered for Go 2.0.
 
 Go is compiled to platform-specific machine code,
 not bytecode for a virtual machine
 that must be interpreted at runtime.
 
-While Go can be used as a systems programming language,
-currently most developers use C, C++, or Rust for that.
-
-Go does not compete with scripting languages like
-JavaScript, Perl, Python, and Ruby.
+Go occupies a space between between languages that are
+often used for systems programming (C, C++, and Rust) and
+scripting languages (JavaScript, Perl, Python, and Ruby).
 
 Currently the most common uses for Go are dev ops tooling
-and server side web application development.
+and server-side web application development,
+including implementing REST services.
 
-The primary Go compiler and runtime are implemented in Go and assembler.
+The primary Go compiler and runtime are implemented in
+a combination of Go and assembler.
 
 ## Go Lineage
 
@@ -57,58 +58,48 @@ Many previous programming languages inspired the design of Go.
 
 Go's characteristics at a glance include:
 
-- compiled to native binaries and libraries
-- statically typed
-- high performance
+- a relatively small language that is easy to learn
+  (the May 9, 2018 spec. is only 78 pages)
+- statically typed which catches many errors at compile-time
 - provides type inference
 - performs garbage collection
 - supports concurrency with lightweight threads called "goroutines"
 - provides communication between goroutines using channels
-- supports networking operations
+- supports networking operations in the standard library
 - minimal support for object-oriented programming
   through structs with methods
+- does not support pointer arithmetic which contributes to simpler code
+- compiles quickly to native executables and libraries,
+  not code that requires a virtual machine
+- high performance
+
+## Reasons to avoid Go
+
+Reasons some defaults choose not to use Go include:
+
+- Some developers dislike the community standards for Go
+  such as using gofmt to format code.
+- Go does not currently support generic types which
+  precludes some aspects of functional programming.
+
+Additional reasons related to systems programming include:
+
+- Some developers feel that C and C++ libraries are
+  currently more mature than Go libraries.
+- Currently it is easier to find developers that have
+  C and C++ experience than finding Go developers.
+- Go provides garbage collection and does not allow control of
+  memory allocation/deallocation that is needed for real-time guarantees.
+- Go does not support pointer arithmetic
+  which is needed for some types of applications.
 
 ## Memory Allocation
 
-The Go specification does not indicate the situations under which
-stack memory or heap memory are used.
+The Go specification does not indicate the situations
+under which stack memory or heap memory are used.
 The primary Go implementation makes some choices based on the fact that
 allocating on the stack is generally faster than allocation on the heap.
 The builtin `new` function always allocates on the heap.
-
-## Reasons to use Go
-
-Some of the primary reasons developers choose to use Go include:
-
-- Go is a relatively small language that is easy to learn
-  (the May 9, 2018 spec. is only 78 pages).
-- Go provides good type safety.
-- Go provides excellent support for asynchronous programming
-  with goroutines and channels.
-- The Go standard library supports writing networking applications.
-- The Go compiler is fast.
-- Go generates native executables, not code that requires a virtual machine.
-- Executables produced by Go have good performance.
-- Go does not support pointer arithmetic and that contributes to simpler code.
-
-## Reasons to use C/C++/Rust instead of Go
-
-Some of the primary reasons developers choose not to use Go include:
-
-- TODO: Is Rust mature enough to be considered along side C and C++?
-- Go does not yet have a mature solution to manage
-  package dependency versions for a project.
-- Go does not support generic types which precludes
-  some aspects of functional programming.
-- Some developers feel that the C and C++ libraries are
-  currently more mature than Go libraries.
-- Currently it is easier to find developers that have C and C++ experience
-  than finding Go developers.
-- Go provides garbage collection and does not allow control of
-  memory allocation/deallocation that is needed for real-time guarantees.
-- Go does not support pointer arithmetic.
-- Some developers object to community standards for Go
-  like using gofmt to format code.
 
 ## Important Environment Variables
 
@@ -119,12 +110,13 @@ Some of the primary reasons developers choose not to use Go include:
   Set this to the directory where packages should be installed.
   TODO: What happens when this is not set?
 - `GOOS`\
-  Set this to the target operating system to be targeted by the Go compiler.
+  Set this to the operating system to be targeted by the Go compiler.
   When not set, the current operating system is assumed.
 - `GOPATH`\
   Set this to the current workspace directory
   which is where source files are located.
   Change this when switching workspaces.
+  This is not needed when "modules" (introduced in Go 1.11) are used.
 - `GOROOT`\
   Set this to the directory where Go tools are installed.
   TODO: What happens when this is not set?
@@ -149,18 +141,17 @@ the more popular ones that have been implemented in Go.
 
 - Docker - assembles container-based systems
   (open source version is now called "Moby")
+- InfluxDB - scalable datastore for metrics, events, and real-time analytics
+  <https://github.com/influxdata/influxdb>
 - Kubernetes - production-grade container scheduling and management
   <http://kubernetes.io>
 - Revel - full-stack web framework <https://github.com/revel/revel>
-- InfluxDB - scalable datastore for metrics, events, and real-time analytics
-  <https://github.com/influxdata/influxdb>
-- TODO: Find more!
+- TODO: Find more?
 
 ## Alternative Go Implementations
 
 Besides the primary Go implementation at <https://golang.org/>,
-there are several alternative implementations.
-These include:
+there are several alternative implementations. These include:
 
 - gccgo <https://gcc.gnu.org/onlinedocs/gccgo/>\
   GNU compiler for Go
@@ -175,4 +166,3 @@ These include:
 - mgo?\
   TODO: I can't find this, but heard it mentioned on "Go Time" podcast.
   Is it for small processors like Arduino?
-
