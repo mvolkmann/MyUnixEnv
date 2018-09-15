@@ -52,6 +52,7 @@ a combination of Go and assembler.
 ## Go Lineage
 
 Many previous programming languages inspired the design of Go.
+
 ![Go Lineage](go-lineage.png)
 
 ## Characteristics
