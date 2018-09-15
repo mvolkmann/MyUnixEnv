@@ -1,7 +1,6 @@
-## Syntax Highlights
+## Go Syntax
 
-This section presents some ways that Go syntax differs
-from the syntax of other programming languages.
+### Overview
 
 A Go source file contains a package clause,
 followed by zero or more import declarations,
@@ -12,27 +11,30 @@ constant, variable, type, function, or method.
 All of these begin with a keyword which is one of
 `const`, `var`, `type`, or `func`.
 These declarations can appear in any order.
-Only these can appear outside of functions.
+These are the only statements that can appear outside of functions.
 This precludes use of the `:=` operator and
 non-declaration statements, like `if` and `for`,
 outside of functions.
 
 Package-level names that start uppercase are "exported".
-This means that other packages that import their package
+This means that other packages that import the package
 can access them.
 
-Types follow variables and parameters, separated by a space.
+Types follow variable and parameter names, separated by a space.
 For example, `var score int8`.
 
 Semicolons are not required, but can be used
 to place multiple statements on the same line.
+However, the `gofmt` code formatting tool
+will place each statement on a separate line
+and remove semicolons.
 
 In some languages `string[]` is an array of strings.
 In a GraphQL schema, this would be written as `[string]`.
 But Go chooses a third option, `[]string`
 which was inspired by Algol 68.
 
-## Package Initialization
+### Package Initialization
 
 Initialization of package-level variables that require logic,
 not just literal values or results of function calls,
@@ -47,57 +49,57 @@ are run before those of a given package.
 All `init` functions of all imported packages are run
 before the `main` function of an application is run.
 
-## Names
+### Names
 
-- Go requires some variable, function, and struct field names to be all uppercase
-- includes ID, JSON, and URL
+Names for variables, types, functions, methods, and parameters
+must begin with a unicode letter and can contain
+unicode letters, unicode digits, and underscores.
 
-## Comments
+Go requires some variable, function, and struct field names to be all uppercase.
+These includes ID, JSON, and URL.
 
-- same a C
-- `/* ... */` for multi-line comments
-  - primarily used for the comment at the top of a package
-    and to temporarily comment out sections of code
-- `//` for single-line comments
-  - used for all other kinds of comments,
-    even those above functions
+### Comments
 
-## Zero Values
+Comments in Go use the same syntax as C.
+
+Multi-line comments use `/* ... */`.
+These primarily used for the comment at the top of a package
+and to temporarily comment out sections of code.
+
+Single-line comments use `//`.
+These are used for all other kinds of comments,
+even those above functions.
+
+### Zero Values
 
 Every type as a "zero value" which is the value it takes on when it is not initialized.
 
-| Type            | Zero Value                                                      |
-| --------------- | --------------------------------------------------------------- |
-| bool            | false                                                           |
-| number          | 0                                                               |
-| rune            | 0                                                               |
-| string          | ""                                                              |
-| array           | array of proper length where all elements have their zero value |
-| slice           | empty slice with length 0 and capacity 0                        |
-| map             | empty map                                                       |
-| struct          | struct where all fields have their zero value                   |
-| all other types | nil                                                             |
+| Type                    | Zero Value                                                      |
+| ----------------------- | --------------------------------------------------------------- |
+| bool                    | false                                                           |
+| all numeric types       | 0                                                               |
+| rune (single character) | 0                                                               |
+| string                  | ""                                                              |
+| array                   | array of proper length where all elements have their zero value |
+| slice                   | empty slice with length 0 and capacity 0                        |
+| map                     | empty map                                                       |
+| struct                  | struct where all fields have their zero value                   |
+| all other types         | nil                                                             |
 
-## Variables
+### Variables
 
 Variables in Go have the following characteristics:
 
 - mutable unless defined with `const`
 - block-scoped within functions, so those in
   inner scopes can shadow those in outer scopes
-- names must start with a letter and
-  can contain letters, digits, and underscores
-- local to their package unless name starts uppercase
+- package-level variables are local to the package
+  unless name starts uppercase
 
 Go distinguishes between declaring, initializing, and assigning variables.
 
-Variables that are declared outside of functions have package scope
-which means they are accessible by all files in the package,
-but not outside the package.
-However, giving them a name that starts uppercase makes them
-accessible anywhere the package is imported.
-
-Variables outside of functions must be declared with a `var` statement.
+Variables that are declared outside of functions (package-level)
+must be declared with a `var` statement.
 This accepts a type and/or initial value. Examples include:
 
 ```go
@@ -110,7 +112,13 @@ While both a type and initial value can be provided,
 that is redundant since the type can be inferred from the value
 and some editor plugins/extensions will warn about this.
 
+Package-level variables have package scope which means they are
+accessible by all files in the package.
+If their name starts uppercase (exported) then
+they are accessible anywhere the package is imported.
+
 Multiple variables can be declared with one `var` statement.
+For example:
 
 ```go
 var name, age = "Mark", 57 // must initialize all
@@ -139,8 +147,10 @@ For example, `name := "Mark"`.
 Multiple variables can be declared with one `:=` operator.
 For example, `name, age := "Mark", 57`.
 
-It is an error to attempt to declare a variable that has already been declared,
-whether is with a `var` statement or using the `:=` operator.
+The `:=` operator is particularly useful for capturing function return values.
+
+It is an error to attempt to declare a variable that has already
+been declared, whether with a `var` statement or the `:=` operator.
 
 Variables that have already been declared can be assigned new values
 with the `=` operator. For example, `name = "Tami"`.
@@ -148,8 +158,6 @@ Multiple variables can be assigned with one `=` operator.
 For example, `name, age = "Tami", 56`.
 
 It is an error to attempt to assign to a variable that has not been defined.
-
-The `:=` operator is particularly useful for capturing function return values.
 
 There is an exception to the rule that existing variables cannot be re-declared.
 As long as at least one variable on the left of `:=` has not yet been declared,
@@ -159,21 +167,21 @@ to capture possible errors from a function call.
 
 Functions can return an number of values.
 Sometimes the caller is only interested in a subset of them.
-The variable "\_" can be used to discard a specific return value.
+The variable "\_" can be used to discard specific return values.
 
-## Constants
+### Constants
 
 Go constants are defined using the `const` keyword.
 They must be initialized to a primitive literal or an expression
 that can be computed at compile-time and results in a primitive value.
 For example, `const HOT = 100`.
 
-## Operators
+### Operators
 
 Go supports the following operators:
 
-- arithmetic: `+`, `-`, `\*`, `/`, `%` (mod)
-- arithmetic assignment: `+=`, `-=`, `\*=`, `/=`, `%=`
+- arithmetic: `+`, `-`, `*`, `/`, `%` (mod)
+- arithmetic assignment: `+=`, `-=`, `*=`, `/=`, `%=`
 - increment: `++`
 - decrement: `--`
 - assignment: `=` (existing variable), `:=` (new variable)
@@ -182,7 +190,7 @@ Go supports the following operators:
   - Structs are compared by comparing their fields.
   - Slices, maps, and functions cannot be compared using these operators.
 - logical: `&&` (and), `||` (or), `!` (not)
-- bitwise: `&`, `|`, `^`, `&^` (bit clear)
+- bitwise: `&`, `|`, `^` (xor), `&^` (bit clear)
 - bitwise assignment: `&=`, `|=`, `^=`, `&^=`
 - bit shift: `<<`, `>>`
 - bit shift assignment: `<<=`, `>>=`
@@ -190,7 +198,7 @@ Go supports the following operators:
 - variadic parameter: `...paramName`
 - slice spread: `sliceName...`
 - pointer creation: `&varName`
-- pointer dereference: `\*pointerName`
+- pointer dereference: `*pointerName`
 - block delimiters: `{ }`
 - expression grouping: `( )`
 - function calling: `fnName(args)`
@@ -200,7 +208,7 @@ Go supports the following operators:
 - array element separator: `,`
 - define label: `someLabel:` (see `goto` keyword)
 
-## Keywords
+### Keywords
 
 Go supports the following keywords:
 
@@ -236,7 +244,7 @@ Go supports the following keywords:
   - This is often used to give a name to a struct or function signature.
 - `var` - defines a variable, its type, and optionally an initial value
 
-## Pointers
+### Pointers
 
 Pointers hold the address of a variable or `nil`.
 Pointer types begin with an asterisk.
@@ -263,7 +271,7 @@ To get the value of the name field, `var name1 = (*ptr).name`.
 This can also be done with shorthand syntax that automatically
 dereferences the pointer with `var name2 = ptr.name`.
 
-## Output
+### Output
 
 - supported by the "fmt" package
 
@@ -272,7 +280,7 @@ import "fmt"
 fmt.Println(expression)
 ```
 
-## If Statement
+### If Statement
 
 - parentheses are not needed around the condition being tested
 - braces around body are required
@@ -298,7 +306,7 @@ if y := x * 2; y < 10 {
 }
 ```
 
-## Switch Statement
+### Switch Statement
 
 Go's `switch` statement is similar to that in other languages,
 but it can switch on expressions of any type.
@@ -374,7 +382,7 @@ The variable `value` will hold the actual type.
 `expression` can be an interface type and
 the actual type can be type that implements the interface.
 
-## For Statement
+### For Statement
 
 The `for` statement is the only looping statement in Go.
 Braces around the body are required.
@@ -421,7 +429,7 @@ for {
 }
 ```
 
-## Strings
+### Strings
 
 Go strings are immutable sequences of bytes representing UTF-8 characters.
 Literal values are delimited with double quotes or back-ticks.
@@ -459,7 +467,7 @@ for _, word := range words {
 }
 ```
 
-## `type` Keyword
+### `type` Keyword
 
 The `type` keyword defines a new type.
 It does not define an alias for an existing type.
@@ -476,7 +484,7 @@ sum : = s + i // invalid operation - mismatched types
 
 The `type` keyword is most often used to define a type for struct, slice, map, or function.
 
-## Structs
+### Structs
 
 A struct is a collection of fields defined with the `struct` keyword.
 Field values can have any type,
@@ -606,7 +614,7 @@ me := person{
 }
 ```
 
-## Sets
+### Sets
 
 Empty structs are useful for representing values in set data structures
 because they do not take up memory, unlike boolean values.
@@ -719,7 +727,7 @@ func main() {
 }
 ```
 
-## Methods
+### Methods
 
 Methods are functions that are invoked on a "receiver" value.
 They can be associated with any type.
@@ -808,7 +816,7 @@ However, the ability to define methods outside the type definition
 is required in order to add methods to non-struct types.
 So Go chooses to only support that same approach for all types.
 
-## Arrays
+### Arrays
 
 Arrays hold a sequence of values, a.k.a. elements.
 The values can be of any type,
@@ -864,7 +872,7 @@ for index, value := range myArr {
 }
 ```
 
-## Slices
+### Slices
 
 Slices are a distinct type from arrays.
 They are a view into an array with a variable length.
@@ -1000,7 +1008,7 @@ processColors(colors...)
   }
   ```
 
-## Maps
+### Maps
 
 A map is a collection of key/value pairs where keys and values can be any type.
 A map type looks like `map[keyType]valueType`.
@@ -1055,7 +1063,7 @@ Maps support concurrent reads, but not concurrent writes
 or a concurrent read and write.
 Issues with these can avoided using channels or mutexes.
 
-## Functions
+### Functions
 
 Go functions are defined with `func` keyword.
 The syntax is:
@@ -1195,7 +1203,7 @@ using this feature is frowned upon
 because the code is less readable
 than explicitly returning values.
 
-## Deferred Functions
+### Deferred Functions
 
 Inside a function, function calls preceded by `defer`
 will have their arguments evaluated immediately,
@@ -1210,7 +1218,7 @@ Examples include closing files or network connections.
 
 This is an alternative to the `try`/`finally` syntax found in other languages.
 
-## Interfaces
+### Interfaces
 
 An interface defines a set of methods.
 Any type can implement an interface, even primitive types.
@@ -1295,7 +1303,7 @@ to indicate whether `g` refers to a `circle` object.
 If it does not, a panic will not be triggered.
 
 Here is an example of a custom collection that
-can hold values of any type.  It's a basic linked list.
+can hold values of any type. It's a basic linked list.
 Note how type assertions are required to
 use values that are obtained from the collection.
 
@@ -1437,7 +1445,7 @@ func main() {
 }
 ```
 
-## Packages
+### Packages
 
 All Go code resides in some package.
 
@@ -1517,7 +1525,7 @@ When an alias is defined, exported names in the package are referenced with
 Circular imports where an import triggers the import of the current package
 are treated as errors.
 
-## Error Handling
+### Error Handling
 
 Go does not support exceptions.
 Instead functions that may encounter errors have an
@@ -1576,4 +1584,3 @@ func divide2(a, b float32) (float32, error) {
   return a / b, nil
 }
 ```
-
