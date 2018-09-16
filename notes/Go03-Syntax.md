@@ -511,27 +511,28 @@ struct, slice type, map type, interface, or function signature.
 
 ### Structs
 
-GRONK
 A struct is a collection of fields defined with the `struct` keyword.
 Field values can have any type,
 including other structs nested to any depth.
 A struct cannot inherit from another struct,
 but can utilize composition of structs.
 
-Fields are either "public" (accessible in all packages)
-or "protected" (accessible in a files within the current package),
-never "private" (only accessible in methods of the struct).
-But note that the terms "public", "protected", and "private"
+Fields are either "public" (accessible in all packages) or
+"protected" (accessible in all files within the current package).
+They are never "private" (only accessible in methods of the struct).
+However, the terms "public", "protected", and "private"
 are not used when describing Go.
+Instead Go refers to names being "exported"
+based on their names starting with an uppercase letter.
 
 It is often desirable to define a type alias for a struct to
 make it easy to refer to in variable and parameter declarations.
 Otherwise the struct is anonymous and
 can only be referred to where it is defined.
 
-The dot operator is used to get and set fields within a struct.
+The dot operator is used to get and set fields within a `struct`.
 
-Here is an example of using an anonymous struct
+Here is an example of using an anonymous `struct`
 that is not assigned to a type name:
 
 ```go
@@ -547,8 +548,9 @@ me.age++
 fmt.Println(me.age) // 58
 ```
 
-Assigning a type name makes the code cleaner and easier to understand.
-For example,
+Assigning a type name makes the code easier to understand
+and makes `struct` definitions reusable.
+For example:
 
 ```go
 type person struct {
@@ -564,10 +566,10 @@ p2.age++
 
 // Print the struct for debugging.
 // Formatting strings are documented at <https://golang.org/pkg/fmt/>.
-// %v can be used for most types.
+// %v can be used for most (TODO: all?) types.
 fmt.Printf("%v\n", p2) // just field values: {Mark 58}
 fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
-fmt.Printf("%#v\n", p2) // Go-syntax representation main.person{name:"Mark", age:58}
+fmt.Printf("%#v\n", p2) // Go-syntax representation: main.person{name:"Mark", age:58}
 ```
 
 Type names must start uppercase if they
@@ -576,10 +578,10 @@ Struct field names must also start uppercase
 if they should be accessible outside the current package.
 
 There is no support for destructuring like in JavaScript
-to extract field values from a struct.
+to extract field values from a `struct`.
 
-If a struct field name is omitted, it is assumed to be the same as the type.
-For example,
+If a `struct` field name is omitted, it is assumed to be the same as the type.
+For example:
 
 ```go
 package main
@@ -593,21 +595,26 @@ func main() {
   type age int
   type myType struct {
     name string // named field
-    age // get field name from a primitive type
-    time.Month // get field name from a library type
+    age // gets field name from a primitive type
+    time.Month // gets field name from a library type
   }
-  //myStruct := myType{name: "Mark", int: 7, Month: time.April}
-  myStruct := myType{"Mark", 7, time.April}
-  fmt.Printf("name = %v\n", myStruct.name)
-  fmt.Printf("age = %v\n", myStruct.age)
-  fmt.Printf("Month = %v\n", myStruct.Month)
+
+  // Using field names.
+  myStruct1 := myType{name: "Mark", int: 7, Month: time.April}
+
+  // Using field positions.
+  myStruct2 := myType{"Mark", 7, time.April}
+
+  fmt.Printf("name = %v\n", myStruct1.name)
+  fmt.Printf("age = %v\n", myStruct1.age)
+  fmt.Printf("Month = %v\n", myStruct1.Month)
 }
 ```
 
-To embed a struct within another,
-precede the struct name with a field name or
+To embed a `struct` within another,
+precede the `struct` name with a field name or
 include just its name to get a field with the same name.
-For example,
+For example:
 
 ```go
 type address struct {
@@ -642,6 +649,7 @@ me := person{
 
 ### Sets
 
+GRONK
 Empty structs are useful for representing values in set data structures
 because they do not take up memory, unlike boolean values.
 They are written as `struct{}`.
