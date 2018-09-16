@@ -50,14 +50,22 @@ which only works on UNIX-like systems.
 
 Create a `src` directory inside your `go` directory.
 
-When a Go package or application is installed in a workspace it is
-placed in a directory that corresponds to the URL where it is published.
-That URL, minus the leading `https://` is used to install the package.
-For example, if you enter `go get github.com/julienschmidt/httprouter`
-it will download the package and place its `.go` files in the
-`$GOPATH/src/github.com/julienschmidt/httprouter` directory.
-It will also build the package and place its object file,
-`httprouter.a` in the
+Packages and applications contributed by the community
+(not in the standard library) must be installed.
+This is typically done using `go get package-url`
+where `package-url` excludes the `https://` prefix.
+
+Packages are installed under `$GOPATH/src` in a subdirectory
+that corresponds to the package URL.
+It does this regardless of the directory from which `go get` is run.
+For example, `go get github.com/julienschmidt/httprouter`
+installs the package `.go` files in
+`$GOPATH/src/github.com/julienschmidt/httprouter`.
+Using the package URL avoids path conflicts.
+
+The `go get` command also builds the package and places its object file
+under the `$GOPATH/pkg` directory.
+In the case of httprouter, this creates `httprouter.a` in the
 `$GOPATH/pkg/{platform}/github.com/julienschmidt` directory.
 An example value for `{platform}` on a Mac is `darwin_amd64`.
 

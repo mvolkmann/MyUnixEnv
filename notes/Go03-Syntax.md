@@ -34,6 +34,68 @@ In a GraphQL schema, this would be written as `[string]`.
 But Go chooses a third option, `[]string`
 which was inspired by Algol 68.
 
+### Packages
+
+All Go code resides in some package.
+
+All source files must start with a `package` statement
+that includes a package name.
+The package name must match the name of the directory that holds the file,
+unless the package name is "main".
+
+The `main` function is the starting point of all Go applications
+and must defined in a source that starts with `package main`.
+
+The source files that define a package
+can have any file name that ends in `.go`.
+
+For example, if the file `foo.go` is in a directory named `bar`,
+the first non-comment line in the file should be `package bar`.
+
+Changing a package name requires renaming the directory
+and modifying the `package` statement in all the files.
+It seems Go missed an opportunity to
+infer the package name from the directory name.
+
+Packages used by an application or by other packages are not required
+to have unique names, but their import paths must be unique.
+For example, the import paths `alpha/one` and `beta/one` can coexist
+even though the package name for both is `one`.
+However, to use both in the same source file,
+one of them will need to be given an alias (described later).
+
+To import the package, include an `import` statement with a
+string that is the package URL without the <https://> prefix.
+For example, `import "github.com/julienschmidt/httprouter"`.
+
+Refer to the names it exports by preceding them with `httprouter.`.
+For example, `httprouter.ResponseWriter`.
+There is not a way to add the exported names to the current namespace
+to avoid using the `pkgName.` prefix.
+
+An `import` statement imports all the exported symbols in given packages.
+It is not possible to import just a subset of the exported symbols.
+
+To import one package, `import "pkgName"`.
+
+To import multiple packages, `import ("pkgName1" "pkgName2" ...)`.
+
+Unused imports are treated as errors
+and some editors automatically remove them.
+
+The strings specified after `import` are slash-separates names.
+For standard library packages these can be single names
+like `"strings"` or names like `"math/rand"`.
+For community packages these are URLs without the `https://` prefix.
+
+An alias for a package name can be defined with `import alias "pkgName"`.
+Note that the alias name is not surrounded by quotes, but the package name is.
+When an alias is defined, exported names in the package are referenced with
+`alias.ExportedName`.
+
+Circular imports where an import triggers the import of the current package
+are treated as errors.
+
 ### Package Initialization
 
 Initialization of package-level variables that require logic,
@@ -195,7 +257,7 @@ Go supports the following operators:
 - bit shift: `<<`, `>>`
 - bit shift assignment: `<<=`, `>>=`
 - channel direction: `<-`
-- variadic parameter: `...paramName`
+- variadic parameter: `paramName ...paramType`
 - slice spread: `sliceName...`
 - pointer creation: `&varName`
 - pointer dereference: `*pointerName`
@@ -649,9 +711,10 @@ me := person{
 
 ### Sets
 
-GRONK
-Empty structs are useful for representing values in set data structures
-because they do not take up memory, unlike boolean values.
+Go does not have a builtin data structure for representing sets
+which are unordered collections of unique values.
+However, a `Map` that uses empty structs for values can be used for this purpose.
+Unlike `bool` values, empty structs do not take up memory.
 They are written as `struct{}`.
 
 The following simple package defines a set data structure for strings.
@@ -715,13 +778,12 @@ func main() {
 
 A recommended community library that supports many data structures
 is "gods" at <https://github.com/emirpasic/gods>.
-It supports several kinds of lists, sets, stacks, map, and trees
-that hold values of any type.
+It supports several kinds of lists, sets, stacks, maps, and trees.
 These collections can hold values of any type,
 but using the values typically requires type assertions.
 
-Compare the `gods.HashSet` type to the `set.Strings` type defined above.
-For example,
+Here is an example of using the `gods.HashSet` type
+to represent a set of `int` values.
 
 ```go
 package main
@@ -736,8 +798,8 @@ func main() {
   set := hashset.New()   // empty
   set.Add(1)             // 1
   set.Add(2, 2, 3, 4, 5) // 3, 1, 2, 4, 5 (random order, duplicates ignored)
-  set.Remove(4)          // 5, 3, 2, 1 (random order)
-  set.Remove(2, 3)       // 1, 5 (random order)
+  set.Remove(4)          // 5, 3, 2, 1
+  set.Remove(2, 3)       // 1, 5
 
   fmt.Println("contains 1?", set.Contains(1))          // true
   fmt.Println("contains 1 and 5?", set.Contains(1, 5)) // true
@@ -776,7 +838,7 @@ Methods are distinguished only by the receiver type and their name.
 
 The syntax for defining a method is
 `func (receiver-info) name(parameter-list) (return-types) { body }`.
-`receiver-info` is a name followed by a type.
+`receiver-info` is a name followed by the instance type for the method.
 Note that there are three sets of parentheses.
 If the method has only one return value,
 the last pair of parentheses can be omitted.
@@ -816,13 +878,13 @@ When the receiver is a type value and not a pointer to a type value
 the method receives a copy and cannot modify the original.
 
 When a function has a parameter with a pointer type,
-it must be passed a pointer
+it must be passed a pointer.
 However, when a method has a pointer receiver,
-it can be invoked on a pointer to a struct or a struct.
-When invoked on a struct, it will automatically
-pass a pointer to the struct to the method.
+it can be invoked on a pointer to a value or a value.
+When invoked on a value, it will automatically
+pass a pointer to the value to the method.
 
-When a type has multiple methods, `golint`
+When a type has multiple methods, the `golint` tool
 wants all the receivers to have the same name.
 However, `golint` does not complain if
 some receivers are a pointer and others are values.
@@ -852,16 +914,14 @@ So Go chooses to only support that same approach for all types.
 
 ### Arrays
 
-Arrays hold a sequence of values, a.k.a. elements.
+Arrays hold an ordered collection of values, a.k.a. elements.
 The values can be of any type,
 including other arrays to create multidimensional arrays.
-They have a fixed length and the length is part of their type.
-Their indexes are zero-based.
+Arrays have a fixed length and the length is part of their type.
 
 The syntax for declaring an array is `[length]type`.
-For example, `var rgb [3]int`.
-
 Placing the square brackets before the type was inspired by Algol 68.
+For example, `var rgb [3]int`.
 
 An array can be created with an "array literal".
 This uses curly braces to specify initial elements.
@@ -875,16 +935,19 @@ supplied initial values, place an ellipsis inside the square brackets.
 For example, `rgb := [...]int{100, 50, 234}`.
 This creates an array with a length of three.
 
-If anything other than a single integer or ellipsis is inside the
-square brackets, a "slice" is created (discussed in the next section).
+If anything other than a single integer or ellipsis appears inside the
+square brackets, a "slice" is created.
+Slices are discussed in the next section.
 
-Square brackets are also used to get and set the value at an index.
+Square brackets are also used to get and set
+the value at a zero-based index.
 To get the second element, `rgb[1]`.
 To set the second element, `rgb[1] = 75`.
 
 To get the length of an array, `len(myArr)`.
 For arrays, the capacity is the same as the length,
 so `cap(myArr)` returns the same value.
+We will see that this is not the case for slices.
 
 One way to iterate over the elements of an array
 is to use a C-style `for` loop.
@@ -923,7 +986,7 @@ that is not yet associated with an array.
 There are three ways to create a slice, using a "slice literal",
 the `make` function, or basing on an existing array.
 
-The most common way to create a slice is with a "slice literal"
+The most common way to create a slice is with a slice literal
 which creates a slice and its underlying array.
 These look like an array literals, but without a specified length.
 `mySlice := []int{}` creates a slice with an empty underlying array
@@ -932,35 +995,33 @@ where the length and capacity are 0.
 length and capacity are 3 with the provided initial values.
 
 It is also possible, but not common, to specify values at specific indices.
-`mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example
+`mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example.
 `mySlice := []int{3: 7, 0: 2}` creates a slice where length and capacity
 are 4 which is one more than the highest specified index.
 
-The `make` function provides another way to create a slice and underlying array.
-Rather than specifying initial values, the length and capacity are specified.
+The `make` function provides another way
+to create a slice and underlying array.
+Rather than specifying initial values,
+the length and capacity are specified.
 This can avoid reallocating space when elements are added later,
 which is somewhat inefficient.
 If it is anticipated that many elements will be appended later,
-try to estimate the largest size needed at the start
+try to estimate the largest size needed
 and use `make` to create the slice.
 For example, `mySlice := make([]int, 5)`
 creates an underlying array of size 5
-and a slice of length 5 and capacity of 5.
+and a slice with length 5 and capacity of 5.
 `mySlice := make([]int, 0, 5)`
 creates an underlying array of size 5 and
-a slice with initial length 0 and initial capacity of 5.
+a slice with length 0 and capacity of 5.
 
-The final way to create a slice is to base it on an existing array,
+The final way and least commonly used way to
+create a slice is to base it on an existing array,
 specifying the start (inclusive) and end (exclusive) indexes.
 For example, `mySlice := myArr[start:end]`
 If `start` is omitted, it defaults to 0.
 If `end` is omitted, it defaults to the array length.
 So `myArr[:]` creates a slice over the entire array.
-
-The most common ways to create a slice are to use
-a slice literal or the `make` function.
-Manually creating an array and then creating a slice over it
-is far less common.
 
 Modifying elements of a slice modifies the underlying array.
 Multiple slices on the same array see the same data.
@@ -977,19 +1038,14 @@ It is not possible to append elements to arrays
 which is one reason why slices are used more often.
 
 `len(mySlice)` returns the number of elements in the slice
-which is its length.
+which is its current length.
 `cap(mySlice)` returns the number of elements in the underlying array
-which is its capacity.
-If `append` is used to increase the number of elements beyond this,
-a larger underlying array will be allocated
-and the returned slice will refer to it.
+which is its current capacity.
 
-Just like with arrays, square brackets used to
+Just like with arrays, square brackets are used to
 get and set the value of a slice at an index.
 If the index is greater than or equal to the slice capacity,
 a panic will be triggered that says "runtime error: index out of range".
-To get the second element, `rgb[1]`.
-To set the second element, `rgb[1] = 75`.
 
 The same approaches for iterating over the elements of an array
 can be used to iterate over the elements of a slice.
@@ -999,8 +1055,7 @@ recreate it with different bounds
 For example, `mySlice = mySlice[newStart:newEnd]`.
 
 Slice elements can be other slices to create multidimensional slices.
-
-TODO: Is the zero value of a slice really nil?
+For example:
 
 ```go
 ticTacToe := [][]string{
@@ -1015,38 +1070,48 @@ ticTacToe[1][2] = "X"
 
 To use all the elements in a slice as separate arguments to a function
 follow the variable name holding the slice with an ellipsis.
-For example, TODO: IS THIS CORRECT?
 
 ```go
-func processColors(...colors string) {
-  // colors is a slice
+// This is a "variadic function, discussed more later.
+// It takes any number of int arguments.
+func sum(numbers ...int) int {
+  result := 0
+  for _, number := range numbers {
+    result += number
+  }
+  return result
 }
-processColors("white", "black")
-colors := []string{"red", "green", "blue"}
-processColors(colors...)
+
+func main() {
+  fmt.Println(sum(1, 2, 3)) // 6
+  values := []int{1, 2, 3}
+  fmt.Println(sum(values...)) // 6
+}
 ```
 
-- slice of structs example
+Slices can contain values of any type.
+Here is an example that uses a slice of structs:
 
-  ```go
-  type person struct {
-    name string
-    age  int8
-  }
+```go
+type person struct {
+  name string
+  age  int8
+}
 
-  func main() {
-    // Note how we do not need to precede each struct with "person".
-    people := []person{{"Mark", 57}, {"Jeremy", 31}}
-    fmt.Printf("%#v\n", people)
-    // []main.person{main.person{name:"Mark", age:57}, main.person{name:"Jeremy", age:31}}
-  }
-  ```
+func main() {
+  // Note how we do not need to precede each struct with "person".
+  people := []person{{"Mark", 57}, {"Jeremy", 31}}
+  fmt.Printf("%+v\n", people) // [{name:Mark age:57} {name:Jeremy age:31}]
+}
+```
 
 ### Maps
 
-A map is a collection of key/value pairs where keys and values can be any type.
+A map is a collection of key/value pairs
+where keys and values can have any type.
 A map type looks like `map[keyType]valueType`.
 For example, `var myMap map[string]int`.
+
 A type alias can be created for this type which is
 useful when the type will be referred to in many places.
 For example, `type playerScoreMap map[string]int`.
@@ -1054,8 +1119,8 @@ For example, `type playerScoreMap map[string]int`.
 One way to create a map is with a "map literal"
 which allows specifying initial key/value pairs.
 For example,
-`scores := map[string]int{"Mark": 90, "Tami": 92}`.
-or using the type alias,
+`scoreMap := map[string]int{"Mark": 90, "Tami": 92}`.
+or using the type alias above,
 `scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}`.
 
 Another way to create a map is using the `make` function.
@@ -1066,7 +1131,7 @@ To add a key/value pair, `myMap[key] = value`.
 
 To get the value for a given key, `value := myMap[key]`.
 
-For example,
+For example:
 
 ```go
 type playerScoreMap map[string]int
@@ -1082,6 +1147,7 @@ fmt.Printf("scoreMap = %+v\n", scoreMap) // map[Tami:92 Amanda:83 Jeremy:95 Mark
 
 To get the value for a given key and verify that the key was present,
 as opposed to just getting the zero value because it wasn't,
+use the second return value which is a `bool`. For example:
 
 ```go
 value, found := myMap[key]
@@ -1095,7 +1161,9 @@ To iterate over the key/value pairs in a map,
 
 Maps support concurrent reads, but not concurrent writes
 or a concurrent read and write.
-Issues with these can avoided using channels or mutexes.
+If a map might be accessed concurrently from multiple goroutines,
+protect against this by using channels or mutexes.
+These are described in the "Concurrency" section.
 
 ### Functions
 
@@ -1103,70 +1171,45 @@ Go functions are defined with `func` keyword.
 The syntax is:
 
 ```go
-func myFunctionName(p1 t1, p2 t2, ...) returnType(s) {
+func functionName(p1 t1, p2 t2, ...) (returnTypes) {
   ...
 }
 ```
-
-Functions act as closures over all in-scope variables.
 
 Function arguments are passed by value
 so copies are made of arrays, slices, and structs.
 To avoid creating copies of these, pass and accept pointers.
 
-It is not possible to specify default values for function parameters
-and they cannot be optional.
-
 Functions cannot be overload based on their parameter types
 in order to create different implementations.
-
-A function can be assigned to variable
-and be called using that variable.
-For example, `fn := someFunction; fn()`.
-
-Functions can be passed as arguments to other functions
-and a function can return a function.
-
-Anonymous functions have the same syntax, but omit the name.
-For example, `func(v int) int { return v * 2 }`.
 
 When consecutive parameters have the same type,
 the type can be omitted from all but the last parameter.
 For example, `func foo(p1 int, p2 int, p3 string, p4 string)`
 is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
 
-Functions can accept a variable number of arguments.
+Functions act as closures over all in-scope variables.
+
+A function can be assigned to variable
+and be called using that variable.
+For example, `fn := someFunction; fn()`.
+
+Functions can be passed as arguments to other functions
+and functions can return other functions.
+
+Anonymous functions have the same syntax, but omit the name.
+For example, `func(v int) int { return v * 2 }`.
+Anonymous functions can be assigned to a variable,
+passed to a function, or returned from a function.
+
+It is not possible to specify default values for function parameters
+and they cannot be optional.
+However, functions can accept a variable number of arguments.
 These are referred to as variadic functions.
-To do this, the type of the last named parameter
-must be preceded by an ellipsis.
+
+To define a variadic function, preceded the type
+of the last named parameter with an ellipsis.
 The parameter value will be a slice of the declared type, not an array.
-For example,
-
-```go
-package main
-
-import (
-  "fmt"
-  "strings"
-)
-
-func log(args ...interface{}) {
-  fmt.Println(args...)
-}
-
-func report(name string, colors ...string) {
-  text := strings.Join(colors, " and ") + "."
-  fmt.Println(name, "likes the colors", text)
-}
-
-func main() {
-  log("red", 7, true)
-  report("Mark", "yellow", "orange")
-}
-```
-
-To pass all the elements in a slice as separate arguments,
-follow the argument with an ellipsis.
 For example:
 
 ```go
@@ -1177,6 +1220,7 @@ import (
   "strings"
 )
 
+// This accepts an number of arguments of any type.
 func log(args ...interface{}) {
   fmt.Println(args...)
 }
@@ -1216,9 +1260,9 @@ func main() {
 
 The return types can have associated names.
 This enables a "naked return" where a
-return will no specified values will return
+`return` with no specified values will return
 the values of variables with the given names.
-For example,
+For example:
 
 ```go
 func mult(n int) (times2, times3 int) {
@@ -1232,10 +1276,8 @@ func mult(n int) (times2, times3 int) {
 n2, n3 := mult(3) // n2 is 6 and n3 is 9
 ```
 
-Unless the function is very short,
-using this feature is frowned upon
-because the code is less readable
-than explicitly returning values.
+Unless the function is very short, using this feature is frowned upon
+because the code is less readable than explicitly returning values.
 
 ### Deferred Functions
 
@@ -1257,7 +1299,7 @@ This is an alternative to the `try`/`finally` syntax found in other languages.
 An interface defines a set of methods.
 Any type can implement an interface, even primitive types.
 Types do not state the interfaces they implement,
-they just implement all the methods.
+they only need to implement all the methods.
 
 When a value is assigned to a variable or parameter with an interface type,
 if its type does not implement all the interface methods then an error
@@ -1279,7 +1321,7 @@ package main
 import "fmt"
 import "math"
 
-type geometry interface {
+type shape interface {
   area() float64
   name() string
 }
@@ -1304,14 +1346,14 @@ func (c circle) name() string {
   return "circle"
 }
 
-func printArea(g geometry) {
+func printArea(g shape) {
   fmt.Println("area =", g.area())
 }
 
 func main() {
   r := rectangle{width: 3, height: 4}
   c := circle{radius: 5}
-  var g geometry
+  var g shape
   //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
   g = r
   printArea(g)
@@ -1320,12 +1362,12 @@ func main() {
 }
 ```
 
-Aa "type assertion" verifies that the value of
+A "type assertion" verifies that the value of
 an interface variable refers to a specific type.
 For example, `myShape := g.(rectangle)`.
 This triggers a runtime panic if the variable `g`
 does not currently refer to a `rectangle` object.
-Keep in mind that When running a program using `go run`,
+Keep in mind that when running a program using `go run`,
 if there are compile errors, the panic will not be
 triggered since the code won't begin running.
 
@@ -1334,7 +1376,7 @@ refers to a specific type.
 For example, `myShape, ok := g.(circle)`.
 The variable `ok` will be set to `true` or `false`
 to indicate whether `g` refers to a `circle` object.
-If it does not, a panic will not be triggered.
+If it does not, no panic will be triggered.
 
 Here is an example of a custom collection that
 can hold values of any type. It's a basic linked list.
@@ -1363,6 +1405,7 @@ func (listPtr *LinkedList) clear() {
   listPtr.head = nil
 }
 
+// isEmpty determines if the LinkedList is empty.
 func (listPtr *LinkedList) isEmpty() bool {
   return listPtr.head == nil
 }
@@ -1373,9 +1416,8 @@ func (listPtr *LinkedList) pop() any {
     return nil
   }
   node := listPtr.head
-  value := node.value
   listPtr.head = node.next
-  return value
+  return node.value
 }
 
 // push adds a node to the front.
@@ -1384,8 +1426,7 @@ func (listPtr *LinkedList) push(value any) {
   listPtr.head = &node
 }
 
-// Why can't the receiver name differ from the other methods
-// and be a LinkedList instead of a pointer to one?
+// len returns the length of the LinkedList.
 func (listPtr *LinkedList) len() int {
   len := 0
   node := listPtr.head
@@ -1407,8 +1448,8 @@ func main() {
   sum := 0
   for !list.isEmpty() {
     value := list.pop()
-    sum += value.(int)
     fmt.Println("value =", value) // 5 and 7
+    sum += value.(int)
   }
   fmt.Println("sum =", sum) // 12
 }
@@ -1437,7 +1478,7 @@ func (p person) String() string {
 }
 
 me := person{"Mark", 57}
-fmt.Println(me)
+fmt.Println(me) // Mark is 57 years old.
 ```
 
 Interfaces can be nested to add the methods of one interface to another.
@@ -1474,105 +1515,26 @@ func (b *box) volume() float32 {
 
 func main() {
   myBox := box{d: 2, h: 3, w: 4}
-  fmt.Println("area =", myBox.area())
-  fmt.Println("volume =", myBox.volume())
+  fmt.Println("area =", myBox.area()) // 12
+  fmt.Println("volume =", myBox.volume()) // 24
 }
 ```
-
-### Packages
-
-All Go code resides in some package.
-
-All source files must start with a `package` statement
-that includes a package name.
-The package name must match the name of the directory that holds the file,
-unless the package name is "main".
-
-The `main` function is the starting point of all Go applications
-and must defined in a source that starts with `package main`.
-This is the only package that does not need to match the name of its directory.
-
-The source files that define the package
-can have any file name that ends in `.go`.
-
-For example, if the file `foo.go` is in a directory named `bar`,
-the first non-comment line in the file should be `package bar`.
-
-Changing a package name requires renaming the directory
-and modifying the `package` statement in all the files.
-It seems Go missed an opportunity to
-infer the package name from the directory name.
-
-Packages used within an application or other package are not required
-to have unique names, but their import paths must be unique.
-For example, the import paths `alpha/one` and `beta/one` can coexist
-even though the package name for both is `one`.
-However, to use both in the same source file,
-one of them will need to be given an alias (described later).
-
-Packages contributed by the community (not in the standard library)
-must be installed, typically using `go get package-url`.
-The `go get` command installs packages under `$GOPATH/src`
-regardless of the directory from which it is run.
-For example, `go get github.com/julienschmidt/httprouter`
-installs the package in `$GOPATH/src/github.com/julienschmidt/httprouter`.
-Using the package URL avoids path conflicts.
-
-To import the package, include an `import` statement with a
-string that is the package URL without the <https://> prefix.
-For example, `import "github.com/julienschmidt/httprouter"`.
-
-Refer to the names it exports by preceding them with `httprouter.`.
-For example, `httprouter.ResponseWriter`.
-There is not a way to add the exported names to the current namespace
-to avoid using the `pkgName.` prefix.
-
-An `import` imports all the exported symbols in a given package.
-It is not possible to import just a subset of the exported symbols.
-
-It is recommended that your own packages reside in directories that
-reflect their eventual URL should they be publish in the future.
-For example, if I created a package named `mypkg`
-it should be in the directory `src/github.com/mvolkmann/mypkg`.
-Other packages could import this with
-`import "github.com/mvolkmann/mypkg"`
-and refer to the names it exports with a prefix of `mypkg.`
-
-The `import` keyword imports all exported symbols
-(names that start uppercase) from given packages.
-To import one package, `import "pkgName"`.
-To import multiple packages, `import ("pkgName1" "pkgName2" ...)`.
-
-Unused imports are treated as errors
-and some editors automatically remove them.
-
-The strings specified after `import` are slash-separate names.
-For standard library packages these can be a single name
-like `"strings"` or a name like `"math/rand"`.
-For community packages these are URLs without the `https://` prefix.
-
-An alias for a package name can be defined with `import alias "pkgName"`.
-Note that the alias name is not surrounded by quotes, but the package name is.
-When an alias is defined, exported names in the package are referenced with
-`alias.ExportedName`.
-
-Circular imports where an import triggers the import of the current package
-are treated as errors.
 
 ### Error Handling
 
 Go does not support exceptions.
 Instead functions that may encounter errors have an
-additional return value of type `error` that callers must check.
-The type `error` is an interface that defines a single method `Error`
+additional return value of type `error` that callers should check.
+The type `error` is a builtin interface that defines a single method `Error`
 that returns a string description of the error.
-The standard library creates and exports many instances.
+
+The standard library creates and exports many instances of this interface.
 It is also possible to define custom implementations of the
 `error` interface that hold additional data describing the error.
 
 The `errors` package defines a `New` method
 that can be used to create error instances from a string.
-For example,
+For example:
 
 ```go
 package main
@@ -1589,8 +1551,8 @@ func divide(a, b float32) (float32, error) {
 }
 
 func main() {
-  // A common idiom for error checking using
-  // the optional assignment of an "if"
+  // A common idiom for error checking is
+  // using the optional assignment in an "if".
   if q, err = divide(7, 0); err == nil {
     fmt.Print(q)
   } else {}
@@ -1607,6 +1569,7 @@ type DivideByZero struct {
   numerator float32
 }
 
+// This makes the DivideByZero type implement the error interface.
 func (err DivideByZero) Error() string {
   return fmt.Sprintf("tried to divide %v by zero", err.numerator)
 }
@@ -1615,6 +1578,6 @@ func divide2(a, b float32) (float32, error) {
   if b == 0 {
     return 0, DivideByZero{a}
   }
-  return a / b, nil
+  return a / b, nil // no error
 }
 ```
