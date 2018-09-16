@@ -193,7 +193,7 @@ For example, attempting to convert a string to an int is an error,
 even if the string contains a valid number.
 
 To convert the string representation of a number to a number,
-use the `strconv` package.  For example,
+use the `strconv` package. For example,
 
 ```go
 s := "19"
@@ -290,7 +290,7 @@ Highlights include:
 In addition to the standard library, also see "sub-repositories" that are
 part of the Go project, but maintained outside the main repository.
 
-## fmt Standard Library
+## `fmt` Standard Library
 
 The `fmt` standard library defines many functions
 for reading and writing formatted messages.

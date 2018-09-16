@@ -210,95 +210,112 @@ Go supports the following operators:
 
 ### Keywords
 
-Go supports the following keywords:
+The Go language has 25 keywords which is less than most languages.
+This contributes to Go being easy to learn.
+The keywords supported by Go include the following,
+each of which is described in more detail later:
 
 - `break` - breaks out of a `for` loop, `select`, or `switch`
 - `case` - used in a `select` or `switch`
-- `chan` - channel type
+- `chan` - channel type for communicating between goroutines
 - `const` - declares a constant
-- `continue` - advances to the next iteration of a for loop
+- `continue` - advances to the next iteration of a `for` loop
 - `default` - the default case in a `select` or `switch`
 - `defer` - defers execution of a given function until the containing function exits
 - `else` - part of an `if`
 - `fallthrough` - used as last statement in a `case` to execute code in next `case`
-- `for` - only loop syntax; C-style (init, condition, and post) or just condition
+- `for` - the only loop syntax; C-style (init, condition, and post) or just a condition
 - `func` - defines a named or anonymous function
-- `go` - precedes a function call to execute it asynchronously as a goroutine
+- `go` - precedes a function call to execute it asynchronously in a goroutine
 - `goto` - jumps to a given label (see `:` operator)
 - `if` - for conditional logic; also see `else`
-- `import` - imports all the exports in given package(s)
-  - See the "Packages" section for more detail.
+- `import` - imports all the exported symbols in given package(s)
 - `interface` - defines a set of methods
-  - This defines a type where all implementing structs are compatible.
-  - Structs do not state the interfaces they implement,
-    they just implement all the methods.
+  - This defines a type where all implementing types are compatible.
 - `map` - type for a collection of key/value pairs where the keys and values can be any type
 - `package` - specifies the package to which the current source file belongs
 - `range` - used in a `for` loop to iterate over a
   string, array, slice, map, or receiving channel
 - `return` - terminates the containing function and returns zero or more values
-- `select` - chooses from a set of channel send or receive operations; see "Select" section
+- `select` - chooses from a set of channel send or receive operations
 - `struct` - a collection of fields that each have a specific type
-- `switch` - similar to other languages; see "Switch" section
-- `type` - creates an alias for other type
-  - This is often used to give a name to a struct or function signature.
+- `switch` - alternative to `if` for choosing a block of code to execute
+  based on an expression or type
+- `type` - creates an alias for another type; often used to
+  give a name to a struct, interface, or function signature
 - `var` - defines a variable, its type, and optionally an initial value
 
 ### Pointers
 
-Pointers hold the address of a variable or `nil`.
+Pointers hold the address of a value or `nil`.
 Pointer types begin with an asterisk.
 `*Type` is the type for a pointer to a value of type `Type`.
 
-To get a pointer to a variable, `myPtr = &myVar`.
-It is not possible to get the address of a constant.
+To obtain a pointer to a variable value, `myPtr = &myVar`.
+It is not possible to obtain the address of a constant value.
 
 To create a value and get a pointer to it in one line,
 `myPtr := new(type)`.
 Another way to do this which is preferred by many is
+to first create a variable to hold the value
+and then get a pointer to it. For example,
 `var myThing type; myPtr := &myThing`.
-The assembly code generated for these two approaches is identical.
+Interestingly the assembly code generated
+for these two approaches is identical.
 
-To get the value at a pointer, `myValue = \*myPtr`.
+To obtain the value at a pointer, `myValue = *myPtr`.
 
-To modify the value at a pointer, `\*myPtr = newValue`.
+To modify the value at a pointer, `*myPtr = newValue`.
 
 Pointer arithmetic, as seen in C and C++, is not supported in Go.
+This avoids memory safety issues and
+simplifies the builtin garbage collector.
 
-Suppose `person` is a struct containing a `name` field
+Suppose `person` is a struct (covered later) containing a `name` field
 and we have a pointer to that struct in the variable `ptr`.
-To get the value of the name field, `var name1 = (*ptr).name`.
-This can also be done with shorthand syntax that automatically
-dereferences the pointer with `var name2 = ptr.name`.
+To get the value of the `name` field, `var personName = (*ptr).name`.
+For pointers to structs, a shorthand syntax using only a "dot"
+automatically dereferences them.
+For example, `var personName = ptr.name`.
 
 ### Output
 
-- supported by the "fmt" package
+Writing to stdout and stderr is supported by the "fmt" package.
+The `Println` method writes expression values,
+followed by a newline character, to stdout.
 
 ```go
 import "fmt"
 fmt.Println(expression)
 ```
 
+The `Printf` method also writes to stdout and uses a format string
+similar to the C `printf` function.
+
+For more detail see the "`fmt` Standard Library" section
+within the "Builtins" section.
+
 ### If Statement
 
-- parentheses are not needed around the condition being tested
-- braces around body are required
-- ex.
+In Go `if` statements,
+parentheses are not needed around the condition being tested
+and braces around the body are required.
+If parentheses are included, the `gofmt` tool will remove them.
+For example:
 
-  ```go
-  if x > 7 {
-    ...
-  } else {
-    ...
-  }
-  ```
+```go
+if x > 7 {
+  ...
+} else {
+  ...
+}
+```
 
 Almost any single statement can precede the condition,
 separated from it by a semicolon.
 However, typically an assignment statement is used.
-The scope of the assigned variable is the if statement,
-including the else block if present
+The scope of the assigned variable is the `if` block,
+including the `else` block if present. For example:
 
 ```go
 if y := x * 2; y < 10 {
@@ -310,17 +327,17 @@ if y := x * 2; y < 10 {
 
 Go's `switch` statement is similar to that in other languages,
 but it can switch on expressions of any type.
-Braces around body are required.
+Braces around the body are required.
+
 Case values can be literal values or expressions.
 The `case` keyword can be followed by any number of
-comma separated expressions. Matching any of them
+comma-separated expressions. Matching any of them
 causes the statements for that case to be executed.
-Case blocks do not fall through by default
+Case blocks do not fall through to the next by default
 so `break` statements are not needed.
-If it is desirable to fall through from one case to the next,
-the `fallthrough` keyword enables this.
+If it is desirable to fall through, use the `fallthrough` keyword.
 
-A basic `switch` statement looks like:
+A basic `switch` statement looks like the following:
 
 ```go
 switch name {
@@ -335,8 +352,8 @@ switch name {
 }
 ```
 
-A switch statement can include an initialization statement
-just like an if statement. For example,
+A `switch` statement can include an initialization statement
+just like an `if` statement. For example,
 
 ```go
 switch name := buildName(person); name {
@@ -349,25 +366,35 @@ switch name := buildName(person); name {
 }
 ```
 
+The previous example could also begin with
+
+```go
+switch buildName(person) {
+```
+
+but then the name would not be available for use inside the `switch`.
+
 A `switch` statement with no expression executes the
 first `case` block whose expression evaluates to true.
 For example,
 
-    ```go
-    switch {
-      case name == "Mark":
-        // handle Mark
-      case age < 20:
-        // handle youngsters
-      default:
-        // handle all other cases
-    }
-    ```
+```go
+switch {
+  case name == "Mark":
+    // handle Mark
+  case age < 20:
+    // handle youngsters
+  default:
+    // handle all other cases
+}
+```
 
-To switch on the type of an expression,
+To switch on the type of an expression
+append `.(type)` to the expression.
+For example:
 
 ```go
-switch value := expression.(type) {
+switch theType := expression.(type) {
   case int, float:
     // handle int or float
   case string:
@@ -377,10 +404,10 @@ switch value := expression.(type) {
 }
 ```
 
-The variable `value` will hold the actual type.
-`value :=` can be omitted if the type is not needed.
-`expression` can be an interface type and
-the actual type can be type that implements the interface.
+The variable `theType` will hold the actual type.
+`theType :=` can be omitted if not needed.
+`expression` can be an interface type and `theType` will
+be set to the actual type that implements the interface.
 
 ### For Statement
 
@@ -388,15 +415,15 @@ The `for` statement is the only looping statement in Go.
 Braces around the body are required.
 The `break` and `continue` keywords can be used inside the body.
 `break` exits the inner-most loop.
-`continue` skips the remainder of the body and
-continues at the top of the loop, testing the condition again.
+`continue` skips the remainder of the body and continues
+at the top of the loop, testing the condition again.
 
 The syntax is `for init; cond; post { ... }`.
 No parentheses are allowed around the the init, cond, and post portions.
 These three parts are separated by semicolons.
 The init and post parts, if present, must be single statements,
 but multiple variables can be assigned in a single statement.
-For example,
+For example:
 
 ```go
 for i := 0; i < 10; i++ {
@@ -404,16 +431,9 @@ for i := 0; i < 10; i++ {
 }
 ```
 
-The init and post parts are optional, so
-a while loop in other languages looks like the following in Go:
-
-```go
-for ; i < 10; {
-  ...
-}
-```
-
-The semicolons can be omitted when only the condition is specified.
+The init and post parts are optional.
+When only the condition is present, the semicolons can be omitted.
+A `while` loop in other languages looks like the following in Go:
 
 ```go
 for i < 10 {
@@ -421,7 +441,7 @@ for i < 10 {
 }
 ```
 
-For an endless loop, omit the condition.
+For an endless loop, omit the condition as follows:
 
 ```go
 for {
@@ -446,18 +466,22 @@ To retrieve a character from a string, `char := name[index]`.
 To iterate over the characters in string,
 
 ```go
-for _, char := range name {
-  // Use char here.
+for index, char := range name {
+  // Use index and char here.
 }
 ```
 
+Replace `index` with `_` if it is not needed.
+
 To create a new string by concatenating a string to another,
 use the `+` and `+=` operators.
+
 The `string` type has no methods.
 The standard library package `strings` provides
 many functions for operating on strings.
+Many of these are described in the "Builtins" section.
 For example, to split a string on whitespace characters
-and print each "word" on a separate line:
+and print each word on a separate line:
 
 ```go
 s := "This is a test."
@@ -482,10 +506,12 @@ var i int = 2
 sum : = s + i // invalid operation - mismatched types
 ```
 
-The `type` keyword is most often used to define a type for struct, slice, map, or function.
+The `type` keyword is most often used to define a type for a
+struct, slice type, map type, interface, or function signature.
 
 ### Structs
 
+GRONK
 A struct is a collection of fields defined with the `struct` keyword.
 Field values can have any type,
 including other structs nested to any depth.
