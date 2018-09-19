@@ -1294,6 +1294,42 @@ Examples include closing files or network connections.
 
 This is an alternative to the `try`/`finally` syntax found in other languages.
 
+Here is an example of using `defer` to
+log how long it takes for a function to execute:
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "time"
+)
+
+func startTimer(name string) func() {
+  t := time.Now()
+  return func() {
+    delta := time.Now().Sub(t)
+    log.Println(name, "took", delta)
+  }
+}
+
+func doWork() int {
+  sum := 0
+  for i := 0; i < 100000000; i++ {
+    sum += i
+  }
+  return sum
+}
+
+func main() {
+  // This calls the function returned by startTimer
+  // when the main function exits.
+  defer startTimer("doWork")()
+  fmt.Println(doWork())
+}
+```
+
 ### Interfaces
 
 An interface defines a set of methods.
