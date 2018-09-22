@@ -936,8 +936,11 @@ followed by the macOS version in parentheses.
 - for more details, see
   <https://code.visualstudio.com/docs/getstarted/keybindings>
   - see "'when' clause contexts"
-  - can have language specific key bindings
+  - can have language-specific key bindings
     by checking editorLangId in a when clause
+  - can have OS-specific key bindings
+    - `"when": "isMac",`
+    - `"when": "isWindows",`
 - default function key mappings
   - the ones I find most useful are preceded by \*
   - \* F1 - Show All Commands (command palette)
@@ -1567,6 +1570,10 @@ followed by the macOS version in parentheses.
   that can be clicked to send feedback via Twitter
   - to hide, add the setting `"workbench.statusBar.feedback.visible": false,"
   - useful to save a bit of space for other information
+
+## Tab Completion
+
+- enable in settings by changing editor.tabCompletion to "on"
 
 ## Tab Navigation
 
