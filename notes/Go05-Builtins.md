@@ -248,6 +248,7 @@ Highlights of the standard library include:
   in the GIF, JPEG, and PNG formats.
 - io\
   This implements functions to read and write buffers and files.
+  The function `io.Copy` copies from a writer to a reader.
 - log\
   This implements simple logging.
 - math\
@@ -265,6 +266,8 @@ Highlights of the standard library include:
   opening, reading, writing, and closing files.
   It exposes the constants `PathSeparator` ('/' on UNIX)
   and `PathListSeparator` (':' on UNIX).
+  It provides the function `os.Exit(status)`
+  that exits the process with a given status.
 - os/exec\
   This runs external (operating system) commands.
 - path\
