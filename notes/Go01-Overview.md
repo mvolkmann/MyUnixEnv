@@ -1,12 +1,15 @@
 ## Overview
 
+Go is an open-source programming language. It runs on
+Unix-based operating systems (including Linux and macOS) and Windows.
+
 Go was conceived by Robert Griesemer, Rob Pike, and Ken Thompson,
 all working at Google, starting in September 2007.
 About a year later Russ Cox and Ian Taylor joined the team.
 Robert Griesemer previously worked on Strongtalk (Smalltalk with optional types),
 the Java Hotspot virtual machine, and the V8 JavaScript engine.
 Rob Pike previously worked on Unix and the Plan 9 distributed operating system.
-Ken Thompson previously worked on nix,
+Ken Thompson previously worked on Unix,
 the B language (which led to C), and Plan 9.
 Russ Cox previously worked on Plan 9.
 Ian Taylor previously worked on the GCC compiler.
