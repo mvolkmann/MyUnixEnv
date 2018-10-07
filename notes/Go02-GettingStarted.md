@@ -207,8 +207,8 @@ func Max(numbers []float64) float64 {
   // "range" is a keyword that is used to iterate over many kinds of sequences,
   // one of which is a slice.  In each iteration it returns two values.
   // For slices it returns an index and the value at that index.
-  // In this example we do not need the index.
-  // That is indicated by placing it in the special underscore variable.
+  // In this example we do not need the index.  That is indicated by
+  // placing it in the "blank identifier" represented by an underscore.
   for _, number := range numbers {
     if number > max {
       max = number

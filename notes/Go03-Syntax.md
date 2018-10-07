@@ -36,6 +36,9 @@ which was inspired by Algol 68.
 
 ### Packages
 
+A package is defined by a collection of Go source files
+in a single directory.
+
 All Go code resides in some package.
 
 All source files must start with a `package` statement
@@ -128,7 +131,7 @@ Multi-line comments use `/* ... */`.
 These primarily used for the comment at the top of a package
 and to temporarily comment out sections of code.
 
-Single-line comments use `//`.
+Single-line comments use `// ...`.
 These are used for all other kinds of comments,
 even those above functions.
 
@@ -269,6 +272,10 @@ Go supports the following operators:
 - statement separator: `;`
 - array element separator: `,`
 - define label: `someLabel:` (see `goto` keyword)
+
+The increment (`++`) and decrement (`--`) operators form statements,
+not expressions. This means they cannot be used in assignment statements.
+For example, `var j = i++` is not allowed.
 
 ### Keywords
 
@@ -474,17 +481,18 @@ be set to the actual type that implements the interface.
 ### For Statement
 
 The `for` statement is the only looping statement in Go.
+The syntax is `for init; cond; post { ... }`.
+No parentheses are allowed around the the init, cond, and post portions.
+The three parts are separated by semicolons.
+The init and post parts, if present, must be single statements,
+but multiple variables can be assigned in a single statement.
 Braces around the body are required.
+
 The `break` and `continue` keywords can be used inside the body.
-`break` exits the inner-most loop.
+`break` without a label exits the inner-most loop.
 `continue` skips the remainder of the body and continues
 at the top of the loop, testing the condition again.
 
-The syntax is `for init; cond; post { ... }`.
-No parentheses are allowed around the the init, cond, and post portions.
-These three parts are separated by semicolons.
-The init and post parts, if present, must be single statements,
-but multiple variables can be assigned in a single statement.
 For example:
 
 ```go
@@ -510,6 +518,12 @@ for {
   ...
 }
 ```
+
+The `range` keyword is often used in `for` loops
+to iterate over string characters,
+elements of arrays and slices,
+and map key/value pairs.
+Examples of these appear later.
 
 ### Strings
 
@@ -1053,6 +1067,8 @@ can be used to iterate over the elements of a slice.
 To change the view of a slice into its underlying array,
 recreate it with different bounds
 For example, `mySlice = mySlice[newStart:newEnd]`.
+This creates a slide that begins at `newStart`
+and ends just before `newEnd`.
 
 Slice elements can be other slices to create multidimensional slices.
 For example:
@@ -1158,6 +1174,7 @@ To delete a key/value pair, `delete(myMap, key)`.
 
 To iterate over the key/value pairs in a map,
 `for key, value := range myMap { ... }`.
+The order of iteration is not defined.
 
 Maps support concurrent reads, but not concurrent writes
 or a concurrent read and write.

@@ -219,6 +219,7 @@ Highlights of the standard library include:
 
 - bufio\
   This implements buffered I/O with `Reader` and `Writer` types.
+  The `Scanner` type splits input into lines and words.
 - builtin\
   This not a real package, just a place to document
   builtin constants, variables, types, and functions.
@@ -312,7 +313,13 @@ The most commonly used functions in this package include:
 
 - `fmt.Println(args ...interface{})`\
   This writes the string representation of each of the arguments
-  to stdout, followed by a newline.
+  to stdout, separated by spaces and followed by a newline.
+
+Format strings can contain placeholders that begin with a percent sign.
+These are referred to as "verbs". Commonly used verbs include
+`%d` for decimal values, `%f` for floating point values,
+`%t` for boolean values, `%s` for strings,
+`%v` for any value, and `%T` to output the type of a value.
 
 ## Logging
 

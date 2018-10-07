@@ -75,12 +75,13 @@ Go's characteristics at a glance include:
 - statically typed which catches many errors at compile-time
 - type inference
 - garbage collection
+- Unicode support
 - concurrency with lightweight threads called "goroutines"
 - communication between goroutines using channels
+- object-oriented programming through structs with methods
 - a somewhat comprehensive standard library
   that supports many common operations including
   text processing, I/O, networking, cryptography, and more
-- object-oriented programming through structs with methods
 - compiles quickly to native executables and libraries,
   not code that requires a virtual machine
 - high performance

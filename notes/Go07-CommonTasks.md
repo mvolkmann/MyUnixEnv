@@ -2,7 +2,7 @@
 
 ## Command-Line Arguments
 
-Command-line arguments are held in a slice stored in `os.Args`.
+Command-line arguments are held in a slice of strings stored in `os.Args`.
 Index 0 holds the path to the executable.
 An executable is created dynamically when "go run" is used.
 Index 1 holds the first command-line-argument.
