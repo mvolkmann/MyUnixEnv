@@ -2,6 +2,7 @@
 
 Go is an open-source programming language. It runs on
 Unix-based operating systems (including Linux and macOS) and Windows.
+Documentation, downloads, and a blog can be found at <https://golang.org/>.
 
 Go was conceived by Robert Griesemer, Rob Pike, and Ken Thompson,
 all working at Google, starting in September 2007.
@@ -72,17 +73,36 @@ Go's characteristics at a glance include:
 - a relatively small language that is easy to learn
   (the May 9, 2018 spec. is only 78 pages)
 - statically typed which catches many errors at compile-time
-- provides type inference
-- performs garbage collection
-- supports concurrency with lightweight threads called "goroutines"
-- provides communication between goroutines using channels
-- supports networking operations in the standard library
-- minimal support for object-oriented programming
-  through structs with methods
-- does not support pointer arithmetic which contributes to simpler code
+- type inference
+- garbage collection
+- concurrency with lightweight threads called "goroutines"
+- communication between goroutines using channels
+- a somewhat comprehensive standard library
+  that supports many common operations including
+  text processing, I/O, networking, cryptography, and more
+- object-oriented programming through structs with methods
 - compiles quickly to native executables and libraries,
   not code that requires a virtual machine
 - high performance
+
+# Not Included
+
+Go purposely omits many features found in other programming languages
+in order to arrive at a simpler programming language.
+These include:
+
+- ternary operator
+- implicit type coercions
+- default parameters
+- constructors and destructors
+- type inheritance
+- operator overloading
+- pointer arithmetic
+- exceptions
+- generics
+- macros
+- annotations
+- thread-local storage
 
 ## Reasons to avoid Go
 

@@ -211,7 +211,11 @@ This only works if the value actually has a type of `float32`.
 
 Go provides many packages in the "standard library".
 To see a list of them, browse <https://golang.org/pkg/>.
-Highlights include:
+Clicking on a library function displays its source code
+which is useful for learning how they work
+and seeing examples of good Go code.
+
+Highlights of the standard library include:
 
 - bufio\
   This implements buffered I/O with `Reader` and `Writer` types.
