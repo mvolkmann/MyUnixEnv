@@ -244,7 +244,8 @@ Highlights of the standard library include:
 - html\
   This implements functions to parse and create HTML.
 - image\
-  This implements functions to parse (decode) and create (encode) images.
+  This implements functions to parse (decode) and create (encode) images
+  in the GIF, JPEG, and PNG formats.
 - io\
   This implements functions to read and write buffers and files.
 - log\
@@ -260,6 +261,8 @@ Highlights of the standard library include:
 - os\
   This provides access to operating system functionality
   like that provided by UNIX shell commands.
+  It defines the `File` type which supports
+  opening, reading, writing, and closing files.
   It exposes the constants `PathSeparator` ('/' on UNIX)
   and `PathListSeparator` (':' on UNIX).
 - os/exec\
@@ -320,6 +323,9 @@ These are referred to as "verbs". Commonly used verbs include
 `%d` for decimal values, `%f` for floating point values,
 `%t` for boolean values, `%s` for strings,
 `%v` for any value, and `%T` to output the type of a value.
+
+It is common for format strings to end with `\n`
+to output a newline character.
 
 ## Logging
 
