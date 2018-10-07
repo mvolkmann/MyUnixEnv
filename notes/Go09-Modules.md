@@ -1,7 +1,7 @@
 ## Modules
 
-Lack of support for package versioning was a major issue in Go
-before version 1.11.  The leading contenders were
+Lack of support for package versioning was a major issue
+before Go version 1.11. The leading contenders were
 vgo from Russ Cox at <https://github.com/golang/go/wiki/vgo>
 and dep from Sam Boyer at <https://golang.github.io/dep/>.
 
@@ -17,14 +17,14 @@ there is no need to do either.
 The easiest way to create `go.mod` for a new module
 is to cd to its module root and run `go mod init {module-name}`
 where module-name is the import path other modules will use to import this one.
-Typically this is a GitHub path such as `github.com/mvolkmann/mymodule`,
+Typically this is a GitHub path such as `github.com/mvolkmann/my-module`,
 but can be a simple name for modules that will not be published.
 
-After running `go mod init github.com/mvolkmann/mymodule`,
+After running `go mod init github.com/mvolkmann/my-module`,
 the content of `go.mod` will be:
 
 ```go
-module github.com/mvolkmann/mymodule
+module github.com/mvolkmann/my-module
 ```
 
 The easiest way to add dependencies to `go.mod` is to
@@ -48,7 +48,7 @@ The major number is increment when incompatible changes are made.
 
 Create a new directory anywhere (except under GOPATH)
 with any name and cd to the directory.
-Enter `go mod init mymodule`.
+Enter `go mod init my-module`.
 Note that a GitHub path is not specified because
 we are not planning to share this module with others.
 
@@ -71,7 +71,7 @@ func main() {
 The code above imports a single community package
 that is not yet listed in `go.mod`.
 To build this application and update `go.mod` with dependency information,
-enter `go build`.  This creates the executable file `mymodule`.
+enter `go build`. This creates the executable file `my-module`.
 It also adds the following to `go.mod`:
 
 ```go
@@ -97,7 +97,7 @@ typically to indicate sets of related files.
 
 The source files for dependencies are not stored in
 the module root directories of modules that use them.
-Instead they are stored in `$GOPATH/pkg/mod`.
+Instead they are stored in subdirectories of `$GOPATH/pkg/mod`.
 This allows multiple modules to share them.
 
 Multiple versions of each dependency can be stored here.
@@ -111,9 +111,9 @@ after the path for the new dependency.
 This indicates that no code in the current module
 has been seen yet that uses the dependency.
 
-These "indirect" comments are removed
-after uses of the dependencies are added to source files
-in the module and a command such as `go build` is run.
+These "indirect" comments are removed after
+uses of the dependencies are added to module source files
+and a command such as `go build` is run.
 Since such commands add dependencies to `go.mod` on their own
 and they will be run eventually,
 it is not necessary to use `go get` to install dependencies.
@@ -135,67 +135,72 @@ may only work with specific versions of its dependencies.
 Major versions of 0 or 1 are considered unstable.
 Major versions that are 2 or higher are considered stable.
 
-To release a new unstable version of a module to GitHub
+To release a new unstable version of a module
 it is only necessary to push changes and
 add a tag following the pattern "v{major}.{minor}.{patch}".
 
-To add a tag from the GitHub web UI,
-click the "releases" tab,
-press the "Draft a new release" button,
-enter the tag name,
-optionally enter a title and description,
-check "This is a pre-release" if not considered stable,
-and press the "Publish release" button.
-
-To add a tag from the command-line,
-enter `git tag {tag-name}`
-and `git push origin {tag-name}`.
-
 To release a new stable version of a module (major version 2 or higher),
-modify the module name in `go.mod` to end with the major version.
-For example `module github.com/mvolkmann/mymodule/v2`.
+modify the module name in `go.mod` to end with the new major version.
+For example `module github.com/mvolkmann/my-module/v2`.
 Then push and tag this change along with other changes.
+
+### Adding Tags
+
+To add a tag from the command-line:
+
+- enter `git tag {tag-name}`
+- enter `git push origin {tag-name}`
+
+To add a tag from the GitHub web UI:
+
+- click the "releases" tab
+- press the "Draft a new release" button
+- enter the tag name
+- optionally enter a title and description
+- if not considered stable, check "This is a pre-release"
+- press the "Publish release" button
+
+### Importing Versions
 
 In other modules that wish to use this module,
 unstable versions can be imported without specifying the major version.
-For example, `import github.com/mvolkmann/mymodule`.
+For example, `import github.com/mvolkmann/my-module`.
 The latest version that is less than v2 will be used.
 
 To use a stable version, add the major version to import paths
 in all source files that import it.
-For example `import github.com/mvolkmann/mymodule/v2`.
+For example `import github.com/mvolkmann/my-module/v2`.
 Note that only the major version is specified,
 not the minor or patch version.
 This is referred to as "semantic import versioning".
-Presumably there will be tooling to automate this in the future.
+Presumably there will be tooling to automate this in the future
+so it is not necessary to manually update multiple source files.
 
 Since each version is stored separately, it is possible to use
 multiple major versions of a dependency in the same application.
 
-### Using Module Versions
+### Versions Used
 
 The actual versions of dependencies that are used
-is determined based on what is found in `go.mod`.
+is determined by what is found in `go.mod`.
 There are several ways to specify a version, called "module queries".
-To add a module query to a require path,
+To add a module query to a `require` path,
 add a space and one of the following after the path.
 
-Module Query Type    | Example    | Notes
--------------------- | ---------- | -------------------------
-fully-specified      | v1.2.3     |
-major version prefix | v1         | latest starting with v1
-minor version prefix | v1.2       | latest starting with v1.2
-version comparison   | >=v1.2.3   | can also use >, <, and <=
-latest               | latest     |
-commit hash          | A1B2C3D    |
-tag                  | my-tag     |
-branch name          | my-branch  |
+| Module Query Type    | Example   | Notes                     |
+| -------------------- | --------- | ------------------------- |
+| fully-specified      | v1.2.3    |
+| minor version prefix | v1.2      | latest starting with v1.2 |
+| major version prefix | v1        | latest starting with v1   |
+| version comparison   | >=v1.2.3  | can also use >, <, and <= |
+| latest               | latest    |
+| commit hash          | A1B2C3D   |
+| tag                  | my-tag    |
+| branch name          | my-branch |
 
 In all cases but using a fully-specified version,
 running a command such as `go build` finds a matching version
 and updates `go.mod` with the result.
-This means that each time a new dependency version is desired,
-`go.mod` must be updated.
 Specifying a version like "v2" will not automatically get the
 latest version that starts with "v2" every time `go build` is run
 since "v2" will be replaced by an actual version.
@@ -205,16 +210,18 @@ He feels that this feature of Go modules loses information
 about the minimum versions that were deemed compatible.
 Further, he feels this makes it hard to resolve diamond-shaped
 dependencies where multiple modules needed by an app
-depend on different minor versions of some other module.
+depend on different minor versions of other modules.
 See his talk "We need to talk about Go modules" at
 <https://www.youtube.com/watch?v=7GGr3S41gjM&feature=youtu.be&t=14m55s>.
 
 No automatic version updates are ever performed.
+To use different versions, modify version queries in `go.mod`
+or bump the major version in imports.
 This means that checking `go.mod` files into a version control repository
 provides a way to produce repeatable builds.
 
 "Version comparison" gets the nearest version to what is requested,
-not the latest version that matches.  For example, if the query is ">=1.2.3"
+not the latest version that matches. For example, if the query is ">=1.2.3"
 and the existing versions include 1.2.2, 1.2.3, and 1.2.4,
 this will use version 1.2.3.
 
@@ -244,7 +251,7 @@ Besides the `module` and `require` directives,
 `exclude` directives specify versions of dependencies that cannot be used.
 `replace` directives specify versions of dependencies
 that should be replaced by another version.
-These can be specified to avoid using versions that have
+These can be used to avoid using versions that have
 known bugs or security issues.
 
 ### Tidying `go.mod` Files
@@ -262,9 +269,11 @@ is to remove unused dependencies.
 
 ### Checksums
 
-Go modules use checksums to verify that the downloaded code
-for their dependencies have not been modified.
-The checksum for each dependency is stored in the file `go.sum`.
+Go modules use checksums to verify that
+downloaded dependency code has not been modified.
+The checksums for each dependency are stored in the file `go.sum`.
+These is one checksum for the dependency as a whole,
+and one for each source file that defines the dependency.
 The command `go mod verify` reports all directories that hold
 downloaded module code and contain files that have been modified.
 

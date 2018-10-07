@@ -1571,6 +1571,14 @@ followed by the macOS version in parentheses.
   - to hide, add the setting `"workbench.statusBar.feedback.visible": false,"
   - useful to save a bit of space for other information
 
+## Suggestions
+
+- while typing, suggestions for the desired word are displayed
+- alphabetical by default
+- to sort based on distance from cursor
+  - check the setting "Editor › Suggest: Locality Bonus"
+  - assumes closer matches are more likely what is wanted
+
 ## Tab Completion
 
 - enable in settings by changing editor.tabCompletion to "on"
@@ -1585,6 +1593,7 @@ followed by the macOS version in parentheses.
 ## Terminal
 
 - press ctrl-` (even in macOS) to open an integrated terminal (can run Fish!)
+  - can also move cursor to top of status bar and drag up to reveal
 - can split a terminal
   - click split button in bottom bar header
 - can move the "bottom bar" containing terminals
