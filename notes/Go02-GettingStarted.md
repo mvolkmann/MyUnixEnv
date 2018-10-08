@@ -90,8 +90,8 @@ Create the file `main.go` inside this directory.
 Go source files begin with a `package` statement.
 That is followed by imports of other packages if any are needed.
 The imports are followed by top-level declarations of
-package-scoped constants, variables, types, methods, and functions.
-Each of these will be described in detail later.
+package-scoped constants, variables, functions, types, and methods.
+Each of these is described in detail later.
 
 Each application has a single function named `main`
 that must be in a package named `main`.

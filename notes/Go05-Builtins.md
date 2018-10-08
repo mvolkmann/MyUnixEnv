@@ -279,6 +279,8 @@ Highlights of the standard library include:
 - strconv\
   This implements conversions to and from
   string representations of primitive types.
+  For example, `strconv.Atoi` converts a `string` to an `int`
+  and `strconv.Itoa` converts an `int` to a `string`.
 - strings\
   This implements many functions on strings including
   `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,

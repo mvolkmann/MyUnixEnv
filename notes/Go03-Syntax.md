@@ -38,12 +38,18 @@ which was inspired by Algol 68.
 
 A package is defined by a collection of Go source files
 in a single directory.
+Exported names (start uppercase) of a package are visible
+in source files of other packages that import the package.
+Unexported names (start lowercase) are visible
+in all source files of the package,
+but not in source files of other packages.
 
 All Go code resides in some package.
 
 All source files must start with a `package` statement
 that includes a package name.
-The package name must match the name of the directory that holds the file,
+The package name must be lowercase and
+match the name of the directory that holds the file,
 unless the package name is "main".
 
 The `main` function is the starting point of all Go applications
@@ -120,8 +126,13 @@ Names for variables, types, functions, methods, and parameters
 must begin with a unicode letter and can contain
 unicode letters, unicode digits, and underscores.
 
-Go requires some variable, function, and struct field names to be all uppercase.
-These includes ID, JSON, and URL.
+Go convention is for multi-word names to use camelcase and
+for acronyms in them to have all their letters in the same case.
+For example, `xmlHTTPRequest`.
+
+The `golint` tool requires some well-known acronyms in names
+to use the same case for all their letters.
+These includes ASCII, HTML, ID, JSON, URL, and XML.
 
 ### Comments
 
@@ -130,10 +141,14 @@ Comments in Go use the same syntax as C.
 Multi-line comments use `/* ... */`.
 These primarily used for the comment at the top of a package
 and to temporarily comment out sections of code.
+These comments cannot be nested.
 
 Single-line comments use `// ...`.
 These are used for all other kinds of comments,
 even those above functions.
+
+A single-line comment should precede each exported declaration.
+These used by the `go doc` and `godoc` tools that generate documentation.
 
 ### Zero Values
 
@@ -281,6 +296,8 @@ For example, `var j = i++` is not allowed.
 
 The Go language has 25 keywords which is less than most languages.
 This contributes to Go being easy to learn.
+These cannot be used as the names of variables,
+functions, methods, parameters, interfaces, or types.
 The keywords supported by Go include the following,
 each of which is described in more detail later:
 
@@ -313,6 +330,12 @@ each of which is described in more detail later:
 - `type` - creates an alias for another type; often used to
   give a name to a struct, interface, or function signature
 - `var` - defines a variable, its type, and optionally an initial value
+
+There are additional "predeclared names" that are not reserved,
+but using them in other contexts could be confusing.
+These include the names of primitive types (such as `int` and `string`),
+the names of builtin functions (such as `append`, `delete`, and `make`),
+and constants (`true`, `false`, `iota`, and `nil`).
 
 ### Pointers
 
@@ -364,7 +387,7 @@ similar to the C `printf` function.
 For more detail see the "`fmt` Standard Library" section
 within the "Builtins" section.
 
-### If Statement
+### `if` Statement
 
 In Go `if` statements,
 parentheses are not needed around the condition being tested
@@ -392,7 +415,7 @@ if y := x * 2; y < 10 {
 }
 ```
 
-### Switch Statement
+### `switch` Statement
 
 Go's `switch` statement is similar to that in other languages,
 but it can switch on expressions of any type.
@@ -445,6 +468,7 @@ but then the name would not be available for use inside the `switch`.
 
 A `switch` statement with no expression executes the
 first `case` block whose expression evaluates to true.
+This is referred to as a "tagless switch".
 For example,
 
 ```go
@@ -478,7 +502,7 @@ The variable `theType` will hold the actual type.
 `expression` can be an interface type and `theType` will
 be set to the actual type that implements the interface.
 
-### For Statement
+### `for` Statement
 
 The `for` statement is the only looping statement in Go.
 The syntax is `for init; cond; post { ... }`.
@@ -585,7 +609,7 @@ sum : = s + i // invalid operation - mismatched types
 The `type` keyword is most often used to define a type for a
 struct, slice type, map type, interface, or function signature.
 
-### Structs
+### `struct` Keyword
 
 A struct is a collection of fields defined with the `struct` keyword.
 Field values can have any type,
