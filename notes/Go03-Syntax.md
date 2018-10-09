@@ -198,6 +198,8 @@ and some editor plugins/extensions will warn about this.
 
 Package-level variables have package scope which means they are
 accessible by all files in the package.
+They are never garbage collected and so are available for
+the entire life of the application in which they are used.
 If their name starts uppercase (exported) then
 they are accessible anywhere the package is imported.
 
@@ -246,8 +248,12 @@ been declared, whether with a `var` statement or the `:=` operator.
 
 Variables that have already been declared can be assigned new values
 with the `=` operator. For example, `name = "Tami"`.
+
 Multiple variables can be assigned with one `=` operator.
 For example, `name, age = "Tami", 56`.
+This can also be used to swap values. For example, `x, y = y, x`.
+`x, y, z = y, z, 0` assigns the current value of `y` to `x`,
+the current value of `z` to `y`, and zero to `z`.
 
 It is an error to attempt to assign to a variable that has not been defined.
 
@@ -260,6 +266,8 @@ to capture possible errors from a function call.
 Functions can return any number of values.
 The result can be assigned to a list of variables.
 For example, `min, max := getXBounds(points)`.
+The left-hand side must contain the same number of variables
+as values returned by the function.
 
 Sometimes the caller is only interested in a subset of the return values.
 The variable "\_" can be used to discard specific return values.
@@ -1318,6 +1326,10 @@ func main() {
   // Do something with sum and avg.
 }
 ```
+
+A common use of returning multiple values from a function is to
+return a result and a value that either describes an error or
+is a boolean that indicates whether the function was successful.
 
 The return types can have associated names.
 This enables a "naked return" where a
