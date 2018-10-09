@@ -40,6 +40,63 @@ To run this, enter `go run greet.go Mark Volkmann`.
 To build an executable and run it,
 enter `go build greet.go; ./greet Mark Volkmann`
 
+## Flags
+
+The `flags` package supports documenting and parsing
+application command-line flags.
+For example, here is a simple application that
+outputs a range of integer values with a given prefix.
+
+```go
+package main
+
+import (
+  "flag"
+  "fmt"
+)
+
+var minPtr = flag.Int("min", 1, "minimum value")
+var maxPtr = flag.Int("max", 10, "maximum value")
+var prefixPtr = flag.String("prefix", "", "prefix")
+
+func main() {
+  flag.Parse()
+  prefix := *prefixPtr
+  for i := *minPtr; i <= *maxPtr; i++ {
+    fmt.Printf("%s%d\n", prefix, i)
+  }
+}
+```
+
+To build this, enter `go build`.
+
+To get help on the flags, enter `./flags --help` which outputs:
+
+```text
+Usage of ./flags:
+  -max int
+        maximum value (default 10)
+  -min int
+        minimum value (default 1)
+  -prefix string
+        prefix
+```
+
+To run this, enter of the following lines:
+
+```text
+./flag-demo -min 3 -max 5 -prefix foo
+./flag-demo -min=3 -max=5 -prefix=foo
+```
+
+both of which output
+
+```text
+foo3
+foo4
+foo5
+```
+
 ## Readers
 
 The `io` package defines the `Reader` interface

@@ -153,18 +153,19 @@ These used by the `go doc` and `godoc` tools that generate documentation.
 ### Zero Values
 
 Every type as a "zero value" which is the value it takes on when it is not initialized.
+There are no uninitialized variables.
 
-| Type                    | Zero Value                                                      |
-| ----------------------- | --------------------------------------------------------------- |
-| bool                    | false                                                           |
-| all numeric types       | 0                                                               |
-| rune (single character) | 0                                                               |
-| string                  | ""                                                              |
-| array                   | array of proper length where all elements have their zero value |
-| slice                   | empty slice with length 0 and capacity 0                        |
-| map                     | empty map                                                       |
-| struct                  | struct where all fields have their zero value                   |
-| all other types         | nil                                                             |
+| Type                       | Zero Value                                                      |
+| -------------------------- | --------------------------------------------------------------- |
+| bool                       | false                                                           |
+| all numeric types          | 0                                                               |
+| rune (single character)    | 0                                                               |
+| string                     | ""                                                              |
+| array                      | array of proper length where all elements have their zero value |
+| slice                      | empty slice with length 0 and capacity 0                        |
+| map                        | empty map                                                       |
+| struct                     | struct where all fields have their zero value                   |
+| pointers & all other types | nil                                                             |
 
 ### Variables
 
@@ -180,7 +181,10 @@ Go distinguishes between declaring, initializing, and assigning variables.
 
 Variables that are declared outside of functions (package-level)
 must be declared with a `var` statement.
-This accepts a type and/or initial value. Examples include:
+This accepts a type and/or initial value.
+The initial value can be any expression
+that yields a value of the desired type.
+Examples include:
 
 ```go
 var name string // defaults to zero value for the type
@@ -220,9 +224,17 @@ var n1, n2 string, a1, a2, a3 int8
 Variables that are declared inside a function are local to that function.
 There are two ways to declare variables inside a function.
 One is to use a `var` statement just like when outside a function.
-Another is to use the `:=` shorthand operator which does not allow a
-type to be specified and instead infers it from the value on the right.
+Another is to use the short variable declaration operator `:=`
+which does not allow a type to be specified and
+instead infers it from the value on the right.
 For example, `name := "Mark"`.
+
+Inside function definitions the `var` form of assignment
+tends to only be used for two reasons.
+The first is when when a value needs to be declared, but not yet be assigned.
+The second is when the desired type differs from that of the initializer.
+For example, in the following declaration the type of the variable `n`
+would be `int` rather than `int8` if it was not specified: `var n int8 = 19`.
 
 Multiple variables can be declared with one `:=` operator.
 For example, `name, age := "Mark", 57`.
@@ -245,9 +257,13 @@ the other variables can already exist.
 A common use case is when the variable `err` is used
 to capture possible errors from a function call.
 
-Functions can return an number of values.
-Sometimes the caller is only interested in a subset of them.
+Functions can return any number of values.
+The result can be assigned to a list of variables.
+For example, `min, max := getXBounds(points)`.
+
+Sometimes the caller is only interested in a subset of the return values.
 The variable "\_" can be used to discard specific return values.
+For example, `_, max := getXBounds(points)`.
 
 ### Constants
 
@@ -369,6 +385,10 @@ To get the value of the `name` field, `var personName = (*ptr).name`.
 For pointers to structs, a shorthand syntax using only a "dot"
 automatically dereferences them.
 For example, `var personName = ptr.name`.
+
+Since function parameters are passed by value,
+passing a pointer to a variable is required
+to allow a function to modify the variable.
 
 ### Output
 
