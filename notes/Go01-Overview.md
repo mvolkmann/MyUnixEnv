@@ -1,3 +1,10 @@
+# Go
+
+This article is the first in a multi-part series on the Go programming language.
+This article provides an overview of the language
+and a quick start guide.
+Future articles will cover Go syntax in depth, tooling, builtins, concurrency, solutions to common tasks, reflection, modules, testing, and the future of Go.
+
 ## Overview
 
 Go is an open-source programming language. It runs on
