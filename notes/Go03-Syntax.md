@@ -36,15 +36,20 @@ which was inspired by Algol 68.
 
 ### Packages
 
+All Go code resides in some package.
 A package is defined by a collection of Go source files
 in a single directory.
+It defines a namespace for the names it defines.
+The source files that define a package
+can have any file name that ends in `.go`.
+
 Exported names (start uppercase) of a package are visible
 in source files of other packages that import the package.
-Unexported names (start lowercase) are visible
-in all source files of the package,
-but not in source files of other packages.
-
-All Go code resides in some package.
+Unexported names (start lowercase).
+All names, exported or unexported, are visible
+in all source files of the package.
+However, unexported names are not in visible
+in the source files of other packages.
 
 All source files must start with a `package` statement
 that includes a package name.
@@ -54,9 +59,6 @@ unless the package name is "main".
 
 The `main` function is the starting point of all Go applications
 and must defined in a source that starts with `package main`.
-
-The source files that define a package
-can have any file name that ends in `.go`.
 
 For example, if the file `foo.go` is in a directory named `bar`,
 the first non-comment line in the file should be `package bar`.
@@ -73,17 +75,30 @@ even though the package name for both is `one`.
 However, to use both in the same source file,
 one of them will need to be given an alias (described later).
 
-To import the package, include an `import` statement with a
-string that is the package URL without the <https://> prefix.
-For example, `import "github.com/julienschmidt/httprouter"`.
+The full name used to import a package is referred to as its "import path".
+These are slash-separate names.
+For standard library packages, this is a simple name
+such as `"strings"` or `"math/rand"`.
+For community packages, this is the URL without the scheme portion.
+For example, to import the package at
+<https://github.com/julienschmidt/httprouter>
+use `import "github.com/julienschmidt/httprouter"`.
+This binds the short name "httprouter" to be used
+for accessing the names exported by the package.
 
-Refer to the names it exports by preceding them with `httprouter.`.
+Refer to the names exported by an imported package
+by preceding them with the package name followed by a period.
 For example, `httprouter.ResponseWriter`.
-There is not a way to add the exported names to the current namespace
+It is not possible to add the exported names to the current namespace
 to avoid using the `pkgName.` prefix.
 
 An `import` statement imports all the exported symbols in given packages.
-It is not possible to import just a subset of the exported symbols.
+The imported names are available in the source file
+containing the `import` statement, but not automatically
+available in other source files of the same package.
+
+It is not possible to import just a subset
+of the names exported by a given package.
 
 To import one package, `import "pkgName"`.
 
@@ -91,11 +106,8 @@ To import multiple packages, `import ("pkgName1" "pkgName2" ...)`.
 
 Unused imports are treated as errors
 and some editors automatically remove them.
-
-The strings specified after `import` are slash-separates names.
-For standard library packages these can be single names
-like `"strings"` or names like `"math/rand"`.
-For community packages these are URLs without the `https://` prefix.
+This avoids accumulating imports that are
+no longer needed as the code is modified.
 
 An alias for a package name can be defined with `import alias "pkgName"`.
 Note that the alias name is not surrounded by quotes, but the package name is.
@@ -109,7 +121,9 @@ are treated as errors.
 
 Initialization of package-level variables that require logic,
 not just literal values or results of function calls,
-must be done in `init` functions.
+must be done in `init` functions
+that have no parameters and no return value.
+
 A package can have any number of `init` functions
 in any of its source files.
 These functions are run in the order they appear,
@@ -631,11 +645,39 @@ but it cannot be used interchangeably with the type `int`.
 type score int
 var s score = 1
 var i int = 2
-sum : = s + i // invalid operation - mismatched types
+sum := s + i // invalid operation - mismatched types
 ```
 
 The `type` keyword is most often used to define a type for a
 struct, slice type, map type, interface, or function signature.
+This avoids repeating long type definitions.
+
+The operations supported by a named type
+include all those supported by the underlying type.
+This means that the `score` type above can be used
+in all the same ways that an `int` can be used.
+
+Type names can be used as functions that convert a value
+that has the same underlying type to that type.
+For example, the invalid operation above can be correct with:
+
+```go
+sum : = s + score(i) // invalid operation - mismatched types
+```
+
+This can also be used to convert between numeric types,
+which is useful since math operations such as addition
+require matching types. For example:
+
+```go
+a := 1
+b := 2.3
+fmt.Println(float64(a) + b) // 3.3
+fmt.Println(a + int(b)) // truncates b resulting in 1 + 2 = 3
+```
+
+Methods can be added to named types.
+These are described later.
 
 ### `struct` Keyword
 
@@ -1662,11 +1704,15 @@ func divide(a, b float32) (float32, error) {
 func main() {
   // A common idiom for error checking is
   // using the optional assignment in an "if".
-  if q, err = divide(7, 0); err == nil {
-    fmt.Print(q)
-  } else {}
+  if q, err = divide(7, 0); err != nil {
     fmt.Println(err) // prints error message
+    return
   }
+
+  // Note how potential errors are handled in the if body.
+  // This allows the following "mainline code" to appear un-indented
+  // and is the recommended Go style.
+  fmt.Print(q)
 }
 ```
 
