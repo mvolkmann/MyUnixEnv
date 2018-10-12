@@ -330,6 +330,11 @@ The increment (`++`) and decrement (`--`) operators form statements,
 not expressions. This means they cannot be used in assignment statements.
 For example, `var j = i++` is not allowed.
 
+The and (`&&`) and or (`||`) operators short-circuit
+like in most programming languages. This means that if the
+result is known by only evaluating the left expression,
+the right expression is not evaluated.
+
 ### Keywords
 
 The Go language has 25 keywords which is less than most languages.
@@ -888,7 +893,8 @@ A recommended community library that supports many data structures
 is "gods" at <https://github.com/emirpasic/gods>.
 It supports several kinds of lists, sets, stacks, maps, and trees.
 These collections can hold values of any type,
-but using the values typically requires type assertions.
+but using the values typically requires type assertions
+(described later).
 
 Here is an example of using the `gods.HashSet` type
 to represent a set of `int` values.
@@ -1496,6 +1502,10 @@ func (c circle) area() float64 {
 func (c circle) name() string {
   return "circle"
 }
+// Adding a method to the circle type that is not in the shape interface.
+func (c circle) diameter() float64 {
+  return c.radius * 2
+}
 
 func printArea(g shape) {
   fmt.Println("area =", g.area())
@@ -1504,20 +1514,27 @@ func printArea(g shape) {
 func main() {
   r := rectangle{width: 3, height: 4}
   c := circle{radius: 5}
-  var g shape
+  var g shape // Note that g is an interface type.
   //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
   g = r
   printArea(g)
   g = c
   printArea(g)
+
+  // Since the shape interface doesn't define the diameter method,
+  // a type assertion is required to call it.
+	fmt.Println("diameter =", g.(circle).diameter())
 }
 ```
 
 A "type assertion" verifies that the value of
 an interface variable refers to a specific type.
-For example, `myShape := g.(rectangle)`.
-This triggers a runtime panic if the variable `g`
-does not currently refer to a `rectangle` object.
+If it does, the same value is returned, but with the asserted type.
+
+For example, consider `myShape := g.(circle)`.
+If `g` does refer to a `circle` then the type of `myShape` is `circle`.
+If it does not, a runtime panic is triggered.
+
 Keep in mind that when running a program using `go run`,
 if there are compile errors, the panic will not be
 triggered since the code won't begin running.

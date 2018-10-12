@@ -77,7 +77,7 @@ var s []string          // slice
 
 ## Builtin Types
 
-Go defines the following builtin types.
+Go defines the following builtin "basic types".
 
 - `bool`\
   The only values are the builtin constants `true` and `false`.
@@ -90,10 +90,12 @@ Go defines the following builtin types.
 - `float32` and `float64`\
   These are used to represent floating-point numbers
   with a specified number of bits.
+  `float64` is preferred in most cases.
 - `int`, `int8`, `int16`, `int32`, `int64`:
   These are used to represent signed integers
   with a specified number of bits.
-  The type `int` is at least 32 bits,
+  The type `int` is at least 32 bits.
+  It is based on the word size of the host platform,
   32 bits on 32-bit systems and
   64 bits on 64-bit systems.
 - `uint`, `uint16`, `uint32`, `uint64`\
@@ -101,7 +103,7 @@ Go defines the following builtin types.
   with a specified number of bits.
   The type `uint` is at least 32 bits.
 - `uintptr`\
-  This type holds any kind of pointer.
+  This type can hold any kind of pointer.
 - `rune`\
   This is an alias for int32.
   It is used for unicode characters
@@ -115,6 +117,10 @@ Go defines the following builtin types.
   Backtick strings can contain newline characters.
   Both are indexed from zero.
   For example, to get the 3rd character use `str[2]`.
+
+Non-basic types include aggregate, reference, and interface types.
+Aggregate types include arrays and structs.
+Reference types include pointers, slices, maps, functions, and channels.
 
 ## Documentation Types
 
@@ -183,10 +189,16 @@ but no such package actually exists.
 ## Type Conversions
 
 No type conversions are performed implicitly.
+
 Builtin types can be used as conversion functions.
 For example, `f := float32(i)` converts an `int` to a `float32`
 and `i := int(f)` converts an `float32` to an `int`,
 truncating the fractional part.
+
+In numeric conversions, if the value is too large to fit
+in the target type, the value can be changed.
+For example, in `i := 1234; j := int8(i)` the value of `j`
+will be -46 because 1234 is too large to fit in an `int8`.
 
 An error will be triggered if the conversion cannot be performed.
 For example, attempting to convert a string to an int is an error,
