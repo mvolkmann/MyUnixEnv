@@ -27,13 +27,6 @@ const (
 )
 
 const (
-  apple  = 9        // iota = 0
-  banana = 8        // iota = 1
-  cherry = iota + 3 // iota = 2, value = 2 + 3 = 5
-  date              // iota = 3, value = 3 + 6 = 6
-)
-
-const (
   north = iota + 1 // iota = 0, value = 0 + 1 = 1
   south            // iota = 1, value = 1 + 1 = 2
   east             // iota = 2, value = 2 + 1 = 3
@@ -52,6 +45,14 @@ const (
   mb                          // iota = 2, value = 1 shifted left 20 places
   gb                          // iota = 3, value = 1 shifted left 30 places
   tb                          // iota = 4, value = 1 shifted left 40 places
+)
+
+// Silly example
+const (
+  apple  = 9        // iota = 0
+  banana = 8        // iota = 1
+  cherry = iota + 3 // iota = 2, value = 2 + 3 = 5
+  date              // iota = 3, value = 3 + 6 = 6
 )
 ```
 
@@ -189,11 +190,19 @@ but no such package actually exists.
 ## Type Conversions
 
 No type conversions are performed implicitly.
+This includes using non-boolean values in a boolean context.
 
 Builtin types can be used as conversion functions.
 For example, `f := float32(i)` converts an `int` to a `float32`
-and `i := int(f)` converts an `float32` to an `int`,
-truncating the fractional part.
+and `i := int(f)` converts other numeric types to an `int`,
+truncating the fractional part if any.
+
+The `bool` type cannot be used as a function
+to convert other basic types to a boolean.
+For example, if `n` is a variable that holds an `int`,
+`bool(n)` results in a compile-time error
+and does not return true or false.
+Instead an expression like `n != 0` must be used.
 
 In numeric conversions, if the value is too large to fit
 in the target type, the value can be changed.
@@ -310,7 +319,7 @@ Highlights of the standard library include:
 - time\
   This provides functions to measure and display time and dates.
 - unicode\
-  This provides functions for working with Unicode characters.
+  This provides functions for working with and testing Unicode characters.
 
 In addition to the standard library, also see "sub-repositories" that are
 part of the Go project, but maintained outside the main repository.

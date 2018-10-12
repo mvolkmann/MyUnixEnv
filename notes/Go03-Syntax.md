@@ -185,7 +185,7 @@ There are no uninitialized variables.
 
 Variables in Go have the following characteristics:
 
-- mutable unless defined with `const`
+- mutable unless primitive and defined with `const`
 - block-scoped within functions, so those in
   inner scopes can shadow those in outer scopes
 - package-level variables are local to the package
@@ -209,6 +209,9 @@ var name string = "Mark"
 While both a type and initial value can be provided,
 that is redundant since the type can be inferred from the value
 and some editor plugins/extensions will warn about this.
+
+When no type is specified, the largest matching type is assumed.
+For example, in `var n = 1.2` the type will be `float64`.
 
 Package-level variables have package scope which means they are
 accessible by all files in the package.
@@ -238,6 +241,7 @@ var n1, n2 string, a1, a2, a3 int8
 ```
 
 Variables that are declared inside a function are local to that function.
+
 There are two ways to declare variables inside a function.
 One is to use a `var` statement just like when outside a function.
 Another is to use the short variable declaration operator `:=`
@@ -294,6 +298,29 @@ They must be initialized to a primitive literal or an expression
 that can be computed at compile-time and results in a primitive value.
 For example, `const HOT = 100`.
 
+Non-primitive types such as arrays and structs
+cannot be declared with `const`.
+
+Like with `var`, a type can be specified.
+This is useful when the desired type cannot be determined from the initializer.
+For example, `const HOT float64 = 100`.
+
+When a constant type is not specified they are "untyped".
+This allows them to be used in many expressions without explicit conversions
+For example, `int` and `float64` values cannot be multiplied
+without converting one of the values to the other type.
+
+```go
+value := 4.5 // type is float64
+const times1 = 3 // type is untyped integer
+good := value * times1 // allowed
+times2 := 3 // type is int
+bad := value * times2 // not allowed
+```
+
+For more on untyped constants, see
+<https://blog.golang.org/constants>.
+
 ### Operators
 
 Go supports the following operators:
@@ -334,6 +361,9 @@ The and (`&&`) and or (`||`) operators short-circuit
 like in most programming languages. This means that if the
 result is known by only evaluating the left expression,
 the right expression is not evaluated.
+
+Go does not include an exponentiation operator.
+Use the `math.Pow(base, exponent)` function for this.
 
 ### Keywords
 
@@ -599,16 +629,55 @@ Examples of these appear later.
 ### Strings
 
 Go strings are immutable sequences of bytes representing UTF-8 characters.
-Literal values are delimited with double quotes or back-ticks.
-When back-ticks are used, the string can include newlines.
+Literal values are delimited with double quotes
+or back-ticks (called "raw string literals").
+
+Raw string literals can include newline characters
+and characters escaped with backslashes
+(such as \n for newline and \t for tab) are not processed.
+This makes them ideal for writing regular expressions
+and HTML templates which often contain backslashes.
 
 An example of declaring and initializing a string
 inside a function is `name := "Mark"`.
 
-To get the length of a string, use the `len` function.
+To get the length of a string in bytes, use the `len` function.
 For example, `len(name)` returns `4`.
 
-To retrieve a character from a string, `char := name[index]`.
+To get the length of a string in UTF-8 characters,
+use the unicode/utf8 package.
+For example, `utf8.RuneCountInString(name)`.
+
+To retrieve a byte from a string, `char := name[index]`.
+Attempting to retrieve a byte at an index beyond the end
+triggers a panic.
+
+To retrieve a UTF-8 character as a rune,
+use the unicode/utf8 package.
+For example, `r, size := utf8.DecodeRuneInString(name[i:])`.
+`i` is the byte index of the start of the character.
+`r` is set to the rune.
+`size` is the number of bytes in the rune
+which can be used to compute `i` for the next character.
+
+To iterate over the UTF-8 characters in a string,
+use a `for` loop with the `range` keyword.
+For example, `for index, char := range name { ... }`.
+
+To create a new string that is a substring of an existing string,
+specify the starting (inclusive) and ending (exclusive) indexes
+in square brackets separated by a colon. For example,
+`name[m:n]` gets the characters from index `m` to just before index `n`,
+`name[m:]` gets characters from `m` to the end,
+`name[:n]` gets characters from the beginning to just before `n`,
+and `name[:]` gets all the characters.
+
+Since strings are immutable, for efficiency substrings share memory
+with the original string rather than copying bytes.
+
+While strings are immutable,
+variables that hold them can be assigned a different string.
+For example, the following is valid: `name = name[:3]`.
 
 To iterate over the characters in string,
 
@@ -1057,6 +1126,8 @@ Square brackets are also used to get and set
 the value at a zero-based index.
 To get the second element, `rgb[1]`.
 To set the second element, `rgb[1] = 75`.
+Attempting to get or set an element at an index beyond the end
+triggers a panic.
 
 To get the length of an array, `len(myArr)`.
 For arrays, the capacity is the same as the length,
