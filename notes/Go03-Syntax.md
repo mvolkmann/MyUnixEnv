@@ -726,6 +726,9 @@ The `type` keyword is most often used to define a type for a
 struct, slice type, map type, interface, or function signature.
 This avoids repeating long type definitions.
 
+Type names must start uppercase to make them accessible (exported)
+outside the current package.
+
 The operations supported by a named type
 include all those supported by the underlying type.
 This means that the `score` type above can be used
@@ -761,13 +764,9 @@ including other structs nested to any depth.
 A struct cannot inherit from another struct,
 but can utilize composition of structs.
 
-Fields are either "public" (accessible in all packages) or
-"protected" (accessible in all files within the current package).
-They are never "private" (only accessible in methods of the struct).
-However, the terms "public", "protected", and "private"
-are not used when describing Go.
-Instead Go refers to names being "exported"
-based on their names starting with an uppercase letter.
+Struct fields whose names start uppercase (exported) are visible in
+other packages that import the package that defines the struct.
+Otherwise fields are only visible in the package that defines the struct.
 
 It is often desirable to define a type alias for a struct to
 make it easy to refer to in variable and parameter declarations.
@@ -806,23 +805,27 @@ var p1 = person{name: "Mark", age: 57} // initialize by field name
 var p2 = person{"Mark", 57} // initialize by field position
 // Uninitialized fields are initialized to their zero value.
 fmt.Println(p1.name) // Mark
-p2.age++
+p2.age++ // 58
 
 // Print the struct for debugging.
 // Formatting strings are documented at <https://golang.org/pkg/fmt/>.
-// %v can be used for most (TODO: all?) types.
+// %v can be used for types.
 fmt.Printf("%v\n", p2) // just field values: {Mark 58}
 fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
 fmt.Printf("%#v\n", p2) // Go-syntax representation: main.person{name:"Mark", age:58}
 ```
 
-Type names must start uppercase if they
-should be accessible outside the current package.
-Struct field names must also start uppercase
-if they should be accessible outside the current package.
-
 There is no support for destructuring like in JavaScript
 to extract field values from a `struct`.
+
+Struct fields can be accessed from a struct pointer
+without dereferencing the pointer. For example,
+
+```go
+personPtr := &p1
+fmt.Println((*personPtr).name) // Mark
+fmt.Println(personPtr.name) // Mark
+```
 
 If a `struct` field name is omitted, it is assumed to be the same as the type.
 For example:
@@ -837,9 +840,10 @@ import (
 
 func main() {
   type age int
+
   type myType struct {
     name string // named field
-    age // gets field name from a primitive type
+    age // gets field name from the primitive type above
     time.Month // gets field name from a library type
   }
 
@@ -889,6 +893,21 @@ me := person{
     zip:    "63141",
   },
 }
+```
+
+A struct cannot contain a field whose type is the same struct type,
+but it can contain a field that is a pointer to the same struct type.
+For example,
+
+```go
+type Node struct {
+  value int
+  next *Node
+}
+tail := Node{value: 20}
+head := Node{value: 10, next: &tail}
+fmt.Println(head.value) // 10
+fmt.Println(head.next.value) // 20
 ```
 
 ### Methods
