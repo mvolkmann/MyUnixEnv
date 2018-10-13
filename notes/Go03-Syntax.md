@@ -891,11 +891,445 @@ me := person{
 }
 ```
 
+### Methods
+
+Methods are functions that are invoked on a "receiver" value.
+They can be associated with any type.
+The receiver is an instance of this type.
+
+Methods are particularly useful for types that implement interfaces.
+Otherwise we can just write functions that take a value of the type as an argument.
+
+It is not possible to create overloaded methods on a type
+to create different implementations for different parameter types.
+Methods are distinguished only by the receiver type and their name.
+
+The syntax for defining a method is
+`func (receiver-info) name(parameter-list) (return-types) { body }`.
+`receiver-info` is a name followed by the instance type for the method.
+Note that there are three sets of parentheses.
+If the method has only one return value,
+the last pair of parentheses can be omitted.
+
+When there are methods that modify the receiver,
+the receiver type should be pointer.
+
+In most programming languages that support methods,
+the method body refers to the receiver
+using a keyword like `this` or `self`.
+In Go the method signature specifies the name
+by which the receiver will be referenced.
+In the example that follows, the name is `p`.
+
+To call a method, specify the receiver followed by a dot,
+the method name, and the argument list.
+For example,
+
+```go
+// Add a method to the type "pointer to a person struct".
+// Note how the receiver and its type appear
+// in parentheses before the method name.
+func (p *person) birthday() {
+  p.age++
+}
+
+p := person{name: "Mark", age: 57}
+(&p).birthday() // The method can be invoked on a pointer to a person.
+p.birthday() // It can also be invoked on a person.
+fmt.Printf("%#v\n", p) // main.person{name:"Mark", age:59}
+```
+
+In the previous example the receiver is a pointer to a struct.
+This allows the method to modify the struct
+and avoids making a copy of the struct when it is invoked.
+When the receiver is a type value and not a pointer to a type value
+the method receives a copy and cannot modify the original.
+
+When a function has a parameter with a pointer type,
+it must be passed a pointer.
+However, when a method has a pointer receiver,
+it can be invoked on a pointer to a value or a value.
+When invoked on a value, it will automatically
+pass a pointer to the value to the method.
+
+When a type has multiple methods, the `golint` tool
+wants all the receivers to have the same name.
+However, `golint` does not complain if
+some receivers are a pointer and others are values.
+
+Methods can be added to primitive types if a type alias is created.
+If an attempt is made to add a method to a built-in type
+an error with the message "cannot define new methods on non-local type"
+will be triggered.
+
+Here is an example of adding a method to a type alias for the `int` type.
+
+```go
+type number int
+
+func (receiver number) double() number {
+  return receiver * 2
+}
+
+n := number(3) // or could use var n number = 3
+fmt.Println(n.double()) // 6
+```
+
+It may seem that struct methods should be defined inside the struct.
+However, the ability to define methods outside the type definition
+is required in order to add methods to non-struct types.
+So Go chooses to only support that same approach for all types.
+
+### Arrays
+
+Arrays hold an ordered collection of values, a.k.a. elements.
+The values can be of any type,
+including other arrays to create multidimensional arrays.
+Arrays have a fixed length and the length is part of their type.
+
+The syntax for declaring an array is `[length]type`.
+The length must be compile-time expression.
+Placing the square brackets before the type was inspired by Algol 68.
+For example, `var rgb [3]int`.
+
+An array can be created with an "array literal".
+This uses curly braces to specify initial elements.
+For example, `rgb := [5]int{100, 50, 234}`.
+This creates an array with a length of five
+where only the first three elements are explicitly initialized.
+The remaining elements are initialized to their zero value.
+
+To create an array whose length is the same as the number of
+supplied initial values, place an ellipsis inside the square brackets.
+For example, `rgb := [...]int{100, 50, 234}`.
+This creates an array with a length of three.
+
+An array can be created by specifying values at specific indexes.
+Values at unspecified indexes are given the zero value for the array element type.
+For example, `names := [...]string{3: "Mark", 1: "Tami"}`
+creates the array `["", "Tami", "", "Mark"]`.
+The length is one more than the highest specified index.
+
+If anything other than a single integer or ellipsis appears inside the
+square brackets, a "slice" is created.
+Slices are discussed in the next section.
+
+Square brackets are also used to get and set
+the value at a zero-based index.
+To get the second element, `rgb[1]`.
+To set the second element, `rgb[1] = 75`.
+Attempting to get or set an element at an index beyond the end
+triggers a panic.
+
+To get the length of an array, `len(myArr)`.
+For arrays, the capacity is the same as the length,
+so `cap(myArr)` returns the same value.
+We will see that this is not the case for slices.
+
+One way to iterate over the elements of an array
+is to use a C-style `for` loop.
+For example,
+
+```go
+for i := 0; i < len(myArr); i++ {
+  value := myArr[i]
+  // Do something with value.
+}
+```
+
+The `range` keyword can be also used to iterate over the elements,
+and this is typically preferred. For example,
+
+```go
+for index, value := range myArr {
+  // Do something with value, and possibly index.
+}
+```
+
+If `index` is not needed, the "blank identifier" (\_) can be used in its place.
+
+```go
+for _, value := range myArr {
+  // Do something with value.
+}
+```
+
+When an array is passed as an argument to a function,
+a copy of the array is created.
+Changes the function makes to the array elements
+are not visible to the caller.
+Also, copying arrays unnecessarily is inefficient.
+To avoid copying and allow the caller to see changes,
+write functions to accept a pointer to an array rather than an array.
+
+### Slices
+
+Slices are a distinct type from arrays.
+They are a view into an array with a variable length.
+
+Functions that have a slice parameter cannot be passed an array.
+Many functions prefer slices over arrays.
+Unless having a fixed length is appropriate,
+use a slice instead of an array.
+
+A slice is described by three components, a pointer to an array element,
+a current length, and a current capacity.
+The pointer can point to any element in the array.
+The length is number of array elements currently seen by the slice.
+The capacity is the number of array elements from the pointer to the end.
+For example,
+
+```go
+arr := [...]string{"red", "orange", "yellow", "green", "blue", "purple"}
+sl := arr[2:5]
+```
+
+The slice `sl` currently points to the element "yellow" in `arr`
+because that is the element at index 2.
+It has a length of 3 (5 - 2) and
+can access the elements "yellow", "green", and "blue".
+It has a capacity of 4 because there is one more element in the array,
+"purple", that it does not currently see.
+
+A slice type is declared with nothing inside square brackets.
+For example, `[]int` is a slice of int values
+that is not yet associated with an array.
+
+There are three ways to create a slice, using a "slice literal",
+using the builtin `make` function, or basing on an existing array.
+
+The most common way to create a slice is with a slice literal
+which creates a slice and its underlying array.
+These look like an array literals, but without a specified length.
+`mySlice := []int{}` creates a slice with an empty underlying array
+where the length and capacity are 0.
+`mySlice := []int{2, 4, 6}` creates a slice where the
+length and capacity are 3, and contains the provided initial values.
+
+It is also possible, but not common, to specify values at specific indexes.
+`mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example.
+`mySlice := []int{3: 7, 0: 2}` creates a slice where length and capacity
+are 4 which is one more than the highest specified index.
+
+The `make` function provides another way
+to create a slice and underlying array.
+Rather than specifying initial values,
+the length and capacity are specified.
+This can avoid reallocating space when elements are added later,
+which is somewhat inefficient.
+If it is anticipated that many elements will be appended later,
+try to estimate the largest size needed
+and use `make` to create the slice.
+For example, `mySlice := make([]int, 5)`
+creates an underlying array of size 5
+and a slice with length 5 and capacity of 5.
+`mySlice := make([]int, 0, 5)`
+creates an underlying array of size 5 and
+a slice with length 0 and capacity of 5.
+
+The final way and least commonly used way to
+create a slice is to base it on an existing array,
+specifying the start (inclusive) and end (exclusive) indexes.
+For example, `mySlice := myArr[start:end]`
+If `start` is omitted, it defaults to 0.
+If `end` is omitted, it defaults to the array length.
+So `myArr[:]` creates a slice over the entire array.
+
+Modifying elements of a slice modifies the underlying array.
+Multiple slices on the same array see the same data.
+
+The builtin `append` function takes a slice
+and returns a new slice containing additional elements.
+For example, `mySlice = append(mySlice, 8, 10)`
+appends the values 8 and 10.
+If the underlying array is too small to accommodate the new elements,
+a larger array is automatically allocated
+(doubling the current capacity after the length exceeds 4)
+and the returned slice will refer to it.
+It is not possible to append elements to arrays
+which is one reason why slices are often preferred.
+
+`len(mySlice)` returns the number of elements in the slice
+which is its current length.
+`cap(mySlice)` returns the number of elements in the underlying array
+which is its current capacity.
+
+Just like with arrays, square brackets are used to
+get and set the value of a slice at an index.
+And like arrays, slice indexes are zero-based.
+If the index is greater than or equal to the slice capacity,
+a panic will be triggered that says "runtime error: index out of range".
+
+The same approaches for iterating over the elements of an array
+can be used to iterate over the elements of a slice.
+
+To change the view of a slice into its underlying array,
+recreate it with different bounds
+For example, `mySlice = mySlice[newStart:newEnd]`.
+This creates a slide that begins at `newStart`
+and ends just before `newEnd`.
+
+Slice elements can be other slices to create multidimensional slices.
+For example:
+
+```go
+ticTacToe := [][]string{
+  []string{" ", " ", " "},
+  []string{" ", " ", " "},
+  []string{" ", " ", " "}}
+  // If the last } is placed on a new line then a
+  // comma is required at the end of the previous line.
+}
+ticTacToe[1][2] = "X"
+```
+
+To use all the elements in a slice as separate arguments to a function
+follow the variable name holding the slice with an ellipsis.
+
+```go
+// This is a "variadic function, discussed more later.
+// It takes any number of int arguments.
+func sum(numbers ...int) int {
+  result := 0
+  for _, number := range numbers {
+    result += number
+  }
+  return result
+}
+
+func main() {
+  fmt.Println(sum(1, 2, 3)) // 6
+  values := []int{1, 2, 3}
+  fmt.Println(sum(values...)) // 6
+}
+```
+
+Slices can contain values of any type.
+Here is an example that uses a slice of structs:
+
+```go
+type person struct {
+  name string
+  age  int8
+}
+
+func main() {
+  // Note how we do not need to precede each struct with "person".
+  people := []person{{"Mark", 57}, {"Jeremy", 31}}
+  fmt.Printf("%+v\n", people) // [{name:Mark age:57} {name:Jeremy age:31}]
+}
+```
+
+A slice can be used to implement a stack.
+
+```go
+package main
+
+import "fmt"
+
+// IntStack is a stack of int values.
+type IntStack []int
+
+func (s *IntStack) push(value int) {
+  *s = append(*s, value)
+}
+
+func (s *IntStack) pop() int {
+  stack := *s
+  l := len(stack)
+  top := stack[l-1]
+  *s = stack[:l-1]
+  return top
+}
+
+func main() {
+  myStack := IntStack{1, 3, 5}
+  fmt.Println(myStack.pop())             // 5, now contains [1, 3]
+  fmt.Println(myStack.pop())             // 3, now contains [1]
+  myStack.push(7)                        // now contains [1, 7]
+  myStack.push(9)                        // now contains [1, 7, 9]
+  fmt.Printf("myStack = %+v\n", myStack) // [1 7 9]
+}
+```
+
+### Maps
+
+A map is a collection of key/value pairs
+that provides efficient lookup of values by their key.
+The keys and values can have any type, but
+in a given map all the keys have the same type
+and all the values have the same type.
+
+A map type looks like `map[keyType]valueType`.
+For example, `var myMap map[string]int`.
+
+A type alias can be created for this type which is
+useful when the type will be referred to in many places.
+For example, `type playerScoreMap map[string]int`.
+
+One way to create a map is with a "map literal"
+which allows specifying initial key/value pairs.
+For example,
+`scoreMap := map[string]int{"Mark": 90, "Tami": 92}`.
+or using the type alias above,
+`scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}`.
+
+Another way to create a map is to use the builtin `make` function.
+For example, `scoreMap := make(map[string]int)`
+or `scoreMap := make(playerScoreMap)`.
+
+To add a key/value pair, `myMap[key] = value`.
+
+To get the value for a given key, `value := myMap[key]`.
+
+For example:
+
+```go
+type playerScoreMap map[string]int
+
+scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}
+scoreMap["Amanda"] = 83
+scoreMap["Jeremy"] = 95
+
+myScore := scoreMap["Mark"]
+fmt.Println("my score =", myScore) // 90
+fmt.Printf("scoreMap = %+v\n", scoreMap) // map[Tami:92 Amanda:83 Jeremy:95 Mark:90]
+```
+
+To get the value for a given key and verify that the key was present,
+as opposed to just getting the zero value because it wasn't,
+use the second return value which is a `bool`. For example:
+
+```go
+value, found := myMap[key]
+if found {
+  ...
+}
+```
+
+In maps where the values are numbers,
+the `++`, `--`, and arithmetic assignment operators
+can be used to modify values.
+For example, `scoreMap["Mark"]++` and `scoreMap["Tami"] *= 2`.
+
+To delete a key/value pair, `delete(myMap, key)`.
+
+To iterate over the key/value pairs in a map,
+`for key, value := range myMap { ... }`.
+The order of iteration is not defined.
+
+Maps support concurrent reads, but not concurrent writes
+or a concurrent read and write.
+If a map might be accessed concurrently from multiple goroutines,
+protect against this by using channels or mutexes.
+These are described in the "Concurrency" section.
+
 ### Sets
 
 Go does not have a builtin data structure for representing sets
 which are unordered collections of unique values.
-However, a `Map` that uses empty structs for values can be used for this purpose.
+However, a `Map` that uses `bool` values or
+empty structs for values can be used for this purpose.
 Unlike `bool` values, empty structs do not take up memory.
 They are written as `struct{}`.
 
@@ -1005,353 +1439,6 @@ func main() {
   fmt.Println("size =", set.Size())  // 0
 }
 ```
-
-### Methods
-
-Methods are functions that are invoked on a "receiver" value.
-They can be associated with any type.
-The receiver is an instance of this type.
-
-Methods are particularly useful for types that implement interfaces.
-Otherwise we can just write functions that take a value of the type as an argument.
-
-It is not possible to create overloaded methods on a type
-to create different implementations for different parameter types.
-Methods are distinguished only by the receiver type and their name.
-
-The syntax for defining a method is
-`func (receiver-info) name(parameter-list) (return-types) { body }`.
-`receiver-info` is a name followed by the instance type for the method.
-Note that there are three sets of parentheses.
-If the method has only one return value,
-the last pair of parentheses can be omitted.
-
-When there are methods that modify the receiver,
-the receiver type should be pointer.
-
-In most programming languages that support methods,
-the method body refers to the receiver
-using a keyword like `this` or `self`.
-In Go the method signature specifies the name
-by which the receiver will be referenced.
-In the example that follows, the name is `p`.
-
-To call a method, specify the receiver followed by a dot,
-the method name, and the argument list.
-For example,
-
-```go
-// Add a method to the type "pointer to a person struct".
-// Note how the receiver and its type appear
-// in parentheses before the method name.
-func (p *person) birthday() {
-  p.age++
-}
-
-p := person{name: "Mark", age: 57}
-(&p).birthday() // The method can be invoked on a pointer to a person.
-p.birthday() // It can also be invoked on a person.
-fmt.Printf("%#v\n", p) // main.person{name:"Mark", age:59}
-```
-
-In the previous example the receiver is a pointer to a struct.
-This allows the method to modify the struct
-and avoids making a copy of the struct when it is invoked.
-When the receiver is a type value and not a pointer to a type value
-the method receives a copy and cannot modify the original.
-
-When a function has a parameter with a pointer type,
-it must be passed a pointer.
-However, when a method has a pointer receiver,
-it can be invoked on a pointer to a value or a value.
-When invoked on a value, it will automatically
-pass a pointer to the value to the method.
-
-When a type has multiple methods, the `golint` tool
-wants all the receivers to have the same name.
-However, `golint` does not complain if
-some receivers are a pointer and others are values.
-
-Methods can be added to primitive types if a type alias is created.
-If an attempt is made to add a method to a built-in type
-an error with the message "cannot define new methods on non-local type"
-will be triggered.
-
-Here is an example of adding a method to a type alias for the `int` type.
-
-```go
-type number int
-
-func (receiver number) double() number {
-  return receiver * 2
-}
-
-n := number(3) // or could use var n number = 3
-fmt.Println(n.double()) // 6
-```
-
-It may seem that struct methods should be defined inside the struct.
-However, the ability to define methods outside the type definition
-is required in order to add methods to non-struct types.
-So Go chooses to only support that same approach for all types.
-
-### Arrays
-
-Arrays hold an ordered collection of values, a.k.a. elements.
-The values can be of any type,
-including other arrays to create multidimensional arrays.
-Arrays have a fixed length and the length is part of their type.
-
-The syntax for declaring an array is `[length]type`.
-Placing the square brackets before the type was inspired by Algol 68.
-For example, `var rgb [3]int`.
-
-An array can be created with an "array literal".
-This uses curly braces to specify initial elements.
-For example, `rgb := [5]int{100, 50, 234}`.
-This creates an array with a length of five
-where only the first three elements are explicitly initialized.
-The remaining elements are initialized to their zero value.
-
-To create an array whose length is the same as the number of
-supplied initial values, place an ellipsis inside the square brackets.
-For example, `rgb := [...]int{100, 50, 234}`.
-This creates an array with a length of three.
-
-If anything other than a single integer or ellipsis appears inside the
-square brackets, a "slice" is created.
-Slices are discussed in the next section.
-
-Square brackets are also used to get and set
-the value at a zero-based index.
-To get the second element, `rgb[1]`.
-To set the second element, `rgb[1] = 75`.
-Attempting to get or set an element at an index beyond the end
-triggers a panic.
-
-To get the length of an array, `len(myArr)`.
-For arrays, the capacity is the same as the length,
-so `cap(myArr)` returns the same value.
-We will see that this is not the case for slices.
-
-One way to iterate over the elements of an array
-is to use a C-style `for` loop.
-For example,
-
-```go
-for i := 0; i < len(myArr); i++ {
-  value := myArr[i]
-  // Do something with value.
-}
-```
-
-The `range` keyword can be also used to iterate over the elements,
-and this is typically preferred. For example,
-
-```go
-for index, value := range myArr {
-  // Do something with value, and possibly index.
-}
-```
-
-### Slices
-
-Slices are a distinct type from arrays.
-They are a view into an array with a variable length.
-Like with arrays, indexes are zero-based.
-
-Functions that take an argument that is a slice cannot be passed an array.
-Many functions prefer slices over arrays.
-Unless having a fixed length is appropriate, use a slice instead of an array.
-
-A slice type is declared with nothing inside square brackets.
-For example, `[]int` is a slice of int values
-that is not yet associated with an array.
-
-There are three ways to create a slice, using a "slice literal",
-the `make` function, or basing on an existing array.
-
-The most common way to create a slice is with a slice literal
-which creates a slice and its underlying array.
-These look like an array literals, but without a specified length.
-`mySlice := []int{}` creates a slice with an empty underlying array
-where the length and capacity are 0.
-`mySlice := []int{2, 4, 6}` creates a slice where the
-length and capacity are 3 with the provided initial values.
-
-It is also possible, but not common, to specify values at specific indices.
-`mySlice := []int{2: 6, 1: 4, 0: 2}` is the same as the previous example.
-`mySlice := []int{3: 7, 0: 2}` creates a slice where length and capacity
-are 4 which is one more than the highest specified index.
-
-The `make` function provides another way
-to create a slice and underlying array.
-Rather than specifying initial values,
-the length and capacity are specified.
-This can avoid reallocating space when elements are added later,
-which is somewhat inefficient.
-If it is anticipated that many elements will be appended later,
-try to estimate the largest size needed
-and use `make` to create the slice.
-For example, `mySlice := make([]int, 5)`
-creates an underlying array of size 5
-and a slice with length 5 and capacity of 5.
-`mySlice := make([]int, 0, 5)`
-creates an underlying array of size 5 and
-a slice with length 0 and capacity of 5.
-
-The final way and least commonly used way to
-create a slice is to base it on an existing array,
-specifying the start (inclusive) and end (exclusive) indexes.
-For example, `mySlice := myArr[start:end]`
-If `start` is omitted, it defaults to 0.
-If `end` is omitted, it defaults to the array length.
-So `myArr[:]` creates a slice over the entire array.
-
-Modifying elements of a slice modifies the underlying array.
-Multiple slices on the same array see the same data.
-
-The builtin `append` function takes a slice
-and returns a new slice containing additional elements.
-For example, `mySlice = append(mySlice, 8, 10)`
-appends the values 8 and 10.
-If the underlying array is too small to accommodate the new elements,
-a larger array is automatically allocated
-(doubling the current capacity after the length exceeds 4)
-and the returned slice will refer to it.
-It is not possible to append elements to arrays
-which is one reason why slices are used more often.
-
-`len(mySlice)` returns the number of elements in the slice
-which is its current length.
-`cap(mySlice)` returns the number of elements in the underlying array
-which is its current capacity.
-
-Just like with arrays, square brackets are used to
-get and set the value of a slice at an index.
-If the index is greater than or equal to the slice capacity,
-a panic will be triggered that says "runtime error: index out of range".
-
-The same approaches for iterating over the elements of an array
-can be used to iterate over the elements of a slice.
-
-To change the view of a slice into its underlying array,
-recreate it with different bounds
-For example, `mySlice = mySlice[newStart:newEnd]`.
-This creates a slide that begins at `newStart`
-and ends just before `newEnd`.
-
-Slice elements can be other slices to create multidimensional slices.
-For example:
-
-```go
-ticTacToe := [][]string{
-  []string{" ", " ", " "},
-  []string{" ", " ", " "},
-  []string{" ", " ", " "}}
-  // If the last } is placed on a new line then a
-  // comma is required at the end of the previous line.
-}
-ticTacToe[1][2] = "X"
-```
-
-To use all the elements in a slice as separate arguments to a function
-follow the variable name holding the slice with an ellipsis.
-
-```go
-// This is a "variadic function, discussed more later.
-// It takes any number of int arguments.
-func sum(numbers ...int) int {
-  result := 0
-  for _, number := range numbers {
-    result += number
-  }
-  return result
-}
-
-func main() {
-  fmt.Println(sum(1, 2, 3)) // 6
-  values := []int{1, 2, 3}
-  fmt.Println(sum(values...)) // 6
-}
-```
-
-Slices can contain values of any type.
-Here is an example that uses a slice of structs:
-
-```go
-type person struct {
-  name string
-  age  int8
-}
-
-func main() {
-  // Note how we do not need to precede each struct with "person".
-  people := []person{{"Mark", 57}, {"Jeremy", 31}}
-  fmt.Printf("%+v\n", people) // [{name:Mark age:57} {name:Jeremy age:31}]
-}
-```
-
-### Maps
-
-A map is a collection of key/value pairs
-where keys and values can have any type.
-A map type looks like `map[keyType]valueType`.
-For example, `var myMap map[string]int`.
-
-A type alias can be created for this type which is
-useful when the type will be referred to in many places.
-For example, `type playerScoreMap map[string]int`.
-
-One way to create a map is with a "map literal"
-which allows specifying initial key/value pairs.
-For example,
-`scoreMap := map[string]int{"Mark": 90, "Tami": 92}`.
-or using the type alias above,
-`scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}`.
-
-Another way to create a map is using the `make` function.
-For example, `scoreMap := make(map[string]int)`
-or `scoreMap := make(playerScoreMap)`.
-
-To add a key/value pair, `myMap[key] = value`.
-
-To get the value for a given key, `value := myMap[key]`.
-
-For example:
-
-```go
-type playerScoreMap map[string]int
-
-scoreMap := playerScoreMap{"Mark": 90, "Tami": 92}
-scoreMap["Amanda"] = 83
-scoreMap["Jeremy"] = 95
-
-myScore := scoreMap["Mark"]
-fmt.Println("my score =", myScore) // 90
-fmt.Printf("scoreMap = %+v\n", scoreMap) // map[Tami:92 Amanda:83 Jeremy:95 Mark:90]
-```
-
-To get the value for a given key and verify that the key was present,
-as opposed to just getting the zero value because it wasn't,
-use the second return value which is a `bool`. For example:
-
-```go
-value, found := myMap[key]
-if found { ... }
-```
-
-To delete a key/value pair, `delete(myMap, key)`.
-
-To iterate over the key/value pairs in a map,
-`for key, value := range myMap { ... }`.
-The order of iteration is not defined.
-
-Maps support concurrent reads, but not concurrent writes
-or a concurrent read and write.
-If a map might be accessed concurrently from multiple goroutines,
-protect against this by using channels or mutexes.
-These are described in the "Concurrency" section.
 
 ### Functions
 
