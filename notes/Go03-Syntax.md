@@ -464,7 +464,7 @@ similar to the C `printf` function.
 For more detail see the "`fmt` Standard Library" section
 within the "Builtins" section.
 
-### `if` Statement
+### If
 
 In Go `if` statements,
 parentheses are not needed around the condition being tested
@@ -492,7 +492,7 @@ if y := x * 2; y < 10 {
 }
 ```
 
-### `switch` Statement
+### Switch
 
 Go's `switch` statement is similar to that in other languages,
 but it can switch on expressions of any type.
@@ -579,7 +579,7 @@ The variable `theType` will hold the actual type.
 `expression` can be an interface type and `theType` will
 be set to the actual type that implements the interface.
 
-### `for` Statement
+### Loops
 
 The `for` statement is the only looping statement in Go.
 The syntax is `for init; cond; post { ... }`.
@@ -707,7 +707,7 @@ for _, word := range words {
 }
 ```
 
-### `type` Keyword
+### Types
 
 The `type` keyword defines a new type.
 It does not define an alias for an existing type.
@@ -756,7 +756,7 @@ fmt.Println(a + int(b)) // truncates b resulting in 1 + 2 = 3
 Methods can be added to named types.
 These are described later.
 
-### `struct` Keyword
+### Structs
 
 A struct is a collection of fields defined with the `struct` keyword.
 Field values can have any type,
@@ -773,8 +773,6 @@ make it easy to refer to in variable and parameter declarations.
 Otherwise the struct is anonymous and
 can only be referred to where it is defined.
 
-The dot operator is used to get and set fields within a `struct`.
-
 Here is an example of using an anonymous `struct`
 that is not assigned to a type name:
 
@@ -786,9 +784,6 @@ var me = struct{
   "Mark",
   57,
 }
-fmt.Println(me.name) // Mark
-me.age++
-fmt.Println(me.age) // 58
 ```
 
 Assigning a type name makes the code easier to understand
@@ -800,16 +795,35 @@ type person struct {
   name string
   age int8
 }
+```
 
+A struct literal creates an instance of a struct.
+Field values can be initialized in the order in which
+they are listed in the struct definition or
+they can be specified in any order by also providing corresponding keys.
+Uninitialized fields are initialized to their zero value.
+For example:
+
+```go
 var p1 = person{name: "Mark", age: 57} // initialize by field name
 var p2 = person{"Mark", 57} // initialize by field position
-// Uninitialized fields are initialized to their zero value.
-fmt.Println(p1.name) // Mark
-p2.age++ // 58
+```
 
-// Print the struct for debugging.
-// Formatting strings are documented at <https://golang.org/pkg/fmt/>.
-// %v can be used for types.
+The dot operator is used to get and set fields within a `struct`.
+For example:
+
+```go
+fmt.Println(p1.name) // Mark
+p1.age++
+fmt.Println(p1.age) // 58
+```
+
+The "%v" verb is useful during debugging for printing values of any type,
+including structs. Only exported fields are output.
+Formatting strings are documented at <https://golang.org/pkg/fmt/>.
+For example:
+
+```go
 fmt.Printf("%v\n", p2) // just field values: {Mark 58}
 fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
 fmt.Printf("%#v\n", p2) // Go-syntax representation: main.person{name:"Mark", age:58}
@@ -824,7 +838,7 @@ without dereferencing the pointer. For example,
 ```go
 personPtr := &p1
 fmt.Println((*personPtr).name) // Mark
-fmt.Println(personPtr.name) // Mark
+fmt.Println(personPtr.name) // same, Mark
 ```
 
 If a `struct` field name is omitted, it is assumed to be the same as the type.
@@ -839,29 +853,22 @@ import (
 )
 
 func main() {
-  type age int
+  type Age int
 
   type myType struct {
-    name string // named field
-    age // gets field name from the primitive type above
-    time.Month // gets field name from a library type
+    Name       string // named field
+    Age               // gets field name from the type above
+    time.Month        // gets field name from a library type
   }
 
-  // Using field names.
-  myStruct1 := myType{name: "Mark", int: 7, Month: time.April}
-
-  // Using field positions.
-  myStruct2 := myType{"Mark", 7, time.April}
-
-  fmt.Printf("name = %v\n", myStruct1.name)
-  fmt.Printf("age = %v\n", myStruct1.age)
-  fmt.Printf("Month = %v\n", myStruct1.Month)
+  myStruct := myType{Name: "Mark", Age: 7, Month: time.April}
+  fmt.Printf("%#v\n", myStruct) // main.myType{Name:"Mark", Age:7, Month:4}
 }
 ```
 
-To embed a `struct` within another,
-precede the `struct` name with a field name or
-include just its name to get a field with the same name.
+To embed a `struct` type within another,
+precede the type name with a field name or
+include just the type name to get a field with the same name.
 For example:
 
 ```go
@@ -893,6 +900,16 @@ me := person{
     zip:    "63141",
   },
 }
+```
+
+When a nested struct is not given an explicit name,
+its fields can be accessed using the struct name or omitting it.
+For example,
+
+```go
+fmt.Println("home city is", me.address.city) // St. Charles
+fmt.Println("home city is", me.city) // same
+fmt.Println("work city is", me.workAddress.city) // Creve Coeur; cannot omit workAddress.
 ```
 
 A struct cannot contain a field whose type is the same struct type,
