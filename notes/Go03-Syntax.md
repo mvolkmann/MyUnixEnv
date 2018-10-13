@@ -798,16 +798,26 @@ type person struct {
 ```
 
 A struct literal creates an instance of a struct.
-Field values can be initialized in the order in which
-they are listed in the struct definition or
-they can be specified in any order by also providing corresponding keys.
-Uninitialized fields are initialized to their zero value.
-For example:
+Field values can be specified in any order by also providing corresponding keys.
+For example,
 
 ```go
-var p1 = person{name: "Mark", age: 57} // initialize by field name
-var p2 = person{"Mark", 57} // initialize by field position
+var p1 = person{name: "Mark", age: 57}
 ```
+
+Struct fields can also be initialized by providing only values
+in the order in which they are listed in the struct definition.
+But this option can only be used within
+the same package that defines the struct type.
+It is best to only use this approach for structs with a small number of fields
+because changes to the field order will break these initializations.
+For example,
+
+```go
+var p2 = person{"Mark", 57}
+```
+
+Uninitialized fields are initialized to their zero value.
 
 The dot operator is used to get and set fields within a `struct`.
 For example:
@@ -869,35 +879,36 @@ func main() {
 To embed a `struct` type within another,
 precede the type name with a field name or
 include just the type name to get a field with the same name.
+The second option is referred to as an "anonymous field".
 For example:
 
 ```go
-type address struct {
-  street string
-  city   string
-  state  string
-  zip    string
+type Address struct {
+  Street string
+  City   string
+  State  string
+  Zip    string
 }
 
-type person struct {
-  name        string
-  address     // home
-  workAddress address
+type Person struct {
+  Name        string
+  Address     // home
+  WorkAddress Address
 }
 
-me := person{
-  name: "Mark Volkmann",
-  address: address{
-    street: "123 Some Street",
-    city:   "St. Charles",
-    state:  "MO",
-    zip:    "63304",
+me := Person{
+  Name: "Mark Volkmann",
+  Address: address{
+    Street: "123 Some Street",
+    City:   "St. Charles",
+    State:  "MO",
+    Zip:    "63304", // comma is required here
   },
-  workAddress: address{
-    street: "123 Woodcrest Executive Drive",
-    city:   "Creve Coeur",
-    state:  "MO",
-    zip:    "63141",
+  WorkAddress: Address{
+    Street: "123 Woodcrest Executive Drive",
+    City:   "Creve Coeur",
+    State:  "MO",
+    Zip:    "63141", // another required comma
   },
 }
 ```
@@ -911,6 +922,12 @@ fmt.Println("home city is", me.address.city) // St. Charles
 fmt.Println("home city is", me.city) // same
 fmt.Println("work city is", me.workAddress.city) // Creve Coeur; cannot omit workAddress.
 ```
+
+If the type of an anonymous field has methods,
+those become methods of the outer struct type as well.
+For example, if the `address` type above had a `Print` method
+that printed the address in the format of a mailing label,
+that method could also be called on a `person` object.
 
 A struct cannot contain a field whose type is the same struct type,
 but it can contain a field that is a pointer to the same struct type.
@@ -926,6 +943,14 @@ head := Node{value: 10, next: &tail}
 fmt.Println(head.value) // 10
 fmt.Println(head.next.value) // 20
 ```
+
+Structs can be compared using the `==` and `!=` operators
+if all the field values are comparable.
+Such structs can be used a keys in maps.
+
+When a struct is passed to a function, a copy is made and
+changes the functions makes to its fields are not visible to the caller.
+For these reasons it is common to pass pointers to structs instead of structs.
 
 ### Methods
 
