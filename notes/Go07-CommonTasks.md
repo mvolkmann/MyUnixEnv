@@ -341,6 +341,134 @@ This allows creation of JSON that is larger than will fit in memory.
 It also allows processing JSON data as it is decoded
 rather than waiting until the entire stream is decoded.
 
+## Text Templates
+
+Go text templates support creating complex strings by embedding "actions"
+that are enclosed in double curly braces.
+They are ideal for creating multi-line strings
+that need embedded data.
+Templates are supported by two standard library packages,
+`text/template` and `html\template`.
+
+Using templates is a multi-step process.
+
+To create a template, call `template.New` which takes a template name
+that can be used to embed the template inside other templates.
+For example, `myTemplate := template.New("template name")`.
+
+To add content to a template, call the `Parse` method on it.
+For example, `myTemplate, err := myTemplate.Parse(content)`.
+
+The steps to create a template and add content can be combined.
+For example,
+
+```go
+myTemplate, err := template.New("template name").Parse(content)
+```
+
+If it is desired to avoid checking for errors and panic if there is one,
+pass the result of calling `New` and `Parse` to `template.Must`.
+For example,
+
+```go
+myTemplate := template.Must(template.New("template name").Parse(content))
+```
+
+To produce a string by applying a template to data in a struct or map,
+call the `Execute` method on the template, passing it
+a pointer to a `bytes.Buffer` and the data.
+For example,
+
+```go
+var buf bytes.Buffer // implements the io.Writer interface
+err = myTemplate.Execute(&buf, data)
+```
+
+To write the result of applying a template to data in a struct or map to stdout,
+call the `Execute` method on the template, passing it `os.Stdout` and the data.
+For example, `err = myTemplate.Execute(os.Stdout, data)`.
+
+Template actions can set variables, conditionally include content, loop over data,
+and indicate whether whitespace should be trimmed.
+
+To set a variable, `{{$name := value}}`.
+
+To conditionally include content,
+
+```go
+{{if pipeline}}
+  true-content
+{{else}}
+  false-content
+{{end}}
+```
+
+To loop over data,
+
+```go
+{{range pipeline}}
+  content
+{{end}}
+```
+
+To trim preceding whitespace, begin an action with `{{-`.
+To trim following whitespace, end an action with `- }}`.
+
+Let's look a full example.
+Given data describing a person and their favorite colors
+we want to produce output like the following:
+
+```text
+The favorite colors of Mark Volkmann are
+  yellow
+  orange
+  red
+```
+
+Here is code to do this:
+
+```go
+package main
+
+import (
+  "fmt"
+  "os"
+  "text/template"
+)
+
+// Person describes a person.
+type Person struct {
+  FirstName string
+  LastName  string
+  Colors    []string
+}
+
+func main() {
+  person := Person{
+    FirstName: "Mark",
+    LastName:  "Volkmann",
+    Colors:    []string{"yellow", "orange", "red"},
+  }
+
+  content := `The favorite colors of{{" "}}
+{{- .FirstName}} {{.LastName}} are
+{{- range .Colors}}
+  {{.}}{{end}}`
+
+  myTemplate := template.Must(template.New("my template").Parse(content))
+
+  err = myTemplate.Execute(os.Stdout, person)
+  if err != nil {
+    fmt.Fprintln(os.Stderr, err)
+  }
+}
+```
+
+Using `html/template` package has the same API as the `text/template` package,
+but adds escaping of strings to avoid injection attacks.
+
+TODO: FINISH THIS!
+
 ## HTTP Servers
 
 HTTP servers can be implemented using the standard library package `net/http`.
