@@ -210,11 +210,15 @@ The `encoding/json` standard library package
 supports marshalling and unmarshalling of JSON.
 Go arrays and slices are represented by JSON arrays.
 Go structs and maps are represented by JSON objects.
-Only exported struct fields are marshaled.
+
+The `encoding/xml` standard library package
+provides similar functionality for XML.
 
 To marshal data to JSON use the `json.Marshal` function.
-This returns a byte slice that can be converted to a string
-with the `string` function. For example,
+This takes a Go value and returns a byte slice
+that can be converted to a string with the `string` function.
+Only exported struct fields are marshaled.
+For example,
 
 ```go
 import (
@@ -223,20 +227,40 @@ import (
   "os"
 )
 
-// Note that the field names must start uppercase
-// so the json package can access them.
-type person struct {
+type Person struct {
   FirstName string
   LastName string
   Age int
 }
-p := person{FirstName: "Mark", LastName: "Volkmann"}
-jsonData, err := json.Marshal(person)
-if err != nil {
-  fmt.Fprintln(os.Stderr, err)
-  return
+
+func main() {
+  p := Person{FirstName: "Mark", LastName: "Volkmann"}
+  json1, err := json.Marshal(p)
+  if err != nil {
+    fmt.Fprintln(os.Stderr, err)
+    return
+  }
+  fmt.Println(string(json1)) // {"FirstName":"Mark","LastName":"Volkmann","Age":0}
 }
-fmt.Println(string(jsonData)) // {"FirstName":"Mark","LastName":"Volkmann","Age":0}
+```
+
+Some Go values cannot be marshaled to JSON. These include
+maps with non-string keys, functions, and channels.
+Pointers are marshaled as the values to which they point.
+Cyclic data structures cannot be marshaled because
+they cause `json.Marshal` to go into an infinite loop.
+
+Here is an example of marshalling a slice of structs.
+
+```go
+people := []Person{
+  Person{FirstName: "Mark", LastName: "Volkmann", Age: 57},
+  Person{FirstName: "Tami", LastName: "Volkmann"},
+}
+json2, err := json.Marshal(people)
+// skipping err check
+fmt.Println(string(json2))
+// [{"FirstName":"Mark","LastName":"Volkmann","Age":57},{"FirstName":"Tami","LastName":"Volkmann","Age":0}]
 ```
 
 Each struct field definition can be followed by a "field tag"
@@ -251,39 +275,71 @@ omit the field if its value is the zero value for its type.
 For example,
 
 ```go
-type Person struct {
+type Person2 struct {
   FirstName string `json:"name"`
   LastName  string `json:"surname"`
   Age       int    `json:"age,omitempty"`
 }
 
-p := Person{FirstName: "Mark", LastName: "Volkmann"}
-jsonData, err := json.Marshal(p)
-if err != nil {
-  fmt.Fprintln(os.Stderr, err)
-  return
-}
-fmt.Println(string(jsonData)) // {"name":"Mark","surname":"Volkmann"}
+p2 := Person2{FirstName: "Mark", LastName: "Volkmann"}
+json3, err := json.Marshal(p2)
+// skipping err check
+fmt.Println(string(json3)) // {"name":"Mark","surname":"Volkmann"}
 ```
 
 To unmarshal data from JSON use the `json.Unmarshal` function.
-The first argument is a JSON byte slice.
-The second argument is a pointer to a struct or slice to be populated.
-TODO: IS THE PREVIOUS LINE CORRECT?
+The first argument is a byte slice representing a JSON string.
+The second argument is a pointer to a
+struct, map, slice, or array to be populated.
+Only exported struct fields are populated.
+For example,
+
+```go
+var p3 Person
+err = json.Unmarshal(json1, &p3)
+// skipping err check
+fmt.Printf("%+v\n", p3) // {FirstName:Mark LastName:Volkmann Age:0}
+```
+
 Properties present in the JSON, but absent in a target struct are ignored.
 This is determined by case-insensitive name matching.
 This allows unmarshaling a selected subset of the JSON data.
 For example,
 
 ```go
-var p2 Person
-err := json.Unmarshal(jsonData, &p2)
-if err != nil {
-  fmt.Fprintln(os.Stderr, err)
-  return
+type PersonSubset struct {
+  LastName string
 }
-fmt.Printf("%+v\n", p) // {FirstName:Mark LastName:Volkmann Age:0}
+var pSubset PersonSubset
+err = json.Unmarshal(json1, &pSubset)
+// skipping err check
+fmt.Printf("%+v\n", pSubset) // {LastName:Volkmann}
 ```
+
+A JSON object can be unmarshaled into a Go map.
+When the JSON property values have a variety of types,
+it is useful to use a map with string keys and values of type `interface{}`
+which can hold any kind of value.
+Unmarshaling from JSON types to Go types are what would be expected
+and include mapping JSON numbers to Go float64 values.
+
+This approach can also be used to unmarshal arbitrary JSON objects
+in a JSON array. For example,
+
+```go
+type MyMap map[string]interface{}
+mySlice := []MyMap{}
+err = json.Unmarshal(json2, &mySlice) // see value for json2 above
+// skipping err check
+fmt.Printf("myMap = %+v\n", mySlice)
+// [map[FirstName:Mark LastName:Volkmann Age:57] map[Age:0 FirstName:Tami LastName:Volkmann]]
+```
+
+The `encoding/json` package also provides the ability to
+encode and decode streams of JSON data one object at a time.
+This allows creation of JSON that is larger than will fit in memory.
+It also allows processing JSON data as it is decoded
+rather than waiting until the entire stream is decoded.
 
 ## HTTP Servers
 
