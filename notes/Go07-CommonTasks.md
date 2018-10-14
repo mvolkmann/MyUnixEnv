@@ -208,33 +208,81 @@ func main() {
 
 The `encoding/json` standard library package
 supports marshalling and unmarshalling of JSON.
+Go arrays and slices are represented by JSON arrays.
+Go structs and maps are represented by JSON objects.
+Only exported struct fields are marshaled.
 
 To marshal data to JSON use the `json.Marshal` function.
-For example,
+This returns a byte slice that can be converted to a string
+with the `string` function. For example,
 
 ```go
-import "encoding/json"
+import (
+  "encoding/json"
+  "fmt"
+  "os"
+)
 
 // Note that the field names must start uppercase
 // so the json package can access them.
 type person struct {
-  Name string
-  Age number
+  FirstName string
+  LastName string
+  Age int
 }
-p := person{Name: "Mark", Age: 57}
+p := person{FirstName: "Mark", LastName: "Volkmann"}
 jsonData, err := json.Marshal(person)
-// Check `err` to verify that this was successful.
-// jsonData will have the type []byte.
-// To get a string from it, use string(jsonData).
+if err != nil {
+  fmt.Fprintln(os.Stderr, err)
+  return
+}
+fmt.Println(string(jsonData)) // {"FirstName":"Mark","LastName":"Volkmann","Age":0}
 ```
 
-To unmarshal data from JSON use the `json.Unmarshal` function.
+Each struct field definition can be followed by a "field tag"
+which is a string containing metadata.
+These provide information on how a field should processed in a specific context.
+
+A field tag with a "json" key specifies processing
+that should be performed by the `encoding/json` package.
+This includes specifying an alternate name for a field
+to be used in the JSON representation, and an option to
+omit the field if its value is the zero value for its type.
 For example,
 
 ```go
-var p person
-err := json.Unmarshal(jsonData, @p)
-// Check `err` to verify that this was successful.
+type Person struct {
+  FirstName string `json:"name"`
+  LastName  string `json:"surname"`
+  Age       int    `json:"age,omitempty"`
+}
+
+p := Person{FirstName: "Mark", LastName: "Volkmann"}
+jsonData, err := json.Marshal(p)
+if err != nil {
+  fmt.Fprintln(os.Stderr, err)
+  return
+}
+fmt.Println(string(jsonData)) // {"name":"Mark","surname":"Volkmann"}
+```
+
+To unmarshal data from JSON use the `json.Unmarshal` function.
+The first argument is a JSON byte slice.
+The second argument is a pointer to a struct or slice to be populated.
+TODO: IS THE PREVIOUS LINE CORRECT?
+Properties present in the JSON, but absent in a target struct are ignored.
+This is determined by case-insensitive name matching.
+This allows unmarshaling a selected subset of the JSON data.
+For example,
+
+```go
+var p2 Person
+err := json.Unmarshal(jsonData, &p2)
+if err != nil {
+  fmt.Fprintln(os.Stderr, err)
+  return
+}
+fmt.Printf("%+v\n", p) // {FirstName:Mark LastName:Volkmann Age:0}
 ```
 
 ## HTTP Servers
