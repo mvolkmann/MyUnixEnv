@@ -345,8 +345,10 @@ rather than waiting until the entire stream is decoded.
 
 Go text templates support creating complex strings by embedding "actions"
 that are enclosed in double curly braces.
-They are ideal for creating multi-line strings
-that need embedded data.
+It's like a mini programming language for
+creating multi-line strings that embedded data
+obtained from a Go data structure.
+
 Templates are supported by two standard library packages,
 `text/template` and `html\template`.
 
@@ -366,7 +368,7 @@ For example,
 myTemplate, err := template.New("template name").Parse(content)
 ```
 
-If it is desired to avoid checking for errors and panic if there is one,
+To avoid the need to check for errors and panic if there is one,
 pass the result of calling `New` and `Parse` to `template.Must`.
 For example,
 
@@ -375,8 +377,9 @@ myTemplate := template.Must(template.New("template name").Parse(content))
 ```
 
 To produce a string by applying a template to data in a struct or map,
-call the `Execute` method on the template, passing it
-a pointer to a `bytes.Buffer` and the data.
+call the `Execute` method on the template,
+passing it a pointer to a `bytes.Buffer` and the data.
+The result is written to the buffer.
 For example,
 
 ```go
@@ -384,14 +387,34 @@ var buf bytes.Buffer // implements the io.Writer interface
 err = myTemplate.Execute(&buf, data)
 ```
 
-To write the result of applying a template to data in a struct or map to stdout,
-call the `Execute` method on the template, passing it `os.Stdout` and the data.
+To write the result of applying a template to stdout,
+pass `os.Stdout` in place of a `bytes.Buffer`.
 For example, `err = myTemplate.Execute(os.Stdout, data)`.
+
+The data structure passed to execute can be accessed in the template
+using a dot (`.`).
+Fields of structs and maps can be accessed by name after a dot.
+
+For example, supposed the data is a struct with the following type defintion.
+
+```go
+type Person struct {
+  Name string
+  Address struct {
+    Street string
+    City string
+  }
+}
+```
+
+To output the name, use `{{.Name}}`.
+To output the city, use `{{.Address.City}}`.
 
 Template actions can set variables, conditionally include content, loop over data,
 and indicate whether whitespace should be trimmed.
 
 To set a variable, `{{$name := value}}`.
+To output the value of a variable, use `{{$name}}`.
 
 To conditionally include content,
 
