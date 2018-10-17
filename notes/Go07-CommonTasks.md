@@ -343,8 +343,11 @@ rather than waiting until the entire stream is decoded.
 
 ## Text Templates
 
-Go text templates support creating complex strings by embedding "actions"
-that are enclosed in double curly braces.
+Go text templates support creating complex strings.
+They provide a much more powerful alternative to the `fmt.Sprintf` function
+which works fine for simple cases.
+
+Text templates embed "actions" that are enclosed in double curly braces.
 It's like a mini programming language for
 creating multi-line strings that embedded data
 obtained from a Go data structure.
@@ -413,8 +416,28 @@ To output the city, use `{{.Address.City}}`.
 Template actions can set variables, conditionally include content, loop over data,
 and indicate whether whitespace should be trimmed.
 
+Variable names start with a dollar sign.
 To set a variable, `{{$name := value}}`.
 To output the value of a variable, use `{{$name}}`.
+
+A pipeline is a sequence of one or more commands.
+
+A command is simple value, function call, or method call.
+
+Simple values include primitive values and variables.
+They also include many expressions that begin with a dot (`.`)
+which represents the value at the current cursor.
+When the value at the cursor is a struct,
+the dot can be followed by a field name.
+When the value at the cursor is a map,
+the dot can be followed by a key.
+When the value at the cursor has methods,
+the dot can be follow by the name of a method that has no parameters.
+
+A function call is a function name followed by
+a space-separated list of arguments.
+
+A method call is ...
 
 To conditionally include content,
 
