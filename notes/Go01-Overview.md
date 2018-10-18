@@ -1,9 +1,10 @@
 # Go
 
 This article is the first in a multi-part series on the Go programming language.
-This article provides an overview of the language
-and a quick start guide.
-Future articles will cover Go syntax in depth, tooling, builtins, concurrency, solutions to common tasks, reflection, modules, testing, and the future of Go.
+It provides an overview of the language and a quick start guide.
+Future articles will cover Go syntax in depth, tooling,
+builtins, concurrency, solutions to common tasks, reflection,
+modules, testing, and the future of Go.
 
 ## Overview
 
@@ -24,6 +25,8 @@ Rob Pike and Ken Thompson invented the UTF-8 Unicode encoding.
 Russ Cox previously worked on Plan 9.
 Ian Taylor previously worked on the GCC compiler.
 
+To get a sense of the timeline for Go,
+it is useful to see some key dates.
 Go was officially announced in November 2009.
 Go 1.0 was released in March 2012.
 Go 1.10 was released in February 2016.
@@ -34,12 +37,12 @@ Go aims to:
 
 - address software issues at Google
 - be simple, indicated by having a small specification
-  and fewer features that most other programming languages
+  and fewer features that most programming languages
 - be very easy to read
 - enable faster software development
 - enable faster build times
 - have a less cumbersome type system that provides type inference
-  and use composition instead of type hierarchies
+- use composition instead of type hierarchies
 - provide garbage collection
 - be safe in terms of memory utilization
 - support concurrent execution and communication
@@ -50,7 +53,7 @@ Go aims to:
 Because simplicity and performance are major goals,
 many features found in other programming languages
 are not present in Go.
-These include classes (and inheritance), annotations,
+These include classes, inheritance, annotations,
 exceptions, the ternary operator, and generic types.
 Generic types are being considered for Go 2.0.
 
@@ -62,7 +65,7 @@ Go occupies a space between between languages that are
 often used for systems programming (C, C++, and Rust) and
 scripting languages (JavaScript, Perl, Python, and Ruby).
 
-Currently the most common uses for Go are dev ops tooling
+Currently the most common uses for Go are DevOps tooling
 and server-side web application development,
 including implementing REST services.
 
@@ -88,7 +91,7 @@ Go's characteristics at a glance include:
 - concurrency with lightweight threads called "goroutines"
 - communication between goroutines using channels
 - object-oriented programming through structs with methods
-- a somewhat comprehensive standard library
+- a fairly comprehensive standard library
   that supports many common operations including
   text processing, I/O, networking, cryptography, and more
 - compiles quickly to native executables and libraries,
@@ -116,7 +119,7 @@ These include:
 
 ## Reasons to avoid Go
 
-Reasons some defaults choose not to use Go include:
+Reasons some developers choose not to use Go include:
 
 - Some developers dislike the community standards for Go
   such as using gofmt to format code.
@@ -128,7 +131,7 @@ Additional reasons related to systems programming include:
 - Some developers feel that C and C++ libraries are
   currently more mature than Go libraries.
 - Currently it is easier to find developers that have
-  C and C++ experience than finding Go developers.
+  C and C++ experience than to find Go developers.
 - Go provides garbage collection and does not allow control of
   memory allocation/deallocation that is needed for real-time guarantees.
 - Go does not support pointer arithmetic
@@ -145,7 +148,7 @@ The builtin `new` function always allocates on the heap.
 
 Variables declared in functions are typically allocated on the stack
 unless access to them escapes from the function
-by return a pointer to it or setting a variable
+by returning a pointer to it or setting a variable
 declared outside the function to a pointer to it.
 
 ## Important Environment Variables
@@ -190,10 +193,11 @@ the more popular ones that have been implemented in Go.
   (open source version is now called "Moby")
 - InfluxDB - scalable datastore for metrics, events, and real-time analytics
   <https://github.com/influxdata/influxdb>
+- Istio - connect, secure, control, and observe services
+  <https://istio.io/>
 - Kubernetes - production-grade container scheduling and management
   <http://kubernetes.io>
 - Revel - full-stack web framework <https://github.com/revel/revel>
-- TODO: Find more?
 
 ## Alternative Go Implementations
 
