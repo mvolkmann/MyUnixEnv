@@ -19,8 +19,8 @@ About a year later Russ Cox and Ian Taylor joined the team.
 Robert Griesemer previously worked on Strongtalk (Smalltalk with optional types),
 the Java Hotspot virtual machine, and the V8 JavaScript engine.
 Rob Pike previously worked on Unix and the Plan 9 distributed operating system.
-Ken Thompson previously worked on Unix,
-the B language (which led to C), and Plan 9.
+Ken Thompson designed and implemented on Unix,
+worked on the B language (which led to C), and worked on Plan 9.
 Rob Pike and Ken Thompson invented the UTF-8 Unicode encoding.
 Russ Cox previously worked on Plan 9.
 Ian Taylor previously worked on the GCC compiler.
@@ -92,8 +92,7 @@ Go's characteristics at a glance include:
 - communication between goroutines using "channels"
 - object-oriented programming through structs and other types
   with methods
-- a fairly comprehensive standard library
-  that supports many common operations including
+- a standard library that supports many common operations including
   text processing, I/O, networking, cryptography, and more
 - compiles quickly to native executables and libraries,
   not code that requires a virtual machine
