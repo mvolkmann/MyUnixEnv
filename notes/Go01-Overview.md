@@ -96,6 +96,10 @@ Go's characteristics at a glance include:
   text processing, I/O, networking, cryptography, and more
 - compiles quickly to native executables and libraries,
   not code that requires a virtual machine
+- for applications, produces a single file to be deployed
+  which is easier than working with archives that contain
+  many files and require additional software to run,
+  for example, Java WAR files and servers such as Tomcat
 - high performance
 
 ## Not Included
