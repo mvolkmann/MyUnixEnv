@@ -54,7 +54,7 @@ Because simplicity and performance are major goals,
 many features found in other programming languages
 are not present in Go.
 These include classes, inheritance, annotations,
-exceptions, the ternary operator, and generic types.
+exceptions, and generic types.
 Generic types are being considered for Go 2.0.
 
 Go is compiled to platform-specific machine code,
@@ -89,8 +89,9 @@ Go's characteristics at a glance include:
 - garbage collection of variables that are no longer reachable
 - Unicode support
 - concurrency with lightweight threads called "goroutines"
-- communication between goroutines using channels
-- object-oriented programming through structs with methods
+- communication between goroutines using "channels"
+- object-oriented programming through structs and other types
+  with methods
 - a fairly comprehensive standard library
   that supports many common operations including
   text processing, I/O, networking, cryptography, and more
@@ -98,7 +99,7 @@ Go's characteristics at a glance include:
   not code that requires a virtual machine
 - high performance
 
-# Not Included
+## Not Included
 
 Go purposely omits many features found in other programming languages
 in order to arrive at a simpler programming language.
@@ -141,8 +142,9 @@ Additional reasons related to systems programming include:
 
 The Go specification does not indicate the situations
 under which stack memory or heap memory are used.
-The primary Go implementation makes some choices based on the fact that
-allocating on the stack is generally faster than allocation on the heap.
+The primary Go implementation makes some choices
+based on the fact that allocating on the stack is
+generally faster than allocating on the heap.
 
 The builtin `new` function always allocates on the heap.
 
@@ -153,23 +155,20 @@ declared outside the function to a pointer to it.
 
 ## Important Environment Variables
 
-- `GOARCH`\
-  Set this to the target architecture to use when compiling.
-  When not set, the current architecture is assumed.
-- `GOBIN`\
-  Set this to the directory where packages should be installed.
-  TODO: What happens when this is not set?
-- `GOOS`\
-  Set this to the operating system to be targeted by the Go compiler.
-  When not set, the current operating system is assumed.
 - `GOPATH`\
   Set this to the current workspace directory
   which is where source files are located.
   Change this when switching workspaces.
   This is not needed when "modules" (introduced in Go 1.11) are used.
-- `GOROOT`\
-  Set this to the directory where Go tools are installed.
+- `GOBIN`\
+  Set this to the directory where packages should be installed.
   TODO: What happens when this is not set?
+- `GOARCH`\
+  Set this to the target architecture to use when compiling.
+  When not set, the current architecture is assumed.
+- `GOOS`\
+  Set this to the operating system to be targeted by the Go compiler.
+  When not set, the current operating system is assumed.
 
 ## Companies Using Go
 
@@ -182,7 +181,7 @@ Facebook, General Electric, GitHub, GitLab, Google, Heroku, Honeywell,
 IBM, Intel, Lyft, Medium, Mesosphere, MongoDB, Mozilla, Netflix,
 New York Times, Oracle, Pinterest, Pivotal, Rackspace, Reddit,
 Riot Games, Shutterfly, Slack, Square, Stripe, Tumblr, Twitch, Twitter,
-Uber, VMware, Yahoo
+Uber, VMware, and Yahoo
 
 ## Implemented in Go
 
@@ -191,13 +190,15 @@ the more popular ones that have been implemented in Go.
 
 - Docker - assembles container-based systems
   (open source version is now called "Moby")
+  <https://www.docker.com/>
 - InfluxDB - scalable datastore for metrics, events, and real-time analytics
   <https://github.com/influxdata/influxdb>
 - Istio - connect, secure, control, and observe services
   <https://istio.io/>
 - Kubernetes - production-grade container scheduling and management
   <http://kubernetes.io>
-- Revel - full-stack web framework <https://github.com/revel/revel>
+- Revel - full-stack web framework
+  <https://github.com/revel/revel>
 
 ## Alternative Go Implementations
 
@@ -214,6 +215,3 @@ there are several alternative implementations. These include:
   Early support is available now,
   but it is not yet ready for serious use.
   See <https://react-etc.net/entry/webassembly-support-lands-in-go-language-golang-wasm-js>
-- mgo?\
-  TODO: I can't find this, but heard it mentioned on "Go Time" podcast.
-  Is it for small processors like Arduino?
