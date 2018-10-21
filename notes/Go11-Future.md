@@ -209,7 +209,7 @@ listed roughly in the order they should be visited.
   - built on "The Go Playground"
   - can use on web or download and run locally
   - when used on web
-    - uploads code to golang.org servers and displays result
+    - uploads code to golang.org servers, builds it, runs it, and displays result
     - uses latest stable version of Go
 - "The Go Playground": <https://play.golang.org/>
   - can enter and test code online
@@ -221,7 +221,6 @@ listed roughly in the order they should be visited.
     ability to highlight lines (useful when sharing snippets),
     and more
 - "How to Write Go Code": <https://golang.org/doc/code.html>
-  - free, online resource
   - "demonstrates the development of a simple Go package and introduces the go tool"
 - "Effective Go": <https://golang.org/doc/effective_go.html>
   - free, online "book"

@@ -20,10 +20,12 @@ The most commonly used sub-commands are summarized below.
   To get documentation on a single member of a package,
   add a space and the name after the package name.
   For example, `godoc strings Trim`.
+  TODO: Discuss using as a local web server.
 - `go fix {file-or-directory-path}`\
   This "finds Go programs that use old APIs and rewrites them to use newer ones."
   "After you update to a new Go release,
   `fix` helps make the necessary changes to your programs."
+  TODO: Were there any fixes needed for Go 1.11?
 - `go get {pkg1} {pkg2} ...`\
   This downloads and installs packages and their dependencies.
 - `go build`\
@@ -31,9 +33,9 @@ The most commonly used sub-commands are summarized below.
   that includes everything needed to run
   and places it in the current directory.
   The executable can be moved anywhere.
-  Go tools do not need to be installed in order to execute the result.
+  Go tools do not need to be installed in order to execute the resulting file.
 - `go install {pkg-name}`\
-  This builds a given package and installs it in `GOBIN` which must be set.
+  This builds a given package and installs it in `GOBIN` which must be set. TODO: Really?
   It also builds all the dependencies of the package,
   and recursively all of their dependencies.
   If run from the package directory, the package name can be omitted.
@@ -47,15 +49,17 @@ The most commonly used sub-commands are summarized below.
   To run tests in multiple packages,
   cd to the `GOPATH` directory and
   specify a space-separated list of package paths.
+  TODO: Is there a way to run all the tests without listing all the packages?
 - `go generate`\
   This generates Go source files based on special comments in other source files.
   The comments specify a generator to use which must be installed.
-  For example, `//go:generate stringer -type=Color` where `Color` is an enumeration type.
   The generated code typically defines functions in the same package
   that satisfy an interface used by the code containing the comment.
-  An example is generated a `String` function that takes an integer constant
+  For example, `//go:generate stringer -type=Color` where `Color` is an enumeration type.
+  This generates a `String` function that takes an integer constant
   and returns its string name.
   For example, `String(2)` might return "yellow".
+  TODO: TRY THIS TO VERIFY.
 - `go version`\
   This outputs the version of Go that is installed.
   To get the version in code, call `runtime.Version()`.
@@ -111,7 +115,6 @@ For example,
 - Vim has the vim-go plugin.
   This is a popular options in the Go community.
 - VS Code has the Go extension from Microsoft.
-  This is another popular option in the Go community.
 
 ### VS Code Go Extension
 
@@ -155,7 +158,7 @@ For example, you could add these:
   "print line": {
     "prefix": "pl",
     "body": "fmt.Println(\"$1\")"
-  },
+  },-
   "print variable": {
     "prefix": "pv",
     "body": "fmt.Printf(\"${1} = %+v\\n\", ${1})"
@@ -182,16 +185,18 @@ and sets `GOPATH` to one level above that."
 
 Many commands starting with "Go:" are added to the Command Palette.
 These include:
+TODO: Verify all of these!
 
 - "Add Import"\
   This displays a list of standard library packages.
   Select one to add an import for it.
 - "Browse Packages"\
   This displays a drop-down list containing the standard library packages.
+  TODO: Only standard ones?
   Select one to see a list of files in the package.
   Select a file to view the source code.
 - "Current GOPATH"\
-  This shows current GOPATH in a popup in lower right.
+  This shows the current GOPATH in a popup in lower right.
 - "Generate Interface Stubs"\
   TODO: This is supposed to generate method stubs for
   all the methods in a given interface for a given receiver type,
@@ -212,3 +217,5 @@ These include:
 - "Test All Packages in Workspace"\
   This runs all tests under the `src` directory,
   including tests for all installed packages.
+
+TODO: Should you describe any other tools?

@@ -39,6 +39,7 @@ const (
   t3            // iota = 2, value = 2 * 3 = 6
 )
 
+TODO: Verify this!
 const (
   _        = iota             // iota = 0, ignore first value
   kb int64 = 1 << (10 * iota) // iota = 1, value = 1 shifted left 10 places
@@ -86,7 +87,7 @@ Go defines the following builtin "basic types".
 - `byte`\
   This is an alias for the type `uint8`.
 - `complex64` and `complex128`\
-   These are used to represent complex numbers
+  These are used to represent complex numbers
   with a specified number of bits.
 - `float32` and `float64`\
   These are used to represent floating-point numbers
@@ -96,7 +97,7 @@ Go defines the following builtin "basic types".
   These are used to represent signed integers
   with a specified number of bits.
   The type `int` is at least 32 bits.
-  It is based on the word size of the host platform,
+  Its size is based on the word size of the host platform,
   32 bits on 32-bit systems and
   64 bits on 64-bit systems.
 - `uint`, `uint16`, `uint32`, `uint64`\
@@ -111,13 +112,9 @@ Go defines the following builtin "basic types".
   that range in size from 1 to 4 bytes.
   Literal values of this type are surrounded by single quotes.
 - `string`\
-  This is a sequence of 8-bit bytes, not unicode characters.
-  Literal values are surrounded by double quotes or backticks.
-  Double quoted strings cannot contain newlines
-  and can contain escape sequences like `\n`.
-  Backtick strings can contain newline characters.
-  Both are indexed from zero.
-  For example, to get the 3rd character use `str[2]`.
+  This is a sequence of 8-bit bytes, not Unicode characters.
+  This type is described in detail in the
+  "Go Syntax" article earlier in the series.
 
 Non-basic types include aggregate, reference, and interface types.
 Aggregate types include arrays and structs.
