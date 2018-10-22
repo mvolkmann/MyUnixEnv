@@ -218,4 +218,4 @@ TODO: Verify all of these!
   This runs all tests under the `src` directory,
   including tests for all installed packages.
 
-TODO: Should you describe any other tools?
+TODO: Should you describe any other tools? go-wrk and flame graphs from Campoy youtube "Go Tools"

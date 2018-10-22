@@ -947,7 +947,13 @@ They can be associated with any named type, but not built-in types.
 The receiver is an instance of this type.
 
 Methods are particularly useful for types that implement interfaces.
-Otherwise we can just write functions that take a value of the type as an argument.
+Otherwise we can just write functions
+that take a value of the type as an argument.
+
+Just like with functions, methods whose name starts lowercase
+can only be called by code in package where the method is defined.
+To make them available in other packages,
+their names must start uppercase.
 
 It is not possible to create overloaded methods on a type
 to create different implementations for different parameter types.
@@ -975,13 +981,13 @@ For example,
 // Add a method to the type "pointer to a Person struct".
 // Note how the receiver and its type appear
 // in parentheses before the method name.
-func (p *Person) birthday() {
+func (p *Person) Birthday() {
   p.age++
 }
 
 p := Person{name: "Mark", age: 57}
-(&p).birthday() // The method can be invoked on a pointer to a Person.
-p.birthday() // It can also be invoked on a Person.
+(&p).Birthday() // The method can be invoked on a pointer to a Person.
+p.Birthday() // It can also be invoked on a Person.
 fmt.Printf("%#v\n", p) // main.Person{name:"Mark", age:59}
 ```
 
@@ -1012,14 +1018,14 @@ methods can be added to built-in types if a type alias is created.
 Here is an example of adding a method to a type alias for the `int` type.
 
 ```go
-type number int
+type Number int
 
-func (receiver number) double() number {
+func (receiver Number) Double() Number {
   return receiver * 2
 }
 
-n := number(3) // or could use var n number = 3
-fmt.Println(n.double()) // 6
+n := Number(3) // or could use var n Number = 3
+fmt.Println(n.Double()) // 6
 ```
 
 It may seem that struct methods should be defined inside the struct.
@@ -1280,11 +1286,11 @@ import "fmt"
 // IntStack is a stack of int values.
 type IntStack []int
 
-func (s *IntStack) push(value int) {
+func (s *IntStack) Push(value int) {
   *s = append(*s, value)
 }
 
-func (s *IntStack) pop() int {
+func (s *IntStack) Pop() int {
   stack := *s
   l := len(stack)
   top := stack[l-1]
@@ -1294,10 +1300,10 @@ func (s *IntStack) pop() int {
 
 func main() {
   myStack := IntStack{1, 3, 5}
-  fmt.Println(myStack.pop())             // 5, now contains [1, 3]
-  fmt.Println(myStack.pop())             // 3, now contains [1]
-  myStack.push(7)                        // now contains [1, 7]
-  myStack.push(9)                        // now contains [1, 7, 9]
+  fmt.Println(myStack.Pop())             // 5, now contains [1, 3]
+  fmt.Println(myStack.Pop())             // 3, now contains [1]
+  myStack.Push(7)                        // now contains [1, 7]
+  myStack.Push(9)                        // now contains [1, 7, 9]
   fmt.Printf("myStack = %+v\n", myStack) // [1 7 9]
 }
 ```

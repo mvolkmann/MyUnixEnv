@@ -2,10 +2,14 @@
 
 ## Command-Line Arguments
 
-Command-line arguments are held in a slice of strings stored in `os.Args`.
+Command-line arguments are held in
+a slice of strings stored in `os.Args`.
+
 Index 0 holds the path to the executable.
-An executable is created dynamically when "go run" is used.
+When `go run` is used, an executable is created dynamically.
+
 Index 1 holds the first command-line-argument.
+
 Often `os.Args[1:]` is used to obtain a slice
 that only contains the command-line arguments.
 
@@ -25,6 +29,8 @@ func main() {
 
   // If the required number of arguments are not present ...
   if len(args) != 2 {
+    // TODO: Should you use a different function that
+    // TODO: writes to stderr and sets the status?
     fmt.Println("usage: greet {first-name} {last-name}")
     os.Exit(1)
   }
@@ -43,9 +49,13 @@ enter `go build greet.go; ./greet Mark Volkmann`
 ## Flags
 
 The `flags` package supports documenting and parsing
-application command-line flags.
-For example, here is a simple application that
-outputs a range of integer values with a given prefix.
+command-line flags for an application.
+Each flag is described by a name, type,
+default value, and documentation string.
+
+For example, here is a simple application
+in a file named `flag-demo.go` that outputs a
+range of integer values with a given string prefix.
 
 ```go
 package main
@@ -55,12 +65,15 @@ import (
   "fmt"
 )
 
+// These pointers will be set after flag.Parse is called.
 var minPtr = flag.Int("min", 1, "minimum value")
 var maxPtr = flag.Int("max", 10, "maximum value")
 var prefixPtr = flag.String("prefix", "", "prefix")
 
 func main() {
   flag.Parse()
+  // TODO: If dereferencing prefixPtr was done in each
+  // TODO: loop iteration, would Go optimize it out?
   prefix := *prefixPtr
   for i := *minPtr; i <= *maxPtr; i++ {
     fmt.Printf("%s%d\n", prefix, i)
@@ -70,7 +83,8 @@ func main() {
 
 To build this, enter `go build`.
 
-To get help on the flags, enter `./flags --help` which outputs:
+To get help on the flags,
+enter `./flag-demo --help` which outputs:
 
 ```text
 Usage of ./flags:
@@ -82,7 +96,11 @@ Usage of ./flags:
         prefix
 ```
 
-To run this, enter of the following lines:
+Flag names are preceded by a single dash
+(TODO: ever two?), followed by `=` or a space,
+and a value.
+
+To run this, enter one of the following lines:
 
 ```text
 ./flag-demo -min 3 -max 5 -prefix foo
@@ -97,22 +115,28 @@ foo4
 foo5
 ```
 
+TODO: Discuss any type checking that is performed on the values.
+
 ## Readers
 
 The `io` package defines the `Reader` interface
 that has a single method `Read`.
-This populates a byte slice and returns the number of bytes read
-or an error (io.EOF if end of stream is reached).
+This reads from an underlying data stream,
+populates a byte slice, and
+returns the number of bytes read or an error.
+For example, the error is io.EOF
+if the end of a stream is reached.
 
 There are many implementations of this interface in the standard library,
 including ones for reading from strings, files, and network connections.
 
 To read from a string, see <https://tour.golang.org/methods/21>.
 
-To read from a file, use the package `io/ioutil`
-which defines a `ReadFile` function.
+One way to read from a file is to use the package `io/ioutil`
+which defines a `ReadFile` function
+that reads the entire file in one call.
 
-For example,
+For example:
 
 ```go
 package main
@@ -127,12 +151,18 @@ func main() {
   // Read entire file into a newly created byte array.
   bytes, err := ioutil.ReadFile("haiku.txt")
   if err != nil {
+    // TODO: Is it better style to use another function
+    // TODO: that writes an error message and exits
+    // TODO: so the "else" isn't needed?
     log.Fatal(err)
   } else {
     fmt.Println(string(bytes))
   }
 }
 ```
+
+To read data a little at a time,
+TODO: Add this part!
 
 ## Writers
 
@@ -145,8 +175,10 @@ including ones for writing to strings, files, and network connections.
 
 To write to a string, see TODO.
 
-The package `io/ioutil` defines a `WriteFile` function.
-Here is an example of code that writes to a file.
+The package `io/ioutil` defines a `WriteFile` function
+that writes all the data to a file in a single call.
+
+For example:
 
 ```go
 package main
@@ -157,8 +189,9 @@ import (
 )
 
 func main() {
+  // Convert a string to a byte slice.
   data := []byte("Line #1\nLine #2")
-  mode := os.FileMode(0644)
+  mode := os.FileMode(0644) // TODO: Add comment?
   err := ioutil.WriteFile("new-file.txt", data, mode)
   if err != nil {
     log.Fatal(err)
@@ -167,6 +200,8 @@ func main() {
 ```
 
 To write data a little at time,
+use the `os.File` `Write` method.
+For example:
 
 ```go
 package main
@@ -190,6 +225,7 @@ func writeLine(file *os.File, text string) {
 }
 
 func main() {
+  // TODO: Why declare these variables? Just use :=?
   var (
     file *os.File
     err error
