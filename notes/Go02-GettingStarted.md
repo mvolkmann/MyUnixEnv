@@ -2,7 +2,8 @@
 
 Let's walk through the steps to create a Go application.
 If you don't already have a GitHub (<https://github.com>)
-or Bitbucket (<https://bitbucket.org>) account,
+Bitbucket (<https://bitbucket.org>),
+or GitLab (https://gitlab.com) account,
 I recommend creating one now so you can experience publishing an app.
 
 This article uses the term "terminal" to refer to
@@ -16,17 +17,17 @@ in this section are performed in a different way.
 ### Install Go
 
 One way to install Go is to browse <https://golang.org/dl/>,
-download a platform-specific installer, and double-click it.
+find a binary release for your system, and follow the instructions.
 If you are using a Mac and have Homebrew (<https://brew.sh/>) installed,
 you can instead run `brew install go`.
 To verify that Go is installed, open a terminal and enter `go version`
 which should output the version of Go you have installed.
 
-In Unix and macOS Go is installed in the `/usr/local/go` directory.
+In Unix and macOS, Go is installed in the `/usr/local/go` directory.
 The `src` subdirectory contains the source code
 for the standard library packages.
 
-### Create Workspace
+### Create a Workspace
 
 Go projects live in a workspace
 which is home to one or more packages.
@@ -59,8 +60,9 @@ Packages are installed under `$GOPATH/src` in a subdirectory
 that corresponds to the package URL.
 It does this regardless of the directory from which `go get` is run.
 For example, `go get github.com/julienschmidt/httprouter`
-installs the`.go` files that implement the package in
-`$GOPATH/src/github.com/julienschmidt/httprouter`.
+downloads the`.go` files that implement the package to
+`$GOPATH/src/github.com/julienschmidt/httprouter`
+and installs the package.
 Using the package URL avoids path/directory conflicts.
 
 The `go get` command also builds the package and places its object file
@@ -121,11 +123,13 @@ like `hello` that each contain a `main.go` file.
 
 ### Run First App
 
-Open a terminal and cd to your application directory.
+Open a terminal and cd to the directory containing `main.go`.
 Enter `go run main.go` to run the app.
-Consider creating an alias for this, perhaps `grm`,
-because you'll be running this command often.
 This should output "Hello, World!".
+
+Consider creating an alias for this,
+because you'll be running this command often.
+My alias name is `grm` which is short for "go run main".
 
 ### Build First App
 
