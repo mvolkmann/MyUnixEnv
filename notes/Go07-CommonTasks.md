@@ -209,9 +209,9 @@ import (
   "os"
 )
 
-func check(e error) {
-  if e != nil {
-    log.Fatal(e)
+func check(err error) {
+  if err != nil {
+    log.Fatal(err)
   }
 }
 
@@ -240,7 +240,7 @@ func main() {
 ## JSON
 
 The `encoding/json` standard library package
-supports marshalling and unmarshalling of JSON.
+supports marshalling and unmarshalling of JSON data.
 Go arrays and slices are represented by JSON arrays.
 Go structs and maps are represented by JSON objects.
 
@@ -264,14 +264,14 @@ type Person struct {
   FirstName string
   LastName string
   Age int
+  height int
 }
 
 func main() {
-  p := Person{FirstName: "Mark", LastName: "Volkmann"}
+  p := Person{FirstName: "Mark", LastName: "Volkmann", height: 74}
   json1, err := json.Marshal(p)
   if err != nil {
-    fmt.Fprintln(os.Stderr, err)
-    return
+    log.Fatal(err)
   }
   fmt.Println(string(json1)) // {"FirstName":"Mark","LastName":"Volkmann","Age":0}
 }
@@ -298,14 +298,15 @@ fmt.Println(string(json2))
 
 Each struct field definition can be followed by a "field tag"
 which is a string containing metadata.
-These provide information on how a field should processed in a specific context.
+These provide information about how a field
+should processed in a specific context.
 
 A field tag with a "json" key specifies processing
 that should be performed by the `encoding/json` package.
 This includes specifying an alternate name for a field
 to be used in the JSON representation, and an option to
 omit the field if its value is the zero value for its type.
-For example,
+For example:
 
 ```go
 type Person2 struct {
@@ -336,7 +337,7 @@ fmt.Printf("%+v\n", p3) // {FirstName:Mark LastName:Volkmann Age:0}
 
 Properties present in the JSON, but absent in a target struct are ignored.
 This is determined by case-insensitive name matching.
-This allows unmarshaling a selected subset of the JSON data.
+It allows unmarshaling a selected subset of the JSON data.
 For example,
 
 ```go
@@ -353,11 +354,11 @@ A JSON object can be unmarshaled into a Go map.
 When the JSON property values have a variety of types,
 it is useful to use a map with string keys and values of type `interface{}`
 which can hold any kind of value.
-Unmarshaling from JSON types to Go types are what would be expected
+Unmarshaling from JSON types to Go types produce what would be expected
 and include mapping JSON numbers to Go float64 values.
 
-This approach can also be used to unmarshal arbitrary JSON objects
-in a JSON array. For example,
+This approach can also be used to unmarshal a JSON array
+of arbitrary JSON objects. For example,
 
 ```go
 type MyMap map[string]interface{}
