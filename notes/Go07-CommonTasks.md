@@ -151,13 +151,10 @@ func main() {
   // Read entire file into a newly created byte array.
   bytes, err := ioutil.ReadFile("haiku.txt")
   if err != nil {
-    // TODO: Is it better style to use another function
-    // TODO: that writes an error message and exits
-    // TODO: so the "else" isn't needed?
     log.Fatal(err)
-  } else {
-    fmt.Println(string(bytes))
   }
+
+  fmt.Println(string(bytes))
 }
 ```
 
