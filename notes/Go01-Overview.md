@@ -162,7 +162,7 @@ declared outside the function to a pointer to it.
   Set this to the current workspace directory
   which is where source files are located.
   Change this when switching workspaces.
-  This is not needed when "modules" (introduced in Go 1.11) are used.
+  When not set, `$HOME/go` is used.
 - `GOBIN`\
   Set this to the directory where packages should be installed.
   TODO: What happens when this is not set?
@@ -191,17 +191,37 @@ Uber, VMware, and Yahoo
 The following applications and libraries are some of
 the more popular ones that have been implemented in Go.
 
-- Docker - assembles container-based systems
+- **Bolt** <https://github.com/boltdb/bolt>\
+  "An embedded key/value database for Go."
+- **Buffalo** <https://gobuffalo.io/en>\
+  "Buffalo is a Go web development eco-system.
+  Designed to make the life of a Go web developer easier.
+
+  Buffalo starts by generating a web project for you that
+  already has everything from front-end (JavaScript, SCSS, etc...)
+  to back-end (database, routing, etc...) already hooked up
+  and ready to run. From there it provides easy APIs to
+  build your web application quickly in Go."
+
+- **CockroachDB** <https://www.cockroachlabs.com>\
+  "the open source, cloud-native SQL database"
+- **Docker** <https://www.docker.com/>\
+  assembles container-based systems
   (open source version is now called "Moby")
-  <https://www.docker.com/>
-- InfluxDB - scalable datastore for metrics, events, and real-time analytics
-  <https://github.com/influxdata/influxdb>
-- Istio - connect, secure, control, and observe services
-  <https://istio.io/>
-- Kubernetes - production-grade container scheduling and management
-  <http://kubernetes.io>
-- Revel - full-stack web framework
-  <https://github.com/revel/revel>
+- **InfluxDB** <https://github.com/influxdata/influxdb>\
+  scalable datastore for metrics, events, and real-time analytics
+- **Istio** <https://istio.io/>\
+  connect, secure, control, and observe services
+- **Kubernetes** <http://kubernetes.io>\
+  "an open-source system for automating deployment, scaling,
+  and management of containerized applications"
+- **mongo-go-driver** <https://github.com/mongodb/mongo-go-driver>\
+  "MongoDB Driver for Go"
+- **Revel** <https://github.com/revel/revel>\
+  full-stack web framework
+- **Testify** <https://github.com/stretchr/testify>\
+  "A toolkit with common assertions and mocks
+  that plays nicely with the standard library"
 
 ## Alternative Go Implementations
 

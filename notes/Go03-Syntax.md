@@ -107,13 +107,16 @@ and some tools automatically remove them.
 This avoids accumulating imports that are
 no longer needed as the code is modified.
 
-An alias for a package name can be defined with `import alias "pkgName"`.
-Note that the alias name is not surrounded by quotes, but the package name is.
-When an alias is defined, exported names in the package are referenced with
-`alias.ExportedName`.
+An alternate name for a package name can be defined
+with `import altName "pkgName"`.
+Note that the alternate name is not surrounded by quotes,
+but the package name is.
+When an alternate name is defined,
+exported names in the package must be referenced with
+`altName.ExportedName`.
 
-Circular imports where an import triggers the import of the current package
-are treated as errors.
+Circular imports where an import triggers the
+import of the current package are treated as errors.
 
 ### Package Initialization
 
@@ -365,7 +368,7 @@ Use the standard library function
 
 Go also does not include a ternary operator.
 It prefers using an `if` statement which some feel
-is more clear, despite being more verbose. 
+is more clear, despite being more verbose.
 
 ### Keywords
 
@@ -437,7 +440,6 @@ To modify the value at a pointer, `*myPtr = newValue`.
 Pointer arithmetic, as seen in C and C++, is not supported in Go.
 This avoids memory safety issues and
 simplifies the builtin garbage collector.
-
 
 Since function parameters are passed by value,
 passing a pointer to a variable is required

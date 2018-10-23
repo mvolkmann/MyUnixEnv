@@ -20,11 +20,11 @@ where module-name is the import path other modules will use to import this one.
 Typically this is a GitHub path such as `github.com/mvolkmann/my-module`,
 but can be a simple name for modules that will not be published.
 
-After running `go mod init github.com/mvolkmann/my-module`,
+After running `go mod init my-simple-module`,
 the content of `go.mod` will be:
 
 ```go
-module github.com/mvolkmann/my-module
+module my-simple-module
 ```
 
 The easiest way to add dependencies to `go.mod` is to

@@ -31,8 +31,7 @@ func main() {
   if len(args) != 2 {
     // TODO: Should you use a different function that
     // TODO: writes to stderr and sets the status?
-    fmt.Println("usage: greet {first-name} {last-name}")
-    os.Exit(1)
+    log.Fatal("usage: greet {first-name} {last-name}")
   }
 
   firstName := args[0]
@@ -71,7 +70,7 @@ var maxPtr = flag.Int("max", 10, "maximum value")
 var prefixPtr = flag.String("prefix", "", "prefix")
 
 func main() {
-  flag.Parse()
+  flag.Parse(
   // TODO: If dereferencing prefixPtr was done in each
   // TODO: loop iteration, would Go optimize it out?
   prefix := *prefixPtr
