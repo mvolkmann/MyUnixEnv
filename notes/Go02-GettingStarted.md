@@ -3,7 +3,7 @@
 Let's walk through the steps to create a Go application.
 If you don't already have a GitHub (<https://github.com>)
 Bitbucket (<https://bitbucket.org>),
-or GitLab (https://gitlab.com) account,
+or GitLab (<https://gitlab.com>) account,
 I recommend creating one now so you can experience publishing an app.
 
 This article uses the term "terminal" to refer to
