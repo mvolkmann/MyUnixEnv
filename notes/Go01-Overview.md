@@ -2,8 +2,8 @@
 
 This article is the first in a multi-part series on the Go programming language.
 It provides an overview of the language and a quick start guide.
-Future articles will cover Go syntax in depth, tooling,
-builtins, concurrency, solutions to common tasks, reflection,
+Future articles will cover Go syntax in depth, builtins,
+tooling, concurrency, solutions to common tasks, reflection,
 modules, testing, and the future of Go.
 
 ## Overview
@@ -12,25 +12,30 @@ Go is an open-source programming language. It runs on
 Unix-based operating systems (including Linux and macOS) and Windows.
 Documentation, downloads, and a blog can be found at <https://golang.org/>.
 
-Go was conceived by Robert Griesemer, Rob Pike, and Ken Thompson,
-all working at Google, starting in September 2007.
+Go was conceived in 2007 by Robert Griesemer, Rob Pike, and Ken Thompson,
+all working at Google.
 About a year later Russ Cox and Ian Taylor joined the team.
+All of the core team members have made
+major contributions to important software projects.
 
-Robert Griesemer previously worked on Strongtalk (Smalltalk with optional types),
-the Java Hotspot virtual machine, and the V8 JavaScript engine.
-Rob Pike previously worked on Unix and the Plan 9 distributed operating system.
-Ken Thompson designed and implemented on Unix,
-worked on the B language (which led to C), and worked on Plan 9.
-Rob Pike and Ken Thompson invented the UTF-8 Unicode encoding.
-Russ Cox previously worked on Plan 9.
-Ian Taylor previously worked on the GCC compiler.
+| Team Member     | Major Contributions Before Go                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------- |
+| Robert Griesmer | Strongtalk (Smalltalk with optional types),<br>Java Hotspot virtual machine,<br>V8 JavaScript engine        |
+| Rob Pike        | Unix, Plan 9 distributed operating system,<br>co-inventor of UTF-8 Unicode encoding                         |
+| Ken Thompson    | Unix (designed and implemented),<br>B language (led to C), Plan 9,<br>co-inventor of UTF-8 Unicode encoding |
+| Russ Cox        | Plan 9                                                                                                      |
+| Ian Taylor      | GCC compiler                                                                                                |
 
 To get a sense of the timeline for Go,
 it is useful to see some key dates.
-Go was officially announced in November 2009.
-Go 1.0 was released in March 2012.
-Go 1.10 was released in February 2016.
-Go 1.11, the latest version, was released in August 2018.
+
+| Date           | Event                   |
+| -------------- | ----------------------- |
+| September 2007 | work on Go begins       |
+| November 2009  | Go officially announced |
+| March 2012     | Go 1.0 released         |
+| February 2016  | Go 1.10 released        |
+| August 2018    | Go 1.11 released        |
 
 Many of Go's goals are in comparison to languages like C++ and Java.
 Go aims to:
@@ -121,7 +126,7 @@ These include:
 - annotations
 - thread-local storage
 
-## Reasons to avoid Go
+## Reasons To Avoid Go
 
 Reasons some developers choose not to use Go include:
 
@@ -141,21 +146,6 @@ Additional reasons related to systems programming include:
 - Go does not support pointer arithmetic
   which is needed for some types of applications.
 
-## Memory Allocation
-
-The Go specification does not indicate the situations
-under which stack memory or heap memory are used.
-The primary Go implementation makes some choices
-based on the fact that allocating on the stack is
-generally faster than allocating on the heap.
-
-The builtin `new` function always allocates on the heap.
-
-Variables declared in functions are typically allocated on the stack
-unless access to them escapes from the function
-by returning a pointer to it or setting a variable
-declared outside the function to a pointer to it.
-
 ## Important Environment Variables
 
 - `GOPATH`\
@@ -165,7 +155,7 @@ declared outside the function to a pointer to it.
   When not set, `$HOME/go` is used.
 - `GOBIN`\
   Set this to the directory where packages should be installed.
-  TODO: What happens when this is not set?
+  When not set, packages are installed in `$GOPATH/bin`.
 - `GOARCH`\
   Set this to the target architecture to use when compiling.
   When not set, the current architecture is assumed.

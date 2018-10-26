@@ -445,6 +445,21 @@ Since function parameters are passed by value,
 passing a pointer to a variable is required
 to allow a function to modify the variable.
 
+### Memory Allocation
+
+The Go specification does not indicate the situations
+under which stack memory or heap memory are used.
+The primary Go implementation makes some choices
+based on the fact that allocating on the stack is
+generally faster than allocating on the heap.
+
+The builtin `new` function always allocates on the heap.
+
+Variables declared in functions are typically allocated on the stack
+unless access to them escapes from the function
+by returning a pointer to it or setting a variable
+declared outside the function to a pointer to it.
+
 ### Output
 
 Writing to stdout and stderr is supported by the "fmt" package.

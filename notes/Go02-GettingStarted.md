@@ -530,7 +530,7 @@ is to run them before making code changes,
 save the results, make code changes,
 run the benchmark tests again, and
 compare these results to the previous results to
-verify that the changes did not cause a performance regression. 
+verify that the changes did not cause a performance regression.
 
 For more detail on Go tests, see <https://golang.org/pkg/testing/>.
 
@@ -695,6 +695,19 @@ and add the following in the `main` function.
   fmt.Println(red("Hello,"), yellow("my name is"), blue("Mark!"), chalk.Reset)
 ```
 
-### Publish Package or App to GitHub
+### Publish Package or App
 
-TODO: Add this section!!!
+Publishing a Go package or application is easy!
+
+1. Select a version control host such as GitHub, BitBucket, or GitLab.
+2. Create a repository there.
+3. Clone the repository.
+4. Commit and push the source files to it.
+5. Add a semantic version tag such as `v1.2.3` where
+   1 is the major version, 2 is the minor version, and 3 is the patch version.
+
+The `go get` command can now be used to
+retrieve a specific version of the package.
+
+For more detail on publishing, see
+<https://github.com/golang/go/wiki/PackagePublishing>.
