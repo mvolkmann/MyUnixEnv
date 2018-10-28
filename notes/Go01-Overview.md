@@ -1,4 +1,4 @@
-# Go
+# Go For It!
 
 This article is the first in a multi-part series on the Go programming language.
 It provides an overview of the language and a quick start guide.
@@ -24,7 +24,7 @@ major contributions to important software projects.
 | Rob Pike        | Unix, Plan 9 distributed operating system,<br>co-inventor of UTF-8 Unicode encoding                         |
 | Ken Thompson    | Unix (designed and implemented),<br>B language (led to C), Plan 9,<br>co-inventor of UTF-8 Unicode encoding |
 | Russ Cox        | Plan 9                                                                                                      |
-| Ian Taylor      | GCC compiler                                                                                                |
+| Ian Taylor      | GCC compiler, Taylor UUCP                                                                                   |
 
 To get a sense of the timeline for Go,
 it is useful to see some key dates.
@@ -42,7 +42,7 @@ Go aims to:
 
 - address software issues at Google
 - be simple, indicated by having a small specification
-  and fewer features that most programming languages
+  and fewer features than most programming languages
 - be very easy to read
 - enable faster software development
 - enable faster build times
@@ -66,7 +66,7 @@ Go is compiled to platform-specific machine code,
 not bytecode for a virtual machine
 that must be interpreted at runtime.
 
-Go occupies a space between between languages that are
+Go occupies a space between languages that are
 often used for systems programming (C, C++, and Rust) and
 scripting languages (JavaScript, Perl, Python, and Ruby).
 
@@ -75,7 +75,7 @@ and server-side web application development,
 including implementing REST services.
 
 The primary Go compiler and runtime are implemented in
-a combination of Go and assembler.
+a combination of Go and assembly.
 
 ## Go Lineage
 
@@ -88,7 +88,7 @@ Many previous programming languages inspired the design of Go.
 Go's characteristics at a glance include:
 
 - a relatively small language that is easy to learn
-  (the May 9, 2018 spec. is only 78 pages)
+  (the May 9, 2018 spec is only 78 pages)
 - statically typed which catches many errors at compile-time
 - type inference
 - garbage collection of variables that are no longer reachable
@@ -150,7 +150,7 @@ Additional reasons related to systems programming include:
 
 - `GOPATH`\
   Set this to the current workspace directory
-  which is where source files are located.
+  where source files are located.
   Change this when switching workspaces.
   When not set, `$HOME/go` is used.
 - `GOBIN`\
@@ -243,7 +243,7 @@ They are listed roughly in the order they should be visited.
     - uses latest stable version of Go
 - "The Go Playground": <https://play.golang.org/>
   - can enter and test code online
-  - can share code with others, but not sure how long they are retained
+  - can share code with others, but not sure how long code is retained
 - "The Go Play Space" at <https://goplay.space/>
   - a better alternative to "The Go Playground"
   - provides syntax highlighting, configurable indentation,
@@ -254,6 +254,8 @@ They are listed roughly in the order they should be visited.
   - "demonstrates the development of a simple Go package and introduces the go tool"
 - "Effective Go": <https://golang.org/doc/effective_go.html>
   - free, online "book"
+- GopherCon 2015: Robert Griesemer - The Evolution of Go:
+  <https://www.youtube.com/watch?v=0ReKdcpNyQg>
 - "The Go Programming Language Specification": <https://golang.org/ref/spec>
 - golang.org articles: <https://golang.org/doc/#articles>
   - a curated list of articles about Go
@@ -265,8 +267,10 @@ They are listed roughly in the order they should be visited.
   - "A curated list of awesome Go frameworks, libraries and software"
 - Go Walkthrough: <https://medium.com/go-walkthrough>
   - "A series of walkthroughs to help you understand the Go standard library better"
-  - seems to have stopped after seven, with the last in September 2016
-- Gophers Slack channel: <https://invite.slack.golangbridge.org/>
+  - seems to have stopped after seven walkthroughs, with the last in September 2016
+- Gophers Slack workspace: <https://invite.slack.golangbridge.org/>
+  - sponsored by Ardan Labs
+  - has a #newbies channel
 - #go-nuts channel on the Freenode IRC server
   - for real-time help
 - Go Nuts mailing list: <https://groups.google.com/forum/#!forum/golang-nuts>
@@ -277,5 +281,3 @@ They are listed roughly in the order they should be visited.
 - "Go Time" podcast: <https://changelog.com/gotime>
 - Golang Weekly: <https://golangweekly.com/>
   - "a weekly newsletter about the Go programming language"
-- GopherCon 2015: Robert Griesemer - The Evolution of Go:
-  <https://www.youtube.com/watch?v=0ReKdcpNyQg>
