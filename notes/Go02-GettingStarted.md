@@ -1,7 +1,7 @@
 ## Getting Started
 
 Let's walk through the steps to create a Go application.
-If you don't already have a GitHub (<https://github.com>)
+If you don't already have a GitHub (<https://github.com>),
 Bitbucket (<https://bitbucket.org>),
 or GitLab (<https://gitlab.com>) account,
 I recommend creating one now so you can experience publishing an app.
@@ -439,7 +439,12 @@ func TestMain(m *testing.M) {
 To run tests for multiple packages in the current workspace,
 cd to `$GOPATH` and enter `go test` followed by
 the import paths of all the packages to be tested.
-Wildcards in these import paths are not supported.
+
+Wildcards in test import paths are not supported.
+However, using `...` in place of the final directory name in the path
+runs all tests in the specified directory and subdirectories.
+For example, `go test ./..` runs all tests in the
+current package directory and those in subdirectories.
 
 When `go test` is given package import paths to run,
 it remembers (caches) successful tests.
