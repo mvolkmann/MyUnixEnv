@@ -533,8 +533,41 @@ To iterate over data in a map,
 The variables `$key` and `$value` can have different names
 and they can be accessed by actions inside the content.
 
+It's tricky business trying to get the desired whitespace in the output.
+Tools like gofmt may add replace spaces in template content with tabs,
+so trimming and the use of literal spaces is sometimes necessary.
 To trim preceding whitespace, begin an action with `{{-`.
 To trim following whitespace, end an action with `-}}`.
+
+Templates support a set of predefined functions
+that can be called in actions.
+
+Logical functions that can be used in templates
+include `and`, `or`, and `not`.
+
+Comparison functions that can be used in templates
+include `eq`, `ne`, `lt`, `le`, `gt`, and `ge`.
+
+Printing functions that can be used in templates
+include `print`, `printf`, and `println`.
+
+The `len` function returns the length of its argument.
+
+The `call` function calls the function specified in its first argument,
+passing the remaining arguments to it, and returns its result.
+This is useful when a function name is specified in the data being processed.
+
+The `html` function returns the escaped version of its
+string argument that is suitable for HTML output.
+
+The `js` function returns the escaped version of its
+string argument that is suitable for JavaScript code output.
+
+The `index` function retrieves a value from a nested structure
+composed of arrays, slices, and maps. For example,
+suppose the data being processed is in a variable named `data`.
+`index .foo 2 "bar" 3` in a template action is equivalent to
+`data.foo[2]["bar"][3]` in Go code.
 
 Let's look a full example.
 Given data describing a person,
