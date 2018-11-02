@@ -957,6 +957,124 @@ When a struct is passed to a function, a copy is made and
 changes the function makes to its fields are not visible to the caller.
 For these reasons it is common to pass pointers to structs instead of structs.
 
+### Functions
+
+Go functions are defined with `func` keyword.
+The syntax is:
+
+```go
+func functionName(param1 type1, param2 type2, ...) (returnTypes) {
+  ...
+}
+```
+
+Function arguments are passed by value
+so copies are made of arrays, slices, and structs.
+To avoid creating copies of these, pass and accept pointers.
+
+Functions cannot be overload based on their parameter types
+in order to create different implementations.
+
+When consecutive parameters have the same type,
+the type can be omitted from all but the last parameter.
+For example, `func foo(p1 int, p2 int, p3 string, p4 string)`
+is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
+
+Functions act as closures over all in-scope variables.
+
+A function can be assigned to variable
+and be called using that variable.
+For example, `fn := someFunction; fn()`.
+
+Functions can be passed as arguments to other functions
+and functions can return other functions.
+
+Anonymous functions have the same syntax, but omit the name.
+For example, `func(v int) int { return v * 2 }`.
+Anonymous functions can be assigned to a variable,
+passed to a function, or returned from a function.
+
+It is not possible to specify default values for function parameters
+and they cannot be made optional.
+However, functions can accept a variable number of arguments.
+These are referred to as variadic functions.
+
+To define a variadic function, precede the type
+of the last named parameter with an ellipsis.
+The parameter value will be a slice of the declared type, not an array.
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "strings"
+)
+
+// This accepts an number of arguments of any type.
+func log(args ...interface{}) {
+  fmt.Println(args...)
+}
+
+func report(name string, colors ...string) {
+  text := strings.Join(colors, " and ") + "."
+  fmt.Println(name, "likes the colors", text)
+}
+
+func main() {
+  log("red", 7, true) // red 7 true
+  report("Mark", "yellow", "orange") // Mark likes yellow and orange
+}
+```
+
+Functions can return zero or more values.
+When there is more than one return value, the types
+must be surrounded by parentheses and separated by commas
+For example,
+
+```go
+// This returns an int and a float64.
+func GetStats(numbers []int) (int, float64) {
+  sum := 0
+  for _, number := range numbers {
+    sum += number
+  }
+  average := float64(sum) / float64(len(numbers))
+  return sum, average
+}
+
+func main() {
+  sum, avg := GetStats(someNumbers)
+  // Do something with sum and avg.
+}
+```
+
+A common use of returning multiple values from a function is to
+return a result and a value that either describes an error or
+is a boolean that indicates whether the function was successful.
+
+The return types can have associated names.
+This enables a "naked return" where a
+`return` with no specified values will return
+the values of variables with the given names.
+For example:
+
+```go
+func mult(n int) (times2, times3 int) {
+  times2 = n * 2
+  times3 = n * 3
+  //return times2 times3 // don't need to specify return values
+  return
+}
+
+// In some other function
+n2, n3 := mult(3) // n2 is 6 and n3 is 9
+```
+
+Unless the function is very short, using this feature is frowned upon
+because the code is less readable than explicitly returning values.
+
 ### Methods
 
 Methods are functions that are invoked on a "receiver" value.
@@ -1523,126 +1641,6 @@ func main() {
   fmt.Println("size =", set.Size())  // 0
 }
 ```
-
-### Functions
-
-TODO: Move this to before section on methods.
-
-Go functions are defined with `func` keyword.
-The syntax is:
-
-```go
-func functionName(param1 type1, param2 type2, ...) (returnTypes) {
-  ...
-}
-```
-
-Function arguments are passed by value
-so copies are made of arrays, slices, and structs.
-To avoid creating copies of these, pass and accept pointers.
-
-Functions cannot be overload based on their parameter types
-in order to create different implementations.
-
-When consecutive parameters have the same type,
-the type can be omitted from all but the last parameter.
-For example, `func foo(p1 int, p2 int, p3 string, p4 string)`
-is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
-
-Functions act as closures over all in-scope variables.
-
-A function can be assigned to variable
-and be called using that variable.
-For example, `fn := someFunction; fn()`.
-
-Functions can be passed as arguments to other functions
-and functions can return other functions.
-
-Anonymous functions have the same syntax, but omit the name.
-For example, `func(v int) int { return v * 2 }`.
-Anonymous functions can be assigned to a variable,
-passed to a function, or returned from a function.
-
-It is not possible to specify default values for function parameters
-and they cannot be made optional.
-However, functions can accept a variable number of arguments.
-These are referred to as variadic functions.
-
-To define a variadic function, precede the type
-of the last named parameter with an ellipsis.
-The parameter value will be a slice of the declared type, not an array.
-For example:
-
-```go
-package main
-
-import (
-  "fmt"
-  "strings"
-)
-
-// This accepts an number of arguments of any type.
-func log(args ...interface{}) {
-  fmt.Println(args...)
-}
-
-func report(name string, colors ...string) {
-  text := strings.Join(colors, " and ") + "."
-  fmt.Println(name, "likes the colors", text)
-}
-
-func main() {
-  log("red", 7, true) // red 7 true
-  report("Mark", "yellow", "orange") // Mark likes yellow and orange
-}
-```
-
-Functions can return zero or more values.
-When there is more than one return value, the types
-must be surrounded by parentheses and separated by commas
-For example,
-
-```go
-// This returns an int and a float64.
-func GetStats(numbers []int) (int, float64) {
-  sum := 0
-  for _, number := range numbers {
-    sum += number
-  }
-  average := float64(sum) / float64(len(numbers))
-  return sum, average
-}
-
-func main() {
-  sum, avg := GetStats(someNumbers)
-  // Do something with sum and avg.
-}
-```
-
-A common use of returning multiple values from a function is to
-return a result and a value that either describes an error or
-is a boolean that indicates whether the function was successful.
-
-The return types can have associated names.
-This enables a "naked return" where a
-`return` with no specified values will return
-the values of variables with the given names.
-For example:
-
-```go
-func mult(n int) (times2, times3 int) {
-  times2 = n * 2
-  times3 = n * 3
-  //return times2 times3 // don't need to specify return values
-  return
-}
-
-// In some other function
-n2, n3 := mult(3) // n2 is 6 and n3 is 9
-```
-
-Unless the function is very short, using this feature is frowned upon
-because the code is less readable than explicitly returning values.
 
 ### Deferred Functions
 

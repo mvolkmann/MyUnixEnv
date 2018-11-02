@@ -534,8 +534,11 @@ The variables `$key` and `$value` can have different names
 and they can be accessed by actions inside the content.
 
 It's tricky business trying to get the desired whitespace in the output.
-Tools like gofmt may add replace spaces in template content with tabs,
+Tools like gofmt may replace spaces in template content with tabs,
 so trimming and the use of literal spaces is sometimes necessary.
+This is one reason to read template content from a file
+instead of embedding it in `.go` source files.
+
 To trim preceding whitespace, begin an action with `{{-`.
 To trim following whitespace, end an action with `-}}`.
 
@@ -572,6 +575,12 @@ suppose the data being processed is in a variable named `data`.
 `index .foo 2 "bar" 3` in a template action is equivalent to
 `data.foo[2]["bar"][3]` in Go code.
 
+To call custom functions inside a template, they must be
+registered with the template by calling the `Funcs` method.
+This takes a `FuncMap` which is a map
+where keys are string function names
+and the values are matching functions.
+
 Let's look a full example.
 Given data describing a person,
 their favorite colors, and their favorite athletes,
@@ -584,13 +593,41 @@ The favorite colors of Mark Volkmann are
   orange
 The longest color name is yellow.
 
+Salary doubled = 2468
+Total Points = 34
+
 Favorite Players
   basketball: Michael Jordan
   hockey: Wayne Gretzky
   tennis: Roger Federer
 ```
 
-Here is code to do this:
+Here is a template for creating this output
+from a file named `template.txt` that is in
+the same directory as the Go code that follows:
+
+```text
+{{$longest := "foo"}}
+The favorite colors of{{" "}}
+{{- .FirstName}} {{.LastName}} are
+{{- range .Colors}}
+  {{- if gt (len .) (len $longest)}}
+    {{- $longest = .}}
+  {{- end}}
+{{.}}
+{{- end}}
+The longest color name is {{$longest}}.
+
+Salary doubled = {{double .Salary}}
+Total Points = {{sum .PointsPerQuarter}}
+
+Favorite Players
+{{range $sport, $player := .Players}}
+  {{- "  "}}{{$sport}}: {{$player}}
+{{end}}
+```
+
+Here is Go code to use this template:
 
 ```go
 package main
@@ -614,33 +651,36 @@ type Person struct {
 
 func main() {
   person := Person{
-    FirstName: "Mark",
-    LastName:  "Volkmann",
-    Colors:    []string{"yellow", "orange", "red"},
-    Players:   StringMap{
+    FirstName:        "Mark",
+    LastName:         "Volkmann",
+    Salary:           1234,
+    PointsPerQuarter: []int{10, 0, 7, 17},
+    Colors:           []string{"red", "yellow", "orange"},
+    Players: StringMap{
       "basketball": "Michael Jordan",
       "hockey":     "Wayne Gretzky",
       "tennis":     "Roger Federer",
     },
   }
 
-  content := `{{$longest := "foo"}}
-The favorite colors of{{" "}}
-{{- .FirstName}} {{.LastName}} are
-{{- range .Colors}}
-  {{- if gt (len .) (len $longest)}}
-    {{- $longest = .}}
-  {{- end}}
-{{.}}
-{{- end}}
-The longest color name is {{$longest}}.
+  funcMap := template.FuncMap{
+    "double": func(n int) int { return n * 2 },
+    "sum": func(numbers []int) int {
+      result := 0
+      for _, n := range numbers {
+        result += n
+      }
+      return result
+    },
+  }
 
-Favorite Players
-{{range $sport, $player := .Players}}
-  {{- "  "}}{{$sport}}: {{$player}}
-{{end}}`
-
-  myTemplate := template.Must(template.New("my template").Parse(content))
+  // Panic on errors.
+  fileName := "template.txt"
+  myTemplate := template.Must(
+    template.
+      New(fileName).
+      Funcs(funcMap).
+      ParseFiles(fileName))
 
   err = myTemplate.Execute(os.Stdout, person)
   if err != nil {
@@ -649,16 +689,8 @@ Favorite Players
 }
 ```
 
-To call custom functions inside a template, they must be
-registered with the template by calling the `Funcs` method.
-This takes a `FuncMap` which is a map
-where keys are string function names
-and the values are matching functions.
-
 Using `html/template` package has the same API as the `text/template` package,
 but adds escaping of strings to avoid injection attacks.
-
-TODO: FINISH THIS!
 
 ## HTTP Servers
 
