@@ -511,7 +511,18 @@ To conditionally include content,
 {{end}}
 ```
 
-To iterate over data in an array, slice, map, or channel,
+To iterate over data in an array, slice, or channel,
+
+```go
+{{range pipeline}}
+  content
+{{end}}
+```
+
+To refer to the current iteration value inside the content,
+use dot.
+
+To iterate over data in a map,
 
 ```go
 {{range $key $value := pipeline}}
@@ -523,17 +534,24 @@ The variables `$key` and `$value` can have different names
 and they can be accessed by actions inside the content.
 
 To trim preceding whitespace, begin an action with `{{-`.
-To trim following whitespace, end an action with `- }}`.
+To trim following whitespace, end an action with `-}}`.
 
 Let's look a full example.
-Given data describing a person and their favorite colors
+Given data describing a person,
+their favorite colors, and their favorite athletes,
 we want to produce output like the following:
 
 ```text
 The favorite colors of Mark Volkmann are
+  red
   yellow
   orange
-  red
+The longest color name is yellow.
+
+Favorite Players
+  basketball: Michael Jordan
+  hockey: Wayne Gretzky
+  tennis: Roger Federer
 ```
 
 Here is code to do this:
@@ -547,11 +565,15 @@ import (
   "text/template"
 )
 
+// StringMap is a map with string keys and values.
+type StringMap map[string]string
+
 // Person describes a person.
 type Person struct {
   FirstName string
   LastName  string
   Colors    []string
+  Players   StringMap
 }
 
 func main() {
@@ -559,12 +581,28 @@ func main() {
     FirstName: "Mark",
     LastName:  "Volkmann",
     Colors:    []string{"yellow", "orange", "red"},
+    Players:   StringMap{
+      "basketball": "Michael Jordan",
+      "hockey":     "Wayne Gretzky",
+      "tennis":     "Roger Federer",
+    },
   }
 
-  content := `The favorite colors of{{" "}}
+  content := `{{$longest := "foo"}}
+The favorite colors of{{" "}}
 {{- .FirstName}} {{.LastName}} are
 {{- range .Colors}}
-  {{.}}{{end}}`
+  {{- if gt (len .) (len $longest)}}
+    {{- $longest = .}}
+  {{- end}}
+{{.}}
+{{- end}}
+The longest color name is {{$longest}}.
+
+Favorite Players
+{{range $sport, $player := .Players}}
+  {{- "  "}}{{$sport}}: {{$player}}
+{{end}}`
 
   myTemplate := template.Must(template.New("my template").Parse(content))
 
