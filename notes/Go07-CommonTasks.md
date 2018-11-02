@@ -394,8 +394,13 @@ To create a template, call `template.New` which takes a template name
 that can be used to embed the template inside other templates.
 For example, `myTemplate := template.New("template name")`.
 
-To add content to a template, call the `Parse` method on it.
+To add content to a template from a string, call the `Parse` method on it.
 For example, `myTemplate, err := myTemplate.Parse(content)`.
+
+To add content to a template from a file, call the `ParseFiles` method on it.
+For example, `myTemplate, err := myTemplate.ParseFiles(filePath1, filePath2, ...)`.
+Reading from more than one file supports
+having templates that embed other templates.
 
 The steps to create a template and add content can be combined.
 For example,
@@ -412,7 +417,9 @@ For example,
 myTemplate := template.Must(template.New("template name").Parse(content))
 ```
 
-To produce a string by applying a template to data in a struct or map,
+To produce a string by applying a template
+to data in a struct, a map, or
+the result of a given function that takes no arguments.
 call the `Execute` method on the template,
 passing it a pointer to a `bytes.Buffer` and the data.
 The result is written to the buffer.
@@ -427,11 +434,14 @@ To write the result of applying a template to stdout,
 pass `os.Stdout` in place of a `bytes.Buffer`.
 For example, `err = myTemplate.Execute(os.Stdout, data)`.
 
-The data structure passed to execute can be accessed in the template
-using a dot (`.`).
+The data structure passed to `execute`
+can be accessed in the template using a dot (`.`).
 Fields of structs and maps can be accessed by name after a dot.
 
-For example, supposed the data is a struct with the following type defintion.
+If a function is passed to `execute`,
+it can be called by using `call .` in an action.
+
+For example, supposed the data is a struct with the following type definition.
 
 ```go
 type Person struct {
@@ -446,14 +456,22 @@ type Person struct {
 To output the name, use `{{.Name}}`.
 To output the city, use `{{.Address.City}}`.
 
-Template actions can set variables, conditionally include content, loop over data,
+Template actions can set variables,
+conditionally include content, loop over data,
 and indicate whether whitespace should be trimmed.
 
 Variable names start with a dollar sign.
+They are useful to capture the result of
+a complex pipeline (described below)
+so it can be reused without recalculating.
 To set a variable, `{{$name := value}}`.
 To output the value of a variable, use `{{$name}}`.
 
 A pipeline is a sequence of one or more commands.
+This is similar to shell script pipes.
+It allows the results of functions and methods
+to be used as the final argument in
+a call to another function or method.
 
 A command is simple value, function call, or method call.
 
@@ -467,10 +485,21 @@ the dot can be followed by a key.
 When the value at the cursor has methods,
 the dot can be follow by the name of a method that has no parameters.
 
-A function call is a function name followed by
-a space-separated list of arguments.
+Chaining is supported by using multiple dots.
 
-A method call is ...
+A function call is a function name followed by
+a space-separated list of arguments
+that are simple values.
+This means that dot expressions can be used as arguments
+in order to pass input data to functions.
+
+A method call is similar a function call.
+To call a method using the cursor value as the receiver,
+begin with a dot, followed by a method name
+and a space-separated list of arguments.
+To call a method on an explicit receiver,
+begin with the receiver, followed by a dot,
+the method name, and the arguments.
 
 To conditionally include content,
 
@@ -482,13 +511,16 @@ To conditionally include content,
 {{end}}
 ```
 
-To loop over data,
+To iterate over data in an array, slice, map, or channel,
 
 ```go
-{{range pipeline}}
+{{range $key $value := pipeline}}
   content
 {{end}}
 ```
+
+The variables `$key` and `$value` can have different names
+and they can be accessed by actions inside the content.
 
 To trim preceding whitespace, begin an action with `{{-`.
 To trim following whitespace, end an action with `- }}`.
@@ -542,6 +574,12 @@ func main() {
   }
 }
 ```
+
+To call custom functions inside a template, they must be
+registered with the template by calling the `Funcs` method.
+This takes a `FuncMap` which is a map
+where keys are string function names
+and the values are matching functions.
 
 Using `html/template` package has the same API as the `text/template` package,
 but adds escaping of strings to avoid injection attacks.
