@@ -582,8 +582,9 @@ where keys are string function names
 and the values are matching functions.
 
 Let's look a full example.
-Given data describing a person,
-their favorite colors, and their favorite athletes,
+Given data describing a person including their
+salary, favorite colors, points scored in a game,
+and favorite athletes,
 we want to produce output like the following:
 
 ```text
@@ -638,15 +639,14 @@ import (
   "text/template"
 )
 
-// StringMap is a map with string keys and values.
-type StringMap map[string]string
-
 // Person describes a person.
 type Person struct {
-  FirstName string
-  LastName  string
-  Colors    []string
-  Players   StringMap
+  FirstName        string
+  LastName         string
+  Salary           int
+  PointsPerQuarter []int
+  Colors           []string
+  Players          map[string]string
 }
 
 func main() {
@@ -656,13 +656,15 @@ func main() {
     Salary:           1234,
     PointsPerQuarter: []int{10, 0, 7, 17},
     Colors:           []string{"red", "yellow", "orange"},
-    Players: StringMap{
+    Players: map[string]string{
       "basketball": "Michael Jordan",
       "hockey":     "Wayne Gretzky",
       "tennis":     "Roger Federer",
     },
   }
 
+  // These are functions we want to make available
+  // for use inside the template.
   funcMap := template.FuncMap{
     "double": func(n int) int { return n * 2 },
     "sum": func(numbers []int) int {
@@ -674,9 +676,8 @@ func main() {
     },
   }
 
-  // Panic on errors.
   fileName := "template.txt"
-  myTemplate := template.Must(
+  myTemplate := template.Must( // panics on errors
     template.
       New(fileName).
       Funcs(funcMap).
