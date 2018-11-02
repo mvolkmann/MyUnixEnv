@@ -976,7 +976,7 @@ Functions cannot be overload based on their parameter types
 in order to create different implementations.
 
 When consecutive parameters have the same type,
-the type can be omitted from all but the last parameter.
+the type can be omitted from all but the last.
 For example, `func foo(p1 int, p2 int, p3 string, p4 string)`
 is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
 
@@ -1029,8 +1029,12 @@ func main() {
 ```
 
 Functions can return zero or more values.
-When there is more than one return value, the types
-must be surrounded by parentheses and separated by commas
+When there are no return values, the list of return types is omitted.
+When there is one return values, its type is provided,
+but the parentheses around it are optional and typically omitted.
+When there are multiple return value, the types
+must be surrounded by parentheses and separated by commas.
+
 For example,
 
 ```go
@@ -1074,6 +1078,40 @@ n2, n3 := mult(3) // n2 is 6 and n3 is 9
 
 Unless the function is very short, using this feature is frowned upon
 because the code is less readable than explicitly returning values.
+
+Functions have a type that is defined by their signature.
+This is based on the order and type of the parameters
+and the order of the return types.
+The function name, parameter names,
+and any return value names
+are not part of the signature.
+
+Function types can be important when passing functions
+or returning functions to/from another.
+
+It is sometimes useful to define a type for a function signature
+to avoid repeating a long definition.
+For example,
+
+```go
+package main
+
+import "fmt"
+
+type CalculateFn func(float64, float64) float64
+
+func product(a float64, b float64) float64 {
+  return a * b
+}
+
+func process(m float64, n float64, fn CalculateFn) float64 {
+  return fn(m, n)
+}
+
+func main() {
+  fmt.Println("result =", process(2, 3, product)) // 6
+}
+```
 
 ### Methods
 
