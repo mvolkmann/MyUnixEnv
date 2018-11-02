@@ -620,13 +620,17 @@ The favorite colors of{{" "}}
 The longest color name is {{$longest}}.
 
 Salary doubled = {{double .Salary}}
-Total Points = {{sum .PointsPerQuarter}}
+Total Points = {{.PointsPerQuarter | sum}}
 
 Favorite Players
 {{range $sport, $player := .Players}}
   {{- "  "}}{{$sport}}: {{$player}}
 {{end}}
 ```
+
+In this example,
+`{{double .Salary}}` is equivalent to `{{.Salary | double}}` and
+`{{sum .PointsPerQuarter}}` is equivalent to `{{.PointsPerQuarter | sum}}`.
 
 Here is Go code to use this template:
 
