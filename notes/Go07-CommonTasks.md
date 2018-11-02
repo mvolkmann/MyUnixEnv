@@ -560,6 +560,9 @@ This is useful when a function name is specified in the data being processed.
 The `html` function returns the escaped version of its
 string argument that is suitable for HTML output.
 
+The `urlquery` function returns the escaped version of its
+string argument that is suitable for using in a URL query.
+
 The `js` function returns the escaped version of its
 string argument that is suitable for JavaScript code output.
 
