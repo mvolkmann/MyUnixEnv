@@ -970,7 +970,11 @@ func functionName(param1 type1, param2 type2, ...) (returnTypes) {
 
 Function arguments are passed by value
 so copies are made of arrays, slices, and structs.
-To avoid creating copies of these, pass and accept pointers.
+To avoid creating copies of these and enable the function
+to make changes that are visible to the caller,
+pass and accept pointers.
+
+Function parameters are local variables inside the function.
 
 Functions cannot be overload based on their parameter types
 in order to create different implementations.
@@ -1058,8 +1062,9 @@ A common use of returning multiple values from a function is to
 return a result and a value that either describes an error or
 is a boolean that indicates whether the function was successful.
 
-The return types can have associated names.
-This enables a "naked return" where a
+Function return types can have associated names
+that become local variables inside the function.
+This enables "naked returns" where a
 `return` with no specified values will return
 the values of variables with the given names.
 For example:
@@ -1112,6 +1117,19 @@ func main() {
   fmt.Println("result =", process(2, 3, product)) // 6
 }
 ```
+
+Like in most programming languages, Go functions can be recursive.
+But most languages use a fixed-size stack
+that limits the depth of recursive calls.
+Generally programs crash when they exceed this.
+
+Go uses a variable-size stack that grows as needed.
+This allows Go functions to support a higher recursive depth
+than most languages without crashing.
+
+The maximum stack size for 64-bit systems is 1GB by default.
+This can be modified by calling the `SetMaxStack` function
+in the `runtime/debug` standard library package.
 
 ### Methods
 

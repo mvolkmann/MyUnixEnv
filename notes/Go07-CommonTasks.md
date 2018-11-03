@@ -977,11 +977,14 @@ func main() {
 
 ## Calling other languages from Go
 
+Function definitions with no body indicate that the
+function is implemented in a different programming language.
+
 The `cgo` tool allows Go code to call C code.
 For more detail, see <https://golang.org/cmd/cgo/>.
 
-If needed, the C code can use the Java Native Interface (JNI)
-to call Java code.
+To call Java code from Go, write C code that uses
+the Java Native Interface (JNI) to call Java code.
 
 ## Calling Go from other languages
 
