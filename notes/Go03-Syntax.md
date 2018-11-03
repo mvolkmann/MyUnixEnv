@@ -1062,6 +1062,19 @@ A common use of returning multiple values from a function is to
 return a result and a value that either describes an error or
 is a boolean that indicates whether the function was successful.
 
+For example, the `ReadFile` function
+in the `io/ioutil` standard library package
+takes a file path and returns
+a byte array and an error description.
+
+```go
+bytes, err := ioutil.ReadFile("haiku.txt")
+if err != nil {
+  log.Fatal(err)
+}
+// Do something with bytes.
+```
+
 Function return types can have associated names
 that become local variables inside the function.
 This enables "naked returns" where a
