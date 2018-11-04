@@ -132,8 +132,8 @@ including ones for reading from strings, files, and network connections.
 To read from a string, see <https://tour.golang.org/methods/21>.
 
 One way to read from a file is to use the package `io/ioutil`
-which defines a `ReadFile` function
-that reads the entire file in one call.
+which defines a `ReadFile` function.
+This reads the entire file in one call.
 
 For example:
 
@@ -157,8 +157,43 @@ func main() {
 }
 ```
 
-To read data a little at a time,
-TODO: Add this part!
+When there is an attempt to read past the end of a stream,
+an `io.EOF` error is returned.
+Some ways of reading from a stream check for this
+so the error is never generated.
+For example, a "scanner" can be used to
+read the lines in a file one at a time.
+
+```go
+package main
+
+import (
+  "bufio"
+  "fmt"
+  "log"
+  "os"
+)
+
+func main() {
+  // Get an os.File which implements the io.Reader interface
+  // by having a Read method.
+  file, err := os.Open("haiku.txt")
+  if err != nil {
+    log.Fatal(err)
+  }
+  defer file.Close()
+
+  scanner := bufio.NewScanner(file) // takes an io.Reader
+  for scanner.Scan() { // returns true if another line was read
+    fmt.Println(count, scanner.Text())
+  }
+
+  // Check for any errors from the calls to Scan and Text.
+  if err := scanner.Err(); err != nil {
+    log.Fatal(err)
+  }
+}
+```
 
 ## Writers
 

@@ -2065,16 +2065,10 @@ func divide(a, b float32) (float32, error) {
 }
 
 func main() {
-  // A common idiom for error checking is
-  // using the optional assignment in an "if".
-  if q, err = divide(7, 0); err != nil {
-    fmt.Println(err) // prints error message
-    return
+  q, err := divide(7, 0)
+  if err != nil {
+    log.Fatal(err)
   }
-
-  // Note how potential errors are handled in the if body.
-  // This allows the following "mainline code" to appear un-indented
-  // and is the recommended Go style.
   fmt.Print(q)
 }
 ```
@@ -2101,6 +2095,30 @@ func divide2(a, b float32) (float32, error) {
   }
   return a / b, nil // no error
 }
+```
+
+It is a convention in Go to handle error conditions before success.
+This allows "mainline code" that follows to appear un-indented.
+For example, instead of:
+
+```go
+result, err := someFunction()
+if err == nil {
+  // Do something with result.
+} else {
+  // Handle errors
+}
+```
+
+the following is preferred:
+
+```go
+result, err := someFunction()
+if err != nil {
+  // Handle errors
+  return
+}
+// Do something with result.
 ```
 
 TODO: Discuss panic and recover! Did you already do that in a different section?
