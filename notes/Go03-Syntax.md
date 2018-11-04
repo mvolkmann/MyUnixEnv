@@ -1039,6 +1039,11 @@ but the parentheses around it are optional and typically omitted.
 When there are multiple return value, the types
 must be surrounded by parentheses and separated by commas.
 
+When calling a function, all return values
+must be captured in a variable.
+The "blank identifier" (\_) can be
+used to capture unneeded return values.
+
 For example,
 
 ```go
@@ -1061,6 +1066,8 @@ func main() {
 A common use of returning multiple values from a function is to
 return a result and a value that either describes an error or
 is a boolean that indicates whether the function was successful.
+Using a boolean is preferred when
+there is only way the function can fail.
 
 For example, the `ReadFile` function
 in the `io/ioutil` standard library package
@@ -1075,10 +1082,17 @@ if err != nil {
 // Do something with bytes.
 ```
 
+For details on error handling,
+see the "Error Handling" section later.
+
+A function call can appear as the only argument
+in another function call. The return values
+become the actual arguments to the outer call.
+
 Function return types can have associated names
 that become local variables inside the function.
-This enables "naked returns" where a
-`return` with no specified values will return
+This enables "naked" (a.k.a. "bare") returns where
+a `return` with no specified values will return
 the values of variables with the given names.
 For example:
 
@@ -2004,15 +2018,33 @@ func main() {
 
 ### Error Handling
 
-Go does not support exceptions.
-Instead functions that may encounter errors have an
-additional return value of type `error` that callers should check.
-The type `error` is a builtin interface that defines a single method `Error`
-that returns a string description of the error.
+Go does not support exceptions,
+and thus no try/catch/finally keywords.
+Instead functions that may encounter errors have
+an additional return value of type `error`
+that callers should check.
+When there is no error, this return value is `nil`.
 
-The standard library creates and exports many instances of this interface.
-It is also possible to define custom implementations of the
-`error` interface that hold additional data describing the error.
+Go prefers this error handling approach
+over using exceptions.
+One reason is that it requires
+handling errors as they occur
+rather than grouping a happy path of statements
+in a try block and handling errors
+with catch blocks at the end.
+Another reason is that exception handling typically
+allows a program to terminate with a stack trace
+when an unhandled error occurs.
+
+The type `error` is a builtin interface
+that defines a single method `Error`
+which returns a string description of the error.
+
+The standard library creates and exports
+many instances of this interface.
+It is also possible to define
+custom implementations of the `error` interface
+that hold additional data describing the error.
 
 The `errors` package defines a `New` method
 that can be used to create error instances from a string.
@@ -2046,6 +2078,9 @@ func main() {
   fmt.Print(q)
 }
 ```
+
+When an error is returned, typically the other return values
+are not be expected to be usable values.
 
 Here is an example of defining a custom error type, `DivideByZero`,
 that holds an error message and the numerator value.

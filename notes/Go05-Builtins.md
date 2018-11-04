@@ -355,10 +355,40 @@ to output a newline character.
 The standard library `log` package provides methods that
 help with writing error messages to stderr.
 
-`log.Fatal(message)` outputs a line containing the date, time, and message,
+By default, `log.Fatal(message)` outputs a line
+containing the date, time, and message,
 and exits with a status code of 1.
 
-`log.Panic(message)` outputs a line containing the date, time, and message,
+By default, `log.Fatalf(formatString, args)` is similar,
+but uses a format string to specify the message string
+that includes placeholders for the remaining arguments.
+
+Including the date and time in log messages
+is useful in long-running applications
+like web servers.
+
+A custom prefix can be added to all messages
+produced by the `log` package
+by calling `log.SetPrefix(prefix)`.
+
+The date and time can be suppressed
+in all messages produced by the `log` package
+by calling `log.SetFlags(0)`.
+This function takes an integer which is the result of or'ing
+predefined constants that identify potential prefixes.
+
+The constants are:
+
+- `Ldate` - yyyy/mm/dd in local time zone
+- `Ltime` - hh:mm:ss in local time zone
+- `Lmicroseconds` - hh:mm:ss.microseconds
+- `Llongfile` - full-file-path:line-number
+- `Lshortfile` - file-name.file-extension:line-number
+- `LUTC` - use UTC instead of local time zone for dates and times
+- `LstdFlags` - same as `Ldate | Ltime`; default flag value
+
+`log.Panic(message)` outputs a line
+containing the date, time, and message,
 followed by a line containing "panic:" and the message again,
 followed by a stack trace,
 and exits with a status code of 2.
