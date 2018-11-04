@@ -960,13 +960,22 @@ For these reasons it is common to pass pointers to structs instead of structs.
 ### Functions
 
 Go functions are defined with `func` keyword.
-The syntax is:
+The syntax for named functions is:
 
 ```go
 func functionName(param1 type1, param2 type2, ...) (returnTypes) {
   ...
 }
 ```
+
+Named functions must be declared at the package level,
+not nested inside other functions.
+
+Anonymous functions have the same syntax, but omit the name.
+For example, `func(v int) int { return v * 2 }`.
+
+Unlike named functions, anonymous functions
+can be defined inside other functions.
 
 Function arguments are passed by value
 so copies are made of arrays, slices, and structs.
@@ -986,17 +995,18 @@ is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
 
 Functions act as closures over all in-scope variables.
 
-A function can be assigned to variable
-and be called using that variable.
+Named and anonymous functions are first-class values.
+This means they can be stored in variables,
+passed as arguments to other functions,
+and returned from other functions.
+
+When a function is assigned to variable,
+it can be called using that variable.
 For example, `fn := someFunction; fn()`.
 
-Functions can be passed as arguments to other functions
-and functions can return other functions.
-
-Anonymous functions have the same syntax, but omit the name.
-For example, `func(v int) int { return v * 2 }`.
-Anonymous functions can be assigned to a variable,
-passed to a function, or returned from a function.
+If a variable with a function type is not assigned a value,
+it defaults to nil.
+If a call is made on a nil variable, a panic is triggered.
 
 It is not possible to specify default values for function parameters
 and they cannot be made optional.
@@ -1157,6 +1167,27 @@ than most languages without crashing.
 The maximum stack size for 64-bit systems is 1GB by default.
 This can be modified by calling the `SetMaxStack` function
 in the `runtime/debug` standard library package.
+
+Typically the lifetime of a variable declared inside
+a function is the duration of a call to that function.
+However, the fact that functions are closures
+creates an exception. For example,
+
+```go
+func closureDemo() func() {
+  // The lifetime of this variable is the lifetime
+  // of the function returned by this function.
+  secret := "Don't tell!"
+  return func () {
+    fmt.Println(secret); // captures local variable secret
+  }
+}
+
+func main() {
+  fn := closureDemo();
+  fn(); // Don't tell!
+}
+```
 
 ### Methods
 

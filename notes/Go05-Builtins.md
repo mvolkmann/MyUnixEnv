@@ -342,13 +342,28 @@ The most commonly used functions in this package include:
   to stdout, separated by spaces and followed by a newline.
 
 Format strings can contain placeholders that begin with a percent sign.
-These are referred to as "verbs". Commonly used verbs include
-`%d` for decimal values, `%f` for floating point values,
-`%t` for boolean values, `%s` for strings,
-`%v` for any value, and `%T` to output the type of a value.
+These are referred to as "verbs". Commonly used verbs include:
+
+- `%d` for decimal values
+- `%f` for floating point values,
+- `%t` for boolean values
+- `%s` for strings,
+- `%v` for any value
+- `%T` to output the type of a value
+- `%*s` to output a string with a number of leading spaces
+  (This consumes two values, the number of leading spaces and the string to follow.)
 
 It is common for format strings to end with `\n`
 to output a newline character.
+
+For example, to output a number indented by
+the number spaces specified in the variable `indent`,
+
+```go
+indent := 4
+number := 19
+fmt.Printf("%*s%d\n", indent, "", number)
+```
 
 ## Logging
 
