@@ -659,8 +659,9 @@ For example, `utf8.RuneCountInString(name)`.
 
 To retrieve a byte from a string, `char := name[index]`.
 Attempting to retrieve a byte at an index beyond the end
-triggers a panic.
-TODO: DESCRIBE WHAT A PANIC IS AHEAD OF THIS!
+triggers a panic, which is a runtime error
+that typically causes the application to terminate
+(see the "Error Handling" section for more detail).
 
 To retrieve a UTF-8 character as a rune,
 use the `unicode/utf8` package.
@@ -977,6 +978,19 @@ For example, `func(v int) int { return v * 2 }`.
 Unlike named functions, anonymous functions
 can be defined inside other functions.
 
+Both named and anonymous functions are first-class values.
+This means they can be stored in variables,
+passed as arguments to other functions,
+and returned from other functions.
+
+When a function is assigned to variable,
+it can be called using that variable.
+For example, `fn := someFunction; fn()`.
+
+If a variable with a function type is not assigned a value,
+it defaults to nil.
+If a call is made on a nil variable, a panic is triggered.
+
 Function arguments are passed by value
 so copies are made of arrays, slices, and structs.
 To avoid creating copies of these and enable the function
@@ -993,21 +1007,6 @@ the type can be omitted from all but the last.
 For example, `func foo(p1 int, p2 int, p3 string, p4 string)`
 is is equivalent to `func foo(p1, p2 int, p3, p4 string)`.
 
-Functions act as closures over all in-scope variables.
-
-Named and anonymous functions are first-class values.
-This means they can be stored in variables,
-passed as arguments to other functions,
-and returned from other functions.
-
-When a function is assigned to variable,
-it can be called using that variable.
-For example, `fn := someFunction; fn()`.
-
-If a variable with a function type is not assigned a value,
-it defaults to nil.
-If a call is made on a nil variable, a panic is triggered.
-
 It is not possible to specify default values for function parameters
 and they cannot be made optional.
 However, functions can accept a variable number of arguments.
@@ -1015,7 +1014,11 @@ These are referred to as variadic functions.
 
 To define a variadic function, precede the type
 of the last named parameter with an ellipsis.
-The parameter value will be a slice of the declared type, not an array.
+When the function is called, behind the scenes
+an array is created to hold all the arguments
+after the initial ones
+and a slice over that array is passed
+which becomes the value of the last parameter.
 For example:
 
 ```go
@@ -1026,11 +1029,14 @@ import (
   "strings"
 )
 
-// This accepts an number of arguments of any type.
+// The type "interface{}" means
+// that any type can be used.
 func log(args ...interface{}) {
   fmt.Println(args...)
 }
 
+// This accepts a person name followed by
+// any number of color names.
 func report(name string, colors ...string) {
   text := strings.Join(colors, " and ") + "."
   fmt.Println(name, "likes the colors", text)
@@ -1041,6 +1047,12 @@ func main() {
   report("Mark", "yellow", "orange") // Mark likes yellow and orange
 }
 ```
+
+If the values to be passed to a variadic function
+are already in a variable that holds a slice,
+follow the variable name with an ellipsis.
+If they are in an array, first create a slice over it.
+For example, `values[:]...`.
 
 Functions can return zero or more values.
 When there are no return values, the list of return types is omitted.
@@ -1167,6 +1179,11 @@ than most languages without crashing.
 The maximum stack size for 64-bit systems is 1GB by default.
 This can be modified by calling the `SetMaxStack` function
 in the `runtime/debug` standard library package.
+
+Functions act as closures over all in-scope variables.
+This allows nested, anonymous functions
+to retain access to and modify variables
+that are in the scope of their definition.
 
 Typically the lifetime of a variable declared inside
 a function is the duration of a call to that function.
@@ -1303,8 +1320,9 @@ This creates an array with a length of five
 where only the first three elements are explicitly initialized.
 The remaining elements are initialized to their zero value.
 
-To create an array whose length is the same as the number of
-supplied initial values, place an ellipsis inside the square brackets
+To create an array whose length is
+the same as the number of supplied initial values,
+place an ellipsis inside the square brackets
 instead of a length.
 For example, `rgb := [...]int{100, 50, 234}`.
 This creates an array with a length of three.
@@ -1765,11 +1783,16 @@ but the function will not execute until the containing function exits.
 All deferred calls are placed on a stack and
 executed in the reverse order from which they are evaluated.
 
+A deferred function can change the values returned
+by a function by simply returning other values.
+
 Deferred functions are typically used for resource cleanup
 that must occur regardless of the code path taken in the function.
-Examples include closing files or network connections.
+Examples include closing files, closing network connections,
+unlocking mutexes, and logging function results/exits.
 
-This is an alternative to the `try`/`finally` syntax found in other languages.
+This is an alternative to the `try`/`finally` syntax
+found in other languages.
 
 Here is an example of using `defer` to
 log how long it takes for a function to execute:
@@ -1824,8 +1847,8 @@ If a value has not be assigned to the variable,
 calling a method on it results in an error.
 
 An interface with no methods, referred to as the "empty interface",
-matches every type.
-This can be given a name such as "any" using `type any interface{}`.
+matches every type. This can be given a name
+such as "any" using `type any interface{}`.
 
 The following code defines an interface and two types that implement it:
 
@@ -1886,7 +1909,7 @@ func main() {
 A "type assertion" verifies that the value of
 an interface variable refers to a specific type.
 If it does, the same value is returned, but with the asserted type.
-If it does not, a runtime panic is triggered.
+If it does not, a panic is triggered.
 
 For example, consider `myShape := g.(Circle)`.
 If `g` does refer to a `Circle` then the type of `myShape` is `Circle`.
@@ -2152,4 +2175,9 @@ if err != nil {
 // Do something with result.
 ```
 
-TODO: Discuss panic and recover! Did you already do that in a different section?
+#### Panics
+
+TODO: A panic is ...
+
+It is possible to recover from a panic.
+TODO: Add detail.
