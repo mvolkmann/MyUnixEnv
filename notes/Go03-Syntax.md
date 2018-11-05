@@ -960,6 +960,8 @@ For these reasons it is common to pass pointers to structs instead of structs.
 
 ### Functions
 
+#### The Basics
+
 Go functions are defined with `func` keyword.
 The syntax for named functions is:
 
@@ -997,6 +999,8 @@ To avoid creating copies of these and enable the function
 to make changes that are visible to the caller,
 pass and accept pointers.
 
+#### Function Parameters
+
 Function parameters are local variables inside the function.
 
 Functions cannot be overload based on their parameter types
@@ -1011,6 +1015,8 @@ It is not possible to specify default values for function parameters
 and they cannot be made optional.
 However, functions can accept a variable number of arguments.
 These are referred to as variadic functions.
+
+#### Variadic Functions
 
 To define a variadic function, precede the type
 of the last named parameter with an ellipsis.
@@ -1053,6 +1059,8 @@ are already in a variable that holds a slice,
 follow the variable name with an ellipsis.
 If they are in an array, first create a slice over it.
 For example, `values[:]...`.
+
+#### Function Return Values
 
 Functions can return zero or more values.
 When there are no return values, the list of return types is omitted.
@@ -1133,6 +1141,8 @@ n2, n3 := mult(3) // n2 is 6 and n3 is 9
 Unless the function is very short, using this feature is frowned upon
 because the code is less readable than explicitly returning values.
 
+#### Function Types
+
 Functions have a type that is defined by their signature.
 This is based on the order and type of the parameters
 and the order of the return types.
@@ -1167,6 +1177,8 @@ func main() {
 }
 ```
 
+#### Recursion
+
 Like in most programming languages, Go functions can be recursive.
 But most languages use a fixed-size stack
 that limits the depth of recursive calls.
@@ -1179,6 +1191,8 @@ than most languages without crashing.
 The maximum stack size for 64-bit systems is 1GB by default.
 This can be modified by calling the `SetMaxStack` function
 in the `runtime/debug` standard library package.
+
+#### Closures
 
 Functions act as closures over all in-scope variables.
 This allows nested, anonymous functions
