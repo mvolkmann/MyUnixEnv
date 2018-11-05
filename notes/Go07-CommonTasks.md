@@ -1146,7 +1146,7 @@ To add a new route,
 
 - edit `actions/app.go`
 - add a call to `app.{method}`
-  - method is GET, POST, PUT, PATCH, DELETE, OPTIONS, or HEAD
+  - method is GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD, or ANY
   - each call specifies a URL pattern and a handler function
 - implement the handler function
   - must match the type `buffalo.Handler`
@@ -1159,9 +1159,75 @@ func helloHandler(c buffalo.Context) error {
   return c.Render(200, r.String("Hello, World!"))
 }
 
+The variable `r` is a `render.Engine` pointer
+defined in the file `render.go`.
+
 // Inside App function ...
 app.GET("/hello", helloHandler)
 ```
+
+If a large number of routes is needed,
+related groups can be defined in new `.go` files
+that are imported by `app.go`.
+
+To get a list of all the defined routes
+and the names assigned to them,
+enter `buffalo routes`.
+
+### Query Parameters
+
+Query parameters appear after a `?` in a URL and are
+specified with `name=value` pairs separated by `&` characters.
+For example, `http://localhost:3000/hello?name=Tami&relation=spouse`.
+
+To obtain query parameters in a handler function,
+call the Context method `Param`.
+For example, `c.Param("name")`.
+
+### Path Parameters
+
+Path parameters appear in URLs after the primary path
+and are separated by slashes.
+For example, `http://localhost:3000/hello/yellow/3`.
+
+Routes can specify their names by surrounding them with curly braces.
+For example, `app.GET("/hello/{color}/{count}", helloHandler)`.
+
+To obtain path parameters in a handler function,
+use the same method as for getting query parameter values.
+For example, `c.Param("color")`.
+
+### Route Groups
+
+Related groups of routes that have the same URL prefix
+can be specified using by creating Group objects.
+For example,
+
+```go
+    sportGroup := app.Group("/sport")
+    // URL is /sport/football.
+    sportGroup.GET("/football", func(c buffalo.Context) error {
+      return c.Render(200, r.String("Tom Brady"))
+    })
+    // URL is /sport/hockey.
+    sportGroup.GET("/hockey", func(c buffalo.Context) error {
+      return c.Render(200, r.String("Wayne Gretzky"))
+    })
+    // URL is /sport/name where name is anything but football or hockey.
+    sportGroup.GET("/{sport}", func(c buffalo.Context) error {
+      sport := c.Param("sport")
+      return c.Render(200, r.String("unsupported sport "+sport))
+    })
+```
+
+### Templates
+
+Templates used to render HTML can obtain data from routes.
+For example, if a route name is "helloPath", use `<%= helloPath() %>`.
+
+For routes that require parameters,
+they can be passed to the route function as a literal map.
+For example, `<%= helloPath({color: "yellow", count: 3}) %>`.
 
 ## Calling other languages from Go
 
