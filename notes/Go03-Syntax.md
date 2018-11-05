@@ -2177,7 +2177,91 @@ if err != nil {
 
 #### Panics
 
-TODO: A panic is ...
+A panic is a runtime error that typically causes the application
+to exit with exit status of 2, an error message, and a stack trace.
+Before exiting, the panic proceeds up the call stack
+and any deferred functions that have been queued
+by functions in the call stack are executed.
 
-It is possible to recover from a panic.
-TODO: Add detail.
+The builtin `panic` function can be called
+to manually trigger a panic.
+Typically this should only be used when an error
+occurs that callers are not expected to handle.
+For expected errors, functions should return an
+extra error return value, that callers can check.
+
+The `panic` function can be passed any value,
+but typically it is an error message.
+For example, `panic("not happy")`.
+
+Functions that call `panic` for some code paths
+often have names that start with `Must`
+to indicate this possibility.
+
+Another way to output a stack trace is to
+import the `runtime/debug` package
+and call `debug.PrintStack()`.
+
+In some circumstances when a panic occurs it is useful to
+perform some cleanup before the application exits
+or even prevent the application from exiting.
+For example, a web server could choose to never exit
+regardless of the errors that may occur.
+
+The builtin `recover` function can be called
+within a deferred function for either of these reasons.
+It returns the value passed to the `panic` function.
+
+If recovery is not possible,
+the deferred function can pass this value
+to the `panic` function to allow other deferred functions
+higher in the call stack to recover from the error.
+
+If recover is possible, ...
+After this deferred function completes,
+the function that panicked does not continue
+at the statement after the panic.
+Instead it returns to its caller using whatever
+the deferred function returns as its return values.
+
+Recovering from a panic originating in another package
+is not recommended.
+
+It is only possible to recover from panics
+that were initiated in the same goroutine.
+
+The following simple example demonstrates
+using `panic` and `recover`.
+However, expected errors such as dividing by zero
+should not be handled using `panic` and `recover`.
+
+```go
+package main
+
+import "fmt"
+
+func mustDivide(m, n float64) float64 {
+  if n == 0 {
+    panic(fmt.Sprintf("cannot divide %f by zero", m))
+  }
+  return m / n
+}
+
+// It is important for this function have a named return type
+// so its deferred function can set it.
+func divideWithRecover(m, n float64) (result float64) {
+  defer func() {
+    message := recover() // nil when there was no panic
+    if message != nil {
+      //fmt.Printf("%s; recovering\n", message)
+      result = 0 // result for all divide by zero calls
+    }
+  }()
+  return mustDivide(m, n)
+}
+
+func main() {
+  fmt.Println(divideWithRecover(7, 2)) // 3.5
+  fmt.Println(divideWithRecover(7, 0)) // 0
+}
+```
