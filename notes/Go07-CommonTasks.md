@@ -1010,6 +1010,88 @@ func main() {
 }
 ```
 
+## Buffalo
+
+Buffalo is a tool and a framework for building web applications using Go.
+
+To install Buffalo, see the instructions at
+<https://gobuffalo.io/en/docs/installation>.
+To verify the installation, enter `buffalo`.
+This should display help on using it.
+
+On a Mac, Buffalo can be installed using Homebrew
+by running the command `brew install gobuffalo/tap/buffalo`.
+
+To create a new project, enter `buffalo new {project-name}`.
+This downloads many files and create a directory structure
+for the project. It will run for about two minutes.
+
+Add the `--api` flag to the `new` command
+to omit front-end code and create a project
+that is focused on implementing REST services.
+
+Add the `--skip-pop` flat to the `new` command
+to omit code for connecting to a relational database.
+
+Buffalo uses the "pop" package to perform CRUD operations
+on relational database tables. It also supports
+schema migrations similar to Ruby's ActiveRecord.
+
+Buffalo supports for databases. These are
+PostgreSQL, MySQL, SQLite3, and CockroachDB.
+
+The database configuration is specified in the file
+`database.yml` which is the root project directory.
+There are three sections in this file that describe
+the "development", "test", and "production" environments.
+By default it attempts to connect to a PostgreSQL database
+named `{project-name}_{environment}` with
+a username of "postgres" and a password of "postgres".
+
+Before starting the server for the first time
+you must choose from these options:
+
+1. create the database specified in `database.yml`
+1. modify `database.yml` to refer to an existing database
+1. comment out the following line in `actions/app.go`
+   that wraps each request in a database transaction:\
+    `app.Use(popmw.Transaction(models.DB))`
+
+To start the application in development mode
+which includes file watch and live reload,
+cd to the new project directory
+and enter `buffalo dev`.
+By default this starts a server that listens
+for requests on port 3000.
+
+Browse `localhost:3000` to see the app.
+To use a different port, say 1234,
+enter `PORT=1234 buffalo dev`.
+This should render the following:
+![Buffalo default page](go-buffalo-default-page.png)
+
+The directory structure created by `buffalo new`
+is described below.
+
+- project root
+  - `actions`
+    - `app.go` configures the application and URL routes
+    - `render.go` configures the template engine
+  - `assets` - contains assets that will be compiled, compressed, and copied to the `public` directory
+    - `css`
+    - `images`
+    - `js`
+  - `fixtures`
+  - `grifts`
+  - `locales`
+  - `models`
+  - `node_modules`
+  - `public`
+    - `assets`
+      - `images`
+  - `templates`
+  - `tmp`
+
 ## Calling other languages from Go
 
 Function definitions with no body indicate that the
