@@ -1074,23 +1074,28 @@ The directory structure created by `buffalo new`
 is described below.
 
 - project root
-  - `actions`
+  - `database.yml` defines database configuration
+  - `main.go` is the application starting point
+  - `actions` directory defines the controller portion of MVC
     - `app.go` configures the application and URL routes
     - `render.go` configures the template engine
-  - `assets` - contains assets that will be compiled, compressed, and copied to the `public` directory
-    - `css`
-    - `images`
-    - `js`
-  - `fixtures`
-  - `grifts`
-  - `locales`
-  - `models`
-  - `node_modules`
-  - `public`
-    - `assets`
-      - `images`
-  - `templates`
-  - `tmp`
+  - `assets` directory\
+    This directory contains assets that will be compiled,
+    compressed, and copied to the `public` directory.
+    It can be removed for API-only projects.
+    - `css` directory
+    - `images` directory
+    - `js` directory
+  - `fixtures` directory
+  - `grifts` directory contains tasks for grift which is a task scripting tool similar to Ruby's Rake.
+  - `locales` directory holds language translation strings
+  - `models` directory maps database tables to Go structs for ORM capabilities (see pop/soda); model portion of MVC
+  - `node_modules` directory contains Node.js modules downloaded from npm
+  - `public` directory contains generated asset files and should not be manually modified
+    - `assets` directory
+      - `images` directory
+  - `templates` directory contains view templates; view portion of MVC
+  - `tmp` directory holds temporary files generated during project rebuilds
 
 ## Calling other languages from Go
 
