@@ -1220,7 +1220,33 @@ For example,
     })
 ```
 
+### Resources
+
+Resources define a kind of data that supports CRUD operations.
+Examples include employees, addresses, and cars.
+
+Resources can support a set of methods defined in the `Resource` interface.
+These include `List`, `Show`, `New`, `Create`, `Edit`, `Update`, and `Destroy`.
+
+Buffalo can generate to the code to support a resource.
+For example, to generate code for a "cars" resource,
+enter `buffalo generate resource cars`.
+This creates the following files:
+
+- `actions/users.go`
+- `actions/users_test.go`
+- `modules/users.go`
+- `modules/users_test.go`
+- `migrations/{date-timestamp}_create_users.up.fizz`
+- `migrations/{date-timestamp}_create_users.down.fizz`
+
+To skip generating migration files, add the `--skip-migration` flag.
+To skip generating model files, add the `--skip-model` flag.
+
 ### Templates
+
+Templates can specify HTML to be rendered
+and can include actions that produce dynamic content.
 
 Templates used to render HTML can obtain data from routes.
 For example, if a route name is "helloPath", use `<%= helloPath() %>`.
