@@ -1022,6 +1022,8 @@ This should display help on using it.
 On a Mac, Buffalo can be installed using Homebrew
 by running the command `brew install gobuffalo/tap/buffalo`.
 
+### Creating a Project
+
 To create a new project, enter `buffalo new {project-name}`.
 This downloads many files and create a directory structure
 for the project. It will run for about two minutes.
@@ -1032,6 +1034,8 @@ that is focused on implementing REST services.
 
 Add the `--skip-pop` flat to the `new` command
 to omit code for connecting to a relational database.
+
+### Databases
 
 Buffalo uses the "pop" package to perform CRUD operations
 on relational database tables. It also supports
@@ -1048,6 +1052,8 @@ By default it attempts to connect to a PostgreSQL database
 named `{project-name}_{environment}` with
 a username of "postgres" and a password of "postgres".
 
+### Starting Server
+
 Before starting the server for the first time
 you must choose from these options:
 
@@ -1058,17 +1064,22 @@ you must choose from these options:
     `app.Use(popmw.Transaction(models.DB))`
 
 To start the application in development mode
-which includes file watch and live reload,
-cd to the new project directory
-and enter `buffalo dev`.
+cd to the new project directory and enter `buffalo dev`.
 By default this starts a server that listens
 for requests on port 3000.
+It also watches files for changes and
+automatically rebuilds and restarts the server.
+It does not provide live reload of the browser out of the box,
+but perhaps there is a way to get this.
+See <https://github.com/gobuffalo/buffalo/issues/510>.
 
 Browse `localhost:3000` to see the app.
 To use a different port, say 1234,
 enter `PORT=1234 buffalo dev`.
 This should render the following:
 ![Buffalo default page](go-buffalo-default-page.png)
+
+### Directory Structure
 
 The directory structure created by `buffalo new`
 is described below.
@@ -1096,6 +1107,61 @@ is described below.
       - `images` directory
   - `templates` directory contains view templates; view portion of MVC
   - `tmp` directory holds temporary files generated during project rebuilds
+
+### Environment Variables
+
+The most important environment variables used by Buffalo are the following:
+
+`GO_ENV` defines the environment in which the server should run.
+It defaults to "development", but can also be set to "test" or "production".
+
+`ADDR` defines the server address.
+It defaults to an IP address for localhost.
+
+`PORT` defines the port on which the server listens.
+It defaults to 3000.
+
+`HOST` is a combination of `ADDR` and `PORT`.
+It defaults to "http://127.0.0.1:3000".
+
+To get the value of any environment variable in a running Buffalo app,
+import the `github.com/gobuffalo/envy` package and call `envy.Get`.
+For example, `value := envy.Get("SOME_NAME", defaultValue)`.
+To return an error if the environment variable is not set,\
+`value, err := envy.Get("SOME_NAME")`
+
+The `.env` file in the project root directory
+can define environment variables.
+These are loaded on server startup using `envy.Load`.
+This file is ignored by Git (listed in `.gitignore`)
+to avoid exposing sensitive information
+such as passwords and secret keys.
+
+### Routes
+
+Buffalo uses the `github.com/gorilla/mux` package
+to handle routing.
+
+To add a new route,
+
+- edit `actions/app.go`
+- add a call to `app.{method}`
+  - method is GET, POST, PUT, PATCH, DELETE, OPTIONS, or HEAD
+  - each call specifies a URL pattern and a handler function
+- implement the handler function
+  - must match the type `buffalo.Handler`
+    which is `func (buffalo.Context) error`
+
+Here is a "hello world" route.
+
+```go
+func helloHandler(c buffalo.Context) error {
+  return c.Render(200, r.String("Hello, World!"))
+}
+
+// Inside App function ...
+app.GET("/hello", helloHandler)
+```
 
 ## Calling other languages from Go
 
