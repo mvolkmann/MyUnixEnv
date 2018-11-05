@@ -2249,6 +2249,8 @@ func mustDivide(m, n float64) float64 {
 
 // It is important for this function have a named return type
 // so its deferred function can set it.
+// Alternatively, if this function had a named return type
+// of type of error, the deferred function could set that.
 func divideWithRecover(m, n float64) (result float64) {
   defer func() {
     message := recover() // nil when there was no panic
