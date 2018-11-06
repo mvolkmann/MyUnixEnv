@@ -1222,26 +1222,56 @@ For example,
 
 ### Resources
 
-Resources define a kind of data that supports CRUD operations.
+Resources define a kind of data that
+supports CRUD operations on a database table.
 Examples include employees, addresses, and cars.
 
 Resources can support a set of methods defined in the `Resource` interface.
 These include `List`, `Show`, `New`, `Create`, `Edit`, `Update`, and `Destroy`.
 
 Buffalo can generate to the code to support a resource.
-For example, to generate code for a "cars" resource,
-enter `buffalo generate resource cars`.
+For example, to generate code for a "todos" resource,
+enter `buffalo generate resource todos`.
 This creates the following files:
 
-- `actions/users.go`
-- `actions/users_test.go`
-- `modules/users.go`
-- `modules/users_test.go`
-- `migrations/{date-timestamp}_create_users.up.fizz`
-- `migrations/{date-timestamp}_create_users.down.fizz`
+- `actions/todos.go`
+- `actions/todos_test.go`
+- `modules/todos.go`
+- `modules/todos_test.go`
+- `migrations/{date-timestamp}_create_todos.up.fizz`
+- `migrations/{date-timestamp}_create_todos.down.fizz`
 
 To skip generating migration files, add the `--skip-migration` flag.
 To skip generating model files, add the `--skip-model` flag.
+
+To demonstrate this, we will create a PostgreSQL database
+with a car table.
+
+On a Mac, PostgreSQL can be installed by first installing Homebrew
+and then entering `brew install postgresql`.
+
+To initialize the database
+
+- sudo mkdir /usr/local/pgsql
+- sudo mkdir /usr/local/pgsql/data
+- sudo chown Mark /usr/local/pgsql
+- sudo chown Mark /usr/local/pgsql/data
+- initdb -D /usr/local/pgsql/data
+
+To create the todos table, create the file
+`setup.sql` containing the following:
+
+```sql
+drop table if exists todos;
+
+create table todos (
+  id serial primary key,
+  text text,
+  done bool
+);
+```
+
+Execute this file by entering `psql -d buffalo -f setup.sql`.
 
 ### Templates
 
