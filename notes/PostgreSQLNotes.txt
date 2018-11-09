@@ -155,7 +155,7 @@ Run a single command
 - psql {db-name} {username} -c {query}
 
 Run commands in a file
-- psql -d {db-name} -u {username} -f {file}
+- psql -d {db-name} -U{username} -f {file}
 
 Auto-incrementing keys
 - approach #1

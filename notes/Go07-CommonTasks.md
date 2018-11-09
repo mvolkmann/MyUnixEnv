@@ -1226,12 +1226,43 @@ Resources define a kind of data that
 supports CRUD operations on a database table.
 Examples include employees, addresses, and cars.
 
+To demonstrate this, we will create a PostgreSQL database
+with a table named "todos".
+
+On a Mac, PostgreSQL can be installed by first installing Homebrew
+and then entering `brew install postgresql`.
+
+To initialize PostgreSQL:
+
+- sudo mkdir /usr/local/pgsql
+- sudo mkdir /usr/local/pgsql/data
+- sudo chown Mark /usr/local/pgsql
+- sudo chown Mark /usr/local/pgsql/data
+- initdb -D /usr/local/pgsql/data
+
+To create a database named "buffalo",
+enter `createdb buffalo_development`.
+
+To create the todos_development table in the buffalo database,
+create the file `setup.sql` containing the following:
+
+```sql
+drop table if exists todos;
+create table todos (
+  id serial primary key,
+  text text,
+  done bool
+);
+```
+
+Execute this file by entering `psql -d buffalo_development -f setup.sql`.
+
 Resources can support a set of methods defined in the `Resource` interface.
 These include `List`, `Show`, `New`, `Create`, `Edit`, `Update`, and `Destroy`.
 
 Buffalo can generate to the code to support a resource.
 For example, to generate code for a "todos" resource,
-enter `buffalo generate resource todos`.
+enter `buffalo generate resource todos text done:bool`.
 This creates the following files:
 
 - `actions/todos.go`
@@ -1244,34 +1275,26 @@ This creates the following files:
 To skip generating migration files, add the `--skip-migration` flag.
 To skip generating model files, add the `--skip-model` flag.
 
-To demonstrate this, we will create a PostgreSQL database
-with a car table.
+Note that there was a pluralization error in the file
+`models/todo.go` where the type "todos" was misspelled as "todoes".
+I had to manually fix those.
 
-On a Mac, PostgreSQL can be installed by first installing Homebrew
-and then entering `brew install postgresql`.
+Also, if the following line in `app.go` was commented out,
+restore it so database operations are performed in a transaction.
 
-To initialize the database
-
-- sudo mkdir /usr/local/pgsql
-- sudo mkdir /usr/local/pgsql/data
-- sudo chown Mark /usr/local/pgsql
-- sudo chown Mark /usr/local/pgsql/data
-- initdb -D /usr/local/pgsql/data
-
-To create the todos table, create the file
-`setup.sql` containing the following:
-
-```sql
-drop table if exists todos;
-
-create table todos (
-  id serial primary key,
-  text text,
-  done bool
-);
+```go
+app.Use(popmw.Transaction(models.DB))
 ```
 
-Execute this file by entering `psql -d buffalo -f setup.sql`.
+Create a user in the database by entering
+`createuser {username} --password`.
+This will prompt for the user password.
+
+Edit the file `database.yml` to correct the
+database name, user name, and password
+for the "development" environment.
+
+To add a row to the todos table,
 
 ### Templates
 

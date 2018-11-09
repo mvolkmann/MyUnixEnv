@@ -1223,12 +1223,23 @@ func main() {
 ### Methods
 
 Methods are functions that are invoked on a "receiver" value.
-They can be associated with any named type, but not built-in types.
+They can be associated with any named type
+that is not a pointer or interface.
+They cannot be associated with built-in types.
 The receiver is an instance of this type.
 
 Methods are particularly useful for types that implement interfaces.
 Otherwise we can just write functions
 that take a value of the type as an argument.
+
+One benefit of defining a method on a type instead of
+defining a function that takes an argument of the type
+is that the name can often be shorter without losing meaning.
+For example, we could add `getAge` method to a `Person` type
+or we could define a `getPersonAge` function that takes a `Person`.
+The difference is even more significant for calls made from
+another package because in that case function names must be
+prefixed with the package name whereas method names do not.
 
 Just like with functions, methods whose name starts lowercase
 can only be called by code in package where the method is defined.
@@ -1243,19 +1254,20 @@ The syntax for defining a method is
 `func (receiver-info) name(parameter-list) (return-types) { body }`.
 `receiver-info` is a name followed by the instance type for the method.
 Note that there are three pairs of parentheses.
-If the method has only one return value,
+If the method has only one return type and it is unnamed,
 the last pair of parentheses can be omitted.
+
+Methods must defined in a source file for the same package
+that defines their receiver type.
 
 In most programming languages that support methods,
 the method body refers to the receiver
 using a keyword like `this` or `self`.
 In Go the method signature specifies the name
 by which the receiver will be referenced.
-In the example that follows, the name is `p`.
 
-To call a method, specify the receiver, followed by a dot,
-the method name, and the argument list.
-For example,
+Often the receiver name is the lowercase first letter of its type.
+For example, the receiver in the method below is `p`.
 
 ```go
 // Add a method to the type "pointer to a Person struct".
@@ -1264,7 +1276,13 @@ For example,
 func (p *Person) Birthday() {
   p.age++
 }
+```
 
+To call a method, specify the receiver, followed by a dot,
+the method name, and the argument list.
+For example,
+
+```go
 p := Person{name: "Mark", age: 57}
 (&p).Birthday() // The method can be invoked on a pointer to a Person.
 p.Birthday() // It can also be invoked on a Person.
@@ -1292,9 +1310,9 @@ TODO: IS THIS OKAY?
 
 If an attempt is made to add a method to a built-in type
 an error with the message "cannot define new methods on non-local type"
-will be triggered. However,
-methods can be added to built-in types if a type alias is created.
+will be triggered.
 
+Recall that the underlying type of a named type can be a primitive type.
 Here is an example of adding a method to a type alias for the `int` type.
 
 ```go
