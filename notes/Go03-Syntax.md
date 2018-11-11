@@ -2098,23 +2098,36 @@ func main() {
 
 ### Interfaces
 
-An interface defines a set of methods.
-Any named type can implement an interface, even named primitive types.
-Types do not state the interfaces they implement,
-they only need to implement all the methods.
+#### Interface Basics
 
-When a value is assigned to a variable or parameter with an interface type,
-if its actual type does not implement all the interface methods,
+An interface defines a set of methods to be implemented by types.
+Any named type can implement an interface, even named primitive types.
+
+Types do not state the interfaces they implement.
+They only need to implement all the methods of an interface.
+
+A type can implement any number of interfaces.
+
+Interface types are abstract, meaning that
+it is not possible to directly create instances of them.
+Instead, instances of types that implement the interface are created.
+
+Variables and parameters with an interface type can hold any value
+whose type implements all the methods of the interface.
+When a value is assigned to such variables or passed to such parameters,
+if the actual type does not implement all the interface methods,
 an error is reported that identifies one of the missing methods.
+
+The actual value of a variable or parameter with an interface type
+may support additional methods, but those cannot be called without
+relying on a type assertion which is described later.
 
 Calling a method on a variable with an interface type
 calls the method on the underlying type.
 If a value has not be assigned to the variable,
 calling a method on it results in an error.
 
-An interface with no methods, referred to as the "empty interface",
-matches every type. This can be given a name
-such as "any" using `type any interface{}`.
+#### Interface Example
 
 The following code defines an interface and two types that implement it:
 
@@ -2172,6 +2185,20 @@ func main() {
 }
 ```
 
+#### Compile Time Checks
+
+A variable declaration can specify that the assigned value
+on the right must implement a given interface.
+This is checked at compile-time. For example,
+
+```go
+  r := Rectangle{width: 3, height: 4} // no check performed
+  var r Shape = Rectangle{width: 3, height: 4} // check passes
+  var r io.Reader = Rectangle{width: 3, height: 4} // check fails
+```
+
+#### Type Assertions
+
 A "type assertion" verifies that the value of
 an interface variable refers to a specific type.
 If it does, the same value is returned, but with the asserted type.
@@ -2184,6 +2211,8 @@ Keep in mind that when running a program using `go run`,
 if there are compile errors, the panic will not be
 triggered since the code won't begin running.
 
+#### Type Tests
+
 A "type test" determines whether an interface variable
 refers to a specific type.
 It differs from a type assertion in that
@@ -2192,6 +2221,20 @@ For example, `myShape, ok := g.(Circle)`.
 The variable `ok` will be set to `true` or `false`
 to indicate whether `g` refers to a `Circle` object.
 If it does not, no panic will be triggered.
+
+#### Empty Interface
+
+An interface with no methods, referred to as the "empty interface",
+matches every type. This can be given a name
+such as "any" using `type any interface{}`.
+
+This enables writing functions with parameters that accept any type.
+The standard library package `fmt` defines many functions such as
+`Println` and `Printf` that do this.
+
+Type assertions must be used to operate on these values.
+
+#### Linked List Example
 
 Here is an example of a custom collection that
 can hold values of any type. It is a basic linked list.
@@ -2270,10 +2313,11 @@ func main() {
 }
 ```
 
+#### Standard Library Interfaces
+
 The standard library packages define many interfaces.
 For example, the `fmt` package defines the `Stringer` interface.
 It contains one method named `String`.
-TODO: Why does the name start uppercase? Required to expose?
 Many other packages check whether values implement this interface
 in order to convert values to strings.
 
@@ -2296,6 +2340,19 @@ func (p Person) String() string {
 me := Person{"Mark", 57}
 fmt.Println(me) // Mark is 57 years old.
 ```
+
+Examples of other commonly used interfaces defined in the standard library
+include `io.Reader` and `io.Writer`.
+Implementations of these interfaces read from and write to many things
+including files, network connections, in-memory buffers, and more.
+
+The `io.Reader` interface defines a `Read` method that
+takes a byte slice and returns the number of bytes read and an error.
+
+The `io.Writer` interface defines a `Write` method that
+takes a byte slice and returns the number of bytes written and an error.
+
+#### Nested Interfaces
 
 Interfaces can be nested to add the methods of one interface to another.
 For example:

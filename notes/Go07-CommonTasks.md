@@ -49,8 +49,10 @@ enter `go build greet.go; ./greet Mark Volkmann`
 
 The `flags` package supports documenting and parsing
 command-line flags for an application.
-Each flag is described by a name, type,
+Each flag is described by a type, name,
 default value, and documentation string.
+The type can be any builtin primitive type
+or a user-defined type (using `flag.Var`).
 
 For example, here is a simple application
 in a file named `flag-demo.go` that outputs a
@@ -65,6 +67,7 @@ import (
 )
 
 // These pointers will be set after flag.Parse is called.
+// There are flag functions for all the primitive data types.
 var minPtr = flag.Int("min", 1, "minimum value")
 var maxPtr = flag.Int("max", 10, "maximum value")
 var prefixPtr = flag.String("prefix", "", "prefix")
@@ -95,9 +98,8 @@ Usage of ./flags:
         prefix
 ```
 
-Flag names are preceded by a single dash
-(TODO: ever two?), followed by `=` or a space,
-and a value.
+Flag names are preceded by a single dash,
+followed by `=` or a space, and a value.
 
 To run this, enter one of the following lines:
 
