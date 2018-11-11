@@ -960,7 +960,7 @@ For these reasons it is common to pass pointers to structs instead of structs.
 
 ### Functions
 
-#### The Basics
+#### Function Basics
 
 Go functions are defined with `func` keyword.
 The syntax for named functions is:
@@ -1222,6 +1222,8 @@ func main() {
 
 ### Methods
 
+#### Method Basics
+
 Methods are functions that are invoked on a "receiver" value.
 They can be associated with any named type
 that is not a pointer or interface.
@@ -1229,14 +1231,14 @@ They cannot be associated with built-in types.
 The receiver is an instance of this type.
 
 Methods are particularly useful for types that implement interfaces.
-Otherwise we can just write functions
+Otherwise we could just write functions
 that take a value of the type as an argument.
 
 One benefit of defining a method on a type instead of
 defining a function that takes an argument of the type
 is that the name can often be shorter without losing meaning.
-For example, we could add a `getAge` method to a `Person` type
-or we could define a `getPersonAge` function that takes a `Person`.
+For example, we can add a `getAge` method to a `Person` type
+or we can define a `getPersonAge` function that takes a `Person`.
 The difference is even more significant for calls made from
 another package because in that case function names must be
 prefixed with the package name whereas method names do not.
@@ -1246,19 +1248,12 @@ can only be called by code in package where the method is defined.
 To make them available in other packages,
 their names must start uppercase.
 
-It is not possible to create overloaded methods on a type
-to create different implementations for different parameter types.
-Methods are distinguished only by the receiver type and their name.
-
 The syntax for defining a method is
 `func (receiver-info) name(parameter-list) (return-types) { body }`.
-`receiver-info` is a name followed by the instance type for the method.
+
 Note that there are three pairs of parentheses.
 If the method has only one return type and it is unnamed,
 the last pair of parentheses can be omitted.
-
-Methods must defined in a source file for the same package
-that defines their receiver type.
 
 In most programming languages that support methods,
 the method body refers to the receiver
@@ -1266,21 +1261,40 @@ using a keyword like `this` or `self`.
 In Go the method signature specifies the name
 by which the receiver will be referenced.
 
+`receiver-info` is a name followed by the instance type for the method.
 Often the receiver name is the lowercase first letter of its type.
-For example, the receiver in the method below is `p`.
+For example, if the receiver type is `Person` then the receiver name is `p`.
+
+#### Method Restrictions
+
+If an attempt is made to add a method to a built-in type
+an error with the message "cannot define new methods on non-local type"
+will be triggered.
+
+When a type has multiple methods, the `golint` tool
+wants all the receivers to have the same name.
+
+Methods must defined in a source file for the same package
+that defines their receiver type.
+
+It is not possible to create overloaded methods on a type
+to create different implementations for different parameter types.
+Methods are distinguished only by the receiver type and their name.
+
+#### Method Example
+
+The following code adds a method to the type "pointer to a Person struct".
+Note how the receiver and its type appear
+in parentheses before the method name.
 
 ```go
-// Add a method to the type "pointer to a Person struct".
-// Note how the receiver and its type appear
-// in parentheses before the method name.
 func (p *Person) Birthday() {
   p.age++
 }
 ```
 
 To call a method, specify the receiver, followed by a dot,
-the method name, and the argument list.
-For example,
+the method name, and the argument list. For example:
 
 ```go
 p := Person{name: "Mark", age: 57}
@@ -1295,15 +1309,14 @@ and avoids making a copy of the struct when it is invoked.
 When the receiver is a type value and not a pointer to a type value
 the method receives a copy and cannot modify the original.
 
+#### Methods With Pointer Receivers
+
 When a function has a parameter with a pointer type,
 it must be passed a pointer.
 However, when a method has a pointer receiver,
 it can be invoked on a pointer to a value or a value.
 When invoked on a value, it will automatically
 pass a pointer to the value to the method.
-
-When a type has multiple methods, the `golint` tool
-wants all the receivers to have the same name.
 
 Go convention is that if any method for a type
 has a pointer receiver, all of them should.
@@ -1315,9 +1328,7 @@ For example, a method that operates on a linked list
 and expects the receiver to be a pointer to the head
 can check for nil and return some reasonable value.
 
-If an attempt is made to add a method to a built-in type
-an error with the message "cannot define new methods on non-local type"
-will be triggered.
+#### Methods On Primitive Types
 
 Recall that the underlying type of a named type can be a primitive type.
 Here is an example of adding a method to a type alias for the `int` type.
@@ -1332,6 +1343,8 @@ func (receiver Number) Double() Number {
 n := Number(3) // or could use var n Number = 3
 fmt.Println(n.Double()) // 6
 ```
+
+#### Struct Method Promotion
 
 When a struct type A is embedded in another struct type B,
 methods on A can be called on B.
@@ -1381,14 +1394,15 @@ func main() {
 }
 ```
 
-#### Method Selectors
+#### Method Values
 
 A method call combines selecting a method on the receiver type
 and binding it to the receiver.
 When the parentheses and arguments are omitted,
-a function is returned that represents
-the method bound to the receiver.
-This function can be called with arguments later.
+the expression evaluates to a function that
+represents the method bound to the receiver.
+This function is called a "method value" and
+can be called with arguments later.
 
 For example:
 
@@ -1405,31 +1419,151 @@ type Point struct {
   y float64
 }
 
-// A method on Point that computes the
-// distance from it to a given Point.
+// Distance returns the distance from
+// the receiver point to a given Point.
 func (p Point) Distance(p2 Point) float64 {
   return math.Sqrt(math.Pow(p.x-p2.x, 2) + math.Pow(p.y-p2.y, 2))
 }
 
 func main() {
   p1 := Point{1, 2}
-  p2 := Point{2, 4}
+  p2 := Point{4, 6}
 
   // Normal call
-  fmt.Println(p1.Distance(p2))
+  fmt.Println(p1.Distance(p2)) // 5
 
-  // Obtaining a bound function and then calling it.
-  fn := p1.Distance
-  fmt.Println(fn(p2))
+  // Obtain a method value and call it.
+  distanceFromP1 := p1.Distance
+  fmt.Println(distanceFromP1(p2)) // 5
 }
 ```
 
-### Methods Defined Outside Structs
+#### Method Expressions
+
+A "method expression" is a type name is followed by a dot and a method name.
+This evaluates to a function whose
+first argument is treated as the method receiver and
+remaining arguments are treated as the method arguments.
+For example:
+
+```go
+  // Obtain a method expression can call it.
+  distanceBetweenPoints := Point.Distance
+  fmt.Println(distanceBetweenPoints(p1, p2)) // 5
+```
+
+#### Method Definition Location
 
 It may seem that struct methods should be defined inside the struct.
 However, the ability to define methods outside the type definition
 is required in order to add methods to non-struct types.
 So Go chooses to only support this same approach for all types.
+
+#### Struct Field Encapsulation
+
+Access to struct fields can be encapsulated
+by using names that start lowercase
+and adding methods that operate on the fields.
+
+Encapsulation has many benefits.
+It prevents using code from relying on
+implementation details that may change later.
+It can prevent using code from setting values incorrectly.
+It reduces the amount of code that must be examined
+to determine where a value is being set incorrectly.
+
+Encapsulation is overkill in many cases.
+It should be avoided when
+the type of a field is unlikely to change,
+using code is unlikely to set it to invalid values,
+and methods would just directly set and get the field.
+
+Go has a naming convention for methods that get and set data.
+"Setter" method names start with "Set", but
+"getter" method names typically do not start with "Get".
+For example, methods to set and get the birthday of a person
+might be named `SetBirthday` and `Birthday`.
+
+Suppose we want to encapsulate access to
+the birthday of a person and use it to
+calculate their age based on the current date.
+
+The package `encapsulation` below defines a `Person` type
+and exports a `NewPerson` function that creates a `Person` object.
+It also adds methods to the `Person` type to get their age,
+birthday as a `time.Time` object, and formatted birthday string.
+
+```go
+package encapsulation
+
+import (
+  "time"
+)
+
+// The "reference time" for time format strings
+// is "Mon Jan 2 15:04:05 MST 2006".
+// Format strings are built using these specific values
+// and variations on them.
+// For more detail, see the comments at https://golang.org/src/time/format.go.
+// This is a date format string that is passed to the Time Format method.
+const dateFormat = "January 2, 2006"
+
+// Person describes a person.
+type Person struct {
+  Name     string    // exported
+  birthday time.Time // encapsulated
+}
+
+// NewPerson creates and returns a new Person object.
+// This is needed because the birthday field is not exported.
+// If it were exported, code in other packages could
+// directly create Person objects.
+func NewPerson(name string, birthday time.Time) Person {
+  return Person{name, birthday}
+}
+
+// Age calculates and returns the age of a Person.
+func (p *Person) Age() int {
+  todayY, todayM, todayD := time.Now().Date()
+  birthdayY, birthdayM, birthdayD := p.birthday.Date()
+  age := todayY - birthdayY
+  // Subtract one if the birthday has not occurred yet this year.
+  if todayM < birthdayM || (todayM == birthdayM && todayD < birthdayD) {
+    age--
+  }
+  return age
+}
+
+// Birthday returns the value of the encapsulated field birthday.
+func (p *Person) Birthday() time.Time {
+  return p.birthday
+}
+
+// FormattedBirthday returns the formatted birthday of a Person.
+func (p *Person) FormattedBirthday() string {
+  return p.birthday.Format(dateFormat)
+}
+```
+
+Here is an application that uses the `encapsulation` package.
+
+```go
+package main
+
+import (
+  "fmt"
+  "time"
+
+  "github.com/mvolkmann/encapsulation"
+)
+
+func main() {
+  birthday := time.Date(1961, time.April, 16, 0, 0, 0, 0, time.UTC)
+  me := encapsulation.NewPerson("Mark", birthday)
+  fmt.Printf("%s was born on %s.\n", me.Name, me.FormattedBirthday())
+  fmt.Printf("%s is %d years old.\n", me.Name, me.Age())
+}
+```
 
 ### Arrays
 
