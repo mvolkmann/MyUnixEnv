@@ -1416,6 +1416,12 @@ To try it online, browse
 - **CockroachDB** <https://www.cockroachlabs.com>`
   "the open source, cloud-native SQL database"
 
+- **Koazee** <http://wesovilabs.com/koazee/>\
+  Koazee is a library for working with arrays and slices in a functional manner.
+  It creates a "stream" from an array or slice and
+  provides many methods for manipulating the stream
+  such as `Filter`, `Map`, and `Reduce`.
+
 - **Kubernetes** <https://kubernetes.io/>\
   "an open-source system for automating deployment, scaling,
   and management of containerized applications"
