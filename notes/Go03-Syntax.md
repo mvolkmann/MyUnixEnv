@@ -1235,7 +1235,7 @@ that take a value of the type as an argument.
 One benefit of defining a method on a type instead of
 defining a function that takes an argument of the type
 is that the name can often be shorter without losing meaning.
-For example, we could add `getAge` method to a `Person` type
+For example, we could add a `getAge` method to a `Person` type
 or we could define a `getPersonAge` function that takes a `Person`.
 The difference is even more significant for calls made from
 another package because in that case function names must be
@@ -1304,9 +1304,16 @@ pass a pointer to the value to the method.
 
 When a type has multiple methods, the `golint` tool
 wants all the receivers to have the same name.
-However, it does not complain if
-some receivers are a pointer and others are values.
-TODO: IS THIS OKAY?
+
+Go convention is that if any method for a type
+has a pointer receiver, all of them should.
+However, `golint` does not complain if this convention is violated.
+
+Methods that have a pointer receiver can
+choose to handle `nil` as a receiver value.
+For example, a method that operates on a linked list
+and expects the receiver to be a pointer to the head
+can check for nil and return some reasonable value.
 
 If an attempt is made to add a method to a built-in type
 an error with the message "cannot define new methods on non-local type"
@@ -1325,6 +1332,99 @@ func (receiver Number) Double() Number {
 n := Number(3) // or could use var n Number = 3
 fmt.Println(n.Double()) // 6
 ```
+
+When a struct type A is embedded in another struct type B,
+methods on A can be called on B.
+This works because the methods from type A are promoted to type B.
+However, this does not mean that values of type B
+can be used anywhere values of type A can be used.
+A and B are still distinct types and there is no implied type hierarchy.
+
+#### Ambiguous Selectors
+
+If multiple struct types are embedded in another struct A,
+more than one embedded struct type has a method B,
+an instance of A is created,
+and a call to method B on this instance is made,
+an "ambiguous selector" error is triggered at compile-time.
+An example of this follows:
+
+```go
+package main
+
+import "fmt"
+
+type foo struct {
+  f int
+}
+
+func (f foo) doIt() {
+  fmt.Println("foo: doIt entered")
+}
+
+type bar struct {
+  b bool
+}
+
+func (b bar) doIt() {
+  fmt.Println("bar: doIt entered")
+}
+
+type baz struct {
+  foo
+  bar
+}
+
+func main() {
+  myBaz := baz{}
+  myBaz.doIt() // ambiguous selector
+}
+```
+
+#### Method Selectors
+
+A method call combines selecting a method on the receiver type
+and binding it to the receiver.
+When the parentheses and arguments are omitted,
+a function is returned that represents
+the method bound to the receiver.
+This function can be called with arguments later.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "math"
+)
+
+type Point struct {
+  x float64
+  y float64
+}
+
+// A method on Point that computes the
+// distance from it to a given Point.
+func (p Point) Distance(p2 Point) float64 {
+  return math.Sqrt(math.Pow(p.x-p2.x, 2) + math.Pow(p.y-p2.y, 2))
+}
+
+func main() {
+  p1 := Point{1, 2}
+  p2 := Point{2, 4}
+
+  // Normal call
+  fmt.Println(p1.Distance(p2))
+
+  // Obtaining a bound function and then calling it.
+  fn := p1.Distance
+  fmt.Println(fn(p2))
+}
+```
+
+### Methods Defined Outside Structs
 
 It may seem that struct methods should be defined inside the struct.
 However, the ability to define methods outside the type definition
