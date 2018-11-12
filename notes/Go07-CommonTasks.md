@@ -120,8 +120,8 @@ TODO: Discuss any type checking that is performed on the values.
 
 ## Functional Programming With Arrays and Slices
 
-Koazee is a library for working with arrays and slices in a functional manner.
-It creates a "stream" from an array or slice and
+Koazee is a library for working with slices in a lazy, functional manner.
+It creates a "stream" from a slice and
 provides many methods for manipulating the stream
 such as `Filter`, `Map`, and `Reduce`.
 
@@ -147,13 +147,13 @@ var double = func(value int) int { return value * 2 }
 var sum = func(acc, value int) int { return acc + value }
 
 func main() {
-  result := koazee.StreamOf(numbers).
+  out := koazee.StreamOf(numbers).
     Filter(isOdd). // [1, 3, 5]
     Map(double).   // [2, 6, 10]
     Add(3).        // [2, 6, 10, 3]
     Reduce(sum).   // 21
     Int()          // 21
-  fmt.Println(result) // 21
+  fmt.Println(out) // 21
 }
 ```
 
@@ -176,6 +176,8 @@ func main() {
 | `Sort`             | sorts the stream elements based on a comparator function            |
 | `With`             | replaces all elements in the stream                                 |
 
+All the stream methods return the stream so calls can be chained.
+
 Most of the stream methods return a value of type `output`
 defined in the file `stream.go`.
 This is a struct with a `value` field of type `interface{}`
@@ -195,11 +197,19 @@ Examples of when errors might occur include:
 - `reduce` passed a function whose first parameter type does not match its return type
 - `reduce` passed a function whose second parameter type does not match the type of the elements in the stream
 
-To get the error pointer, call `Err()` on the return value.
+If an error occurs, it is stored in the stream
+and any subsequent chained calls are not processed.
+
+To check for an error, call `Err()` on the return value.
 This will return `nil` if there is no error.
-It seems that when there is an error, Koazee outputs an error message
-and stops the application, so there is
-no opportunity to detect the error and recover.
+For example,
+
+```go
+  if out.Err() != nil {
+    fmt.Println("koazee error:", out.Err())
+    return
+  }
+```
 
 The `output` struct has many methods for converting the value to specific types.
 There is one for each primitive type whose name
