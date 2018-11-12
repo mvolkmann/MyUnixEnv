@@ -118,6 +118,100 @@ foo5
 
 TODO: Discuss any type checking that is performed on the values.
 
+## Functional Programming With Arrays and Slices
+
+Koazee is a library for working with arrays and slices in a functional manner.
+It creates a "stream" from an array or slice and
+provides many methods for manipulating the stream
+such as `Filter`, `Map`, and `Reduce`.
+
+The stream holds values with a type of `interface{}`.
+Methods to convert the final result to specific types are provided.
+
+To install it, enter `go get github.com/wesovilabs/koazee`.
+
+Here is an example of using it.
+
+```go
+package main
+
+import (
+  "fmt"
+
+  "github.com/wesovilabs/koazee"
+)
+
+var numbers = []int{1, 2, 3, 4, 5}
+var isOdd = func(value int) bool { return value%2 == 1 }
+var double = func(value int) int { return value * 2 }
+var sum = func(acc, value int) int { return acc + value }
+
+func main() {
+  result := koazee.StreamOf(numbers).
+    Filter(isOdd). // [1, 3, 5]
+    Map(double).   // [2, 6, 10]
+    Add(3).        // [2, 6, 10, 3]
+    Reduce(sum).   // 21
+    Int()          // 21
+  fmt.Println(result) // 21
+}
+```
+
+| Stream Method      | Description                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| `Add`              | adds a single element to the stream                                 |
+| `At`               | returns the stream element at a given index                         |
+| `Compose`          | creates a stream from any number of existing streams                |
+| `Contains`         | determines if the stream contains a given element                   |
+| `Count`            | returns the number of elements in the stream                        |
+| `Drop`             | drops the first matching element from the stream                    |
+| `Filter`           | removes elements for which a given predicate function returns false |
+| `First`            | returns the first stream element                                    |
+| `ForEach`          | executes a given function for each stream element                   |
+| `Last`             | returns the last stream element                                     |
+| `Map`              | modifies each stream element using a mapping function               |
+| `Out`              | gets the stream contents as an array                                |
+| `Reduce`           | reduces a stream to a single element using an accumulator function  |
+| `RemoveDuplicates` | removes duplicate stream elements (first occurrences remain)        |
+| `Sort`             | sorts the stream elements based on a comparator function            |
+| `With`             | replaces all elements in the stream                                 |
+
+Most of the stream methods return a value of type `output`
+defined in the file `stream.go`.
+This is a struct with a `value` field of type `interface{}`
+and an `error` field that is a pointer to an error value.
+
+To get the value, call `Val()` on the return value.
+Typically it will be necessary to perform a type assertion
+on this value in order to do something useful with it.
+
+Examples of when errors might occur include:
+
+- `first`, `last`, `at`, `reduce`, or `out` method called on a nil stream
+- `first`, `last`, or `at` method called with nothing in the stream
+- `at` method called an index that is less than 0 or greater than length - 1
+- `reduce` not passed a function
+- `reduce` passed a function that does not have two parameters and one return type
+- `reduce` passed a function whose first parameter type does not match its return type
+- `reduce` passed a function whose second parameter type does not match the type of the elements in the stream
+
+To get the error pointer, call `Err()` on the return value.
+This will return `nil` if there is no error.
+It seems that when there is an error, Koazee outputs an error message
+and stops the application, so there is
+no opportunity to detect the error and recover.
+
+The `output` struct has many methods for converting the value to specific types.
+There is one for each primitive type whose name
+matches the type name, but starts uppercase.
+For example, there are `Bool`, `Int`, `Float64`, and `String` methods.
+
+To enable logging of each method,
+import `github.com/wesovilabs/koazee/logger` and
+add `logger.Enabled = true`.
+For each stream method called, this outputs "[koazee]", a timestamp, the method name,
+and the stream content before and after the method is executed.
+
 ## Readers
 
 The `io` package defines the `Reader` interface
@@ -937,7 +1031,7 @@ func main() {
 }
 ```
 
-## go-watcher
+## File Watching
 
 The go-watcher application starts another application in the current directory
 watches all the `.go` files in and below current directory,
