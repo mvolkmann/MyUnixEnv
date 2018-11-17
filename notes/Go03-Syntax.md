@@ -2129,6 +2129,15 @@ If a value has not be assigned to the variable,
 meaning it is `nil`,
 calling a method on it triggers a panic.
 
+An interface is typically only used when
+more than one concrete type will implement it and
+there is a need to use values of the interface type
+in a way that works for all the concrete types.
+In the example below, the interface type `Shape`
+is implemented by the concrete types `Rectangle` and `Circle`.
+This allows us to write code that works with variables
+of type `Shape` without needing to know the concrete type.
+
 #### Interface Example
 
 The following code defines an interface and two types that implement it:
@@ -2241,6 +2250,74 @@ if the value being tested does not match the asserted type.
 For example, consider `myShape, ok := g.(Circle)`.
 The variable `ok` will be set to `true` or `false`
 to indicate whether `g` refers to a `Circle` object.
+
+Type assertions and tests can be used with any type,
+even primitive types. For example, a function has
+a parameter of type `interface{}` can test the
+actual type as follows:
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "strconv"
+)
+
+func makeString(value interface{}) string {
+  if b, ok := value.(bool); ok {
+    if b {
+      return "true"
+    }
+    return "false"
+  } else if i, ok := value.(int); ok {
+    return strconv.Itoa(i)
+  } else if _, ok := value.(float64); ok {
+    return fmt.Sprintf("%f", value)
+  } else if s, ok := value.(string); ok {
+    return s
+  } else {
+    log.Fatalf("unsupported value %v of type %T", value, value)
+    return ""
+  }
+}
+
+func main() {
+  fmt.Println(makeString(false))
+  fmt.Println(makeString(true))
+  fmt.Println(makeString(7))
+  fmt.Println(makeString(3.14))
+  fmt.Println(makeString("test"))
+  fmt.Println(makeString('x')) // unsupported value 120 of type int32
+}
+```
+
+A nicer way to write the `makeString` function
+is to use a "type switch".
+
+```go
+func makeString(value interface{}) string {
+  // Note how the variable "value" is shadowed
+  // with the result of the type assertion.
+  switch value := value.(type) {
+  case bool:
+    if value {
+      return "true"
+    }
+    return "false"
+  case int:
+    return strconv.Itoa(value)
+  case float64:
+    return fmt.Sprintf("%f", value)
+  case string:
+    return value
+  default:
+    log.Fatalf("unsupported value %v of type %T", value, value)
+    return ""
+  }
+}
+```
 
 #### Empty Interface
 
