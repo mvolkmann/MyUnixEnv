@@ -1,3 +1,13 @@
+# Go For It! Part 2
+
+This article is the second in a multi-part series on the Go programming language.
+It provides details on the syntax of the language and the builtins it provides.
+
+The first article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
+Future articles will cover tooling, concurrency, solutions to common tasks,
+reflection, modules, testing, and the future of Go.
+
 ## Go Syntax
 
 ### Overview
