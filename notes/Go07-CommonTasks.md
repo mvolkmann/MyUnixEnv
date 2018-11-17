@@ -853,6 +853,8 @@ The net/http package in the standard library can be used to implement REST servi
 Here is an example of a simple HTTP server in a file named `main.go`.
 To run it, enter `go run main.go` and browse localhost:1234.
 
+TODO: Extract more information from pages 191-195 in the blue book?
+
 ```go
 package main
 

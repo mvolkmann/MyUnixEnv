@@ -2103,10 +2103,11 @@ func main() {
 An interface defines a set of methods to be implemented by types.
 Any named type can implement an interface, even named primitive types.
 
-Types do not state the interfaces they implement.
-They only need to implement all the methods of an interface.
-
 A type can implement any number of interfaces.
+
+Types do not state the interfaces they implement.
+They only need to implement all the methods
+of the interfaces they wish to implement.
 
 Interface types are abstract, meaning that
 it is not possible to directly create instances of them.
@@ -2120,12 +2121,13 @@ an error is reported that identifies one of the missing methods.
 
 The actual value of a variable or parameter with an interface type
 may support additional methods, but those cannot be called without
-relying on a type assertion which is described later.
+using a type assertion which is described later.
 
 Calling a method on a variable with an interface type
 calls the method on the underlying type.
 If a value has not be assigned to the variable,
-calling a method on it results in an error.
+meaning it is `nil`,
+calling a method on it triggers a panic.
 
 #### Interface Example
 
@@ -2137,31 +2139,31 @@ import "fmt"
 import "math"
 
 type Shape interface {
-  area() float64
-  name() string
+  Area() float64
+  Name() string
 }
 
 type Rectangle struct {
   width, height float64
 }
-func (r Rectangle) area() float64 {
+func (r Rectangle) Area() float64 {
   return r.width * r.height
 }
-func (r Rectangle) name() string {
+func (r Rectangle) Name() string {
   return "rectangle"
 }
 
 type Circle struct {
   radius float64
 }
-func (c Circle) area() float64 {
+func (c Circle) Area() float64 {
   return math.Pi * c.radius * c.radius
 }
-func (c Circle) name() string {
+func (c Circle) Name() string {
   return "circle"
 }
 // Adding a method to the Circle type that is not in the Shape interface.
-func (c Circle) diameter() float64 {
+func (c Circle) Diameter() float64 {
   return c.radius * 2
 }
 
@@ -2175,13 +2177,16 @@ func main() {
   var g Shape // Note that g is an interface type.
   //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
   g = r
+  // The formatting verb %T can be used to output the type
+  // of the value currently held in an interface variable.
+	fmt.Printf("g currently holds a %T\n", g) // main.rectangle
   printArea(g)
   g = c
   printArea(g)
 
   // Since the shape interface doesn't define the diameter method,
   // a type assertion is required to call it.
-  fmt.Println("diameter =", g.(Circle).diameter())
+  fmt.Println("diameter =", g.(Circle).Diameter())
 }
 ```
 
@@ -2192,9 +2197,9 @@ on the right must implement a given interface.
 This is checked at compile-time. For example,
 
 ```go
-  r := Rectangle{width: 3, height: 4} // no check performed
-  var r Shape = Rectangle{width: 3, height: 4} // check passes
-  var r io.Reader = Rectangle{width: 3, height: 4} // check fails
+r := Rectangle{width: 3, height: 4} // no check performed
+var r Shape = Rectangle{width: 3, height: 4} // check passes
+var r io.Reader = Rectangle{width: 3, height: 4} // check fails
 ```
 
 #### Type Assertions
@@ -2205,10 +2210,24 @@ If it does, the same value is returned, but with the asserted type.
 If it does not, a panic is triggered.
 
 For example, consider `myShape := g.(Circle)`.
+The asserted type `Circle` is a concrete type.
 If `g` does refer to a `Circle` then the type of `myShape` is `Circle`.
 
+When the asserted type is an interface type,
+if the value on the left implements the interface
+then the result has that interface type.
+This can be used to allow methods from the interface to be called.
+For example, suppose we have a value in the variable `someValue`
+whose type implements multiple interfaces, one of which is `Shape`.
+The following code prints the name of the shape.
+
+```go
+myShape := someValue.(Shape);
+fmt.Println(myShape.Name)
+```
+
 Keep in mind that when running a program using `go run`,
-if there are compile errors, the panic will not be
+if there are compile errors, a panic will not be
 triggered since the code won't begin running.
 
 #### Type Tests
@@ -2216,17 +2235,18 @@ triggered since the code won't begin running.
 A "type test" determines whether an interface variable
 refers to a specific type.
 It differs from a type assertion in that
-an extra return value is captured.
-For example, `myShape, ok := g.(Circle)`.
+an extra return value is captured and it doesn't panic
+if the value being tested does not match the asserted type.
+
+For example, consider `myShape, ok := g.(Circle)`.
 The variable `ok` will be set to `true` or `false`
 to indicate whether `g` refers to a `Circle` object.
-If it does not, no panic will be triggered.
 
 #### Empty Interface
 
-An interface with no methods, referred to as the "empty interface",
-matches every type. This can be given a name
-such as "any" using `type any interface{}`.
+An interface with no methods, referred to as
+the "empty interface", matches every type.
+This can be given a name such as "any" using `type any interface{}`.
 
 This enables writing functions with parameters that accept any type.
 The standard library package `fmt` defines many functions such as
@@ -2258,19 +2278,19 @@ type node struct {
   next  *node
 }
 
-// clear removes all nodes.
-func (listPtr *LinkedList) clear() {
+// Clear removes all nodes.
+func (listPtr *LinkedList) Clear() {
   listPtr.head = nil
 }
 
-// isEmpty determines if the LinkedList is empty.
-func (listPtr *LinkedList) isEmpty() bool {
+// IsEmpty determines if the LinkedList is empty.
+func (listPtr *LinkedList) IsEmpty() bool {
   return listPtr.head == nil
 }
 
-// pop removes the first node and returns its value.
-func (listPtr *LinkedList) pop() any {
-  if listPtr.isEmpty() {
+// Pop removes the first node and returns its value.
+func (listPtr *LinkedList) Pop() any {
+  if listPtr.IsEmpty() {
     return nil
   }
   node := listPtr.head
@@ -2278,14 +2298,14 @@ func (listPtr *LinkedList) pop() any {
   return node.value
 }
 
-// push adds a node to the front.
-func (listPtr *LinkedList) push(value any) {
+// Push adds a node to the front.
+func (listPtr *LinkedList) Push(value any) {
   node := node{value, listPtr.head}
   listPtr.head = &node
 }
 
-// len returns the length of the LinkedList.
-func (listPtr *LinkedList) len() int {
+// Len returns the length of the LinkedList.
+func (listPtr *LinkedList) Len() int {
   len := 0
   node := listPtr.head
   for node != nil {
@@ -2297,16 +2317,16 @@ func (listPtr *LinkedList) len() int {
 
 func main() {
   list := LinkedList{}
-  list.push(1)
-  list.push(3)
-  list.clear()
-  list.push(5)
-  list.push(7)
+  list.Push(1)
+  list.Push(3)
+  list.Clear()
+  list.Push(5)
+  list.Push(7)
 
   sum := 0
-  for !list.isEmpty() {
-    value := list.pop()
-    fmt.Println("value =", value) // 5 and 7
+  for !list.IsEmpty() {
+    value := list.Pop()
+    fmt.Println("value =", value) // 7 and 5
     sum += value.(int)
   }
   fmt.Println("sum =", sum) // 12
@@ -2402,6 +2422,9 @@ an additional return value of type `error`
 that callers should check.
 When there is no error, this return value is `nil`.
 
+The type `error` is an interface with a single method
+`Error` that takes no arguments and returns a `string`.
+
 Go prefers this error handling approach
 over using exceptions.
 One reason is that it requires
@@ -2423,8 +2446,10 @@ It is also possible to define
 custom implementations of the `error` interface
 that hold additional data describing the error.
 
-The `errors` package defines a `New` method
-that can be used to create error instances from a string.
+#### Creating Error Values
+
+The `errors` package defines a `New` method that
+can be used to create error instances from a string.
 For example:
 
 ```go
@@ -2450,8 +2475,22 @@ func main() {
 }
 ```
 
+Another way to create an `error` value is to use the `fmt.Errorf` function.
+It works like `fmt.Sprintf` to format an error message.
+The line in the `divide` function above that creates and returns an `error`
+could be replaced by `return 0, fmt.Errorf("divide %d by zero", a)`.
+This differs in that the error message includes
+the number that would have been divided by zero.
+
 When an error is returned, typically the other return values
 are not be expected to be usable values.
+
+#### Custom Error Types
+
+Sometimes it is useful for an error
+to hold more data than just a message.
+This allows callers of functions that return errors
+to access additional details.
 
 Here is an example of defining a custom error type, `DivideByZero`,
 that holds an error message and the numerator value.
@@ -2463,7 +2502,7 @@ type DivideByZero struct {
 
 // This makes the DivideByZero type implement the error interface.
 func (err DivideByZero) Error() string {
-  return fmt.Sprintf("tried to divide %v by zero", err.numerator)
+  return fmt.Sprintf("tried to divide %d by zero", err.numerator)
 }
 
 func divide2(a, b float32) (float32, error) {

@@ -21,6 +21,11 @@ The most commonly used sub-commands are summarized below.
   add a space and the name after the package name.
   For example, `godoc strings Trim`.
   TODO: Discuss using as a local web server.
+- `go env`\
+  This prints the values of all Go-related environment variables
+  such as `GOARCH`, `GOOS`, `GOPATH`, and `GOROOT`.
+  It also accepts arguments that are the names of specific
+  environment variables whose values should be listed.
 - `go fix {file-or-directory-path}`\
   This "finds Go programs that use old APIs and rewrites them to use newer ones."
   "After you update to a new Go release,
@@ -28,6 +33,9 @@ The most commonly used sub-commands are summarized below.
   TODO: Were there any fixes needed for Go 1.11?
 - `go get {pkg1} {pkg2} ...`\
   This downloads and installs packages and their dependencies.
+- `go list`\
+  This outputs the import path of the current directory
+  if the current contains at least one `.go` file.
 - `go build`\
   This builds an executable for the package in the current directory
   that includes everything needed to run
@@ -76,6 +84,14 @@ These include `test`, `run`, `build`, and `install`.
 There are many Go tools that are not sub-commands of the `go` command.
 Some of the more popular ones include:
 
+- `gofmt`\
+  This formats code in the standard format.
+  It uses tabs for indentation and spaces for alignment.
+  It also alphabetizes imports.
+  The arguments can be file paths or directory paths
+  to process all the `.go` files in the directories.
+  By default, the formatted code is written to stdout.
+  To overwrite the files, include the `-w` flag.
 - `golint`\
   This is a linter for `.go` files that just focuses on coding style.
   Unlike `gofmt` which corrects some issues, `golint` just reports them.
@@ -85,10 +101,6 @@ Some of the more popular ones include:
   For a list of supported tools, see
   <https://github.com/alecthomas/gometalinter#supported-linters>.
   `golint` is one of the supported tools.
-- `gofmt`\
-  This formats code in the standard format.
-  It uses tabs for indentation and spaces for alignment.
-  It also alphabetizes imports.
 - `goimports`\
   This does what `gofmt` does and also
   adds missing imports and removes unused imports.
