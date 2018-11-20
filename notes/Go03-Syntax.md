@@ -692,8 +692,8 @@ Examples of these appear later.
 ### Strings
 
 Go strings are immutable sequences of bytes representing UTF-8 characters.
-Literal values are delimited with double quotes
-or back-ticks (called "raw string literals").
+Literal values are delimited with double quotes or back-ticks.
+When back-ticks are used, they are called "raw string literals".
 
 Raw string literals can include newline characters
 and characters escaped with backslashes
@@ -711,7 +711,8 @@ To get the length of a string in UTF-8 characters,
 use the `unicode/utf8` package.
 For example, `utf8.RuneCountInString(name)`.
 
-To retrieve a byte from a string, `char := name[index]`.
+To retrieve a byte from a string, use square brackets.
+For example, `char := name[index]`.
 Attempting to retrieve a byte at an index beyond the end
 triggers a panic, which is a runtime error
 that typically causes the application to terminate
@@ -753,8 +754,8 @@ The `string` type has no methods.
 The standard library package `strings` provides
 many functions for operating on strings.
 Many of these are described in the "Builtins" section.
-For example, to split a string on whitespace characters
-and print each word on a separate line:
+For example, the following code splits a string on
+whitespace characters and prints each word on a separate line:
 
 ```go
 s := "This is a test."
