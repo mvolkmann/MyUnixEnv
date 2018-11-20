@@ -15,23 +15,21 @@ reflection, modules, testing, and the future of Go.
 A Go source file contains a package clause,
 followed by zero or more import declarations,
 followed by zero or more package-level declarations.
+Package clauses and import declarations
+are described in the "Package" section.
 
 A package-level declaration is a declaration of a package
 constant, variable, type, function, or method.
 All of these begin with a keyword which is one of
 `const`, `var`, `type`, or `func`.
 These declarations can appear in any order.
-These are the only statements that can appear outside of functions.
+They are the only statements that can appear outside of functions.
 This precludes use of the `:=` operator and
 non-declaration statements, like `if` and `for`,
 outside of functions.
 
-Package-level names that start uppercase are "exported".
-This means that other packages that import the package
-can access them.
-
 Types follow variable and parameter names, separated by a space.
-For example, `var score int8`.
+For example, `var score int`.
 
 Semicolons are not required, but can be used
 to place multiple statements on the same line.
@@ -39,71 +37,45 @@ However, the `gofmt` code formatting tool
 will place each statement on a separate line
 and remove semicolons.
 
-In some languages `string[]` represents an array of strings.
-In a GraphQL schema, this would be written as `[string]`.
-But Go chooses a third option, `[]string`
-which was inspired by Algol 68.
-
 ### Packages
 
 All Go code resides in some package.
-A package is defined by a collection of Go source files
-in a single directory.
+
+The package name must match the name of the directory that
+holds the file, unless the package name is "main".
 It defines a namespace for the names it defines.
+For example, if a directory named `astronomy` contains the file `planets.go`,
+the first non-comment line in the file should be `package astronomy`.
+
+A package is defined by a collection of
+Go source files in a single directory.
 The source files that define a package
 can have any file name that ends in `.go`.
 
+All names defined in a package are visible
+in all source files of the package.
 Exported names of a package start uppercase and are visible
 in source files of other packages that import the package.
 Unexported names start lowercase and are not in visible
 in the source files of other packages.
-All names, exported or unexported, are visible
-in all source files of the package.
 
-All source files must start with a `package` statement
-that includes a package name.
-The package name must be lowercase and
-match the name of the directory that holds the file,
-unless the package name is "main".
+Go convention is for package names to be
+all lowercase without underscores or hyphens.
+This precludes the use of camelcase names.
 
 The `main` function is the starting point of all Go applications
-and must defined in a source that starts with `package main`.
+and must defined in a source file that starts with `package main`.
 
-For example, if the file `foo.go` is in a directory named `bar`,
-the first non-comment line in the file should be `package bar`.
-
-Changing a package name requires renaming the directory
-and modifying the `package` statement in all the files.
-It seems Go missed an opportunity to
+Changing a package name requires renaming the directory and
+modifying the `package` statement in all the files that define it.
+Editorial: It seems Go missed an opportunity to
 infer the package name from the directory name.
 
-Packages used by an application or by other packages are not required
-to have unique names, but their import paths must be unique.
-For example, the import paths `alpha/one` and `beta/one` can coexist
-even though the package name for both is `one`.
-However, to use both in the same source file,
-one of them will need to be given an alias (described later).
+### Imports
 
-The full name used to import a package is referred to as its "import path".
-These are slash-separate names.
-For standard library packages, this is a simple name
-such as `"strings"` or `"math/rand"`.
-For community packages, this is the URL without the scheme portion.
-For example, to import the package at
-<https://github.com/julienschmidt/httprouter>
-use `import "github.com/julienschmidt/httprouter"`.
-This binds the short name "httprouter" to be used
-for accessing the names exported by the package.
-
-Refer to the names exported by an imported package
-by preceding them with the package name followed by a period.
-For example, `httprouter.ResponseWriter`.
-It is not possible to add the exported names to the current namespace
-to avoid using the `pkgName.` prefix.
-
-An `import` statement imports all the exported symbols in given packages.
+An `import` statement imports all the exported names in given packages.
 The imported names are available in the source file
-containing the `import` statement, but not automatically
+containing the `import` statement, but are not automatically
 available in other source files of the same package.
 It is not possible to import just a subset
 of the names exported by a given package.
@@ -122,8 +94,34 @@ with `import altName "pkgName"`.
 Note that the alternate name is not surrounded by quotes,
 but the package name is.
 When an alternate name is defined,
-exported names in the package must be referenced with
-`altName.ExportedName`.
+exported names in the package must be
+referenced with `altName.ExportedName`.
+instead of `pkgName.ExportedName`.
+
+The full name used to import a package is referred to as its "import path".
+These are slash-separate names.
+For standard library packages, the import path is a simple name
+such as `"strings"` or `"math/rand"`.
+For community packages, the import path
+is the package URL without the scheme portion.
+For example, to import the package at
+<https://github.com/julienschmidt/httprouter>
+use `import "github.com/julienschmidt/httprouter"`.
+This binds the short name `httprouter` so it can be used
+for accessing the names exported by the package.
+
+Refer to the names exported by an imported package
+by preceding them with the package name followed by a period.
+For example, `httprouter.ResponseWriter`.
+It is not possible to add the exported names to the current namespace
+to avoid using the `pkgName.` prefix.
+
+Packages used by an application or by other packages are not required
+to have unique names, but their import paths must be unique.
+For example, the import paths `alpha/one` and `beta/one` can coexist
+even though the package name for both is `one`.
+However, to use both in the same source file,
+one of them must be given an alternate name.
 
 Circular imports where an import triggers the
 import of the current package are treated as errors.
@@ -132,16 +130,16 @@ import of the current package are treated as errors.
 
 Initialization of package-level variables that require logic,
 not just literal values or results of function calls,
-must be done in `init` functions
-that have no parameters and no return value.
+must be done in `init` functions.
+These have no parameters and no return value.
 
 A package can have any number of `init` functions
 in any of its source files.
 These functions are run in the order they appear,
 and alphabetically by source file name within a package.
 
-The `init` functions of all imported packages
-are run before those of a given package.
+The `init` functions of all imported packages are
+run before those of the package that imports them.
 All `init` functions of all imported packages are run
 before the `main` function of an application is run.
 
@@ -157,28 +155,34 @@ For example, `xmlHTTPRequest`.
 
 The `golint` tool requires some well-known acronyms in names
 to use the same case for all their letters.
-These includes ASCII, HTML, ID, JSON, URL, and XML.
+These include ASCII, HTML, ID, JSON, URL, and XML.
 
 ### Comments
 
 Comments in Go use the same syntax as C.
 
 Multi-line comments use `/* ... */`.
-These primarily used for the comment at the top of a package
+These cannot be nested.
+They are primarily used for the comment at the top of a package
 and to temporarily comment out sections of code.
-These comments cannot be nested.
 
 Single-line comments use `// ...`.
 These are used for all other kinds of comments,
-even those above functions.
+even those preceding functions.
 
 A single-line comment should precede each exported declaration.
-These used by the `go doc` and `godoc` tools that generate documentation.
+These used by the `go doc` and `godoc` tools to generate documentation.
 
 ### Zero Values
 
-Every type as a "zero value" which is the value it takes on when it is not initialized.
-There are no uninitialized variables.
+Every type as a "zero value" which is
+the value it takes on when it is not initialized.
+This means that all variables have a value.
+
+The table below mentions "slices".
+These are described in detail in the "Slices" section.
+For now think of a slice as an array with a variable length.
+Arrays in Go have a fixed length.
 
 | Type                       | Zero Value                                                      |
 | -------------------------- | --------------------------------------------------------------- |
@@ -194,15 +198,19 @@ There are no uninitialized variables.
 
 ### Variables
 
-Variables in Go have the following characteristics:
+#### Variable Characteristics
 
-- mutable unless primitive and defined with `const`
-- block-scoped within functions, so those in
-  inner scopes can shadow those in outer scopes
-- package-level variables are local to the package
-  unless their name starts uppercase
+Variables in Go are mutable unless primitive and defined with `const`.
+
+Variables are block-scoped within functions, so
+those in inner scopes can shadow those in outer scopes.
+
+Package-level variables are local to the package
+unless their name starts uppercase.
 
 Go distinguishes between declaring, initializing, and assigning variables.
+
+#### Package-level Variables
 
 Variables that are declared outside of functions (package-level)
 must be declared with a `var` statement.
@@ -212,8 +220,8 @@ that yields a value of the desired type.
 Examples include:
 
 ```go
-var name string // defaults to zero value for the type
-var name = "Mark"
+var name string // defaults to zero value for the type (empty string)
+var name = "Mark" // inferred type is string
 var name string = "Mark"
 ```
 
@@ -225,8 +233,8 @@ Some editor plugins/extensions will warn about this.
 When no type is specified, the largest matching type is assumed.
 For example, in `var n = 1.2` the type will be `float64`.
 
-Package-level variables have package scope which means they are
-accessible by all files in the package.
+Package-level variables have package scope which means
+they are accessible in all source files of the package.
 They are never garbage collected and so are available for
 the entire life of the application in which they are used.
 
@@ -235,7 +243,7 @@ For example:
 
 ```go
 var name, age = "Mark", 57 // must initialize all
-var (
+var ( // use parens to spread over multiple lines
   name string = "Mark"
   age number // not initialized, so uses zero value
 )
@@ -243,12 +251,14 @@ var (
 
 When multiple consecutive variables have the same type,
 the type can be omitted from all but the last.
-For example, these are equivalent:
+For example, these lines are equivalent:
 
 ```go
 var n1 string, n2 string, a1 int8, a2 int8, a3 int8
 var n1, n2 string, a1, a2, a3 int8
 ```
+
+#### Variables in Functions
 
 Variables that are declared inside a function are local to that function.
 
@@ -261,13 +271,17 @@ For example, `name := "Mark"`.
 
 Inside function definitions the `var` form of assignment
 tends to only be used for two reasons.
-The first is when when a variable needs to be declared, but not yet be assigned.
-The second is when the desired type differs from that of the initializer.
+The first is when when a variable needs to be declared,
+but not yet assigned a non-zero value.
+The second is when the desired type differs
+from what would be inferred from the initializer.
 For example, in the following declaration the type of the variable `n`
-would be `int` rather than `int8` if it was not specified: `var n int8 = 19`.
+would be `int` rather than `int8` if it was not specified:
+`var n int8 = 19`.
 
 Multiple variables can be declared with one `:=` operator.
 For example, `name, age := "Mark", 57`.
+An initializer must be supplied for each variable.
 
 It is an error to attempt to declare a variable that has already
 been declared, whether with a `var` statement or the `:=` operator.
@@ -279,7 +293,8 @@ Multiple variables can be assigned with one `=` operator.
 For example, `name, age = "Tami", 56`.
 This can also be used to swap values. For example, `x, y = y, x`.
 This works with any number of variables.
-`x, y, z = y, z, 0` assigns the current value of `y` to `x`,
+For example, `x, y, z = y, z, 0` assigns
+the current value of `y` to `x`,
 the current value of `z` to `y`, and zero to `z`.
 
 It is an error to attempt to assign to a variable that has not been defined.
@@ -289,16 +304,25 @@ As long as at least one variable on the left of `:=` has not yet been declared,
 the other variables can already exist.
 A common use case is when the variable `err` is used
 to capture possible errors from a function call.
+For example, as long as the variable `bytes` has not be previously declared
+the following statement is valid even if `err` has been previously declared.
+
+```go
+bytes, err := ioutil.ReadFile("haiku.txt")
+```
+
+#### Multiple Return Values
 
 Functions can return any number of values.
-The result can be assigned to a list of variables.
-For example, `min, max := getXBounds(points)`.
-The left-hand side must contain the same number of variables
-as values returned by the function.
+The result can be assigned to the same number of variables.
+For example, if `getBounds` is a function that returns two values,
+`min, max := getXBounds(points)` is a valid statement.
 
 Sometimes the caller is only interested in a subset of the return values.
-The "blank identifier" \_ can be used to discard specific return values.
+The "blank identifier" `_` can be used to discard specific return values.
 For example, `_, max := getXBounds(points)`.
+
+GRONK
 
 ### Constants
 
@@ -1045,8 +1069,8 @@ import (
   "strings"
 )
 
-// The type "interface{}" means
-// that any type can be used.
+// The type "interface{}" means that any type can be used.
+// See the "Empty Interface" section later.
 func log(args ...interface{}) {
   fmt.Println(args...)
 }
@@ -1087,7 +1111,7 @@ used to capture unneeded return values.
 For example,
 
 ```go
-// This returns an int and a float64.
+// This takes a "slice" of int values and returns an int and a float64.
 func GetStats(numbers []int) (int, float64) {
   sum := 0
   for _, number := range numbers {
@@ -1583,6 +1607,11 @@ a.k.a. elements, that all have the same type.
 Values can be other arrays to create multidimensional arrays.
 
 Arrays have a fixed length and the length is part of their type.
+
+In some languages `string[]` represents an array of strings.
+In a GraphQL schema, this would be written as `[string]`.
+But Go chooses a third option, `[]string`
+which was inspired by Algol 68.
 
 The syntax for declaring an array is `[length]type`.
 The length must be compile-time expression.
@@ -2221,6 +2250,23 @@ var r Shape = Rectangle{width: 3, height: 4} // check passes
 var r io.Reader = Rectangle{width: 3, height: 4} // check fails
 ```
 
+#### Empty Interface
+
+An interface with no methods, referred to as
+the "empty interface", matches every type.
+This can be given a name such as "any" using `type any interface{}`.
+
+The empty interface enables writing functions
+with parameters that accept any type.
+The standard library package `fmt` defines many functions
+such as `Println` and `Printf` that do this.
+
+Type assertions must be used to operate on these values.
+
+Using empty interfaces should be avoided when possible
+because they sacrifice compile-time type checking
+and open the possibility for more run-time errors.
+
 #### Type Assertions
 
 A "type assertion" verifies that the value of
@@ -2328,18 +2374,6 @@ func makeString(value interface{}) string {
   }
 }
 ```
-
-#### Empty Interface
-
-An interface with no methods, referred to as
-the "empty interface", matches every type.
-This can be given a name such as "any" using `type any interface{}`.
-
-This enables writing functions with parameters that accept any type.
-The standard library package `fmt` defines many functions such as
-`Println` and `Printf` that do this.
-
-Type assertions must be used to operate on these values.
 
 #### Linked List Example
 
