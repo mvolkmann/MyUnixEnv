@@ -1376,6 +1376,13 @@ and avoids making a copy of the struct when it is invoked.
 When the receiver is a type value and not a pointer to a type value
 the method receives a copy and cannot modify the original.
 
+#### Method Definition Location
+
+It may seem that struct methods should be defined inside the struct.
+However, the ability to define methods outside the type definition
+is required in order to add methods to non-struct types.
+So Go chooses to only support this same approach for all types.
+
 #### Methods With Pointer Receivers
 
 When a function has a parameter with a pointer type,
@@ -1492,7 +1499,7 @@ type Point struct {
 // Distance returns the distance from
 // the receiver point to a given Point.
 func (p Point) Distance(p2 Point) float64 {
-  return math.Sqrt(math.Pow(p.x-p2.x, 2) + math.Pow(p.y-p2.y, 2))
+  return math.Sqrt(math.Pow(p.x - p2.x, 2) + math.Pow(p.y - p2.y, 2))
 }
 
 func main() {
@@ -1521,13 +1528,6 @@ For example:
   distanceBetweenPoints := Point.Distance
   fmt.Println(distanceBetweenPoints(p1, p2)) // 5
 ```
-
-#### Method Definition Location
-
-It may seem that struct methods should be defined inside the struct.
-However, the ability to define methods outside the type definition
-is required in order to add methods to non-struct types.
-So Go chooses to only support this same approach for all types.
 
 #### Struct Field Encapsulation
 
