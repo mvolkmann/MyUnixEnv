@@ -322,8 +322,6 @@ Sometimes the caller is only interested in a subset of the return values.
 The "blank identifier" `_` can be used to discard specific return values.
 For example, `_, max := getXBounds(points)`.
 
-GRONK
-
 ### Constants
 
 Go constants are defined using the `const` keyword.
@@ -331,14 +329,14 @@ They must be initialized to a primitive literal or an expression
 that can be computed at compile-time and results in a primitive value.
 For example, `const HOT = 100`.
 
-Non-primitive types such as arrays and structs
+Non-primitive types such as arrays, slices, structs, and maps
 cannot be declared with `const`.
 
 Like with `var`, a type can be specified.
-This is useful when the desired type cannot be determined from the initializer.
+This is useful when the desired type differs from what would be inferred.
 For example, `const HOT float64 = 100`.
 
-When a constant type is not specified they are "untyped".
+When a constant type is not specified the constant is "untyped".
 This allows them to be used in many expressions without explicit conversions
 For example, `int` and `float64` values cannot be multiplied
 without converting one of the values to the other type.
@@ -381,7 +379,8 @@ Go supports the following operators:
 - block delimiters: `{ }`
 - expression grouping: `( )`
 - function call: `fnName(args)`
-- array creation: `[elements]`
+- array or slice index: `arr[index]`
+- map value: `map[key]`
 - struct member reference: `structName.memberName`
 - statement separator: `;`
 - array element separator: `,`
@@ -423,14 +422,14 @@ each of which is described in more detail later:
 - `else` - part of an `if`
 - `fallthrough` - used as last statement in a `case` to execute code in next `case`
 - `for` - the only loop syntax; C-style (init, condition, and post) or just a condition
-- `func` - defines a named or anonymous function or a method
+- `func` - defines a named or anonymous function or method
 - `go` - precedes a function call to execute it asynchronously in a goroutine
 - `goto` - jumps to a given label (see `:` operator)
 - `if` - for conditional logic; also see `else`
-- `import` - imports all exported symbols in given package(s)
+- `import` - imports all exported symbols in given packages
 - `interface` - defines a set of methods;
-  typically used to define a type where all implementing types are compatible
-- `map` - collection of key/value pairs where keys and values can be any type
+  typically used to define a type with which all implementing types are compatible
+- `map` - collection of key/value pairs where keys and values can have any type specified type
 - `package` - specifies the package to which the current source file belongs
 - `range` - used in a `for` loop to iterate over a
   string, array, slice, map, or receiving channel
@@ -441,7 +440,7 @@ each of which is described in more detail later:
   based on an expression or type
 - `type` - creates an alias for another type; often used to
   give a name to a struct, interface, or function signature
-- `var` - defines a variable, its type, and optionally an initial value
+- `var` - defines a variable and its type, initial value, or both
 
 There are additional "predeclared names" that are not reserved,
 but using them in other contexts could be confusing.
@@ -450,6 +449,8 @@ the names of builtin functions (such as `append`, `delete`, `make`, and `range`)
 and constants (`true`, `false`, `iota`, and `nil`).
 
 ### Pointers
+
+GRONK
 
 Pointers hold the address of a value or `nil`.
 Pointer types begin with an asterisk.
