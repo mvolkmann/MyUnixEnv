@@ -1951,8 +1951,6 @@ or using the named type above,
 Another way to create a map is to use the builtin `make` function.
 For example, `scoreMap := make(map[string]int)`
 or `scoreMap := make(PlayerScoreMap)`.
-GRONK
-TODO: Is scoreMap really a pointer?
 
 To add a key/value pair, `myMap[key] = value`.
 
@@ -1975,7 +1973,7 @@ fmt.Printf("scoreMap = %+v\n", scoreMap) // map[Tami:92 Amanda:83 Jeremy:95 Mark
 ```
 
 To get the value for a given key and verify that the key was present,
-as opposed to getting the zero value because it wasn't,
+as opposed to getting the zero value because it isn't,
 capture the second return value which is a `bool`. For example:
 
 ```go
@@ -2008,7 +2006,7 @@ Maps support concurrent reads, but not concurrent writes
 or a concurrent read and write.
 If a map might be accessed concurrently from multiple goroutines,
 protect against this by using channels or mutexes.
-These will be described in a later article in the series on concurrency.
+These will be described in the Concurrency article later in the series.
 
 ### Sets
 
