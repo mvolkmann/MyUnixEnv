@@ -1350,7 +1350,7 @@ Methods are distinguished only by the receiver type and their name.
 
 #### Method Example
 
-The following code adds a method to the type "pointer to a Person struct".
+The following code adds a method to the Person type.
 Note how the receiver and its type appear
 in parentheses before the method name.
 
@@ -1383,7 +1383,7 @@ it must be passed a pointer.
 However, when a method has a pointer receiver,
 it can be invoked on a pointer to a value or a value.
 When invoked on a value, it will automatically
-pass a pointer to the value to the method.
+use a pointer to the value as the receiver.
 
 Go convention is that if any method for a type
 has a pointer receiver, all of them should.
@@ -1398,7 +1398,8 @@ can check for nil and return some reasonable value.
 #### Methods On Primitive Types
 
 Recall that the underlying type of a named type can be a primitive type.
-Here is an example of adding a method to a named type for the `int` type.
+Here is an example of adding a method to a
+named type with an underlying type of `int`.
 
 ```go
 type Number int
