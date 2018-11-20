@@ -1928,14 +1928,13 @@ func main() {
 
 ### Maps
 
-GRONK
 A map is a collection of key/value pairs
 that provides efficient lookup of values by their key.
 The keys and values can have any type, but
 in a given map all the keys have the same type
 and all the values have the same type.
 
-A map type looks like `map[keyType]valueType`.
+The syntax for a map type is `map[keyType]valueType`.
 For example, `var myMap map[string]int`.
 
 A named type can be created for this type which is
@@ -1945,13 +1944,14 @@ For example, `type PlayerScoreMap map[string]int`.
 One way to create a map is with a "map literal"
 which allows specifying initial key/value pairs.
 For example,
-`scoreMap := map[string]int{"Mark": 90, "Tami": 92}`.
+`scoreMap := map[string]int{"Mark": 90, "Tami": 92}`,
 or using the named type above,
 `scoreMap := PlayerScoreMap{"Mark": 90, "Tami": 92}`.
 
 Another way to create a map is to use the builtin `make` function.
 For example, `scoreMap := make(map[string]int)`
-or `scoreMap := make(playerScoreMap)`.
+or `scoreMap := make(PlayerScoreMap)`.
+GRONK
 TODO: Is scoreMap really a pointer?
 
 To add a key/value pair, `myMap[key] = value`.
