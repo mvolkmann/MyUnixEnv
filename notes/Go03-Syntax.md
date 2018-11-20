@@ -1024,7 +1024,7 @@ Go functions are defined with `func` keyword.
 The syntax for named functions is:
 
 ```go
-func functionName(param1 type1, param2 type2, ...) (returnTypes) {
+func fnName(param1 type1, param2 type2, ...) (returnTypes) {
   ...
 }
 ```
@@ -1033,10 +1033,8 @@ Named functions must be declared at the package level,
 not nested inside other functions.
 
 Anonymous functions have the same syntax, but omit the name.
+These can be declared inside other functions.
 For example, `func(v int) int { return v * 2 }`.
-
-Unlike named functions, anonymous functions
-can be defined inside other functions.
 
 Both named and anonymous functions are first-class values.
 This means they can be stored in variables,
@@ -1079,10 +1077,8 @@ These are referred to as variadic functions.
 To define a variadic function, precede the type
 of the last named parameter with an ellipsis.
 When the function is called, behind the scenes
-an array is created to hold all the arguments
-after the initial ones
-and a slice over that array is passed
-which becomes the value of the last parameter.
+an array is created to hold all the arguments after the initial ones
+and the last parameter is set to a slice over that array.
 For example:
 
 ```go
@@ -1102,40 +1098,42 @@ func log(args ...interface{}) {
 // This accepts a person name followed by
 // any number of color names.
 func report(name string, colors ...string) {
-  text := strings.Join(colors, " and ") + "."
-  fmt.Println(name, "likes the colors", text)
+  text := strings.Join(colors, " and ")
+  fmt.Printf("%s likes the colors %s.\n", name, text)
 }
 
 func main() {
   log("red", 7, true) // red 7 true
-  report("Mark", "yellow", "orange") // Mark likes yellow and orange
+  report("Mark", "yellow", "orange") // Mark likes the colors yellow and orange.
 }
 ```
 
 If the values to be passed to a variadic function
 are already in a variable that holds a slice,
-follow the variable name with an ellipsis.
+follow the variable name with an ellipsis
+to pass the values as separate arguments.
 If they are in an array, first create a slice over it.
-For example, `values[:]...`.
+For example, `log(myArr[:]...)`.
 
 #### Function Return Values
 
 Functions can return zero or more values.
 When there are no return values, the list of return types is omitted.
 When there is one return values, its type is provided,
-but the parentheses around it are optional and typically omitted.
+but parentheses around it are optional and typically omitted.
 When there are multiple return value, the types
 must be surrounded by parentheses and separated by commas.
 
 When calling a function, all return values
-must be captured in a variable.
+must be captured in variables.
 The "blank identifier" (\_) can be
 used to capture unneeded return values.
 
 For example,
 
 ```go
-// This takes a "slice" of int values and returns an int and a float64.
+// This takes a "slice" of int values and returns
+// their sum as an int and their average as a float64.
 func GetStats(numbers []int) (int, float64) {
   sum := 0
   for _, number := range numbers {
@@ -1145,10 +1143,10 @@ func GetStats(numbers []int) (int, float64) {
   return sum, average
 }
 
-func main() {
-  sum, avg := GetStats(someNumbers)
-  // Do something with sum and avg.
-}
+// In some other function
+scores := []int{1, 3, 4, 7}
+sum, avg := GetStats(scores)
+// Do something with sum and avg.
 ```
 
 A common use of returning multiple values from a function is to
@@ -1176,6 +1174,12 @@ see the "Error Handling" section later.
 A function call can appear as the only argument
 in another function call. The return values
 become the actual arguments to the outer call.
+For example,
+
+```go
+// Pass the two return values from GetStats to Println.
+fmt.Println(GetStats(scores));
+```
 
 Function return types can have associated names
 that become local variables inside the function.
@@ -1196,7 +1200,7 @@ func mult(n int) (times2, times3 int) {
 n2, n3 := mult(3) // n2 is 6 and n3 is 9
 ```
 
-Unless the function is very short, using this feature is frowned upon
+Unless the function is very short, using naked returns is frowned upon
 because the code is less readable than explicitly returning values.
 
 #### Function Types
@@ -1208,24 +1212,27 @@ The function name, parameter names,
 and any return value names
 are not part of the signature.
 
-Function types can be important when passing functions
-or returning functions to/from another.
+Function types can be important when passing functions to
+or returning functions from another function.
 
 It is sometimes useful to define a type for a function signature
 to avoid repeating a long definition.
-For example,
+For example:
 
 ```go
 package main
 
 import "fmt"
 
+// This type matches any function that
+// takes two float64 arguments and returns a float64.
 type CalculateFn func(float64, float64) float64
 
 func product(a float64, b float64) float64 {
   return a * b
 }
 
+// This function takes a function as its third argument.
 func process(m float64, n float64, fn CalculateFn) float64 {
   return fn(m, n)
 }
