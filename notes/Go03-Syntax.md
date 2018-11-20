@@ -827,16 +827,15 @@ Struct fields whose names start uppercase (exported) are visible in
 other packages that import the package that defines the struct.
 Otherwise fields are only visible in the package that defines the struct.
 
-It is often desirable to define a type alias for a struct to
+It is often desirable to define a type for a struct to
 make it easy to refer to in variable and parameter declarations.
 Otherwise the struct is anonymous and
 can only be referred to where it is defined.
 
-Here is an example of using an anonymous `struct`
-that is not assigned to a type name:
+Here is an example of using an anonymous `struct`.
 
 ```go
-var me = struct{
+me := struct{
   name string
   age int8
 }{
@@ -845,12 +844,12 @@ var me = struct{
 }
 ```
 
-Assigning a type name makes the code easier to understand
-and makes `struct` definitions reusable.
+Creating a type name makes the code easier to understand
+and make the `struct` definition reusable.
 For example:
 
 ```go
-type person struct {
+type Person struct {
   name string
   age int8
 }
@@ -861,7 +860,7 @@ Field values can be specified in any order by also providing corresponding keys.
 For example,
 
 ```go
-var p1 = person{name: "Mark", age: 57}
+p1 := Person{name: "Mark", age: 57}
 ```
 
 Struct fields can also be initialized by providing only values
@@ -870,10 +869,10 @@ But this option can only be used within
 the same package that defines the struct type.
 It is best to only use this approach for structs with a small number of fields
 because changes to the field order will break these initializations.
-For example,
+For example:
 
 ```go
-var p2 = person{"Mark", 57}
+p2 := person{"Mark", 57}
 ```
 
 Uninitialized fields are initialized to their zero value.
@@ -893,8 +892,7 @@ However, the reflection API can be used to do this.
 
 The `fmt.Printf` function takes a format string that can contain "verbs".
 The "%v" verb is useful during debugging for printing values of any type,
-including structs. Only exported fields are output.
-TODO: YOUR EXAMPLE CONTRADICTS THIS!
+including structs.
 Formatting strings are documented at <https://golang.org/pkg/fmt/>.
 For example:
 
@@ -904,7 +902,7 @@ fmt.Printf("%+v\n", p2) // including field names: {name:Mark age:58}
 fmt.Printf("%#v\n", p2) // Go-syntax representation: main.person{name:"Mark", age:58}
 ```
 
-There is no support for destructuring like in JavaScript
+There is no support for destructuring, like in JavaScript,
 to extract field values from a `struct`.
 
 Struct fields can be accessed from a struct pointer
@@ -913,7 +911,7 @@ without dereferencing the pointer. For example,
 ```go
 personPtr := &p1
 fmt.Println((*personPtr).name) // Mark
-fmt.Println(personPtr.name) // same, Mark
+fmt.Println(personPtr.name) // same
 ```
 
 If a `struct` field name is omitted, it is assumed to be the same as the type.
@@ -932,7 +930,7 @@ func main() {
 
   type myType struct {
     Name       string // named field
-    Age               // gets field name from the type above
+    Age               // gets field name from the type defined above
     time.Month        // gets field name from a library type
   }
 
@@ -957,8 +955,8 @@ type Address struct {
 
 type Person struct {
   Name        string
-  Address     // home
-  WorkAddress Address
+  Address     // anonymous field for home address
+  WorkAddress Address // named field for work address
 }
 
 me := Person{
@@ -978,8 +976,8 @@ me := Person{
 }
 ```
 
-When a nested struct is not given an explicit name,
-its fields can be accessed using the struct name or omitting it.
+When a nested struct is not given an explicit name, its fields
+can be accessed by either using the struct name or omitting it.
 For example,
 
 ```go
@@ -988,11 +986,12 @@ fmt.Println("home city is", me.city) // same
 fmt.Println("work city is", me.workAddress.city) // Creve Coeur; cannot omit workAddress.
 ```
 
+Methods are described later.
 If the type of an anonymous field has methods,
 those become methods of the outer struct type as well.
-For example, if the `Address` type above had a `Print` method
-that printed the address in the format of a mailing label,
-that method could also be called on a `Person` object.
+For example, if the `Address` type above has a `Print` method
+that prints the address in the format of a mailing label,
+that method can also be called on a `Person` object.
 
 A struct cannot contain a field whose type is the same struct type,
 but it can contain a field that is a pointer to the same struct type.
@@ -1010,7 +1009,7 @@ fmt.Println(head.next.value) // 20
 ```
 
 Structs can be compared using the `==` and `!=` operators
-if all the field values are comparable.
+if all their field values are comparable.
 Such structs can be used a keys in maps.
 
 When a struct is passed to a function, a copy is made and
@@ -1390,7 +1389,7 @@ can check for nil and return some reasonable value.
 #### Methods On Primitive Types
 
 Recall that the underlying type of a named type can be a primitive type.
-Here is an example of adding a method to a type alias for the `int` type.
+Here is an example of adding a method to a named type for the `int` type.
 
 ```go
 type Number int
@@ -1916,7 +1915,7 @@ and all the values have the same type.
 A map type looks like `map[keyType]valueType`.
 For example, `var myMap map[string]int`.
 
-A type alias can be created for this type which is
+A named type can be created for this type which is
 useful when it will be referred to in many places.
 For example, `type PlayerScoreMap map[string]int`.
 
@@ -1924,7 +1923,7 @@ One way to create a map is with a "map literal"
 which allows specifying initial key/value pairs.
 For example,
 `scoreMap := map[string]int{"Mark": 90, "Tami": 92}`.
-or using the type alias above,
+or using the named type above,
 `scoreMap := PlayerScoreMap{"Mark": 90, "Tami": 92}`.
 
 Another way to create a map is to use the builtin `make` function.
