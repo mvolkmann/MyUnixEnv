@@ -780,6 +780,25 @@ var i int = 2
 sum := s + i // invalid operation - mismatched types
 ```
 
+Type names can be used as functions that convert a value
+that has the same underlying type to that type.
+For example, the invalid operation above can be corrected with:
+
+```go
+sum : = s + score(i) // works!
+```
+
+Type names can also be used as functions to convert between numeric types,
+which is useful since math operations such as addition
+require matching types. For example:
+
+```go
+a := 1 // int
+b := 2.3 // float64
+fmt.Println(float64(a) + b) // 3.3
+fmt.Println(a + int(b)) // truncates b resulting in 1 + 2 = 3
+```
+
 The `type` keyword is most often used to define a type for a
 struct, slice type, map type, interface, or function signature.
 This avoids repeating long type definitions.
@@ -792,25 +811,6 @@ include all those supported by the underlying type.
 This means that the `score` type above can be used
 in all the same ways that an `int` can be used,
 but not in place of an `int`.
-
-Type names can be used as functions that convert a value
-that has the same underlying type to that type.
-For example, the invalid operation above can be corrected with:
-
-```go
-sum : = s + score(i) // works!
-```
-
-This can also be used to convert between numeric types,
-which is useful since math operations such as addition
-require matching types. For example:
-
-```go
-a := 1 // int
-b := 2.3 // float64
-fmt.Println(float64(a) + b) // 3.3
-fmt.Println(a + int(b)) // truncates b resulting in 1 + 2 = 3
-```
 
 Methods can be added to named types.
 These are described later.
