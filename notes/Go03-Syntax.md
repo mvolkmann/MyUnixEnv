@@ -2014,6 +2014,7 @@ Go does not have a builtin data structure for representing sets
 which are unordered collections of unique values.
 However, a `Map` that uses `bool` values or
 empty structs for values can be used for this purpose.
+
 Unlike `bool` values, empty structs do not take up memory.
 They are written as `struct{}`.
 
@@ -2027,6 +2028,7 @@ type empty struct{} // memory-efficient value for sets
 // Strings is a set of strings.
 type Strings map[string]empty
 
+// This value is used to mark a value as present in the set.
 var present = empty{}
 
 // Add adds a given value to the set.
@@ -2067,7 +2069,7 @@ func main() {
   colors := []string{"red", "yellow", "blue"}
   for _, color := range colors {
     if colorSet.Contains(color) {
-      fmt.Println("have", color) // prints "red" and "blue"
+      fmt.Println("have", color) // prints "have red" and "have blue"
     }
   }
 
@@ -2078,9 +2080,9 @@ func main() {
 
 A recommended community library that supports many data structures
 is "gods" at <https://github.com/emirpasic/gods>.
-It supports several kinds of lists, sets, stacks, maps, and trees.
+It implements several kinds of lists, sets, stacks, maps, and trees.
 These collections can hold values of any type,
-but using the values typically requires type assertions
+but using the values typically requires "type assertions"
 (described later).
 
 Here is an example of using the `gods.HashSet` type
@@ -2116,7 +2118,7 @@ func main() {
   for _, v := range values {
     sum += v.(int)
   }
-  fmt.Println("sum =", sum)
+  fmt.Println("sum =", sum) // 6
 
   set.Clear()                        // empty
   fmt.Println("empty?", set.Empty()) // true
@@ -2125,6 +2127,7 @@ func main() {
 ```
 
 ### Deferred Functions
+GRONK
 
 Inside a function, function calls preceded by `defer`
 will have their arguments evaluated immediately,
