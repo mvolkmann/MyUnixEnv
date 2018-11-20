@@ -729,7 +729,7 @@ which can be used to compute `i` for the next character.
 To iterate over the UTF-8 characters in a string,
 use a `for` loop with the `range` keyword.
 For example, `for index, char := range name { ... }`.
-Replace `index` with `_` if it is not needed.
+Replace `index` with the blank identifier `_` if it is not needed.
 
 To create a new string that is a substring of an existing string,
 specify the starting (inclusive) and ending (exclusive) indexes
@@ -1126,7 +1126,7 @@ must be surrounded by parentheses and separated by commas.
 
 When calling a function, all return values
 must be captured in variables.
-The "blank identifier" (\_) can be
+The blank identifier `_` can be
 used to capture unneeded return values.
 
 For example,
@@ -1650,8 +1650,7 @@ But Go chooses a third option, `[]string`
 which was inspired by Algol 68.
 
 The syntax for declaring an array is `[length]type`.
-The length must be compile-time expression.
-Placing the square brackets before the type was inspired by Algol 68.
+The length must be a compile-time expression.
 For example, `var rgb [3]int`.
 
 An array can be created with an "array literal".
@@ -1686,6 +1685,7 @@ Attempting to get or set an element at an index beyond the end
 triggers a panic.
 
 To get the length of an array, `len(myArr)`.
+
 For arrays, the capacity is the same as the length,
 so `cap(myArr)` returns the same value.
 We will see that this is not the case for slices.
@@ -1695,14 +1695,14 @@ is to use a C-style `for` loop.
 For example,
 
 ```go
-for i := 0; i < len(myArr); i++ {
-  value := myArr[i]
+for index := 0; index < len(myArr); index++ {
+  value := myArr[index]
   // Do something with value.
 }
 ```
 
 The `range` keyword can be also used to iterate over the elements,
-and this is typically preferred. For example,
+and this is preferred. For example,
 
 ```go
 for index, value := range myArr {
@@ -1710,7 +1710,7 @@ for index, value := range myArr {
 }
 ```
 
-If `index` is not needed, the "blank identifier" \_ can be used in its place.
+If `index` is not needed, the blank identifier `_` can be used in its place.
 
 ```go
 for _, value := range myArr {
@@ -1723,7 +1723,8 @@ a copy of the array is created.
 Changes the function makes to the array elements
 are not visible to the caller.
 To avoid copying and allow the caller to see changes,
-write functions to accept a pointer to an array rather than an array.
+write functions to accept a pointer to an array rather than an array
+and pass pointers.
 
 ### Slices
 
