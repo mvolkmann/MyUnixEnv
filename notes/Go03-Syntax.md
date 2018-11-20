@@ -450,21 +450,22 @@ and constants (`true`, `false`, `iota`, and `nil`).
 
 ### Pointers
 
-GRONK
+Pointers hold the address of a value.
+When not set, their value is `nil`.
 
-Pointers hold the address of a value or `nil`.
 Pointer types begin with an asterisk.
 `*Type` is the type for a pointer to a value of type `Type`.
 
-To obtain a pointer to a variable value, `myPtr := &myVar`.
+To obtain a pointer to a variable value, use the `&` operator.
+For example, `myPtr := &myVar`.
 It is not possible to obtain the address of a constant value.
 
-To create a value and get a pointer to it in one line,
+To create a value and get a pointer to it in one statement,
 `myPtr := new(type)`.
 Another way to do this which is preferred by many is
 to first create a variable to hold the value
 and then get a pointer to it. For example,
-`var myThing type; myPtr := &myThing`.
+`var myThing ThingType; myPtr := &myThing`.
 Interestingly the assembly code generated
 for these two approaches is identical.
 
@@ -476,7 +477,7 @@ Pointer arithmetic, as seen in C and C++, is not supported in Go.
 This avoids memory safety issues and
 simplifies the builtin garbage collector.
 
-Since function parameters are passed by value,
+Function parameters are passed by value, so
 passing a pointer to a variable is required
 to allow a function to modify the variable.
 
@@ -493,31 +494,44 @@ The builtin `new` function always allocates on the heap.
 Variables declared in functions are typically allocated on the stack
 unless access to them escapes from the function
 by returning a pointer to it or setting a variable
-declared outside the function to a pointer to it.
+declared outside the function to a pointer to the variable.
 
 ### Output
 
 Writing to stdout and stderr is supported by the "fmt" package.
-The `Println` method writes expression values,
-followed by a newline character, to stdout.
+The `Println` method writes expression values to stdout.
+Each value is separated from the next by a single space.
+A newline character is written after the last expression.
+For example:
 
 ```go
-import "fmt"
 fmt.Println(expr1, expr2)
 ```
 
-The `Printf` function also writes to stdout and uses a format string
-similar to the C `printf` function.
+The `Printf` function also writes to stdout.
+It uses a format string similar to the C `printf` function.
+For example:
+
+```go
+fmt.Printf("%s is %d years old.\n", name, age)
+```
 
 For more detail see the "`fmt` Standard Library" section
 in the "Builtins" section.
 
 ### If
 
-In Go `if` statements,
-parentheses are not needed around the condition being tested
-and braces around the body are required.
+In `if` statements, parentheses are not needed
+around the condition being tested.
 If parentheses are included, the `gofmt` tool will remove them.
+
+Braces are required around the statements
+to be executed when the condition is true.
+
+An `else` block is optional.
+When present, braces are required around the statements
+to be executed when the condition is false.
+
 For example:
 
 ```go
@@ -531,7 +545,7 @@ if x > 7 {
 Almost any single statement can precede the condition,
 separated from it by a semicolon.
 However, typically an assignment statement is used.
-The scope of the assigned variable is the `if` block,
+The scope of the assigned variables are the `if` block,
 including the `else` block if present. For example:
 
 ```go
@@ -542,7 +556,7 @@ if y := x * 2; y < 10 {
 
 ### Switch
 
-Go's `switch` statement is similar to that in other languages,
+The `switch` statement in Go is similar to that in other languages,
 but it can switch on expressions of any type.
 Braces around the body are required.
 
@@ -570,6 +584,10 @@ switch name {
 }
 ```
 
+Braces are only needed around the statements in a `case`
+to introduce a new scope for variables
+that are only used by that `case`.
+
 A `switch` statement can include an initialization statement
 just like an `if` statement. For example,
 
@@ -590,7 +608,7 @@ but then the name would not be available for use inside the `switch`.
 A `switch` statement with no expression executes the
 first `case` block whose expression evaluates to true.
 This is referred to as a "tagless switch".
-For example,
+For example:
 
 ```go
 switch {
@@ -646,8 +664,9 @@ for i := 0; i < 10; i++ {
 }
 ```
 
-The init and post parts are optional.
-When only the condition is present, the semicolons can be omitted.
+When the init and post parts are omitted and only
+the condition is present, the semicolons can be omitted.
+
 A `while` loop in other languages looks like the following in Go:
 
 ```go
@@ -866,6 +885,10 @@ fmt.Println(p1.name) // Mark
 p1.age++
 fmt.Println(p1.age) // 58
 ```
+
+There is no syntax for accessing a field of a struct
+whose name is held in a variable.
+However, the reflection API can be used to do this.
 
 The `fmt.Printf` function takes a format string that can contain "verbs".
 The "%v" verb is useful during debugging for printing values of any type,
