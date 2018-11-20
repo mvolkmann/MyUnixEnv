@@ -1245,7 +1245,8 @@ func main() {
 #### Recursion
 
 Like in most programming languages, Go functions can be recursive.
-But most languages use a fixed-size stack
+
+Most languages use a fixed-size stack
 that limits the depth of recursive calls.
 Generally programs crash when they exceed this.
 
@@ -1267,7 +1268,7 @@ that are in the scope of their definition.
 Typically the lifetime of a variable declared inside
 a function is the duration of a call to that function.
 However, the fact that functions are closures
-creates an exception. For example,
+creates an exception to this. For example,
 
 ```go
 func closureDemo() func() {
@@ -1292,16 +1293,16 @@ func main() {
 Methods are functions that are invoked on a "receiver" value.
 They can be associated with any named type
 that is not a pointer or interface.
-They cannot be associated with built-in types.
 The receiver is an instance of this type.
+Methods cannot be associated with built-in types.
 
 Methods are particularly useful for types that implement interfaces.
-Otherwise we could just write functions
+Otherwise we can just write functions
 that take a value of the type as an argument.
 
 One benefit of defining a method on a type instead of
 defining a function that takes an argument of the type
-is that the name can often be shorter without losing meaning.
+is that the name can be shorter without losing meaning.
 For example, we can add a `getAge` method to a `Person` type
 or we can define a `getPersonAge` function that takes a `Person`.
 The difference is even more significant for calls made from
@@ -1317,7 +1318,8 @@ The syntax for defining a method is
 `func (receiver-info) name(parameter-list) (return-types) { body }`.
 
 Note that there are three pairs of parentheses.
-If the method has only one return type and it is unnamed,
+If the method has no return type,
+or it has only one and it is unnamed,
 the last pair of parentheses can be omitted.
 
 In most programming languages that support methods,
@@ -1332,15 +1334,15 @@ For example, if the receiver type is `Person` then the receiver name is `p`.
 
 #### Method Restrictions
 
+Methods must defined in a source file for the same package
+that defines their receiver type.
+
 If an attempt is made to add a method to a built-in type
 an error with the message "cannot define new methods on non-local type"
 will be triggered.
 
 When a type has multiple methods, the `golint` tool
 wants all the receivers to have the same name.
-
-Methods must defined in a source file for the same package
-that defines their receiver type.
 
 It is not possible to create overloaded methods on a type
 to create different implementations for different parameter types.
