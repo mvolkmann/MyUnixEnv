@@ -1729,7 +1729,7 @@ and pass pointers.
 ### Slices
 
 Slices are a distinct type from arrays.
-They are a view into an array with a variable length.
+They are a variable length view into an array that has a fixed length.
 
 Functions that take a slice parameter cannot be passed an array.
 Many functions prefer slices over arrays.
@@ -1760,8 +1760,11 @@ A slice type is declared with nothing inside square brackets.
 For example, `[]int` is a slice of int values
 that is not yet associated with an array.
 
-There are three ways to create a slice, using a "slice literal",
-using the builtin `make` function, or basing on an existing array.
+There are three ways to create a slice.
+
+1. using a "slice literal"
+2. using the builtin `make` function
+3. basing on an existing array
 
 The most common way to create a slice is with a slice literal
 which creates a slice and its underlying array.
@@ -1792,7 +1795,7 @@ and a slice with length 5 and capacity of 5.
 creates an underlying array of size 5 and
 a slice with length 0 and capacity of 5.
 
-The final way and least commonly used way to
+The final and least commonly used way to
 create a slice is to base it on an existing array,
 specifying the start (inclusive) and end (exclusive) indexes.
 For example, `mySlice := myArr[start:end]`
@@ -1801,6 +1804,7 @@ If `end` is omitted, it defaults to the array length.
 So `myArr[:]` creates a slice over the entire array.
 
 Modifying elements of a slice modifies the underlying array.
+
 Multiple slices on the same array see the same data.
 
 The builtin `append` function takes a slice
@@ -1811,12 +1815,14 @@ If the underlying array is too small to accommodate the new elements,
 a larger array is automatically allocated
 (doubling the current capacity after the length exceeds 4)
 and the returned slice will refer to it.
-It is not possible to append elements to arrays
+It is not possible to append elements to arrays,
 which is one reason why slices are often preferred.
 
 `len(mySlice)` returns the number of elements in the slice
 which is its current length.
-`cap(mySlice)` returns the number of elements in the underlying array
+
+`cap(mySlice)` returns the number of elements from the
+start index of the slice to the end of underlying array
 which is its current capacity.
 
 Just like with arrays, square brackets are used to
@@ -1850,10 +1856,11 @@ ticTacToe[1][2] = "X"
 
 To use all the elements in a slice as separate arguments to a function
 follow the variable name holding the slice with an ellipsis.
+For example:
 
 ```go
-// This is a "variadic function, discussed more later.
-// It takes any number of int arguments.
+// This is a "variadic function" that
+// takes any number of int arguments.
 func sum(numbers ...int) int {
   result := 0
   for _, number := range numbers {
@@ -1895,10 +1902,12 @@ import "fmt"
 // IntStack is a stack of int values.
 type IntStack []int
 
+// Push adds an int to the end of the stack.
 func (s *IntStack) Push(value int) {
   *s = append(*s, value)
 }
 
+// Pop removes an int to the end of the stack and returns it.
 func (s *IntStack) Pop() int {
   stack := *s
   l := len(stack)
@@ -1919,6 +1928,7 @@ func main() {
 
 ### Maps
 
+GRONK
 A map is a collection of key/value pairs
 that provides efficient lookup of values by their key.
 The keys and values can have any type, but
