@@ -1538,15 +1538,15 @@ and adding methods that operate on the fields.
 Encapsulation has many benefits.
 It prevents using code from relying on
 implementation details that may change later.
-It can prevent using code from setting values incorrectly.
+It can prevent using code from setting field values incorrectly.
 It reduces the amount of code that must be examined
 to determine where a value is being set incorrectly.
 
 Encapsulation is overkill in many cases.
 It should be avoided when
 the type of a field is unlikely to change,
-using code is unlikely to set it to invalid values,
-and methods would just directly set and get the field.
+using code is unlikely to set it to invalid values, and
+non-setter/getter methods directly set and get the field.
 
 Go has a naming convention for methods that get and set data.
 "Setter" method names start with "Set", but
@@ -1575,7 +1575,7 @@ import (
 // Format strings are built using these specific values
 // and variations on them.
 // For more detail, see the comments at https://golang.org/src/time/format.go.
-// This is a date format string that is passed to the Time Format method.
+// The following is a date format string that is passed to the Time Format method.
 const dateFormat = "January 2, 2006"
 
 // Person describes a person.
