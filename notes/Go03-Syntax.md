@@ -1423,11 +1423,14 @@ A and B are still distinct types and there is no implied type hierarchy.
 
 #### Ambiguous Selectors
 
-If multiple struct types are embedded in another struct A,
-more than one embedded struct type has a method B,
-an instance of A is created,
-and a call to method B on this instance is made,
+If all of the following occur,
 an "ambiguous selector" error is triggered at compile-time.
+
+1. Multiple struct types are embedded in another struct A.
+2. More than one of the embedded struct types has a method B.
+3. An instance of A is created.
+4. A call to method B on this instance is made.
+
 An example of this follows:
 
 ```go
@@ -1435,30 +1438,29 @@ package main
 
 import "fmt"
 
-type foo struct {
-  f int
+type Foo struct {
 }
 
-func (f foo) doIt() {
-  fmt.Println("foo: doIt entered")
+func (f Foo) DoIt() {
+  fmt.Println("Foo: DoIt entered")
 }
 
-type bar struct {
-  b bool
+type Bar struct {
 }
 
-func (b bar) doIt() {
-  fmt.Println("bar: doIt entered")
+func (b Bar) DoIt() {
+  fmt.Println("Bar: DoIt entered")
 }
 
-type baz struct {
-  foo
-  bar
+// This struct embeds the two previous structs.
+type Baz struct {
+  Foo
+  Bar
 }
 
 func main() {
-  myBaz := baz{}
-  myBaz.doIt() // ambiguous selector
+  myBaz := Baz{}
+  myBaz.DoIt() // ambiguous selector
 }
 ```
 
@@ -1470,7 +1472,7 @@ When the parentheses and arguments are omitted,
 the expression evaluates to a function that
 represents the method bound to the receiver.
 This function is called a "method value" and
-can be called with arguments later.
+can be called later with arguments.
 
 For example:
 
