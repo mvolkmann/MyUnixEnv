@@ -2750,9 +2750,8 @@ call to the `panic` function, passing it the same value.
 This allows other deferred functions
 higher in the call stack to recover from the error.
 
-GRONK
-If recover is possible, ...
-After this deferred function completes,
+If recover is possible, ... TODO
+After the deferred function that calls `recover` completes,
 the function that panicked does not continue
 at the statement after the panic.
 Instead it returns to its caller using whatever
@@ -2764,7 +2763,7 @@ is not recommended.
 It is only possible to recover from panics
 that were initiated in the same goroutine.
 
-The following simple example demonstrates
+The following simple example demonstrate
 using `panic` and `recover`.
 However, expected errors such as dividing by zero
 should not be handled using `panic` and `recover`.
@@ -2789,7 +2788,7 @@ func divideWithRecover(m, n float64) (result float64) {
   defer func() {
     message := recover() // nil when there was no panic
     if message != nil {
-      //fmt.Printf("%s; recovering\n", message)
+      fmt.Printf("%s; recovering\n", message)
       result = 0 // result for all divide by zero calls
     }
   }()
