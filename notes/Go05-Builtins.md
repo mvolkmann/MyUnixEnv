@@ -61,18 +61,24 @@ const (
 Variables provided by Go are listed as being in a
 package named "builtin" for documentation purposes,
 but no such package actually exists.
-There is only one, `nil`, which is the zero value for a
+There is only one named `nil`.
+This is the zero value for a
 pointer, channel, func, interface, map, or slice.
 For example,
 the current value of all the variables below is nil.
 
 ```go
 var ptr *string         // pointer
+
 var c chan string       // channel
+
 type stringToString func(string) string
 var f stringToString    // function
+
 var i error             // interface
+
 var m map[string]string // map
+
 var s []string          // slice
 ```
 
@@ -99,6 +105,7 @@ Go defines the following builtin "basic types".
   Its size is based on the word size of the host platform,
   32 bits on 32-bit systems and
   64 bits on 64-bit systems.
+  `int` is preferred in many cases.
 - `uint`, `uint16`, `uint32`, `uint64`\
   These are used to represent unsigned integers
   with a specified number of bits.
@@ -106,14 +113,13 @@ Go defines the following builtin "basic types".
 - `uintptr`\
   This type can hold any kind of pointer.
 - `rune`\
-  This is an alias for int32.
+  This is an alias for `int32`.
   It is used for unicode characters
   that range in size from 1 to 4 bytes.
   Literal values of this type are surrounded by single quotes.
 - `string`\
   This is a sequence of 8-bit bytes, not Unicode characters.
-  This type is described in detail in the
-  "Go Syntax" article earlier in the series.
+  However, the bytes are often used to represent Unicode characters.
 
 Non-basic types include aggregate, reference, and interface types.
 Aggregate types include arrays and structs.
