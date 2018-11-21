@@ -2127,11 +2127,10 @@ func main() {
 ```
 
 ### Deferred Functions
-GRONK
 
 Inside a function, function calls preceded by `defer`
-will have their arguments evaluated immediately,
-but the function will not execute until the containing function exits.
+have their arguments evaluated immediately,
+but the function does not execute until the containing function exits.
 
 All deferred calls are placed on a stack and
 executed in the reverse order from which they are evaluated.
@@ -2159,6 +2158,7 @@ import (
   "time"
 )
 
+// Note that this returns a function.
 func startTimer(name string) func() {
   t := time.Now()
   return func() {
@@ -2176,8 +2176,9 @@ func doWork() int {
 }
 
 func main() {
-  // This calls the function returned by startTimer
-  // when the main function exits.
+  // Note that the syntax appears to call
+  // the function returned by startTime immediately,
+  // but it is not actually run until the main function exits.
   defer startTimer("doWork")()
   fmt.Println(doWork())
 }
@@ -2188,7 +2189,8 @@ func main() {
 #### Interface Basics
 
 An interface defines a set of methods to be implemented by types.
-Any named type can implement an interface, even named primitive types.
+Any named type can implement an interface,
+even those whose underlying type is a primitive type.
 
 A type can implement any number of interfaces.
 
@@ -2198,13 +2200,13 @@ of the interfaces they wish to implement.
 
 Interface types are abstract, meaning that
 it is not possible to directly create instances of them.
-Instead, instances of types that implement the interface are created.
+Instead, instances of types that implement an interface are created.
 
 Variables and parameters with an interface type can hold any value
 whose type implements all the methods of the interface.
 When a value is assigned to such variables or passed to such parameters,
 if the actual type does not implement all the interface methods,
-an error is reported that identifies one of the missing methods.
+a compile-time error is reported that identifies one of the missing methods.
 
 The actual value of a variable or parameter with an interface type
 may support additional methods, but those cannot be called without
@@ -2220,14 +2222,13 @@ An interface is typically only used when
 more than one concrete type will implement it and
 there is a need to use values of the interface type
 in a way that works for all the concrete types.
-In the example below, the interface type `Shape`
-is implemented by the concrete types `Rectangle` and `Circle`.
-This allows us to write code that works with variables
-of type `Shape` without needing to know the concrete type.
 
 #### Interface Example
 
-The following code defines an interface and two types that implement it:
+In the example below, the interface type `Shape`
+is implemented by the concrete types `Rectangle` and `Circle`.
+This allows writing code that works with variables
+of type `Shape` without needing to know the concrete type.
 
 ```go
 package main
@@ -2270,19 +2271,19 @@ func printArea(g Shape) {
 func main() {
   r := Rectangle{width: 3, height: 4}
   c := Circle{radius: 5}
-  var g Shape // Note that g is an interface type.
+  var g Shape // g has an interface type and is not initialized.
   //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
   g = r
-  // The formatting verb %T can be used to output the type
-  // of the value currently held in an interface variable.
-	fmt.Printf("g currently holds a %T\n", g) // main.rectangle
-  printArea(g)
+  // The formatting verb %T outputs the type of the value
+  // currently held in an interface variable.
+  fmt.Printf("g currently holds a %T\n", g) // main.rectangle
+  printArea(g) // area = 12
   g = c
-  printArea(g)
+  printArea(g) // area = 78.53981633974483
 
   // Since the shape interface doesn't define the diameter method,
   // a type assertion is required to call it.
-  fmt.Println("diameter =", g.(Circle).Diameter())
+  fmt.Println("diameter =", g.(Circle).Diameter()) // diameter = 10
 }
 ```
 
@@ -2294,15 +2295,16 @@ This is checked at compile-time. For example,
 
 ```go
 r := Rectangle{width: 3, height: 4} // no check performed
-var r Shape = Rectangle{width: 3, height: 4} // check passes
-var r io.Reader = Rectangle{width: 3, height: 4} // check fails
+var r Shape = Rectangle{width: 3, height: 4} // passes
+var r io.Reader = Rectangle{width: 3, height: 4} // fails with "does not implement"
 ```
 
 #### Empty Interface
 
 An interface with no methods, referred to as
 the "empty interface", matches every type.
-This can be given a name such as "any" using `type any interface{}`.
+This can be given a name such as "any"
+using `type any interface{}`.
 
 The empty interface enables writing functions
 with parameters that accept any type.
@@ -2310,6 +2312,7 @@ The standard library package `fmt` defines many functions
 such as `Println` and `Printf` that do this.
 
 Type assertions must be used to operate on these values.
+These are described in the next section.
 
 Using empty interfaces should be avoided when possible
 because they sacrifice compile-time type checking
@@ -2324,12 +2327,13 @@ If it does not, a panic is triggered.
 
 For example, consider `myShape := g.(Circle)`.
 The asserted type `Circle` is a concrete type.
-If `g` does refer to a `Circle` then the type of `myShape` is `Circle`.
+If `g` does refer to a `Circle`
+then the type of `myShape` is `Circle`.
 
 When the asserted type is an interface type,
-if the value on the left implements the interface
+if the value of the variable implements the interface
 then the result has that interface type.
-This can be used to allow methods from the interface to be called.
+This can be used to allow methods from the asserted interface to be called.
 For example, suppose we have a value in the variable `someValue`
 whose type implements multiple interfaces, one of which is `Shape`.
 The following code prints the name of the shape.
@@ -2340,25 +2344,25 @@ fmt.Println(myShape.Name)
 ```
 
 Keep in mind that when running a program using `go run`,
-if there are compile errors, a panic will not be
-triggered since the code won't begin running.
+if there are compile errors, no type-assertion panics
+will not be triggered because the code won't begin running.
 
 #### Type Tests
 
 A "type test" determines whether an interface variable
 refers to a specific type.
 It differs from a type assertion in that
-an extra return value is captured and it doesn't panic
+an extra return value is captured and it does not panic
 if the value being tested does not match the asserted type.
 
 For example, consider `myShape, ok := g.(Circle)`.
 The variable `ok` will be set to `true` or `false`
 to indicate whether `g` refers to a `Circle` object.
 
-Type assertions and tests can be used with any type,
-even primitive types. For example, a function has
-a parameter of type `interface{}` can test the
-actual type as follows:
+Type assertions and type tests can be used with any type,
+even primitive types. For example,
+a function that has a parameter of type `interface{}`
+can test the actual type as follows:
 
 ```go
 package main
@@ -2376,14 +2380,14 @@ func makeString(value interface{}) string {
     }
     return "false"
   } else if i, ok := value.(int); ok {
-    return strconv.Itoa(i)
+    return strconv.Itoa(i) // converts an int to a string
   } else if _, ok := value.(float64); ok {
     return fmt.Sprintf("%f", value)
   } else if s, ok := value.(string); ok {
     return s
   } else {
     log.Fatalf("unsupported value %v of type %T", value, value)
-    return ""
+    return "" // won't reach, but compiler wants this
   }
 }
 
@@ -2398,7 +2402,7 @@ func main() {
 ```
 
 A nicer way to write the `makeString` function
-is to use a "type switch".
+is to use a "type switch" as follows:
 
 ```go
 func makeString(value interface{}) string {
@@ -2507,8 +2511,8 @@ func main() {
 The standard library packages define many interfaces.
 For example, the `fmt` package defines the `Stringer` interface.
 It contains one method named `String`.
-Many other packages check whether values implement this interface
-in order to convert values to strings.
+Functions in many other packages check whether values
+implement this interface in order to convert values to strings.
 
 Any type can choose to implement this interface
 by defining the `String` method.
@@ -2521,7 +2525,6 @@ type Person struct {
 }
 
 // Note that the receiver is a Person struct, not a pointer to one.
-// This is typical for methods that do not modify the receiver.
 func (p Person) String() string {
   return fmt.Sprintf("%v is %v years old.", p.Name, p.Age)
 }
@@ -2536,10 +2539,12 @@ Implementations of these interfaces read from and write to many things
 including files, network connections, in-memory buffers, and more.
 
 The `io.Reader` interface defines a `Read` method that
-takes a byte slice and returns the number of bytes read and an error.
+takes a byte slice to hold the data read.
+It returns the number of bytes read and an error description.
 
 The `io.Writer` interface defines a `Write` method that
-takes a byte slice and returns the number of bytes written and an error.
+takes a byte slice containing the data to be written.
+It returns the number of bytes written and an error description.
 
 #### Nested Interfaces
 
