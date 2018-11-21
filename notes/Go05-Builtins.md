@@ -1,6 +1,6 @@
 ## Builtins
 
-## Builtin Constants
+### Builtin Constants
 
 Constants provided by Go are listed as being in a
 package named "builtin" for documentation purposes,
@@ -12,11 +12,12 @@ and `iota`.
 It is a global counter that is set to zero
 at the beginning of every `const` definition,
 which is the only place it can be used.
+
 The value of `iota` is incremented by one after each line in the
 `const` definition, except for blank lines and comment lines.
 It is typically used to define enumerated values.
 The last expression involving `iota` is repeated for subsequent
-constant values, but using an incremented value of `iota`.
+constant values, but uses an incremented value of `iota`.
 For example:
 
 ```go
@@ -27,25 +28,23 @@ const (
 )
 
 const (
-  north = iota + 1 // iota = 0, value = 0 + 1 = 1
-  south            // iota = 1, value = 1 + 1 = 2
-  east             // iota = 2, value = 2 + 1 = 3
-  west             // iota = 3, value = 3 + 1 = 4
+  north = iota + 1 // iota = 0, 0 + 1 = 1
+  south            // iota = 1, 1 + 1 = 2
+  east             // iota = 2, 2 + 1 = 3
+  west             // iota = 3, 3 + 1 = 4
 )
 
 const (
-  t1 = iota * 3 // iota = 0, value = 0 * 3 = 0
-  t2            // iota = 1, value = 1 * 3 = 3
-  t3            // iota = 2, value = 2 * 3 = 6
+  t1 = iota * 3 // iota = 0, 0 * 3 = 0
+  t2            // iota = 1, 1 * 3 = 3
+  t3            // iota = 2, 2 * 3 = 6
 )
 
-TODO: Verify this!
 const (
   _        = iota             // iota = 0, ignore first value
-  kb int64 = 1 << (10 * iota) // iota = 1, value = 1 shifted left 10 places
-  mb                          // iota = 2, value = 1 shifted left 20 places
-  gb                          // iota = 3, value = 1 shifted left 30 places
-  tb                          // iota = 4, value = 1 shifted left 40 places
+  kb int64 = 1 << (10 * iota) // iota = 1, 1 shifted left 10 places, 1024
+  mb                          // iota = 2, 1 shifted left 20 places, 1048576
+  gb                          // iota = 3, 1 shifted left 30 places, 1073741824
 )
 
 // Silly example
@@ -57,7 +56,7 @@ const (
 )
 ```
 
-## Builtin Variables
+### Builtin Variables
 
 Variables provided by Go are listed as being in a
 package named "builtin" for documentation purposes,
@@ -77,7 +76,7 @@ var m map[string]string // map
 var s []string          // slice
 ```
 
-## Builtin Types
+### Builtin Types
 
 Go defines the following builtin "basic types".
 
@@ -120,7 +119,7 @@ Non-basic types include aggregate, reference, and interface types.
 Aggregate types include arrays and structs.
 Reference types include pointers, slices, maps, functions, and channels.
 
-## Documentation Types
+### Documentation Types
 
 Despite Go not currently supporting generic types,
 the following "type" names that are not real types
@@ -132,26 +131,26 @@ appear in the Go documentation.
 - `FloatType` - represents a float32 or float64
 - `IntegerType` - represents any int type
 
-## Builtin Functions
+### Builtin Functions
 
 Functions provided by Go are listed as being in a
 package named "builtin" for documentation purposes,
 but no such package actually exists.
 
-### for complex numbers
+#### for complex numbers
 
 - `complex` - constructs a complex value from two floating-point values
 - `imag(c ComplexType) FloatType` - returns the imaginary part of a complex number
 - `real` - returns the real part of a complex number
 
-### for output
+#### for output
 
 - `print(args ...Type)` - writes to stderr;
   useful for debugging; may be dropped from language
 - `println(args ...Type)` - like `print` but adds newline
 - see `fmt` package to write to stdout
 
-### for data structures
+#### for data structures
 
 - `append(slice []Type, elems ...Type) []Type` -
   appends elements to the end of a slice and returns the updated slice
@@ -166,12 +165,12 @@ but no such package actually exists.
   if Type is Map, optionally specify number of key/value pairs for which to allocate space
 - `new(Type) *Type` - allocates memory for a given type and returns pointer to it
 
-### for channels
+#### for channels
 
 - `close(c chan<-)` - closes a channel after the last sent value is received
 - `make(Channel, [buffer-capacity])` - unbuffered if buffer-capacity is omitted
 
-### for error handling
+#### for error handling
 
 - `panic(v interface{})` - stops normal execution of the current goroutine;
   cascades upward through call stack;
@@ -184,7 +183,7 @@ but no such package actually exists.
 - `error` - type that represents an error condition
   - has value `nil` when there is no error
 
-## Type Conversions
+### Type Conversions
 
 No type conversions are performed implicitly.
 This includes using non-boolean values in a boolean context.
@@ -225,7 +224,7 @@ For example, `var f = value.(float32)` converts
 a value with an interface type to a `float32`.
 This only works if the value actually has a type of `float32`.
 
-## Standard Library Packages
+### Standard Library Packages
 
 Go provides many packages in the "standard library".
 To see a list of them, browse <https://golang.org/pkg/>.
@@ -321,7 +320,7 @@ Highlights of the standard library include:
 In addition to the standard library, also see "sub-repositories" that are
 part of the Go project, but maintained outside the main repository.
 
-## `fmt` Standard Library
+### `fmt` Standard Library
 
 The `fmt` standard library defines many functions
 for reading and writing formatted messages.
@@ -365,7 +364,7 @@ number := 19
 fmt.Printf("%*s%d\n", indent, "", number)
 ```
 
-## Logging
+### Logging
 
 The standard library `log` package provides methods that
 help with writing error messages to stderr.
