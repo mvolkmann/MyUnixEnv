@@ -2589,15 +2589,16 @@ func main() {
 
 ### Error Handling
 
-Go does not support exceptions,
-and thus no try/catch/finally keywords.
+Go does not support exceptions, and thus
+has no `try`, `catch`, or `finally` keywords.
 Instead functions that may encounter errors have
 an additional return value of type `error`
 that callers should check.
 When there is no error, this return value is `nil`.
 
-The type `error` is an interface with a single method
-`Error` that takes no arguments and returns a `string`.
+The type `error` is a builtin interface with a
+single method `Error` that takes no arguments and
+returns a `string` description of the error.
 
 Go prefers this error handling approach
 over using exceptions.
@@ -2610,10 +2611,6 @@ Another reason is that exception handling typically
 allows a program to terminate with a stack trace
 when an unhandled error occurs.
 
-The type `error` is a builtin interface
-that defines a single method `Error`
-which returns a string description of the error.
-
 The standard library creates and exports
 many instances of this interface.
 It is also possible to define
@@ -2622,8 +2619,8 @@ that hold additional data describing the error.
 
 #### Creating Error Values
 
-The `errors` package defines a `New` method that
-can be used to create error instances from a string.
+The `errors` package defines a `New` function
+that creates error instances from a string.
 For example:
 
 ```go
@@ -2633,7 +2630,7 @@ import (
   "fmt"
 )
 
-func divide(a, b float32) (float32, error) {
+func divide(a, b float64) (float64, error) {
   if b == 0 {
     return 0, errors.New("divide by zero")
   }
@@ -2645,14 +2642,14 @@ func main() {
   if err != nil {
     log.Fatal(err)
   }
-  fmt.Print(q)
+  fmt.Println(q)
 }
 ```
 
 Another way to create an `error` value is to use the `fmt.Errorf` function.
 It works like `fmt.Sprintf` to format an error message.
 The line in the `divide` function above that creates and returns an `error`
-could be replaced by `return 0, fmt.Errorf("divide %d by zero", a)`.
+can be replaced by `return 0, fmt.Errorf("divide %d by zero", a)`.
 This differs in that the error message includes
 the number that would have been divided by zero.
 
@@ -2671,15 +2668,15 @@ that holds an error message and the numerator value.
 
 ```go
 type DivideByZero struct {
-  numerator float32
+  numerator float64
 }
 
 // This makes the DivideByZero type implement the error interface.
 func (err DivideByZero) Error() string {
-  return fmt.Sprintf("tried to divide %d by zero", err.numerator)
+  return fmt.Sprintf("tried to divide %f by zero", err.numerator)
 }
 
-func divide2(a, b float32) (float32, error) {
+func divide2(a, b float64) (float64, error) {
   if b == 0 {
     return 0, DivideByZero{a}
   }
@@ -2748,11 +2745,12 @@ The builtin `recover` function can be called
 within a deferred function for either of these reasons.
 It returns the value passed to the `panic` function.
 
-If recovery is not possible,
-the deferred function can pass this value
-to the `panic` function to allow other deferred functions
+If recovery is not possible, the deferred function can
+call to the `panic` function, passing it the same value.
+This allows other deferred functions
 higher in the call stack to recover from the error.
 
+GRONK
 If recover is possible, ...
 After this deferred function completes,
 the function that panicked does not continue
