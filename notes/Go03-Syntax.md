@@ -2750,12 +2750,15 @@ call to the `panic` function, passing it the same value.
 This allows other deferred functions
 higher in the call stack to recover from the error.
 
-If recover is possible, ... TODO
-After the deferred function that calls `recover` completes,
+If recovery is possible, check the value returned
+by the `recover` function. If it is not nil,
+return the values to be used as the
+return values of the function that panicked.
+After this deferred function completes,
 the function that panicked does not continue
 at the statement after the panic.
-Instead it returns to its caller using whatever
-the deferred function returns as its return values.
+Instead it returns to its caller
+using these return values.
 
 Recovering from a panic originating in another package
 is not recommended.
