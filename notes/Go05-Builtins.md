@@ -122,6 +122,9 @@ Go defines the following builtin "basic types".
   This is a sequence of 8-bit bytes, not Unicode characters.
   However, the bytes are often used to represent Unicode characters.
 
+Go defines the type `error` to represent an error condition.
+Variables of this type have the value `nil` when there is no error.
+
 Non-basic types include aggregate, reference, and interface types.
 Aggregate types include arrays and structs.
 Reference types include pointers, slices, maps, functions, and channels.
@@ -129,100 +132,106 @@ Reference types include pointers, slices, maps, functions, and channels.
 ### Documentation Types
 
 Despite Go not currently supporting generic types,
-the following "type" names that are not real types
+the following "generic type" names that are not real types
 appear in the Go documentation.
 
 - `Type` - represents a specific type for a given function invocation
-- `Type1` - like `Type`, but for a different type
+- `Type1` - like `Type`, but for a second type
 - `ComplexType` - represents a complex64 or complex128
 - `FloatType` - represents a float32 or float64
-- `IntegerType` - represents any int type
+- `IntegerType` - represents any integer type
 
 ### Builtin Functions
 
 #### Data Structure Functions
 
 - `append(slice []Type, elems ...Type) []Type`\
-  appends elements to the end of a slice and returns the updated slice
+  This appends elements to the end of a slice and returns the updated slice.
 - `cap(v Type) int`\
-  returns the capacity of of a string, array, slice, or map
+  This returns the capacity of of a string, array, slice, or map.
 - `copy(dst, src []Type) int`\
-  copies elements from a source slice to a destination slice
-  and returns the number of elements copied
+  This copies elements from a source slice to a destination slice
+  and returns the number of elements copied.
 - `delete(m map[Type]Type1, key Type)`\
-  deletes a key/value pair from a map
+  This deletes a key/value pair from a map.
 - `len(v Type) int`\
-  returns the length of a string, array, slice, or map
+  This returns the length of a string, array, slice, or map
 - `make(t Type, size ...IntegerType) Type`\
-  allocates and initializes a slice, map, or channel;\
+  This allocates and initializes a slice, map, or channel.\
   If Type is Slice, pass the length, and optional capacity.\
   If Type is Map, optionally specify the number of key/value pairs for which to allocate space.
 - `new(Type) *Type`\
-  allocates memory for a given type and returns pointer to it
+  This allocates memory for a given type and returns pointer to it.
 
 #### Output Functions
 
 - `print(args ...Type)`\
-  writes to stderr; useful for debugging
+  This writes to stderr; useful for debugging.
 - `println(args ...Type)`\
-  like `print`, but adds a newline
-- See the `fmt` package to write to stdout.
+  This is like `print`, but adds a newline at the end.
+- To write to stdout, see the `fmt` package.
 
 #### Error Handling Functions
 
+See the earlier section "Error Handling" for more detail on these.
+
 - `panic(v interface{})`\
-  stops normal execution of the current goroutine;
-  Control cascades upward through the call stack.
-  The program is terminated and an error is reported.
-  This can be controlled by the `recover` function
-  A `panic` is similar to a `throw` in other languages.
+  This stops normal execution of the current goroutine.\
+  It is somewhat like a `throw` in other languages.\
+  Control cascades upward through the call stack.\
+  When it reaches the top, the program is terminated and an error is reported.\
+  This can be controlled by the `recover` function.
 - `recover`\
-  call inside a deferred function to
-  stop the panic sequence and restore normal execution;
-  similar to `catch` in other languages
-- `error`\
-  type that represents an error condition;
-  has value `nil` when there is no error
+  This should be called inside a deferred function to stop the panic sequence\
+  and restore normal execution.
+  It is somewhat like a `catch` in other languages.
 
 #### Channel Functions
 
+Channels will be covered in detail in a future article on concurrency.
+
 - `close(c chan<-)`\
-  closes a channel after the last sent value is received
+  This closes a channel after the last sent value is received.
 - `make(Channel, [buffer-capacity])`\
-  unbuffered if buffer-capacity is omitted
+  This creates a channel.\
+  The channel is unbuffered if `buffer-capacity` is omitted.
 
 #### Complex Number Functions
 
 - `complex(real, imag FloatType) ComplexType`\
-  creates a complex value from two floating-point values
+  This creates a complex value from two floating-point values
+  that represent the real and imaginary parts.
 - `imag(c ComplexType) FloatType`\
-  returns the imaginary part of a complex number
+  This returns the imaginary part of a complex number.
 - `real(c ComplexType) FloatType`\
-  returns the real part of a complex number
+  This returns the real part of a complex number.
 
 ### Type Conversions
 
 No type conversions are performed implicitly.
-This includes using non-boolean values in a boolean context.
+For example, non-boolean values are not automatically converted
+to booleans to allow them to be used in a boolean context.
 
-Builtin types can be used as conversion functions.
-For example, `f := float32(i)` converts an `int` to a `float32`
-and `i := int(f)` converts other numeric types to an `int`,
-truncating the fractional part if any.
+Many builtin types can be used as conversion functions.
+For example, `float32(value)` converts any numeric type to a `float32`
+and `int(value)` converts any numeric type to an `int`,
+truncating any fractional part.
 
 The `bool` type cannot be used as a function
 to convert other basic types to a boolean.
 For example, if `n` is a variable that holds an `int`,
 `bool(n)` results in a compile-time error
 and does not return true or false.
-Instead an expression like `n != 0` must be used.
+To obtain a boolean value from a number,
+use an expression like `n != 0`.
 
 In numeric conversions, if the value is too large to fit
-in the target type, the value can be changed.
+in the target type, the value will be changed.
 For example, in `i := 1234; j := int8(i)` the value of `j`
 will be -46 because 1234 is too large to fit in an `int8`.
 
-An error will be triggered if the conversion cannot be performed.
+Using the builtin primitive types as conversion functions
+will trigger an error if the conversion cannot be performed.
 For example, attempting to convert a string to an int is an error,
 even if the string contains a valid number.
 
@@ -231,7 +240,10 @@ use the `strconv` package. For example,
 
 ```go
 s := "19"
-n, err := strconv.ParseInt(s, 10, 32) // base 10, bitsize 32
+i, err := strconv.ParseInt(s, 10, 32) // base 10, bitsize 32
+
+s = "3.14"
+f, err := strconv.ParseFloat(s, 65) // bitsize 64
 ```
 
 When a value is held in an interface type,
@@ -240,6 +252,7 @@ a type assertion can be used to convert it to a non-interface type.
 For example, `var f = value.(float32)` converts
 a value with an interface type to a `float32`.
 This only works if the value actually has a type of `float32`.
+See the earlier section "Type Assertions" for more detail.
 
 ### Standard Library Packages
 
@@ -251,91 +264,105 @@ and seeing examples of good Go code.
 
 Highlights of the standard library include:
 
-- bufio\
-  This implements buffered I/O with `Reader` and `Writer` types.
-  The `Scanner` type splits input into lines and words.
-- builtin\
+- `bufio`\
+  This provides functions to perform buffered I/O
+  using the types `Reader` and `Writer`.\
+  It also provides a `Scanner` type that
+  splits input into lines and words.
+- `builtin`\
   This not a real package, just a place to document
   builtin constants, variables, types, and functions.
-- container.list\
+- `container/heap`\
+  This implements a kind of tree data structure.
+- `container/list`\
   This implements doubly linked lists.
-- database/sql\
+- `container/ring`\
+  This implements circular lists.
+- `database/sql`\
   This defines interfaces implemented by relational database-specific drivers.
   For example, there are drivers for MySQL and PostgreSQL.
-- encoding\
+- `encoding`\
   This defines interfaces for reading and writing
-  various data formats such as csv, json, and xml.
-- errors\
-  This defines the `New` function for creating `error` structs with a string
-  description and a method to get those strings from an `error` struct.
-- flag\
-  This implements command-line flag parsing.
-- fmt\
-  This implements formatted I/O similar to C's `printf` and `scanf`.
-- go\
-  The sub-packages implement all the standard go tooling
+  various data formats such as CSV, JSON, and XML.
+- `errors`\
+  This provides the `New` function that creates `error` values
+  that have a string description and
+  a method named `Error` to retrieve the description.
+- `flag`\
+  This provides flag parsing for command-line applications.
+- `fmt`\
+  This provides functions for formatted I/O.
+  Many of its functions are similar to C's `printf` and `scanf`.
+  The next section describes this package in more detail.
+- `go`\
+  The sub-packages of this package implement all the standard go tooling
   such as source file parsing to ASTs and code formatting.
-- html\
-  This implements functions to parse and create HTML.
-- image\
-  This implements functions to parse (decode) and create (encode) images
+- `html`\
+  This provides functions to parse and create HTML.
+- `image`\
+  This provides functions to parse (decode) and create (encode) images
   in the GIF, JPEG, and PNG formats.
-- io\
-  This implements functions to read and write buffers and files.
-  The function `io.Copy` copies from a writer to a reader.
-- log\
-  This implements simple logging.
-- math\
-  This implements many math functions.
-- mime\
-  This encodes and decodes multimedia formats.
-- net\
-  This implements network I/O including TCP and UDP.
-- net/http\
-  This implements functions to send and listen for HTTP and HTTPS requests.
-- os\
+- `io`\
+  This provides functions to read and write buffers and files.
+  The function `io.Copy` copies data from a writer to a reader.
+- `log`\
+  This provides simple logging.
+- `math`\
+  This provides many math functions.
+- `mime`\
+  This provides functions to encode and decode multimedia formats.
+- `net`\
+  This provides functions that perform network I/O including TCP and UDP.
+- `net/http`\
+  This provides functions to send and listen for HTTP and HTTPS requests.
+- `os`\
   This provides access to operating system functionality
   like that provided by UNIX shell commands.
   It defines the `File` type which supports
   opening, reading, writing, and closing files.
-  It exposes the constants `PathSeparator` ('/' on UNIX)
+  It defines the constants `PathSeparator` ('/' on UNIX)
   and `PathListSeparator` (':' on UNIX).
   It provides the function `os.Exit(status)`
   that exits the process with a given status.
-- os/exec\
-  This runs external (operating system) commands.
-- path\
-  This implements functions for working with UNIX-style file paths and URLs.
-- reflect\
-  This implements reflection to work with types determined at run-time.
-- sort\
-  This implements functions for sorting slices and other collections.
-- strconv\
-  This implements conversions to and from
+- `os/exec`\
+  This provides functions that run external (operating system) commands.
+- `path`\
+  This provides functions that work with UNIX-style file paths and URLs.
+- `reflect`\
+  This provides types and functions that support using reflection
+  to work with types determined at run-time.
+- `regexp`\
+  This provides functions that perform regular expression searches.
+- `sort`\
+  This provides functions that sort slices and other collections.
+- `strconv`\
+  This provides conversions to and from
   string representations of primitive types.
   For example, `strconv.Atoi` converts a `string` to an `int`
   and `strconv.Itoa` converts an `int` to a `string`.
-- strings\
-  This implements many functions on strings including
+- `strings`\
+  This provides many functions that operate on strings including
   `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
   `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
   It also defines the `Builder`, `Reader`, and `Replacer` types.
-- sync\
+- `sync`\
   This provides synchronization primitives such as mutual exclusion locks.
-  Often code will use channels and `select` instead.
-- testing\
-  This supports automated tests run by `go test`.
-  The `quick` sub-package implements fuzz testing.
-- text\
-  This provides functions for parsing text,
-  writing tabbed columns, and data-driven templates.
-- time\
-  This provides functions to measure and display time and dates.
-- unicode\
-  This provides functions for working with and testing Unicode characters.
+  Often code will use channels and `select` instead to achieve this.
+- `testing`\
+  This provides functions and types that
+  support automated tests run by `go test`.
+  The sub-package `quick` implements fuzz testing.
+- `text`\
+  This provides functions that parse text,
+  write tabbed columns, and support data-driven templates.
+- `time`\
+  This provides functions that measure and display time and dates.
+- `unicode`\
+  This provides functions that work with and test Unicode characters.
 
-In addition to the standard library, also see "sub-repositories" that are
-part of the Go project, but maintained outside the main repository.
+In addition to the standard library,
+also see the "sub-repositories" that are part of the Go project,
+but maintained outside the main repository.
 
 ### `fmt` Standard Library
 
@@ -348,7 +375,7 @@ Functions that write have names that start with `Print`.
 The most commonly used functions in this package include:
 
 - `fmt.Errorf(format string, args ...interface{}) error`\
-   This creates an error object containing a formatted message.
+   This creates an error value containing a formatted message.
 
 - `fmt.Printf(format string, args ...interface{})`\
   This writes a formatted string to stdout.
@@ -360,14 +387,14 @@ The most commonly used functions in this package include:
 Format strings can contain placeholders that begin with a percent sign.
 These are referred to as "verbs". Commonly used verbs include:
 
-- `%d` for decimal values
-- `%f` for floating point values,
-- `%t` for boolean values
-- `%s` for strings,
+- `%d` for decimal values (includes all the integer types)
+- `%f` for floating point values
+- `%t` for boolean values to output "true" or "false"
+- `%s` for strings
 - `%v` for any value
 - `%T` to output the type of a value
-- `%*s` to output a string with a number of leading spaces
-  (This consumes two values, the number of leading spaces and the string to follow.)
+- `%*s` to output a string with a number of leading spaces\
+  This consumes two values, the number of leading spaces and the string to follow.
 
 It is common for format strings to end with `\n`
 to output a newline character.
@@ -379,6 +406,7 @@ the number spaces specified in the variable `indent`,
 indent := 4
 number := 19
 fmt.Printf("%*s%d\n", indent, "", number)
+// outputs "    19" without the quotes
 ```
 
 ### Logging
@@ -406,7 +434,7 @@ The date and time can be suppressed
 in all messages produced by the `log` package
 by calling `log.SetFlags(0)`.
 This function takes an integer which is the result of or'ing
-predefined constants that identify potential prefixes.
+predefined constants that identify the desired parts of the prefix.
 
 The constants are:
 
@@ -416,21 +444,22 @@ The constants are:
 - `Llongfile` - full-file-path:line-number
 - `Lshortfile` - file-name.file-extension:line-number
 - `LUTC` - use UTC instead of local time zone for dates and times
-- `LstdFlags` - same as `Ldate | Ltime`; default flag value
+- `LstdFlags` - same as `Ldate | Ltime`; the default flags value
 
 `log.Panic(message)` outputs a line
 containing the date, time, and message,
 followed by a line containing "panic:" and the message again,
-followed by a stack trace,
-and exits with a status code of 2.
+followed by a stack trace.
+It exits the application with a status code of 2.
 
-To write messages that include a file name and line number,
+To write messages to stdout that include
+a file name, line number, name of a variable, and its value,
 write a function like the following and call it from other functions.
 
 ```go
 func logValue(name string, value interface{}) {
-  // Passing 1 causes it to get the information
-  // from one level higher in the call stack.
+  // Passing 1 to runtime.Caller causes it to get the
+  // information from one level higher in the call stack.
   _, file, line, ok := runtime.Caller(1)
   if ok {
     fmt.Printf("%s:%d %s=%v\n", file, line, name, value)
@@ -440,4 +469,4 @@ func logValue(name string, value interface{}) {
 }
 ```
 
-- TODO: ADD MORE!:
+- TODO: ADD MORE?
