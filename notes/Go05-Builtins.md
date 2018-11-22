@@ -1,12 +1,16 @@
 ## Builtins
 
+The builtin constants, variables, and functions
+provided by Go are listed as being in a package
+named "builtin" for documentation purposes,
+but no such package actually exists.
+
+The following sections describe each of the provided builtins.
+
 ### Builtin Constants
 
-Constants provided by Go are listed as being in a
-package named "builtin" for documentation purposes,
-but no such package actually exists.
-These include the boolean literals `true` and `false`,
-and `iota`.
+The provided constants include
+the boolean literals `true` and `false`, and `iota`.
 
 `iota` is not actually a constant.
 It is a global counter that is set to zero
@@ -58,10 +62,7 @@ const (
 
 ### Builtin Variables
 
-Variables provided by Go are listed as being in a
-package named "builtin" for documentation purposes,
-but no such package actually exists.
-There is only one named `nil`.
+There is only one provided variable, named `nil`.
 This is the zero value for a
 pointer, channel, func, interface, map, or slice.
 For example,
@@ -139,55 +140,65 @@ appear in the Go documentation.
 
 ### Builtin Functions
 
-Functions provided by Go are listed as being in a
-package named "builtin" for documentation purposes,
-but no such package actually exists.
+#### Data Structure Functions
 
-#### for complex numbers
-
-- `complex` - constructs a complex value from two floating-point values
-- `imag(c ComplexType) FloatType` - returns the imaginary part of a complex number
-- `real` - returns the real part of a complex number
-
-#### for output
-
-- `print(args ...Type)` - writes to stderr;
-  useful for debugging; may be dropped from language
-- `println(args ...Type)` - like `print` but adds newline
-- see `fmt` package to write to stdout
-
-#### for data structures
-
-- `append(slice []Type, elems ...Type) []Type` -
+- `append(slice []Type, elems ...Type) []Type`\
   appends elements to the end of a slice and returns the updated slice
-- `cap(v Type) int` - returns the capacity of v
-- `copy(dst, src []Type) int` - copies elements from a source slice
-  to a destination slice and returns the number off elements copied
-- `delete(m map[Type]Type1, key Type)` - deletes the element at a key from a map
-- `len(v Type) int` - returns the length of v where v is a string, array, slice, or map?
-- `make(t Type, size ...IntegerType) Type` -
-  allocates and initializes a slice, map, or chan;
-  if Type is Slice, pass the length, and optional capacity;
-  if Type is Map, optionally specify number of key/value pairs for which to allocate space
-- `new(Type) *Type` - allocates memory for a given type and returns pointer to it
+- `cap(v Type) int`\
+  returns the capacity of of a string, array, slice, or map
+- `copy(dst, src []Type) int`\
+  copies elements from a source slice to a destination slice
+  and returns the number of elements copied
+- `delete(m map[Type]Type1, key Type)`\
+  deletes a key/value pair from a map
+- `len(v Type) int`\
+  returns the length of a string, array, slice, or map
+- `make(t Type, size ...IntegerType) Type`\
+  allocates and initializes a slice, map, or channel;\
+  If Type is Slice, pass the length, and optional capacity.\
+  If Type is Map, optionally specify the number of key/value pairs for which to allocate space.
+- `new(Type) *Type`\
+  allocates memory for a given type and returns pointer to it
 
-#### for channels
+#### Output Functions
 
-- `close(c chan<-)` - closes a channel after the last sent value is received
-- `make(Channel, [buffer-capacity])` - unbuffered if buffer-capacity is omitted
+- `print(args ...Type)`\
+  writes to stderr; useful for debugging
+- `println(args ...Type)`\
+  like `print`, but adds a newline
+- See the `fmt` package to write to stdout.
 
-#### for error handling
+#### Error Handling Functions
 
-- `panic(v interface{})` - stops normal execution of the current goroutine;
-  cascades upward through call stack;
-  terminates program and reports an error condition;
-  can be controlled by the `recover` function
-  - similar to `throw` in other languages
-- `recover` - call inside a deferred function to
-  stop the panic sequence and restore normal execution
-  - similar to `catch` in other languages
-- `error` - type that represents an error condition
-  - has value `nil` when there is no error
+- `panic(v interface{})`\
+  stops normal execution of the current goroutine;
+  Control cascades upward through the call stack.
+  The program is terminated and an error is reported.
+  This can be controlled by the `recover` function
+  A `panic` is similar to a `throw` in other languages.
+- `recover`\
+  call inside a deferred function to
+  stop the panic sequence and restore normal execution;
+  similar to `catch` in other languages
+- `error`\
+  type that represents an error condition;
+  has value `nil` when there is no error
+
+#### Channel Functions
+
+- `close(c chan<-)`\
+  closes a channel after the last sent value is received
+- `make(Channel, [buffer-capacity])`\
+  unbuffered if buffer-capacity is omitted
+
+#### Complex Number Functions
+
+- `complex(real, imag FloatType) ComplexType`\
+  creates a complex value from two floating-point values
+- `imag(c ComplexType) FloatType`\
+  returns the imaginary part of a complex number
+- `real(c ComplexType) FloatType`\
+  returns the real part of a complex number
 
 ### Type Conversions
 
