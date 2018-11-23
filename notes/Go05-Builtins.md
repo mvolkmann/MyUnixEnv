@@ -471,3 +471,11 @@ func logValue(name string, value interface{}) {
 
 - TODO: Should you add sections on any other standard library packages?
 - TODO: Maybe some are already described in the "Common Tasks" section.
+
+- `container/list`\
+
+Additional examples of using standard library packages
+will be presented in a future article on common tasks in Go.
+These include `bufio`, `database/sql`, `encoding/json`,
+`flag`, `io`, `net/http`, `os`, `sort`, `strings`,
+`text/template`, and `time`.
