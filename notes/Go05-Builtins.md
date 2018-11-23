@@ -469,4 +469,5 @@ func logValue(name string, value interface{}) {
 }
 ```
 
-- TODO: ADD MORE?
+- TODO: Should you add sections on any other standard library packages?
+- TODO: Maybe some are already described in the "Common Tasks" section.

@@ -889,6 +889,32 @@ fmt.Println(p1.age) // 58
 There is no syntax for accessing a field of a struct
 whose name is held in a variable.
 However, the reflection API can be used to do this.
+The standard library package `reflect`
+will be covered in detail in a future article.
+
+Here is a function that uses the `reflect` package
+to get the value or a struct field
+whose name can be determined at runtime.
+
+```go
+// StructFieldValue returns the value of a given field in a struct.
+func StructFieldValue(aStruct interface{}, fieldName string) reflect.Value {
+  value := reflect.ValueOf(aStruct)
+  if value.Kind() != reflect.Struct {
+    log.Fatalf("StructFieldValue first argument must be a struct")
+  }
+  return value.FieldByName(fieldName)
+}
+```
+
+The type `reflect.Value` has many methods for obtaining
+the value as a specific builtin type. For example:
+
+```go
+  // address is struct that describes a mailing address.
+  city := StructFieldValue(address, "city").String()
+  zip := StructFieldValue(address, "zip").Int()
+```
 
 The `fmt.Printf` function takes a format string that can contain "verbs".
 The "%v" verb is useful during debugging for printing values of any type,
