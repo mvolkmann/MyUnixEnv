@@ -269,6 +269,8 @@ Highlights of the standard library include:
   using the types `Reader` and `Writer`.\
   It also provides a `Scanner` type that
   splits input into lines and words.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `builtin`\
   This not a real package, just a place to document
   builtin constants, variables, types, and functions.
@@ -276,27 +278,39 @@ Highlights of the standard library include:
   This implements a kind of tree data structure.
 - `container/list`\
   This implements doubly linked lists.
+  It is described in more detail in the "Doubly Linked List" section below.
 - `container/ring`\
   This implements circular lists.
 - `database/sql`\
   This defines interfaces implemented by relational database-specific drivers.
   For example, there are drivers for MySQL and PostgreSQL.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `encoding`\
   This defines interfaces for reading and writing
   various data formats such as CSV, JSON, and XML.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `errors`\
   This provides the `New` function that creates `error` values
   that have a string description and
   a method named `Error` to retrieve the description.
+  This package was described in more detail
+  in the earlier "Error Handling" section.
 - `flag`\
   This provides flag parsing for command-line applications.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `fmt`\
   This provides functions for formatted I/O.
   Many of its functions are similar to C's `printf` and `scanf`.
-  The next section describes this package in more detail.
+  This package is described in more detail in the "fmt" section below.
 - `go`\
   The sub-packages of this package implement all the standard go tooling
   such as source file parsing to ASTs and code formatting.
+  This package was described in more detail
+  in the first article in the series.
+  Additional detail will be provided in a future article on Go tooling.
 - `html`\
   This provides functions to parse and create HTML.
 - `image`\
@@ -305,8 +319,11 @@ Highlights of the standard library include:
 - `io`\
   This provides functions to read and write buffers and files.
   The function `io.Copy` copies data from a writer to a reader.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `log`\
   This provides simple logging.
+  This package is described in more detail in the "Logging" section below.
 - `math`\
   This provides many math functions.
 - `mime`\
@@ -315,6 +332,8 @@ Highlights of the standard library include:
   This provides functions that perform network I/O including TCP and UDP.
 - `net/http`\
   This provides functions to send and listen for HTTP and HTTPS requests.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `os`\
   This provides access to operating system functionality
   like that provided by UNIX shell commands.
@@ -324,6 +343,8 @@ Highlights of the standard library include:
   and `PathListSeparator` (':' on UNIX).
   It provides the function `os.Exit(status)`
   that exits the process with a given status.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `os/exec`\
   This provides functions that run external (operating system) commands.
 - `path`\
@@ -331,34 +352,54 @@ Highlights of the standard library include:
 - `reflect`\
   This provides types and functions that support using reflection
   to work with types determined at run-time.
+  This package will be described in more detail
+  in a future article on reflection in Go.
 - `regexp`\
   This provides functions that perform regular expression searches.
+  This package is described in more detail
+  in the "Regular Expressions" section below.
 - `sort`\
   This provides functions that sort slices and other collections.
+  This package is described in more detail
+  in the "Sorting" section below.
 - `strconv`\
   This provides conversions to and from
   string representations of primitive types.
   For example, `strconv.Atoi` converts a `string` to an `int`
   and `strconv.Itoa` converts an `int` to a `string`.
+  This package was described in more detail
+  in the "Type Conversions" section above.
 - `strings`\
   This provides many functions that operate on strings including
   `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
   `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
   It also defines the `Builder`, `Reader`, and `Replacer` types.
+  This package was described in more detail
+  in the earlier "Strings" section.
 - `sync`\
   This provides synchronization primitives such as mutual exclusion locks.
   Often code will use channels and `select` instead to achieve this.
+  This package will be described in more detail
+  in a future article on concurrency in Go.
 - `testing`\
   This provides functions and types that
   support automated tests run by `go test`.
   The sub-package `quick` implements fuzz testing.
+  This package will be described in more detail
+  in a future article on tests in Go.
 - `text`\
   This provides functions that parse text,
   write tabbed columns, and support data-driven templates.
+  This package will be described in more detail
+  in a future article on common tasks in Go.
 - `time`\
   This provides functions that measure and display time and dates.
+  Use of this package was demonstrated in the
+  earlier "Struct Field Encapsulation" section.
 - `unicode`\
   This provides functions that work with and test Unicode characters.
+  This package is described in more detail
+  in the "Unicode" section below.
 
 In addition to the standard library,
 also see the "sub-repositories" that are part of the Go project,
@@ -366,11 +407,7 @@ but maintained outside the main repository.
 
 The following sections provide examples
 of using some of the standard libraries.
-Additional examples will be presented in
-a future article on common tasks in Go.
-These include `bufio`, `database/sql`, `encoding/json`,
-`flag`, `io`, `net/http`, `os`, `sort`, `strings`,
-`text/template`, and `time`.
+These include `strings`, `text/template`, and `time`.
 
 #### `fmt` Standard Library
 
@@ -553,3 +590,23 @@ func main() {
   }
 }
 ```
+
+#### Regular Expressions
+
+TODO: Add this!
+
+#### Sorting
+
+TODO: Add this!
+
+For example:
+
+```go
+  sort.Slice(results, func(i, j int) bool {
+    return results[i].ReleaseDate < results[j].ReleaseDate
+  })
+```
+
+#### Unicode
+
+TODO: Add this!
