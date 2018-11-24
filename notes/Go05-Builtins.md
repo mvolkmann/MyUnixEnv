@@ -364,10 +364,18 @@ In addition to the standard library,
 also see the "sub-repositories" that are part of the Go project,
 but maintained outside the main repository.
 
-### `fmt` Standard Library
+The following sections provide examples
+of using some of the standard libraries.
+Additional examples will be presented in
+a future article on common tasks in Go.
+These include `bufio`, `database/sql`, `encoding/json`,
+`flag`, `io`, `net/http`, `os`, `sort`, `strings`,
+`text/template`, and `time`.
 
-The `fmt` standard library defines many functions
-for reading and writing formatted messages.
+#### `fmt` Standard Library
+
+The `fmt` standard library package defines many functions
+that read and write formatted messages.
 
 Functions that read have names that start with `Scan`.
 Functions that write have names that start with `Print`.
@@ -409,10 +417,10 @@ fmt.Printf("%*s%d\n", indent, "", number)
 // outputs "    19" without the quotes
 ```
 
-### Logging
+#### Logging
 
-The standard library `log` package provides methods that
-help with writing error messages to stderr.
+The `log` standard library package provides functions
+that help with writing error messages to stderr.
 
 By default, `log.Fatal(message)` outputs a line
 containing the date, time, and message,
@@ -472,10 +480,76 @@ func logValue(name string, value interface{}) {
 - TODO: Should you add sections on any other standard library packages?
 - TODO: Maybe some are already described in the "Common Tasks" section.
 
-- `container/list`\
+#### Doubly Linked Lists
 
-Additional examples of using standard library packages
-will be presented in a future article on common tasks in Go.
-These include `bufio`, `database/sql`, `encoding/json`,
-`flag`, `io`, `net/http`, `os`, `sort`, `strings`,
-`text/template`, and `time`.
+`container/list`\
+
+The `container/list` standard library package defines the types
+`List` and `Element` for creating and operating on doubly linked lists.
+
+`Element` objects represent nodes in the `List`.
+They are structs that have a `Value` field
+with a type of `interface{}` which
+allows them to hold a value of any type.
+
+To create a new, empty doubly linked list, use the `List` method `New`.
+For example, `myList := list.New()`.
+
+To add an `Element` to a `List`, use the `List` methods
+`PushFront`, `PushBack`, `InsertAfter`, and `InsertBefore`.
+These take a value of any type and return
+the `Element` object they add to the `List`.
+
+To get the length of a `List`, use the `List` method `Len`.
+
+To get the first or last `Element` in a `List`,
+use the `List` method `Front` or `Back`.
+
+To add a copy of all the `Element` objects in another `List` to a `List`,
+use the `List` methods `PushFrontList` and `PushBackList`.
+
+To move an `Element` object to another location within its `List`, use the
+`List` methods `MoveToFront`, `MoveToBack`, `MoveAfter`, and `MoveBefore`.
+
+To remove an `Element` from its `List`, use the `List` method `Remove`.
+
+To remove all the `Element` objects from a `List`,
+making it empty, use the `Init` method.
+
+To get the `Element` that comes before or after a given `Element`,
+use the `Element` method `Prev` or `Next`.
+
+For example:
+
+```go
+package main
+
+import (
+  "container/list"
+  "fmt"
+)
+
+type Team struct {
+  name   string
+  wins   int
+  losses int
+}
+
+func main() {
+  // Create an empty, doubly-linked list.
+  teams := list.New()
+
+  // Add Element objects to the list.
+  firstPlace := teams.PushFront(Team{"Chiefs", 9, 2})
+  lastPlace := teams.PushBack(Team{"Raiders", 2, 8})
+  teams.InsertBefore(Team{"Broncos", 4, 6}, lastPlace)
+  teams.InsertAfter(Team{"Chargers", 7, 3}, firstPlace)
+
+  // Iterate through the list.
+  for team := teams.Front(); team != nil; team = team.Next() {
+    // Note the use of a type assertion to
+    // turn the Element Value into a Team object.
+    fmt.Println(team.Value.(Team).name)
+  }
+}
+```
