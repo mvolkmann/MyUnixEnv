@@ -5,6 +5,8 @@ It provides details on the syntax of the language.
 
 The first article in the series is available at
 <https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
+It provides an overview of the language and a quick-start guide.
+
 Future articles will cover the Go standard library, tooling, solutions to common tasks,
 concurrency, reflection, modules, testing, and the future of Go.
 
