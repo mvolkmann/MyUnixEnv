@@ -1,9 +1,10 @@
-## Builtins
+## Standard Library
 
-The builtin constants, variables, and functions
-provided by Go are listed as being in a package
-named "builtin" for documentation purposes,
-but no such package actually exists.
+### Builtins
+
+The builtin constants, variables, and functions provided by Go
+are listed as being in the standard library package "builtin"
+for documentation purposes, but no such package actually exists.
 
 The following sections describe each of the provided builtins.
 

@@ -1,7 +1,7 @@
 # Go For It! Part 2
 
 This article is the second in a multi-part series on the Go programming language.
-It provides details on the syntax of the language and the builtins it provides.
+It provides details on the syntax of the language and its standard library.
 
 The first article in the series is available at
 <https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
