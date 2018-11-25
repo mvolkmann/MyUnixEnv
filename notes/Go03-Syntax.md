@@ -2460,6 +2460,9 @@ can hold values of any type. It is a basic linked list.
 Note how type assertions are required to
 use values that are obtained from the collection.
 
+For a doubly linked list, see the
+standard library package `container/list`.
+
 ```go
 package main
 

@@ -567,26 +567,24 @@ import (
 )
 
 type Team struct {
-  name   string
-  wins   int
-  losses int
+  Name   string
+  Wins   int
+  Losses int
 }
 
 func main() {
   // Create an empty, doubly-linked list.
   teams := list.New()
 
-  // Add Element objects to the list.
+  // Add elements to the list.
+  // Team records are from 11/24/2018.
   firstPlace := teams.PushFront(Team{"Chiefs", 9, 2})
   lastPlace := teams.PushBack(Team{"Raiders", 2, 8})
   teams.InsertBefore(Team{"Broncos", 4, 6}, lastPlace)
   teams.InsertAfter(Team{"Chargers", 7, 3}, firstPlace)
 
-  // Iterate through the list.
   for team := teams.Front(); team != nil; team = team.Next() {
-    // Note the use of a type assertion to
-    // turn the Element Value into a Team object.
-    fmt.Println(team.Value.(Team).name)
+    fmt.Println(team.Value.(Team).Name) // Chiefs, Chargers, Broncos, Raiders
   }
 }
 ```
@@ -597,14 +595,146 @@ TODO: Add this!
 
 #### Sorting
 
-TODO: Add this!
+The `sort` standard library package defines functions and types
+that help with sorting slices and custom collections.
 
-For example:
+To sort a slice, pass the slice and a function for comparing elements
+to the `Slice` function. For example:
 
 ```go
-  sort.Slice(results, func(i, j int) bool {
-    return results[i].ReleaseDate < results[j].ReleaseDate
-  })
+package main
+
+type Person struct {
+  Name string
+  Occupation string
+}
+
+func main() {
+  people := []Person{}
+  people = append(people, Person{"Mark", "software engineer"})
+  people = append(people, Person{"Tami", "vet receptionist"})
+  people = append(people, Person{"Amanda", "nurse"})
+  people = append(people, Person{"Jeremy", "IT manager"})
+
+  // This function determines whether
+  // the slice element at index1 should come before
+  // the slice element at index2 in the sort order.
+  less := func(index1, index2 int) bool {
+    return people[index1].Name < people[index2].Name
+  }
+  sort.Slice(people, less)
+  for _, person := range people {
+    fmt.Printf("%v\n", person) // Amanda, Jeremy, Mark, Tami
+  }
+}
+```
+
+To sort a custom collection, rather than a slice,
+implement the methods in the `sort.Interface` interface
+for the custom collection type.
+These methods include `Len`, `Less`, and `Swap`.
+The `Len` method returns the number of elements in the collection.
+The `Less` method takes two indexes and returns a `bool`
+that indicates whether the element at the first index
+comes before the element at the second index in sort order.
+The `Swap` method takes two indexes and modifies the collection
+so the elements at those indexes are swapped.
+Call the `sort.Sort` function to sort the collection.
+
+For example, this approach can be used to sort a linked list.
+The following code sorts the list of `Team` elements
+created in the "Doubly Linked List" section above.
+
+```go
+package main
+
+import (
+  "container/list"
+  "fmt"
+  "sort"
+)
+
+// ListAt returns a pointer to the List Element at a given index.
+// This is not an efficient operation for a linked list.
+func ListAt(l *list.List, index int) *list.Element {
+  len := l.Len()
+  if index >= len {
+    return nil
+  }
+
+  element := l.Front()
+  for i := 1; i < index; i++ {
+    element = element.Next()
+  }
+  return element
+}
+
+// ListPrint prints the elements of a linked list.
+func ListPrint(l *list.List) {
+  for element := l.Front(); element != nil; element = element.Next() {
+    fmt.Println(element.Value)
+  }
+}
+
+// Team describes a sports team.
+type Team struct {
+  Name   string
+  Wins   int
+  Losses int
+}
+
+// ByName is used to sort a linked list of Team object by team name.
+type ByName struct {
+  teams *list.List
+}
+
+// Len returns the length of the linked list of Teams.
+func (b ByName) Len() int {
+  return b.teams.Len()
+}
+
+// Less determines if the Team at one index belongs
+// before the Team at another index in the sort order.
+func (b ByName) Less(i, j int) bool {
+  teams := b.teams
+  team1 := ListAt(teams, i).Value.(Team)
+  team2 := ListAt(teams, j).Value.(Team)
+  return team1.Name < team2.Name
+}
+
+// Swap swaps the Teams at the given indexes.
+func (b ByName) Swap(i, j int) {
+  if i > j {
+    i, j = j, i // swap indexes so i < j
+  }
+
+  teams := b.teams
+  el1 := ListAt(teams, i)
+  el2 := ListAt(teams, j)
+  el2Next := el2.Next()
+
+  teams.MoveAfter(el2, el1)
+
+  if el2Next == nil {
+    teams.MoveToBack(el1)
+  } else {
+    teams.MoveBefore(el1, el2Next)
+  }
+}
+
+func main() {
+  // Create an empty, doubly-linked list.
+  teams := list.New()
+
+  // Add Teams to the list.
+  firstPlace := teams.PushFront(Team{"Chiefs", 9, 2})
+  lastPlace := teams.PushBack(Team{"Raiders", 2, 8})
+  teams.InsertBefore(Team{"Broncos", 4, 6}, lastPlace)
+  teams.InsertAfter(Team{"Chargers", 7, 3}, firstPlace)
+
+  sort.Sort(ByName{teams})
+  ListPrint(teams) // Broncos, Chargers, Chiefs, Raiders
+}
 ```
 
 #### Unicode
