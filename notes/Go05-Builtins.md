@@ -598,7 +598,20 @@ TODO: Add this!
 The `sort` standard library package defines functions and types
 that help with sorting slices and custom collections.
 
-To sort a slice, pass the slice and a function for comparing elements
+To sort slices of primitive values, use the functions
+`Ints`, `Float64s`, and `Strings`. For example:
+
+```go
+numbers := []int{7, 3, 9, 1}
+sort.Ints(numbers)
+fmt.Printf("%v\n", numbers) // [1 3 7 9]
+```
+
+To determine if a slice of primitive values is already sorted,
+use the functions `IntsAreSorted`, `Float64sAreSorted`, and `StringsAreSorted`.
+
+To sort a slice of non-primitive values,
+pass the slice and a function for comparing elements
 to the `Slice` function. For example:
 
 ```go
@@ -639,7 +652,12 @@ that indicates whether the element at the first index
 comes before the element at the second index in sort order.
 The `Swap` method takes two indexes and modifies the collection
 so the elements at those indexes are swapped.
-Call the `sort.Sort` function to sort the collection.
+Finally, call the `sort.Sort` function to sort the collection.
+
+The `sort.Sort` function performs an unstable sort.
+This means that two elements with the same "sort key"
+may be in a different order after the sort.
+For a stable sort, use `sort.Stable` instead.
 
 For example, this approach can be used to sort a linked list.
 The following code sorts the list of `Team` elements
@@ -736,6 +754,12 @@ func main() {
   ListPrint(teams) // Broncos, Chargers, Chiefs, Raiders
 }
 ```
+
+In addition to sorting, the `sort` package
+provides functions for searching slices.
+`SearchInts`, `SearchFloat64s`, and `SearchStrings`
+search an already sorted slice of their type for
+an element with a given value and return its index.
 
 #### Unicode
 
