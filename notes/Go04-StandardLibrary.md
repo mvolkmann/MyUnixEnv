@@ -595,8 +595,14 @@ func main() {
 The `regexp` standard library package defines functions
 and the type `Regexp` for working with regular expressions.
 
+The regular expression syntax supported by this package
+is mostly the same as that supported by Perl.
+For details on the syntax, see
+<https://golang.org/s/re2syntax>.
+
 The easiest way to determine if text matches a regular expression
 is to use the functions `MatchString` and `Match`.
+Both return a `bool` indicating whether there is a match.
 These differ in how they obtain the text to be tested.
 For example:
 
@@ -621,14 +627,15 @@ func main() {
   matched, err = regexp.MatchString("bad[", text)
   fmt.Println(matched, err) // false error parsing regexp: missing closing ]
 
+  // The file haiku.txt contains:
+  // Out of memory.
+  // We wish to hold the whole sky,
+  // but we never will.
   bytes, err := ioutil.ReadFile("haiku.txt")
   if err != nil {
     log.Fatal(err)
   }
   matched, err = regexp.Match("whole sky", bytes)
-  fmt.Println(matched, err) // true nil
-
-  matched, err = regexp.MatchReader("whole sky", reader)
   fmt.Println(matched, err) // true nil
 }
 ```
@@ -657,14 +664,25 @@ For example:
   fmt.Println(matched, err) // true nil
 ```
 
-To get capture groups, use the ...
-For example:
+To get capture groups, use the `FindStringSubmatch` function.
+For example, the following regular expression
+defines capture groups to capture the letter and number
+of a Bingo call.
+
+```go
+  bingoRE := regexp.MustCompile("^([BINGO])(\\d{1,2})$")
+  matches := bingoRE.FindStringSubmatch("G57")
+  fmt.Printf("matches = %v\n", matches) // [G57 G 57]
+```
 
 To replace matches, use the ...
 For example:
 
 To split a string on a regular expression delimiter,
 using the `Regexp` `Split method`. For example:
+
+We have just scratched the surface of the `regexp` package.
+There are many more methods on the `Regexp` type.
 
 #### Sorting
 
