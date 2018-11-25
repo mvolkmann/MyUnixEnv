@@ -592,7 +592,79 @@ func main() {
 
 #### Regular Expressions
 
-TODO: Add this!
+The `regexp` standard library package defines functions
+and the type `Regexp` for working with regular expressions.
+
+The easiest way to determine if text matches a regular expression
+is to use the functions `MatchString` and `Match`.
+These differ in how they obtain the text to be tested.
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+  "log"
+  "regexp"
+)
+
+func main() {
+  text := "FooBarBaz"
+  matched, err := regexp.MatchString("Bar", text)
+  fmt.Println(matched, err) // true nil
+  matched, err = regexp.MatchString("^Foo", text)
+  fmt.Println(matched, err) // true nil
+  matched, err = regexp.MatchString("Baz$", text)
+  fmt.Println(matched, err) // true nil
+  matched, err = regexp.MatchString("bad[", text)
+  fmt.Println(matched, err) // false error parsing regexp: missing closing ]
+
+  bytes, err := ioutil.ReadFile("haiku.txt")
+  if err != nil {
+    log.Fatal(err)
+  }
+  matched, err = regexp.Match("whole sky", bytes)
+  fmt.Println(matched, err) // true nil
+
+  matched, err = regexp.MatchReader("whole sky", reader)
+  fmt.Println(matched, err) // true nil
+}
+```
+
+For regular expressions that will be used multiple times,
+it is more efficient to create a Regexp object
+so the regular expression is parsed only once.
+The functions `Compile` and `CompilePOSIX`
+take a string and return a pointer to a `Regexp` and an error.
+A non-nil error is returned if the string
+cannot be parsed as a regular expression.
+The functions `MustCompile` and `MustCompilePOSIX`
+are similar, but panic instead of returning an error.
+
+The `POSIX` variants restricts the regular expression syntax
+and use "leftmost-longest" matching. For details, see
+<https://golang.org/pkg/regexp/#CompilePOSIX>.
+
+For example:
+
+```go
+  // Panics if the regular expression cannot be parsed.
+  bingoRE := regexp.MustCompile("^[BINGO]\\d{1,2}$")
+  callout := "G57"
+  matched = bingoRE.MatchString(callout)
+  fmt.Println(matched, err) // true nil
+```
+
+To get capture groups, use the ...
+For example:
+
+To replace matches, use the ...
+For example:
+
+To split a string on a regular expression delimiter,
+using the `Regexp` `Split method`. For example:
 
 #### Sorting
 
