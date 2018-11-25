@@ -1,12 +1,12 @@
 # Go For It! Part 2
 
 This article is the second in a multi-part series on the Go programming language.
-It provides details on the syntax of the language and its standard library.
+It provides details on the syntax of the language.
 
 The first article in the series is available at
 <https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
-Future articles will cover tooling, concurrency, solutions to common tasks,
-reflection, modules, testing, and the future of Go.
+Future articles will cover the Go standard library, tooling, solutions to common tasks,
+concurrency, reflection, modules, testing, and the future of Go.
 
 ## Go Syntax
 
@@ -2832,3 +2832,13 @@ func main() {
   fmt.Println(divideWithRecover(7, 0)) // 0
 }
 ```
+
+### Conclusion
+
+This article has exposed you to all the syntax in the Go language.
+
+Look for additional articles in this series early in 2019
+at <https://objectcomputing.com/resources/publications/sett>.
+Next up will be a review of the Go standard library.
+
+Thanks to Charles Sharp for his detailed review of this article!

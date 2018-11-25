@@ -716,3 +716,14 @@ retrieve a specific version of the package.
 
 For more detail on publishing, see
 <https://github.com/golang/go/wiki/PackagePublishing>.
+
+### Conclusion
+
+Learning Go has been interesting and fun for me!
+I hope you enjoy it also.
+
+Look for additional articles in this series early in 2019
+at <https://objectcomputing.com/resources/publications/sett>.
+These will prepare you to put your Go knowledge to use in real world applications.
+
+Thanks to Charles Sharp for his detailed review of this article!
