@@ -622,11 +622,44 @@ and returns the number of bytes written or an error.
 There are many implementations in the standard library
 including ones for writing to strings, files, and network connections.
 
-To write to a string, see TODO.
+The package `io/ioutil` defines a `WriteString` function
+that writes a string to a file.
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "io"
+  "log"
+  "os"
+)
+
+func check(err error) {
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+
+func writeString(file *os.File, text string) {
+  bytes, err := io.WriteString(file, text)
+  check(err)
+  fmt.Printf("wrote %v bytes\n", bytes)
+}
+
+func main() {
+  file, err := os.Create("out-file.txt")
+  check(err)
+  defer file.Close()
+
+  writeString(file, "first line\n")
+  writeString(file, "second line\n")
+}
+```
 
 The package `io/ioutil` defines a `WriteFile` function
 that writes all the data to a file in a single call.
-
 For example:
 
 ```go
@@ -674,13 +707,7 @@ func writeLine(file *os.File, text string) {
 }
 
 func main() {
-  // TODO: Why declare these variables? Just use :=?
-  var (
-    file *os.File
-    err error
-  )
-
-  file, err = os.Create("out-file.txt")
+  file, err := os.Create("out-file.txt")
   check(err)
   defer file.Close()
 
