@@ -350,7 +350,7 @@ Highlights of the standard library include:
   in a future article on common tasks in Go.
 - `os/exec`\
   This provides functions that run external (operating system) commands.
-  TODO: ADD AN EXAMPLE of executing a command like `ls` and capturing the output.
+  This package is described in the "OS Commands" section below.
 - `path`\
   This provides functions that work with UNIX-style file paths and URLs.
 - `reflect`\
@@ -953,6 +953,76 @@ func logValue(name string, value interface{}) {
     fmt.Printf("%s=%v\n", name, value)
   }
 }
+```
+
+#### OS Commands
+
+The standard library package `os/exec` defines types with
+methods that support executing operating system commands.
+The four methods that do this are `Output`, `CombinedOutput`, `Run`, and `Start`.
+All but `Start` block until the command finishes.
+
+To use these methods, create a `Cmd` object by calling `cmd.Command`.
+This takes a command name and its arguments as separate string arguments.
+It returns a pointer to a `Cmd` object.
+A `Cmd` object can only execute its command once.
+To execute the same command again, create a new `Cmd` object.
+
+The `Output` method returns a byte array
+containing the output to stdout, and an error.
+If the error is not `nil`, `error.Stderr` will be set to a byte slice
+which can be turned into a string with `string(error.Stderr)`.
+
+The `CombinedOutput` method returns a byte array
+containing the combined output to stdout and stderr,
+and an error.
+
+The `Run` method returns an error.
+Before calling this, optionally
+assign an `io.Reader` to `cmd.Stdin` to supply an input stream,
+assign an `io.Writer` to `cmd.Stdout` to supply an output stream, and
+assign an `io.Writer` to `cmd.Stderr` to supply an error stream.
+
+For example, all of the following approaches produce the same output:
+
+```go
+  cmd := exec.Command("ls", "-la")
+  output, err := cmd.Output()
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println("Command =", string(output))
+
+  cmd = exec.Command("ls", "-la")
+  output, err = cmd.CombinedOutput()
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println("CombinedOutput =", string(output))
+
+  cmd = exec.Command("ls", "-la")
+  var stdout bytes.Buffer
+  cmd.Stdout = &stdout
+  err = cmd.Run()
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println("Run =", stdout.String())
+
+  cmd = exec.Command("ls", "-la")
+  var stdout2 bytes.Buffer
+  cmd.Stdout = &stdout2
+  err = cmd.Start()
+  if err != nil {
+    log.Fatal(err)
+  }
+  // Do something else here before using the `wait` method
+  // to block until the command completes.
+  err = cmd.Wait()
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println("Start =", stdout2.String())
 ```
 
 #### Regular Expressions
