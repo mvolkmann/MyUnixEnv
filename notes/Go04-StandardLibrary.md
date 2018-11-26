@@ -410,9 +410,82 @@ The following sections provide examples
 of using some of the standard libraries.
 These include `strings`, `text/template`, and `time`.
 
-#### `fmt` Standard Library
+#### Command-line Flags
 
-The `fmt` standard library package defines many functions
+The standard library package `flags` supports
+documenting and parsing command-line flags for an application.
+Each flag is described by a type, name,
+default value, and documentation string.
+The type can be any builtin primitive type
+or a user-defined type (using `flag.Var`).
+
+For example, here is a simple application
+in a file named `flag-demo.go` that outputs a
+range of integer values with a given string prefix.
+
+```go
+package main
+
+import (
+  "flag"
+  "fmt"
+)
+
+// These pointers will be set after flag.Parse is called.
+// There are flag functions for all the primitive data types.
+var minPtr = flag.Int("min", 1, "minimum value")
+var maxPtr = flag.Int("max", 10, "maximum value")
+var prefixPtr = flag.String("prefix", "", "prefix")
+
+func main() {
+  flag.Parse(
+  // TODO: If dereferencing prefixPtr was done in each
+  // TODO: loop iteration, would Go optimize it out?
+  prefix := *prefixPtr
+  for i := *minPtr; i <= *maxPtr; i++ {
+    fmt.Printf("%s%d\n", prefix, i)
+  }
+}
+```
+
+To build this, enter `go build`.
+
+To get help on the flags,
+enter `./flag-demo --help` which outputs:
+
+```text
+Usage of ./flags:
+  -max int
+        maximum value (default 10)
+  -min int
+        minimum value (default 1)
+  -prefix string
+        prefix
+```
+
+Flag names are preceded by a single dash,
+followed by `=` or a space, and a value.
+
+To run this, enter one of the following lines:
+
+```text
+./flag-demo -min 3 -max 5 -prefix foo
+./flag-demo -min=3 -max=5 -prefix=foo
+```
+
+both of which output
+
+```text
+foo3
+foo4
+foo5
+```
+
+TODO: Discuss any type checking that is performed on the values.
+
+#### Formatting
+
+The standard library package `fmt` defines many functions
 that read and write formatted messages.
 
 Functions that read have names that start with `Scan`.
@@ -455,74 +528,9 @@ fmt.Printf("%*s%d\n", indent, "", number)
 // outputs "    19" without the quotes
 ```
 
-#### Logging
+#### Linked Lists
 
-The `log` standard library package provides functions
-that help with writing error messages to stderr.
-
-By default, `log.Fatal(message)` outputs a line
-containing the date, time, and message,
-and exits with a status code of 1.
-
-By default, `log.Fatalf(formatString, args)` is similar,
-but uses a format string to specify the message string
-that includes placeholders for the remaining arguments.
-
-Including the date and time in log messages
-is useful in long-running applications
-like web servers.
-
-A custom prefix can be added to all messages
-produced by the `log` package
-by calling `log.SetPrefix(prefix)`.
-
-The date and time can be suppressed
-in all messages produced by the `log` package
-by calling `log.SetFlags(0)`.
-This function takes an integer which is the result of or'ing
-predefined constants that identify the desired parts of the prefix.
-
-The constants are:
-
-- `Ldate` - yyyy/mm/dd in local time zone
-- `Ltime` - hh:mm:ss in local time zone
-- `Lmicroseconds` - hh:mm:ss.microseconds
-- `Llongfile` - full-file-path:line-number
-- `Lshortfile` - file-name.file-extension:line-number
-- `LUTC` - use UTC instead of local time zone for dates and times
-- `LstdFlags` - same as `Ldate | Ltime`; the default flags value
-
-`log.Panic(message)` outputs a line
-containing the date, time, and message,
-followed by a line containing "panic:" and the message again,
-followed by a stack trace.
-It exits the application with a status code of 2.
-
-To write messages to stdout that include
-a file name, line number, name of a variable, and its value,
-write a function like the following and call it from other functions.
-
-```go
-func logValue(name string, value interface{}) {
-  // Passing 1 to runtime.Caller causes it to get the
-  // information from one level higher in the call stack.
-  _, file, line, ok := runtime.Caller(1)
-  if ok {
-    fmt.Printf("%s:%d %s=%v\n", file, line, name, value)
-  } else {
-    fmt.Printf("%s=%v\n", name, value)
-  }
-}
-```
-
-- TODO: Should you add sections on any other standard library packages?
-- TODO: Maybe some are already described in the "Common Tasks" section.
-
-#### Doubly Linked Lists
-
-`container/list`\
-
-The `container/list` standard library package defines the types
+The standard library package `container/list` defines the types
 `List` and `Element` for creating and operating on doubly linked lists.
 
 `Element` objects represent nodes in the `List`.
@@ -590,9 +598,69 @@ func main() {
 }
 ```
 
+#### Logging
+
+The standard library package `log` provides functions
+that help with writing error messages to stderr.
+
+By default, `log.Fatal(message)` outputs a line
+containing the date, time, and message,
+and exits with a status code of 1.
+
+By default, `log.Fatalf(formatString, args)` is similar,
+but uses a format string to specify the message string
+that includes placeholders for the remaining arguments.
+
+Including the date and time in log messages
+is useful in long-running applications
+like web servers.
+
+A custom prefix can be added to all messages
+produced by the `log` package
+by calling `log.SetPrefix(prefix)`.
+
+The date and time can be suppressed
+in all messages produced by the `log` package
+by calling `log.SetFlags(0)`.
+This function takes an integer which is the result of or'ing
+predefined constants that identify the desired parts of the prefix.
+
+The constants are:
+
+- `Ldate` - yyyy/mm/dd in local time zone
+- `Ltime` - hh:mm:ss in local time zone
+- `Lmicroseconds` - hh:mm:ss.microseconds
+- `Llongfile` - full-file-path:line-number
+- `Lshortfile` - file-name.file-extension:line-number
+- `LUTC` - use UTC instead of local time zone for dates and times
+- `LstdFlags` - same as `Ldate | Ltime`; the default flags value
+
+`log.Panic(message)` outputs a line
+containing the date, time, and message,
+followed by a line containing "panic:" and the message again,
+followed by a stack trace.
+It exits the application with a status code of 2.
+
+To write messages to stdout that include
+a file name, line number, name of a variable, and its value,
+write a function like the following and call it from other functions.
+
+```go
+func logValue(name string, value interface{}) {
+  // Passing 1 to runtime.Caller causes it to get the
+  // information from one level higher in the call stack.
+  _, file, line, ok := runtime.Caller(1)
+  if ok {
+    fmt.Printf("%s:%d %s=%v\n", file, line, name, value)
+  } else {
+    fmt.Printf("%s=%v\n", name, value)
+  }
+}
+```
+
 #### Regular Expressions
 
-The `regexp` standard library package defines functions
+The standard library package `regexp` defines functions
 and the type `Regexp` for working with regular expressions.
 
 The regular expression syntax supported by this package
@@ -658,13 +726,20 @@ For example:
 
 ```go
   // Panics if the regular expression cannot be parsed.
+  // Note how backslashes for character classes
+  // must be escaped with a second backslash.
   bingoRE := regexp.MustCompile("^[BINGO]\\d{1,2}$")
+
+  // Determine whether a strings matches this regular expression.
   callout := "G57"
   matched = bingoRE.MatchString(callout)
   fmt.Println(matched, err) // true nil
 ```
 
-To get capture groups, use the `FindStringSubmatch` function.
+To capture matches of specific portions of a regular expression,
+surround them with parentheses to define "capture groups".
+The method `FindStringSubmatch` returns a slice containing
+the full match and the match for each of the capture groups.
 For example, the following regular expression
 defines capture groups to capture the letter and number
 of a Bingo call.
@@ -675,18 +750,22 @@ of a Bingo call.
   fmt.Printf("matches = %v\n", matches) // [G57 G 57]
 ```
 
-To replace matches, use the ...
-For example:
-
 To split a string on a regular expression delimiter,
 using the `Regexp` `Split method`. For example:
+
+```go
+  text := "ab1c23def456g"
+  digitsRE := regexp.MustCompile("\\d+") // matches one or more digits
+  parts := digitsRE.Split(text, -1) // -1 to return all parts
+  fmt.Printf("parts = %v\n", parts) // [ab c def g]
+```
 
 We have just scratched the surface of the `regexp` package.
 There are many more methods on the `Regexp` type.
 
 #### Sorting
 
-The `sort` standard library package defines functions and types
+The standard library package `sort` defines functions and types
 that help with sorting slices and custom collections.
 
 To sort slices of primitive values, use the functions
@@ -854,4 +933,26 @@ an element with a given value and return its index.
 
 #### Unicode
 
-TODO: Add this!
+The standard library package `unicode` defines
+many constants, variables, functions, and types
+for testing and converting `rune` values.
+
+Many of the constants define ranges of Unicode characters
+used in specific written languages.
+
+Many of the functions take a `rune` and return a `bool`
+indicating whether the `rune` is a member of
+a particular category of Unicode characters.
+These include `IsDigit`, `IsLetter`, `IsLower`, `IsUpper`,
+and `IsSpace`.
+
+`IsSpace` determines whether a `rune` represents a whitespace character.
+These include the characters space, tab, newline, carriage return,
+and the less commonly used characters
+formfeed, non-breaking space (NBSP), vertical tab, and next line (NEL).
+
+The functions `ToLower` and `ToUpper`
+take a `rune` and return another `rune`.
+
+- TODO: Should you add sections on any other standard library packages?
+- TODO: Some are already described in the "Common Tasks" section.
