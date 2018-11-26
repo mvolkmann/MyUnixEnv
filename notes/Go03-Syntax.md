@@ -518,8 +518,8 @@ For example:
 fmt.Printf("%s is %d years old.\n", name, age)
 ```
 
-For more detail see the "`fmt` Standard Library" section
-in the "Builtins" section.
+The `Printf` function will be described in more detail
+in a future article on the Go standard library.
 
 ### If
 
@@ -755,7 +755,8 @@ use the `+` and `+=` operators.
 The `string` type has no methods.
 The standard library package `strings` provides
 many functions for operating on strings.
-Many of these are described in the "Builtins" section.
+Many of these will be described in a
+future article on the Go standard library.
 For example, the following code splits a string on
 whitespace characters and prints each word on a separate line:
 

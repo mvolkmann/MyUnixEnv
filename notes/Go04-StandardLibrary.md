@@ -270,16 +270,15 @@ Highlights of the standard library include:
   using the types `Reader` and `Writer`.\
   It also provides a `Scanner` type that
   splits input into lines and words.
-  This package will be described in more detail
-  in a future article on common tasks in Go.
 - `builtin`\
   This not a real package, just a place to document
   builtin constants, variables, types, and functions.
+  Most of these were described earlier in this article.
 - `container/heap`\
   This implements a kind of tree data structure.
 - `container/list`\
-  This implements doubly linked lists.
-  It is described in more detail in the "Doubly Linked List" section below.
+  This implements a doubly linked list.
+  This package is described in the "Linked Lists" section below.
 - `container/ring`\
   This implements circular lists.
 - `database/sql`\
@@ -292,28 +291,30 @@ Highlights of the standard library include:
   various data formats such as CSV, JSON, and XML.
   This package will be described in more detail
   in a future article on common tasks in Go.
+  The `encoding/json` package is described
+  in the "JSON" section below.
 - `errors`\
   This provides the `New` function that creates `error` values
   that have a string description and
   a method named `Error` to retrieve the description.
-  This package was described in more detail
-  in the earlier "Error Handling" section.
+  This package was described in the "Error Handling" section
+  of the second article in this series.
 - `flag`\
   This provides flag parsing for command-line applications.
-  This package will be described in more detail
-  in a future article on common tasks in Go.
+  This package is described in the "Command-line Flags" section below.
 - `fmt`\
   This provides functions for formatted I/O.
   Many of its functions are similar to C's `printf` and `scanf`.
-  This package is described in more detail in the "fmt" section below.
+  This package is described in the "Formatting" section below.
 - `go`\
   The sub-packages of this package implement all the standard go tooling
   such as source file parsing to ASTs and code formatting.
-  This package was described in more detail
-  in the first article in the series.
+  This package was described in the first article in the series.
   Additional detail will be provided in a future article on Go tooling.
 - `html`\
   This provides functions to parse and create HTML.
+  The `html/template` package will be described
+  in a future article on common tasks in Go.
 - `image`\
   This provides functions to parse (decode) and create (encode) images
   in the GIF, JPEG, and PNG formats.
@@ -324,9 +325,10 @@ Highlights of the standard library include:
   in a future article on common tasks in Go.
 - `log`\
   This provides simple logging.
-  This package is described in more detail in the "Logging" section below.
+  This package is described in the "Logging" section below.
 - `math`\
-  This provides many math functions.
+  This provides many math functions including
+  ones for logarithms and trigonometry.
 - `mime`\
   This provides functions to encode and decode multimedia formats.
 - `net`\
@@ -348,6 +350,7 @@ Highlights of the standard library include:
   in a future article on common tasks in Go.
 - `os/exec`\
   This provides functions that run external (operating system) commands.
+  TODO: ADD AN EXAMPLE of executing a command like `ls` and capturing the output.
 - `path`\
   This provides functions that work with UNIX-style file paths and URLs.
 - `reflect`\
@@ -357,12 +360,10 @@ Highlights of the standard library include:
   in a future article on reflection in Go.
 - `regexp`\
   This provides functions that perform regular expression searches.
-  This package is described in more detail
-  in the "Regular Expressions" section below.
+  This package is described in the "Regular Expressions" section below.
 - `sort`\
   This provides functions that sort slices and other collections.
-  This package is described in more detail
-  in the "Sorting" section below.
+  This package is described in the "Sorting" section below.
 - `strconv`\
   This provides conversions to and from
   string representations of primitive types.
@@ -375,8 +376,8 @@ Highlights of the standard library include:
   `Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
   `Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
   It also defines the `Builder`, `Reader`, and `Replacer` types.
-  This package was described in more detail
-  in the earlier "Strings" section.
+  This package is described in more detail
+  in the "Strings" section below.
 - `sync`\
   This provides synchronization primitives such as mutual exclusion locks.
   Often code will use channels and `select` instead to achieve this.
@@ -391,12 +392,13 @@ Highlights of the standard library include:
 - `text`\
   This provides functions that parse text,
   write tabbed columns, and support data-driven templates.
-  This package will be described in more detail
+  The `text/template` package will be described
   in a future article on common tasks in Go.
 - `time`\
   This provides functions that measure and display time and dates.
   Use of this package was demonstrated in the
-  earlier "Struct Field Encapsulation" section.
+  "Struct Field Encapsulation" section
+  of the second article in this series.
 - `unicode`\
   This provides functions that work with and test Unicode characters.
   This package is described in more detail
@@ -408,7 +410,51 @@ but maintained outside the main repository.
 
 The following sections provide examples
 of using some of the standard libraries.
-These include `strings`, `text/template`, and `time`.
+
+#### Formatting
+
+The standard library package `fmt` defines many functions
+that read and write formatted messages.
+
+Functions that read have names that start with `Scan`.
+Functions that write have names that start with `Print`.
+
+The most commonly used functions in this package include:
+
+- `fmt.Errorf(format string, args ...interface{}) error`\
+   This creates an error value containing a formatted message.
+
+- `fmt.Printf(format string, args ...interface{})`\
+  This writes a formatted string to stdout.
+
+- `fmt.Println(args ...interface{})`\
+  This writes the string representation of each of the arguments
+  to stdout, separated by spaces and followed by a newline.
+
+Format strings can contain placeholders that begin with a percent sign.
+These are referred to as "verbs". Commonly used verbs include:
+
+- `%d` for decimal values (includes all the integer types)
+- `%f` for floating point values
+- `%t` for boolean values to output "true" or "false"
+- `%s` for strings
+- `%v` for any value
+- `%T` to output the type of a value
+- `%*s` to output a string with a number of leading spaces\
+  This consumes two values, the number of leading spaces and the string to follow.
+
+It is common for format strings to end with `\n`
+to output a newline character.
+
+For example, to output a number indented by
+the number spaces specified in the variable `indent`,
+
+```go
+indent := 4
+number := 19
+fmt.Printf("%*s%d\n", indent, "", number)
+// outputs "    19" without the quotes
+```
 
 #### Command-line Flags
 
@@ -483,50 +529,301 @@ foo5
 
 TODO: Discuss any type checking that is performed on the values.
 
-#### Formatting
+#### Input/Output
 
-The standard library package `fmt` defines many functions
-that read and write formatted messages.
+The standard library package `io` defines
+the `Reader` and `Writer` interfaces.
 
-Functions that read have names that start with `Scan`.
-Functions that write have names that start with `Print`.
+##### Readers
 
-The most commonly used functions in this package include:
+The `Reader` interface has a single method `Read`.
+This reads from an underlying data stream,
+populates a byte slice, and
+returns the number of bytes read or an error.
+For example, the error is io.EOF
+if the end of a stream is reached.
 
-- `fmt.Errorf(format string, args ...interface{}) error`\
-   This creates an error value containing a formatted message.
+There are many implementations of this interface in the standard library,
+including ones for reading from strings, files, and network connections.
 
-- `fmt.Printf(format string, args ...interface{})`\
-  This writes a formatted string to stdout.
+To read from a string, see <https://tour.golang.org/methods/21>.
 
-- `fmt.Println(args ...interface{})`\
-  This writes the string representation of each of the arguments
-  to stdout, separated by spaces and followed by a newline.
+One way to read from a file is to use the package `io/ioutil`
+which defines a `ReadFile` function.
+This reads the entire file in one call.
 
-Format strings can contain placeholders that begin with a percent sign.
-These are referred to as "verbs". Commonly used verbs include:
-
-- `%d` for decimal values (includes all the integer types)
-- `%f` for floating point values
-- `%t` for boolean values to output "true" or "false"
-- `%s` for strings
-- `%v` for any value
-- `%T` to output the type of a value
-- `%*s` to output a string with a number of leading spaces\
-  This consumes two values, the number of leading spaces and the string to follow.
-
-It is common for format strings to end with `\n`
-to output a newline character.
-
-For example, to output a number indented by
-the number spaces specified in the variable `indent`,
+For example:
 
 ```go
-indent := 4
-number := 19
-fmt.Printf("%*s%d\n", indent, "", number)
-// outputs "    19" without the quotes
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+  "log"
+)
+
+func main() {
+  // Read entire file into a newly created byte array.
+  bytes, err := ioutil.ReadFile("haiku.txt")
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  fmt.Println(string(bytes))
+}
 ```
+
+When there is an attempt to read past the end of a stream,
+an `io.EOF` error is returned.
+Some ways of reading from a stream check for this
+so the error is never generated.
+For example, a "scanner" can be used to
+read the lines in a file one at a time.
+
+```go
+package main
+
+import (
+  "bufio"
+  "fmt"
+  "log"
+  "os"
+)
+
+func main() {
+  // Get an os.File which implements the io.Reader interface
+  // by having a Read method.
+  file, err := os.Open("haiku.txt")
+  if err != nil {
+    log.Fatal(err)
+  }
+  defer file.Close()
+
+  scanner := bufio.NewScanner(file) // takes an io.Reader
+  for scanner.Scan() { // returns true if another line was read
+    fmt.Println(count, scanner.Text())
+  }
+
+  // Check for any errors from the calls to Scan and Text.
+  if err := scanner.Err(); err != nil {
+    log.Fatal(err)
+  }
+}
+```
+
+##### Writers
+
+The `Writer` interface has a single method `Write`.
+This writes a byte slice to an underlying data stream
+and returns the number of bytes written or an error.
+There are many implementations in the standard library
+including ones for writing to strings, files, and network connections.
+
+To write to a string, see TODO.
+
+The package `io/ioutil` defines a `WriteFile` function
+that writes all the data to a file in a single call.
+
+For example:
+
+```go
+package main
+
+import (
+  "io/ioutil"
+  "log"
+)
+
+func main() {
+  // Convert a string to a byte slice.
+  data := []byte("Line #1\nLine #2")
+  mode := os.FileMode(0644) // TODO: Add comment?
+  err := ioutil.WriteFile("new-file.txt", data, mode)
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+```
+
+To write data a little at time,
+use the `os.File` `Write` method.
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "os"
+)
+
+func check(err error) {
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+
+func writeLine(file *os.File, text string) {
+  bytes, err := file.Write([]byte(text + "\n"))
+  check(err)
+  fmt.Printf("wrote %v bytes\n", bytes)
+}
+
+func main() {
+  // TODO: Why declare these variables? Just use :=?
+  var (
+    file *os.File
+    err error
+  )
+
+  file, err = os.Create("out-file.txt")
+  check(err)
+  defer file.Close()
+
+  writeLine(file, "Line #1")
+  writeLine(file, "Line #2")
+}
+```
+
+#### JSON
+
+The `encoding/json` standard library package
+supports marshalling and unmarshalling of JSON data.
+Go arrays and slices are represented by JSON arrays.
+Go structs and maps are represented by JSON objects.
+
+The `encoding/xml` standard library package
+provides similar functionality for XML.
+
+To marshal data to JSON use the `json.Marshal` function.
+This takes a Go value and returns a byte slice
+that can be converted to a string with the `string` function.
+Only exported struct fields are marshaled.
+For example,
+
+```go
+import (
+  "encoding/json"
+  "fmt"
+  "os"
+)
+
+type Person struct {
+  FirstName string
+  LastName string
+  Age int
+  height int
+}
+
+func main() {
+  p := Person{FirstName: "Mark", LastName: "Volkmann", height: 74}
+  json1, err := json.Marshal(p)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Println(string(json1)) // {"FirstName":"Mark","LastName":"Volkmann","Age":0}
+}
+```
+
+Some Go values cannot be marshaled to JSON. These include
+maps with non-string keys, functions, and channels.
+Pointers are marshaled as the values to which they point.
+Cyclic data structures cannot be marshaled because
+they cause `json.Marshal` to go into an infinite loop.
+
+Here is an example of marshalling a slice of structs.
+
+```go
+people := []Person{
+  Person{FirstName: "Mark", LastName: "Volkmann", Age: 57},
+  Person{FirstName: "Tami", LastName: "Volkmann"},
+}
+json2, err := json.Marshal(people)
+// skipping err check
+fmt.Println(string(json2))
+// [{"FirstName":"Mark","LastName":"Volkmann","Age":57},{"FirstName":"Tami","LastName":"Volkmann","Age":0}]
+```
+
+Each struct field definition can be followed by a "field tag"
+which is a string containing metadata.
+These provide information about how a field
+should processed in a specific context.
+
+A field tag with a "json" key specifies processing
+that should be performed by the `encoding/json` package.
+This includes specifying an alternate name for a field
+to be used in the JSON representation, and an option to
+omit the field if its value is the zero value for its type.
+For example:
+
+```go
+type Person2 struct {
+  FirstName string `json:"name"`
+  LastName  string `json:"surname"`
+  Age       int    `json:"age,omitempty"`
+}
+
+p2 := Person2{FirstName: "Mark", LastName: "Volkmann"}
+json3, err := json.Marshal(p2)
+// skipping err check
+fmt.Println(string(json3)) // {"name":"Mark","surname":"Volkmann"}
+```
+
+To unmarshal data from JSON use the `json.Unmarshal` function.
+The first argument is a byte slice representing a JSON string.
+The second argument is a pointer to a
+struct, map, slice, or array to be populated.
+Only exported struct fields are populated.
+For example,
+
+```go
+var p3 Person
+err = json.Unmarshal(json1, &p3)
+// skipping err check
+fmt.Printf("%+v\n", p3) // {FirstName:Mark LastName:Volkmann Age:0}
+```
+
+Properties present in the JSON, but absent in a target struct are ignored.
+This is determined by case-insensitive name matching.
+It allows unmarshaling a selected subset of the JSON data.
+For example,
+
+```go
+type PersonSubset struct {
+  LastName string
+}
+var pSubset PersonSubset
+err = json.Unmarshal(json1, &pSubset)
+// skipping err check
+fmt.Printf("%+v\n", pSubset) // {LastName:Volkmann}
+```
+
+A JSON object can be unmarshaled into a Go map.
+When the JSON property values have a variety of types,
+it is useful to use a map with string keys and values of type `interface{}`
+which can hold any kind of value.
+Unmarshaling from JSON types to Go types produce what would be expected
+and include mapping JSON numbers to Go float64 values.
+
+This approach can also be used to unmarshal a JSON array
+of arbitrary JSON objects. For example,
+
+```go
+type MyMap map[string]interface{}
+mySlice := []MyMap{}
+err = json.Unmarshal(json2, &mySlice) // see value for json2 above
+// skipping err check
+fmt.Printf("myMap = %+v\n", mySlice)
+// [map[FirstName:Mark LastName:Volkmann Age:57] map[Age:0 FirstName:Tami LastName:Volkmann]]
+```
+
+The `encoding/json` package also provides the ability to
+encode and decode streams of JSON data one object at a time.
+This allows creation of JSON that is larger than will fit in memory.
+It also allows processing JSON data as it is decoded
+rather than waiting until the entire stream is decoded.
 
 #### Linked Lists
 
@@ -930,6 +1227,18 @@ provides functions for searching slices.
 `SearchInts`, `SearchFloat64s`, and `SearchStrings`
 search an already sorted slice of their type for
 an element with a given value and return its index.
+
+#### Strings
+
+The standard library package `strings`
+provides many functions for operating on strings.
+
+TODO: Provide examples of these:
+`Contains`, `HasPrefix`, `HasSuffix`, `Index`, `Join`,
+`Repeat`, `Split`, `ToLower`, `ToTitle`, `ToUpper`, and `Trim`
+
+TODO: Provide examples of these:
+`Builder`, `Reader`, and `Replacer` types.
 
 #### Unicode
 
