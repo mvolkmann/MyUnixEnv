@@ -1109,6 +1109,8 @@ To capture matches of specific portions of a regular expression,
 surround them with parentheses to define "capture groups".
 The method `FindStringSubmatch` returns a slice containing
 the full match and the match for each of the capture groups.
+If the string does not match the regular expression,
+an empty slice is returned.
 For example, the following regular expression
 defines capture groups to capture the letter and number
 of a Bingo call.
