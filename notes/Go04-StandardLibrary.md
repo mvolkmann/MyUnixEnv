@@ -486,7 +486,7 @@ var maxPtr = flag.Int("max", 10, "maximum value")
 var prefixPtr = flag.String("prefix", "", "prefix")
 
 func main() {
-  flag.Parse(
+  flag.Parse()
   // TODO: If dereferencing prefixPtr was done in each
   // TODO: loop iteration, would Go optimize it out?
   prefix := *prefixPtr
@@ -529,7 +529,14 @@ foo4
 foo5
 ```
 
-TODO: Discuss any type checking that is performed on the values.
+If an invalid value is used for any of the flags,
+an error message is displayed, followed by the help output.
+For example, if a non-integer value such as "x" is
+specified for the max flag, the following error message is output:
+
+```text
+invalid value "x" for flag -max: strconv.ParseInt: parsing "x": invalid syntax
+```
 
 #### Input/Output
 
@@ -1334,7 +1341,7 @@ an element with a given value and return its index.
 #### Strings
 
 The standard library package `strings`
-provides many functions for operating on strings.
+provides functions for operating on strings.
 The code below demonstrates many of them.
 
 ```go
@@ -1353,8 +1360,8 @@ func main() {
   fmt.Println("Index =", strings.Index(text, "cd")) // 2
 
   names := []string{"Mark", "Tami", "Amanda", "Jeremy"}
-  joined := strings.Join(names, " - ")
-  fmt.Printf("joined = %+v\n", joined) // Mark - Tami - Amanda - Jeremy
+  joined := strings.Join(names, ", ")
+  fmt.Printf("joined = %+v\n", joined) // Mark, Tami, Amanda, Jeremy
 
   fmt.Println("Repeat =", strings.Repeat(text, 2)) // abcdefabcdef
   fmt.Println("Split =", strings.Split(text, "cd")) // [ab ef]
@@ -1362,12 +1369,12 @@ func main() {
   fmt.Println("Trim =", strings.Trim("  foo bar  ", " ")) // "foo bar"
   // Also see TrimLeft and TrimRight.
 
-  // The Builder type supports efficiently building dynamic strings.
+  // The Builder type supports efficiently building strings.
   var b strings.Builder
   b.WriteString("Foo")
   b.WriteString("Bar")
   b.WriteString("Baz")
-  // Other Write methods on the Builder include
+  // Other Write methods on Builder include:
   // Write to write a byte slice
   // WriteByte to write a single byte
   // WriteRune to write a single rune
@@ -1377,6 +1384,7 @@ func main() {
   fmt.Println("Replace =", strings.Replace(sentence, "ar", "il", -1)) // Milk goes to the pilk.
 
   // The Replacer type provides a more powerful alternative to strings.Replace.
+  // This demonstrates HTML entity escaping.
   // Create a Replace object with pairs of old/new strings.
   r := strings.NewReplacer("&", "&amp;", "'", "&apos;", "\"", "&quot;", "<", "&lt;", ">", "&gt;")
   // Call the Replace method once for each string to be processed.
@@ -1407,6 +1415,3 @@ formfeed, non-breaking space (NBSP), vertical tab, and next line (NEL).
 
 The functions `ToLower` and `ToUpper`
 take a `rune` and return another `rune`.
-
-- TODO: Should you add sections on any other standard library packages?
-- TODO: Some are already described in the "Common Tasks" section.
