@@ -3,7 +3,7 @@
 Java was my primary programming language for 15 years.
 But in the last eight years I have rarely used it.
 Recently I started work on a project that is mostly
-implemented in Java.  This gave me a chance to reflect
+implemented in Java. This gave me a chance to reflect
 on why I no longer prefer Java.
 
 Some of the issues are inherent in the language.
@@ -92,7 +92,7 @@ class Address {
 ### Constants
 
 String constants are overused.
-It is typically to see definitions like the following:
+It is typical to see definitions like the following:
 
 ```java
 public static final String MY_LONG_CONSTANT_NAME = "MY_LONG_CONSTANT_NAME";
@@ -140,4 +140,3 @@ It would be great to see some effort put into porting
 popular Java libraries and frameworks to
 other commonly used programming languages
 including JavaScript, Python, and Go.
-
