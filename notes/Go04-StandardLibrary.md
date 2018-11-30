@@ -1,5 +1,3 @@
-SEARCH FOR TODO IN THIS FILE!
-
 ## Standard Library
 
 ### Builtins
@@ -487,8 +485,6 @@ var prefixPtr = flag.String("prefix", "", "prefix")
 
 func main() {
   flag.Parse()
-  // TODO: If dereferencing prefixPtr was done in each
-  // TODO: loop iteration, would Go optimize it out?
   prefix := *prefixPtr
   for i := *minPtr; i <= *maxPtr; i++ {
     fmt.Printf("%s%d\n", prefix, i)
