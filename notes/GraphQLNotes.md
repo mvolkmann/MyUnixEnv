@@ -1,5 +1,11 @@
 # GraphQL Notes
 
+## Overview
+
+GraphQL is a specification for obtaining and querying data (server-side and client-side).
+It is programming language agnostic.
+A GraphQL server can act as a proxy for REST services.
+
 ## Getting Started
 
 - browse https://graphql.org
@@ -66,13 +72,13 @@
   - required to pass "dynamic variables"
   - useful to identify queries in logs
 - variables
-  - queries can refer to variables prefixed with a $
+  - queries can refer to variables prefixed with a \$
   - values are specified in an object where the keys
     are variable names
   - parameters are named, not positional
   - parameters are optional unless their type is followed by !
   - parameters can have default values
-    - ex. $name: String = "Mark"
+    - ex. \$name: String = "Mark"
 - directives
   - the shape of a query can be conditionally changed with a directive
   - two kinds, @include and @skip
@@ -169,3 +175,125 @@
 - implement resolve functions which map queries to
   code that performs the actually queries
   - ex. SQL select statements using joins
+
+## More Notes to be organized.
+
+Can use Apollo on client-side
+Can use Prisma and Yoga on server-side
+One endpoint for all queries
+Do all queries return JSON?
+Queries look very similar to the structure of the JSON that is returned.
+data models are typed
+A GraphQL schema defines the data types and supported mutations.
+Types include String, Int, ID, DateTime, ..., and custom types
+! means required
+@unique on a field requires unique values
+@default(value) on a field gives it a default value when not supplied
+[type] is an array of the type
+Tools can support field/property completion based on type definitions
+Queries get data.
+Mutations create, update, and delete data.
+The GraphQL spec doesn’t define syntax for filtering and sorting, but implementations add this in an implementation specific way (WHY?)
+For example, Prisma supports “where clauses”.
+Prisma is an open-source library for performing CRUD operations on databases using GraphQL.
+It currently only supports MySQL, PostgreSQL, and MongoDB, but aims to support more databases in the future.
+Prisma generates SQL so you don’t have to write it.
+Does Prisma also have commercial offerings?
+Yoga supports custom logic?
+
+$npm install -g prisma
+Create a prisma account by browsing prisma.io and clicking “Sign In”$ prisma login
+\$ prisma init
+Choose between creating a new database, using an existing database, or using the demo server
+“Create new database” sets up a local database using Docker.
+Can choose MySQL, PostgreSQL, or MongoDB
+Can optionally choose to generate code for a specific kind of client (JavaScript, TypeScript, Flow, or Go)
+Generates prisma.yml to hold service description including endpoint URL, datamodel file, and path to generated client code.
+Generates datamodel.graphql to hold type descriptions
+Generates docker-compose.yml (if creating a new database)
+Generates generated/prism-client/index.js (ES5 code)
+Generates generated/prism-client/prisma-schema.js (GraphQL syntax, not JavaScript)
+
+$docker-compose up -d$ prisma deploy
+Creates “User” type.
+Starts server with endpoint at http://localhost:4466
+and WebSocket URL ws://localhost:4466
+
+Browse http://localhost:4466
+Click “SCHEMA” drawer to see available queries and mutations.
+To create a new user, enter the following and press the triangle play button
+mutation {
+createUser(data: {name: "Mark"}) {id, name}
+}
+To get all the users, enter the following and press the triangle play button
+query {
+users {
+id # GraphQL calls these “fields”.
+name
+}
+}
+To modify an existing user, enter the following and press the triangle play button
+mutation {
+updateUser(
+data: {
+name: "Richard"
+}
+where: { # must uniquely identify a user
+id: "cjp5ilekx000c0965ryhvncd5"
+}
+) {
+name # Specifies the fields to be returned to identify the updated objects.
+}
+}
+Can you modify all objects that match criteria instead of just uniquely identified ones?
+To delete an existing user, enter the following and press the triangle play button
+mutation {
+deleteUser(
+where: {
+id: "cjp5ix9zu000u09658bbf185x"
+}
+) {
+name # Specifies the fields to be returned to identify the deleted objects. # If you don’t care to be told what was deleted, # use \_\_typename to just get back the name of the object type that was deleted
+}
+}
+To upsert a user, enter the following and press the triangle play button
+mutation {
+upsertUser(
+where: {
+name: “Richard”
+}
+create: {
+name: “Richard”
+}
+update: {
+name: “Mark”
+}
+) {
+name
+}
+}
+
+How can you launch psql so it uses the Postgres database running in Docker?
+
+How can you change the columns in an existing table?
+
+How can you add a new table to the database?
+
+in prisma.yml, can get values from environment variables with ${env:var-name}
+define variables in a .env file and add the .env files to .gitignore since they contain sensitive information
+Things to add to prisma.yml:
+to make it secure, add the line: secret:${env:PRISMA_SECRET}
+hooks:
+post-deploy: - graphql get-schema -p prisma
+This retrieves the update GraphQL schema when it is modified.
+Is this all generated?
+
+prisma —help
+prisma -e variables.env deploy
+(need -e if file is not named .env)
+Can ignore “Warning command prepare both exists ...”
+
+Comments in GraphQL files are delimited by triple quotes.
+For example, “””This is a comment.”””
+
+One of the biggest benefits of Prisma is that it generates lots of query and mutation definitions for you.
