@@ -96,12 +96,14 @@ A GraphQL server can act as a proxy for REST services.
 - define what is available to queries
 - queries are validated against the schema
 - types are defined with
-  ```text
+
+  ```graphql
   type {name} {
     {field-name}: {type}
     ...
   }
   ```
+
 - note the lack of commas and semicolons
 - each field can specify named arguments
   with their types and optional default values
@@ -176,6 +178,13 @@ A GraphQL server can act as a proxy for REST services.
   code that performs the actually queries
   - ex. SQL select statements using joins
 
+## Field Directives
+
+- @unique requires unique values
+- @default(value) specifies a default value when not supplied
+- @relation defines a relationship between types?
+- @rename ?
+
 ## More Notes to be organized.
 
 Can use Apollo on client-side
@@ -187,8 +196,6 @@ data models are typed
 A GraphQL schema defines the data types and supported mutations.
 Types include String, Int, ID, DateTime, ..., and custom types
 ! means required
-@unique on a field requires unique values
-@default(value) on a field gives it a default value when not supplied
 [type] is an array of the type
 Tools can support field/property completion based on type definitions
 Queries get data.
@@ -214,64 +221,123 @@ Generates docker-compose.yml (if creating a new database)
 Generates generated/prism-client/index.js (ES5 code)
 Generates generated/prism-client/prisma-schema.js (GraphQL syntax, not JavaScript)
 
-$docker-compose up -d$ prisma deploy
-Creates “User” type.
-Starts server with endpoint at http://localhost:4466
-and WebSocket URL ws://localhost:4466
+When Prisma creates a new database, it creates a `user` table.
+This has the fields `id`, `name`, `createdAt` and `updatedAt`.
+
+To start the Prisma server (-d starts in background),
+enter `docker-compose up -d` and `prisma deploy`.
+
+- repeat this after every schema change?
+- need to shutdown server first?
+
+To stop the Prisma server, enter `docker-compose down`.
+
+This creates a “User” table and type, and starts a Prisma GraphQL server.
+
+To see the endpoints, enter `prisma info`.
+They are typically http://localhost:4466 for HTTP
+and ws://localhost:4466 for WebSockets.
+
+To see a list of deployed services, enter `prisma list`.
+None are deployed by default.
 
 Browse http://localhost:4466
 Click “SCHEMA” drawer to see available queries and mutations.
 To create a new user, enter the following and press the triangle play button
+
+```graphql
 mutation {
-createUser(data: {name: "Mark"}) {id, name}
+  createUser(data: {name: "Mark"}) {
+    id
+    name
+  }
 }
+```
+
 To get all the users, enter the following and press the triangle play button
+
+```graphql
 query {
-users {
-id # GraphQL calls these “fields”.
-name
+  users {
+    id # GraphQL calls these “fields”.
+    name
+  }
 }
+```
+
+To get only some of the users, add a where clause.
+
+```graphql
+query {
+  users(where: {name_contains: "er"}) {
+    id
+    name
+  }
 }
+```
+
 To modify an existing user, enter the following and press the triangle play button
+
+```graphql
 mutation {
-updateUser(
-data: {
-name: "Richard"
+  updateUser(
+    data: {name: "Richard"}
+    where: {
+      # must uniquely identify a user
+      id: "cjp5ilekx000c0965ryhvncd5"
+    }
+  ) {
+    name # Specifies the fields to be returned to identify the updated objects.
+  }
 }
-where: { # must uniquely identify a user
-id: "cjp5ilekx000c0965ryhvncd5"
-}
-) {
-name # Specifies the fields to be returned to identify the updated objects.
-}
-}
+```
+
 Can you modify all objects that match criteria instead of just uniquely identified ones?
 To delete an existing user, enter the following and press the triangle play button
+
+```graphql
 mutation {
-deleteUser(
-where: {
-id: "cjp5ix9zu000u09658bbf185x"
+  deleteUser(where: {id: "cjp5ix9zu000u09658bbf185x"}) {
+    name # Specifies the fields to be returned to identify the deleted objects. # If you don’t care to be told what was deleted, # use \_\_typename to just get back the name of the object type that was deleted
+  }
 }
-) {
-name # Specifies the fields to be returned to identify the deleted objects. # If you don’t care to be told what was deleted, # use \_\_typename to just get back the name of the object type that was deleted
-}
-}
+```
+
 To upsert a user, enter the following and press the triangle play button
+
+```graphql
 mutation {
-upsertUser(
-where: {
-name: “Richard”
+  upsertUser(
+    where: {
+      name: “Richard”
+    }
+    create: {
+      name: “Richard”
+    }
+    update: {
+    name: “Mark”
+    }
+  ) {
+    name
+  }
 }
-create: {
-name: “Richard”
-}
-update: {
-name: “Mark”
-}
-) {
-name
-}
-}
+```
+
+To generate a file that defines the types that correspond to existing database tables,
+\$ prisma introspect
+This currently only works with PostgreSQL databases.
+
+To open the browser-based playground for running queries and mutations, enter `prisma playground`.
+
+To view information about the currently logged in Prisma account, enter `prisma account`.
+
+To get the Docker container id for the postgres container,
+enter `docker container ls`.
+To start a bash shell inside the Docker container,
+enter `docker exec -it 4ed0580df628 sh`.
+From here, run psql with `psql -U prisma`.
+To launch psql inside the Docker container to examine the database,
+enter `docker exec -it {container-id} psql -U prisma`.
 
 How can you launch psql so it uses the Postgres database running in Docker?
 
