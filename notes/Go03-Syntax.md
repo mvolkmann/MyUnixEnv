@@ -18,7 +18,7 @@ A Go source file contains a package clause,
 followed by zero or more import declarations,
 followed by zero or more package-level declarations.
 Package clauses and import declarations
-are described in the "Package" section.
+are described in the "Packages" section.
 
 A package-level declaration is a declaration of a package
 constant, variable, type, function, or method.
@@ -101,7 +101,7 @@ referenced with `altName.ExportedName`.
 instead of `pkgName.ExportedName`.
 
 The full name used to import a package is referred to as its "import path".
-These are slash-separate names.
+These are slash-separated names.
 For standard library packages, the import path is a simple name
 such as `"strings"` or `"math/rand"`.
 For community packages, the import path
@@ -306,7 +306,7 @@ As long as at least one variable on the left of `:=` has not yet been declared,
 the other variables can already exist.
 A common use case is when the variable `err` is used
 to capture possible errors from a function call.
-For example, as long as the variable `bytes` has not be previously declared
+For example, as long as the variable `bytes` has not been previously declared
 the following statement is valid even if `err` has been previously declared.
 
 ```go
@@ -318,11 +318,11 @@ bytes, err := ioutil.ReadFile("haiku.txt")
 Functions can return any number of values.
 The result can be assigned to the same number of variables.
 For example, if `getBounds` is a function that returns two values,
-`min, max := getXBounds(points)` is a valid statement.
+`min, max := getBounds(points)` is a valid statement.
 
 Sometimes the caller is only interested in a subset of the return values.
 The "blank identifier" `_` can be used to discard specific return values.
-For example, `_, max := getXBounds(points)`.
+For example, `_, max := getBounds(points)`.
 
 ### Constants
 
@@ -339,7 +339,7 @@ This is useful when the desired type differs from what would be inferred.
 For example, `const HOT float64 = 100`.
 
 When a constant type is not specified the constant is "untyped".
-This allows them to be used in many expressions without explicit conversions
+This allows them to be used in many expressions without explicit conversions.
 For example, `int` and `float64` values cannot be multiplied
 without converting one of the values to the other type.
 
