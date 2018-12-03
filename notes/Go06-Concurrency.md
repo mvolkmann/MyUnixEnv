@@ -1,3 +1,24 @@
+# Go For It! Part 4
+
+This article is the fourth in a multi-part series on the Go programming language.
+It provides details on concurrency in Go.
+
+The first article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
+It provides an overview of the language and a quick-start guide.
+
+The second article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-2>.
+It provides details on all the syntax in the Go language.
+
+The third article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-3>.
+It provides an overview of the Go Standard Library
+and provides details on some of its packages.
+
+Future articles will cover solutions to common tasks,
+reflection, modules, testing, and the future of Go.
+
 ## Concurrency
 
 In parallel computing, a task is divided into subtasks
@@ -17,10 +38,11 @@ see Goroutines, Channels, the `select` statement, and Mutexes.
 
 The name "goroutine" is a play on "coroutine" which is described
 in Wikipedia at <https://en.wikipedia.org/wiki/Coroutine>.
+
 A goroutine is a lightweight thread of execution
 managed by the Go runtime that runs a specific function call.
 Each goroutine consumes about 2K of memory compared to 1MB for a Java thread.
-They use only use more memory when needed.
+They use more memory only when when needed.
 
 Goroutines start up faster than threads.
 They are not mapped one-to-one with threads,
@@ -31,12 +53,13 @@ A goroutine runs until its function exits or the application terminates.
 The `main` function of an application runs in a goroutine,
 so there is always at least one.
 
-When a function is called without using `go` the call is synchronous.
+Function calls without the `go` keyword
+run synchronously in the current goroutine.
 
-To create a new goroutine, proceed any function call,
-named or anonymous, with the `go` keyword.
+To create a new goroutine, precede any function call with the `go` keyword.
+This works with both named and anonymous functions.
 Arguments to the function are evaluated in the current goroutine.
-The function is executed asynchronously inside the new goroutine
+The function is executed asynchronously in the new goroutine
 when it is scheduled to run in a thread.
 
 To get the number of currently running goroutines,
@@ -57,13 +80,15 @@ where duration is in nanoseconds (1 nanosecond = 1,000,000 milliseconds).
 
 ### Channels
 
+#### Channels Overview
+
 Channels are "pipes" that allow concurrent goroutines to communicate.
-Values can be sent to a channel and can be received from them.
+Values can be sent to a channel and can be received from one.
 
 To create a channel, use the builtin `make` function.
 For example, `myChannel := make(chan string)` creates a channel
 for sending and receiving strings. Non-primitive types
-such as structs, slices, and maps can also be used.
+such as slices, structs, and maps can also be used.
 
 Channels that are created without specifying a size are "unbuffered".
 Later we will see how to make them buffered.
@@ -109,8 +134,8 @@ package main
 
 import "fmt"
 
-func getNumbers(start int, c chan<- int) {
-  for n := start; n < 10; n += 2 {
+func getNumbers(min, max, delta int, c chan<- int) {
+  for n := min; n < max; n += delta {
     c <- n
   }
   close(c)
@@ -120,8 +145,8 @@ func main() {
   c1 := make(chan int)
   c2 := make(chan int)
 
-  go getNumbers(1, c1) // odd numbers
-  go getNumbers(2, c2) // even numbers
+  go getNumbers(1, 10, 2, c1) // odd numbers
+  go getNumbers(2, 10, 2, c2) // even numbers
 
   n := 0
   moreEvens, moreOdds := true, true // TODO: Is there any reason to initialize these?
@@ -130,11 +155,11 @@ func main() {
     select {
     case n, moreOdds = <-c1:
       if moreOdds {
-        fmt.Println(n, moreOdds)
+        fmt.Println(n)
       }
     case n, moreEvens = <-c2:
       if moreEvens {
-        fmt.Println(n, moreEvens)
+        fmt.Println(n)
       }
     }
     if !moreEvens && !moreOdds {
@@ -144,7 +169,7 @@ func main() {
 }
 ```
 
-### Channel Direction
+#### Channel Direction
 
 The type `chan` can be used to both send and receive values.
 When a channel is passed to a function,
@@ -184,7 +209,7 @@ func main() {
 }
 ```
 
-### Buffered Channels
+#### Buffered Channels
 
 Buffered channels allow multiple values to be
 sent to or received from a channel without blocking.
@@ -254,7 +279,7 @@ go myAsync(done)
 <-done // Waits for myAsync to single that it is finished.
 ```
 
-### `select` statement
+#### `select` statement
 
 The `select` statement attempts to receive data
 from one of a number of channels.

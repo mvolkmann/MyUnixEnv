@@ -1,3 +1,19 @@
+# Go For It! Part 3
+
+This article is the third in a multi-part series on the Go programming language.
+It provides details on the Go Standard Library.
+
+The first article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
+It provides an overview of the language and a quick-start guide.
+
+The second article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-2>.
+It provides details on all the syntax in the Go language.
+
+Future articles will cover concurrency, solutions to common tasks,
+reflection, modules, testing, and the future of Go.
+
 ## Standard Library
 
 ### Builtins
