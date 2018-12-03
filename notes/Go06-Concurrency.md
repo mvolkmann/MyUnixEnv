@@ -1,5 +1,15 @@
 ## Concurrency
 
+In parallel computing, a task is divided into subtasks
+that are processed at the same time.
+When these complete, their results are combined.
+
+In concurrent computing, multiple unrelated tasks
+are processed at the same time.
+These may communicate with each other during execution.
+
+This article focuses on concurrent computing.
+
 Concurrency in Go is primarily supported by four features,
 see Goroutines, Channels, the `select` statement, and Mutexes.
 
@@ -133,7 +143,6 @@ func main() {
   }
 }
 ```
-
 
 ### Channel Direction
 
