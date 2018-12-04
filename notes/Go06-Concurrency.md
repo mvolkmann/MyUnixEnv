@@ -171,7 +171,8 @@ func main() {
 
 #### Channel Direction
 
-The type `chan` can be used to both send and receive values.
+The type `chan` represents a channel.
+
 When a channel is passed to a function,
 the argument type can state that the function
 will only send to or receive from the channel.
@@ -183,7 +184,7 @@ can be passed a read/write channel.
 But functions that accept a read/write channel
 cannot be passed a read-only or write-only channel.
 
-For example,
+For example:
 
 ```go
 package main
@@ -203,9 +204,9 @@ func receiver(c <-chan int) { // only reads
 }
 
 func main() {
-  c := make(chan int) // works buffered or not
+  c := make(chan int) // could also use a buffered channel
   go sender(c) // runs in a new goroutine
-  receiver(c) // runs in current goroutine
+  receiver(c) // runs in the current goroutine
 }
 ```
 
@@ -218,16 +219,19 @@ To create a buffered channel, pass a size
 as the second argument to the `make` function.
 For example, `myChannel := make(chan string, 5)`
 creates a channel that can hold up to 5 unread strings.
-There is no builtin way to create a buffered channel
-with an unlimited capacity.
-TODO: Is there a non-builtin way to do this?
+
+There is no builtin way to create a
+buffered channel with an unlimited capacity.
+Implementing this is non-trivial, but has been done.
+See <https://medium.com/capital-one-tech/building-an-unbounded-channel-in-go-789e175cd2cd>.
 
 Sending to a buffered channel only blocks if the channel is full.
+
 Receiving from a buffered channel only blocks if the channel is empty.
 
 A `for` loop can be used to iterate over the values in a channel
 that is closed after the last value is sent to it.
-For example,
+For example:
 
 ```go
 package main
@@ -254,30 +258,72 @@ func main() {
 
 It is sometimes useful to use use a channel
 to which no useful data will be sent
-to synchronize goroutine execution.
+just to synchronize goroutine execution.
 This is particularly the case when
 a receiving goroutine receives data from multiple channels
 and one or more of them is able to determine
 when the receiving goroutine should stop
 trying to receive data from any of them.
 
-Here is a simple example that demonstrates this approach
-with only a single sending goroutine:
+Here is an example that demonstrates this approach:
 
 ```go
-import "time"
+package main
 
-func myAsync(done chan<- bool) { // can send, but not receive
-  // Do some asynchronous thing.
-  time.Sleep(time.Second * 3)
-  // When it completes, signal to the goroutine that started this one.
-  done <- true
+import (
+  "fmt"
+  "math/rand"
+  "time"
+)
+
+// Sends random integers from 1 to 10 to the "numbers" channel
+// and sends true to the "done" channel when zero is generated.
+func myAsync(numbers chan<- int, done chan<- bool) {
+  for {
+    n := rand.Intn(11) // 0 to 10
+    if n == 0 {
+      done <- true
+      break
+    } else {
+      numbers <- n
+    }
+  }
 }
 
-done := make(chan bool, 1) // TODO: Why specify 1?
-go myAsync(done)
-<-done // Waits for myAsync to single that it is finished.
+func main() {
+  // Seed random number generation based on the current time.
+  rand.Seed(int64(time.Now().Nanosecond()))
+
+  // Create all the channels to be used.
+  numbers1 := make(chan int)
+  numbers2 := make(chan int)
+  done := make(chan bool)
+
+  // Start two goroutines to generate random numbers.
+  go myAsync(numbers1, done)
+  go myAsync(numbers2, done)
+
+  // Print the random numbers as they arrive.
+loop:
+  for {
+    select {
+    case n := <-numbers1:
+      fmt.Println("from first,", n)
+    case n := <-numbers2:
+      fmt.Println("from second,", n)
+    case <-done:
+      break loop // without label, just breaks from select
+    }
+  }
+  fmt.Println("done")
+}
 ```
+
+Another way to implement the previous example is to
+remove the `done` channel parameter from the `myAsync` function
+and change it to close the `numbers` channel when zero is generated.
+The `main` function could check for the `number1` and `number2` channels
+to be closed and break out of the `for` loop when that happens.
 
 #### `select` statement
 
@@ -384,7 +430,8 @@ func main() {
 
 ### Mutexes and WaitGroups
 
-The `sync` package defines the `Mutex` and `WaitGroup` structs.
+The `sync` standard library package defines
+the `Mutex` and `WaitGroup` struct types.
 
 Using a `Mutex` is one way to prevent concurrent access
 to shared data from multiple goroutines.
