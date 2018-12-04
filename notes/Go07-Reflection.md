@@ -25,15 +25,18 @@ modules, testing, and the future of Go.
 
 ## Reflection
 
+### Reflection Basics
+
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
 
-To get the type of an expression, `typ := reflect.TypeOf(expression)`.
-This returns a `Type` object that has many methods.
+To get the type of an expression, call `reflect.TypeOf(expression)`.
+This returns a `Type` object that has many methods,
+some of which are described below.
 
-The `Type` method `Name` returns the type as a string.
-The `Type` method `Kind` returns the type as an
-enumerated value of type `reflect.Kind`. For example,
+The `Name` method returns the type as a string.
+The `Kind` method returns the type as an
+enumerated value of type `reflect.Kind`. For example:
 
 ```go
 package main
@@ -59,48 +62,70 @@ func whatAmI(value any) {
 
 func main() {
   s := []int{1, 2, 3}
-  whatAmI(s)
+  whatAmI(s) // I am a slice.
 
   a := [3]int{1, 2, 3}
-  whatAmI(a)
+  whatAmI(a) // I am an array.
 
   i := 1
-  whatAmI(i)
+  whatAmI(i) // I am something else.
 }
 ```
 
-The `Type` method `PkgPath` returns the import path for the type.
-The `Type` method `Implements` returns a boolean indicating
+The `PkgPath` method returns the import path for the type.
+
+The `Implements` method returns a boolean indicating
 whether the type implements a given interface type.
+
+### Type Methods For Function Types
 
 For function types, it is possible to iterate
 over its parameters and return types.
-The `Type` method `NumIn` returns the number of parameters in the function.
-The `Type` method `In` returns a `Type` object
+
+The `NumIn` method returns the number of parameters in the function.
+
+The `In` method returns a `Type` object
 describing the parameter at a given index.
-The `Type` method `NumOut` returns the number of return types in the function.
-The `Type` method `Out` returns a `Type` object
+
+The `NumOut` method returns the number of return types in the function.
+
+The `Out` method returns a `Type` object
 describing the return type at a given index.
 
+### Type Methods For Struct Types
+
 For struct types, it is possible to iterate over its fields.
-The `Type` method `NumField` returns the number of fields in the struct.
-The `Type` method `FieldByIndex` returns a `StructField` object
+
+The `NumField` method returns the number of fields in the struct.
+
+The `FieldByIndex` method returns a `StructField` object
 describing the field at a given index.
 
+### Type Methods For Interface Types
+
 For interface types, it is possible to iterate over its methods.
-The `Type` method `NumMethod` returns the number of methods in the interface.
-The `Type` method `Method` returns a `Method` object
+
+The `NumMethod` method returns the number of methods in the interface.
+
+The `Method` method returns a `Method` object
 describing the method at a given index.
 
+### Type Methods For Map Types
+
 For map types, it is possible to obtain the key and value types.
-The `Type` method `Key` returns a `Type` object describing the key type.
-The `Type` method `Elem` returns a `Type` object describing the value type.
+
+The `Key` method returns a `Type` object describing the key type.
+
+The `Elem` method returns a `Type` object describing the value type.
 This method can also be used to get the element type of an
 `Array`, `Chan`, pointer, or `Slice`.
 
-For array and slice types ...
+### Type Methods For Arrays and Slices Types
+
 To get a `Value` for a slice, `reflect.Value(slice)`.
+
 To get the length, `value.Len()`
+
 To get the element at index i, `value.Index(i)`.
 
 There is much more to reflection in Go!
