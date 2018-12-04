@@ -126,8 +126,6 @@ The following code demonstrates the use of channels
 by using two that send sequences of numbers.
 It prints all the numbers received and
 exits once both channels are closed.
-The `switch` statement is used to read from multiple channels.
-This is described in more detail later.
 
 ```go
 package main
@@ -152,6 +150,10 @@ func main() {
   moreEvens, moreOdds := true, true // TODO: Is there any reason to initialize these?
 
   for {
+    // The select statement is used to receive from multiple channels.
+    // Each time it is executed, it randomly selects a channel
+    // from the ones that are not empty and receives from it.
+    // This is described in more detail later.
     select {
     case n, moreOdds = <-c1:
       if moreOdds {
@@ -306,6 +308,7 @@ func main() {
   // Print the random numbers as they arrive.
 loop:
   for {
+    // The select statement is described in the next section.
     select {
     case n := <-numbers1:
       fmt.Println("from first,", n)
@@ -329,7 +332,7 @@ to be closed and break out of the `for` loop when that happens.
 
 The `select` statement attempts to receive data
 from one of a number of channels.
-It is frequently used inside a `for` loop
+It is commonly used inside a `for` loop
 so multiple values from each channel can be received.
 
 If multiple channels are ready, one is
@@ -338,17 +341,17 @@ chosen randomly and a value is received from it.
 If none of the channels are ready, there are two possibilities.
 If no `default` block is present, the `select` blocks
 until one of the channels is ready.
-If a `default` block is present, that code will run.
-TODO: Then does it block until a channel os ready?
+If a `default` block is present, that code will run and
+the `select` will again check whether any of the channels are ready.
 
-When using `break` in a `select` `case` that is
-inside a `for` loop, to jump out of the loop
+Using `break` in a `select` `case`, exits the `select`.
+To jump out of a loop that surrounds a `select`,
 add a label before the loop and `break` to it.
 Alternatively, use `return` to exit the containing function.
 
 The following code demonstrates two uses of the `select` statement.
 One works with channels that are sent a finite number of values.
-The other works with channels that are sent infinite numbers of values.
+The other works with channels that are sent an infinite numbers of values.
 
 ```go
 package main
@@ -385,10 +388,10 @@ func finite() {
   }
 }
 
-// numbers sends a sequence of int values to a given channel.
+// numbers sends an infinite sequence of int values to a given channel.
 // It starts at and increments by given int values.
 // It sleeps for a given number of seconds before sending each value.
-func numbers(c chan int, start int, delta int, sleep int) {
+func numbers(c chan int, start, delta, sleep int) {
   n := start
   for {
     time.Sleep(time.Duration(sleep) * time.Second)
@@ -424,7 +427,11 @@ loop:
 
 func main() {
   finite()
-  infinite() // doesn't start until finite finishes
+
+  // The next line isn't executed until the "finite" function finishes
+  // because the select statement in "finite" blocks
+  // and it runs in the main goroutine.
+  infinite()
 }
 ```
 
@@ -443,10 +450,10 @@ Often mutexes are held in the field of a struct
 that requires exclusive access.
 
 To lock a mutex, call the `Lock` method.
-For example. `myMutex.Lock`.
+For example. `myMutex.Lock()`.
 
 To unlock a mutex, call the Unlock method.
-For example, `myMutex.Unlock`.
+For example, `myMutex.Unlock()`.
 
 A `WaitGroup` can be used to wait for multiple goroutines to complete.
 To create a `WaitGroup`, declare a variable of type `sync.WaitGroup`.
@@ -459,7 +466,7 @@ To mark a `WaitGroup` item as done, `wg.Done()`.
 
 To wait for all items in a WaitGroup to be done, call `wg.Wait()`.
 
-For example,
+For example:
 
 ```go
 package main
@@ -471,8 +478,10 @@ import (
   "time"
 )
 
-var mutex sync.Mutex
+// We need to prevent concurrent access to this slice.
 var slice = make([]string, 0)
+
+var mutex sync.Mutex
 var wg sync.WaitGroup
 
 // addString adds a given string to the slice
@@ -491,7 +500,7 @@ func addString(s string) {
   mutex.Unlock() // finished using the slice
 }
 
-// addString adds a string to the slice a given number of times.
+// addStrings adds a string to the slice a given number of times.
 func addStrings(s string, count int) {
   for n := 0; n < count; n++ {
     addString(s)
@@ -500,6 +509,10 @@ func addStrings(s string, count int) {
 }
 
 func main() {
+  //TODO: Why is the result not random?
+  // Seed random number generation based on the current time.
+  rand.Seed(int64(time.Now().Nanosecond()))
+
   wg.Add(2) // we will create two new goroutines
   go addStrings("X", 5) // starts first goroutine
   go addStrings("O", 3) // starts second goroutine
