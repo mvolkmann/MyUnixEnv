@@ -431,7 +431,7 @@ each of which is described in more detail later:
 - `import` - imports all exported symbols in given packages
 - `interface` - defines a set of methods;
   typically used to define a type with which all implementing types are compatible
-- `map` - collection of key/value pairs where keys and values can have any type specified type
+- `map` - collection of key/value pairs where keys and values can have any specified type
 - `package` - specifies the package to which the current source file belongs
 - `range` - used in a `for` loop to iterate over a
   string, array, slice, map, or receiving channel
@@ -447,7 +447,7 @@ each of which is described in more detail later:
 There are additional "predeclared names" that are not reserved,
 but using them in other contexts could be confusing.
 These include the names of primitive types (such as `int` and `string`),
-the names of builtin functions (such as `append`, `delete`, `make`, and `range`),
+the names of built-in functions (such as `append`, `delete`, `make`, and `range`),
 and constants (`true`, `false`, `iota`, and `nil`).
 
 ### Pointers
@@ -477,7 +477,7 @@ To modify the value at a pointer, `*myPtr = newValue`.
 
 Pointer arithmetic, as seen in C and C++, is not supported in Go.
 This avoids memory safety issues and
-simplifies the builtin garbage collector.
+simplifies the built-in garbage collector.
 
 Function parameters are passed by value, so
 passing a pointer to a variable is required
@@ -491,7 +491,7 @@ The primary Go implementation makes some choices
 based on the fact that allocating on the stack is
 generally faster than allocating on the heap.
 
-The builtin `new` function always allocates on the heap.
+The built-in `new` function always allocates on the heap.
 
 Variables declared in functions are typically allocated on the stack
 unless access to them escapes from the function
@@ -703,6 +703,15 @@ and characters escaped with backslashes
 This makes them ideal for writing regular expressions
 and HTML templates which sometimes contain backslashes.
 
+The following two strings are equal:
+```go
+message1 := `Hello
+World!
+This is a
+Go program.`
+message2 := "Hello\nWorld!\nThis is a\nGo program."
+```
+
 An example of declaring and initializing a string
 inside a function is `name := "Mark"`.
 
@@ -875,7 +884,7 @@ because changes to the field order will break these initializations.
 For example:
 
 ```go
-p2 := person{"Mark", 57}
+p2 := Person{"Mark", 57}
 ```
 
 Uninitialized fields are initialized to their zero value.
@@ -911,7 +920,7 @@ func StructFieldValue(aStruct interface{}, fieldName string) reflect.Value {
 ```
 
 The type `reflect.Value` has many methods for obtaining
-the value as a specific builtin type. For example:
+the value as a specific built-in type. For example:
 
 ```go
   // address is struct that describes a mailing address.
@@ -990,7 +999,7 @@ type Person struct {
 
 me := Person{
   Name: "Mark Volkmann",
-  Address: address{
+  Address: Address{
     Street: "123 Some Street",
     City:   "St. Charles",
     State:  "MO",
@@ -1010,9 +1019,9 @@ can be accessed by either using the struct name or omitting it.
 For example,
 
 ```go
-fmt.Println("home city is", me.address.city) // St. Charles
-fmt.Println("home city is", me.city) // same
-fmt.Println("work city is", me.workAddress.city) // Creve Coeur; cannot omit workAddress.
+fmt.Println("home city is", me.Address.City) // St. Charles
+fmt.Println("home city is", me.City) // same
+fmt.Println("work city is", me.WorkAddress.City) // Creve Coeur; cannot omit workAddress.
 ```
 
 Methods are described later.
@@ -1792,7 +1801,7 @@ that is not yet associated with an array.
 There are three ways to create a slice.
 
 1. using a "slice literal"
-2. using the builtin `make` function
+2. using the built-in `make` function
 3. basing on an existing array
 
 The most common way to create a slice is with a slice literal
@@ -1836,7 +1845,7 @@ Modifying elements of a slice modifies the underlying array.
 
 Multiple slices on the same array see the same data.
 
-The builtin `append` function takes a slice
+The built-in `append` function takes a slice
 and returns a new slice containing additional elements.
 For example, `mySlice = append(mySlice, 8, 10)`
 appends the values 8 and 10.
@@ -1977,7 +1986,7 @@ For example,
 or using the named type above,
 `scoreMap := PlayerScoreMap{"Mark": 90, "Tami": 92}`.
 
-Another way to create a map is to use the builtin `make` function.
+Another way to create a map is to use the built-in `make` function.
 For example, `scoreMap := make(map[string]int)`
 or `scoreMap := make(PlayerScoreMap)`.
 
@@ -2039,7 +2048,7 @@ These will be described in the Concurrency article later in the series.
 
 ### Sets
 
-Go does not have a builtin data structure for representing sets
+Go does not have a built-in data structure for representing sets
 which are unordered collections of unique values.
 However, a `Map` that uses `bool` values or
 empty structs for values can be used for this purpose.
@@ -2628,7 +2637,7 @@ an additional return value of type `error`
 that callers should check.
 When there is no error, this return value is `nil`.
 
-The type `error` is a builtin interface with a
+The type `error` is a built-in interface with a
 single method `Error` that takes no arguments and
 returns a `string` description of the error.
 
@@ -2748,7 +2757,7 @@ Before exiting, the panic proceeds up the call stack
 and any deferred functions that have been queued
 by functions in the call stack are executed.
 
-The builtin `panic` function can be called
+The built-in `panic` function can be called
 to manually trigger a panic.
 Typically this should only be used when an error
 occurs that callers are not expected to handle.
@@ -2773,7 +2782,7 @@ or even prevent the application from exiting.
 For example, a web server could choose to never exit
 regardless of the errors that may occur.
 
-The builtin `recover` function can be called
+The built-in `recover` function can be called
 within a deferred function for either of these reasons.
 It returns the value passed to the `panic` function.
 
