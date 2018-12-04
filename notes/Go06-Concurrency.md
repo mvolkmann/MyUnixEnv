@@ -16,8 +16,8 @@ The third article in the series is available at
 It provides an overview of the Go Standard Library
 and provides details on some of its packages.
 
-Future articles will cover solutions to common tasks,
-reflection, modules, testing, and the future of Go.
+Future articles will cover reflection, solutions to common tasks,
+modules, testing, and the future of Go.
 
 ## Concurrency
 

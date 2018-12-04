@@ -1,3 +1,28 @@
+# Go For It! Part 5
+
+This article is the fifth in a multi-part series on the Go programming language.
+It provides details on reflection in Go.
+
+The first article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1>.
+It provides an overview of the language and a quick-start guide.
+
+The second article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-2>.
+It provides details on all the syntax in the Go language.
+
+The third article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-3>.
+It provides an overview of the Go Standard Library
+and provides details on some of its packages.
+
+The fourth article in the series is available at
+<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-4>.
+It provides details on the use of reflection in Go.
+
+Future articles will cover solutions to common tasks,
+modules, testing, and the future of Go.
+
 ## Reflection
 
 The standard library package `reflect` provides run-time reflection
@@ -8,7 +33,7 @@ This returns a `Type` object that has many methods.
 
 The `Type` method `Name` returns the type as a string.
 The `Type` method `Kind` returns the type as an
-enumerated value of type `reflect.Kind`.  For example,
+enumerated value of type `reflect.Kind`. For example,
 
 ```go
 package main
@@ -270,4 +295,3 @@ func Reduce(slice interface{}, fn interface{}, initial interface{}) interface{} 
   return result.Interface()
 }
 ```
-

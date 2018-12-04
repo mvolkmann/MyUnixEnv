@@ -2,8 +2,8 @@
 
 This article is the first in a multi-part series on the Go programming language.
 It provides an overview of the language and a quick start guide.
-Future articles will cover Go syntax in depth, builtins,
-tooling, concurrency, solutions to common tasks, reflection,
+Future articles will cover Go syntax in depth, the standard library,
+concurrency, reflection, solutions to common tasks,
 modules, testing, and the future of Go.
 
 ## Overview

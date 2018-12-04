@@ -11,8 +11,8 @@ The second article in the series is available at
 <https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-2>.
 It provides details on all the syntax in the Go language.
 
-Future articles will cover concurrency, solutions to common tasks,
-reflection, modules, testing, and the future of Go.
+Future articles will cover concurrency, reflection,
+solutions to common tasks, modules, testing, and the future of Go.
 
 ## Standard Library
 
