@@ -695,25 +695,25 @@ Examples of these appear later.
 
 Go strings are immutable sequences of bytes representing UTF-8 characters.
 Literal values are delimited with double quotes or back-ticks.
-When back-ticks are used, they are called "raw string literals".
 
-Raw string literals can include newline characters
+An example of declaring and initializing a string
+inside a function is `name := "Mark"`.
+
+When back-ticks are used, they are called "raw string literals".
+These can include newline characters
 and characters escaped with backslashes
 (such as \n for newline and \t for tab) are not processed.
 This makes them ideal for writing regular expressions
 and HTML templates which sometimes contain backslashes.
 
 The following two strings are equal:
+
 ```go
-message1 := `Hello
-World!
+message1 := `Hello World!
 This is a
 Go program.`
-message2 := "Hello\nWorld!\nThis is a\nGo program."
+message2 := "Hello World!\nThis is a\nGo program."
 ```
-
-An example of declaring and initializing a string
-inside a function is `name := "Mark"`.
 
 To get the length of a string in bytes, use the `len` function.
 For example, `len(name)` returns `4`.
