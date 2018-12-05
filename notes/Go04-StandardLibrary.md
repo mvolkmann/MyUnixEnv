@@ -561,7 +561,7 @@ The `Reader` interface has a single method `Read`.
 This reads from an underlying data stream,
 populates a byte slice, and
 returns the number of bytes read or an error.
-For example, the error is io.EOF
+For example, the error is `io.EOF`
 if the end of a stream is reached.
 
 There are many implementations of this interface in the standard library,

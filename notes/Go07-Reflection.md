@@ -25,7 +25,7 @@ modules, testing, and the future of Go.
 
 ## Reflection
 
-### Reflection Basics
+### Basics
 
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
@@ -76,6 +76,56 @@ The `PkgPath` method returns the import path for the type.
 
 The `Implements` method returns a boolean indicating
 whether the type implements a given interface type.
+
+For example:
+
+```go
+package main
+
+import (
+  "container/list"
+  "fmt"
+  "reflect"
+)
+
+type Shape interface {
+  Area() float64
+  Name() string
+}
+
+type Rectangle struct {
+  width, height float64
+}
+
+func (r Rectangle) Area() float64 {
+  return r.width * r.height
+}
+func (r Rectangle) Name() string {
+  return "rectangle"
+}
+func (r Rectangle) String() string {
+  return fmt.Sprintf("rectangle %f by %f", r.width, r.height)
+}
+
+func main() {
+  rect := Rectangle{width: 10, height: 20} // custom type defined here
+  typ := reflect.TypeOf(rect)
+  fmt.Println(typ.Name())    // Rectangle
+  fmt.Println(typ.Kind())    // struct
+  fmt.Println(typ.PkgPath()) // main
+
+  myListPtr := list.New() // type in standard library
+  ptrType := reflect.TypeOf(myListPtr)
+  elemType := ptrType.Elem() // type to which the pointer points
+  fmt.Println("name of myList type is", elemType.Name())
+  fmt.Println("path of myList type is", elemType.PkgPath())
+
+  shapeType := reflect.TypeOf(new(Shape)).Elem()
+  fmt.Println("Is a Shape?", typ.Implements(shapeType))
+  stringerType := reflect.TypeOf(new(Shape)).Elem()
+  fmt.Println("Is a Stringer?", typ.Implements(stringerType))
+}
+```
 
 ### Type Methods For Function Types
 
