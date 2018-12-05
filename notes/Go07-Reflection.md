@@ -25,10 +25,14 @@ modules, testing, and the future of Go.
 
 ## Reflection
 
-### Basics
-
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
+
+Use of reflection should be avoided when possible.
+From Rob Pike, "Clear is better than clever. Reflection is never clear."
+However, sometimes reflection is necessary.
+
+### Types
 
 To get the type of an expression, call `reflect.TypeOf(expression)`.
 This returns a `Type` object that has many methods,
@@ -120,6 +124,7 @@ func main() {
   fmt.Println("name of myList type is", elemType.Name())
   fmt.Println("path of myList type is", elemType.PkgPath())
 
+  // Note approach to get a reflect.Type for an interface.
   shapeType := reflect.TypeOf((*Shape)(nil)).Elem()
   fmt.Println("Is a Shape?", typ.Implements(shapeType))
   stringerType := reflect.TypeOf(new(Shape)).Elem()
@@ -127,11 +132,41 @@ func main() {
 }
 ```
 
+### Values
+
 To get the value of an expression, call `reflect.ValueOf(expression)`.
 This returns a `Value` object that has many methods,
 some of which are described below.
 
-TODO: List some of these and provide examples.
+Methods that extract the actual value from a `Value` object include:
+
+- `Bool` returns a `bool`
+- `Bytes` returns a `byte` slice
+- `Cap` returns the capacity of a slice, array, or `chan` value
+- `Complex` returns a `complex128`
+- `Float` returns a `float64`
+- `Int` returns a `int64`
+- `IsNil` returns a `bool` that indicates whether the underlying value is nil
+- `Len` returns the length of a `string`, slice, array, `map`, or `chan` value
+- `Pointer` returns a `uintptr`
+- `String` returns a `string`
+- `Uint` returns a `uint64`
+
+Methods that set the actual value in a `Value` object include:
+
+- `Set` takes a `Value`
+- `SetBool` takes a `bool`
+- `SetBytes` takes a `byte` slice
+- `SetCap` takes an `int` and sets the capacity of a slice
+- `SetComplex` takes a `complex128` slice
+- `SetFloat` takes a `float64` slice
+- `SetInt` takes a `int64` slice
+- `SetLen` takes an `int` and sets the length of a slice
+- `SetMapIndex` takes two `Value` objects representing a key and its value
+- `SetString` takes a `string`
+- `SetUint` takes a `uint64`
+
+TODO: List more of these and provide examples.
 
 ### Type Methods For Function Types
 
