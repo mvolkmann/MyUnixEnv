@@ -120,12 +120,18 @@ func main() {
   fmt.Println("name of myList type is", elemType.Name())
   fmt.Println("path of myList type is", elemType.PkgPath())
 
-  shapeType := reflect.TypeOf(new(Shape)).Elem()
+  shapeType := reflect.TypeOf((*Shape)(nil)).Elem()
   fmt.Println("Is a Shape?", typ.Implements(shapeType))
   stringerType := reflect.TypeOf(new(Shape)).Elem()
   fmt.Println("Is a Stringer?", typ.Implements(stringerType))
 }
 ```
+
+To get the value of an expression, call `reflect.ValueOf(expression)`.
+This returns a `Value` object that has many methods,
+some of which are described below.
+
+TODO: List some of these and provide examples.
 
 ### Type Methods For Function Types
 
@@ -141,6 +147,33 @@ The `NumOut` method returns the number of return types in the function.
 
 The `Out` method returns a `Type` object
 describing the return type at a given index.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "reflect"
+  "strings"
+)
+
+func main() {
+  typ := reflect.TypeOf(strings.Repeat)
+  fmt.Println(typ.NumIn())       // 2
+  fmt.Println(typ.In(0).Name())  // string (s parameter)
+  fmt.Println(typ.In(1).Name())  // int (count parameter)
+  fmt.Println(typ.NumOut())      // 1
+  fmt.Println(typ.Out(0).Name()) // string
+
+  // Call the function from a reflect.Value.
+  val := reflect.ValueOf(strings.Repeat)
+  in := []reflect.Value{reflect.ValueOf("Foo"), reflect.ValueOf(2)}
+  out := val.Call(in)
+  fmt.Println(out[0])
+}
+```
 
 ### Type Methods For Struct Types
 
