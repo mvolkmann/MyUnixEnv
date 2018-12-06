@@ -1154,6 +1154,7 @@ If they are in an array, first create a slice over it.
 For example, `log(myArr[:]...)`.
 
 BEGIN TODO
+
 Mark, maybe you can tell me I'm missing something silly here...
 
 
