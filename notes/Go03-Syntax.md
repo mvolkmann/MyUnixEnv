@@ -1154,22 +1154,30 @@ If they are in an array, first create a slice over it.
 For example, `log(myArr[:]...)`.
 
 BEGIN TODO
+Mark, maybe you can tell me I'm missing something silly here...
+
 
 `log(myArr[:]...)` won't work unless myArr is defined
-as an array of interfaces. Same for a slice. I had to start with either
+as an array of interfaces{}. Same for a slice. I had to start with either
+
 `var myArr[3]interface{}` to get `log(myArr[:]...)` to work
 
 Or
+
 `mySlice := []interface{}{"red", 7, true}` to get `log(mySlice...)` to work.
 
-The example read to me as any array or slice would could be used with the 
+The example read to me as any array or slice could be used with the 
 ellipsis when calling log (as defined in the example). But my initial arrays 
 and slices were typed as string and didn't work. I'm not sure I have a great 
 suggestion on this (yet). Still have a lot to learn about Go and it took me 
 a bit to figure out the error was with regard to a mismatch of the typed 
 array or slice when an interface{} was required?  It's weird because the 
 ellipsis doesn't seem to be applied before the function call (as I expected, 
-may you did too with your example). 
+may you did too with your example?). 
+
+The above is at least what I *think* is happening, but I may well be missing
+something. Please let me know if my assessment above is off or you have a
+better explanation.
 
 Didn't get far tonight on the review, but I definitely learned something.
 
