@@ -1097,7 +1097,7 @@ pass and accept pointers.
 
 Function parameters are local variables inside the function.
 
-Functions cannot be overload based on their parameter types
+Functions cannot be overloaded based on their parameter types
 in order to create different implementations.
 
 When consecutive parameters have the same type,
@@ -1152,6 +1152,30 @@ follow the variable name with an ellipsis
 to pass the values as separate arguments.
 If they are in an array, first create a slice over it.
 For example, `log(myArr[:]...)`.
+
+BEGIN TODO
+
+`log(myArr[:]...)` won't work unless myArr is defined
+as an array of interfaces. Same for a slice. I had to start with either
+`var myArr[3]interface{}` to get `log(myArr[:]...)` to work
+
+Or
+`mySlice := []interface{}{"red", 7, true}` to get `log(mySlice...)` to work.
+
+The example read to me as any array or slice would could be used with the 
+ellipsis when calling log (as defined in the example). But my initial arrays 
+and slices were typed as string and didn't work. I'm not sure I have a great 
+suggestion on this (yet). Still have a lot to learn about Go and it took me 
+a bit to figure out the error was with regard to a mismatch of the typed 
+array or slice when an interface{} was required?  It's weird because the 
+ellipsis doesn't seem to be applied before the function call (as I expected, 
+may you did too with your example). 
+
+Didn't get far tonight on the review, but I definitely learned something.
+
+END TODO
+
+`var myArr[3]interface{}` to get `log(myArr[:]...)` to work.
 
 #### Function Return Values
 
