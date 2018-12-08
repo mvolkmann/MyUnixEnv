@@ -23,6 +23,7 @@ ln -s MyUnixEnv/.vim .vim
 ln -s MyUnixEnv/.vimrc .vimrc
 ln -s MyUnixEnv/.vintrc.yaml .vintrc.yaml
 ln -s MyUnixEnv/mytmux mytmux
+ln -s MyUnixEnv/tslint.json tslint.json
 
 mkdir -p bin
 cp MyUnixEnv/bin/* bin
