@@ -1151,7 +1151,20 @@ are already in a variable that holds a slice,
 follow the variable name with an ellipsis
 to pass the values as separate arguments.
 If they are in an array, first create a slice over it.
-For example, `log(myArr[:]...)`.
+For example, the following can be added
+to the end of the `main` function above:
+
+```go
+  // This must match the parameter type of the log function
+  // rather than be a slice of strings.
+  args := []interface{}{"Mark", "yellow", "orange"}
+  log(args...)
+
+  args2 := []string{"Mark", "yellow", "orange"}
+  // The initial arguments to report before the variadic one
+  // must be passed separately.
+  report("foo", args2...)
+```
 
 #### Function Return Values
 
