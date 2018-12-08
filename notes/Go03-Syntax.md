@@ -1157,13 +1157,13 @@ to the end of the `main` function above:
 ```go
   // This must match the parameter type of the log function
   // rather than be a slice of strings.
-  args := []interface{}{"Mark", "yellow", "orange"}
+  args := []interface{}{"red", 7, true}
   log(args...)
 
-  args2 := []string{"Mark", "yellow", "orange"}
-  // The initial arguments to report before the variadic one
+  // The initial arguments before the variadic one
   // must be passed separately.
-  report("foo", args2...)
+  colors := []string{"yellow", "orange"}
+  report("Mark", colors...)
 ```
 
 #### Function Return Values
