@@ -1097,7 +1097,7 @@ pass and accept pointers.
 
 Function parameters are local variables inside the function.
 
-Functions cannot be overload based on their parameter types
+Functions cannot be overloaded based on their parameter types
 in order to create different implementations.
 
 When consecutive parameters have the same type,

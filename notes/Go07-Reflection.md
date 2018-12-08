@@ -166,6 +166,18 @@ Methods that set the actual value in a `Value` object include:
 - `SetString` takes a `string`
 - `SetUint` takes a `uint64`
 
+To determine if a `Value` can be set, call the `myValue.CanSet()`
+which returns a bool.
+
+For example:
+
+```go
+// Need an example where the Value method CanSet doesn't return false!
+// The underlying value must be "addressable"!
+For an operand x of type T, the address operation &x generates a pointer of type *T to x. The operand must be addressable, that is, either a variable, pointer indirection, or slice indexing operation; or a field selector of an addressable struct operand; or an array indexing operation of an addressable array. As an exception to the addressability requirement, x may also be a (possibly parenthesized) composite literal
+
+```
+
 TODO: List more of these and provide examples.
 
 ### Type Methods For Function Types
