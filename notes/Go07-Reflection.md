@@ -182,7 +182,7 @@ TODO: List more of these and provide examples.
 
 ### Type Methods For Function Types
 
-For function types, it is possible to iterate
+For a function type, it is possible to iterate
 over its parameters and return types.
 
 The `NumIn` method returns the number of parameters in the function.
@@ -224,12 +224,89 @@ func main() {
 
 ### Type Methods For Struct Types
 
-For struct types, it is possible to iterate over its fields.
+For a struct type, it is possible to iterate over its fields.
 
 The `NumField` method returns the number of fields in the struct.
 
 The `FieldByIndex` method returns a `StructField` object
 describing the field at a given index.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "reflect"
+)
+
+type Address struct {
+  Street string
+  City   string
+  State  string
+  Zip    int
+  Home   bool
+}
+
+// DumpStruct prints information about each field in a given struct.
+// It must be passed a pointer to a struct.
+func DumpStruct(structPtr interface{}) {
+  value := reflect.ValueOf(structPtr)
+  if value.Kind() != reflect.Ptr {
+    log.Fatal("dumpStruct requires a pointer")
+  }
+
+  elem := value.Elem()
+  if elem.Kind() != reflect.Struct {
+    log.Fatal("dumpStruct requires a struct pointer")
+  }
+
+  elemType := elem.Type()
+
+  for i := 0; i < elem.NumField(); i++ {
+    field := elemType.Field(i)
+    fieldValue := elem.Field(i).Interface()
+    fmt.Printf("%s = %v (%s)\n", field.Name, fieldValue, field.Type)
+  }
+
+}
+
+// GetField returns a reflect.Value for a given struct field.
+// It must be passed a pointer to a struct.
+func GetField(structPtr interface{}, fieldName string) reflect.Value {
+  elem := reflect.ValueOf(structPtr).Elem()
+  return elem.FieldByName(fieldName)
+}
+
+// SetField sets a given field in a struct.
+// It must be passed a pointer to a struct.
+// If the value type passed does not match the field type, this will panic.
+func SetField(structPtr interface{}, fieldName string, value interface{}) {
+  elem := reflect.ValueOf(structPtr).Elem()
+  field := elem.FieldByName(fieldName)
+  field.Set(reflect.ValueOf(value))
+}
+
+func main() {
+  address := Address{"123 Some Street", "Some Town", "MO", 12345, true}
+  addressPtr := &address
+  DumpStruct(addressPtr)
+
+  SetField(addressPtr, "State", "IL")
+  SetField(addressPtr, "Zip", 98765)
+  SetField(addressPtr, "Home", false)
+  fmt.Println(address)
+
+  value := GetField(addressPtr, "State").String()
+  fmt.Println("State =", value) // IL - a string
+
+  //s := "not a struct"
+  //dumpStruct(s) // dumpStruct requires a pointer
+  //dumpStruct(&s) // dumpStruct requires a struct pointer
+}
+```
 
 ### Type Methods For Interface Types
 
