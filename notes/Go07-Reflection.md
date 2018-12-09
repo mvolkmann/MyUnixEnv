@@ -231,6 +231,8 @@ The `NumField` method returns the number of fields in the struct.
 The `FieldByIndex` method returns a `StructField` object
 describing the field at a given index.
 
+TODO: Fix list of methods covered above based on code example below.
+
 For example:
 
 ```go
@@ -250,32 +252,30 @@ type Address struct {
   Home   bool
 }
 
+func verifyStructPtr(fnName string, val interface{}) {
+  value := reflect.ValueOf(val)
+  if value.Kind() != reflect.Ptr || value.Elem().Kind() != reflect.Struct {
+    log.Fatalf("%s requires a struct pointer\n", fnName)
+  }
+}
+
 // DumpStruct prints information about each field in a given struct.
 // It must be passed a pointer to a struct.
 func DumpStruct(structPtr interface{}) {
-  value := reflect.ValueOf(structPtr)
-  if value.Kind() != reflect.Ptr {
-    log.Fatal("dumpStruct requires a pointer")
-  }
-
-  elem := value.Elem()
-  if elem.Kind() != reflect.Struct {
-    log.Fatal("dumpStruct requires a struct pointer")
-  }
-
+  verifyStructPtr("DumpStruct", structPtr)
+  elem := reflect.ValueOf(structPtr).Elem()
   elemType := elem.Type()
-
   for i := 0; i < elem.NumField(); i++ {
     field := elemType.Field(i)
     fieldValue := elem.Field(i).Interface()
     fmt.Printf("%s = %v (%s)\n", field.Name, fieldValue, field.Type)
   }
-
 }
 
 // GetField returns a reflect.Value for a given struct field.
 // It must be passed a pointer to a struct.
 func GetField(structPtr interface{}, fieldName string) reflect.Value {
+  verifyStructPtr("GetField", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
   return elem.FieldByName(fieldName)
 }
@@ -284,6 +284,7 @@ func GetField(structPtr interface{}, fieldName string) reflect.Value {
 // It must be passed a pointer to a struct.
 // If the value type passed does not match the field type, this will panic.
 func SetField(structPtr interface{}, fieldName string, value interface{}) {
+  verifyStructPtr("SetField", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
   field := elem.FieldByName(fieldName)
   field.Set(reflect.ValueOf(value))
@@ -303,8 +304,8 @@ func main() {
   fmt.Println("State =", value) // IL - a string
 
   //s := "not a struct"
-  //dumpStruct(s) // dumpStruct requires a pointer
-  //dumpStruct(&s) // dumpStruct requires a struct pointer
+  //DumpStruct(s)
+  //DumpStruct(&s) // dumpStruct requires a struct pointer
 }
 ```
 
