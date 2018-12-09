@@ -32,6 +32,10 @@ Use of reflection should be avoided when possible.
 From Rob Pike, "Clear is better than clever. Reflection is never clear."
 However, sometimes reflection is necessary.
 
+Reflection is not used frequently in Go,
+so it is difficult to memorize the reflection API.
+This article will provide a quick refresher.
+
 ### Types
 
 To get the type of an expression, call `reflect.TypeOf(expression)`.
@@ -50,9 +54,7 @@ import (
   "reflect"
 )
 
-type any interface{}
-
-func whatAmI(value any) {
+func whatAmI(value interface{}) {
   kind := reflect.TypeOf(value).Kind()
   switch kind {
   case reflect.Array:
@@ -306,6 +308,7 @@ func VerifyStructPtr(fnName string, val interface{}) {
 
 // DumpStruct prints information about each field in a given struct.
 // It must be passed a pointer to a struct.
+// Note that the type of this parameter cannot be *interface{}.
 func DumpStruct(structPtr interface{}) {
   VerifyStructPtr("DumpStruct", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
@@ -366,6 +369,8 @@ The `NumMethod` method returns the number of methods in the interface.
 The `Method` method returns a `Method` object
 describing the method at a given index.
 
+TODO: Add an example similar to those for func and struct types.
+
 ### Type Methods For Map Types
 
 For map types, it is possible to obtain the key and value types.
@@ -376,6 +381,8 @@ The `Elem` method returns a `Type` object describing the value type.
 This method can also be used to get the element type of an
 `Array`, `Chan`, pointer, or `Slice`.
 
+TODO: Add an example similar to the one for struct types.
+
 ### Type Methods For Arrays and Slices Types
 
 To get a `Value` for a slice, `reflect.Value(slice)`.
@@ -383,6 +390,8 @@ To get a `Value` for a slice, `reflect.Value(slice)`.
 To get the length, `value.Len()`
 
 To get the element at index i, `value.Index(i)`.
+
+TODO: Add an example similar to the one for struct types.
 
 There is much more to reflection in Go!
 

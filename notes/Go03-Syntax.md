@@ -910,6 +910,8 @@ whose name can be determined at runtime.
 
 ```go
 // StructFieldValue returns the value of a given field in a struct.
+// The type "interface{}" means that any type can be used.
+// See the "Empty Interface" section later.
 func StructFieldValue(aStruct interface{}, fieldName string) reflect.Value {
   value := reflect.ValueOf(aStruct)
   if value.Kind() != reflect.Struct {
@@ -2354,13 +2356,23 @@ var r io.Reader = Rectangle{width: 3, height: 4} // fails with "does not impleme
 
 An interface with no methods, referred to as
 the "empty interface", matches every type.
-This can be given a name such as "any"
-using `type any interface{}`.
+This includes pointers to specific types.
+It is written as `interface{}`.
 
 The empty interface enables writing functions
 with parameters that accept any type.
 The standard library package `fmt` defines many functions
 such as `Println` and `Printf` that do this.
+
+To make this more clear, we could define
+the type `any` with `type any interface{}`.
+However, `any` would be a distinct type,
+not just an alias for `interface{}`.
+So it's best to just use `interface{}`
+when any type should be accepted.
+
+To accept a pointer to any type, use `interface{}`,
+not `*interface{}`.
 
 Type assertions must be used to operate on these values.
 These are described in the next section.
@@ -2498,10 +2510,8 @@ type LinkedList struct {
   head *node
 }
 
-type any interface{}
-
 type node struct {
-  value any
+  value interface{}
   next  *node
 }
 
@@ -2516,7 +2526,7 @@ func (listPtr *LinkedList) IsEmpty() bool {
 }
 
 // Pop removes the first node and returns its value.
-func (listPtr *LinkedList) Pop() any {
+func (listPtr *LinkedList) Pop() interface{} {
   if listPtr.IsEmpty() {
     return nil
   }
@@ -2526,7 +2536,7 @@ func (listPtr *LinkedList) Pop() any {
 }
 
 // Push adds a node to the front.
-func (listPtr *LinkedList) Push(value any) {
+func (listPtr *LinkedList) Push(value interface{}) {
   node := node{value, listPtr.head}
   listPtr.head = &node
 }
