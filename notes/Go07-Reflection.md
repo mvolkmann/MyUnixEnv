@@ -202,23 +202,55 @@ package main
 
 import (
   "fmt"
+  "log"
   "reflect"
   "strings"
 )
 
-func main() {
-  typ := reflect.TypeOf(strings.Repeat)
-  fmt.Println(typ.NumIn())       // 2
-  fmt.Println(typ.In(0).Name())  // string (s parameter)
-  fmt.Println(typ.In(1).Name())  // int (count parameter)
-  fmt.Println(typ.NumOut())      // 1
-  fmt.Println(typ.Out(0).Name()) // string
+// VerifyFunc verifies that a given value is a function
+// and panics if it is not.
+func VerifyFunc(fnName string, fn interface{}) {
+  value := reflect.ValueOf(fn)
+  if value.Kind() != reflect.Func {
+    log.Fatalf("%s requires a func pointer\n", fnName)
+  }
+}
 
-  // Call the function from a reflect.Value.
-  val := reflect.ValueOf(strings.Repeat)
-  in := []reflect.Value{reflect.ValueOf("Foo"), reflect.ValueOf(2)}
-  out := val.Call(in)
-  fmt.Println(out[0])
+// DumpStruct prints information about each field in a given struct.
+// It must be passed a pointer to a struct.
+func DumpFunc(fn interface{}) {
+  verifyFunc("DumpFunc", fn)
+  funcType := reflect.ValueOf(fn).Type()
+  fmt.Println("signature is", funcType) // func(string, int) string
+  numIn := funcType.NumIn() // 2
+  for i := 0; i < numIn; i++ {
+    fmt.Printf("parameter type %d is %s\n", i+1, funcType.In(i).Name())
+  }
+  numOut := funcType.NumOut() // 1
+  for i := 0; i < numOut; i++ {
+    fmt.Printf("return type %d is %s\n", i+1, funcType.Out(i).Name())
+  }
+}
+
+// CallFunc calls a given function with given arguments
+// and returns a reflect.Value slice of results.
+func CallFunc(fn interface{}, args []interface{}) []reflect.Value {
+  verifyFunc("CallFunc", fn)
+  val := reflect.ValueOf(fn)
+  in := make([]reflect.Value, len(args))
+  for i, arg := range args {
+    in[i] = reflect.ValueOf(arg)
+  }
+  return val.Call(in)
+}
+
+func main() {
+  DumpFunc(strings.Repeat)
+
+  args := []interface{}{"Ho", 3}
+  out := CallFunc(strings.Repeat, args)
+  result := out[0].String()
+  fmt.Println("result =", result) // HoHoHo
 }
 ```
 
@@ -252,7 +284,9 @@ type Address struct {
   Home   bool
 }
 
-func verifyStructPtr(fnName string, val interface{}) {
+// VerifyStructPtr verifies that a given value is a struct pointer
+// and panics if it is not.
+func VerifyStructPtr(fnName string, val interface{}) {
   value := reflect.ValueOf(val)
   if value.Kind() != reflect.Ptr || value.Elem().Kind() != reflect.Struct {
     log.Fatalf("%s requires a struct pointer\n", fnName)
@@ -262,7 +296,7 @@ func verifyStructPtr(fnName string, val interface{}) {
 // DumpStruct prints information about each field in a given struct.
 // It must be passed a pointer to a struct.
 func DumpStruct(structPtr interface{}) {
-  verifyStructPtr("DumpStruct", structPtr)
+  VerifyStructPtr("DumpStruct", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
   elemType := elem.Type()
   for i := 0; i < elem.NumField(); i++ {
@@ -275,7 +309,7 @@ func DumpStruct(structPtr interface{}) {
 // GetField returns a reflect.Value for a given struct field.
 // It must be passed a pointer to a struct.
 func GetField(structPtr interface{}, fieldName string) reflect.Value {
-  verifyStructPtr("GetField", structPtr)
+  VerifyStructPtr("GetField", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
   return elem.FieldByName(fieldName)
 }
@@ -284,7 +318,7 @@ func GetField(structPtr interface{}, fieldName string) reflect.Value {
 // It must be passed a pointer to a struct.
 // If the value type passed does not match the field type, this will panic.
 func SetField(structPtr interface{}, fieldName string, value interface{}) {
-  verifyStructPtr("SetField", structPtr)
+  VerifyStructPtr("SetField", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
   field := elem.FieldByName(fieldName)
   field.Set(reflect.ValueOf(value))
