@@ -195,6 +195,10 @@ The `NumOut` method returns the number of return types in the function.
 The `Out` method returns a `Type` object
 describing the return type at a given index.
 
+The `Call` method calls a function
+with arguments specific in a `reflect.Value` slice
+and returns the return value in a `reflect.Value slice`.
+
 For example:
 
 ```go
@@ -212,14 +216,14 @@ import (
 func VerifyFunc(fnName string, fn interface{}) {
   value := reflect.ValueOf(fn)
   if value.Kind() != reflect.Func {
-    log.Fatalf("%s requires a func pointer\n", fnName)
+    log.Fatalf("%s requires a func\n", fnName)
   }
 }
 
 // DumpStruct prints information about each field in a given struct.
 // It must be passed a pointer to a struct.
 func DumpFunc(fn interface{}) {
-  verifyFunc("DumpFunc", fn)
+  VerifyFunc("DumpFunc", fn)
   funcType := reflect.ValueOf(fn).Type()
   fmt.Println("signature is", funcType) // func(string, int) string
   numIn := funcType.NumIn() // 2
@@ -235,7 +239,7 @@ func DumpFunc(fn interface{}) {
 // CallFunc calls a given function with given arguments
 // and returns a reflect.Value slice of results.
 func CallFunc(fn interface{}, args []interface{}) []reflect.Value {
-  verifyFunc("CallFunc", fn)
+  VerifyFunc("CallFunc", fn)
   val := reflect.ValueOf(fn)
   in := make([]reflect.Value, len(args))
   for i, arg := range args {
@@ -251,6 +255,10 @@ func main() {
   out := CallFunc(strings.Repeat, args)
   result := out[0].String()
   fmt.Println("result =", result) // HoHoHo
+
+  // This commented out line demonstrates handling of
+  // invalid values passed to DumpFunc.
+  //DumpFunc("not a function") // DumpFunc requires a func
 }
 ```
 
@@ -260,10 +268,13 @@ For a struct type, it is possible to iterate over its fields.
 
 The `NumField` method returns the number of fields in the struct.
 
-The `FieldByIndex` method returns a `StructField` object
+The `Field` method returns a `StructField` object
 describing the field at a given index.
 
-TODO: Fix list of methods covered above based on code example below.
+The `FieldByName` method returns a `StructField` object
+describing the field with a given name.
+
+The `Set` method sets a struct field to a given value.
 
 For example:
 
@@ -301,6 +312,7 @@ func DumpStruct(structPtr interface{}) {
   elemType := elem.Type()
   for i := 0; i < elem.NumField(); i++ {
     field := elemType.Field(i)
+    // Get the value of the field at index i as the generic interface{} type.
     fieldValue := elem.Field(i).Interface()
     fmt.Printf("%s = %v (%s)\n", field.Name, fieldValue, field.Type)
   }
@@ -337,8 +349,10 @@ func main() {
   value := GetField(addressPtr, "State").String()
   fmt.Println("State =", value) // IL - a string
 
+  // These commented out lines demonstrate handling of
+  // invalid values passed to DumpStruct.
   //s := "not a struct"
-  //DumpStruct(s)
+  //DumpStruct(s) // dumpStruct requires a struct pointer
   //DumpStruct(&s) // dumpStruct requires a struct pointer
 }
 ```
