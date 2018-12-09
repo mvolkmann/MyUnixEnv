@@ -355,8 +355,8 @@ func main() {
   // These commented out lines demonstrate handling of
   // invalid values passed to DumpStruct.
   //s := "not a struct"
-  //DumpStruct(s) // dumpStruct requires a struct pointer
-  //DumpStruct(&s) // dumpStruct requires a struct pointer
+  //DumpStruct(s) // DumpStruct requires a struct pointer
+  //DumpStruct(&s) // DumpStruct requires a struct pointer
 }
 ```
 
@@ -369,7 +369,54 @@ The `NumMethod` method returns the number of methods in the interface.
 The `Method` method returns a `Method` object
 describing the method at a given index.
 
-TODO: Add an example similar to those for func and struct types.
+For example:
+
+```go
+//TODO: This code doesn't work yet!
+package main
+
+import (
+	"fmt"
+	"log"
+	"reflect"
+)
+
+type Shape interface {
+	Area() float64
+	Rotate(angle float64)
+	Translate(x, y float64)
+}
+
+// VerifyInterface verifies that a given value is an interface
+// and panics if it is not.
+func VerifyInterface(fnName string, val interface{}) {
+	value := reflect.ValueOf(val)
+	if value.Kind() != reflect.Interface {
+		log.Fatalf("%s requires an interface\n", fnName)
+	}
+}
+
+// DumpInterface prints information about each method in a given interface.
+// It must be passed an interface.
+func DumpInterface(intf interface{}) {
+	VerifyInterface("DumpInterface", intf)
+	interfaceType := reflect.ValueOf(intf).Type()
+	for i := 0; i < interfaceType.NumMethod(); i++ {
+		method := interfaceType.Method(i)
+		fmt.Printf("%s\n", method.Name)
+	}
+}
+
+//TODO: Add function to call a method on a given object with arguments.
+
+func main() {
+	DumpInterface(Shape)
+
+	// This commented out line demonstrate handling of
+	// invalid values passed to DumpInterface.
+	//DumpInterface("not an interface") // DumpInterface requires an interface
+}
+```
 
 ### Type Methods For Map Types
 
@@ -381,7 +428,73 @@ The `Elem` method returns a `Type` object describing the value type.
 This method can also be used to get the element type of an
 `Array`, `Chan`, pointer, or `Slice`.
 
-TODO: Add an example similar to the one for struct types.
+The `MapIndex` method returns the value of a given map key.
+
+The `SetMapIndex` method sets the value of a given map key.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "reflect"
+)
+
+type PlayerScoreMap map[string]int
+
+// VerifyMap verifies that a given value is a struct pointer
+// and panics if it is not.
+func VerifyMap(fnName string, val interface{}) {
+  value := reflect.ValueOf(val)
+  if value.Kind() != reflect.Map {
+    log.Fatalf("%s requires a Map\n", fnName)
+  }
+}
+
+// DumpMap prints the contents of a given Map.
+// It must be passed a Map.
+func DumpMap(theMap interface{}) {
+  VerifyMap("DumpMap", theMap)
+  mapValue := reflect.ValueOf(theMap)
+  mapType := mapValue.Type()
+  keyType := mapType.Key()
+  valueType := mapType.Elem()
+  fmt.Printf("map with %s keys and %s values\n", keyType.Name(), valueType.Name())
+
+  for _, key := range mapValue.MapKeys() {
+    value := mapValue.MapIndex(key)
+    fmt.Printf("  %v = %v\n", key, value)
+  }
+}
+
+// SetMap sets the value of a given key in a map.
+// It must be passed a Map and the key and value
+// must have the correct types for the map.
+func SetMap(theMap interface{}, key interface{}, value interface{}) {
+  VerifyMap("SetMap", theMap)
+  m := reflect.ValueOf(theMap)
+  k := reflect.ValueOf(key)
+  v := reflect.ValueOf(value)
+  m.SetMapIndex(k, v)
+}
+
+func main() {
+  scoreMap := PlayerScoreMap{"Mark": 90, "Tami": 92}
+  scoreMap["Amanda"] = 83
+  scoreMap["Jeremy"] = 95
+
+  SetMap(scoreMap, "Mark", 96)
+
+  DumpMap(scoreMap)
+
+  // This commented out line demonstrate handling of
+  // invalid values passed to DumpInterface.
+  //DumpMap("not a map") // DumpMap requires a map
+}
+```
 
 ### Type Methods For Arrays and Slices Types
 
