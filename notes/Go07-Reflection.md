@@ -372,49 +372,44 @@ describing the method at a given index.
 For example:
 
 ```go
-//TODO: This code doesn't work yet!
 package main
 
 import (
-	"fmt"
-	"log"
-	"reflect"
+  "fmt"
+  "reflect"
 )
 
 type Shape interface {
-	Area() float64
-	Rotate(angle float64)
-	Translate(x, y float64)
+  Area() float64
+  Rotate(angle float64)
+  Translate(x, y float64)
 }
 
-// VerifyInterface verifies that a given value is an interface
-// and panics if it is not.
-func VerifyInterface(fnName string, val interface{}) {
-	value := reflect.ValueOf(val)
-	if value.Kind() != reflect.Interface {
-		log.Fatalf("%s requires an interface\n", fnName)
-	}
+func DumpMethod(method reflect.Method) {
+  methodType := method.Type
+  numIn := methodType.NumIn()
+  numOut := methodType.NumOut()
+  fmt.Printf("%s method takes %d arguments and returns %d values\n", method.Name, numIn, numOut)
+  for i := 0; i < numIn; i++ {
+    fmt.Printf("  parameter %d type is %s\n", i+1, methodType.In(i).Name())
+  }
+  for i := 0; i < numOut; i++ {
+    fmt.Printf("  return %d type is %s\n", i+1, methodType.Out(i).Name())
+  }
 }
 
-// DumpInterface prints information about each method in a given interface.
-// It must be passed an interface.
-func DumpInterface(intf interface{}) {
-	VerifyInterface("DumpInterface", intf)
-	interfaceType := reflect.ValueOf(intf).Type()
-	for i := 0; i < interfaceType.NumMethod(); i++ {
-		method := interfaceType.Method(i)
-		fmt.Printf("%s\n", method.Name)
-	}
+func DumpInterface(intfPtr interface{}) {
+  intfType := reflect.TypeOf(intfPtr).Elem() // returns a reflect.Type
+  fmt.Println("interface name is ", intfType.Name())
+  fmt.Println("method count is", intfType.NumMethod())
+  for i := 0; i < intfType.NumMethod(); i++ {
+    DumpMethod(intfType.Method(i))
+  }
 }
-
-//TODO: Add function to call a method on a given object with arguments.
 
 func main() {
-	DumpInterface(Shape)
-
-	// This commented out line demonstrate handling of
-	// invalid values passed to DumpInterface.
-	//DumpInterface("not an interface") // DumpInterface requires an interface
+  var intfPtr *Shape
+  DumpInterface(intfPtr)
 }
 ```
 
