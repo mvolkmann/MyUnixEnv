@@ -2364,6 +2364,9 @@ with parameters that accept any type.
 The standard library package `fmt` defines many functions
 such as `Println` and `Printf` that do this.
 
+Think of using the `interface{}` type as opting into runtime type checking
+which introduces more opportunities for panics to occur.
+
 To make this more clear, we could define
 the type `any` with `type any interface{}`.
 However, `any` would be a distinct type,

@@ -25,6 +25,12 @@ modules, testing, and the future of Go.
 
 ## Reflection
 
+Reflection supports the use of data whose type is not known until runtime.
+In Go this typically involves writing functions that take arguments
+or return values of type `interface{}` which can be any type.
+Think of using the `interface{}` type as opting into runtime type checking
+which introduces more opportunities for panics to occur.
+
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
 
@@ -34,7 +40,8 @@ However, sometimes reflection is necessary.
 
 Reflection is not used frequently in Go,
 so it is difficult to memorize the reflection API.
-This article will provide a quick refresher.
+This article will provide a quick refresher for those times
+when reflection is needed, but you haven't used it recently.
 
 ### Types
 
@@ -144,15 +151,20 @@ Methods that extract the actual value from a `Value` object include:
 
 - `Bool` returns a `bool`
 - `Bytes` returns a `byte` slice
-- `Cap` returns the capacity of a slice, array, or `chan` value
 - `Complex` returns a `complex128`
 - `Float` returns a `float64`
 - `Int` returns a `int64`
-- `IsNil` returns a `bool` that indicates whether the underlying value is nil
-- `Len` returns the length of a `string`, slice, array, `map`, or `chan` value
 - `Pointer` returns a `uintptr`
 - `String` returns a `string`
 - `Uint` returns a `uint64`
+- `Interface` returns an `interface{}` which can represent any type
+
+Methods that return specific characteristics of
+the actual value in a `Value` object include:
+
+- `IsNil` returns a `bool` that indicates whether the underlying value is nil
+- `Cap` returns the capacity of a slice, array, or `chan` value
+- `Len` returns the length of a `string`, slice, array, `map`, or `chan` value
 
 Methods that set the actual value in a `Value` object include:
 
@@ -170,17 +182,20 @@ Methods that set the actual value in a `Value` object include:
 
 To determine if a `Value` can be set, call the `myValue.CanSet()`
 which returns a bool.
+This requires the `Value` to be addressable.
 
+REWORD THIS!
+For an operand x of type T, the address operation &x generates a pointer of type \*T to x. The operand must be addressable, that is, either a variable, pointer indirection, or slice indexing operation; or a field selector of an addressable struct operand; or an array indexing operation of an addressable array. As an exception to the addressability requirement, x may also be a (possibly parenthesized) composite literal
 For example:
 
 ```go
 // Need an example where the Value method CanSet doesn't return false!
 // The underlying value must be "addressable"!
-For an operand x of type T, the address operation &x generates a pointer of type *T to x. The operand must be addressable, that is, either a variable, pointer indirection, or slice indexing operation; or a field selector of an addressable struct operand; or an array indexing operation of an addressable array. As an exception to the addressability requirement, x may also be a (possibly parenthesized) composite literal
-
 ```
 
-TODO: List more of these and provide examples.
+The following sections describe using reflection with specific underlying types.
+
+TODO: List more methods and provide examples?
 
 ### Struct Reflection
 
@@ -226,7 +241,7 @@ func VerifyStructPtr(fnName string, val interface{}) {
 
 // DumpStruct prints information about each field in a given struct.
 // It must be passed a pointer to a struct.
-// Note that the type of this parameter cannot be *interface{}.
+// Note that the type of this parameter cannot be a pointer to an interface{}.
 func DumpStruct(structPtr interface{}) {
   VerifyStructPtr("DumpStruct", structPtr)
   elem := reflect.ValueOf(structPtr).Elem()
@@ -278,9 +293,13 @@ func main() {
 }
 ```
 
-### Array and Slice Reflection
+### Array, Slice, and String Reflection
 
-To get a `Value` for a slice, `reflect.Value(slice)`.
+The array, slice, and string types all represent values that are "indexable".
+This means they hold values that can be retrieved and set by an index number.
+Reflection treats these types in a similar manner.
+
+To get a `Value` for an indexable value, `value := reflect.Value(indexable)`.
 
 To get the length, `value.Len()`
 
@@ -289,7 +308,7 @@ To get the element at index i, `value.Index(i)`.
 To set the element at index i, get the element at the index
 and call `value.Set(newValue)`.
 
-TODO: Add array examples below!
+For example:
 
 ```go
 package main
@@ -308,21 +327,25 @@ type Address struct {
   Home   bool
 }
 
-// VerifySlicePtr verifies that a given value is a slice pointer
+// VerifyIndexablePtr verifies that a given value is a slice, array, or string pointer
 // and panics if it is not.
-func VerifySlicePtr(fnName string, val interface{}) {
+func VerifyIndexablePtr(fnName string, val interface{}) {
   value := reflect.ValueOf(val)
-  if value.Kind() != reflect.Ptr || value.Elem().Kind() != reflect.Slice {
-    log.Fatalf("%s requires a slice pointer\n", fnName)
+  msg := "%s requires a slice, array, or string pointer\n"
+  if value.Kind() != reflect.Ptr {
+    log.Fatalf(msg, fnName)
+  }
+  kind := value.Elem().Kind()
+  if kind != reflect.Slice && kind != reflect.Array && kind != reflect.String {
+    log.Fatalf(msg, fnName)
   }
 }
 
-// DumpSlice prints information about each field in a given struct.
-// It must be passed a pointer to a struct.
-// Note that the type of this parameter cannot be *interface{}.
-func DumpSlice(slicePtr interface{}) {
-  VerifySlicePtr("DumpSlice", slicePtr)
-  elem := reflect.ValueOf(slicePtr).Elem()
+// DumpIndexable prints information about a slice, array, or string.
+// It must be passed a pointer to a slice, array, or string.
+func DumpIndexable(valuePtr interface{}) {
+  VerifyIndexablePtr("DumpIndexable", valuePtr)
+  elem := reflect.ValueOf(valuePtr).Elem()
   len := elem.Len()
   fmt.Println("slice has length", len)
   for index := 0; index < len; index++ {
@@ -332,32 +355,36 @@ func DumpSlice(slicePtr interface{}) {
   }
 }
 
-// GetSliceElement returns a reflect.Value for a given slice element.
-// It must be passed a pointer to a slice.
-func GetSliceElement(slicePtr interface{}, index int) reflect.Value {
-  VerifySlicePtr("GetElement", slicePtr)
-  elem := reflect.ValueOf(slicePtr).Elem()
+// GetIndexableElement returns a reflect.Value for a given slice element.
+// It must be passed a pointer to a slice, array, or string.
+func GetIndexableElement(valuePtr interface{}, index int) reflect.Value {
+  VerifyIndexablePtr("GetIndexableElement", valuePtr)
+  elem := reflect.ValueOf(valuePtr).Elem()
   return elem.Index(index)
 }
 
-// SetSliceElement sets a slice element.
+// SetIndexableElement sets a slice element.
 // It must be passed a pointer to a slice.
-func SetSliceElement(slicePtr interface{}, index int, value interface{}) {
-  VerifySlicePtr("SetElement", slicePtr)
-  elem := reflect.ValueOf(slicePtr).Elem()
+func SetIndexableElement(valuePtr interface{}, index int, value interface{}) {
+  VerifyIndexablePtr("SetIndexableElement", valuePtr)
+  elem := reflect.ValueOf(valuePtr).Elem()
   ptr := elem.Index(index)
   ptr.Set(reflect.ValueOf(value))
 }
 
 func main() {
-  names := []string{"Mark", "Tami", "Amanda", "Jeremy"}
-  DumpSlice(&names)
+  names := [4]string{"Mark", "Tami", "Amanda", "Jeremy"} // a slice
+  //names := []string{"Mark", "Tami", "Amanda", "Jeremy"} // an array
+  //names := "Mark" // a string
+  DumpIndexable(&names)
 
-  SetSliceElement(&names, 2, "Danielle")
-  fmt.Println(GetSliceElement(&names, 2)) // Danielle
+  SetIndexableElement(&names, 2, "Danielle")
+  //SetIndexableElement(&names, 1, 'o')
+  fmt.Println(GetIndexableElement(&names, 2)) // Danielle
 
   fmt.Println(names) // [Mark Tami Danielle Jeremy]
 }
+
 ```
 
 ### Map Reflection
