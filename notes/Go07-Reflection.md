@@ -182,7 +182,7 @@ For an operand x of type T, the address operation &x generates a pointer of type
 
 TODO: List more of these and provide examples.
 
-### Type Methods For Struct Types
+### Struct Reflection
 
 For a struct type, it is possible to iterate over its fields.
 
@@ -278,7 +278,17 @@ func main() {
 }
 ```
 
-### Type Methods For Map Types
+### Array and Slice Reflection
+
+To get a `Value` for a slice, `reflect.Value(slice)`.
+
+To get the length, `value.Len()`
+
+To get the element at index i, `value.Index(i)`.
+
+TODO: Add an example similar to the one for struct types.
+
+### Map Reflection
 
 For map types, it is possible to obtain the key and value types.
 
@@ -356,17 +366,7 @@ func main() {
 }
 ```
 
-### Type Methods For Arrays and Slices Types
-
-To get a `Value` for a slice, `reflect.Value(slice)`.
-
-To get the length, `value.Len()`
-
-To get the element at index i, `value.Index(i)`.
-
-TODO: Add an example similar to the one for struct types.
-
-### Type Methods For Function Types
+### Function Reflection
 
 For a function type, it is possible to iterate
 over its parameters and return types.
@@ -448,7 +448,7 @@ func main() {
 }
 ```
 
-### Type Methods For Interface Types
+### Interface Reflection
 
 For interface types, it is possible to iterate over its methods.
 
