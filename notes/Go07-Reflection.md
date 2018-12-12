@@ -286,7 +286,77 @@ To get the length, `value.Len()`
 
 To get the element at index i, `value.Index(i)`.
 
-TODO: Add an example similar to the one for struct types.
+To set the element at index i, get the element at the index
+and call `value.Set(newValue)`.
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "reflect"
+)
+
+type Address struct {
+  Street string
+  City   string
+  State  string
+  Zip    int
+  Home   bool
+}
+
+// VerifySlicePtr verifies that a given value is a slice pointer
+// and panics if it is not.
+func VerifySlicePtr(fnName string, val interface{}) {
+  value := reflect.ValueOf(val)
+  if value.Kind() != reflect.Ptr || value.Elem().Kind() != reflect.Slice {
+    log.Fatalf("%s requires a slice pointer\n", fnName)
+  }
+}
+
+// DumpSlice prints information about each field in a given struct.
+// It must be passed a pointer to a struct.
+// Note that the type of this parameter cannot be *interface{}.
+func DumpSlice(slicePtr interface{}) {
+  VerifySlicePtr("DumpSlice", slicePtr)
+  elem := reflect.ValueOf(slicePtr).Elem()
+  len := elem.Len()
+  fmt.Println("slice has length", len)
+  for index := 0; index < len; index++ {
+    value := elem.Index(index).Interface()
+    valueType := reflect.TypeOf(value).Name()
+    fmt.Printf("  [%d] = %v (%s)\n", index, value, valueType)
+  }
+}
+
+// GetSliceElement returns a reflect.Value for a given slice element.
+// It must be passed a pointer to a slice.
+func GetSliceElement(slicePtr interface{}, index int) reflect.Value {
+  VerifySlicePtr("GetElement", slicePtr)
+  elem := reflect.ValueOf(slicePtr).Elem()
+  return elem.Index(index)
+}
+
+// SetSliceElement sets a slice element.
+// It must be passed a pointer to a slice.
+func SetSliceElement(slicePtr interface{}, index int, value interface{}) {
+  VerifySlicePtr("SetElement", slicePtr)
+  elem := reflect.ValueOf(slicePtr).Elem()
+  ptr := elem.Index(index)
+  ptr.Set(reflect.ValueOf(value))
+}
+
+func main() {
+  names := []string{"Mark", "Tami", "Amanda", "Jeremy"}
+  DumpSlice(&names)
+
+  SetSliceElement(&names, 2, "Danielle")
+  fmt.Println(GetSliceElement(&names, 2)) // Danielle
+
+  fmt.Println(names) // [Mark Tami Danielle Jeremy]
+}
+```
 
 ### Map Reflection
 
