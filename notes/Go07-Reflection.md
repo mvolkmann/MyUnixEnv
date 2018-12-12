@@ -182,88 +182,6 @@ For an operand x of type T, the address operation &x generates a pointer of type
 
 TODO: List more of these and provide examples.
 
-### Type Methods For Function Types
-
-For a function type, it is possible to iterate
-over its parameters and return types.
-
-The `NumIn` method returns the number of parameters in the function.
-
-The `In` method returns a `Type` object
-describing the parameter at a given index.
-
-The `NumOut` method returns the number of return types in the function.
-
-The `Out` method returns a `Type` object
-describing the return type at a given index.
-
-The `Call` method calls a function
-with arguments specific in a `reflect.Value` slice
-and returns the return value in a `reflect.Value slice`.
-
-For example:
-
-```go
-package main
-
-import (
-  "fmt"
-  "log"
-  "reflect"
-  "strings"
-)
-
-// VerifyFunc verifies that a given value is a function
-// and panics if it is not.
-func VerifyFunc(fnName string, fn interface{}) {
-  value := reflect.ValueOf(fn)
-  if value.Kind() != reflect.Func {
-    log.Fatalf("%s requires a func\n", fnName)
-  }
-}
-
-// DumpStruct prints information about each field in a given struct.
-// It must be passed a pointer to a struct.
-func DumpFunc(fn interface{}) {
-  VerifyFunc("DumpFunc", fn)
-  funcType := reflect.ValueOf(fn).Type()
-  fmt.Println("signature is", funcType) // func(string, int) string
-  numIn := funcType.NumIn() // 2
-  for i := 0; i < numIn; i++ {
-    fmt.Printf("parameter type %d is %s\n", i+1, funcType.In(i).Name())
-  }
-  numOut := funcType.NumOut() // 1
-  for i := 0; i < numOut; i++ {
-    fmt.Printf("return type %d is %s\n", i+1, funcType.Out(i).Name())
-  }
-}
-
-// CallFunc calls a given function with given arguments
-// and returns a reflect.Value slice of results.
-func CallFunc(fn interface{}, args []interface{}) []reflect.Value {
-  VerifyFunc("CallFunc", fn)
-  val := reflect.ValueOf(fn)
-  in := make([]reflect.Value, len(args))
-  for i, arg := range args {
-    in[i] = reflect.ValueOf(arg)
-  }
-  return val.Call(in)
-}
-
-func main() {
-  DumpFunc(strings.Repeat)
-
-  args := []interface{}{"Ho", 3}
-  out := CallFunc(strings.Repeat, args)
-  result := out[0].String()
-  fmt.Println("result =", result) // HoHoHo
-
-  // This commented out line demonstrates handling of
-  // invalid values passed to DumpFunc.
-  //DumpFunc("not a function") // DumpFunc requires a func
-}
-```
-
 ### Type Methods For Struct Types
 
 For a struct type, it is possible to iterate over its fields.
@@ -360,59 +278,6 @@ func main() {
 }
 ```
 
-### Type Methods For Interface Types
-
-For interface types, it is possible to iterate over its methods.
-
-The `NumMethod` method returns the number of methods in the interface.
-
-The `Method` method returns a `Method` object
-describing the method at a given index.
-
-For example:
-
-```go
-package main
-
-import (
-  "fmt"
-  "reflect"
-)
-
-type Shape interface {
-  Area() float64
-  Rotate(angle float64)
-  Translate(x, y float64)
-}
-
-func DumpMethod(method reflect.Method) {
-  methodType := method.Type
-  numIn := methodType.NumIn()
-  numOut := methodType.NumOut()
-  fmt.Printf("%s method takes %d arguments and returns %d values\n", method.Name, numIn, numOut)
-  for i := 0; i < numIn; i++ {
-    fmt.Printf("  parameter %d type is %s\n", i+1, methodType.In(i).Name())
-  }
-  for i := 0; i < numOut; i++ {
-    fmt.Printf("  return %d type is %s\n", i+1, methodType.Out(i).Name())
-  }
-}
-
-func DumpInterface(intfPtr interface{}) {
-  intfType := reflect.TypeOf(intfPtr).Elem() // returns a reflect.Type
-  fmt.Println("interface name is ", intfType.Name())
-  fmt.Println("method count is", intfType.NumMethod())
-  for i := 0; i < intfType.NumMethod(); i++ {
-    DumpMethod(intfType.Method(i))
-  }
-}
-
-func main() {
-  var intfPtr *Shape
-  DumpInterface(intfPtr)
-}
-```
-
 ### Type Methods For Map Types
 
 For map types, it is possible to obtain the key and value types.
@@ -500,6 +365,141 @@ To get the length, `value.Len()`
 To get the element at index i, `value.Index(i)`.
 
 TODO: Add an example similar to the one for struct types.
+
+### Type Methods For Function Types
+
+For a function type, it is possible to iterate
+over its parameters and return types.
+
+The `NumIn` method returns the number of parameters in the function.
+
+The `In` method returns a `Type` object
+describing the parameter at a given index.
+
+The `NumOut` method returns the number of return types in the function.
+
+The `Out` method returns a `Type` object
+describing the return type at a given index.
+
+The `Call` method calls a function
+with arguments specific in a `reflect.Value` slice
+and returns the return value in a `reflect.Value slice`.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "log"
+  "reflect"
+  "strings"
+)
+
+// VerifyFunc verifies that a given value is a function
+// and panics if it is not.
+func VerifyFunc(fnName string, fn interface{}) {
+  value := reflect.ValueOf(fn)
+  if value.Kind() != reflect.Func {
+    log.Fatalf("%s requires a func\n", fnName)
+  }
+}
+
+// DumpStruct prints information about each field in a given struct.
+// It must be passed a pointer to a struct.
+func DumpFunc(fn interface{}) {
+  VerifyFunc("DumpFunc", fn)
+  funcType := reflect.ValueOf(fn).Type()
+  fmt.Println("signature is", funcType) // func(string, int) string
+  numIn := funcType.NumIn() // 2
+  for i := 0; i < numIn; i++ {
+    fmt.Printf("parameter type %d is %s\n", i+1, funcType.In(i).Name())
+  }
+  numOut := funcType.NumOut() // 1
+  for i := 0; i < numOut; i++ {
+    fmt.Printf("return type %d is %s\n", i+1, funcType.Out(i).Name())
+  }
+}
+
+// CallFunc calls a given function with given arguments
+// and returns a reflect.Value slice of results.
+func CallFunc(fn interface{}, args []interface{}) []reflect.Value {
+  VerifyFunc("CallFunc", fn)
+  val := reflect.ValueOf(fn)
+  in := make([]reflect.Value, len(args))
+  for i, arg := range args {
+    in[i] = reflect.ValueOf(arg)
+  }
+  return val.Call(in)
+}
+
+func main() {
+  DumpFunc(strings.Repeat)
+
+  args := []interface{}{"Ho", 3}
+  out := CallFunc(strings.Repeat, args)
+  result := out[0].String()
+  fmt.Println("result =", result) // HoHoHo
+
+  // This commented out line demonstrates handling of
+  // invalid values passed to DumpFunc.
+  //DumpFunc("not a function") // DumpFunc requires a func
+}
+```
+
+### Type Methods For Interface Types
+
+For interface types, it is possible to iterate over its methods.
+
+The `NumMethod` method returns the number of methods in the interface.
+
+The `Method` method returns a `Method` object
+describing the method at a given index.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "reflect"
+)
+
+type Shape interface {
+  Area() float64
+  Rotate(angle float64)
+  Translate(x, y float64)
+}
+
+func DumpMethod(method reflect.Method) {
+  methodType := method.Type
+  numIn := methodType.NumIn()
+  numOut := methodType.NumOut()
+  fmt.Printf("%s method takes %d arguments and returns %d values\n", method.Name, numIn, numOut)
+  for i := 0; i < numIn; i++ {
+    fmt.Printf("  parameter %d type is %s\n", i+1, methodType.In(i).Name())
+  }
+  for i := 0; i < numOut; i++ {
+    fmt.Printf("  return %d type is %s\n", i+1, methodType.Out(i).Name())
+  }
+}
+
+func DumpInterface(intfPtr interface{}) {
+  intfType := reflect.TypeOf(intfPtr).Elem() // returns a reflect.Type
+  fmt.Println("interface name is ", intfType.Name())
+  fmt.Println("method count is", intfType.NumMethod())
+  for i := 0; i < intfType.NumMethod(); i++ {
+    DumpMethod(intfType.Method(i))
+  }
+}
+
+func main() {
+  var intfPtr *Shape
+  DumpInterface(intfPtr)
+}
+```
 
 There is much more to reflection in Go!
 
