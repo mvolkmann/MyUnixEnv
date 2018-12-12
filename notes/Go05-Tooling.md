@@ -76,6 +76,7 @@ The most commonly used sub-commands are summarized below.
   such as Printf calls whose arguments do not align with the format string.
   It "uses heuristics that do not guarantee all reports are genuine problems,
   but it can find errors not caught by the compilers."
+  The `-shadow` option causes it to report uses of variables that shadow others.
 
 Many `go` sub-commands support the `-race` flag which
 adds detection and reporting of data races.

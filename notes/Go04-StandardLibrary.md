@@ -452,8 +452,9 @@ These are referred to as "verbs". Commonly used verbs include:
 
 - `%d` for decimal values (includes all the integer types)
 - `%f` for floating point values
-- `%t` for boolean values to output "true" or "false"
 - `%s` for strings
+- `%t` for boolean values to output "true" or "false"
+- `%p` for pointers (prints hex address of a variable)
 - `%v` for any value
 - `%T` to output the type of a value
 - `%*s` to output a string with a number of leading spaces\
