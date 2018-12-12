@@ -610,6 +610,8 @@ func main() {
 }
 ```
 
+TODO: Can you use reflection to call a method on a given object?
+
 There is much more to reflection in Go!
 
 ## Not Functional
@@ -623,7 +625,7 @@ or generics for writing functions that work with multiple types.
 Writing generic collection functions such as
 `map`, `filter`, and `reduce` is somewhat difficult in Go.
 It's easy to write type-specific versions of these.
-For example,
+For example:
 
 ```go
 func mapOverInts(slice []int, fn func(int) int) []int {
