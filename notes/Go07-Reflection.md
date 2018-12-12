@@ -184,8 +184,18 @@ To determine if a `Value` can be set, call the `myValue.CanSet()`
 which returns a bool.
 This requires the `Value` to be addressable.
 
-REWORD THIS!
-For an operand x of type T, the address operation &x generates a pointer of type \*T to x. The operand must be addressable, that is, either a variable, pointer indirection, or slice indexing operation; or a field selector of an addressable struct operand; or an array indexing operation of an addressable array. As an exception to the addressability requirement, x may also be a (possibly parenthesized) composite literal
+A value is addressable if it is a:
+
+- variable
+- pointer indirection?
+- result of slice indexing
+- result of array indexing on an indexable array
+- result of string indexing on an indexable string?
+- field selector of an addressable struct
+- composite literal?
+
+TODO: Need to understand the above better!
+
 For example:
 
 ```go
@@ -355,7 +365,7 @@ func DumpIndexable(valuePtr interface{}) {
   }
 }
 
-// GetIndexableElement returns a reflect.Value for a given slice element.
+// GetIndexableElement returns a reflect.Value for a given slice, array, or string.
 // It must be passed a pointer to a slice, array, or string.
 func GetIndexableElement(valuePtr interface{}, index int) reflect.Value {
   VerifyIndexablePtr("GetIndexableElement", valuePtr)
@@ -363,8 +373,9 @@ func GetIndexableElement(valuePtr interface{}, index int) reflect.Value {
   return elem.Index(index)
 }
 
-// SetIndexableElement sets a slice element.
-// It must be passed a pointer to a slice.
+// SetIndexableElement sets a slice or array element.
+// It must be passed a pointer to a slice or array.
+// It cannot be passed a pointer to a string because strings are immutable.
 func SetIndexableElement(valuePtr interface{}, index int, value interface{}) {
   VerifyIndexablePtr("SetIndexableElement", valuePtr)
   elem := reflect.ValueOf(valuePtr).Elem()
@@ -378,13 +389,12 @@ func main() {
   //names := "Mark" // a string
   DumpIndexable(&names)
 
+  // names cannot be a string because strings are immutable.
   SetIndexableElement(&names, 2, "Danielle")
-  //SetIndexableElement(&names, 1, 'o')
-  fmt.Println(GetIndexableElement(&names, 2)) // Danielle
+  fmt.Println(GetIndexableElement(&names, 2)) // Danielle for slice or array
 
-  fmt.Println(names) // [Mark Tami Danielle Jeremy]
+  fmt.Println(names) // [Mark Tami Danielle Jeremy] for slice or array
 }
-
 ```
 
 ### Map Reflection
