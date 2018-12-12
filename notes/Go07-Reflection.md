@@ -147,6 +147,10 @@ To get the value of an expression, call `reflect.ValueOf(expression)`.
 This returns a `Value` object that has many methods,
 some of which are described below.
 
+There are also types for specific kinds of values, which is useful because
+`Value` methods are not applicable to all kinds of values.
+These types include `Method`, `StructField`, and `StructTag`?
+
 Methods that extract the actual value from a `Value` object include:
 
 - `Bool` returns a `bool`
@@ -202,6 +206,10 @@ For example:
 // Need an example where the Value method CanSet doesn't return false!
 // The underlying value must be "addressable"!
 ```
+
+### Kinds
+
+TODO: Discuss the `Kind` type.
 
 The following sections describe using reflection with specific underlying types.
 
@@ -613,6 +621,10 @@ func main() {
 TODO: Can you use reflection to call a method on a given object?
 
 There is much more to reflection in Go!
+
+## Other Reflection Functions
+
+TODO: Discuss the functions `Copy`, `DeepEqual`, and `Swapper`.
 
 ## Not Functional
 
