@@ -289,6 +289,8 @@ To get the element at index i, `value.Index(i)`.
 To set the element at index i, get the element at the index
 and call `value.Set(newValue)`.
 
+TODO: Add array examples below!
+
 ```go
 package main
 
