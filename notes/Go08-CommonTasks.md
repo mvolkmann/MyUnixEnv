@@ -506,7 +506,7 @@ func (handler myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func main() {
   var handler myHandler
-  http.ListenAndServe("localhost:1234", handler)
+  log.Fatal(http.ListenAndServe("localhost:1234", handler))
 }
 ```
 
