@@ -533,7 +533,7 @@ import (
 )
 
 // Album describes a single album.
-// This will be used by json.Unmarshall which
+// This will be used by json.Unmarshal which
 // requires all the fields to be exported (uppercase).
 // It matches JSON property names to these case-insensitive.
 type Album struct {
@@ -546,7 +546,7 @@ type Album struct {
 }
 
 // Albums describes a collection of albums.
-// This will also be used by json.Unmarshall.
+// This will also be used by json.Unmarshal.
 type Albums struct {
   ResultCount int
   Results     []Album
@@ -580,7 +580,7 @@ func main() {
   //fmt.Println("body =", string(body))
 
   // Parse the bytes as JSON.
-  // Using json.Unmarshall is preferred over json.NewDecoder
+  // Using json.Unmarshal is preferred over json.NewDecoder
   // for JSON in HTTP response bodies.  JSON properties that
   // don't match a field in the struct being populated are ignored.
   var albums Albums

@@ -541,7 +541,7 @@ For more detail on Go tests, see <https://golang.org/pkg/testing/>.
 
 ### Generate Documentation
 
-The `go doc` and `godoc` tools generates package documentation.
+The `go doc` tool generates package documentation.
 They parse `.go` source files, looking for
 comments that follow certain conventions.
 
@@ -581,8 +581,9 @@ in `average.go` and `maximum.go`.
 
 The `go doc` command provides a quick overview of a package.
 For an overview of the `statistics` package,
-enter `go doc` while in the `statistics` directory
-or `go doc statistics` if in another directory.
+enter `go doc` while in the `statistics` directory or
+`go doc github.com/mvolkmann/statistics` if in another directory.
+
 This produces the following output:
 
 ```text
@@ -598,38 +599,13 @@ func Max(numbers []float64) float64
 This tells us how to import the package and the
 purpose of the package, but does not output the function comments.
 
-The `godoc` command produces more detailed documentation.
-Enter `godoc` followed by a package path.
-This can also be used to view documentation on standard library packages.
-
 In addition to specifying a package name, a name the package exports
 can be specified to limit the output to just that documentation.
 For example, the standard library package "strings" exports a "Join" function.
-To see its documentation, enter `godoc strings Join`.
+To see its documentation, enter `go doc strings Join`.
 
-To see documentation for our "statistics" package,
-enter `godoc github.com/mvolkmann/statistics`
-which produces the following output:
-
-```text
-PACKAGE DOCUMENTATION
-
-package statistics
-    import "github.com/mvolkmann/statistics"
-
-    statistics provides functions that compute statistical values for a
-    slice of float64 values.
-
-FUNCTIONS
-
-func Avg(numbers []float64) float64
-    Avg returns the average of slice of float64 values.
-
-func Max(numbers []float64) float64
-    Max returns the maximum of slice of float64 values.
-```
-
-To browse an HTML version of this documentation,
+To browse an HTML version of this documentation
+along with documentation on standard library packages,
 enter `godoc -http=:1234` where 1234 is a port number.
 Any available, non-privileged port can be used.
 Browse localhost:1234 to see a local version

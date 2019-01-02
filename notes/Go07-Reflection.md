@@ -25,11 +25,15 @@ modules, testing, and the future of Go.
 
 ## Reflection
 
-Reflection supports the use of data whose type is not known until runtime.
+Reflection supports the use of data that
+whose types are not known until runtime
+and do not implement known interfaces.
+This includes the ability to call methods on the data.
+
 In Go this typically involves writing functions that take arguments
 or return values of type `interface{}` which can be any type.
-Think of using the `interface{}` type as opting into runtime type checking
-which introduces more opportunities for panics to occur.
+Think of using the `interface{}` type as opting into runtime type checking.
+A downside is that it introduces more opportunities for panics to occur.
 
 The standard library package `reflect` provides run-time reflection
 for determining the type of a value and manipulating it in a type-safe way.
@@ -49,41 +53,23 @@ To get the type of an expression, call `reflect.TypeOf(expression)`.
 This returns a `Type` object that has many methods,
 some of which are described below.
 
-The `Name` method returns the type as a string.
+The `String` method returns the type as a string.
+For example, for a `time.Time` value this returns `time.Time`
+and for a `[]int` value this returns `[]int`.
+
+The `%T` formatting verb outputs this same value.
+For example, `fmt.Printf("%T", expression)`.
+
+The `Name` method returns the type within its package as a string.
+For example, for a `time.Time` value this returns `Time`.
+For structure types such as slices, arrays, and maps, this returns an empty string.
+For example, for a `[]int` value this returns an empty string.
+Due to this, the `String` method is often more useful.
+
 The `Kind` method returns the type as an
-enumerated value of type `reflect.Kind`. For example:
-
-```go
-package main
-
-import (
-  "fmt"
-  "reflect"
-)
-
-func whatAmI(value interface{}) {
-  kind := reflect.TypeOf(value).Kind()
-  switch kind {
-  case reflect.Array:
-    fmt.Println("I am an array.")
-  case reflect.Slice:
-    fmt.Println("I am a slice.")
-  default:
-    fmt.Println("I am something else.")
-  }
-}
-
-func main() {
-  s := []int{1, 2, 3}
-  whatAmI(s) // I am a slice.
-
-  a := [3]int{1, 2, 3}
-  whatAmI(a) // I am an array.
-
-  i := 1
-  whatAmI(i) // I am something else.
-}
-```
+enumerated value of type `reflect.Kind`.
+This is useful in `switch` statements.
+See the "Kind" section for an example.
 
 The `PkgPath` method returns the import path for the type.
 
@@ -146,12 +132,30 @@ func main() {
 To get the value of an expression, call `reflect.ValueOf(expression)`.
 This returns a `Value` object that has many methods,
 some of which are described below.
+Some `Value` methods are not applicable to all kinds of values.
 
-There are also types for specific kinds of values, which is useful because
-`Value` methods are not applicable to all kinds of values.
-These types include `Method`, `StructField`, and `StructTag`?
+The `%v` formatting verb outputs the value described by a `Value` object.
+For example, `fmt.Printf("%v", reflect.ValueOf(expression))`.
 
-Methods that extract the actual value from a `Value` object include:
+The `Type` method returns a `Type` object describing
+the type the value described by a `Value` object.
+
+The `Kind` method returns the type as an
+enumerated value of type `reflect.Kind`.
+This is useful in `switch` statements.
+See the "Kind" section for an example.
+
+The `Field` method can be called on a `Value` object that describes a `struct` value.
+It returns a `StructField` value that describes the field at a given index.
+`StructField` objects contain many fields including `Name` and `Type`.
+
+The `Method` method returns a `Method` value that
+describes the method at a given index.
+`Method` objects contain many fields including `Name`, `Type`, and `Func`.
+The `Func` field holds a function that can be called to
+invoke the method using the first argument as the receiver.
+
+`Value` methods that extract the actual value include:
 
 - `Bool` returns a `bool`
 - `Bytes` returns a `byte` slice
@@ -209,7 +213,51 @@ For example:
 
 ### Kinds
 
-TODO: Discuss the `Kind` type.
+The interfaces `Type` and `Value` both have a `Kind` method
+that returns an object of type `Kind`.
+These are useful in `switch` statements
+to perform type-specific actions.
+
+The `reflect` package defines many constants that identify specific builtin types.
+These include all the primitive types and the following non-primitive types:
+`Array`, `Chan`, `Func`, `Interface`, `Map`, `Ptr`,
+`Slice`, `String`, `Struct`, and `UnsafePointer`.
+
+For example:
+
+```go
+package main
+
+import (
+  "fmt"
+  "reflect"
+)
+
+func whatAmI(value interface{}) {
+  kind := reflect.TypeOf(value).Kind()
+  switch kind {
+  case reflect.Array:
+    fmt.Println("I am an array.")
+  case reflect.Slice:
+    fmt.Println("I am a slice.")
+  default:
+    fmt.Println("I am something else.")
+  }
+}
+
+func main() {
+  s := []int{1, 2, 3}
+  whatAmI(s) // I am a slice.
+
+  a := [3]int{1, 2, 3}
+  whatAmI(a) // I am an array.
+
+  i := 1
+  whatAmI(i) // I am something else.
+}
+```
+
+---
 
 The following sections describe using reflection with specific underlying types.
 
@@ -414,6 +462,9 @@ The `Key` method returns a `Type` object describing the key type.
 The `Elem` method returns a `Type` object describing the value type.
 This method can also be used to get the element type of an
 `Array`, `Chan`, pointer, or `Slice`.
+
+The `MapKeys` method returns a slice of `Value` objects
+that describe all the keys in a given `map`.
 
 The `MapIndex` method returns the value of a given map key.
 

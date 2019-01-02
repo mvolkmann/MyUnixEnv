@@ -741,7 +741,7 @@ func main() {
 #### JSON
 
 The `encoding/json` standard library package
-supports marshalling and unmarshalling of JSON data.
+supports marshaling and unmarshaling of JSON data.
 Go arrays and slices are represented by JSON arrays.
 Go structs and maps are represented by JSON objects.
 
@@ -784,7 +784,7 @@ Pointers are marshaled as the values to which they point.
 Cyclic data structures cannot be marshaled because
 they cause `json.Marshal` to go into an infinite loop.
 
-Here is an example of marshalling a slice of structs.
+Here is an example of marshaling a slice of structs.
 
 ```go
 people := []Person{

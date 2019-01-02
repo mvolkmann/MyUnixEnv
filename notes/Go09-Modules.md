@@ -1,5 +1,7 @@
 ## Modules
 
+TODO: Update this from you Go Modules slides!
+
 Lack of support for package versioning was a major issue
 before Go version 1.11. The leading contenders were
 vgo from Russ Cox at <https://github.com/golang/go/wiki/vgo>
