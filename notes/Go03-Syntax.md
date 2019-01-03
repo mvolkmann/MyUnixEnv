@@ -605,7 +605,7 @@ to introduce a new scope for variables
 that are only used by that `case`.
 
 A `switch` statement can include an initialization statement
-just like an `if` statement. For example,
+just like an `if` statement. For example:
 
 ```go
 switch name := buildName(person); name {
@@ -886,7 +886,7 @@ type Person struct {
 
 A struct literal creates an instance of a struct.
 Field values can be specified in any order by also providing corresponding keys.
-For example,
+For example:
 
 ```go
 p1 := Person{name: "Mark", age: 57}
@@ -963,7 +963,7 @@ There is no support for destructuring, like in JavaScript,
 to extract field values from a `struct`.
 
 Struct fields can be accessed from a struct pointer
-without dereferencing the pointer. For example,
+without dereferencing the pointer. For example:
 
 ```go
 personPtr := &p1
@@ -1035,7 +1035,7 @@ me := Person{
 
 When a nested struct is not given an explicit name, its fields
 can be accessed by either using the struct name or omitting it.
-For example,
+For example:
 
 ```go
 fmt.Println("home city is", me.Address.City) // St. Charles
@@ -1052,7 +1052,7 @@ that method can also be called on a `Person` object.
 
 A struct cannot contain a field whose type is the same struct type,
 but it can contain a field that is a pointer to the same struct type.
-For example,
+For example:
 
 ```go
 type Node struct {
@@ -1153,7 +1153,7 @@ func log(args ...interface{}) {
   fmt.Println(args...)
 }
 
-// This accepts a person name followed by
+// This accepts a person's name followed by
 // any number of color names.
 func report(name string, colors ...string) {
   text := strings.Join(colors, " and ")
@@ -1190,9 +1190,9 @@ to the end of the `main` function above:
 
 Functions can return zero or more values.
 When there are no return values, the list of return types is omitted.
-When there is one return values, its type is provided,
+When there is one return value, its type is provided,
 but parentheses around it are optional and typically omitted.
-When there are multiple return value, the types
+When there are multiple return values, the types
 must be surrounded by parentheses and separated by commas.
 
 When calling a function, all return values
@@ -1200,7 +1200,7 @@ must be captured in variables.
 The blank identifier `_` can be
 used to capture unneeded return values.
 
-For example,
+For example:
 
 ```go
 // This takes a "slice" of int values and returns
@@ -1224,7 +1224,7 @@ A common use of returning multiple values from a function is to
 return a result and a value that either describes an error or
 is a boolean that indicates whether the function was successful.
 Using a boolean is preferred when
-there is only way the function can fail.
+there is only one way the function can fail.
 
 For example, the `ReadFile` function
 in the `io/ioutil` standard library package
@@ -1245,7 +1245,7 @@ see the "Error Handling" section later.
 A function call can appear as the only argument
 in another function call. The return values
 become the actual arguments to the outer call.
-For example,
+For example:
 
 ```go
 // Pass the two return values from GetStats to Println.
@@ -1339,7 +1339,7 @@ that are in the scope of their definition.
 Typically the lifetime of a variable declared inside
 a function is the duration of a call to that function.
 However, the fact that functions are closures
-creates an exception to this. For example,
+creates an exception to this. For example:
 
 ```go
 func closureDemo() func() {
@@ -1763,7 +1763,7 @@ We will see that this is not the case for slices.
 
 One way to iterate over the elements of an array
 is to use a C-style `for` loop.
-For example,
+For example:
 
 ```go
 for index := 0; index < len(myArr); index++ {
@@ -1773,7 +1773,7 @@ for index := 0; index < len(myArr); index++ {
 ```
 
 The `range` keyword can be also used to iterate over the elements,
-and this is preferred. For example,
+and this is preferred. For example:
 
 ```go
 for index, value := range myArr {
@@ -1813,7 +1813,7 @@ The pointer can point to any element in the array.
 The length is number of array elements currently seen by the slice.
 The capacity is the number of array elements
 from the pointer to the end of the array.
-For example,
+For example:
 
 ```go
 arr := [...]string{"red", "orange", "yellow", "green", "blue", "purple"}
@@ -2362,7 +2362,7 @@ func main() {
 
 A variable declaration can specify that the assigned value
 on the right must implement a given interface.
-This is checked at compile-time. For example,
+This is checked at compile-time. For example:
 
 ```go
 r := Rectangle{width: 3, height: 4} // no check performed
