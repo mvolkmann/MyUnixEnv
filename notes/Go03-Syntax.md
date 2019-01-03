@@ -1315,7 +1315,7 @@ func main() {
 
 #### Recursion
 
-Like in most programming languages, Go functions can be recursive.
+Like most programming languages, functions in Go can be recursive.
 
 Most languages use a fixed-size stack
 that limits the depth of recursive calls.
@@ -1380,7 +1380,7 @@ The difference is even more significant for calls made from
 another package because in that case function names must be
 prefixed with the package name whereas method names do not.
 
-Just like with functions, methods whose name starts with a lowercase letter
+Just like functions, methods whose name starts with a lowercase letter
 can only be called by code in package where the method is defined.
 To make them available in other packages,
 their names must start with an uppercase letter.
@@ -1898,7 +1898,7 @@ which is its current length.
 start index of the slice to the end of underlying array
 which is its current capacity.
 
-Just like with arrays, square brackets are used to
+Just like arrays, square brackets are used to
 get and set the value of a slice at a zero-based index.
 If the index is greater than or equal to the slice capacity,
 a panic will be triggered with the message
