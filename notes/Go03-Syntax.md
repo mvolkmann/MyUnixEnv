@@ -90,9 +90,9 @@ To import multiple packages,
 
 ```go
 import (
-  "pkgName1"
-  "pkgName2"
-  ...
+    "pkgName1"
+    "pkgName2"
+    ...
  )
 ```
 
@@ -258,8 +258,8 @@ For example:
 ```go
 var name, age = "Mark", 57 // must initialize all
 var ( // use parens to spread over multiple lines
-  name string = "Mark"
-  age number // not initialized, so uses zero value
+    name string = "Mark"
+    age number // not initialized, so uses zero value
 )
 ```
 
@@ -552,9 +552,9 @@ For example:
 
 ```go
 if x > 7 {
-  ...
+    ...
 } else {
-  ...
+    ...
 }
 ```
 
@@ -566,7 +566,7 @@ including the `else` block if present. For example:
 
 ```go
 if y := x * 2; y < 10 {
-  ...
+    ...
 }
 ```
 
@@ -589,14 +589,14 @@ A basic `switch` statement looks like the following:
 
 ```go
 switch name {
-  case "Mark":
-    // handle Mark
-  case "Tami":
-    // handle Tami
-  case "Amanda", "Jeremy":
-    // handle Amanda or Jeremy
-  default:
-    // handle all other names
+    case "Mark":
+        // handle Mark
+    case "Tami":
+        // handle Tami
+    case "Amanda", "Jeremy":
+        // handle Amanda or Jeremy
+    default:
+        // handle all other names
 }
 ```
 
@@ -609,7 +609,7 @@ just like an `if` statement. For example:
 
 ```go
 switch name := buildName(person); name {
-  ...
+    ...
 }
 ```
 
@@ -628,12 +628,12 @@ For example:
 
 ```go
 switch {
-  case name == "Mark":
-    // handle Mark
-  case age < 20:
-    // handle youngsters
-  default:
-    // handle all other cases
+    case name == "Mark":
+        // handle Mark
+    case age < 20:
+        // handle youngsters
+    default:
+        // handle all other cases
 }
 ```
 
@@ -643,12 +643,12 @@ For example:
 
 ```go
 switch theType := expression.(type) {
-  case int, float:
-    // handle int or float
-  case string:
-    // handle string
-  default:
-    // handle all other types
+    case int, float:
+      // handle int or float
+    case string:
+      // handle string
+    default:
+      // handle all other types
 }
 ```
 
@@ -676,7 +676,7 @@ For example:
 
 ```go
 for i := 0; i < 10; i++ {
-  ...
+    ...
 }
 ```
 
@@ -687,7 +687,7 @@ A `while` loop in other languages looks like the following in Go:
 
 ```go
 for i < 10 {
-  ...
+    ...
 }
 ```
 
@@ -695,7 +695,7 @@ For an endless loop, omit the condition as follows:
 
 ```go
 for {
-  ...
+    ...
 }
 ```
 
@@ -790,7 +790,7 @@ whitespace characters and prints each word on a separate line:
 s := "This is a test."
 words := strings.Fields(s)
 for _, word := range words {
-  fmt.Println(word) // outputs "This", "is", "a", and "test."
+    fmt.Println(word) // outputs "This", "is", "a", and "test."
 }
 ```
 
@@ -865,11 +865,11 @@ Here is an example of using an anonymous `struct`.
 
 ```go
 me := struct{
-  name string
-  age int8
+    name string
+    age int8
 }{
-  "Mark",
-  57,
+    "Mark",
+    57,
 }
 ```
 
@@ -879,8 +879,8 @@ For example:
 
 ```go
 type Person struct {
-  name string
-  age int8
+    name string
+    age int8
 }
 ```
 
@@ -930,11 +930,11 @@ whose name can be determined at runtime.
 // The type "interface{}" means that any type can be used.
 // See the "Empty Interface" section later.
 func StructFieldValue(aStruct interface{}, fieldName string) reflect.Value {
-  value := reflect.ValueOf(aStruct)
-  if value.Kind() != reflect.Struct {
-    log.Fatalf("StructFieldValue first argument must be a struct")
-  }
-  return value.FieldByName(fieldName)
+    value := reflect.ValueOf(aStruct)
+    if value.Kind() != reflect.Struct {
+        log.Fatalf("StructFieldValue first argument must be a struct")
+    }
+    return value.FieldByName(fieldName)
 }
 ```
 
@@ -942,9 +942,9 @@ The type `reflect.Value` has many methods for obtaining
 the value as a specific built-in type. For example:
 
 ```go
-  // address is struct that describes a mailing address.
-  city := StructFieldValue(address, "city").String()
-  zip := StructFieldValue(address, "zip").Int()
+// address is struct that describes a mailing address.
+city := StructFieldValue(address, "city").String()
+zip := StructFieldValue(address, "zip").Int()
 ```
 
 The `fmt.Printf` function takes a format string that can contain "verbs".
@@ -978,21 +978,21 @@ For example:
 package main
 
 import (
-  "fmt"
-  "time"
+    "fmt"
+    "time"
 )
 
 func main() {
-  type Age int
+    type Age int
 
-  type myType struct {
-    Name       string // named field
-    Age               // gets field name from the type defined above
-    time.Month        // gets field name from a library type
-  }
+    type myType struct {
+        Name       string // named field
+        Age               // gets field name from the type defined above
+        time.Month        // gets field name from a library type
+    }
 
-  myStruct := myType{Name: "Mark", Age: 7, Month: time.April}
-  fmt.Printf("%#v\n", myStruct) // main.myType{Name:"Mark", Age:7, Month:4}
+    myStruct := myType{Name: "Mark", Age: 7, Month: time.April}
+    fmt.Printf("%#v\n", myStruct) // main.myType{Name:"Mark", Age:7, Month:4}
 }
 ```
 
@@ -1004,32 +1004,32 @@ For example:
 
 ```go
 type Address struct {
-  Street string
-  City   string
-  State  string
-  Zip    string
+    Street string
+    City   string
+    State  string
+    Zip    string
 }
 
 type Person struct {
-  Name        string
-  Address     // anonymous field for home address
-  WorkAddress Address // named field for work address
+    Name        string
+    Address     // anonymous field for home address
+    WorkAddress Address // named field for work address
 }
 
 me := Person{
-  Name: "Mark Volkmann",
-  Address: Address{
-    Street: "123 Some Street",
-    City:   "St. Charles",
-    State:  "MO",
-    Zip:    "63304", // comma is required here
-  },
-  WorkAddress: Address{
-    Street: "123 Woodcrest Executive Drive",
-    City:   "Creve Coeur",
-    State:  "MO",
-    Zip:    "63141", // another required comma
-  },
+    Name: "Mark Volkmann",
+    Address: Address{
+        Street: "123 Some Street",
+        City:   "St. Charles",
+        State:  "MO",
+        Zip:    "63304", // comma is required here
+    },
+    WorkAddress: Address{
+        Street: "123 Woodcrest Executive Drive",
+        City:   "Creve Coeur",
+        State:  "MO",
+        Zip:    "63141", // another required comma
+    },
 }
 ```
 
@@ -1056,8 +1056,8 @@ For example:
 
 ```go
 type Node struct {
-  value int
-  next *Node
+    value int
+    next *Node
 }
 tail := Node{value: 20}
 head := Node{value: 10, next: &tail}
@@ -1082,7 +1082,7 @@ The syntax for named functions is:
 
 ```go
 func fnName(param1 type1, param2 type2, ...) (returnTypes) {
-  ...
+    ...
 }
 ```
 
@@ -1143,26 +1143,26 @@ For example:
 package main
 
 import (
-  "fmt"
-  "strings"
+    "fmt"
+    "strings"
 )
 
 // The type "interface{}" means that any type can be used.
 // See the "Empty Interface" section later.
 func log(args ...interface{}) {
-  fmt.Println(args...)
+    fmt.Println(args...)
 }
 
 // This accepts a person's name followed by
 // any number of color names.
 func report(name string, colors ...string) {
-  text := strings.Join(colors, " and ")
-  fmt.Printf("%s likes the colors %s.\n", name, text)
+    text := strings.Join(colors, " and ")
+    fmt.Printf("%s likes the colors %s.\n", name, text)
 }
 
 func main() {
-  log("red", 7, true) // red 7 true
-  report("Mark", "yellow", "orange") // Mark likes the colors yellow and orange.
+    log("red", 7, true) // red 7 true
+    report("Mark", "yellow", "orange") // Mark likes the colors yellow and orange.
 }
 ```
 
@@ -1175,15 +1175,15 @@ For example, the following can be added
 to the end of the `main` function above:
 
 ```go
-  // This must match the parameter type of the log function
-  // rather than be a slice of strings.
-  args := []interface{}{"red", 7, true}
-  log(args...)
+    // This must match the parameter type of the log function
+    // rather than be a slice of strings.
+    args := []interface{}{"red", 7, true}
+    log(args...)
 
-  // The initial arguments before the variadic one
-  // must be passed separately.
-  colors := []string{"yellow", "orange"}
-  report("Mark", colors...)
+    // The initial arguments before the variadic one
+    // must be passed separately.
+    colors := []string{"yellow", "orange"}
+    report("Mark", colors...)
 ```
 
 #### Function Return Values
@@ -1206,12 +1206,12 @@ For example:
 // This takes a "slice" of int values and returns
 // their sum as an int and their average as a float64.
 func GetStats(numbers []int) (int, float64) {
-  sum := 0
-  for _, number := range numbers {
-    sum += number
-  }
-  average := float64(sum) / float64(len(numbers))
-  return sum, average
+    sum := 0
+    for _, number := range numbers {
+        sum += number
+    }
+    average := float64(sum) / float64(len(numbers))
+    return sum, average
 }
 
 // In some other function
@@ -1234,7 +1234,7 @@ a byte array and an error description.
 ```go
 bytes, err := ioutil.ReadFile("haiku.txt")
 if err != nil {
-  log.Fatal(err)
+    log.Fatal(err)
 }
 // Do something with bytes.
 ```
@@ -1261,10 +1261,10 @@ For example:
 
 ```go
 func mult(n int) (times2, times3 int) {
-  times2 = n * 2
-  times3 = n * 3
-  //return times2 times3 // don't need to specify return values
-  return
+    times2 = n * 2
+    times3 = n * 3
+    //return times2 times3 // don't need to specify return values
+    return
 }
 
 // In some other function
@@ -1300,16 +1300,16 @@ import "fmt"
 type CalculateFn func(float64, float64) float64
 
 func product(a float64, b float64) float64 {
-  return a * b
+    return a * b
 }
 
 // This function takes a function as its third argument.
 func process(m float64, n float64, fn CalculateFn) float64 {
-  return fn(m, n)
+    return fn(m, n)
 }
 
 func main() {
-  fmt.Println("result =", process(2, 3, product)) // 6
+    fmt.Println("result =", process(2, 3, product)) // 6
 }
 ```
 
@@ -1343,17 +1343,17 @@ creates an exception to this. For example:
 
 ```go
 func closureDemo() func() {
-  // The lifetime of this variable is the lifetime
-  // of the function returned by this function.
-  secret := "Don't tell!"
-  return func () {
-    fmt.Println(secret); // captures local variable secret
-  }
+    // The lifetime of this variable is the lifetime
+    // of the function returned by this function.
+    secret := "Don't tell!"
+    return func () {
+        fmt.Println(secret); // captures local variable secret
+    }
 }
 
 func main() {
-  fn := closureDemo();
-  fn(); // Don't tell!
+    fn := closureDemo();
+    fn(); // Don't tell!
 }
 ```
 
@@ -1427,7 +1427,7 @@ in parentheses before the method name.
 
 ```go
 func (p *Person) Birthday() {
-  p.age++
+    p.age++
 }
 ```
 
@@ -1452,7 +1452,7 @@ the method receives a copy and cannot modify the original.
 It may seem that struct methods should be defined inside the struct.
 However, the ability to define methods outside the type definition
 is required in order to add methods to non-struct types.
-So Go chooses to only support this same approach for all types.
+So Go chooses to only support this approach for all types.
 
 #### Methods With Pointer Receivers
 
@@ -1483,7 +1483,7 @@ named type with an underlying type of `int`.
 type Number int
 
 func (receiver Number) Double() Number {
-  return receiver * 2
+    return receiver * 2
 }
 
 n := Number(3) // or could use var n Number = 3
@@ -1520,25 +1520,25 @@ type Foo struct {
 }
 
 func (f Foo) DoIt() {
-  fmt.Println("Foo: DoIt entered")
+    fmt.Println("Foo: DoIt entered")
 }
 
 type Bar struct {
 }
 
 func (b Bar) DoIt() {
-  fmt.Println("Bar: DoIt entered")
+    fmt.Println("Bar: DoIt entered")
 }
 
 // This struct embeds the two previous structs.
 type Baz struct {
-  Foo
-  Bar
+    Foo
+    Bar
 }
 
 func main() {
-  myBaz := Baz{}
-  myBaz.DoIt() // ambiguous selector
+    myBaz := Baz{}
+    myBaz.DoIt() // ambiguous selector
 }
 ```
 
@@ -1558,31 +1558,31 @@ For example:
 package main
 
 import (
-  "fmt"
-  "math"
+    "fmt"
+    "math"
 )
 
 type Point struct {
-  x float64
-  y float64
+    x float64
+    y float64
 }
 
 // Distance returns the distance from
 // the receiver point to a given Point.
 func (p Point) Distance(p2 Point) float64 {
-  return math.Sqrt(math.Pow(p.x - p2.x, 2) + math.Pow(p.y - p2.y, 2))
+    return math.Sqrt(math.Pow(p.x - p2.x, 2) + math.Pow(p.y - p2.y, 2))
 }
 
 func main() {
-  p1 := Point{1, 2}
-  p2 := Point{4, 6}
+    p1 := Point{1, 2}
+    p2 := Point{4, 6}
 
-  // Normal call
-  fmt.Println(p1.Distance(p2)) // 5
+    // Normal call
+    fmt.Println(p1.Distance(p2)) // 5
 
-  // Obtain a method value and call it.
-  distanceFromP1 := p1.Distance
-  fmt.Println(distanceFromP1(p2)) // 5
+    // Obtain a method value and call it.
+    distanceFromP1 := p1.Distance
+    fmt.Println(distanceFromP1(p2)) // 5
 }
 ```
 
@@ -1595,9 +1595,9 @@ remaining arguments are treated as the method arguments.
 For example:
 
 ```go
-  // Obtain a method expression can call it.
-  distanceBetweenPoints := Point.Distance
-  fmt.Println(distanceBetweenPoints(p1, p2)) // 5
+    // Obtain a method expression can call it.
+    distanceBetweenPoints := Point.Distance
+    fmt.Println(distanceBetweenPoints(p1, p2)) // 5
 ```
 
 #### Struct Field Encapsulation
@@ -1607,9 +1607,9 @@ by using names that start with a lowercase letter
 and adding methods that operate on the fields.
 
 Encapsulation has many benefits.
-It prevents using code from relying on
-implementation details that may change later.
-It can prevent using code from setting field values incorrectly.
+It prevents code that uses the fields from relying
+on implementation details that may change later.
+It can prevent code that uses the fields from setting field values incorrectly.
 It reduces the amount of code that must be examined
 to determine where a value is being set incorrectly.
 
@@ -1638,7 +1638,7 @@ birthday as a `time.Time` object, and formatted birthday string.
 package encapsulation
 
 import (
-  "time"
+    "time"
 )
 
 // The "reference time" for time format strings
@@ -1651,8 +1651,8 @@ const dateFormat = "January 2, 2006"
 
 // Person describes a person.
 type Person struct {
-  Name     string    // exported
-  birthday time.Time // encapsulated
+    Name     string    // exported
+    birthday time.Time // encapsulated
 }
 
 // NewPerson creates and returns a new Person object.
@@ -1660,29 +1660,29 @@ type Person struct {
 // If it were exported, code in other packages could
 // directly create Person objects.
 func NewPerson(name string, birthday time.Time) Person {
-  return Person{name, birthday}
+    return Person{name, birthday}
 }
 
 // Age calculates and returns the age of a Person.
 func (p *Person) Age() int {
-  todayY, todayM, todayD := time.Now().Date()
-  birthdayY, birthdayM, birthdayD := p.birthday.Date()
-  age := todayY - birthdayY
-  // Subtract one if the birthday has not occurred yet this year.
-  if todayM < birthdayM || (todayM == birthdayM && todayD < birthdayD) {
-    age--
-  }
-  return age
+    todayY, todayM, todayD := time.Now().Date()
+    birthdayY, birthdayM, birthdayD := p.birthday.Date()
+    age := todayY - birthdayY
+    // Subtract one if the birthday has not occurred yet this year.
+    if todayM < birthdayM || (todayM == birthdayM && todayD < birthdayD) {
+        age--
+    }
+    return age
 }
 
 // Birthday returns the value of the encapsulated field birthday.
 func (p *Person) Birthday() time.Time {
-  return p.birthday
+    return p.birthday
 }
 
 // FormattedBirthday returns the formatted birthday of a Person.
 func (p *Person) FormattedBirthday() string {
-  return p.birthday.Format(dateFormat)
+    return p.birthday.Format(dateFormat)
 }
 ```
 
@@ -1692,24 +1692,24 @@ Here is an application that uses the `encapsulation` package.
 package main
 
 import (
-  "fmt"
-  "time"
+    "fmt"
+    "time"
 
-  "github.com/mvolkmann/encapsulation"
+    "github.com/mvolkmann/encapsulation"
 )
 
 func main() {
-  birthday := time.Date(1961, time.April, 16, 0, 0, 0, 0, time.UTC)
-  me := encapsulation.NewPerson("Mark", birthday)
-  fmt.Printf("%s was born on %s.\n", me.Name, me.FormattedBirthday())
-  fmt.Printf("%s is %d years old.\n", me.Name, me.Age())
+    birthday := time.Date(1961, time.April, 16, 0, 0, 0, 0, time.UTC)
+    me := encapsulation.NewPerson("Mark", birthday)
+    fmt.Printf("%s was born on %s.\n", me.Name, me.FormattedBirthday())
+    fmt.Printf("%s is %d years old.\n", me.Name, me.Age())
 }
 ```
 
 ### Arrays
 
 Arrays hold an ordered collection of values,
-a.k.a. elements, that all have the same type.
+also known as elements, that all have the same type.
 
 Values can be other arrays to create multidimensional arrays.
 
@@ -1767,8 +1767,8 @@ For example:
 
 ```go
 for index := 0; index < len(myArr); index++ {
-  value := myArr[index]
-  // Do something with value.
+    value := myArr[index]
+    // Do something with value.
 }
 ```
 
@@ -1777,7 +1777,7 @@ and this is preferred. For example:
 
 ```go
 for index, value := range myArr {
-  // Do something with value, and possibly index.
+    // Do something with value, and possibly index.
 }
 ```
 
@@ -1785,7 +1785,7 @@ If `index` is not needed, the blank identifier `_` can be used in its place.
 
 ```go
 for _, value := range myArr {
-  // Do something with value.
+    // Do something with value.
 }
 ```
 
@@ -1877,6 +1877,8 @@ So `myArr[:]` creates a slice over the entire array.
 Modifying elements of a slice modifies the underlying array.
 
 Multiple slices on the same array see the same data.
+Utilizing this feature can be a common source errors
+since changing elements in one slice affects others.
 
 The built-in `append` function takes a slice
 and returns a new slice containing additional elements.
@@ -1916,11 +1918,11 @@ For example:
 
 ```go
 ticTacToe := [][]string{
-  []string{" ", " ", " "},
-  []string{" ", " ", " "},
-  []string{" ", " ", " "}}
-  // If the last } is placed on a new line then a
-  // comma is required at the end of the previous line.
+    []string{" ", " ", " "},
+    []string{" ", " ", " "},
+    []string{" ", " ", " "}}
+    // If the last } is placed on a new line then a
+    // comma is required at the end of the previous line.
 }
 ticTacToe[1][2] = "X"
 ```
@@ -1933,17 +1935,17 @@ For example:
 // This is a "variadic function" that
 // takes any number of int arguments.
 func sum(numbers ...int) int {
-  result := 0
-  for _, number := range numbers {
-    result += number
-  }
-  return result
+    result := 0
+    for _, number := range numbers {
+        result += number
+    }
+    return result
 }
 
 func main() {
-  fmt.Println(sum(1, 2, 3)) // 6
-  values := []int{1, 2, 3}
-  fmt.Println(sum(values...)) // 6
+    fmt.Println(sum(1, 2, 3)) // 6
+    values := []int{1, 2, 3}
+    fmt.Println(sum(values...)) // 6
 }
 ```
 
@@ -1952,14 +1954,14 @@ Here is an example that uses a slice of structs:
 
 ```go
 type Person struct {
-  name string
-  age  int8
+    name string
+    age  int8
 }
 
 func main() {
-  // Note how we do not need to precede each struct with "Person".
-  people := []Person{{"Mark", 57}, {"Jeremy", 31}}
-  fmt.Printf("%+v\n", people) // [{name:Mark age:57} {name:Jeremy age:31}]
+    // Note how we do not need to precede each struct with "Person".
+    people := []Person{{"Mark", 57}, {"Jeremy", 31}}
+    fmt.Printf("%+v\n", people) // [{name:Mark age:57} {name:Jeremy age:31}]
 }
 ```
 
@@ -1975,25 +1977,25 @@ type IntStack []int
 
 // Push adds an int to the end of the stack.
 func (s *IntStack) Push(value int) {
-  *s = append(*s, value)
+    *s = append(*s, value)
 }
 
 // Pop removes an int to the end of the stack and returns it.
 func (s *IntStack) Pop() int {
-  stack := *s
-  l := len(stack)
-  top := stack[l-1]
-  *s = stack[:l-1]
-  return top
+    stack := *s
+    l := len(stack)
+    top := stack[l-1]
+    *s = stack[:l-1]
+    return top
 }
 
 func main() {
-  myStack := IntStack{1, 3, 5}
-  fmt.Println(myStack.Pop())             // 5, now contains [1, 3]
-  fmt.Println(myStack.Pop())             // 3, now contains [1]
-  myStack.Push(7)                        // now contains [1, 7]
-  myStack.Push(9)                        // now contains [1, 7, 9]
-  fmt.Printf("myStack = %+v\n", myStack) // [1 7 9]
+    myStack := IntStack{1, 3, 5}
+    fmt.Println(myStack.Pop())             // 5, now contains [1, 3]
+    fmt.Println(myStack.Pop())             // 3, now contains [1]
+    myStack.Push(7)                        // now contains [1, 7]
+    myStack.Push(9)                        // now contains [1, 7, 9]
+    fmt.Printf("myStack = %+v\n", myStack) // [1 7 9]
 }
 ```
 
@@ -2050,7 +2052,7 @@ capture the second return value which is a `bool`. For example:
 ```go
 value, found := myMap[key]
 if found {
-  // Do something with value.
+    // Do something with value.
 }
 ```
 
@@ -2058,7 +2060,7 @@ or
 
 ```go
 if value, found := myMap[key]; found {
-  // Do something with value.
+    // Do something with value.
 }
 ```
 
@@ -2104,18 +2106,18 @@ var present = empty{}
 
 // Add adds a given value to the set.
 func (set Strings) Add(value string) {
-  set[value] = present
+    set[value] = present
 }
 
 // Contains determines if a given value is in the set.
 func (set Strings) Contains(value string) bool {
-  _, ok := set[value]
-  return ok
+    _, ok := set[value]
+    return ok
 }
 
 // Remove removes a given value from the set.
 func (set Strings) Remove(value string) {
-  delete(set, value)
+    delete(set, value)
 }
 ```
 
@@ -2125,27 +2127,27 @@ Here's an example of using this "set" package.
 package main
 
 import (
-  "fmt"
+    "fmt"
 
-  "github.com/mvolkmann/set"
+    "github.com/mvolkmann/set"
 )
 
 func main() {
-  colorSet := set.Strings{}
-  colorSet.Add("red")
-  colorSet.Add("yellow")
-  colorSet.Add("blue")
-  colorSet.Remove("yellow")
+    colorSet := set.Strings{}
+    colorSet.Add("red")
+    colorSet.Add("yellow")
+    colorSet.Add("blue")
+    colorSet.Remove("yellow")
 
-  colors := []string{"red", "yellow", "blue"}
-  for _, color := range colors {
-    if colorSet.Contains(color) {
-      fmt.Println("have", color) // prints "have red" and "have blue"
+    colors := []string{"red", "yellow", "blue"}
+    for _, color := range colors {
+        if colorSet.Contains(color) {
+            fmt.Println("have", color) // prints "have red" and "have blue"
+        }
     }
-  }
 
-  fmt.Printf("%+v\n", colorSet) // map[red:{} yellow:{}]
-  fmt.Println(len(colorSet)) // 2
+    fmt.Printf("%+v\n", colorSet) // map[red:{} yellow:{}]
+    fmt.Println(len(colorSet)) // 2
 }
 ```
 
@@ -2163,37 +2165,37 @@ to represent a set of `int` values.
 package main
 
 import (
-  "fmt"
+    "fmt"
 
-  "github.com/emirpasic/gods/sets/hashset"
+    "github.com/emirpasic/gods/sets/hashset"
 )
 
 func main() {
-  set := hashset.New()   // empty
-  set.Add(1)             // 1
-  set.Add(2, 2, 3, 4, 5) // 3, 1, 2, 4, 5 (random order, duplicates ignored)
-  set.Remove(4)          // 5, 3, 2, 1
-  set.Remove(2, 3)       // 1, 5
+    set := hashset.New()   // empty
+    set.Add(1)             // 1
+    set.Add(2, 2, 3, 4, 5) // 3, 1, 2, 4, 5 (random order, duplicates ignored)
+    set.Remove(4)          // 5, 3, 2, 1
+    set.Remove(2, 3)       // 1, 5
 
-  fmt.Println("contains 1?", set.Contains(1))          // true
-  fmt.Println("contains 1 and 5?", set.Contains(1, 5)) // true
-  fmt.Println("contains 1 and 6?", set.Contains(1, 6)) // false
+    fmt.Println("contains 1?", set.Contains(1))          // true
+    fmt.Println("contains 1 and 5?", set.Contains(1, 5)) // true
+    fmt.Println("contains 1 and 6?", set.Contains(1, 6)) // false
 
-  values := set.Values()
-  fmt.Println("values =", values)    // []int{5,1} (random order)
-  fmt.Println("empty?", set.Empty()) // false
-  fmt.Println("size =", set.Size())  // 2
+    values := set.Values()
+    fmt.Println("values =", values)    // []int{5,1} (random order)
+    fmt.Println("empty?", set.Empty()) // false
+    fmt.Println("size =", set.Size())  // 2
 
-  // Must use type assertions to operate on values.
-  sum := 0
-  for _, v := range values {
-    sum += v.(int)
-  }
-  fmt.Println("sum =", sum) // 6
+    // Must use type assertions to operate on values.
+    sum := 0
+    for _, v := range values {
+        sum += v.(int)
+    }
+    fmt.Println("sum =", sum) // 6
 
-  set.Clear()                        // empty
-  fmt.Println("empty?", set.Empty()) // true
-  fmt.Println("size =", set.Size())  // 0
+    set.Clear()                        // empty
+    fmt.Println("empty?", set.Empty()) // true
+    fmt.Println("size =", set.Size())  // 0
 }
 ```
 
@@ -2224,34 +2226,34 @@ log how long it takes for a function to execute:
 package main
 
 import (
-  "fmt"
-  "log"
-  "time"
+    "fmt"
+    "log"
+    "time"
 )
 
 // Note that this returns a function.
 func startTimer(name string) func() {
-  t := time.Now()
-  return func() {
-    delta := time.Now().Sub(t)
-    log.Println(name, "took", delta)
-  }
+    t := time.Now()
+    return func() {
+        delta := time.Now().Sub(t)
+        log.Println(name, "took", delta)
+    }
 }
 
 func doWork() int {
-  sum := 0
-  for i := 0; i < 100000000; i++ {
-    sum += i
-  }
-  return sum
+    sum := 0
+    for i := 0; i < 100000000; i++ {
+        sum += i
+    }
+    return sum
 }
 
 func main() {
-  // Note that the syntax appears to call
-  // the function returned by startTime immediately,
-  // but it is not actually run until the main function exits.
-  defer startTimer("doWork")()
-  fmt.Println(doWork())
+    // Note that the syntax appears to call
+    // the function returned by startTime immediately,
+    // but it is not actually run until the main function exits.
+    defer startTimer("doWork")()
+    fmt.Println(doWork())
 }
 ```
 
@@ -2307,54 +2309,54 @@ import "fmt"
 import "math"
 
 type Shape interface {
-  Area() float64
-  Name() string
+    Area() float64
+    Name() string
 }
 
 type Rectangle struct {
-  width, height float64
+    width, height float64
 }
 func (r Rectangle) Area() float64 {
-  return r.width * r.height
+    return r.width * r.height
 }
 func (r Rectangle) Name() string {
-  return "rectangle"
+    return "rectangle"
 }
 
 type Circle struct {
-  radius float64
+    radius float64
 }
 func (c Circle) Area() float64 {
-  return math.Pi * c.radius * c.radius
+    return math.Pi * c.radius * c.radius
 }
 func (c Circle) Name() string {
-  return "circle"
+    return "circle"
 }
 // Adding a method to the Circle type that is not in the Shape interface.
 func (c Circle) Diameter() float64 {
-  return c.radius * 2
+    return c.radius * 2
 }
 
 func printArea(g Shape) {
-  fmt.Println("area =", g.Area())
+    fmt.Println("area =", g.Area())
 }
 
 func main() {
-  r := Rectangle{width: 3, height: 4}
-  c := Circle{radius: 5}
-  var g Shape // g has an interface type and is not initialized.
-  //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
-  g = r
-  // The formatting verb %T outputs the type of the value
-  // currently held in an interface variable.
-  fmt.Printf("g currently holds a %T\n", g) // main.rectangle
-  printArea(g) // area = 12
-  g = c
-  printArea(g) // area = 78.53981633974483
+    r := Rectangle{width: 3, height: 4}
+    c := Circle{radius: 5}
+    var g Shape // g has an interface type and is not initialized.
+    //printArea(g) // panic: runtime error: invalid memory address or nil pointer dereference
+    g = r
+    // The formatting verb %T outputs the type of the value
+    // currently held in an interface variable.
+    fmt.Printf("g currently holds a %T\n", g) // main.rectangle
+    printArea(g) // area = 12
+    g = c
+    printArea(g) // area = 78.53981633974483
 
-  // Since the shape interface doesn't define the diameter method,
-  // a type assertion is required to call it.
-  fmt.Println("diameter =", g.(Circle).Diameter()) // diameter = 10
+    // Since the shape interface doesn't define the diameter method,
+    // a type assertion is required to call it.
+    fmt.Println("diameter =", g.(Circle).Diameter()) // diameter = 10
 }
 ```
 
@@ -2452,36 +2454,36 @@ can test the actual type as follows:
 package main
 
 import (
-  "fmt"
-  "log"
-  "strconv"
+    "fmt"
+    "log"
+    "strconv"
 )
 
 func makeString(value interface{}) string {
-  if b, ok := value.(bool); ok {
-    if b {
-      return "true"
+    if b, ok := value.(bool); ok {
+        if b {
+            return "true"
+        }
+        return "false"
+    } else if i, ok := value.(int); ok {
+        return strconv.Itoa(i) // converts an int to a string
+    } else if _, ok := value.(float64); ok {
+        return fmt.Sprintf("%f", value)
+    } else if s, ok := value.(string); ok {
+        return s
+    } else {
+        log.Fatalf("unsupported value %v of type %T", value, value)
+        return "" // won't reach, but compiler wants this
     }
-    return "false"
-  } else if i, ok := value.(int); ok {
-    return strconv.Itoa(i) // converts an int to a string
-  } else if _, ok := value.(float64); ok {
-    return fmt.Sprintf("%f", value)
-  } else if s, ok := value.(string); ok {
-    return s
-  } else {
-    log.Fatalf("unsupported value %v of type %T", value, value)
-    return "" // won't reach, but compiler wants this
-  }
 }
 
 func main() {
-  fmt.Println(makeString(false))
-  fmt.Println(makeString(true))
-  fmt.Println(makeString(7))
-  fmt.Println(makeString(3.14))
-  fmt.Println(makeString("test"))
-  fmt.Println(makeString('x')) // unsupported value 120 of type int32
+    fmt.Println(makeString(false))
+    fmt.Println(makeString(true))
+    fmt.Println(makeString(7))
+    fmt.Println(makeString(3.14))
+    fmt.Println(makeString("test"))
+    fmt.Println(makeString('x')) // unsupported value 120 of type int32
 }
 ```
 
@@ -2490,24 +2492,24 @@ is to use a "type switch" as follows:
 
 ```go
 func makeString(value interface{}) string {
-  // Note how the variable "value" is shadowed
-  // with the result of the type assertion.
-  switch value := value.(type) {
-  case bool:
-    if value {
-      return "true"
+    // Note how the variable "value" is shadowed
+    // with the result of the type assertion.
+    switch value := value.(type) {
+    case bool:
+        if value {
+            return "true"
+        }
+        return "false"
+    case int:
+        return strconv.Itoa(value)
+    case float64:
+        return fmt.Sprintf("%f", value)
+    case string:
+        return value
+    default:
+        log.Fatalf("unsupported value %v of type %T", value, value)
+        return ""
     }
-    return "false"
-  case int:
-    return strconv.Itoa(value)
-  case float64:
-    return fmt.Sprintf("%f", value)
-  case string:
-    return value
-  default:
-    log.Fatalf("unsupported value %v of type %T", value, value)
-    return ""
-  }
 }
 ```
 
@@ -2528,66 +2530,66 @@ import "fmt"
 
 // LinkedList implements a linked list with values of any type.
 type LinkedList struct {
-  head *node
+    head *node
 }
 
 type node struct {
-  value interface{}
-  next  *node
+    value interface{}
+    next  *node
 }
 
 // Clear removes all nodes.
 func (listPtr *LinkedList) Clear() {
-  listPtr.head = nil
+    listPtr.head = nil
 }
 
 // IsEmpty determines if the LinkedList is empty.
 func (listPtr *LinkedList) IsEmpty() bool {
-  return listPtr.head == nil
+    return listPtr.head == nil
 }
 
 // Pop removes the first node and returns its value.
 func (listPtr *LinkedList) Pop() interface{} {
-  if listPtr.IsEmpty() {
-    return nil
-  }
-  node := listPtr.head
-  listPtr.head = node.next
-  return node.value
+    if listPtr.IsEmpty() {
+        return nil
+    }
+    node := listPtr.head
+    listPtr.head = node.next
+    return node.value
 }
 
 // Push adds a node to the front.
 func (listPtr *LinkedList) Push(value interface{}) {
-  node := node{value, listPtr.head}
-  listPtr.head = &node
+    node := node{value, listPtr.head}
+    listPtr.head = &node
 }
 
 // Len returns the length of the LinkedList.
 func (listPtr *LinkedList) Len() int {
-  len := 0
-  node := listPtr.head
-  for node != nil {
-    len++
-    node = node.next
-  }
-  return len
+    len := 0
+    node := listPtr.head
+    for node != nil {
+        len++
+        node = node.next
+    }
+    return len
 }
 
 func main() {
-  list := LinkedList{}
-  list.Push(1)
-  list.Push(3)
-  list.Clear()
-  list.Push(5)
-  list.Push(7)
+    list := LinkedList{}
+    list.Push(1)
+    list.Push(3)
+    list.Clear()
+    list.Push(5)
+    list.Push(7)
 
-  sum := 0
-  for !list.IsEmpty() {
-    value := list.Pop()
-    fmt.Println("value =", value) // 7 and 5
-    sum += value.(int)
-  }
-  fmt.Println("sum =", sum) // 12
+    sum := 0
+    for !list.IsEmpty() {
+        value := list.Pop()
+        fmt.Println("value =", value) // 7 and 5
+        sum += value.(int)
+    }
+    fmt.Println("sum =", sum) // 12
 }
 ```
 
@@ -2605,13 +2607,13 @@ For example:
 
 ```go
 type Person struct {
-  Name string
-  Age int8
+    Name string
+    Age int8
 }
 
 // Note that the receiver is a Person struct, not a pointer to one.
 func (p Person) String() string {
-  return fmt.Sprintf("%v is %v years old.", p.Name, p.Age)
+    return fmt.Sprintf("%v is %v years old.", p.Name, p.Age)
 }
 
 me := Person{"Mark", 57}
@@ -2640,41 +2642,41 @@ For example:
 package main
 
 type Shape2d interface {
-  area() float64
+    area() float64
 }
 
 type Shape3d interface {
-  Shape2d // Shape3d objects also support Shape2d methods
-  volume() float64
+    Shape2d // Shape3d objects also support Shape2d methods
+    volume() float64
 }
 
 type Box struct {
-  d float64
-  h float64
-  w float64
+    d float64
+    h float64
+    w float64
 }
 
 // Implements Shape2d interface.
 // Accepting a pointer so a copy is not made.
 func (b *Box) area() float64 {
-  return b.w * b.h
+    return b.w * b.h
 }
 
 // Implements Shape3d interface.
 func (b *Box) volume() float64 {
-  return b.area() * b.d
+    return b.area() * b.d
 }
 
 func main() {
-  myBox := Box{d: 2, h: 3, w: 4}
-  fmt.Println("area =", myBox.area()) // 12
-  fmt.Println("volume =", myBox.volume()) // 24
+    myBox := Box{d: 2, h: 3, w: 4}
+    fmt.Println("area =", myBox.area()) // 12
+    fmt.Println("volume =", myBox.volume()) // 24
 }
 ```
 
 ### Error Handling
 
-Go does not support exceptions, and thus
+Go does not support exceptions and thus
 has no `try`, `catch`, or `finally` keywords.
 Instead functions that may encounter errors have
 an additional return value of type `error`
@@ -2711,23 +2713,23 @@ For example:
 ```go
 package main
 import (
-  "errors"
-  "fmt"
+    "errors"
+    "fmt"
 )
 
 func divide(a, b float64) (float64, error) {
-  if b == 0 {
-    return 0, errors.New("divide by zero")
-  }
-  return a / b, nil // no error
+    if b == 0 {
+        return 0, errors.New("divide by zero")
+    }
+    return a / b, nil // no error
 }
 
 func main() {
-  q, err := divide(7, 0)
-  if err != nil {
-    log.Fatal(err)
-  }
-  fmt.Println(q)
+    q, err := divide(7, 0)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(q)
 }
 ```
 
@@ -2753,19 +2755,19 @@ that holds an error message and the numerator value.
 
 ```go
 type DivideByZero struct {
-  numerator float64
+    numerator float64
 }
 
 // This makes the DivideByZero type implement the error interface.
 func (err DivideByZero) Error() string {
-  return fmt.Sprintf("tried to divide %f by zero", err.numerator)
+    return fmt.Sprintf("tried to divide %f by zero", err.numerator)
 }
 
 func divide2(a, b float64) (float64, error) {
-  if b == 0 {
-    return 0, DivideByZero{a}
-  }
-  return a / b, nil // no error
+    if b == 0 {
+        return 0, DivideByZero{a}
+    }
+    return a / b, nil // no error
 }
 ```
 
@@ -2776,9 +2778,9 @@ For example, instead of:
 ```go
 result, err := someFunction()
 if err == nil {
-  // Do something with result.
+    // Do something with result.
 } else {
-  // Handle errors
+    // Handle errors
 }
 ```
 
@@ -2787,8 +2789,8 @@ the following is preferred:
 ```go
 result, err := someFunction()
 if err != nil {
-  // Handle errors
-  return
+    // Handle errors
+    return
 }
 // Do something with result.
 ```
@@ -2831,7 +2833,7 @@ within a deferred function for either of these reasons.
 It returns the value passed to the `panic` function.
 
 If recovery is not possible, the deferred function can
-call to the `panic` function, passing it the same value.
+call the `panic` function, passing it the same value.
 This allows other deferred functions
 higher in the call stack to recover from the error.
 
@@ -2862,10 +2864,10 @@ package main
 import "fmt"
 
 func mustDivide(m, n float64) float64 {
-  if n == 0 {
-    panic(fmt.Sprintf("cannot divide %f by zero", m))
-  }
-  return m / n
+    if n == 0 {
+        panic(fmt.Sprintf("cannot divide %f by zero", m))
+    }
+    return m / n
 }
 
 // It is important for this function have a named return type
@@ -2873,19 +2875,19 @@ func mustDivide(m, n float64) float64 {
 // Alternatively, if this function had a named return type
 // of type of error, the deferred function could set that.
 func divideWithRecover(m, n float64) (result float64) {
-  defer func() {
-    message := recover() // nil when there was no panic
-    if message != nil {
-      fmt.Printf("%s; recovering\n", message)
-      result = 0 // result for all divide by zero calls
-    }
-  }()
-  return mustDivide(m, n)
+    defer func() {
+        message := recover() // nil when there was no panic
+        if message != nil {
+            fmt.Printf("%s; recovering\n", message)
+            result = 0 // result for all divide by zero calls
+        }
+    }()
+    return mustDivide(m, n)
 }
 
 func main() {
-  fmt.Println(divideWithRecover(7, 2)) // 3.5
-  fmt.Println(divideWithRecover(7, 0)) // 0
+    fmt.Println(divideWithRecover(7, 2)) // 3.5
+    fmt.Println(divideWithRecover(7, 0)) // 0
 }
 ```
 
