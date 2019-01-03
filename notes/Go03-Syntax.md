@@ -18,7 +18,7 @@ A Go source file contains a package clause,
 followed by zero or more import declarations,
 followed by zero or more package-level declarations.
 Package clauses and import declarations
-are described in the "Packages" section.
+are described in the next two sections.
 
 A package-level declaration is a declaration of a package
 constant, variable, type, function, or method.
@@ -43,9 +43,11 @@ and remove semicolons.
 
 All Go code resides in some package.
 
+Each source file must begin with a package clause
+that is the keyword "package" followed by a package name.
 The package name must match the name of the directory that
-holds the file, unless the package name is "main".
-It defines a namespace for the names it defines.
+holds the file, unless the package name is `main`.
+This defines a namespace for the names it defines.
 For example, if a directory named `astronomy` contains the file `planets.go`,
 the first non-comment line in the file should be `package astronomy`.
 
@@ -56,10 +58,10 @@ can have any file name that ends in `.go`.
 
 All names defined in a package are visible
 in all source files of the package.
-Exported names of a package start uppercase and are visible
-in source files of other packages that import the package.
-Unexported names start lowercase and are not in visible
-in the source files of other packages.
+Exported names of a package start with an uppercase letter and
+are visible in source files of other packages that import the package.
+Unexported names start wth a lowercase letter and
+are not visible in the source files of other packages.
 
 Go convention is for package names to be
 all lowercase without underscores or hyphens.
@@ -84,7 +86,15 @@ of the names exported by a given package.
 
 To import one package, `import "pkgName"`.
 
-To import multiple packages, `import ("pkgName1" "pkgName2" ...)`.
+To import multiple packages,
+
+```go
+import (
+  "pkgName1"
+  "pkgName2"
+  ...
+ )
+```
 
 Unused imports are treated as errors
 and some tools automatically remove them.
@@ -97,7 +107,7 @@ Note that the alternate name is not surrounded by quotes,
 but the package name is.
 When an alternate name is defined,
 exported names in the package must be
-referenced with `altName.ExportedName`.
+referenced with `altName.ExportedName`
 instead of `pkgName.ExportedName`.
 
 The full name used to import a package is referred to as its "import path".
@@ -105,7 +115,8 @@ These are slash-separated names.
 For standard library packages, the import path is a simple name
 such as `"strings"` or `"math/rand"`.
 For community packages, the import path
-is the package URL without the scheme portion.
+is the package URL without the scheme portion
+and the double-slashes that follow it.
 For example, to import the package at
 <https://github.com/julienschmidt/httprouter>
 use `import "github.com/julienschmidt/httprouter"`.
@@ -113,8 +124,8 @@ This binds the short name `httprouter` so it can be used
 for accessing the names exported by the package.
 
 Refer to the names exported by an imported package
-by preceding them with the package name followed by a period.
-For example, `httprouter.ResponseWriter`.
+by preceding them with the package name followed by a period,
+for example, `httprouter.ResponseWriter`.
 It is not possible to add the exported names to the current namespace
 to avoid using the `pkgName.` prefix.
 
@@ -137,7 +148,7 @@ These have no parameters and no return value.
 
 A package can have any number of `init` functions
 in any of its source files.
-These functions are run in the order they appear,
+These functions are run in the order they appear
 and alphabetically by source file name within a package.
 
 The `init` functions of all imported packages are
@@ -173,11 +184,11 @@ These are used for all other kinds of comments,
 even those preceding functions.
 
 A single-line comment should precede each exported declaration.
-These used by the `go doc` and `godoc` tools to generate documentation.
+These are used by the `go doc` and `godoc` tools to generate documentation.
 
 ### Zero Values
 
-Every type as a "zero value" which is
+Every type has a "zero value" which is
 the value it takes on when it is not initialized.
 This means that all variables have a value.
 
@@ -208,7 +219,7 @@ Variables are block-scoped within functions, so
 those in inner scopes can shadow those in outer scopes.
 
 Package-level variables are local to the package
-unless their name starts uppercase.
+unless their name starts with an uppercase letter.
 
 Go distinguishes between declaring, initializing, and assigning variables.
 
@@ -216,7 +227,7 @@ Go distinguishes between declaring, initializing, and assigning variables.
 
 Variables that are declared outside of functions (package-level)
 must be declared with a `var` statement.
-This accepts a type and/or initial value.
+This accepts a type, an initial value, or both.
 The initial value can be any expression
 that yields a value of the desired type.
 Examples include:
@@ -233,7 +244,8 @@ the type can be inferred from the value.
 Some editor plugins/extensions will warn about this.
 
 When no type is specified, the largest matching type is assumed.
-For example, in `var n = 1.2` the type will be `float64`.
+For example, in `var n = 3` the type will be `int`
+and in `var n = 1.2` the type will be `float64`.
 
 Package-level variables have package scope which means
 they are accessible in all source files of the package.
@@ -299,7 +311,7 @@ For example, `x, y, z = y, z, 0` assigns
 the current value of `y` to `x`,
 the current value of `z` to `y`, and zero to `z`.
 
-It is an error to attempt to assign to a variable that has not been defined.
+It is an error to attempt to assign to a variable that has not been declared.
 
 There is an exception to the rule that existing variables cannot be re-declared.
 As long as at least one variable on the left of `:=` has not yet been declared,
@@ -388,8 +400,10 @@ Go supports the following operators:
 - array element separator: `,`
 - label definition: `someLabel:` (see `goto` keyword)
 
-The increment (`++`) and decrement (`--`) operators form statements,
-not expressions. This means they cannot be used in assignment statements.
+The increment (`++`) and decrement (`--`) operators
+can only be used as postfix operators.
+They form statements, not expressions. This means
+they cannot be used in assignment statements.
 For example, `var j = i++` is not allowed.
 
 The and (`&&`) and or (`||`) operators short-circuit
@@ -444,7 +458,7 @@ each of which is described in more detail later:
   give a name to a struct, interface, or function signature
 - `var` - defines a variable and its type, initial value, or both
 
-There are additional "predeclared names" that are not reserved,
+There are additional predeclared names that are not reserved,
 but using them in other contexts could be confusing.
 These include the names of primitive types (such as `int` and `string`),
 the names of built-in functions (such as `append`, `delete`, `make`, and `range`),
@@ -502,7 +516,7 @@ declared outside the function to a pointer to the variable.
 
 Writing to stdout and stderr is supported by the "fmt" package.
 The `Println` method writes expression values to stdout.
-Each value is separated from the next by a single space.
+Each output value is separated from the next by a single space.
 A newline character is written after the last expression.
 For example:
 
@@ -694,12 +708,12 @@ Examples of these appear later.
 ### Strings
 
 Go strings are immutable sequences of bytes representing UTF-8 characters.
-Literal values are delimited with double quotes or back-ticks.
+Literal values are delimited with double quotes or back quotes.
 
 An example of declaring and initializing a string
 inside a function is `name := "Mark"`.
 
-When back-ticks are used, they are called "raw string literals".
+When back quotes are used, they are called "raw string literals".
 These can include newline characters
 and characters escaped with backslashes
 (such as \n for newline and \t for tab) are not processed.
@@ -716,8 +730,11 @@ message2 := "Hello World!\nThis is a\nGo program."
 ```
 
 To get the length of a string in bytes, use the `len` function.
-For example, `len(name)` returns `4`.
+For example, using the variable `name` defined above,
+`len(name)` returns `4`.
 
+If the string contains any multi-byte UTF-8 characters,
+the `len` function does not return the number of characters.
 To get the length of a string in UTF-8 characters,
 use the `unicode/utf8` package.
 For example, `utf8.RuneCountInString(name)`.
@@ -815,8 +832,8 @@ The `type` keyword is most often used to define a type for a
 struct, slice type, map type, interface, or function signature.
 This avoids repeating long type definitions.
 
-Type names must start uppercase to make them accessible (exported)
-outside the current package.
+Type names must start with an uppercase letter
+to make them accessible (exported) outside the current package.
 
 The operations supported by a named type
 include all those supported by the underlying type.
@@ -835,8 +852,8 @@ including other structs nested to any depth.
 A struct cannot inherit from another struct,
 but can utilize composition of structs.
 
-Struct fields whose names start uppercase (exported) are visible in
-other packages that import the package that defines the struct.
+Struct fields whose names start with an uppercase letter (exported) are
+visible in other packages that import the package that defines the struct.
 Otherwise fields are only visible in the package that defines the struct.
 
 It is often desirable to define a type for a struct to
@@ -1050,7 +1067,7 @@ fmt.Println(head.next.value) // 20
 
 Structs can be compared using the `==` and `!=` operators
 if all their field values are comparable.
-Such structs can be used a keys in maps.
+Such structs can be used as keys in maps.
 
 When a struct is passed to a function, a copy is made and
 changes the function makes to its fields are not visible to the caller.
@@ -1060,7 +1077,7 @@ For these reasons it is common to pass pointers to structs instead of structs.
 
 #### Function Basics
 
-Go functions are defined with `func` keyword.
+Go functions are defined with the `func` keyword.
 The syntax for named functions is:
 
 ```go
@@ -1073,13 +1090,14 @@ Named functions must be declared at the package level,
 not nested inside other functions.
 
 Anonymous functions have the same syntax, but omit the name.
-These can be declared inside other functions.
+These can be used inside other functions.
 For example, `func(v int) int { return v * 2 }`.
 
 Both named and anonymous functions are first-class values.
 This means they can be stored in variables,
 passed as arguments to other functions,
 and returned from other functions.
+For example, `double := func(v int) int { return v * 2 }`.
 
 When a function is assigned to variable,
 it can be called using that variable.
@@ -1362,10 +1380,10 @@ The difference is even more significant for calls made from
 another package because in that case function names must be
 prefixed with the package name whereas method names do not.
 
-Just like with functions, methods whose name starts lowercase
+Just like with functions, methods whose name starts with a lowercase letter
 can only be called by code in package where the method is defined.
 To make them available in other packages,
-their names must start uppercase.
+their names must start with an uppercase letter.
 
 The syntax for defining a method is
 `func (receiver-info) name(parameter-list) (return-types) { body }`.
@@ -1585,7 +1603,7 @@ For example:
 #### Struct Field Encapsulation
 
 Access to struct fields can be encapsulated
-by using names that start lowercase
+by using names that start with a lowercase letter
 and adding methods that operate on the fields.
 
 Encapsulation has many benefits.
