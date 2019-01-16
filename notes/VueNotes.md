@@ -249,6 +249,10 @@ cannot be called. See https://github.com/elbywan/bosket/issues/23.
 
 ## Using Sass
 
+npm install -D sass-loader node-sass
+
+<style lang="scss">
+
 ## VueX
 
 ## More on Vue CLI
