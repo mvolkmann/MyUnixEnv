@@ -263,6 +263,88 @@ With this in place it is possible to
 use all features of Sass including
 variables, nested rules, and mixins.
 
+## Devtool
+
+There is a devtool for Vue that can run as a
+Chrome extension, a Firefox addon, or an Electron app.
+See https://github.com/vuejs/vue-devtools.
+
+This is aware of Vuex and can display the contents of the store.
+
 ## VueX
+
+This is the most popular state management library for Vue.
+
+To install it in a project, enter `npm install vuex`.
+
+At the top of the app, likely in `App.js`, add the following:
+
+```js
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+```
+
+The next step is to create the store
+which can hold any number of pieces of state.
+Suppose we want to hold a year and an array of color names.
+
+```js
+const store = new Vuex.Store({
+  state: {
+    year: new Date().getFullYear(),
+    colors: ['yellow', 'orange']
+  },
+  mutations: {
+    setYear(state, year) {
+      state.year = year;
+    },
+    clearColors(state) {
+      state.colors = [];
+    }
+    appendColor(state, color) {
+      state.colors = state.colors.concat(color);
+    }
+  }
+});
+```
+
+Register the store with the top component as follows:
+
+```js
+export default {
+  name: 'app',
+  components: {
+    ...components used by the App component are listed here...
+  },
+  store
+};
+```
+
+Any component can now access the state with `this.$store.state`.
+When many things are needed from the state,
+it is convenient to use the `mapState` function
+to make them accessible via computed properties.
+For example:
+
+```js
+import {mapState} from 'vuex';
+
+export default {
+  name: 'SomeComponent',
+  computed: {
+    ...mapState({
+      year: state => state.year,
+      colors: state => state.colors
+    })
+    // can define additional computed properties here
+  }
+};
+```
+
+To trigger mutations from a component, call
+`this.$store.commit(mutationName, args)`.
+For example, `this.$store.commit('appendColor', 'red');`
 
 ## More on Vue CLI
