@@ -249,9 +249,19 @@ cannot be called. See https://github.com/elbywan/bosket/issues/23.
 
 ## Using Sass
 
-npm install -D sass-loader node-sass
+To use Sass syntax in the `<style>` element of a Vue component,
+install some npm packages and
+add a `lang` attribute to the `<style>` tag.
 
-<style lang="scss">
+To install the npm packages, enter
+`npm install -D sass-loader node-sass`.
+
+Change the opening `style` tag to
+`<style lang="scss" scope>`.
+
+With this in place it is possible to
+use all features of Sass including
+variables, nested rules, and mixins.
 
 ## VueX
 
