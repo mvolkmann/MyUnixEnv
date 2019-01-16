@@ -263,13 +263,30 @@ With this in place it is possible to
 use all features of Sass including
 variables, nested rules, and mixins.
 
-## Devtool
+## Vue Devtool
 
-There is a devtool for Vue that can run as a
-Chrome extension, a Firefox addon, or an Electron app.
+The Vue devtool can run as a Chrome extension,
+a Firefox addon, or an Electron app.
 See https://github.com/vuejs/vue-devtools.
 
-This is aware of Vuex and can display the contents of the store.
+To use in Chrome, browsing a Vue app,
+click the Vue icon near the upper-right of the window,
+and open the devtools.
+If the devtools are open before the Vue icon is clicked,
+it is necessary to close the devtools and reopen them.
+
+The "Components" tab supports navigating the component hierarchy.
+Select a component to examine its props, computed props, and data.
+Data values can be edited and the UI will update to show new values.
+
+The "Vuex" tab supports examining the contents
+of the Vuex store state.
+It also displays a list of committed mutations.
+Clicking a mutation displays the store state
+after the mutation is processed.
+Clicking "Base State" displays the initial store store.
+
+It is aware of Vuex and can display the contents of the store.
 
 ## VueX
 
@@ -292,6 +309,7 @@ Suppose we want to hold a year and an array of color names.
 
 ```js
 const store = new Vuex.Store({
+  strict: true,
   state: {
     year: new Date().getFullYear(),
     colors: ['yellow', 'orange']
@@ -309,6 +327,10 @@ const store = new Vuex.Store({
   }
 });
 ```
+
+When `strict` is `true` an error is thrown
+if the state is modified outside of a mutation.
+This is very desirable!
 
 Register the store with the top component as follows:
 
@@ -346,5 +368,41 @@ export default {
 To trigger mutations from a component, call
 `this.$store.commit(mutationName, args)`.
 For example, `this.$store.commit('appendColor', 'red');`
+
+Getters can be defined in the store
+to retrieve computed values. For example:
+
+```js
+getters: {
+  uncompletedCount: state => state.todos.filter(t => !t.done).length;
+}
+```
+
+To retrieve the value of this getter in a component,
+use `$store.getters.uncompletedCount`.
+
+Computed properties can be created inside a component
+that map to getters so they can be referred to
+with just computed property names. For example:
+
+```js
+import {mapGetters} from 'vuex';
+
+export default {
+  ...
+  computed: {
+    ...mapGetters(['uncompletedCount', /* more getter names */]),
+    // More computed properties can be defined here.
+  }
+```
+
+Actions support asynchronous mutation commits
+and triggering multiple commits.
+See https://vuex.vuejs.org/guide/actions.html.
+
+The Vuex store can be split into multiple "modules".
+Each of these have their own state, getters, mutations, and actions.
+Modules can be further divided into sub-modules.
+This is a bad idea! Using a single store is far easier.
 
 ## More on Vue CLI
