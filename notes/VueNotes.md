@@ -274,11 +274,39 @@ This sets the value of the CSS `display` property for this element.
 
 ### Other Directives
 
-v-cloak
-v-html
-v-once
-v-pre
-v-text
+`v-cloak`
+
+This hides an element until all data it uses has been loaded to
+avoid displaying unevaluated interpolations (double curly braces).
+It also requires CSS changes.
+
+`v-html`
+
+This is used to render a string of HTML as HTML instead of plain text.
+For example, `<span v-html="myHtml"></span>` where `myHtml`
+is a prop or data value that is a string of HTML.
+
+`v-once`
+
+This causes the content of an element to be evaluated only once.
+If data used in the content changes after the initial render,
+the element will continue to render the same as the initial render.
+
+`v-pre`
+
+This skips all evaluation of element content
+which allows rendering double curly braces.
+It is useful for outputting Vue example code.
+
+`v-text`
+
+This is an alternative to using double curly braces
+to output a data value. For example, these are equivalent:
+
+```js
+<span v-text="firstName"></span>
+<span>{{firstName}}</span>
+```
 
 ## JSX
 
