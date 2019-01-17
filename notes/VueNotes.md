@@ -45,9 +45,10 @@ This includes changes to the state in a VueX store if that is used.
 
 ## .vue Files
 
-The most common way to define a Vue component
-is to create a file with a `.vue` extension.
-The content of this file is:
+Typically each component is defined by a single source file
+and the source file only defines one component.
+These source files have a `.vue` extension.
+Their content is valid HTML with the following layout:
 
 ```js
 <template>
@@ -68,6 +69,9 @@ The content of this file is:
   this CSS only applies to this component.
 </style>
 ```
+
+The Webpack `vue-loader` processes these files.
+The Vue CLI configures this by default.
 
 ## Component objects
 
@@ -107,10 +111,12 @@ with the following properties.
   computed based on other props and data.
 
 - `data`\
-  This is a function that returns data specific to a component instance.
+  This must be a function that returns data specific to a component instance.
+  This allows each instance can maintain its own data.
   It is similar to "state" in React.
-  If an object is specified instead of a function,
-  all component instances will share that data.
+  If the `data` property is set to an object instead of a function,
+  the following error will be output:
+  "error: data property in component must be a function"
 
 - `methods`\
   This is an object that defines the methods of this component.
