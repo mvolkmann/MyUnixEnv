@@ -72,40 +72,59 @@ The content of this file is:
 ## Component objects
 
 The `.vue` file that defines a component typically has an
-`export default` of an object with the following properties.
+`export default` of an "instance definition" object
+with the following properties.
 
 - `el`\
   This is a CSS selector that specifies
   where this component should be rendered,
   typically only specified in top-level components.
+
 - `name`\
   This is the component name.
   Does it become an id in the generated HTML that can be referenced in CSS?
+
 - `components`\
   This lists other components used by this component inside curly braces.
   It is an object where keys are component names and values are components.
   With ES6 object shorthand, it can be written as `{Foo, Bar}`.
+
 - `props`\
   This is an object describing the props this component accepts.
   The keys are prop names and the values are their types.
   For example, `props: {name: String, age: Number}`.
+
   Prop values are passed in from parent components using attributes.
   When their values change, the component is updated
   rather than creating a new instance.
   The `beforeUpdate` and `updated` lifecycle methods are invoked.
+
+  Camel-cased prop names must be written in kebab-case in HTML.
+  For example, the prop `fooBar` would be `foo-bar` in HTML.
+
 - `computed`\
   This is an object describing props that are
   computed based on other props and data.
+
 - `data`\
   This is a function that returns data specific to a component instance.
   It is similar to "state" in React.
   If an object is specified instead of a function,
   all component instances will share that data.
+
 - `methods`\
   This is an object that defines the methods of this component.
   They are primarily used for event handling.
   Lifecycle methods are not defined here.
   The keyword "this" refers to a component instance in these methods.
+
+Much of the data defined in the properties above
+can be accessed in methods using the `this` keyword.
+This includes `props`, `computed`, `data`, `methods`,
+and lifecycle methods.
+They can also be referenced by name without the `this` keyword
+in template interpolations (double curly braces) and
+directives (such as `v-bind` and `v-model`).
 
 ## Assets
 
@@ -313,6 +332,9 @@ to output a data value. For example, these are equivalent:
 Components can specify what to render using either a template or JSX.
 To use JSX, omit the template and include a `render` method
 at the top of the object that describes the component.
+Use of JSX requires a Babel plugin.
+Applications created by the Vue CLI have this configured by default.
+
 For example:
 
 ```js
