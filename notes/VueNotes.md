@@ -36,7 +36,18 @@ Install the extensions "Vetur" and "Vue.js Extension Pack".
 
 Modify `src/App.vue` and `.vue` files under `src/components`.
 
-## Format of .vue files
+## Vue Components
+
+Vue components are rendered using a virtual DOM (like React)
+to minimize the number of actual DOM updates that are performed.
+They are automatically updated with their data changes.
+This includes changes to the state in a VueX store if that is used.
+
+## .vue Files
+
+The most common way to define a Vue component
+is to create a file with a `.vue` extension.
+The content of this file is:
 
 ```js
 <template>
@@ -48,7 +59,7 @@ Modify `src/App.vue` and `.vue` files under `src/components`.
 <script>
   JavaScript goes here.
   Can import other component .vue files.
-  Can export a component definition.
+  Can export an "instance definition" object as the default export.
 </script>
 
 <style scoped>
@@ -63,21 +74,38 @@ Modify `src/App.vue` and `.vue` files under `src/components`.
 The `.vue` file that defines a component typically has an
 `export default` of an object with the following properties.
 
-- `el`: a CSS selector that specifies
+- `el`\
+  This is a CSS selector that specifies
   where this component should be rendered,
-  typically only used for top-level components
-- `name`: the component name
-  This becomes an id in the generated HTML that can be referenced in CSS.
-- `components`: an object where keys are component names and values are components
-  - with ES6 object shorthand, can be `{Foo, Bar}`
-    list of other components used by this component inside curly braces
-- `props`: an object describing the props this component accepts
-  - keys are prop names; values are their types
-  - ex. `props: {name: String, age: Number}`
-- `computed`: props that are computed based on other props and data
-- `data`: data specific to a component instance, like state in React
-- `methods`: primarily used for event handling
-  (Are there lifecycle methods that go here?)
+  typically only specified in top-level components.
+- `name`\
+  This is the component name.
+  Does it become an id in the generated HTML that can be referenced in CSS?
+- `components`\
+  This lists other components used by this component inside curly braces.
+  It is an object where keys are component names and values are components.
+  With ES6 object shorthand, it can be written as `{Foo, Bar}`.
+- `props`\
+  This is an object describing the props this component accepts.
+  The keys are prop names and the values are their types.
+  For example, `props: {name: String, age: Number}`.
+  Prop values are passed in from parent components using attributes.
+  When their values change, the component is updated
+  rather than creating a new instance.
+  The `beforeUpdate` and `updated` lifecycle methods are invoked.
+- `computed`\
+  This is an object describing props that are
+  computed based on other props and data.
+- `data`\
+  This is a function that returns data specific to a component instance.
+  It is similar to "state" in React.
+  If an object is specified instead of a function,
+  all component instances will share that data.
+- `methods`\
+  This is an object that defines the methods of this component.
+  They are primarily used for event handling.
+  Lifecycle methods are not defined here.
+  The keyword "this" refers to a component instance in these methods.
 
 ## Assets
 
@@ -205,13 +233,16 @@ For checkboxes, the `v-model` for multiple `<input>` elements
 can be the same array. The checkbox values will be used
 to populate the array when they are checked.
 
+### `v-show`
+
+This sets the value of the CSS `display` property for this element.
+
 ### Other Directives
 
 v-cloak
 v-html
 v-once
 v-pre
-v-show
 v-text
 
 ## JSX
@@ -246,6 +277,21 @@ This works because in this case the Vue build tooling is not needed.
 Component methods can be called from inside curly braces,
 but plain functions defined outside the component definition
 cannot be called. See https://github.com/elbywan/bosket/issues/23.
+
+## Lifecycle Methods
+
+The following optional component methods will be automatically called
+at specific points in the lifecycle of the component.
+They are defined as top-level properties in an instance definition.
+
+- `beforeCreate` and `created`
+- `beforeMount` and `mounted`
+- `beforeUpdate` and `updated`
+- `beforeDestroy` and `destroyed`
+
+The most commonly used of these are `created` and `updated`.
+These corresponsd to the React lifecycle methods
+`componentDidMount` and `componentDidUpdate`.
 
 ## Using Sass
 
@@ -406,3 +452,19 @@ Modules can be further divided into sub-modules.
 This is a bad idea! Using a single store is far easier.
 
 ## More on Vue CLI
+
+## Comparison to React
+
+In Vue components are defined by an object and
+event handling is implemented with methods on that object.
+There seems to be no way to use plain functions.
+
+In React components can be defined by a plain function
+as can event handling.
+In the past React components usually were not
+defined by a plain function because
+a class was required to implement state and lifecycle methods.
+With the introduction of hooks, that is no longer true.
+So most React code will just use plain functions for everything.
+This removes the need to understand the value of the `this` keyword
+and how classes work.
