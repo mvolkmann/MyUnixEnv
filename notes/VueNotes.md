@@ -112,6 +112,41 @@ The `.vue` file that defines a component typically has an
 Assets such as images, audio, and video typically reside in
 `src/assets` and are accessed with URLs that start with `./assets/`.
 
+## Templates
+
+Templates hold the HTML that is rendered by a component.
+They can contain Vue directives and
+interpolations (in double curly braces) that insert dynamic data.
+
+A component template is compiled into a render function
+that is called to produce the DOM for the component.
+It is also possible to omit the template
+and manually write a `render` function.
+
+Manually written `render` functions can use
+the `createElement` function to produce DOM nodes.
+This function is passed as the only argument to the `render` function.
+`render` functions can also return JSX which is an XML format
+that is syntactic sugar for calls to `createElement`.
+
+The `createElement` function takes three arguments,
+the element name, an object describing attributes,
+and an array of child nodes.
+Only the first argument is required.
+If only two arguments are supplied,
+the second is assumed to be an array of child nodes,
+not the attributes.
+
+For example:
+
+```js
+  render(createElement) {
+    return createElement('h1', 'Hello from createElement!');
+    // OR
+    //return <h1>Hello from JSX!</h1>;
+  },
+```
+
 ## Inserting Template Text
 
 To insert the value of a single JavaScript expression
@@ -269,7 +304,7 @@ export default {
 </script>
 ```
 
-This could also include a `<style>` element.
+This can also include a `<style>` element.
 However, if no CSS is needed, the file extension can be changed to `.js`
 and the `<script>` start and end tags can be removed.
 This works because in this case the Vue build tooling is not needed.
@@ -277,6 +312,25 @@ This works because in this case the Vue build tooling is not needed.
 Component methods can be called from inside curly braces,
 but plain functions defined outside the component definition
 cannot be called. See https://github.com/elbywan/bosket/issues/23.
+
+Here's an example of a `render` method that returns JSX
+that calls a method to get more JSX.
+
+```js
+  data() {
+    return {
+      colors: ['red', 'green', 'blue']
+    };
+  },
+  render() {
+    return <ul>{this.getItems()}</ul>;
+  },
+  methods: {
+    getItems() {
+      return this.colors.map(color => <li>{color}</li>);
+    }
+  },
+```
 
 ## Lifecycle Methods
 
@@ -468,3 +522,7 @@ With the introduction of hooks, that is no longer true.
 So most React code will just use plain functions for everything.
 This removes the need to understand the value of the `this` keyword
 and how classes work.
+
+## Slots
+
+What are these?
