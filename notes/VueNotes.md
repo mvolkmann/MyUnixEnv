@@ -98,6 +98,9 @@ with the following properties.
   The keys are prop names and the values are their types.
   For example, `props: {name: String, age: Number}`.
 
+  It can also be an array of just prop names,
+  but that bypasses type checking and isn't recommended.
+
   Prop values are passed in from parent components using attributes.
   When their values change, the component is updated
   rather than creating a new instance.
@@ -419,11 +422,14 @@ With this in place it is possible to
 use all features of Sass including
 variables, nested rules, and mixins.
 
-## Vue Devtool
+## Vue Devtools
 
 The Vue devtool can run as a Chrome extension,
 a Firefox addon, or an Electron app.
 See https://github.com/vuejs/vue-devtools.
+
+This is only able to display information about Vue apps
+that were not built for production, i.e. not minimized.
 
 To use in Chrome, browsing a Vue app,
 click the Vue icon near the upper-right of the window,
@@ -436,13 +442,13 @@ Select a component to examine its props, computed props, and data.
 Data values can be edited and the UI will update to show new values.
 
 The "Vuex" tab supports examining the contents
-of the Vuex store state.
+of the Vuex store state, if Vuex is being used.
 It also displays a list of committed mutations.
-Clicking a mutation displays the store state
-after the mutation is processed.
-Clicking "Base State" displays the initial store store.
-
-It is aware of Vuex and can display the contents of the store.
+Click a mutation name to display the store state
+after the mutation was processed.
+To update the UI to match that state, click the
+"Time Travel" link to the right of the mutation name.
+Click "Base State" to display the initial store store.
 
 ## VueX
 
@@ -560,6 +566,16 @@ The Vuex store can be split into multiple "modules".
 Each of these have their own state, getters, mutations, and actions.
 Modules can be further divided into sub-modules.
 This is a bad idea! Using a single store is far easier.
+
+## Vue-Router
+
+The vue-router library maps URLs to components and supports
+navigation between "pages" using the `<router-link>` elements.
+The current route can also be changed from JavaScript code
+by calling `this.$router.go` or `this.$router.push`.
+The current route is render in a `<router-view>` element
+that is typically rendered by the top-most component.
+For more detail, see <https://router.vuejs.org/guide/>.
 
 ## More on Vue CLI
 
