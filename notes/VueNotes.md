@@ -378,7 +378,7 @@ This works because in this case the Vue build tooling is not needed.
 
 Component methods can be called from inside curly braces,
 but plain functions defined outside the component definition
-cannot be called. See https://github.com/elbywan/bosket/issues/23.
+cannot be called. See <https://github.com/elbywan/bosket/issues/23>.
 
 Here's an example of a `render` method that returns JSX
 that calls a method to get more JSX.
@@ -411,7 +411,7 @@ They are defined as top-level properties in an instance definition.
 - `beforeDestroy` and `destroyed`
 
 The most commonly used of these are `created` and `updated`.
-These corresponsd to the React lifecycle methods
+These corresponds to the React lifecycle methods
 `componentDidMount` and `componentDidUpdate`.
 
 ## Refs
@@ -464,7 +464,7 @@ variables, nested rules, and mixins.
 
 The Vue devtool can run as a Chrome extension,
 a Firefox addon, or an Electron app.
-See https://github.com/vuejs/vue-devtools.
+See <https://github.com/vuejs/vue-devtools>.
 
 This is only able to display information about Vue apps
 that were not built for production, i.e. not minimized.
@@ -507,6 +507,8 @@ Vue.use(Vuex);
 
 The next step is to create the store
 which can hold any number of pieces of state.
+This defines the initial state and mutation methods that modify it.
+Mutations must be synchronous.
 Suppose we want to hold a year and an array of color names.
 
 ```js
@@ -575,6 +577,18 @@ To trigger mutations from a component, call
 `this.$store.commit(mutationName, args)`.
 For example, `this.$store.commit('appendColor', 'red');`
 
+Another option is to use `mapMutations` to generate methods
+that make these calls for you. For example:
+
+```js
+  methods: {
+    ...mapMutations(['appendColor'])
+  }
+```
+
+This allows the call to `commit` above to be replaced by
+`this.appendColor('red');`.
+
 Getters can be defined in the store
 to retrieve computed values. For example:
 
@@ -604,7 +618,7 @@ export default {
 
 Actions support asynchronous mutation commits
 and triggering multiple commits.
-See https://vuex.vuejs.org/guide/actions.html.
+See <https://vuex.vuejs.org/guide/actions.html>.
 
 The Vuex store can be split into multiple "modules".
 Each of these have their own state, getters, mutations, and actions.
