@@ -414,6 +414,14 @@ The most commonly used of these are `created` and `updated`.
 These corresponds to the React lifecycle methods
 `componentDidMount` and `componentDidUpdate`.
 
+To verify what is on the instance object,
+add the following to the instance definition object:
+
+````js
+  mounted() {
+    console.log('{conponent-name}: this =', this);
+  }
+
 ## Refs
 
 Template elements can have a `ref` attribute
@@ -442,7 +450,7 @@ export default {
   }
 }
 </script>
-```
+````
 
 ## Using Sass
 
@@ -556,6 +564,8 @@ Any component can now access the state with `this.$store.state`.
 When many things are needed from the state,
 it is convenient to use the `mapState` function
 to make them accessible via computed properties.
+The `mapState` function returns an object that
+should be spread into the "computed" property.
 For example:
 
 ```js
@@ -578,7 +588,9 @@ To trigger mutations from a component, call
 For example, `this.$store.commit('appendColor', 'red');`
 
 Another option is to use `mapMutations` to generate methods
-that make these calls for you. For example:
+that make these calls for you.
+This returns an object that should be spread into the "mutations" property.
+For example:
 
 ```js
   methods: {
@@ -603,7 +615,10 @@ use `$store.getters.uncompletedCount`.
 
 Computed properties can be created inside a component
 that map to getters so they can be referred to
-with just computed property names. For example:
+with just computed property names.
+The `mapGetters` function returns an object that
+should be spread into the "computed" property.
+For example:
 
 ```js
 import {mapGetters} from 'vuex';
