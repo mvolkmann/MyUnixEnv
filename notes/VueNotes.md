@@ -102,7 +102,9 @@ with the following properties.
   but that bypasses type checking and isn't recommended.
 
   Prop values are passed in from parent components using attributes.
-  When their values change, the component is updated
+  They can be any kind of value, including functions
+  defined in the parent component that the child component can call.
+  When prop values change, the component is updated
   rather than creating a new instance.
   The `beforeUpdate` and `updated` lifecycle methods are invoked.
 
@@ -230,15 +232,21 @@ For example:
 </div>
 ```
 
+Note that binding a value to the `key` prop is needed by Vue to
+allow it to minimize the number of DOM updates required when data changes.
+
 ### `v-on:event-name` or shorthand `@event-name`
 
-This is used to register an event handling method.
+This is used to register event handling.
+The value specified can be the name of a method or
+a JavaScript statement such as assigning a value to a data property.
 For example, assuming `onDelete` is a component method:
 
 ```js
 <button @click="onDelete">Delete</button> <!-- calls with no arguments -->
 <button @click="add(5)">Add 5</button> <!-- calls with an argument -->
 <input @keypress="processKey($event)" />> <!-- passes event object -->
+<button @click="havePower = !havePower" />> <!-- assigns to data -->
 ```
 
 Event modifiers can follow the event name. These include:
@@ -406,6 +414,36 @@ The most commonly used of these are `created` and `updated`.
 These corresponsd to the React lifecycle methods
 `componentDidMount` and `componentDidUpdate`.
 
+## Refs
+
+Template elements can have a `ref` attribute
+that allows component methods to get a reference to them.
+This has many uses. One is to get a reference to an `input` element
+so that focus can be moved to it. For example:
+
+```js
+<template>
+  <div>
+    <input v-model="name" type="text" ref="name"/>
+  </div>
+</template>
+
+<script>
+export default {
+  // other component instance properties omitted
+  data() {
+    return {name: ''};
+  }
+  methods: {
+    clearName() {
+      this.name = '';
+      this.$refs.name.focus();
+    }
+  }
+}
+</script>
+```
+
 ## Using Sass
 
 To use Sass syntax in the `<style>` element of a Vue component,
@@ -453,9 +491,11 @@ Click "Base State" to display the initial store store.
 ## VueX
 
 This is the most popular state management library for Vue.
+It was developed by and is maintained by the Vue team.
 
 To install it in a project, enter `npm install vuex`.
 
+Create the file `src/store.js` and add the following:
 At the top of the app, likely in `App.js`, add the following:
 
 ```js
@@ -470,7 +510,7 @@ which can hold any number of pieces of state.
 Suppose we want to hold a year and an array of color names.
 
 ```js
-const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: true,
   state: {
     year: new Date().getFullYear(),
@@ -484,7 +524,9 @@ const store = new Vuex.Store({
       state.colors = [];
     }
     appendColor(state, color) {
-      state.colors = state.colors.concat(color);
+      // Note that state properties can be modified in mutation functions.
+      // It is not necessary to treat the state object as immutable here.
+      state.colors.push(color);
     }
   }
 });
@@ -494,9 +536,11 @@ When `strict` is `true` an error is thrown
 if the state is modified outside of a mutation.
 This is very desirable!
 
-Register the store with the top component as follows:
+Register the store with the top component as follows in `src/App.js`:
 
 ```js
+import store from './store';
+
 export default {
   name: 'app',
   components: {
