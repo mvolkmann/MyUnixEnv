@@ -516,7 +516,11 @@ Vue.use(Vuex);
 The next step is to create the store
 which can hold any number of pieces of state.
 This defines the initial state and mutation methods that modify it.
-Mutations must be synchronous.
+Mutations are the only way to modify the state
+and they must be synchronous methods.
+They are not called directly and are instead invoked by calling
+`this.$store.commit` which is described later.
+
 Suppose we want to hold a year and an array of color names.
 
 ```js
@@ -546,7 +550,9 @@ When `strict` is `true` an error is thrown
 if the state is modified outside of a mutation.
 This is very desirable!
 
-Register the store with the top component as follows in `src/App.js`:
+Register the store with the top component.
+This "injects" store access into all descendant components.
+For example, this can be done in `src/App.js`:
 
 ```js
 import store from './store';
@@ -561,11 +567,11 @@ export default {
 ```
 
 Any component can now access the state with `this.$store.state`.
-When many things are needed from the state,
+When many items are needed from the state,
 it is convenient to use the `mapState` function
 to make them accessible via computed properties.
 The `mapState` function returns an object that
-should be spread into the "computed" property.
+should be spread into the `computed` property.
 For example:
 
 ```js
@@ -584,8 +590,13 @@ export default {
 ```
 
 To trigger mutations from a component, call
-`this.$store.commit(mutationName, args)`.
+`this.$store.commit(mutationName, arg)`.
 For example, `this.$store.commit('appendColor', 'red');`
+Only a single argument can follow the mutation name.
+To supply more than one value, pass an array or object
+containing all the values.
+Any components that use the state affected by the mutation
+will be updated.
 
 Another option is to use `mapMutations` to generate methods
 that make these calls for you.
@@ -598,8 +609,13 @@ For example:
   }
 ```
 
-This allows the call to `commit` above to be replaced by
-`this.appendColor('red');`.
+This allows the call to the `commit` method above
+to be replaced by `this.appendColor('red');`.
+
+Within a mutation there are two ways to update a state property.
+For example, to change the foo.bar property to 'baz' we can use
+`state.foo.bar = 'baz'` or `Vue.set(state.foo, 'bar', 'baz')`.
+Why would the second form ever be preferred?
 
 Getters can be defined in the store
 to retrieve computed values. For example:
