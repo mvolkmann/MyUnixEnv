@@ -108,6 +108,20 @@ with the following properties.
   `default` (must match the `type`),
   and `required` (boolean).
 
+  Supported types include
+  `Boolean`, `Number`, `String`, `Symbol`,
+  `Date`, `Function`, `Object`, and `Array`.
+  A custom class name can also be used.
+
+  For more fine-grained validation, supply a `validator` method
+  that returns true if the prop value is valid. For example:
+
+  ```js
+    validator(value) {
+      return typeof(value) === 'object' && value.someRequiredProperty;
+    }
+  ```
+
   Prop values are passed in from parent components using attributes.
   They can be any kind of value, including functions
   defined in the parent component that the child component can call.
@@ -431,6 +445,11 @@ add the following to the instance definition object:
   mounted() {
     console.log('{component-name}: this =', this);
   }
+
+## Inserting Children
+
+A custom component can insert child elements into its template
+with `<slot></slot>`.
 
 ## Refs
 
