@@ -92,14 +92,21 @@ with the following properties.
   This lists other components used by this component inside curly braces.
   It is an object where keys are component names and values are components.
   With ES6 object shorthand, it can be written as `{Foo, Bar}`.
+  It's a bummer that Vue requires listing all the components used in template!
 
 - `props`\
-  This is an object describing the props this component accepts.
+   This is an object describing the props this component accepts.
   The keys are prop names and the values are their types.
   For example, `props: {name: String, age: Number}`.
 
   It can also be an array of just prop names,
   but that bypasses type checking and isn't recommended.
+
+  When props are defined using an object,
+  each prop value can be a type or an object
+  with the properties `type`,
+  `default` (must match the `type`),
+  and `required` (boolean).
 
   Prop values are passed in from parent components using attributes.
   They can be any kind of value, including functions
@@ -239,7 +246,8 @@ allow it to minimize the number of DOM updates required when data changes.
 
 This is used to register event handling.
 The value specified can be the name of a method or
-a JavaScript statement such as assigning a value to a data property.
+a JavaScript statement such as a method call with arguments
+or assigning a value to a data property.
 For example, assuming `onDelete` is a component method:
 
 ```js
@@ -410,6 +418,8 @@ They are defined as top-level properties in an instance definition.
 - `beforeUpdate` and `updated`
 - `beforeDestroy` and `destroyed`
 
+Properties are not added to `this` yet in `beforeCreate`.
+
 The most commonly used of these are `created` and `updated`.
 These corresponds to the React lifecycle methods
 `componentDidMount` and `componentDidUpdate`.
@@ -419,7 +429,7 @@ add the following to the instance definition object:
 
 ````js
   mounted() {
-    console.log('{conponent-name}: this =', this);
+    console.log('{component-name}: this =', this);
   }
 
 ## Refs
