@@ -775,6 +775,26 @@ Vue requires additional learning that is not required in React.
 
 Evaluation: small win for React
 
+### Overriding Component CSS
+
+Parent components can override the CSS specified in child components
+by simply using CSS selectors that have higher specificity.
+The top element of component instances
+are not assigned any id or class name by default.
+
+Adding a class to the top element in component templates
+is helpful in allowing ancestor components
+to target child components in CSS selectors.
+
+For example, suppose we have an `App` component
+that renders a `TodoList` component
+that renders `Todo` components.
+If we add `class="todo-list"` and `class="todo"`
+to the top elements of the `TodoList` and `Todo` components
+then the `App` component can override the style for buttons
+specified in the `Todo` component with the CSS selector
+`.todo-list .todo button { ... }`
+
 ### Generated CSS
 
 In React there are many approaches that can be used
