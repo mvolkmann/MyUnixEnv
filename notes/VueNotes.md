@@ -702,6 +702,10 @@ For more detail, see <https://router.vuejs.org/guide/>.
 In Vue components are defined by an object and
 event handling is implemented with methods on that object.
 There seems to be no way to use plain functions.
+This is a major difference from React where components
+and event handling can all be defined with plain functions.
+A benefit of this is that React can be learned without
+learning how classes and the keyword `this` work in JavaScript.
 
 In React components can be defined by a plain function
 as can event handling.
