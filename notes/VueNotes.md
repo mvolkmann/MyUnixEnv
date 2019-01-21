@@ -851,6 +851,14 @@ that was created by the CLI, but without requesting use of Jest:
 - `npm install babel-core`
 - `npm install babel-jest`
 - `npm install eslint-plugin-jest`
+- create `babel.config.js` file with the following content
+
+  ```js
+  module.exports = {
+    presets: ['@vue/app']
+  };
+  ```
+
 - edit `package.json`
   - add the following scripts
     - "test:e2e": "vue-cli-service test:e2e",
@@ -859,6 +867,7 @@ that was created by the CLI, but without requesting use of Jest:
   - in the "eslintConfig" object,
     add `"plugins": ["jest"],`
   - add the following section
+
     ```js
       "jest": {
         "moduleFileExtensions": [
@@ -899,3 +908,5 @@ describe('some name', () => {
 ```
 
 To run unit tests, enter `npm run test:unit`.
+This is supposed to also support a `--watch` option,
+but that seemed to broken the last time I tried to use it.
