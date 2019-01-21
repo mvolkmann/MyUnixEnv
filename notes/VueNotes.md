@@ -713,6 +713,97 @@ So most React code will just use plain functions for everything.
 This removes the need to understand the value of the `this` keyword
 and how classes work.
 
+## Easier to Learn?
+
+Many claim a benefit of Vue is that it is easier to learn than React's JSX.
+This comes down to comparing the ways in which JSX differs from HTML
+to the things that Vue adds to HTML.
+Let's compare them point by point.
+
+### Inserting Content
+
+In React, the result of a JavaScript expression is
+inserted into the DOM by enclosing it in curly braces.
+For example, `{new Date().toString()}`
+
+The Vue the same approach is used,
+but with double curly braces.
+For example, `{{new Date().toString()}}`
+
+Evaluation: tie
+
+### Changes in Attribute Names
+
+In React JSX, some HTML attributes must be specified with
+a different name because they are keywords in JavaScript.
+The most common are `class` which must be specified as `className` and
+`for` (often used on `label` elements) which must be specified as `htmlFor`.
+Another difference is that event handling attributes
+must be camel-cased. For example, `onclick` must be specified as `onClick`.
+While these differences are an annoyance, when developers
+forget to use the alternate names, React gives very clear error messages.
+
+In Vue, event handling attributes are specified using
+the `v-on` directive or its shorthand form `@`.
+For example, instead of `onclick`, `v-on:click` or `@click` must be used.
+
+Evaluation: small win for Vue
+
+### Directives
+
+Vue defines many directives that can be used in HTML.
+Some of these support conditional logic and iteration.
+Examples include `v-if` and `v-for`.
+
+Vue also supports defining custom directives.
+Use of these should probably be discouraged
+since developers that are familiar with Vue
+will not be familiar with custom directives
+being used in an application that is new to them.
+
+React relies on knowledge of JavaScript and the DOM
+for implementing the same tasks.
+JavaScript in curly braces is used for conditional logic and iteration.
+Iteration is primarily achieved using the Array `map` method.
+
+For developers that already have strong knowledge of JavaScript and the DOM,
+Vue requires additional learning that is not required in React.
+
+Evaluation: small win for React
+
+### Generated CSS
+
+In React there are many approaches that can be used
+to associate CSS with component elements.
+There are several CSS-in-JS libraries that are popular.
+Plain CSS and Sass can also be used.
+An advantage of choosing Sass is that nested rules can be used
+to scope CSS to the CSS class of the top element of each component.
+
+In Vue, CSS for a component is typically specified
+in the `.vue` source file for the component.
+Each element is assigned a unique data attribute.
+For example, `<button data-v-ee48fd14="">some text</button>`.
+CSS for this button will have the selector `button[data-v-ee48fd14]`.
+This is less readable than using
+CSS class names selected by the developer.
+
+Evaluation: win for React
+
+### CLI Startup
+
+In React applications created with create-react-app,
+entering `npm start` starts a local HTTP server
+opens a tab in the default web browser,
+and runs the app.
+
+In Vue applications created with the Vue CLI,
+entering `npm run serve` starts a local HTTP server,
+by it does not open a browser tab for the application.
+That must be done manually.
+
+Evaluation: win for React
+
 ## Slots
 
 What are these?
