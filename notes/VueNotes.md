@@ -717,7 +717,7 @@ So most React code will just use plain functions for everything.
 This removes the need to understand the value of the `this` keyword
 and how classes work.
 
-## Easier to Learn?
+## Easier to Learn
 
 Many claim a benefit of Vue is that it is easier to learn than React's JSX.
 This comes down to comparing the ways in which JSX differs from HTML
@@ -828,6 +828,74 @@ That must be done manually.
 
 Evaluation: win for React
 
-## Slots
+## Unit Testing
 
-What are these?
+Projects created with Vue CLI 3 do not support tests by default.
+To get test support, select "Manually select features" instead of "default".
+Then select "Unit Testing" and "E2E Testing".
+For the "unit testing solution" choose between
+"Mocha + Chai" and "Jest" (preferred).
+For the "E2E testing solution" choose between
+"Cypress" (preferred) and "Nightwatch (Selenium-based)".
+Assuming that Jest and Cypress are selected,
+this also installs @vue/test-utils,
+@vue/cli-plugin-e2e-cypress (depends on cypress and more), and
+@vue/cli-plugin-unit-jest (depends on jest and more).
+
+To add the ability to run Jest and Cypress tests to an existing Vue project
+that was created by the CLI, but without requesting use of Jest:
+
+- `npm install @vue/test-utils`
+- `npm install @vue/cli-plugin-e2e-cypress`
+- `npm install @vue/cli-plugin-unit-jest`
+- `npm install babel-core`
+- `npm install babel-jest`
+- `npm install eslint-plugin-jest`
+- edit `package.json`
+  - add the following scripts
+    - "test:e2e": "vue-cli-service test:e2e",
+    - "test:unit": "vue-cli-service test:unit"
+  - in the "env" object, add `"jest/globals": true,`
+  - in the "eslintConfig" object,
+    add `"plugins": ["jest"],`
+  - add the following section
+    ```js
+      "jest": {
+        "moduleFileExtensions": [
+          "js",
+          "jsx",
+          "json",
+          "vue"
+        ],
+        "transform": {
+          "^.+\\.vue$": "vue-jest",
+          ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+          "^.+\\.jsx?$": "babel-jest"
+        },
+        "moduleNameMapper": {
+          "^@/(.*)$": "<rootDir>/src/$1"
+        },
+        "snapshotSerializers": [
+          "jest-serializer-vue"
+        ],
+        "testMatch": [
+          "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
+        ],
+        "testURL": "http://localhost/"
+      }
+  ```
+
+Unit test source files should be placed in directories below `tests/unit`
+in files whose names end with `.spec.js`.
+
+Jest test source files have the following structure:
+
+```js
+describe('some name', () => {
+  it('something being tested', () => {
+    expect(someResult).toBe(someExpectedValue);
+  });
+});
+```
+
+To run unit tests, enter `npm run test:unit`.
