@@ -851,14 +851,6 @@ that was created by the CLI, but without requesting use of Jest:
 - `npm install babel-core`
 - `npm install babel-jest`
 - `npm install eslint-plugin-jest`
-- create `babel.config.js` file with the following content
-
-  ```js
-  module.exports = {
-    presets: ['@vue/app']
-  };
-  ```
-
 - edit `package.json`
   - add the following scripts
     - "test:e2e": "vue-cli-service test:e2e",
@@ -866,9 +858,14 @@ that was created by the CLI, but without requesting use of Jest:
   - in the "env" object, add `"jest/globals": true,`
   - in the "eslintConfig" object,
     add `"plugins": ["jest"],`
-  - add the following section
+  - add the following sections
 
     ```js
+      "babel": {
+        "presets": [
+          "@vue/app"
+        ]
+      },
       "jest": {
         "moduleFileExtensions": [
           "js",
