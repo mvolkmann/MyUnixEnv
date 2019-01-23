@@ -924,10 +924,6 @@ that was created by the CLI, but without requesting use of Jest:
       }
     ```
 
-  ```
-
-  ```
-
 Unit test source files should be placed in directories below `tests/unit`
 in files whose names end with `.spec.js`.
 
