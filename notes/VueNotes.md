@@ -699,6 +699,8 @@ For more detail, see <https://router.vuejs.org/guide/>.
 
 ## Comparison to React
 
+### Component Definitions
+
 In Vue components are defined by an object and
 event handling is implemented with methods on that object.
 There seems to be no way to use plain functions.
@@ -717,12 +719,29 @@ So most React code will just use plain functions for everything.
 This removes the need to understand the value of the `this` keyword
 and how classes work.
 
-## Easier to Learn
+### Ease of Learning
 
 Many claim a benefit of Vue is that it is easier to learn than React's JSX.
 This comes down to comparing the ways in which JSX differs from HTML
 to the things that Vue adds to HTML.
 Let's compare them point by point.
+
+### Error Messages
+
+React currently provides clearer error messages than Vue.
+Often Vue only provides a brief error message with a stack trace in the browser.
+
+### Performance
+
+React uses virtual DOM diffing to determine the actual DOM updates that are required.
+
+Vue changes all data objects and VueX state objects to track property changes
+by modifying them at startup using the defineProperty method
+which adds getter and setter methods for all properties.
+Vue refers to this as making the objects "reactive".
+This has a startup cost, but results in faster determination
+of required DOM changes than React.
+Perhaps this is why live reload is slower in Vue than in React.
 
 ### Inserting Content
 
@@ -806,7 +825,8 @@ to scope CSS to the CSS class of the top element of each component.
 
 In Vue, CSS for a component is typically specified
 in the `.vue` source file for the component.
-Each element is assigned a unique data attribute.
+When the `<style>` tag has the `scoped` attribute,
+each element is assigned a unique data attribute.
 For example, `<button data-v-ee48fd14="">some text</button>`.
 CSS for this button will have the selector `button[data-v-ee48fd14]`.
 This is less readable than using
@@ -842,6 +862,18 @@ this also installs @vue/test-utils,
 @vue/cli-plugin-e2e-cypress (depends on cypress and more), and
 @vue/cli-plugin-unit-jest (depends on jest and more).
 
+By default, unit test source files are expected to be
+under the `tests/unit` or `__tests__` directories.
+To colocate tests with the source files they test,
+modify the "testMatch" property in the "jest" section
+of `package.json` as follows:
+
+```js
+    "testMatch": [
+      "**/src/**/*.spec.js"
+    ],
+```
+
 To add the ability to run Jest and Cypress tests to an existing Vue project
 that was created by the CLI, but without requesting use of Jest:
 
@@ -852,6 +884,7 @@ that was created by the CLI, but without requesting use of Jest:
 - `npm install babel-jest`
 - `npm install eslint-plugin-jest`
 - edit `package.json`
+
   - add the following scripts
     - "test:e2e": "vue-cli-service test:e2e",
     - "test:unit": "vue-cli-service test:unit"
@@ -889,6 +922,10 @@ that was created by the CLI, but without requesting use of Jest:
         ],
         "testURL": "http://localhost/"
       }
+    ```
+
+  ```
+
   ```
 
 Unit test source files should be placed in directories below `tests/unit`
