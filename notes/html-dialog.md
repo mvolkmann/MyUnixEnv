@@ -1,4 +1,4 @@
-# HTML `<dialog>` Element
+# HTML \<dialog\> Element
 
 The `<dialog>` element was added to HTML in version 5.2.
 It provides a way to define dialogs that can be styled with CSS.
