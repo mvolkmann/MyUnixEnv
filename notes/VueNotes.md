@@ -96,7 +96,8 @@ Their content is valid HTML with the following layout:
 
 <script>
   JavaScript goes here.
-  This can import other component .vue files.
+  This can import other component .vue and .js files.
+  It is not necessary to include the file extension.
   It should export an "instance definition" object
   as the default export.
 </script>
@@ -570,6 +571,35 @@ that calls a method to get more JSX.
       return this.colors.map(color => <li>{color}</li>);
     }
   },
+```
+
+Here is an example that includes event handling.
+Note the differences between Vue template syntax and JSX syntax.
+Interpolation is done with single curly braces instead of double.
+Event handling is done with "on" attributes.
+These supply a value in curly braces that
+is the name of a method, not a call to it.
+
+```js
+export default {
+  name: 'MyJsx',
+  data() {
+    return {on: false};
+  },
+  methods: {
+    toggleOn() {
+      this.on = !this.on;
+    }
+  },
+  render() {
+    return (
+      <div>
+        <div>on? {String(this.on)}</div>
+        <button onclick={this.toggleOn}>Toggle On</button>
+      </div>
+    );
+  }
+};
 ```
 
 ## Lifecycle Methods
