@@ -260,6 +260,10 @@ Each interpolation is a pair of double curly braces
 containing a single JavaScript expression.
 For example, `{{ new Date().toString() }}`.
 
+Component methods can be called from inside these curly braces,
+but plain functions defined outside the component definition
+cannot be called. See <https://github.com/elbywan/bosket/issues/23>.
+
 A component template is compiled into a `render` function
 that is called to produce the DOM for the component.
 It is also possible to omit the template
@@ -517,9 +521,10 @@ to output a data value. For example, these are equivalent:
 
 ## JSX
 
-Components can specify what to render using either a template or JSX.
+Components can specify what to render using either an HTML template or JSX.
 To use JSX, omit the template and include a `render` method
-at the top of the object that describes the component.
+at the top level of the instance definition object.
+
 Use of JSX requires a Babel plugin.
 Applications created by the Vue CLI have this configured by default.
 
@@ -542,14 +547,11 @@ export default {
 </script>
 ```
 
-This can also include a `<style>` element.
+Components that use a `render` method instead of an HTML template
+can still include a `<style>` element.
 However, if no CSS is needed, the file extension can be changed to `.js`
 and the `<script>` start and end tags can be removed.
 This works because in this case the Vue build tooling is not needed.
-
-Component methods can be called from inside curly braces,
-but plain functions defined outside the component definition
-cannot be called. See <https://github.com/elbywan/bosket/issues/23>.
 
 Here's an example of a `render` method that returns JSX
 that calls a method to get more JSX.
