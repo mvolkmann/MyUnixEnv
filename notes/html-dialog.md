@@ -161,3 +161,8 @@ dialog + .backdrop /* for the dialog-polyfill */ {
   background-color: rgba(0, 0, 0, 0.2);
 }
 ```
+
+## Summary
+
+Even with the need to use a polyfill,
+the `<dialog>` element is pretty easy to use!
