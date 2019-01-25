@@ -196,20 +196,48 @@ with the following properties:
 - `computed`\
   This is an object describing props that are
   computed based on other props and data.
+  The object defines methods whose names are prop names.
+  The methods return value of their prop.
+  For example:
+
+  ```js
+  computed: {
+    fullName() {
+      return this.firstName + ' ' + this.lastName;
+    }
+
+    // This works, but is too verbose.
+    //fullName: function () {
+    //  return this.firstName + ' ' + this.lastName;
+    //}
+
+    // This does not work!
+    //fullName: () => this.firstName + ' ' + this.lastName
+  }
+  ```
 
 - `data`\
-  This must be a function that returns data specific to a component instance.
-  This allows each instance can maintain its own data.
-  It is similar to "state" in React.
-  If the `data` property is set to an object instead of a function,
+  This must be a function that returns an object
+  containing data specific to a component instance.
+  It allows each instance can maintain its own data
+  and is similar to "state" in React.
+
+  The keys are data names and the values are
+  their initial values which can be changed later.
+  The keyword `this` is used to in component methods
+  to get and set these values.
+
+  If this is set to an object instead of a function,
   the following error will be output:
   "error: data property in component must be a function"
 
 - `methods`\
-  This is an object that defines the methods of this component.
+  This is an object that defines the component methods.
   They are primarily used for event handling.
-  Lifecycle methods are not defined here.
   The keyword "this" refers to a component instance in these methods.
+
+  Lifecycle methods are defined at the top of
+  the instance definition object, not defined here.
 
 Much of the data defined in the properties above
 can be accessed in methods using the `this` keyword.
@@ -227,10 +255,12 @@ Assets such as images, audio, and video typically reside in
 ## Templates
 
 Templates hold the HTML that is rendered by a component.
-They can contain Vue directives and
-interpolations (in double curly braces) that insert dynamic data.
+They can contain Vue directives and interpolations that insert dynamic data.
+Each interpolation is a pair of double curly braces
+containing a single JavaScript expression.
+For example, `{{ new Date().toString() }}`.
 
-A component template is compiled into a render function
+A component template is compiled into a `render` function
 that is called to produce the DOM for the component.
 It is also possible to omit the template
 and manually write a `render` function.
@@ -242,7 +272,7 @@ This function is passed as the only argument to the `render` function.
 that is syntactic sugar for calls to `createElement`.
 
 The `createElement` function takes three arguments,
-the element name, an object describing attributes,
+the element name, an object describing its attributes,
 and an array of child nodes.
 Only the first argument is required.
 If only two arguments are supplied,
@@ -254,7 +284,7 @@ For example:
 ```js
   render(createElement) {
     return createElement('h1', 'Hello from createElement!');
-    // OR
+    // or alternatively
     //return <h1>Hello from JSX!</h1>;
   },
 ```
@@ -262,33 +292,36 @@ For example:
 ## Inserting Template Text
 
 To insert the value of a single JavaScript expression
-that can use the values of props and data,
 use interpolation via double curly braces.
 For example, `{{expression}}`.
 
 The expression can be any valid JavaScript expression
 including a ternary or a function call.
-It cannot be a JavaScript statement like
+It can access instance props and data, and can call component methods.
+It cannot be a JavaScript statement such as
 a variable declaration or `if` statement.
 
-If the text contains HTML to be rendered, use
-`<span v-html="prop-name"></span>`.
+If a prop or data value is a string of HTML to be rendered,
+use `<span v-html="prop-name"></span>`.
 The HTML should not contain Vue directives
 because those will not be processed.
 
 ## Template Directives
 
-These directives can appear as HTML attributes in a component template.
+Template directives appear as HTML attributes in a component template.
+Each of the builtin template directives are described below.
+It is also possible to define custom directives.
 
 ### `v-bind` or shorthand `:`
 
-This binds a prop value in the current component
-to a prop of another component.
-For example, `<input :checked="isChecked">`
+This binds a prop value in the current component instance
+to a prop of another component or HTML element.
+For example, `<input v-bind:checked="isChecked">`
+or `<input :checked="isChecked">`.
 
 ### `v-if`, `v-else-if`, `v-else`
 
-This provides conditional rendering.
+These provides conditional rendering.
 For example:
 
 ```js
@@ -314,16 +347,17 @@ For example:
 </div>
 ```
 
-Note that binding a value to the `key` prop is needed by Vue to
-allow it to minimize the number of DOM updates required when data changes.
+Note that binding a value to the `key` prop is required to allow Vue
+to minimize the number of DOM updates performed when data changes.
 
 ### `v-on:event-name` or shorthand `@event-name`
 
-This is used to register event handling.
+This registers event handling for a specific event.
 The value specified can be the name of a method or
 a JavaScript statement such as a method call with arguments
 or assigning a value to a data property.
-For example, assuming `onDelete` is a component method:
+For example, assuming `delete`, `add`, and `processKey`
+are component methods and `havePower` is a data property:
 
 ```js
 <button @click="onDelete">Delete</button> <!-- calls with no arguments -->
@@ -334,15 +368,17 @@ For example, assuming `onDelete` is a component method:
 
 Event modifiers can follow the event name. These include:
 
-- `.prevent` to trigger event.preventDefault();
-- `.stop` to trigger event.stopPropagation();
+- `.prevent` to trigger event.preventDefault()
+- `.stop` to trigger event.stopPropagation()
 - `.once` to only process the first event
 - `.self` to only process the event if it occurred
-  on this element (at the target)
+  on this element (at the target),
+  as opposed to on an ancestor element
 - `.capture` to only process the event if it
-  did not occur at the target and occurred during the capture phase
+  did not occur at the target and
+  occurred during the capture phase
 - `.passive` to ignore certain events during scrolling
-  to improve performance
+  in order to improve performance
 
 For example:
 
@@ -353,18 +389,20 @@ For example:
 Key modifiers check for common key codes. These include
 `.enter`, `.tab`, `.delete`, `.esc`, `.space`,
 `.up`, `.down`, `.left`, and `.right`.
-
-System modifiers check for keys that can be
-pressed in conjunction with another key
-to change the meaning. These include
-`.ctrl`, `.alt`, `.shift`, and `.meta`.
-In macOS, `.meta` detects the command key.
+When these are used, the event handling code is
+only invoked when the specified key is pressed.
 
 For example:
 
 ```js
 <input @keyPress.enter="handleEnterKey">
 ```
+
+System modifiers check for keys that can be
+pressed in conjunction with another key
+to change the meaning. These include
+`.ctrl`, `.alt`, `.shift`, and `.meta`.
+In macOS, `.meta` detects the command key.
 
 Mouse button modifiers check for presses of specific mouse buttons.
 These include `.left`, `.right`, and `.middle`.
