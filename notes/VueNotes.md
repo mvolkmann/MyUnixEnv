@@ -301,11 +301,6 @@ It can access instance props and data, and can call component methods.
 It cannot be a JavaScript statement such as
 a variable declaration or `if` statement.
 
-If a prop or data value is a string of HTML to be rendered,
-use `<span v-html="prop-name"></span>`.
-The HTML should not contain Vue directives
-because those will not be processed.
-
 ## Template Directives
 
 Template directives appear as HTML attributes in a component template.
@@ -410,7 +405,7 @@ These include `.left`, `.right`, and `.middle`.
 ### `v-model`
 
 This creates a two-way binding between
-a form component value and a component prop.
+a form element value and a component prop.
 It can be used in `<input>`, `<textarea>`, and `<select>` elements.
 Recall that `<input>` elements can be used for
 text, checkboxes, and radio buttons.
@@ -422,38 +417,93 @@ For example:
 ```
 
 For checkboxes, the `v-model` for multiple `<input>` elements
-can be the same array. The checkbox values will be used
+can be the same array. The checkbox values are used
 to populate the array when they are checked.
+For example:
+
+```html
+<template>
+  ...
+  <div v-for="color in colors" :key="color">
+    <input
+      :id="color"
+      type="checkbox"
+      v-model="selectedColors"
+      :value="color"
+    />
+    <label :for="color">{{color}}</label>
+  </div>
+  ...
+</template>
+...
+<script>
+  ...
+  data: () => {
+    return {
+      colors: ['red', 'green', 'blue'],
+      selectedColors: []
+    };
+  },
+  ...
+</script>
+```
 
 ### `v-show`
 
-This sets the value of the CSS `display` property for this element.
+This toggles the value of the CSS `display` property for an element
+between its normal value (such as "block" or "inline") and "none".
+For example, assuming the component has
+a `data` property named `showGreeting`:
+
+```html
+<div v-show="showGreeting">Hello!</div>
+<button @click="showGreeting = !showGreeting">Toggle Greeting</button>
+```
+
+This differs from conditional rendering using `v-if`
+in that `v-if` will remove elements from the DOM
+when the condition is false
+whereas `v-show` leaves the element in the DOM
+and just changes its CSS `display` property.
 
 ### Other Directives
 
 `v-cloak`
 
-This hides an element until all data it uses has been loaded to
-avoid displaying unevaluated interpolations (double curly braces).
-It also requires CSS changes.
+This hides an element until all the data it uses has been loaded.
+The benefit is that it avoids displaying unevaluated interpolations
+(double curly braces).
+This rarely occurs, so `v-cloak` is rarely used.
+
+In order for this directive to work,
+the following CSS rule must be defined:
+
+```css
+[v-cloak] {
+  display: none;
+}
+```
 
 `v-html`
 
 This is used to render a string of HTML as HTML instead of plain text.
 For example, `<span v-html="myHtml"></span>` where `myHtml`
 is a prop or data value that is a string of HTML.
+The HTML should not contain Vue directives
+because those will not be processed.
 
 `v-once`
 
 This causes the content of an element to be evaluated only once.
 If data used in the content changes after the initial render,
-the element will continue to render the same as the initial render.
+the element will continue to render
+the same output as the initial render.
 
 `v-pre`
 
 This skips all evaluation of element content
 which allows rendering double curly braces.
-It is useful for outputting Vue example code.
+One use if for outputting example Vue code.
 
 `v-text`
 
