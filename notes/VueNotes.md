@@ -604,39 +604,112 @@ export default {
 
 ## Lifecycle Methods
 
-The following optional component methods will be automatically called
+The following optional component methods are automatically called
 at specific points in the lifecycle of the component.
 They are defined as top-level properties in an instance definition.
 
 - `beforeCreate` and `created`
+  A component instance is consider to be created
+  after its data has been made "reactive".
+  At this point it is not yet part of the DOM.
+  Template compilation into a `render` method
+  occurs between `created` and `beforeMount`.
+
 - `beforeMount` and `mounted`
+  A component instance is mounted when
+  it is inserted into the DOM of its parent or
+  replaces the element referred to by its `el` property.
+
+  The `beforeMount` method can be use used to modify
+  the DOM before the component instance is rendered
+  for the first time.
+
+  The `mounted` method can be use used to modify
+  the DOM after the component instance is rendered
+  for the first time.
+  It method can be called before
+  all of its child components have been mounted.
+  To do something after all of those have been mounted
+  call `this.$nextTick` inside the `mounted` method,
+  passing it a function that it will call.
+
+  The `mounted` method is the most frequently used lifecycle method.
+  It is a common place for making
+  REST calls that get data needed by a component.
+
 - `beforeUpdate` and `updated`
+  A component instance is updated when
+  any of its props or data change.
+  These are sometimes used for debugging purposes.
+  The `updated` method can be used to
+  modify the DOM after a prop or data change.
+
 - `beforeDestroy` and `destroyed`
+  A component instance is destroyed when
+  it is removed from the DOM.
+  The `beforeDestroy` method is sometimes used
+  to unsubscribe from events and data streams.
 
-Properties are not added to `this` yet in `beforeCreate`.
-
-The most commonly used of these are `created` and `updated`.
+The most commonly used of these are `mounted` and `updated`.
 These corresponds to the React lifecycle methods
 `componentDidMount` and `componentDidUpdate`.
 
-To verify what is on the instance object,
+To see all the data and methods on an instance object,
 add the following to the instance definition object:
 
-````js
+```js
   mounted() {
-    console.log('{component-name}: this =', this);
+    console.log(this.$options._componentTag + ':', this);
   }
+```
 
-## Inserting Children
+//TODO: Is it correct to use the term "reactive data" below?
+When reactive data is displayed in the devtools console,
+values are represented with "(...)".
+Click that to see the actual value.
 
-A custom component can insert child elements into its template
-with `<slot></slot>`.
+## Inserting Child Nodes
+
+A custom component can insert child nodes into its template
+with `<slot>optional default content</slot>`.
+If no child nodes are provided, the default content is used.
+Otherwise it is replaced by the child nodes.
+
+The child nodes can be any kind of HTML content or Vue elements.
+
+For example, a custom select element named `Select`
+could insert child `option` elements.
+
+```html
+<select path="favorite.color">
+  <option>red</option>
+  <option>green</option>
+  <option>blue</option>
+</select>
+```
+
+The template for the `Select` element can use `<slot></slot>`
+to indicate where all the child nodes should be inserted.
+
+It is also possible for a template to contain multiple named slots.
+They simply add a `name` attribute to the `slot` element.
+Each can optionally define default content.
+
+Parent components specify the content for each named slot with
+`<template slot="slot-name">the content</template>`.
+Alternatively, the `slot` attribute can be used on a "normal" element.
+For example, `<div slot="slot-name">the content</div>`.
+
+Even when named slots are used, there can still be an unnamed slot
+that is used for any content not marked for a specific slot name.
+
+A related top is "scoped slots". These seem very complex!
 
 ## Refs
 
-Template elements can have a `ref` attribute
-that allows component methods to get a reference to them.
-This has many uses. One is to get a reference to an `input` element
+Template elements can have a `ref` attribute.
+This allows component methods to get a reference to them.
+It has many uses. One is to get a reference to an `input` element
 so that focus can be moved to it. For example:
 
 ```js
@@ -660,23 +733,59 @@ export default {
   }
 }
 </script>
-````
+```
 
 ## Using Sass
 
 To use Sass syntax in the `<style>` element of a Vue component,
-install some npm packages and
+install a couple npm packages and
 add a `lang` attribute to the `<style>` tag.
 
 To install the npm packages, enter
 `npm install -D sass-loader node-sass`.
 
 Change the opening `style` tag to
-`<style lang="scss" scope>`.
+`<style lang="scss">`.
 
 With this in place it is possible to
 use all features of Sass including
 variables, nested rules, and mixins.
+
+When the `<style>` tag has the `scoped` attribute,
+each element is assigned a unique data attribute.
+This is how scoping of CSS is achieved.
+For example, `<button data-v-ee48fd14="">some text</button>`.
+CSS for this button will have the selector `button[data-v-ee48fd14]`.
+This is less readable than using
+CSS class names selected by the developer.
+It can be avoided by using Sass nested rules and
+still keep the CSS for a component scoped to it.
+All that is needed is to follow this simple pattern.
+
+1. Add a class attribute to the top-most element in the template
+   whose name matches the name of the component.
+2. Wrap all the CSS for the component in a rule
+   that matches the class name used in step 1.
+
+For example:
+
+```html
+<template>
+  <div class="Foo">... content goes here ...</div>
+</template>
+
+<script>
+  export default {
+    name: 'Foo'
+  };
+</script>
+
+<style lang="scss">
+  .Foo {
+    ... CSS rules for this component go here ...
+  }
+</style>
+```
 
 ## Vue Devtools
 
@@ -994,26 +1103,6 @@ to the top elements of the `TodoList` and `Todo` components
 then the `App` component can override the style for buttons
 specified in the `Todo` component with the CSS selector
 `.todo-list .todo button { ... }`
-
-### Generated CSS
-
-In React there are many approaches that can be used
-to associate CSS with component elements.
-There are several CSS-in-JS libraries that are popular.
-Plain CSS and Sass can also be used.
-An advantage of choosing Sass is that nested rules can be used
-to scope CSS to the CSS class of the top element of each component.
-
-In Vue, CSS for a component is typically specified
-in the `.vue` source file for the component.
-When the `<style>` tag has the `scoped` attribute,
-each element is assigned a unique data attribute.
-For example, `<button data-v-ee48fd14="">some text</button>`.
-CSS for this button will have the selector `button[data-v-ee48fd14]`.
-This is less readable than using
-CSS class names selected by the developer.
-
-Evaluation: win for React
 
 ### CLI Startup
 
