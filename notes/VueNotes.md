@@ -1031,7 +1031,20 @@ change pages by using `v-if`, `v-else-if`, and `v-else`
 in the top component to choose a component to render
 based on a "route" value.
 
-For more detail, see <https://router.vuejs.org/guide/>.
+The `router-link` of the active route is given the class name `router-link-active`.
+This can be used to style the current link differently from the others.
+
+Route `path` strings can contain colon-prefixed parts
+to allow data to be passed when the route is changed.
+For example, `/item/:itemNumber`.
+Values for the colon-prefixed parts can be obtained
+from `$route.params` which is an object where
+the keys are the names after the colons
+and the values are the supplied values.
+
+Components can access the router instance using `this.$router`.
+
+For more detail on vue-router, see <https://router.vuejs.org/guide/>.
 
 ## More on Vue CLI
 
