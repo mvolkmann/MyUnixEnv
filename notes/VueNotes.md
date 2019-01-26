@@ -577,6 +577,7 @@ Here is an example that includes event handling.
 Note the differences between Vue template syntax and JSX syntax.
 Interpolation is done with single curly braces instead of double.
 Event handling is done with "on" attributes.
+The name can be all lowercase (ex. `onclick`) or camel-case (ex. `onClick`).
 These supply a value in curly braces that
 is the name of a method, not a call to it.
 
@@ -595,7 +596,7 @@ export default {
     return (
       <div>
         <div>on? {String(this.on)}</div>
-        <button onclick={this.toggleOn}>Toggle On</button>
+        <button onClick={this.toggleOn}>Toggle On</button>
       </div>
     );
   }
