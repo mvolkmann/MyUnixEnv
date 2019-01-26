@@ -1014,12 +1014,23 @@ It is based on the battle-tested React libraries
 
 ## Vue-Router
 
+This is the most popular routing library for Vue.
+It was developed by and is maintained by the Vue team.
+
 The vue-router library maps URLs to components and supports
 navigation between "pages" using the `<router-link>` elements.
 The current route can also be changed from JavaScript code
 by calling `this.$router.go` or `this.$router.push`.
 The current route is render in a `<router-view>` element
 that is typically rendered by the top-most component.
+
+Some applications do not need the features of a router.
+For applications that do not need the URL to change
+for different "pages" of the app, it's possible to
+change pages by using `v-if`, `v-else-if`, and `v-else`
+in the top component to choose a component to render
+based on a "route" value.
+
 For more detail, see <https://router.vuejs.org/guide/>.
 
 ## More on Vue CLI
