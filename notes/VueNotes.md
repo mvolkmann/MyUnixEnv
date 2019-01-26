@@ -824,8 +824,9 @@ It was developed by and is maintained by the Vue team.
 
 To install it in a project, enter `npm install vuex`.
 
+### Store Setup
+
 Create the file `src/store.js` and add the following:
-At the top of the app, likely in `App.js`, add the following:
 
 ```js
 import Vue from 'vue';
@@ -834,13 +835,13 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 ```
 
-The next step is to create the store
+In the same file, create the store
 which can hold any number of pieces of state.
-This defines the initial state and mutation methods that modify it.
+It defines the initial state and mutation methods that modify it.
 Mutations are the only way to modify the state
 and they must be synchronous methods.
 They are not called directly and are instead invoked by calling
-`this.$store.commit` which is described later.
+`this.$store.commit` (described later) from components.
 
 Suppose we want to hold a year and an array of color names.
 
@@ -848,13 +849,10 @@ Suppose we want to hold a year and an array of color names.
 export default new Vuex.Store({
   strict: true,
   state: {
-    year: new Date().getFullYear(),
+    year: new Date().getFullYear(), // current year
     colors: ['yellow', 'orange']
   },
   mutations: {
-    setYear(state, year) {
-      state.year = year;
-    },
     clearColors(state) {
       state.colors = [];
     }
@@ -862,6 +860,9 @@ export default new Vuex.Store({
       // Note that state properties can be modified in mutation functions.
       // It is not necessary to treat the state object as immutable here.
       state.colors.push(color);
+    },
+    setYear(state, year) {
+      state.year = year;
     }
   }
 });
@@ -871,6 +872,8 @@ When `strict` is `true` an error is thrown
 if the state is modified outside of a mutation.
 This is very desirable!
 
+### Using From Components
+
 Register the store with the top component.
 This "injects" store access into all descendant components.
 For example, this can be done in `src/App.js`:
@@ -879,9 +882,9 @@ For example, this can be done in `src/App.js`:
 import store from './store';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    ...components used by the App component are listed here...
+    // Components used by the App component are listed here.
   },
   store
 };
@@ -902,13 +905,15 @@ export default {
   name: 'SomeComponent',
   computed: {
     ...mapState({
-      year: state => state.year,
-      colors: state => state.colors
+      colors: state => state.colors,
+      year: state => state.year
     })
-    // can define additional computed properties here
+    // More computed properties can be defined here.
   }
 };
 ```
+
+### Triggering Mutations
 
 To trigger mutations from a component, call
 `this.$store.commit(mutationName, arg)`.
@@ -920,13 +925,14 @@ Any components that use the state affected by the mutation
 will be updated.
 
 Another option is to use `mapMutations` to generate methods
-that make these calls for you.
-This returns an object that should be spread into the "mutations" property.
+that make these calls for you. This returns an object that
+should be spread into the `mutations` property.
 For example:
 
 ```js
   methods: {
     ...mapMutations(['appendColor'])
+    // More methods can be defined here.
   }
 ```
 
@@ -934,9 +940,11 @@ This allows the call to the `commit` method above
 to be replaced by `this.appendColor('red');`.
 
 Within a mutation there are two ways to update a state property.
-For example, to change the foo.bar property to 'baz' we can use
+For example, to change the `foo.bar` property to `'baz'` we can use
 `state.foo.bar = 'baz'` or `Vue.set(state.foo, 'bar', 'baz')`.
 Why would the second form ever be preferred?
+
+### Getters
 
 Getters can be defined in the store
 to retrieve computed values. For example:
@@ -954,7 +962,7 @@ Computed properties can be created inside a component
 that map to getters so they can be referred to
 with just computed property names.
 The `mapGetters` function returns an object that
-should be spread into the "computed" property.
+should be spread into the `computed` property.
 For example:
 
 ```js
@@ -968,14 +976,41 @@ export default {
   }
 ```
 
+### Actions
+
 Actions support asynchronous mutation commits
 and triggering multiple commits.
 See <https://vuex.vuejs.org/guide/actions.html>.
+
+Actions are never really needed.
+Any asynchronous processing, such as calling a REST service,
+can be done in an event handling method instead of an action.
+When the asynchronous part completes,
+a synchronous VueX commit can be performed.
+
+If common event handling code is needed across multiple components,
+it can be implemented as a plain function
+that is imported into each of the components
+and invoked from their event handling methods.
+This is simpler than using VueX actions.
+
+### Splitting the Store
 
 The Vuex store can be split into multiple "modules".
 Each of these have their own state, getters, mutations, and actions.
 Modules can be further divided into sub-modules.
 This is a bad idea! Using a single store is far easier.
+
+### vuex-easy
+
+For the easiest way possible to use VueX,
+see [vuex-easy](https://www.npmjs.com/package/vuex-easy).
+This acts as a layer above the VueX library,
+so the Vue devtools Vuex tab can still be used.
+It makes it unnecessary to implement any mutations.
+It is based on the battle-tested React libraries
+[redux-easy](https://www.npmjs.com/package/redux-easy) and
+[context-easy](https://www.npmjs.com/package/context-easy).
 
 ## Vue-Router
 
