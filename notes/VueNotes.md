@@ -1210,9 +1210,10 @@ It is possible for a URL to match more than one route path.
 When this happens, the first matching route path,
 in the order in which they are defined, is selected.
 
-### Nested Routes
+### Named and Nested
 
-The vue-router library also supports nested routes and nested views.
+The vue-router library also supports named routes,
+named views, and nested named views.
 These are advanced topics that most applications do not need.
 For more detail on vue-router, see <https://router.vuejs.org/guide/>.
 
