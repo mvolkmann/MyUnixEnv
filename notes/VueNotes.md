@@ -106,7 +106,7 @@ the `.vue` files under `src/components`.
 Vue components are rendered using a virtual DOM (like React)
 to minimize the number of actual DOM updates that are performed.
 They are automatically updated when their data changes.
-This includes changes to the state in a VueX store if that is used.
+This includes changes to the state in a Vuex store if that is used.
 
 ## .vue Files
 
@@ -819,7 +819,7 @@ For example:
 </style>
 ```
 
-## VueX
+## Vuex
 
 This is the most popular state management library for Vue.
 It was developed by and is maintained by the Vue team.
@@ -988,13 +988,13 @@ Actions are never really needed.
 Any asynchronous processing, such as calling a REST service,
 can be done in an event handling method instead of an action.
 When the asynchronous part completes,
-a synchronous VueX commit can be performed.
+a synchronous Vuex commit can be performed.
 
 If common event handling code is needed across multiple components,
 it can be implemented as a plain function
 that is imported into each of the components
 and invoked from their event handling methods.
-This is simpler than using VueX actions.
+This is simpler than using Vuex actions.
 
 ### Splitting the Store
 
@@ -1005,9 +1005,9 @@ This is a bad idea! Using a single store is far easier.
 
 ### vuex-easy
 
-For the easiest way possible to use VueX,
+For the easiest way possible to use Vuex,
 see [vuex-easy](https://www.npmjs.com/package/vuex-easy).
-This acts as a layer above the VueX library,
+This acts as a layer above the Vuex library,
 so the Vue devtools Vuex tab can still be used.
 It makes it unnecessary to implement any mutations.
 It is based on the battle-tested React libraries
@@ -1083,6 +1083,13 @@ export default new Router({
   ]
 });
 ```
+
+Hash routing is the technique where URLs contain a "#" character.
+Changes in the URL before the hash are handled by the server
+and changes after the hash are handled in the browser.
+By setting the router `mode` to `history`,
+the same functionality is achieved without the hash character
+which results in better looking URLs.
 
 The file `main.js` should import the `Router` object
 that is exported from `router.js`
@@ -1257,7 +1264,7 @@ Often Vue only provides a brief error message with a stack trace in the browser.
 
 React uses virtual DOM diffing to determine the actual DOM updates that are required.
 
-Vue changes all data objects and VueX state objects to track property changes
+Vue changes all data objects and Vuex state objects to track property changes
 by modifying them at startup using the defineProperty method
 which adds getter and setter methods for all properties.
 Vue refers to this as making the objects "reactive".
