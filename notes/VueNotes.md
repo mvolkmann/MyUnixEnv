@@ -1457,6 +1457,16 @@ That must be done manually.
 
 Evaluation: small win for React
 
+#### Two-Way Data Binding
+
+In Vue, the `v-model` directive can be used to bind
+the value of a form element to a component data value.
+
+In React, implementing this functionality requires
+custom event handling methods and use of the `setState` method.
+
+Evaluation: win for Vue
+
 ## Unit Testing
 
 Projects created with Vue CLI 3 do not support tests by default.
