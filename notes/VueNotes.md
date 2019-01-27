@@ -3,6 +3,8 @@
 Vue is a web application framework that competes
 with other frameworks such as React and Angular.
 
+TODO: Add screenshots to some sections.
+
 ## Getting Started
 
 The easiest way to start a new application is to
@@ -1229,6 +1231,7 @@ with a new one, so the browser back button
 will not return to the previous URL.
 
 TODO: Add code from vue-router-demo that demonstrates this with links for fruits.
+TODO: See vue-router-demo project.
 
 ### Special Route Syntax
 
