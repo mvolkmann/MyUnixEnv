@@ -1441,9 +1441,9 @@ Iteration is primarily achieved using the Array `map` method.
 For developers that already have strong knowledge of JavaScript and the DOM,
 Vue requires additional learning that is not required in React.
 
-Evaluation: tie
+Evaluation: small win for React
 
-### CLI Startup
+#### CLI Startup
 
 In React applications created with create-react-app,
 entering `npm start` starts a local HTTP server
@@ -1455,7 +1455,7 @@ entering `npm run serve` starts a local HTTP server,
 by it does not open a browser tab for the application.
 That must be done manually.
 
-Evaluation: win for React
+Evaluation: small win for React
 
 ## Unit Testing
 
