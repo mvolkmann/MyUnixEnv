@@ -1221,10 +1221,50 @@ in the order in which they are defined, is selected.
 
 The vue-router library also supports named routes,
 named views, and nested named views.
-These are advanced topics that most applications do not need.
+These are advanced topics that many applications do not need.
+
 For more detail on vue-router, see <https://router.vuejs.org/guide/>.
 
 ## More on Vue CLI
+
+The Vue CLI tool has the following characteristics:
+
+- built on webpack and webpack-dev-server
+- provides good default webpack configuration
+
+The most commonly used Vue CLI commands are:
+
+- `vue create` creates a new project
+- `vue add` adds plugin to a project
+- `vue serve` runs a local HTTP server to demo/test a project in development mode
+- `vue build` builds a project in production mode
+  This command seems to be broken,
+  but `npm run build` can be used instead.
+  It creates a `dist` directory containing all
+  the files needed to deploy the application.
+- `vue ui` opens the web-based project dashboard which supports
+  - viewing installed plugins and installing more
+  - viewing installed dependencies and installing more
+  - viewing and modifying the CLI and ESLint configurations
+  - viewing and running project tasks
+  - killing the process listening on a given port
+- `vue info` outputs information about the current environment
+  that is useful in bug reporting, including:
+  - operating system
+  - CPU
+  - versions of binaries (Node, Yarn, and npm)
+  - versions of installed web browsers
+  - versions of installed npm packages
+
+Projects created by the Vue CLI have
+a runtime dependency on @vue/cli-service.
+Much of the functionality for developing a project
+comes from this. It can be upgraded as improvements are made.
+It is similar to the `react-scripts` library used by projects that are created by create-react-app.
+
+comes with the basic serve, build and inspect commands
+
+CLI Plugins are npm packages that provide optional features to your Vue CLI projects, such as Babel/TypeScript transpilation, ESLint integration, unit testing, and end-to-end testing. It's easy to spot a Vue CLI plugin as their names start with either @vue/cli-plugin- (for built-in plugins) or vue-cli-plugin- (for community plugins).
 
 ## Comparison to React
 
@@ -1449,3 +1489,7 @@ describe('some name', () => {
 To run unit tests, enter `npm run test:unit`.
 This is supposed to also support a `--watch` option,
 but that seemed to broken the last time I tried to use it.
+
+TODO: Add examples of unit tests.
+
+TODO: Add examples of e2e tests.
