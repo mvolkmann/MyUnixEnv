@@ -1553,3 +1553,14 @@ but that seemed to broken the last time I tried to use it.
 TODO: Add examples of unit tests.
 
 TODO: Add examples of e2e tests.
+
+## TypeScript
+
+The Vue CLI can generate projects that are configured to use TypeScript.
+It will ask if use of class-based syntax is desired.
+If choose not to use the class-based syntax,
+the source files it generates will not include any types.
+The only difference is that `main.js` becomes `main.ts` and
+the `.vue` files contain script tags that look like `<script lang=“ts”>`.
+So the project is ready for you to use TypeScript,
+but the generated code does not.
