@@ -285,7 +285,9 @@ Assets such as images, audio, and video typically reside in
 ## Templates
 
 Templates hold the HTML that is rendered by a component.
-They can contain Vue directives and interpolations that insert dynamic data.
+They must contain a single root element
+that contains all the other elements.
+They can use Vue directives and interpolations that insert dynamic data.
 Each interpolation is a pair of double curly braces
 containing a single JavaScript expression.
 For example, `{{ new Date().toString() }}`.
@@ -592,13 +594,13 @@ that calls a method to get more JSX.
       colors: ['red', 'green', 'blue']
     };
   },
-  render() {
-    return <ul>{this.getItems()}</ul>;
-  },
   methods: {
     getItems() {
       return this.colors.map(color => <li>{color}</li>);
     }
+  },
+  render() {
+    return <ul>{this.getItems()}</ul>;
   },
 ```
 
@@ -1020,29 +1022,193 @@ It was developed by and is maintained by the Vue team.
 The vue-router library maps URLs to components and supports
 navigation between "pages" using the `<router-link>` elements.
 The current route can also be changed from JavaScript code
-by calling `this.$router.go` or `this.$router.push`.
+by calling `this.$router.push`.
 The current route is render in a `<router-view>` element
 that is typically rendered by the top-most component.
 
 Some applications do not need the features of a router.
 For applications that do not need the URL to change
-for different "pages" of the app, it's possible to
+for different "pages" of the app, it is possible to
 change pages by using `v-if`, `v-else-if`, and `v-else`
 in the top component to choose a component to render
 based on a "route" value.
 
-The `router-link` of the active route is given the class name `router-link-active`.
-This can be used to style the current link differently from the others.
+The `router-link` of the active route is given
+the class name `router-link-exact-active`.
+This can be used to style the link of the current route
+differently from the others.
 
-Route `path` strings can contain colon-prefixed parts
+Components can access the router instance using `this.$router`.
+
+In some Vue apps, components that are associated with routes are
+placed in the `/view` directory instead of the `/components` directory.
+However, this is not required.
+
+### Router Setup
+
+Route configuration is typically done in the file `router.js`.
+When using Vue CLI, if "Router" is one of the selected features,
+this file will be created and will perform the setup.
+When not using the CLI, this file can be manually created.
+The content should be similar to the following:
+
+```js
+import Vue from 'vue';
+import Router from 'vue-router';
+// Import app-specific view components here.
+
+Vue.use(Router);
+
+export default new Router({
+  mode: 'history', // doesn't use "hash routing"
+  base: process.env.BASE_URL, // defaults to /; usually not needed
+  routes: [
+    /**
+    Route definitions go here.
+    Each is an object containing "path" and "component" properties.
+    A path is the part of a URL after the domain.
+
+    There are additional optional properties
+    that can be specified for each route.
+
+    The "name" property is used to describe named routes
+    which allow rendering multiple views at the same time.
+
+    The "beforeEnter" property is a function that
+    takes "to", "from", and "next" parameters.
+    The "next" parameter is a function that should
+    be called to allow navigating to the route.
+    If it is not called, the navigation will not take place.
+    */
+  ]
+});
+```
+
+The file `main.js` should import the `Router` object
+that is exported from `router.js`
+and configure Vue to use it as follows:
+
+```js
+import Vue from 'vue';
+import App from './App.vue'; // top component
+import router from './router';
+
+new Vue({
+  router, // tells Vue to use the router
+  // "h" is short for "hyperscript",
+  // but it is really the createElement function.
+  render: h => h(App)
+}).$mount('#app'); // "app" is an id specified in public/index.html
+```
+
+### Where Route Components Are Rendered
+
+The top component, typically defined in `App.js`,
+is a common place to create links to routes.
+If `<a>` tags are used, each click on them will result in
+a call to the server and loss of application state.
+Using `<router-link>` elements instead avoids this
+and processes route changes entirely in the browser.
+For example:
+
+```js
+<template>
+  <div id="App">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/page1">Page 1</router-link>
+      <router-link to="/page2">Page 2</router-link>
+    </nav>
+
+    <!-- This is where route components will render. -->
+    <router-view/>
+  </div>
+</template>
+```
+
+### Route Parameters
+
+In route definition objects,
+`path` string values can contain colon-prefixed parts
 to allow data to be passed when the route is changed.
-For example, `/item/:itemNumber`.
-Values for the colon-prefixed parts can be obtained
-from `$route.params` which is an object where
+For example, `/fruit/:name`.
+
+In components that are rendered as the result of a route change,
+values for these route parameters can be obtained
+from `this.$route.params` which is an object where
 the keys are the names after the colons
 and the values are the supplied values.
 
-Components can access the router instance using `this.$router`.
+For URLs that contain query parameters and/or hash values,
+those are stored in `this.$route.query` and `this.$route.hash`.
+
+When navigating to a route that is the same as the current route,
+but with different router parameters, the same component will be used.
+The lifecycle methods for creating and mounting the component
+will not be called again.
+
+### Before Route Parameter Changes
+
+When a route change is for the same route path,
+but with different parameter values,
+the `beforeRouteUpdate` method of
+the component being rendered is invoked.
+It is passed an object describing the current route (`from`)
+and the target route (`to`).
+It is also passed a `next` function
+that it should call to allow the change
+or not call to prevent it.
+
+```js
+  beforeRouteUpdate(to, from, next) {
+    // Do things before the route parameter change.
+
+    // Call next() to allow the route to change,
+    // or don't to prevent it.
+  }
+```
+
+### After Route Parameter Changes
+
+A `watch` on the `$route` property can be used to
+do things after such a route parameter change.
+For example:
+
+```js
+  watch: {
+    $route(to, from) {
+      // Do things after the route parameter change.
+    }
+  }
+```
+
+### Route Changes From Code
+
+A component method can change the current route
+by calling `this.$router.push`,
+passing it the URL of the new route.
+This pushes the new URL on to the history stack so the
+browser back button can be used to return to the previous URL.
+
+Alternatively `this.$router.replace` can be called,
+passing it the URL of the new route.
+This replaces the current URL at the top of the history stack
+with a new one, so the browser back button
+will not return to the previous URL.
+
+TODO: Add code from vue-router-demo that demonstrates this with links for fruits.
+
+### Special Route Syntax
+
+To match any URL not matched by another route, use "\*" for the path.
+A "\*" can also be used as a wildcard part of any path.
+The matching string is held in `$route.params.pathMatch`.
+
+Regular expressions can also be used in route paths.
+
+It is possible for a URL to match more than one route path.
+When this happens, the first matching route path,
+in the order in which they are defined, is selected.
 
 For more detail on vue-router, see <https://router.vuejs.org/guide/>.
 
