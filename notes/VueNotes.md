@@ -911,6 +911,134 @@ For example:
 </style>
 ```
 
+## Events
+
+Vue objects support the `$emit` and `$on` methods
+that publish and subscribe to events.
+In some applications these can be use to share data between components,
+making the use of a state management library unnecessary.
+
+Events have a name and an optional payload.
+
+The Vue devtools supports logging and filtering of these events.
+
+Here is an example that demonstrates most of the features
+of Vue events.
+
+### `event.js`
+
+```js
+import Vue from 'vue';
+
+export const EventBus = new Vue();
+```
+
+### `src/App.vue`
+
+This component renders the `DataEntry` and `Report` components.
+A button is provided to toggle whether the `Report` component is rendered.
+When it switches from not being rendered to being rendered,
+its `mounted` method is called.
+When it switches from being rendered to not being rendered,
+its `destroyed` method is called.
+
+```html
+<template>
+  <div>
+    <DataEntry />
+    <Report v-if="showReport" />
+    <button @click="showReport = !showReport">Toggle Report</button>
+  </div>
+</template>
+
+<script>
+  import DataEntry from './components/DataEntry';
+  import Report from './components/Report';
+  export default {
+    name: 'App',
+    components: {DataEntry, Report},
+    data() {
+      return {showReport: true};
+    }
+  };
+</script>
+```
+
+### `src/components/DataEntry`
+
+This component renders a number `input` for entering a zip code.
+It emits a `zipCode` event with the value every time the value changes.
+It subscribes to `getZipCode` events and
+emits the current value when that event is received.
+
+```html
+<template>
+  <div>
+    <label for="zipCode">Zip</label> <input v-model="zipCode" type="number" />
+  </div>
+</template>
+
+<script>
+  import {EventBus} from '../event';
+  export default {
+    name: 'DataEntry',
+    data() {
+      return {zipCode: 0};
+    },
+    mounted() {
+      // When the value of zipCode is requested, emit it.
+      EventBus.$on('getZipCode', () => EventBus.$emit('zipCode', this.zipCode));
+    },
+    watch: {
+      // When the value of zipCode changes, notify listeners.
+      zipCode() {
+        EventBus.$emit('zipCode', this.zipCode);
+      }
+    }
+  };
+</script>
+```
+
+### `src/components/Report`
+
+This component displays the current zip code value.
+When a new instance is mounted,
+it subscribes to `zipCode` events to get updates to the value
+and emits a `getZipCode` event to get the current value.
+When an instance is destroyed,
+it unsubscribes from `zipCode` events.
+
+```html
+<template>
+  <div>The zip code is now {{zipCode}}.</div>
+</template>
+
+<script>
+  import {EventBus} from '../event';
+  export default {
+    name: 'Report',
+    data() {
+      return {
+        listener: null,
+        zipCode: 0
+      };
+    },
+    mounted() {
+      // Subscribe to the "zipCode" event.
+      this.listener = zipCode => (this.zipCode = zipCode);
+      EventBus.$on('zipCode', this.listener);
+
+      // Request the current value.
+      EventBus.$emit('getZipCode');
+    },
+    destroyed() {
+      // Unsubscribe this listener from the "zipCode" event.
+      EventBus.$off('zipCode', this.listener);
+    }
+  };
+</script>
+```
+
 ## Vuex
 
 This is the most popular state management library for Vue.
