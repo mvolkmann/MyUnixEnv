@@ -340,6 +340,12 @@ with the following properties:
   Lifecycle methods are defined at the top of
   the instance definition object, not defined here.
 
+- `watch`\
+  This is an object where
+  the keys are the names of data to be watched and
+  the values are functions to execute when the value changes.
+  The functions are passed the new value and the old value.
+
 Much of the data defined in the properties above
 can be accessed in methods using the `this` keyword.
 This includes `props`, `computed`, `data`, `methods`,
@@ -919,6 +925,9 @@ In some applications these can be use to share data between components,
 making the use of a state management library unnecessary.
 
 Events have a name and an optional payload.
+All arguments to `$emit` after the event name are
+passed as separate arguments to the listener functions
+registered on the event using the `$on` method.
 
 The Vue devtools supports logging and filtering of these events.
 
@@ -926,6 +935,12 @@ Here is an example that demonstrates most of the features
 of Vue events.
 
 ### `event.js`
+
+This creates a `Vue` object that is exported so
+all components that wish to publish or subscribe to events
+can do so using this object.
+Note that all `Vue` objects support the methods
+`$emit`, `$on`, `$once`, and `$off`.
 
 ```js
 import Vue from 'vue';
@@ -1038,6 +1053,9 @@ it unsubscribes from `zipCode` events.
   };
 </script>
 ```
+
+The `$once` method can be used in place of `$on` to
+only listen to the next occurrence of a given event.
 
 ## Vuex
 
