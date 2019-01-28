@@ -5,9 +5,60 @@ with other frameworks such as React and Angular.
 
 TODO: Add screenshots to some sections.
 
-## Getting Started
+## Simplest Example
 
-The easiest way to start a new application is to
+This example gets the Vue library from a CDN,
+doesn't define any components, and
+illustrates a few basic Vue concepts.
+These include:
+
+- targeting an HTML element by its id (`el` property)
+- storing mutable data (`data` property)
+- defining computed properties (`computed` property)
+- two-way data binding (`v-model` prop)
+- template interpolation (in double curly braces)
+
+```html
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      window.onload = function() {
+        new Vue({
+          el: '#app', // matches div id in body
+          data() {
+            // "name" is used in computed message and v-model of the input.
+            return {name: 'World'};
+          },
+          computed: {
+            message() {
+              return 'Hello, ' + this.name + '!';
+            }
+          }
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <label>Name</label>
+        <!-- The input uses 2-way data binding. -->
+        <input v-model="name" />
+      </div>
+      <div>{{ message }}</div>
+    </div>
+  </body>
+</html>
+```
+
+This is fine for a demonstration, but real web applications
+define many components and use tooling to transform source files
+into the final code that is served to the browser.
+
+## Getting Real
+
+The easiest way to start a new Vue application is to
 create the initial configuration using the Vue CLI
 
 To install it, enter `npm install -g @vue/cli`.
