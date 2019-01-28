@@ -52,8 +52,22 @@ These include:
 </html>
 ```
 
-This is fine for a demonstration, but real web applications
-define many components and use tooling to transform source files
+## Defining Components with `createElement`
+
+Vue components have a `render` method that determines
+the DOM nodes to produce. This can be done using
+the `createElement` function or JSX.
+JSX is an XML syntax that is very similar to HTML.
+But using JSX requires tooling.
+For now let's see one more example that requires no tooling.
+
+```html
+TODO: Provide this!
+```
+
+The previous approaches are fine for a demonstrations,
+but real web applications define many components
+and use tooling to transform source files
 into the final code that is served to the browser.
 
 ## Getting Real
