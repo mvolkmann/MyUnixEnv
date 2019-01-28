@@ -42,7 +42,107 @@ from the `node_modules/dialog-polyfill` directory
 into the directory where `index.html` resides.
 Typically it is in the `public` directory.
 
-## Example Usage
+## Example Usage in Plain JavaScript
+
+Here is an example of using the `<dialog>` element without using a web app framework.
+
+Before the dialog is opened, the page has the following content:
+![before opening](./html-dialog-closed.png)
+
+After the dialog is opened, the page has the following content:
+![after opening](./html-dialog-opened.png)
+
+### `index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="dialog-polyfill.css" />
+    <link rel="stylesheet" href="dialog-demo.css" />
+    <script src="dialog-polyfill.js"></script>
+    <script src="dialog-demo.js"></script>
+    <title>Dialog Demo</title>
+  </head>
+  <body>
+    <!-- This defines the content of the dialog which
+          can be any HTML, including form elements. -->
+    <dialog>
+      I'm a dialog!
+      <!-- This renders a "Close" button that will
+            close the dialog when it is clicked. -->
+      <form method="dialog"><input type="submit" value="Close" /></form>
+    </dialog>
+
+    <div>This is the page content.</div>
+
+    <!-- Pressing this button causes the dialog to open. -->
+    <button onClick="openDialog()">Open...</button>
+  </body>
+</html>
+```
+
+### `dialog-demo.js`
+
+```js
+// Tell ESLint that about global variables.
+/* global dialogPolyfill: false */
+
+// eslint-disable-next-line no-unused-vars, no-var
+let openDialog;
+
+window.onload = () => {
+  const dialog = document.querySelector('dialog');
+  dialogPolyfill.registerDialog(dialog);
+  openDialog = () => dialog.showModal();
+};
+```
+
+### `dialog-demo.css`
+
+Here is the CSS that styles the dialog
+and the buttons that open and close it.
+
+```css
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+/* These are styles for buttons, including
+   submit buttons used to close dialogs.
+   The background-color and box-shadow styles
+   must be specified in order to make the buttons
+   look the same across various browser. */
+button,
+input[type='submit'] {
+  background-color: white;
+  border: solid gray 1px;
+  border-radius: 4px;
+  box-shadow: none;
+  margin-top: 10px;
+  padding: 4px;
+}
+
+/* These are the styles for the dialog */
+dialog {
+  border: solid gray 2px;
+  border-radius: 10px;
+}
+
+/* This is the style for outside the dialog
+   when the dialog is displayed
+   to make it clear that it is a "modal dialog" and
+   the user cannot interact with anything outside it. */
+::backdrop, /* for native <dialog> */
+dialog + .backdrop {
+  /* for dialog-polyfill */
+  /* a transparent shade of gray */
+  background-color: rgba(0, 0, 0, 0.2);
+}
+```
+
+## Example Usage in React
 
 Here is an example of using the `<dialog>` element in a React application.
 It was created using
@@ -51,12 +151,6 @@ It was created using
 No knowledge of React is required to understand the example.
 It should be easy to extract the parts that are specific to the
 dialog and use them with other frameworks or even with no framework.
-
-Before the dialog is opened, the page has the following content:
-![before opening](./html-dialog-closed.png)
-
-After the dialog is opened, the page has the following content:
-![after opening](./html-dialog-opened.png)
 
 ### `public/index.html`
 
@@ -126,41 +220,10 @@ export default App;
 
 ### `src/App.css`
 
-Here is the CSS that styles the dialog
-and the buttons that open and close it.
+The content of this file is the same as `dialog-demo.css`
+in the previous version.
 
-```css
-/* These are styles for buttons, including
-   submit buttons used to close dialogs.
-   The background-color and box-shadow styles
-   must be specified in order to make the buttons
-   look the same across various browser. */
-button,
-input[type='submit'] {
-  background-color: white;
-  border: solid gray 1px;
-  border-radius: 4px;
-  box-shadow: none;
-  margin-top: 10px;
-  padding: 4px;
-}
-
-/* These are the styles for the dialog */
-dialog {
-  border: solid gray 2px;
-  border-radius: 10px;
-}
-
-/* This is the style for outside the dialog
-   when the dialog is displayed
-   to make it clear that it is a "modal dialog" and
-   the user cannot interact with anything outside it. */
-::backdrop /* for native dialogs */,
-dialog + .backdrop /* for the dialog-polyfill */ {
-  /* a transparent shade of gray */
-  background-color: rgba(0, 0, 0, 0.2);
-}
-```
+## Example Usage in Vue
 
 ## Summary
 
