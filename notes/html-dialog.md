@@ -28,6 +28,7 @@ As of January 25, 2019, the `<dialog>` element was
 supported by Chrome, Firefox, and Opera,
 but not by Edge, Internet Explorer, or Safari.
 However, there is a polyfill named "dialog-polyfill"
+from the Google Chrome team
 that allows it to work in all of these browsers.
 It is available at <https://github.com/GoogleChrome/dialog-polyfill>.
 
@@ -37,10 +38,12 @@ If Node.js is not installed, browse <https://nodejs.org>,
 download the "LTS" or "Current" version, and run the installer.
 
 Install the polyfill by entering `npm install dialog-polyfill`.
+
 Copy the files `dialog-polyfill.css` and `dialog-polyfill.js`
 from the `node_modules/dialog-polyfill` directory
-into the directory where `index.html` resides.
-Typically it is in the `public` directory.
+into the directory where `index.html` resides in the
+web application that wishes to use the `<dialog>` element.
+Typically this is the `public` directory.
 
 ## Example Usage in Plain JavaScript
 
@@ -77,7 +80,7 @@ After the dialog is opened, the page has the following content:
     <div>This is the page content.</div>
 
     <!-- Pressing this button causes the dialog to open. -->
-    <button onClick="openDialog()">Open...</button>
+    <button onClick="dialog.showModal()">Open...</button>
   </body>
 </html>
 ```
@@ -88,19 +91,18 @@ After the dialog is opened, the page has the following content:
 // Tell ESLint that about global variables.
 /* global dialogPolyfill: false */
 
-// eslint-disable-next-line no-unused-vars, no-var
-let openDialog;
+// eslint-disable-next-line no-unused-vars
+let dialog; // accessed in index.html
 
 window.onload = () => {
-  const dialog = document.querySelector('dialog');
+  dialog = document.querySelector('dialog');
   dialogPolyfill.registerDialog(dialog);
-  openDialog = () => dialog.showModal();
 };
 ```
 
 ### `dialog-demo.css`
 
-Here is the CSS that styles the dialog
+This is the CSS that styles the dialog
 and the buttons that open and close it.
 
 ```css
@@ -149,23 +151,21 @@ It was created using
 [`create-react-app`](https://facebook.github.io/create-react-app/).
 
 No knowledge of React is required to understand the example.
-It should be easy to extract the parts that are specific to the
-dialog and use them with other frameworks or even with no framework.
 
-### `public/index.html`
+### React `public/index.html`
 
-Edit `index.html` and add the following lines
+Edit this file and add the following lines
 inside the `<head>` element.
 
 ```html
-<script src="dialog-polyfill.js"></script>
 <link rel="stylesheet" href="dialog-polyfill.css" />
+<script src="dialog-polyfill.js"></script>
 ```
 
-### `src/App.js`
+### React `src/App.js`
 
-Here is the entire content of `App.js`
-including comments the explain the relevant parts.
+This is the entire content of `App.js`,
+including comments that explain the relevant parts.
 
 ```js
 // Tell ESLint that about global variables.
@@ -218,14 +218,86 @@ class App extends Component {
 export default App;
 ```
 
-### `src/App.css`
+### React `src/App.css`
 
 The content of this file is the same as `dialog-demo.css`
 in the previous version.
 
 ## Example Usage in Vue
 
+Here is an example of using the `<dialog>` element in a Vue application.
+It was created using the [`Vue CLI`](https://cli.vuejs.org/).
+
+No knowledge of Vue is required to understand the example.
+
+### Vue `public/index.html`
+
+Edit this file and add the following lines
+inside the `<head>` element.
+
+```html
+<link rel="stylesheet" href="dialog-polyfill.css" />
+<script src="dialog-polyfill.js"></script>
+```
+
+### Vue `src/App.vue`
+
+Modify the `<template>` and `<script>` sections
+to match the following:
+
+```html
+<template>
+  <DialogDemo />
+</template>
+
+<script>
+  import DialogDemo from './components/DialogDemo.vue';
+
+  export default {
+    name: 'app',
+    components: {
+      DialogDemo
+    }
+  };
+</script>
+```
+
+### Vue `src/components/DialogDemo.vue`
+
+Create this file with the following content:
+
+```html
+<template>
+  <div>
+    <dialog
+      >I'm a dialog!
+      <form method="dialog"><input type="submit" value="Close" /></form>
+    </dialog>
+    <div>This is page content.</div>
+    <button @click="dialog.showModal()">Open...</button>
+  </div>
+</template>
+
+<script>
+  /* global dialogPolyfill: false */
+  export default {
+    name: 'DialogDemo',
+    data() {
+      return {dialog: Object};
+    },
+    mounted() {
+      this.dialog = document.querySelector('dialog');
+      dialogPolyfill.registerDialog(this.dialog);
+    }
+  };
+</script>
+
+<style>
+  <!-- Add same CSS rules here as are found in `dialog-demo.css`.
+</style>
+```
+
 ## Summary
 
 Even with the need to use a polyfill,
-the `<dialog>` element is pretty easy to use!
+the `<dialog>` element is very easy to use!
