@@ -427,6 +427,19 @@ to a prop of another component or HTML element.
 For example, `<input v-bind:checked="isChecked">`
 or `<input :checked="isChecked">`.
 
+Forms with a submit button can bind to the `onsubmit` DOM event.
+For example:
+
+```html
+<template>
+  <form @submit="handleSubmit">
+    <input type="text" v-model="name" />
+    <input type="color" v-model="favoriteColor" />
+    <input type="submit" value="Submit" />
+  </form>
+</template>
+```
+
 ### `v-if`, `v-else-if`, `v-else`
 
 These provides conditional rendering.
