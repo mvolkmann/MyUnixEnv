@@ -872,6 +872,10 @@ then the `App` component can override the style for buttons
 specified in the `Todo` component with the CSS selector
 `.todo-list .todo button { ... }`
 
+It is possible to have more than one class attribute on an element.
+They can have literal values or values that are set using `v-bind`.
+For example, `<div class="todo" :class="{done: todo.done}">`.
+
 ## Using Sass
 
 To use Sass syntax in the `<style>` element of a Vue component,
@@ -921,7 +925,11 @@ For example:
 
 Vue objects support the `$emit` and `$on` methods
 that publish and subscribe to events.
-In some applications these can be use to share data between components,
+The `v-on` template directive can also be used
+to subscribe to an event.
+For example, `<div v-on:event-name="expression">`.
+
+Applications can use events to share data between components,
 making the use of a state management library unnecessary.
 
 Events have a name and an optional payload.
@@ -1494,7 +1502,9 @@ This makes the `vue` command globally accessible.
 
 The most commonly used Vue CLI commands are:
 
-- `vue create` creates a new project
+- `vue create` creates a new project\
+  This includes a `package.json` file with the npm scripts
+  `lint`, `serve`, and `build`.
 
 - `vue add` adds plugin to a project
 
@@ -1521,14 +1531,16 @@ The most commonly used Vue CLI commands are:
     so future projects can easily be created with the same options.
   - importing existing projects
   - managing an existing project
+  - running tasks such as "lint", "serve", and "build"\
+    Serving an app from the web UI provides lots of analytics.
 
-  Managing a project includes:
+Managing a project includes:
 
-  - viewing installed plugins and installing more
-  - viewing installed dependencies and installing more
-  - viewing and modifying the CLI and ESLint configurations
-  - viewing and running project tasks
-  - killing the process listening on a given port
+- viewing installed plugins and installing more
+- viewing installed dependencies and installing more
+- viewing and modifying the CLI and ESLint configurations
+- viewing and running project tasks
+- killing the process listening on a given port
 
 - `vue info` outputs information about the current environment
   that is useful in bug reporting, including:

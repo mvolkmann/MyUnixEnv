@@ -96,6 +96,7 @@ alias cdtesla 'cd $OCI_DIR/clients/Purina/tesla-client'
 alias cdtraining 'cd $TRAINING_DIR'
 alias cdts 'cd $TYPESCRIPT_DIR'
 alias cdvim 'cd $PROGRAMMING_DIR/Tools/Vim'
+alias cdvue 'cd $JAVASCRIPT_DIR/vue'
 alias cls 'clear'
 
 # Git aliases
