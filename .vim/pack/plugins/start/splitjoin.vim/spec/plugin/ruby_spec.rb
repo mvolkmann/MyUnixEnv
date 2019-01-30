@@ -13,6 +13,9 @@ describe "ruby" do
     vim.command('silent! unlet g:splitjoin_ruby_heredoc_type')
     vim.command('silent! unlet g:splitjoin_ruby_hanging_args')
     vim.command('silent! unlet g:splitjoin_ruby_do_block_split')
+    vim.command('silent! unlet g:splitjoin_trailing_comma')
+    vim.command('silent! unlet g:splitjoin_ruby_options_as_arguments')
+    vim.command('silent! unlet g:splitjoin_ruby_curly_braces')
   end
 
   specify "if-clauses" do
@@ -525,6 +528,29 @@ describe "ruby" do
     EOF
   end
 
+  specify "hashes with symbol syntax" do
+    set_file_contents <<-EOF
+      foo = { bar: 1, one: 2 }
+    EOF
+
+    vim.search 'bar:'
+    split
+
+    assert_file_contents <<-EOF
+      foo = {
+        bar: 1,
+        one: 2
+      }
+    EOF
+
+    vim.search 'foo'
+    join
+
+    assert_file_contents <<-EOF
+      foo = { bar: 1, one: 2 }
+    EOF
+  end
+
   specify "hashes without a trailing comma" do
     vim.command('let g:splitjoin_ruby_trailing_comma = 0')
 
@@ -539,6 +565,21 @@ describe "ruby" do
       foo = {
         :bar => 'baz',
         :one => 'two'
+      }
+    EOF
+  end
+
+  specify "hashes with spaces in them" do
+    set_file_contents <<-EOF
+      a_hash = { a_key: "a longer value" }
+    EOF
+
+    vim.search 'a_key'
+    split
+
+    assert_file_contents <<-EOF
+      a_hash = {
+        a_key: "a longer value"
       }
     EOF
   end
@@ -870,6 +911,8 @@ describe "ruby" do
     end
 
     it "splits normal strings into heredocs" do
+      vim.command('let g:splitjoin_ruby_heredoc_type = "<<-"')
+
       set_file_contents 'string = "\"anything\""'
 
       vim.search 'anything'
@@ -889,7 +932,7 @@ describe "ruby" do
       split
 
       assert_file_contents <<-OUTER
-        string = <<-EOF
+        string = <<~EOF
         EOF
       OUTER
     end
@@ -913,6 +956,36 @@ describe "ruby" do
         EOF
         end
       OUTER
+    end
+
+    it "can use the <<~ heredoc style" do
+      vim.command('let g:splitjoin_ruby_heredoc_type = "<<~"')
+
+      set_file_contents <<-EOF
+        do
+          string = "something"
+        end
+      EOF
+
+      vim.search 'something'
+      split
+
+      assert_file_contents <<-OUTER
+        do
+          string = <<~EOF
+            something
+          EOF
+        end
+      OUTER
+
+      vim.search 'EOF'
+      join
+
+      assert_file_contents <<-EOF
+        do
+          string = 'something'
+        end
+      EOF
     end
   end
 
@@ -992,6 +1065,25 @@ describe "ruby" do
         foo = bar(
           "one",
           "two"
+        )
+      EOF
+    end
+
+    specify "with a trailing comma" do
+      vim.command('let g:splitjoin_ruby_hanging_args = 0')
+      vim.command('let g:splitjoin_trailing_comma = 1')
+
+      set_file_contents(<<-EOF)
+        foo = bar("one", "two")
+      EOF
+
+      vim.search('one')
+      split
+
+      assert_file_contents(<<-EOF)
+        foo = bar(
+          "one",
+          "two",
         )
       EOF
     end
@@ -1126,6 +1218,38 @@ describe "ruby" do
       EOF
     end
 
+    specify "split options as arguments" do
+      vim.command('let g:splitjoin_ruby_options_as_arguments = 1')
+
+      set_file_contents <<-EOF
+        OpenStruct.new(one, two, {first_name: 'John', last_name: 'Doe'})
+      EOF
+
+      vim.search 'one'
+      split
+
+      assert_file_contents <<-EOF
+        OpenStruct.new(one,
+                       two,
+                       first_name: 'John',
+                       last_name: 'Doe')
+      EOF
+
+      set_file_contents <<-EOF
+        OpenStruct.new(one, two, {first_name: 'John', last_name: 'Doe'})
+      EOF
+
+      vim.search 'first_name'
+      split
+
+      assert_file_contents <<-EOF
+        OpenStruct.new(one, two, {
+          first_name: 'John',
+          last_name: 'Doe'
+        })
+      EOF
+    end
+
     specify "doesn't get confused by interpolation" do
       vim.command('let g:splitjoin_ruby_curly_braces = 1')
 
@@ -1146,6 +1270,43 @@ describe "ruby" do
 
       assert_file_contents <<-EOF
         foo "\#{one}", { :two => 3 }
+      EOF
+    end
+
+    specify "doesn't get confused by namespaces (::)" do
+      vim.command('let g:splitjoin_ruby_curly_braces = 1')
+
+      set_file_contents <<-EOF
+        foo Bar::Baz, bla
+      EOF
+
+      vim.search 'Bar'
+      split
+
+      assert_file_contents <<-EOF
+        foo(Bar::Baz,
+            bla)
+      EOF
+
+      join
+
+      assert_file_contents <<-EOF
+        foo(Bar::Baz, bla)
+      EOF
+    end
+
+    specify "doesn't get confused by extra spaces" do
+      set_file_contents <<-EOF
+        rules << { query: escaped_query  }
+      EOF
+
+      vim.search 'query'
+      split
+
+      assert_file_contents <<-EOF
+        rules << {
+          query: escaped_query
+        }
       EOF
     end
   end
@@ -1223,14 +1384,33 @@ describe "ruby" do
       assert_file_contents <<-EOF
         array = [
           0,
-          { a: 1 }
+          a: 1
         ]
       EOF
 
       vim.search 'array ='
       join
 
-      assert_file_contents "array = [0, { a: 1 }]"
+      assert_file_contents "array = [0, a: 1]"
+    end
+
+    specify "last hash inside array can also be bracketless" do
+      set_file_contents "array = [0, a: 1]"
+
+      vim.search '0'
+      split
+
+      assert_file_contents <<-EOF
+        array = [
+          0,
+          a: 1
+        ]
+      EOF
+
+      vim.search 'array ='
+      join
+
+      assert_file_contents "array = [0, a: 1]"
     end
   end
 

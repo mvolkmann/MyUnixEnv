@@ -484,6 +484,7 @@ autocmd BufRead,BufNewFile *.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
 " }}}
 
 " airline --- {{{
+let g:airline#extensions#ale#enabled = 1
 " Display list of buffer names at top when only one is visible.
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline_powerline_fonts = 1
@@ -564,7 +565,7 @@ set laststatus=2
 set statusline=%t " file name (omits path)
 set statusline+=%M " modified flag
 set statusline+=%R " read-only flag
-set statusline+=\ %{ALEGetStatusLine()} " Asynchronous Lint Engine
+"set statusline+=\ %{ALEGetStatusLine()} " Asynchronous Lint Engine
 set statusline+=%= " left/right separator
 set statusline+=line\ %l " line number
 set statusline+=\ of\ %L " total lines
@@ -600,12 +601,52 @@ let g:syntastic_javascript_checkers=['eslint']
 "autocmd FileType typescript nmap <buffer> <leader>ts : <c-u>echo tsuquyomi#hint()<cr>
 " }}}
 
-" Ultisnips plugin {{{
+" UltiSnips plugin {{{
+" To select a snippet, move to it with up and down arrow keys.
+" To expand a snippet, press ctrl-j.
 let g:UltiSnipsExpandTrigger='<c-j>'
 let g:UltiSnipsListSnippets='<leader>snips'
+" To move between placeholders in a snippet, press ctrl-j and ctrl-k.
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 nnoremap <leader>es :UltiSnipsEdit<cr>
+
+" This mess of code allows the tab key
+" to be used to expand UltiSnips snippets.
+
+"function! g:UltiSnips_Complete()
+"  call UltiSnips#ExpandSnippet()
+"  if g:ulti_expand_res == 0
+"    if pumvisible()
+"      return "\<C-n>"
+"    else
+"      call UltiSnips#JumpForwards()
+"      if g:ulti_jump_forwards_res == 0
+"        return "\<TAB>"
+"      endif
+"    endif
+"  endif
+"  return ""
+"endfunction
+
+"function! g:UltiSnips_Reverse()
+"  call UltiSnips#JumpBackwards()
+"  if g:ulti_jump_backwards_res == 0
+"    return "\<C-P>"
+"  endif
+"  return ""
+"endfunction
+
+"if !exists("g:UltiSnipsJumpForwardTrigger")
+"  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"endif
+"
+"if !exists("g:UltiSnipsJumpBackwardTrigger")
+"  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"endif
+
+"au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+"au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 " }}}
 
 " vim-flow {{{

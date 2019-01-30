@@ -5,6 +5,12 @@
 # each time an interactive shell is created.
 if status --is-login
   echo running .config/fish/config.fish
+
+  # If not already in PATH, add /usr/local/bin.
+  if not contains /usr/local/bin $PATH
+    set PATH /usr/local/bin $PATH
+  end
+
   # If not already in PATH, add $HOME/bin.
   if not contains $HOME/bin $PATH
     set PATH $HOME/bin $PATH
@@ -212,7 +218,7 @@ set PATH $PATH $GOBIN
 #set GREP_OPTIONS '--color=ALWAYS'
 
 # Haskell (GHC) settings
-set PATH $HOME/.local/bin $PATH
+#set PATH $HOME/.local/bin $PATH
 
 # HTTP server to serve files in current directory
 alias serve 'python -m SimpleHTTPServer 8080'
@@ -231,7 +237,7 @@ set JS_DIR $LANGUAGES_DIR/javascript
 #set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
 
 # Micronaut settings
-set PATH $PATH $MICRONAUT_DIR/bin
+#set PATH $PATH $MICRONAUT_DIR/bin
 
 # MongoDB settings
 #set PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
@@ -245,6 +251,9 @@ alias pgl 'psql -d demo'
 set NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
 set PATH $PATH $NODE_DIR/deps/v8/tools
 #function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+
+# Python settings
+#alias python 'python3'
 
 # React Native settings
 set ANDROID_HOME /usr/local/opt/android-sdk
@@ -266,4 +275,4 @@ set VISUAL vim
 set PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; end; end
+#if [ -f '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; end; end

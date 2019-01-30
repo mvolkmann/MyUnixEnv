@@ -1513,7 +1513,7 @@ TypeScript
 
 UltiSnips
 - to install
-  * cd ~/.vim/bundle
+  * cd ~/.vim/pack/plugins/start
   * git clone https://github.com/SirVer/ultisnips
   * git clone https://github.com/honza/vim-snippets
 - to configure, add these lines to .vimrc
@@ -1777,21 +1777,26 @@ YouCompleteMe (YCM)
   * type ./ or ../ to begin
   * not used for all file types (ex. not in .txt files)
 - to install
-  * cd .vim/bundle
+  * cd .vim/pack/plugins/start
   * git clone https://github.com/Valloric/YouCompleteMe.git
   * cd YouCompleteMe
+  * python install.py
   * git submodule update --init --recursive
   * install CMake
     - on Mac OS X, brew install cmake
     - in Cygwin, is install through setup-x86.exe
   * this plugin has a compiled component
-    - cd ~/.vim/bundle/YouCompleteMe
+    - cd ~/.vim/pack/plugins/start/YouCompleteMe
     - for JavaScript support, ./install.py --tern-completer
     - Are the rest of these steps really needed?
     - cd
     - mkdir ycm_build
     - cd ycm_build
     - cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+- to update
+  - cd MyUnixEnv/.vim/pack/plugins/start/YouCompleteMe
+  - git pull
+  - ./install.sh
 - integrates with UltiSnips
   * but use of tab key conflicts
     - see key mapping suggestions in UltiSnips section

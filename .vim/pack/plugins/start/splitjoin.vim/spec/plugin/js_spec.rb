@@ -111,21 +111,53 @@ describe "javascript" do
       assert_file_contents 'let foo = [bar => "baz"]'
     end
 
-    specify "in an object, semicolon at the end" do
+    specify "in an object" do
+      pending "Broken on TravisCI due to old Vim version" if ENV['TRAVIS_CI']
+
       set_file_contents 'let foo = {"key": bar => "baz"};'
 
       vim.search 'bar'
       split
 
       assert_file_contents <<-EOF
-        let foo = {"key": bar => {
-          return "baz";
-        }};
+        let foo = {
+        "key": bar => "baz"
+        };
       EOF
 
       join
 
-      assert_file_contents 'let foo = {"key": bar => "baz"};'
+      assert_file_contents 'let foo = { "key": bar => "baz" };'
+    end
+
+    specify "gives priority to objects in argument list" do
+      pending "Broken on TravisCI due to old Vim version" if ENV['TRAVIS_CI']
+
+      set_file_contents 'const func = ({ a, b, c }) => a + b'
+
+      vim.search 'b,'
+      split
+
+      assert_file_contents <<-EOF
+        const func = ({
+          a,
+          b,
+          c
+        }) => a + b
+      EOF
+    end
+
+    specify "separated by a comma" do
+      set_file_contents 'var foo = [callback => callback(one, two), three]'
+
+      vim.search 'callback =>'
+      split
+
+      assert_file_contents <<-EOF
+        var foo = [callback => {
+          return callback(one, two)
+        }, three]
+      EOF
     end
   end
 
