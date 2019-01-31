@@ -554,6 +554,21 @@ For example:
 <input v-model="firstName" />
 ```
 
+#### `v-model` modifiers
+
+Data values associated with a `v-model` are updated on each keystroke.
+To wait until the focus leaves the input, use the `.lazy` modifier.
+
+To automatically trim string values, use the `.trim` modifier.
+For example, `v-model.trim="name"`.
+
+To automatically convert the value to a number, use the `.number` modifier.
+For example, `v-model.number="score"`.
+
+#### `v-model` with Checkboxes
+
+For checkboxes, the value is always a boolean.
+
 For checkboxes, the `v-model` for multiple `<input>` elements
 can be the same array. The checkbox values are used
 to populate the array when they are checked.
@@ -860,7 +875,7 @@ export default {
   // other component instance properties omitted
   data() {
     return {name: ''};
-  }
+  },
   methods: {
     clearName() {
       this.name = '';
