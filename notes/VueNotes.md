@@ -432,7 +432,7 @@ For example:
 
 ```html
 <template>
-  <form @submit="handleSubmit">
+  <form @submit.prevent="handleSubmit">
     <input type="text" v-model="name" />
     <input type="color" v-model="favoriteColor" />
     <input type="submit" value="Submit" />
@@ -941,6 +941,8 @@ that publish and subscribe to events.
 The `v-on` template directive can also be used
 to subscribe to an event.
 For example, `<div v-on:event-name="expression">`.
+If the expression is a method name,
+the event arguments are passed to it.
 
 Applications can use events to share data between components,
 making the use of a state management library unnecessary.
@@ -1120,6 +1122,10 @@ export default new Vuex.Store({
     appendColor(state, color) {
       // Note that state properties can be modified in mutation functions.
       // It is not necessary to treat the state object as immutable here.
+      // However, to set a specific element,
+      // rather than using syntax like state.colors[2] = color;
+      // use the Array splice method or the Vue-supplied method $set
+      // like state.colors.$set(2, color);
       state.colors.push(color);
     },
     setYear(state, year) {
