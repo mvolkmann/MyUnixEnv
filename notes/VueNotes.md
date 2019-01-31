@@ -352,6 +352,12 @@ with the following properties:
   Lifecycle methods are defined at the top of
   the instance definition object, not defined here.
 
+- `template`\
+  This is a string of HTML to be rendered.
+  It is an alternative to using a `<template>` element.
+  To spread the content on to multiple lines,
+  surround the string with backticks.
+
 - `watch`\
   This is an object where
   the keys are the names of data to be watched and
@@ -439,6 +445,19 @@ to a prop of another component or HTML element.
 For example, `<input v-bind:checked="isChecked">`
 or `<input :checked="isChecked">`.
 
+There are several attributes that commonly bind a value.
+
+To compute CSS class names, use `:class`
+which takes a string value or an object
+where the keys are class names and the values are boolean expressions
+that determine whether the class name should be used.
+
+To conditionally disable a form element,
+use `:disabled` which takes a boolean value.
+
+To dynamically generate CSS styles, use `:style`
+which takes an object where the keys are camel-case CSS property names.
+
 Forms with a submit button can bind to the `onsubmit` DOM event.
 For example:
 
@@ -470,13 +489,18 @@ a preceding sibling that uses `v-if` or `v-else-if`.
 
 ### `v-for`
 
-This provides iteration over array elements.
+This provides iteration over array elements and object properties.
 For example:
 
 ```js
-<div v-for="color in colors" :key="color">{{color}}</div>
-<div v-for="(color, index) in colors" :key="index">
-  {{index + 1}}) {{color}}
+<div v-for="element in array" :key="element">{{element}}</div>
+
+<div v-for="(element, index) in array" :key="index">
+  {{index + 1}}) {{element}}
+</div>
+
+<div v-for="(value, key) of object" :key="key">
+  {{key}} is {{value}}
 </div>
 ```
 
@@ -536,6 +560,13 @@ pressed in conjunction with another key
 to change the meaning. These include
 `.ctrl`, `.alt`, `.shift`, and `.meta`.
 In macOS, `.meta` detects the command key.
+
+For example, to call the method `interrupt`
+if ctrl-c is pressed while the focus is an `<input>` element,
+
+```html
+<input type="text" @keyup.ctrl.c="interrupt" v-model="someDataName" />
+```
 
 Mouse button modifiers check for presses of specific mouse buttons.
 These include `.left`, `.right`, and `.middle`.
@@ -848,7 +879,8 @@ Each can optionally define default content.
 
 Parent components specify the content for each named slot with
 `<template slot="slot-name">the content</template>`.
-Alternatively, the `slot` attribute can be used on a "normal" element.
+Alternatively, the `slot` attribute can be used
+on a "normal" HTML element.
 For example, `<div slot="slot-name">the content</div>`.
 
 Even when named slots are used, there can still be an unnamed slot
@@ -1877,3 +1909,9 @@ The only difference is that `main.js` becomes `main.ts` and
 the `.vue` files contain script tags that look like `<script lang=“ts”>`.
 So the project is ready for you to use TypeScript,
 but the generated code does not.
+
+## Nuxt
+
+This is a library that uses Vue to generate static sites
+or create web applications perform server-side rendering.
+It also supports code splitting and hot reloading.
