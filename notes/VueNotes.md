@@ -3,6 +3,9 @@
 Vue is a web application framework that competes
 with other frameworks such as React and Angular.
 
+Vue 2 uses Flow for type checking.
+Vue 3 is written in TypeScript.
+
 TODO: Add screenshots to some sections.
 
 ## Simplest Example
@@ -957,6 +960,8 @@ the event arguments are passed to it.
 
 Applications can use events to share data between components,
 making the use of a state management library unnecessary.
+Events provide an alternative to using Vuex
+that some developers prefer.
 
 Events have a name and an optional payload.
 All arguments to `$emit` after the event name are
@@ -1633,13 +1638,20 @@ rather than application-specific code.
 
 React uses virtual DOM diffing to determine the actual DOM updates that are required.
 
-Vue changes all data objects and Vuex state objects to track property changes
+Vue 2 changes all data objects and Vuex state objects to track property changes
 by modifying them at startup using the `defineProperty` method
 which adds getter and setter methods for all properties.
 Vue refers to this as making the objects "reactive".
 This has a startup cost, but results in faster determination
 of required DOM changes than React.
 Perhaps this is why live reload is slower in Vue than in React.
+
+Vue 3 changes from using generated getters and setters
+to monitor data changes to using Proxies.
+This is faster (both in initialization of components and runtime usage of them),
+uses less memory, and supports detecting changes from more JavaScript features.
+This likely means that the following are no longer needed:
+`$set`, `$delete`, and `Array` `$set`.
 
 ### Ease of Learning
 
