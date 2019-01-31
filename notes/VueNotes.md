@@ -950,13 +950,33 @@ For example:
 
 ## Events
 
-Vue objects support the `$emit` and `$on` methods
+Vue component instances support the `$emit` and `$on` methods
 that publish and subscribe to events.
 The `v-on` template directive can also be used
 to subscribe to an event.
-For example, `<div v-on:event-name="expression">`.
+For example, `<div v-on:event-name="expression">`
+or `<div @event-name="expression">`.
 If the expression is a method name,
 the event arguments are passed to it.
+
+Events emitted from a component can only be
+subscribed to from the same component instance.
+For example, a child component named `Child` can
+emit an event named "foo" on a button click using:
+
+```html
+<button @click="$emit('foo', value1, value2)">Alpha</button>
+```
+
+A parent component can subscribe to this event
+on its instance of the `Child` component using:
+
+```html
+<Child @foo="parentMethod" />
+```
+
+The event payload values `value1` and `value2`
+will be passed to `parentMethod`.
 
 Applications can use events to share data between components,
 making the use of a state management library unnecessary.
