@@ -90,9 +90,11 @@ Linter/Formatter, Unit Testing, and E2E Testing.
 Choose between using Yarn or npm.
 
 The `vue create` command can also be used to merge features into an existing project.
-From the parent directory of the project, enter `vue create {project-name}`
-and select "Merge".
-Select the features to add.
+From the parent directory of the project, enter `vue create {project-name}`,
+select "Merge", and select the features to add.
+For some features, this will overwrite files such as `src/App.vue`!
+If you have made changes to any of the files,
+make backup copies before doing this.
 
 ### Approach #2
 
@@ -331,6 +333,13 @@ with the following properties:
   If this is set to an object instead of a function,
   the following error will be output:
   "error: data property in component must be a function"
+
+  Changes to data are watched by Vue.
+  Some JavaScript approaches to modifying data
+  aren't seen by Vue, so other techniques must be used.
+  To add or delete data properties that are not initially present,
+  use the `Vue.set` and `Vue.delete` functions.
+  To set an array element, use `arr.$set(index, value)`.
 
 - `methods`\
   This is an object that defines the component methods.
@@ -754,6 +763,8 @@ They are defined as top-level properties in an instance definition.
   To do something after all of those have been mounted
   call `this.$nextTick` inside the `mounted` method,
   passing it a function that it will call.
+  This can also be used to execute code after
+  batched DOM updates have completed.
 
   The `mounted` method is the most frequently used lifecycle method.
   It is a common place for making
