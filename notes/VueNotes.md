@@ -1006,8 +1006,11 @@ or `<div @event-name="expression">`.
 If the expression is a method name,
 the event arguments are passed to it.
 
-Events emitted from a component can only be
+Vue events emitted from a component can only be
 subscribed to from the same component instance.
+They are not like DOM events that have
+a capture and bubbling phase.
+
 For example, a child component named `Child` can
 emit an event named "foo" on a button click using:
 
