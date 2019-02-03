@@ -1,14 +1,17 @@
 {
-  "defaultSeverity": "error",
-  "extends": ["tslint:recommended"],
-  "jsRules": {},
-  "rules": {
-    "arrow-parens": [true, "ban-single-arg-parens"],
-    "comment-format": [true, {"ignore-words": ["TODO"]}],
-    "member-access": [true, "no-public"],
-    "no-console": [false],
-    "quotemark": [true, "single", "jsx-double"],
-    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}]
-  },
-  "rulesDirectory": []
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+      "arrow-parens": [true, "ban-single-arg-parens"],
+      "comment-format": [true, {"ignore-words": ["TODO"]}],
+      "interface-name": false,
+      "no-console": false,
+      "object-literal-sort-keys": false,
+      "quotemark": [true, "single", "jsx-double"],
+      "trailing-comma": false
+    },
+    "rulesDirectory": []
 }

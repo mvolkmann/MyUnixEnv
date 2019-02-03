@@ -21,6 +21,10 @@ These include:
 - two-way data binding (`v-model` prop)
 - template interpolation (in double curly braces)
 
+There are several CDNs that host the Vue library.
+One URL is <https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js>.
+Another URL is <https://cdn.jsdelivr.net/npm/vue/dist/vue.js>.
+
 ```html
 <html>
   <head>
@@ -115,6 +119,27 @@ To find additional plugins, search on npmjs.org for
 pages whose names contain "vue" and "cli-plugin".
 These include apollo, e2e-cypress, markdown, storybook, and @vue/cli-plugin-unit-jest.
 
+## Vue Project Structure
+
+Projects created by the Vue CLI have the following structure:
+
+- `node_modules` - contains modules used by the project
+- `public`
+  - `favicon.ico` - icon displayed in browser tab
+  - `index.html` - contains `<div id="app"></div>`
+- `src`
+  - `assets` - contains images and other media files
+  - `components` - contains definitions of Vue components used on pages
+  - `views` - contains definitions of Vue component that represent "pages"
+  - `App.vue` - top/root component
+  - `main.js` - bootstraps application
+  - `router.js` - configures use of vue-router for page routing
+  - `store.js` - configures use of Vuex for state management
+- `.gitignore` - lists directories and files that should not be committed in Git
+- `package.json` - lists project dependencies and defines npm scripts
+- `package-lock.json` - lists specific versions of project dependencies to "lock" to them
+- `babel.config.js` - configures the Babel transpiler
+
 ## Building and Running
 
 To build and run a project, cd to the project directory
@@ -161,11 +186,17 @@ Click "Base State" to display the initial store state.
 When using VS Code to edit Vue code it is helpful to install
 the extension "Vue.js Extension Pack".
 This includes several other extensions including
-vetur, vue-peek, ESLint, Prettier, and more.
-The vetur extension provides syntax highlighting,
-snippets, auto-completion, and more.
-See <https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack>
-for details.
+Vetur, Vue Peek, ESLint, Prettier, and more.
+
+The Vetur extension provides syntax highlighting,
+snippets, auto-completion, Emmet, and more.
+Snippets include "scaffold", "template with" (html or pug),
+and "style with" (many options).
+For more detail, see
+<https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack>.
+
+The Vue Peek extension displays a "peek" of a component instance definition.
+Right-click on a component instance in a template and select "Peek Definition".
 
 ## Customizing the Generated App
 
@@ -1622,6 +1653,11 @@ The most commonly used Vue CLI commands are:
   but `npm run build` can be used instead.
   It creates a `dist` directory containing all
   the files needed to deploy the application.
+  These are in the subdirectories `css`, `img`, and `js`.
+  In the `js` directory,
+  "chunk" files contain compiled and minified dependency code and
+  "app" files contain compiled and minified project-specific code.
+  Source maps are also generated for use in browser devtools debugging.
 
   There is also a "modern" mode that creates two JavaScript bundles,
   one targeted at modern browsers and one targeted an older browsers

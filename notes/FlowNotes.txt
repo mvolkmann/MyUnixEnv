@@ -1,5 +1,5 @@
 Flow Notes
 
-- see slides in training/React/keynote/10-Flow.key
+- see slides in training/JavaScript/keynote/tools/flow.key
 - workaround for interface functions whose names are JavaScript keywords
   * see training/React/react-examples/todo-reducer-rest/interfaces/axios.js
