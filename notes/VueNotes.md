@@ -80,7 +80,8 @@ into the final code that is served to the browser.
 ## Getting Real
 
 The easiest way to start a new Vue application is to
-create the initial configuration using the Vue CLI
+create the initial configuration using the Vue CLI.
+This uses Webpack for module bundling.
 
 To install it, enter `npm install -g @vue/cli`.
 
@@ -1457,6 +1458,9 @@ The current route can also be changed from JavaScript code
 by calling `this.$router.push`.
 The current route is render in a `<router-view>` element
 that is typically rendered by the top-most component.
+
+Applications created using the Vue CLI that choose to include vue-router
+will already have two configured routes named "home" and "about".
 
 Some applications do not need the features of a router.
 For applications that do not need the URL to change
