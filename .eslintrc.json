@@ -21,9 +21,10 @@
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
-    "plugin:vue/essential",
     "prettier",
-    "react-app"
+    "react-app",
+    "plugin:vue/essential",
+    "@vue:prettier"
   ],
 
   "plugins": ["html", "jsx-a11y", "prettier", "react"],

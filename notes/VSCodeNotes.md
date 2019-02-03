@@ -1144,7 +1144,7 @@ followed by the macOS version in parentheses.
 
 ## Open File
 
-- in Windows, ctrl-o
+- in macOS, to see hidden files press cmd-shift-.
 
 ## Organize Imports
 
