@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 default_message="Command completed."
 message="${*}"

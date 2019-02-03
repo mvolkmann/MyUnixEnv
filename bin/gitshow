@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This outputs the version of a given filename in a specified commit.
 # It assumes you have already cd'ed to the directory containing the file.
 

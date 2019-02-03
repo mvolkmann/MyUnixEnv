@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This looks for the class in jar files in and under
 # the current working directory.
 

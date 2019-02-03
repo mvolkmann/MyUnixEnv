@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Finds all files with a given file extension in and below the current directory
 # that contain a given string.
 # For example, find3 java "implements Foo"

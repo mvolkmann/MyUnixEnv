@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This works with git repository tags.
 # With no arguments, it shows the current tags.
 # With one argument, it adds the specified tag.

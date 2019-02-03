@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This lists all remote git branches and includes when
 # each was last updated, ordered from most recent.
 for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r

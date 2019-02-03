@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Kills the process listening on a given port.
 
 if [[ $# -ne 1 ]]; then

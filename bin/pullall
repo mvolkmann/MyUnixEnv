@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Runs "git pull origin master" in all child directories.
 # This is useful in ~/.vim/bundle.
 # The parens around the commands create a subshell

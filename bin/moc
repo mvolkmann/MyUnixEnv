@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Runs all Mocha tests in the test subdirectory or a specified test.
 # For example, "moc foo" runs the tests in test/foo.mocha.js.
 

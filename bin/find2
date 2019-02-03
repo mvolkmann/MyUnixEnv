@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Finds all files with a given name in and below the current directory.
 # The name can contain wildcard characters.
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This merges the current git branch with master
 # and deletes the current git branch.
 # Changes to the current branch must be committed before running this.

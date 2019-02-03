@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Finds all files with a given file extension in and below the current directory.
 # It does not consider files in the subdirectories named
 # bower_components and node_modules.
@@ -10,7 +10,5 @@ if [ $# -ne 1 ]; then
 fi
 
 find . \
-  -not \( -regex .*bower_components.* -prune \) \
-  -not \( -regex .*flow-typed.* -prune \) \
   -not \( -regex .*node_modules.* -prune \) \
   -name "*.$1"

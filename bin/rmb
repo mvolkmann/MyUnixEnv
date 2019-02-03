@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Removes a given git branch, both local and remote.
 
 if [ $# -ne 1 ]; then
