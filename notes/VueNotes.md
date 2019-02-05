@@ -397,7 +397,11 @@ with the following properties:
   This is an object describing props that are
   computed based on other props and data.
   The object defines methods whose names are prop names.
-  The methods return value of their prop.
+  The methods return the value of their prop.
+  Results are cached and only recomputed when data they depend on changes.
+  This makes them more efficient that implementing
+  a method that returns the same computed value.
+
   For example:
 
   ```js
