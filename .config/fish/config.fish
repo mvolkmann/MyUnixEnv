@@ -126,6 +126,7 @@ alias findjson 'find3 json'
 alias findless 'find3 less'
 alias findscss 'find3 scss'
 alias findts 'find3 ts'
+alias findvue 'find3 vue'
 
 # ESLint aliases
 alias esl 'clear; eslint -f codeframe **/*.js'

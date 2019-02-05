@@ -95,6 +95,14 @@ To start interactive mode
 - psql -U{username} {database-name}
   * username can be "postgres"
 
+To make the "postgres" user able to create tables
+- psql -d some-database
+- \password postgres
+- Enter new password like "postgres".
+- alter role postgres with superuser;
+- alter role postgres with createdb;
+- ctrl-d
+
 To create a user/role
 - createuser
   * will prompt for name of role to add and

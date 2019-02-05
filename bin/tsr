@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This compiles a given TypeScript source file and runs it using Node.js.
+# The name stands for "TypeScript Run".
+# Do not include the ".ts" file extension.
+
+if [ $# -ne 1 ]; then
+  echo usage: tsr {file-name}
+  exit 1
+fi
+
+tsc $1 && node $1

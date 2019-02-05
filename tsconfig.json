@@ -1,0 +1,6 @@
+{
+  "forceConsistentCasingInFileNames": true,
+  "noImplicitReturns": true,
+  "strict": true,
+  "noUnusedLocals": true
+}

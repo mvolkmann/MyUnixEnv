@@ -31,10 +31,13 @@ Another URL is <https://cdn.jsdelivr.net/npm/vue/dist/vue.js>.
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       window.onload = function() {
+        // The Vue instance created here is the root of a Vue application.
         new Vue({
-          el: '#app', // matches div id in body
+          el: '#app', // matches div id in body where this should render
           data() {
             // "name" is used in computed message and v-model of the input.
+            // Vue data is "reactive" meaning that
+            // changes to it cause UI that uses it to update.
             return {name: 'World'};
           },
           computed: {
@@ -53,11 +56,17 @@ Another URL is <https://cdn.jsdelivr.net/npm/vue/dist/vue.js>.
         <!-- The input uses 2-way data binding. -->
         <input v-model="name" />
       </div>
+      <!-- Use "interpolation" expression to
+           display data from Vue instance. -->
       <div>{{ message }}</div>
     </div>
   </body>
 </html>
 ```
+
+Data can be changed from the devtools console
+and the UI will update.
+For example, `app.name = 'Vue'`.
 
 ## Defining Components with `createElement`
 
@@ -159,10 +168,13 @@ The Vue devtool can run as a Chrome extension,
 a Firefox addon, or an Electron app.
 See <https://github.com/vuejs/vue-devtools>.
 
-It displays information about Vue apps that were
+It is recommended to enable "Allow access to file URLs"
+so the tool can display application source code.
+
+This displays information about Vue apps that were
 not built for production, i.e. not minimized.
 
-To use in Chrome, browsing a Vue app,
+To use in Chrome, browse a Vue app,
 click the Vue icon near the upper-right of the window,
 and open the devtools.
 If the devtools are open before the Vue icon is clicked,
@@ -532,7 +544,9 @@ There are several attributes that commonly bind a value.
 To compute CSS class names, use `:class`
 which takes a string value or an object
 where the keys are class names and the values are boolean expressions
-that determine whether the class name should be used.
+that determine whether each class name should be used.
+This can be combined with use of a `class` attribute that is
+not preceded by a colon for class names that are always present.
 
 To conditionally disable a form element,
 use `:disabled` which takes a boolean value.

@@ -1645,6 +1645,9 @@ followed by the macOS version in parentheses.
 ## TypeScript
 
 - under "Customize" on "Welcome" screen, install support for TypeScript
+- if TypeScript is installed globally with `npm install -g typescript`
+  and you want to use that version by default in VS Code, add the setting
+  `"typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib",`.
 
 ## Version Lens extension
 
