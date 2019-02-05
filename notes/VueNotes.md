@@ -648,8 +648,10 @@ only invoked when the specified key is pressed.
 For example:
 
 ```js
-<input @keyPress.enter="handleEnterKey">
+<input @keyPress.enter.native="handleEnterKey">
 ```
+
+TODO: Why is ".native" needed?
 
 System modifiers check for keys that can be
 pressed in conjunction with another key
