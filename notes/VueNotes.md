@@ -546,6 +546,11 @@ to a prop of another component or HTML element.
 For example, `<input v-bind:checked="isChecked">`
 or `<input :checked="isChecked">`.
 
+This is also useful for passing a literal number
+as a prop with a type of `Number`.
+For example, `size="12"` passes a string,
+but `:size="12"` passes a number.
+
 There are several attributes that commonly bind a value.
 
 To compute CSS class names, use `:class`
