@@ -546,10 +546,13 @@ to a prop of another component or HTML element.
 For example, `<input v-bind:checked="isChecked">`
 or `<input :checked="isChecked">`.
 
-This is also useful for passing a literal number
-as a prop with a type of `Number`.
-For example, `size="12"` passes a string,
+This is also useful for passing a literal boolean or number value
+as a prop with a type of `Boolean` or `Number`.
+For example, `size="true"` passes a string,
+but `:size="true"` passes a boolean.
+Similarly, `size="12"` passes a string,
 but `:size="12"` passes a number.
+This approach can also be used to pass a literal array or object.
 
 There are several attributes that commonly bind a value.
 
@@ -715,12 +718,15 @@ that listens for a `submit` event.
 Typically this should prevent the default behavior
 by including the `.prevent` modifier.
 
+For more form validation options, see
+<https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation>.
+
 For example:
 
 ```html
 <form @submit.prevent="handleSubmit">
   <label>Name</label>
-  <Input type="text" path="name" required />
+  <input type="text" path="name" required />
   <button type="submit">Submit</button>
 </form>
 ```
