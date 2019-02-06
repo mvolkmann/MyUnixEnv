@@ -528,8 +528,6 @@ followed by the macOS version in parentheses.
   - note the number of downloads and number of stars for each option
   - select one
   - press the "Install" button
-  - after it finishes, press the "Reload" button
-    to use in current session
   - click on name of extension for documentation
 - updates
   - by default, automatically checks for and installs extension updates
@@ -1740,7 +1738,7 @@ defaults delete -g ApplePressAndHoldEnabled # if necessary to reset global defau
 
 ## VS Live Share extension
 
-- install the extension and press "Reload"
+- install the extension
 - click "Sign in" on the left side of the status bar
   - can sign in with a Microsoft or GitHub account
   - "Sign in" will be replaced by "Share"
