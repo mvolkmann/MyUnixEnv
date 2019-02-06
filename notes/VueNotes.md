@@ -546,13 +546,12 @@ to a prop of another component or HTML element.
 For example, `<input v-bind:checked="isChecked">`
 or `<input :checked="isChecked">`.
 
-This is also useful for passing a literal boolean or number value
-as a prop with a type of `Boolean` or `Number`.
+It is also useful for passing non-string literal values as props.
+This includes boolean, number, object, and array literal values.
 For example, `size="true"` passes a string,
 but `:size="true"` passes a boolean.
 Similarly, `size="12"` passes a string,
 but `:size="12"` passes a number.
-This approach can also be used to pass a literal array or object.
 
 There are several attributes that commonly bind a value.
 
