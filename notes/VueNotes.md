@@ -710,27 +710,6 @@ To automatically convert the value to a number,
 use the `.number` modifier.
 For example, `v-model.number="score"`.
 
-Required form elements that include the `required` attribute
-and have no value or an invalid value entered
-will remind the user to enter a valid value.
-This requires use of a `<form>` element
-that listens for a `submit` event.
-Typically this should prevent the default behavior
-by including the `.prevent` modifier.
-
-For more form validation options, see
-<https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation>.
-
-For example:
-
-```html
-<form @submit.prevent="handleSubmit">
-  <label>Name</label>
-  <input type="text" path="name" required />
-  <button type="submit">Submit</button>
-</form>
-```
-
 #### `v-model` with Checkboxes
 
 For checkboxes, the value is always a boolean.
@@ -766,6 +745,35 @@ For example:
   ...
 </script>
 ```
+
+#### Form Validation
+
+HTML5 added many features to support form validation.
+
+Required form elements that include the `required` attribute
+and have no value or an invalid value entered
+will remind the user to enter a valid value.
+This requires use of a `<form>` element
+that listens for a `submit` event.
+Typically this should prevent the default behavior
+by including the `.prevent` modifier.
+
+For more form validation options, see
+<https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation>.
+
+For example:
+
+```html
+<form @submit.prevent="handleSubmit">
+  <label>Name</label>
+  <input type="text" path="name" required />
+  <button type="submit">Submit</button>
+</form>
+```
+
+Valid form elements match the CSS pseudo-class `:valid`
+and invalid ones match `:invalid`.
+These can be used to style form elements based on their validity.
 
 ### `v-show`
 
