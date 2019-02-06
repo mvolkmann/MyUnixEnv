@@ -247,6 +247,7 @@ the instance definition templates
 `vprops`, `vdata`, `vcomputed`,
 `vmethod`, `vwatcher`, and `vgetter`,
 and many more.
+Installing this seems to disable your own Vue snippets!
 
 Add the setting `"vetur.completion.useScaffoldSnippets": false,`
 so these snippets do not conflict with those provided by the Vetur extension.
