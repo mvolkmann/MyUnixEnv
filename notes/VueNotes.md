@@ -345,6 +345,7 @@ with the following properties:
 
 - `props`\
   This is an object or array describing the props this component accepts.
+  It provides a why for parent components to pass data to child components.
 
   When the value is an object,
   the keys are prop names and the values
@@ -455,6 +456,8 @@ with the following properties:
   It is an alternative to using a `<template>` element.
   To spread the content on to multiple lines,
   surround the string with backticks.
+  TODO: Can this only be used with components defined with
+  `Vue.component({...})`?
 
 - `watch`\
   This is an object where
@@ -695,8 +698,27 @@ To wait until the focus leaves the input, use the `.lazy` modifier.
 To automatically trim string values, use the `.trim` modifier.
 For example, `v-model.trim="name"`.
 
-To automatically convert the value to a number, use the `.number` modifier.
+To automatically convert the value to a number,
+use the `.number` modifier.
 For example, `v-model.number="score"`.
+
+Required form elements that include the `required` attribute
+and have no value or an invalid value entered
+will remind the user to enter a valid value.
+This requires use of a `<form>` element
+that listens for a `submit` event.
+Typically this should prevent the default behavior
+by including the `.prevent` modifier.
+
+For example:
+
+```html
+<form @submit.prevent="handleSubmit">
+  <label>Name</label>
+  <Input type="text" path="name" required />
+  <button type="submit">Submit</button>
+</form>
+```
 
 #### `v-model` with Checkboxes
 
@@ -1098,6 +1120,10 @@ For example:
 ```
 
 ## Events
+
+Vue events provide a way for child components
+to pass data to parent components.
+In a sense they are the opposite of props.
 
 Vue component instances support the `$emit` and `$on` methods
 that publish and subscribe to events.
