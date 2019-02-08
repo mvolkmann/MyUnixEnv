@@ -125,7 +125,7 @@ To add a plugin to an existing project,
 cd to the project directory and enter `vue add {plugin-name}`.
 For example, `vue add vuex`.
 
-To find additional plugins, search on npmjs.org for
+To find additional plugins, search on <npmjs.org> for
 pages whose names contain "vue" and "cli-plugin".
 These include apollo, e2e-cypress, markdown, storybook, and @vue/cli-plugin-unit-jest.
 
@@ -346,7 +346,7 @@ with the following properties:
 
 - `props`\
   This is an object or array describing the props this component accepts.
-  It provides a why for parent components to pass data to child components.
+  It provides a way for parent components to pass data to child components.
 
   When the value is an object,
   the keys are prop names and the values
