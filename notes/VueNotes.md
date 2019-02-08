@@ -444,6 +444,31 @@ with the following properties:
   use the `Vue.set` and `Vue.delete` functions.
   To set an array element, use `arr.$set(index, value)`.
 
+  In some cases it is desirable to
+  set data based on a prop value and
+  updated it whenever a new prop value is passed in.
+  Here is one way to achieve this where
+  the prop name is "foo" and the data name is "fooData":
+
+  ```js
+  props: {
+    foo: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      fooData: this.foo // captures initial value
+    };
+  },
+  watch: {
+    foo(newValue) {
+      this.fooData = newValue; // captures updates
+    }
+  },
+  ```
+
 - `methods`\
   This is an object that defines the component methods.
   They are primarily used for event handling.
