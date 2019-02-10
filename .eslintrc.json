@@ -18,11 +18,11 @@
 
   "extends": [
     "eslint:recommended",
+    "plugin:import/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
     "prettier",
-    "react-app",
     "plugin:vue/essential",
     "@vue:prettier"
   ],
