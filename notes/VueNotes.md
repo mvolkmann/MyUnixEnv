@@ -254,12 +254,24 @@ so these snippets do not conflict with those provided by the Vetur extension.
 
 ## ESLint Configuration
 
-The following settings in `.eslintrc.json` are recommended.
+The following settings in `.eslintrc.js` are recommended.
 
-In the "extends" array, add
+Modify the "extends" array to match the following:
 
-```json
-("plugin:vue/essential", "plugin:prettier/recommended", "@vue:prettier")
+```js
+  extends: [
+    'plugin:vue/essential',
+    'plugin:prettier/recommended',
+    '@vue/prettier'
+  ],
+```
+
+Install additional npm packages by entering the following:
+
+```bash
+npm install -D eslint-plugin-vue
+npm install -D eslint-plugin-prettier
+npm install -D @vue/eslint-config-prettier
 ```
 
 ## Customizing the Generated App
