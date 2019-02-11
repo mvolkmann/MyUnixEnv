@@ -1999,16 +1999,14 @@ Evaluation: win for Vue
 
 ## Unit Testing
 
-Projects created with Vue CLI 3 do not support tests by default.
-To get test support, select "Manually select features" instead of "default".
-Then select "Unit Testing" and "E2E Testing".
+Projects created with Vue CLI 3 do not support unit tests by default.
+To get unit test support,
+select "Manually select features" instead of "default".
+Then select "Unit Testing".
 For the "unit testing solution" choose between
 "Mocha + Chai" and "Jest" (preferred).
-For the "E2E testing solution" choose between
-"Cypress" (preferred) and "Nightwatch (Selenium-based)".
-Assuming that Jest and Cypress are selected,
-this also installs @vue/test-utils,
-@vue/cli-plugin-e2e-cypress (depends on cypress and more), and
+Assuming that Jest is selected,
+this also installs @vue/test-utils and
 @vue/cli-plugin-unit-jest (depends on jest and more).
 
 By default, unit test source files are expected to be
@@ -2092,7 +2090,18 @@ but that seemed to broken the last time I tried to use it.
 
 TODO: Add examples of unit tests.
 
-TODO: Add examples of e2e tests.
+## End-to-End (E2E) Testing
+
+Projects created with Vue CLI 3 do not support E2E tests by default.
+To get E2E test support,
+select "Manually select features" instead of "default".
+Then select "E2E Testing".
+For the "E2E testing solution" choose between
+"Cypress" (preferred) and "Nightwatch (Selenium-based)".
+Assuming that Cypress is selected, this also installs
+@vue/cli-plugin-e2e-cypress (depends on cypress and more).
+
+TODO: Add examples of E2E tests.
 
 ## TypeScript
 
