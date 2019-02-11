@@ -2021,11 +2021,10 @@ of `package.json` as follows:
     ],
 ```
 
-To add the ability to run Jest and Cypress tests to an existing Vue project
+To add the ability to run Jest tests to an existing Vue project
 that was created by the CLI, but without requesting use of Jest:
 
 - `npm install @vue/test-utils`
-- `npm install @vue/cli-plugin-e2e-cypress`
 - `npm install @vue/cli-plugin-unit-jest`
 - `npm install babel-core`
 - `npm install babel-jest`
@@ -2033,8 +2032,7 @@ that was created by the CLI, but without requesting use of Jest:
 - edit `package.json`
 
   - add the following scripts
-    - "test:e2e": "vue-cli-service test:e2e",
-    - "test:unit": "vue-cli-service test:unit"
+    - `"test:unit": "vue-cli-service test:unit"`
   - in the "env" object, add `"jest/globals": true,`
   - in the "eslintConfig" object,
     add `"plugins": ["jest"],`
@@ -2071,6 +2069,49 @@ that was created by the CLI, but without requesting use of Jest:
       }
     ```
 
+Two transformers are needed.
+babel-jest transforms JavaScript.
+vue-jest transforms `.vue` files.
+TODO: Are these installed by the CLI?
+
+These must be configured to be used by Jest.
+TODO: Does the CLI do this?
+
+If using `package.json`, look for:
+
+```json
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.vue$": "vue-jest"
+    }
+  }
+```
+
+An npm script in `package.json` is used to run the tests.
+The CLI provides this:
+
+```json
+    "test:unit": "vue-cli-service test:unit"
+```
+
+You could provide this:
+
+```json
+    "unit": "jest"
+```
+
+TODO: What's the difference?
+
+If using `jest.config.js`, look for:
+
+```js
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.vue$': 'vue-jest'
+  },
+```
+
 Unit test source files should be placed in directories below `tests/unit`
 in files whose names end with `.spec.js`.
 
@@ -2088,7 +2129,79 @@ To run unit tests, enter `npm run test:unit`.
 This is supposed to also support a `--watch` option,
 but that seemed to broken the last time I tried to use it.
 
-TODO: Add examples of unit tests.
+There are two popular libraries for Vue unit tests,
+vue-test-utils (installed by the CLI)
+and vue-testing-library (must be manually installed).
+
+### vue-test-utils
+
+Documentation is at <http://vue-test-utils.vuejs.org/>.
+
+This provides the following functions:
+
+- `mount` -
+- `shallowMount` -
+
+The mount functions take a component and return a wrapper object
+that contains the component instance (`wrapper.vm`)
+and the DOM element (`wrapper.element`).
+
+Test inputs include component props, data in store (like Vuex),
+and user actions. Outputs that can be tested include
+rendered DOM, Vue events, and calls to provided functions.
+
+To test for calls to functions,
+create mock functions with `jest.fn()`.
+
+To enable formatting of snapshots for more readable diffs,
+install with jest-serializer-vue with
+`npm install -D jest-serializer-vue`
+and configure it in `package.json` with:
+
+```json
+  "jest": {
+    "snapshotSerializers": ["jest-serializer-vue"],
+    ...
+  }
+```
+
+### Example Jest Tests
+
+```js
+test('does not render when ?', () => {
+  const wrapper = mount(MyComponent);
+  expect(wrapper.isEmpty()).toBe(true);
+});
+
+test('renders when ?', () => {
+  const wrapper = mount(MyComponent, propsData: {p1: v1, p2: v2});
+  expect(wrapper.isEmpty()).toBe(false);
+});
+
+test('calls callback when button is clicked', () => {
+  const cb = jest.fn();
+  const wrapper = mount(MyComponent, propsData: {cb});
+  wrapper.find('button').trigger('click');
+  expect(cb).toHaveBeenCalled();
+});
+
+test('render child content', () => {
+  const wrapper = mount(
+    MyComponent,
+    propsData: {p1: v1, p2: v2},
+    slots: {default: 'some HTML'} // for an unnamed slot
+  );
+  expect(wrapper.html()).toMatchSnapshot();
+});
+```
+
+### vue-testing-library
+
+TODO: Add details.
+
+TODO: See the Manning book "Testing Vue.js Applications".
+This does not cover vue-testing-library.
+For E2E tests, it covers Nightwatch, but not Cypress.
 
 ## End-to-End (E2E) Testing
 
@@ -2100,6 +2213,16 @@ For the "E2E testing solution" choose between
 "Cypress" (preferred) and "Nightwatch (Selenium-based)".
 Assuming that Cypress is selected, this also installs
 @vue/cli-plugin-e2e-cypress (depends on cypress and more).
+
+To add the ability to run Cypress tests to an existing Vue project
+that was created by the CLI, but without requesting use of Cypress:
+
+- `npm install @vue/cli-plugin-e2e-cypress`
+
+- edit `package.json`
+
+  - add the following script
+    - `"test:e2e": "vue-cli-service test:e2e",`
 
 TODO: Add examples of E2E tests.
 
