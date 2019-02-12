@@ -1212,10 +1212,11 @@ on its instance of the `Child` component using:
 The event payload values `value1` and `value2`
 will be passed to `parentMethod`.
 
-Applications can use events to share data between components,
+### Event Bus
+
+Applications can use an "event bus" to share data between components,
 making the use of a state management library unnecessary.
-Events provide an alternative to using Vuex
-that some developers prefer.
+This provide an alternative to using Vuex that some developers prefer.
 
 Events have a name and an optional payload.
 All arguments to `$emit` after the event name are
@@ -1224,8 +1225,7 @@ registered on the event using the `$on` method.
 
 The Vue devtools supports logging and filtering of these events.
 
-Here is an example that demonstrates most of the features
-of Vue events.
+Here is an example that demonstrates using an event bus.
 
 ### `event.js`
 
@@ -2009,6 +2009,9 @@ Assuming that Jest is selected,
 this also installs @vue/test-utils and
 @vue/cli-plugin-unit-jest (depends on jest and more).
 
+Adding the ability to run unit tests later is fairly tedious,
+so request this when creating the project!
+
 By default, unit test source files are expected to be
 under the `tests/unit` or `__tests__` directories.
 To colocate tests with the source files they test,
@@ -2021,95 +2024,11 @@ of `package.json` as follows:
     ],
 ```
 
-To add the ability to run Jest tests to an existing Vue project
-that was created by the CLI, but without requesting use of Jest:
-
-- `npm install @vue/test-utils`
-- `npm install @vue/cli-plugin-unit-jest`
-- `npm install babel-core`
-- `npm install babel-jest`
-- `npm install eslint-plugin-jest`
-- edit `package.json`
-
-  - add the following scripts
-    - `"test:unit": "vue-cli-service test:unit"`
-  - in the "env" object, add `"jest/globals": true,`
-  - in the "eslintConfig" object,
-    add `"plugins": ["jest"],`
-  - add the following sections
-
-    ```js
-      "babel": {
-        "presets": [
-          "@vue/app"
-        ]
-      },
-      "jest": {
-        "moduleFileExtensions": [
-          "js",
-          "jsx",
-          "json",
-          "vue"
-        ],
-        "transform": {
-          "^.+\\.vue$": "vue-jest",
-          ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
-          "^.+\\.jsx?$": "babel-jest"
-        },
-        "moduleNameMapper": {
-          "^@/(.*)$": "<rootDir>/src/$1"
-        },
-        "snapshotSerializers": [
-          "jest-serializer-vue"
-        ],
-        "testMatch": [
-          "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
-        ],
-        "testURL": "http://localhost/"
-      }
-    ```
-
-Two transformers are needed.
-babel-jest transforms JavaScript.
-vue-jest transforms `.vue` files.
-TODO: Are these installed by the CLI?
-
-These must be configured to be used by Jest.
-TODO: Does the CLI do this?
-
-If using `package.json`, look for:
+To run tests in "watch" mode, add `--watch` to the npm script
+as follows:
 
 ```json
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.vue$": "vue-jest"
-    }
-  }
-```
-
-An npm script in `package.json` is used to run the tests.
-The CLI provides this:
-
-```json
-    "test:unit": "vue-cli-service test:unit"
-```
-
-You could provide this:
-
-```json
-    "unit": "jest"
-```
-
-TODO: What's the difference?
-
-If using `jest.config.js`, look for:
-
-```js
-  transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.vue$': 'vue-jest'
-  },
+  "test:unit": "vue-cli-service test:unit --watch"
 ```
 
 Unit test source files should be placed in directories below `tests/unit`
@@ -2125,26 +2044,41 @@ describe('some name', () => {
 });
 ```
 
-To run unit tests, enter `npm run test:unit`.
-This is supposed to also support a `--watch` option,
-but that seemed to broken the last time I tried to use it.
-
 There are two popular libraries for Vue unit tests,
 vue-test-utils (installed by the CLI)
 and vue-testing-library (must be manually installed).
 
-### vue-test-utils
+### Vue Test Utils
 
 Documentation is at <http://vue-test-utils.vuejs.org/>.
 
 This provides the following functions:
 
+TODO: See https://vue-test-utils.vuejs.org/api/
+
 - `mount` -
 - `shallowMount` -
+- `render` -
+- `renderToString` -
 
-The mount functions take a component and return a wrapper object
-that contains the component instance (`wrapper.vm`)
-and the DOM element (`wrapper.element`).
+The mount functions take a component and return a wrapper object.
+
+The wrapper object contains the following properties:
+
+- `vm` - the component instance
+- `element` - the DOM element
+
+The wrapper object supports the following methods:
+
+- `attributes([name])`\
+  returns the value of the attribute name passed,
+  or a map of all the attributes if no name is passed
+- `classes()`\
+   returns an array of the CSS class names on the element
+- `contains(elementOrName)`\
+  returns a boolean indicating whether the element contains a specified element
+- `emitted([eventName])`\
+  TODO
 
 Test inputs include component props, data in store (like Vuex),
 and user actions. Outputs that can be tested include
@@ -2153,49 +2087,95 @@ rendered DOM, Vue events, and calls to provided functions.
 To test for calls to functions,
 create mock functions with `jest.fn()`.
 
-To enable formatting of snapshots for more readable diffs,
-install with jest-serializer-vue with
-`npm install -D jest-serializer-vue`
-and configure it in `package.json` with:
-
-```json
-  "jest": {
-    "snapshotSerializers": ["jest-serializer-vue"],
-    ...
-  }
-```
-
 ### Example Jest Tests
 
+Here is a very simple single file Vue component
+that implements a modal dialog.
+
+```html
+<template>
+  <div class="modal" v-if="show">
+    <slot />
+    <div>
+      <button @click="$emit('close')">Close</button>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'Modal',
+    props: {
+      show: {
+        type: Boolean,
+        required: true
+      }
+    }
+  };
+</script>
+
+<style scoped>
+  .modal {
+    background-color: white;
+    border: solid black 3px;
+    z-index: 1;
+
+    /* Center in window */
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal > * {
+    margin: 20px;
+  }
+
+  button {
+    text-align: center;
+  }
+</style>
+```
+
+Here is a test for the component above
+that uses vue-test-utils.
+
 ```js
-test('does not render when ?', () => {
-  const wrapper = mount(MyComponent);
+import {mount} from '@vue/test-utils';
+import Modal from '@/components/Modal';
+
+test('does not render when show is false', () => {
+  const wrapper = mount(Modal, {propsData: {show: false}});
   expect(wrapper.isEmpty()).toBe(true);
 });
 
-test('renders when ?', () => {
-  const wrapper = mount(MyComponent, propsData: {p1: v1, p2: v2});
+test('renders when show is true', () => {
+  const wrapper = mount(Modal, {propsData: {show: true}});
   expect(wrapper.isEmpty()).toBe(false);
 });
 
-test('calls callback when button is clicked', () => {
-  const cb = jest.fn();
-  const wrapper = mount(MyComponent, propsData: {cb});
+test('emits close event when button is clicked', () => {
+  const wrapper = mount(Modal, {propsData: {show: true}});
   wrapper.find('button').trigger('click');
-  expect(cb).toHaveBeenCalled();
+  expect(wrapper.emitted().close).toBeTruthy();
 });
 
-test('render child content', () => {
-  const wrapper = mount(
-    MyComponent,
-    propsData: {p1: v1, p2: v2},
-    slots: {default: 'some HTML'} // for an unnamed slot
-  );
+test('renders child content', () => {
+  const content = '<div><h3>My Modal</h3><p>my content</p>';
+  const wrapper = mount(Modal, {
+    propsData: {show: true},
+    slots: {default: content} // for an unnamed slot
+  });
   expect(wrapper.html()).toMatchSnapshot();
 });
 ```
 
 ### vue-testing-library
+
+This provides a layer over Vue Test Utils
+that provides access to the dom-testing-library.
+
+See <https://vue-test-utils.vuejs.org/>.
 
 TODO: Add details.
 
