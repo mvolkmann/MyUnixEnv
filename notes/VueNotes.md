@@ -2054,7 +2054,7 @@ Documentation is at <http://vue-test-utils.vuejs.org/>.
 
 This provides the following functions:
 
-TODO: See https://vue-test-utils.vuejs.org/api/
+TODO: See <https://vue-test-utils.vuejs.org/api/>
 
 - `mount` -
 - `shallowMount` -
