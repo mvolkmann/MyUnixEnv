@@ -31,6 +31,11 @@ Another URL is <https://cdn.jsdelivr.net/npm/vue/dist/vue.js>.
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       window.onload = function() {
+        Vue.component('user-name', {
+          props: ['name'],
+          template: '<p>Hi {{ name }}</p>'
+        });
+
         // The Vue instance created here is the root of a Vue application.
         new Vue({
           el: '#app', // matches div id in body where this should render
@@ -59,6 +64,7 @@ Another URL is <https://cdn.jsdelivr.net/npm/vue/dist/vue.js>.
       <!-- Use "interpolation" expression to
            display data from Vue instance. -->
       <div>{{ message }}</div>
+      <user-name name="Mark"></user-name>
     </div>
   </body>
 </html>
@@ -1861,6 +1867,17 @@ Vue projects created with the Vue CLI
 never require ejecting to customize their build process.
 They can always take advantage of improvements
 to the `@vue/cli-service` library.
+
+## Things Nobody Does
+
+There are many things that are possible in Vue
+that are rarely done in real projects
+
+- start a project without using the Vue CLI
+- create components with Vue.component
+  instead of using single-file .vue files
+- use v-bind (everybody uses the : shorthand)
+- use v-on (everybody uses the @ shorthand)
 
 ## Comparison to React
 
