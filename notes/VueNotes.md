@@ -398,8 +398,18 @@ with the following properties:
   that returns true if the prop value is valid. For example:
 
   ```js
-    validator(value) {
-      return typeof value === 'object' && value.someRequiredProperty;
+  const isNumber = value => typeof value === 'number';
+  const isString = value => typeof value === 'string';
+  ...
+
+    props: {
+      person: {
+      type: Object,
+      required: true,
+      validator(person) {
+        const {name, age} = person;
+        return isString(name) && isNumber(age);
+      }
     }
   ```
 
