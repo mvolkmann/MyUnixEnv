@@ -542,6 +542,25 @@ followed by the macOS version in parentheses.
        - look at top entries that start with
          "/Applications/Visual Studio Code.app/Contents/Frameworks/"
        - "Code Helper.app" was a culprit for me
+- my extensions (as of 2/15/2019)
+  - Auto Close Tag: for HTML/XML tags
+  - Bracket Pair Colorizer
+  - Code Spell Checker
+  - ESLint
+  - GitLens
+  - Go
+  - LintLens: for ESLint rules
+  - markdownlint
+  - Prettier - Code Formatter
+  - PrintCode
+  - Settings Cycler
+  - Sort Lines
+  - TODO Highlight
+  - Version Lens: for npm package.json files
+  - Vetur: for Vue files; uses too much CPU!
+  - Vim
+  - vscode-go-to-file
+  - vscode-icons
 
 ## ESLint and TSLint extensions
 

@@ -579,7 +579,7 @@ For example:
 
 To insert the value of a single JavaScript expression
 use interpolation via double curly braces.
-For example, `{{expression}}`.
+For example, `{{ expression }}`.
 
 The expression can be any valid JavaScript expression
 including a ternary or a function call.
