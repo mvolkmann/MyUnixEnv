@@ -168,6 +168,8 @@ alias pso 'clear; polymer serve -o'
 # Is this needed?
 set SHELL /usr/local/bin/fish
 
+set EDITOR (which code)
+
 if test -e $HOME/secret.sh
   . $HOME/secret.sh
 end

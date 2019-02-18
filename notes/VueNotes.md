@@ -83,8 +83,15 @@ JSX is an XML syntax that is very similar to HTML.
 But using JSX requires tooling.
 For now let's see one more example that requires no tooling.
 
-```html
-TODO: Provide this!
+```js
+Vue.component('Danger', {
+  props: {
+    message: {type: String, required: true}
+  },
+  render(createElement) {
+    return createElement('div', {class: 'danger'}, this.message);
+  }
+});
 ```
 
 The previous approaches are fine for a demonstrations,
@@ -117,7 +124,7 @@ From the parent directory of the project, enter `vue create {project-name}`,
 select "Merge", and select the features to add.
 For some features, this will overwrite files such as `src/App.vue`!
 If you have made changes to any of the files,
-make backup copies before doing this.
+commit to version control before doing this.
 
 ### Approach #2
 
@@ -132,7 +139,7 @@ cd to the project directory and enter `vue add {plugin-name}`.
 For example, `vue add vuex`.
 
 To find additional plugins, search on <npmjs.org> for
-pages whose names contain "vue" and "cli-plugin".
+packages whose names contain "vue" and "cli-plugin".
 These include apollo, e2e-cypress, markdown, storybook, and @vue/cli-plugin-unit-jest.
 
 ## Vue Project Structure
@@ -159,7 +166,7 @@ Projects created by the Vue CLI have the following structure:
 ## Building and Running
 
 To build and run a project, cd to the project directory
-and enter `npm install` and `npm run serve`.
+and enter `npm run serve`.
 By default this starts a local HTTP server that listens on port 8080.
 It does not automatically open a tab for the app in the default browser.
 Browse localhost:8080 to see the app.
@@ -622,19 +629,6 @@ use `:disabled` which takes a boolean value.
 To dynamically generate CSS styles, use `:style`
 which takes an object where the keys are camel-case CSS property names.
 
-Forms with a submit button can bind to the `onsubmit` DOM event.
-For example:
-
-```html
-<template>
-  <form @submit.prevent="handleSubmit">
-    <input type="text" v-model="name" />
-    <input type="color" v-model="favoriteColor" />
-    <input type="submit" value="Submit" />
-  </form>
-</template>
-```
-
 ### `v-if`, `v-else-if`, `v-else`
 
 These provides conditional rendering.
@@ -676,18 +670,18 @@ to minimize the number of DOM updates performed when data changes.
 This registers event handling for a specific event.
 The value specified can be the name of a method or
 a JavaScript statement such as a method call with arguments
-or assigning a value to a data property.
+or assignment to a data property.
 For example, assuming `delete`, `add`, and `processKey`
 are component methods and `havePower` is a data property:
 
 ```js
 <button @click="onDelete">Delete</button> <!-- calls with no arguments -->
 <button @click="add(5)">Add 5</button> <!-- calls with an argument -->
-<input @keypress="processKey($event)" />> <!-- passes event object -->
-<button @click="havePower = !havePower" />> <!-- assigns to data -->
+<input @keypress="processKey($event)" /> <!-- passes event object -->
+<button @click="havePower = !havePower" /> <!-- assigns to data -->
 ```
 
-Event modifiers can follow the event name. These include:
+Event modifiers can follow an event name. These include:
 
 - `.prevent` to trigger event.preventDefault()
 - `.stop` to trigger event.stopPropagation()
@@ -704,7 +698,20 @@ Event modifiers can follow the event name. These include:
 For example:
 
 ```js
-<button @click.stop.prevent="handleClick">Press Me</button>
+<button @click.prevent.stop="handleClick">Press Me</button>
+```
+
+Forms with a submit button can bind to the `onsubmit` DOM event.
+For example:
+
+```html
+<template>
+  <form @submit.prevent="handleSubmit">
+    <input type="text" v-model="name" />
+    <input type="color" v-model="favoriteColor" />
+    <input type="submit" value="Submit" />
+  </form>
+</template>
 ```
 
 Key modifiers check for common key codes. These include
@@ -786,7 +793,6 @@ For example:
   </div>
   ...
 </template>
-...
 <script>
   ...
   data: () => {
@@ -883,7 +889,7 @@ the same output as the initial render.
 
 This skips all evaluation of element content
 which allows rendering double curly braces.
-One use if for outputting example Vue code.
+One use is for outputting example Vue code.
 
 `v-text`
 
@@ -1003,7 +1009,7 @@ They are defined as top-level properties in an instance definition.
   The `mounted` method can be use used to modify
   the DOM after the component instance is rendered
   for the first time.
-  It method can be called before
+  It can be called before
   all of its child components have been mounted.
   To do something after all of those have been mounted
   call `this.$nextTick` inside the `mounted` method,
@@ -1059,11 +1065,11 @@ For example, a custom select element named `Select`
 could insert child `option` elements.
 
 ```html
-<select path="favorite.color">
+<Select path="favorite.color">
   <option>red</option>
   <option>green</option>
   <option>blue</option>
-</select>
+</Select>
 ```
 
 The template for the `Select` element can use `<slot></slot>`
@@ -1086,7 +1092,7 @@ A related top is "scoped slots". These seem very complex!
 
 ## Refs
 
-Template elements can have a `ref` attribute.
+Elements in a template can have a `ref` attribute.
 This allows component methods to get a reference to them.
 It has many uses. One is to get a reference to an `input` element
 so that focus can be moved to it. For example:
@@ -1230,9 +1236,9 @@ will be passed to `parentMethod`.
 
 ### Event Bus
 
-Applications can use an "event bus" to share data between components,
-making the use of a state management library unnecessary.
-This provide an alternative to using Vuex that some developers prefer.
+Applications can use an "event bus" to share data between components.
+This provide an alternative to using state management libraries
+like Vuex that some developers prefer.
 
 Events have a name and an optional payload.
 All arguments to `$emit` after the event name are
@@ -1250,6 +1256,9 @@ all components that wish to publish or subscribe to events
 can do so using this object.
 Note that all `Vue` objects support the methods
 `$emit`, `$on`, `$once`, and `$off`.
+
+The `$once` method can be used in place of `$on` to
+only listen to the next occurrence of a given event.
 
 ```js
 import Vue from 'vue';
@@ -1288,7 +1297,7 @@ its `destroyed` method is called.
 </script>
 ```
 
-### `src/components/DataEntry`
+### `src/components/DataEntry.vue`
 
 This component renders a number `input` for entering a zip code.
 It emits a `zipCode` event with the value every time the value changes.
@@ -1298,7 +1307,8 @@ emits the current value when that event is received.
 ```html
 <template>
   <div>
-    <label for="zipCode">Zip</label> <input v-model="zipCode" type="number" />
+    <label for="zipCode">Zip</label>
+    <input v-model="zipCode" type="number" />
   </div>
 </template>
 
@@ -1310,11 +1320,12 @@ emits the current value when that event is received.
       return {zipCode: 0};
     },
     mounted() {
-      // When the value of zipCode is requested, emit it.
-      EventBus.$on('getZipCode', () => EventBus.$emit('zipCode', this.zipCode));
+      // When value of zipCode is requested, emit it.
+      EventBus.$on('getZipCode',
+        () => EventBus.$emit('zipCode', this.zipCode));
     },
     watch: {
-      // When the value of zipCode changes, notify listeners.
+      // When value of zipCode changes, emit it.
       zipCode() {
         EventBus.$emit('zipCode', this.zipCode);
       }
@@ -1323,7 +1334,7 @@ emits the current value when that event is received.
 </script>
 ```
 
-### `src/components/Report`
+### `src/components/Report.vue`
 
 This component displays the current zip code value.
 When a new instance is mounted,
@@ -1348,23 +1359,20 @@ it unsubscribes from `zipCode` events.
       };
     },
     mounted() {
-      // Subscribe to the "zipCode" event.
+      // Subscribe to "zipCode" event.
       this.listener = zipCode => (this.zipCode = zipCode);
       EventBus.$on('zipCode', this.listener);
 
-      // Request the current value.
+      // Request current value.
       EventBus.$emit('getZipCode');
     },
     destroyed() {
-      // Unsubscribe this listener from the "zipCode" event.
+      // Unsubscribe this listener from "zipCode" event.
       EventBus.$off('zipCode', this.listener);
     }
   };
 </script>
 ```
-
-The `$once` method can be used in place of `$on` to
-only listen to the next occurrence of a given event.
 
 ## Vuex
 
@@ -1402,9 +1410,6 @@ export default new Vuex.Store({
     colors: ['yellow', 'orange']
   },
   mutations: {
-    clearColors(state) {
-      state.colors = [];
-    }
     appendColor(state, color) {
       // Note that state properties can be modified in mutation functions.
       // It is not necessary to treat the state object as immutable here.
@@ -1413,6 +1418,9 @@ export default new Vuex.Store({
       // use the Array splice method or the Vue-supplied method $set
       // like state.colors.$set(2, color);
       state.colors.push(color);
+    },
+    clearColors(state) {
+      state.colors = [];
     },
     setYear(state, year) {
       state.year = year;
@@ -1466,9 +1474,9 @@ export default {
 };
 ```
 
-### Triggering Mutations
+### Committing Mutations
 
-To trigger mutations from a component, call
+To commit mutations from a component, call
 `this.$store.commit(mutationName, arg)`.
 For example, `this.$store.commit('appendColor', 'red');`
 Only a single argument can follow the mutation name.
@@ -1527,12 +1535,14 @@ export default {
     ...mapGetters(['uncompletedCount', /* more getter names */]),
     // More computed properties can be defined here.
   }
+  ...
+};
 ```
 
 ### Actions
 
 Actions support asynchronous mutation commits
-and triggering multiple commits.
+and commit multiple mutations.
 See <https://vuex.vuejs.org/guide/actions.html>.
 
 Actions are never really needed.
