@@ -6,8 +6,6 @@
     "node": true
   },
 
-  "parser": "babel-eslint",
-
   "parserOptions": {
     "ecmaVersion": 7,
     "sourceType": "module",
@@ -27,7 +25,7 @@
     "@vue:prettier"
   ],
 
-  "plugins": ["html", "jsx-a11y", "prettier", "react"],
+  "plugins": ["html", "jsx-a11y", "prettier", "react", "vue"],
 
   "settings": {
     "react": {

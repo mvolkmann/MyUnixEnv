@@ -478,6 +478,8 @@ with the following properties:
   To add or delete data properties that are not initially present,
   use the `Vue.set` and `Vue.delete` functions.
   To set an array element, use `arr.$set(index, value)`.
+  To delete an array element, use the `Array` `splice` method
+  or `this.$delete(this.someArray, index)`.
 
   In some cases it is desirable to
   set data based on a prop value and
@@ -1575,7 +1577,7 @@ It is based on the battle-tested React libraries
 [redux-easy](https://www.npmjs.com/package/redux-easy) and
 [context-easy](https://www.npmjs.com/package/context-easy).
 
-## Vue-Router
+## Vue Router
 
 This is the most popular routing library for Vue.
 It was developed by and is maintained by the Vue team.
@@ -1584,7 +1586,7 @@ The vue-router library maps URLs to components and supports
 navigation between "pages" using the `<router-link>` elements.
 The current route can also be changed from JavaScript code
 by calling `this.$router.push`.
-The current route is render in a `<router-view>` element
+The current route is rendered in a `<router-view>` element
 that is typically rendered by the top-most component.
 
 Applications created using the Vue CLI that choose to include vue-router
@@ -1797,7 +1799,7 @@ It is built on webpack and webpack-dev-server and
 provides good default configuration for these.
 
 Projects created by the Vue CLI have
-a runtime dependency on `@vue/cli-service`.
+a dev dependency on `@vue/cli-service`.
 This is similar to the `react-scripts` library
 used by projects that are created by create-react-app.
 Much of the functionality for developing a project comes from this library.
@@ -1873,21 +1875,6 @@ Managing a project includes:
   - versions of installed web browsers
   - versions of installed npm packages
 
-### Ejecting
-
-With React projects that are created using create-react-app,
-the kinds of configuration changes that can be made are limited.
-Certain kinds of changes required "ejecting".
-This removes the dependency on the `react-scripts` library
-and copies many configuration files and dependencies into the project.
-After ejecting, it is no longer possible to take advantage
-of improvements to the `react-scripts` library.
-
-Vue projects created with the Vue CLI
-never require ejecting to customize their build process.
-They can always take advantage of improvements
-to the `@vue/cli-service` library.
-
 ## Things Nobody Does
 
 There are many things that are possible in Vue
@@ -1952,6 +1939,35 @@ uses less memory, and supports detecting changes from more JavaScript features.
 This likely means that the following are no longer needed:
 `$set`, `$delete`, and `Array` `$set`.
 
+### CLI Startup
+
+In React applications created with create-react-app,
+entering `npm start` starts a local HTTP server
+opens a tab in the default web browser,
+and loads the app.
+
+In Vue applications created with the Vue CLI,
+entering `npm run serve` starts a local HTTP server,
+but it does not open a browser tab for the application.
+That must be done manually.
+
+Evaluation: small win for React
+
+### Ejecting
+
+With React projects that are created using create-react-app,
+the kinds of configuration changes that can be made are limited.
+Certain kinds of changes required "ejecting".
+This removes the dependency on the `react-scripts` library
+and copies many configuration files and dependencies into the project.
+After ejecting, it is no longer easy to take advantage
+of improvements to the `react-scripts` library.
+
+Vue projects created using the Vue CLI
+never require ejecting to customize their build process.
+They can always take advantage of improvements
+to the `@vue/cli-service` library.
+
 ### Ease of Learning
 
 Many claim a benefit of Vue is that it is easier to learn than React's JSX.
@@ -2007,20 +2023,6 @@ Iteration is primarily achieved using the Array `map` method.
 
 For developers that already have strong knowledge of JavaScript and the DOM,
 Vue requires additional learning that is not required in React.
-
-Evaluation: small win for React
-
-#### CLI Startup
-
-In React applications created with create-react-app,
-entering `npm start` starts a local HTTP server
-opens a tab in the default web browser,
-and runs the app.
-
-In Vue applications created with the Vue CLI,
-entering `npm run serve` starts a local HTTP server,
-by it does not open a browser tab for the application.
-That must be done manually.
 
 Evaluation: small win for React
 
@@ -2081,6 +2083,7 @@ describe('some name', () => {
 });
 ```
 
+GRONK
 There are two popular libraries for Vue unit tests,
 vue-test-utils (installed by the CLI)
 and vue-testing-library (must be manually installed).

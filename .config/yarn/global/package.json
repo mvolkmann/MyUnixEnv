@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@vue/cli-service-global": "^3.3.0",
-    "@vue/cli-upgrade": "^3.3.0"
-  }
-}
