@@ -5,6 +5,12 @@
 # each time an interactive shell is created.
 if status --is-login
   echo running .config/fish/config.fish
+
+  # If not already in PATH, add /usr/local/bin.
+  if not contains /usr/local/bin $PATH
+    set PATH /usr/local/bin $PATH
+  end
+
   # If not already in PATH, add $HOME/bin.
   if not contains $HOME/bin $PATH
     set PATH $HOME/bin $PATH
@@ -23,6 +29,10 @@ set -U fish_greeting ''
 #---------------------------------------------------------------------------
 # Abbreviations
 #---------------------------------------------------------------------------
+
+# For Go
+
+abbr --add grm go run main.go
 
 # For git
 abbr --add add git add
@@ -61,25 +71,32 @@ alias bigdirs 'du -sk * | sort -nr | head'
 alias cdbmx 'cd $OCI_DIR/clients/bioMerieux'
 alias cddropbox 'cd $DROPBOX_DIR'
 alias cdelm 'cd $PROGRAMMING_DIR/languages/Elm'
+alias cdgo 'cd $PROGRAMMING_DIR/languages/go'
+alias cdgop 'cd $GOPATH'
+alias cdgopv 'cd $GOPATH/src/github.com/mvolkmann'
 alias cdhaskell 'cd $PROGRAMMING_DIR/languages/Haskell'
 alias cdjava 'cd $JAVA_DIR'
 alias cdjavascript 'cd $JAVASCRIPT_DIR'
 alias cdjs 'cd $JAVASCRIPT_DIR'
 alias cdlanguages 'cd $LANGUAGES_DIR'
 alias cdmaritz 'cd $MARITZ_DIR'
+alias cdmc 'cd $OCI_DIR/clients/MasterCard/RewardLoyalties'
 alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
 alias cdnotes 'cd $HOME/MyUnixEnv/notes'
 alias cdoci 'cd $OCI_DIR'
 alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
+alias cdreact 'cd $JAVASCRIPT_DIR/react'
 alias cdrga 'cd $RGA_DIR'
 alias cdsd 'cd $OCI_DIR/SmartDevice_Web_Demo'
 alias cdsett 'cd $SETT_DIR'
 alias cdtalks 'cd $PROGRAMMING_DIR/conferences/talks'
+alias cdtesla 'cd $OCI_DIR/clients/Purina/tesla-client'
 alias cdtraining 'cd $TRAINING_DIR'
 alias cdts 'cd $TYPESCRIPT_DIR'
 alias cdvim 'cd $PROGRAMMING_DIR/Tools/Vim'
+alias cdvue 'cd $JAVASCRIPT_DIR/vue'
 alias cls 'clear'
 
 # Git aliases
@@ -99,6 +116,7 @@ alias ens 'enscript --borders --columns=2 --fancy-header --landscape --line-numb
 alias ens1 'enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63'
 
 alias findcss 'find3 css'
+alias findgo 'find3 go'
 alias findhtml 'find3 html'
 alias findhtml1 'find-depth-1 html'
 alias findjava 'find3 java'
@@ -108,6 +126,7 @@ alias findjson 'find3 json'
 alias findless 'find3 less'
 alias findscss 'find3 scss'
 alias findts 'find3 ts'
+alias findvue 'find3 vue'
 
 # ESLint aliases
 alias esl 'clear; eslint -f codeframe **/*.js'
@@ -149,6 +168,8 @@ alias pso 'clear; polymer serve -o'
 # Is this needed?
 set SHELL /usr/local/bin/fish
 
+set EDITOR (which code)
+
 if test -e $HOME/secret.sh
   . $HOME/secret.sh
 end
@@ -170,6 +191,7 @@ set CSS_DIR $LANGUAGES_DIR/CSS
 set HTML_DIR $LANGUAGES_DIR/html
 set JAVA_DIR $LANGUAGES_DIR/java
 set JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
+set MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
 #set MONGODB_DIR=$DATABASES_DIR/MongoDB
 set SETT_DIR $OCI_DIR/SETT
 set TRAINING_DIR $DOCUMENTS_DIR/training
@@ -177,6 +199,9 @@ set TYPESCRIPT_DIR $LANGUAGES_DIR/typescript
 
 # AsciiDoc settings
 set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
+
+# bat settings (better version of cat command)
+set BAT_PAGER myless
 
 # Clojure settings
 #set CLOJURE_HOME $LANGUAGES_DIR/clojure/clojure-1.2.1
@@ -187,12 +212,17 @@ set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
 set GITHUB_USER mvolkmann
 #set GITHUB_PASS ?
 
+# Go settings
+set GOPATH $HOME/go
+set GOBIN $GOPATH/bin
+set PATH $PATH $GOBIN
+
 # grep settings
 # This setting may interfere with fink scripts!
 #set GREP_OPTIONS '--color=ALWAYS'
 
 # Haskell (GHC) settings
-set PATH $HOME/.local/bin $PATH
+#set PATH $HOME/.local/bin $PATH
 
 # HTTP server to serve files in current directory
 alias serve 'python -m SimpleHTTPServer 8080'
@@ -210,6 +240,9 @@ set JS_DIR $LANGUAGES_DIR/javascript
 #set PATH $PATH $MAVEN_HOME/bin
 #set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
 
+# Micronaut settings
+#set PATH $PATH $MICRONAUT_DIR/bin
+
 # MongoDB settings
 #set PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
 
@@ -222,6 +255,9 @@ alias pgl 'psql -d demo'
 set NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
 set PATH $PATH $NODE_DIR/deps/v8/tools
 #function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+
+# Python settings
+#alias python 'python3'
 
 # React Native settings
 set ANDROID_HOME /usr/local/opt/android-sdk
@@ -243,4 +279,4 @@ set VISUAL vim
 set PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/Mark/Downloads/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Downloads/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Downloads/google-cloud-sdk/path.fish.inc'; end; end
+#if [ -f '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; end; end

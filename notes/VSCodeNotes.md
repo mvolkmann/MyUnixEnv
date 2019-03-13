@@ -1354,6 +1354,7 @@ followed by the macOS version in parentheses.
 - click left and right arrows in popup
   to move to previous and next matches
 - search results are live and update as files are modified
+- press up and down arrows to navigate to previous searches
 
 ## Selection
 

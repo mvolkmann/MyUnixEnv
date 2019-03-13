@@ -365,7 +365,7 @@ with the following properties:
   If the components used are `Foo` and `Bar`,
   it can be written as `{Foo: Foo, Bar: Bar}`
   or, with ES6 object shorthand, just `{Foo, Bar}`.
-  The ability the choose the names by which components will be referenced
+  The ability to choose the names by which components will be referenced
   is important when there are name conflicts because it allows
   use of multiple components that happen to have the same name.
 
@@ -408,7 +408,6 @@ with the following properties:
   const isNumber = value => typeof value === 'number';
   const isString = value => typeof value === 'string';
   ...
-
     props: {
       person: {
       type: Object,
@@ -506,6 +505,18 @@ with the following properties:
   },
   ```
 
+- `watch`\
+  This is an object where
+  the keys are the names of data to be watched and
+  the values are functions to execute when the value changes.
+  The functions are passed the new value and the old value.
+
+  To watch for deep changes in an object or array,
+  use an object for the value with `deep` and `handler` properties.
+  The `deep` property is a boolean that must be set to `true`.
+  The `handler   property is a function that is invoked with
+  the new value when anything in the watched object changes.
+
 - `methods`\
   This is an object that defines the component methods.
   They are primarily used for event handling.
@@ -521,12 +532,6 @@ with the following properties:
   surround the string with backticks.
   TODO: Can this only be used with components defined with
   `Vue.component({...})`?
-
-- `watch`\
-  This is an object where
-  the keys are the names of data to be watched and
-  the values are functions to execute when the value changes.
-  The functions are passed the new value and the old value.
 
 Much of the data defined in the properties above
 can be accessed in methods using the `this` keyword.

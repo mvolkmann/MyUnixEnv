@@ -333,7 +333,7 @@ To move or delete part of a media clip
 - press t key or click thumb at bottom of scrubber
 - repeat until parts to be moved or deleted are isolated
 - to move a clip, drag it
-- to delete a click, click to select and press delete key
+- to delete a clip, click to select and press delete key
 - to delete a gap between clips, click to select and press delete key
 - there should be a way to combine deleting and closing the gap!
 
