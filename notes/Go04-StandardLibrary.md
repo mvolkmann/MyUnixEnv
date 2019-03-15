@@ -8,7 +8,7 @@ The first article in the series is available at
 It provides an overview of the language and a quick-start guide.
 
 The second article in the series is available at
-<https://objectcomputing.com/resources/publications/sett/?-2019-way-to-go-part-2>.
+<https://objectcomputing.com/resources/publications/sett/january-2019-way-to-go-part-2>.
 It provides details on all the syntax in the Go language.
 
 Future articles will cover concurrency, reflection,
@@ -20,7 +20,7 @@ solutions to common tasks, modules, testing, and the future of Go.
 
 The builtin constants, variables, and functions provided by Go
 are listed as being in the standard library package "builtin"
-for documentation purposes, but no such package actually exists.
+for documentation purposes but no such package actually exists.
 
 The following sections describe each of the provided builtins.
 
@@ -35,10 +35,10 @@ at the beginning of every `const` definition,
 which is the only place it can be used.
 
 The value of `iota` is incremented by one after each line in the
-`const` definition, except for blank lines and comment lines.
+`const` definition except for blank lines and comment lines.
 It is typically used to define enumerated values.
 The last expression involving `iota` is repeated for subsequent
-constant values, but uses an incremented value of `iota`.
+constant values but uses an incremented value of `iota`.
 For example:
 
 ```go
@@ -106,7 +106,7 @@ Go defines the following builtin "basic types".
 
 - `bool`\
   The only values are the builtin constants `true` and `false`.
-  These can use with the operators `&&`, `||`, and `!`.
+  These can be used with the operators `&&`, `||`, and `!`.
 - `byte`\
   This is an alias for the type `uint8`.
 - `complex64` and `complex128`\
@@ -133,7 +133,7 @@ Go defines the following builtin "basic types".
 - `rune`\
   This is an alias for `int32`.
   It is used for unicode characters
-  that range in size from 1 to 4 bytes.
+  that range in size from 1 to 4 bytes (a.k.a. Unicode code point).
   Literal values of this type are surrounded by single quotes.
 - `string`\
   This is a sequence of 8-bit bytes, not Unicode characters.
@@ -153,7 +153,7 @@ the following "generic type" names that are not real types
 appear in the Go documentation.
 
 - `Type` - represents a specific type for a given function invocation
-- `Type1` - like `Type`, but for a second type
+- `Type1` - like `Type` but for a second type
 - `ComplexType` - represents a complex64 or complex128
 - `FloatType` - represents a float32 or float64
 - `IntegerType` - represents any integer type
@@ -177,20 +177,23 @@ appear in the Go documentation.
   This allocates and initializes a slice, map, or channel.\
   If Type is Slice, pass the length, and optional capacity.\
   If Type is Map, optionally specify the number of key/value pairs for which to allocate space.
+  See the "Channel Functions" section below for details on using `make` to create a `Channel`.
 - `new(Type) *Type`\
-  This allocates memory for a given type and returns pointer to it.
+  This allocates memory for a given type and returns a pointer to it.
 
 #### Output Functions
 
 - `print(args ...Type)`\
   This writes to stderr; useful for debugging.
 - `println(args ...Type)`\
-  This is like `print`, but adds a newline at the end.
+  This is like `print` but adds a newline at the end.
 - To write to stdout, see the `fmt` package.
 
 #### Error Handling Functions
 
-See the earlier section "Error Handling" for more detail on these.
+See the "Error Handling" section of the
+[second article](https://objectcomputing.com/resources/publications/sett/january-2019-way-to-go-part-2)
+in this series for more detail on these.
 
 - `panic(v interface{})`\
   This stops normal execution of the current goroutine.\
@@ -209,9 +212,9 @@ Channels will be covered in detail in a future article on concurrency.
 
 - `close(c chan<-)`\
   This closes a channel after the last sent value is received.
-- `make(Channel, [buffer-capacity])`\
+- `make(Channel [, buffer-capacity])`\
   This creates a channel.\
-  The channel is unbuffered if `buffer-capacity` is omitted.
+  The channel is unbuffered if `buffer-capacity` is omitted or is zero.
 
 #### Complex Number Functions
 
@@ -264,18 +267,21 @@ f, err := strconv.ParseFloat(s, 65) // bitsize 64
 ```
 
 When a value is held in an interface type,
-including the "any" type `interface{}`,
 a type assertion can be used to convert it to a non-interface type.
+This includes the "any" type `interface{}`.
 For example, `var f = value.(float32)` converts
 a value with an interface type to a `float32`.
 This only works if the value actually has a type of `float32`.
-See the earlier section "Type Assertions" for more detail.
+See the "Type Assertions" section of the
+[second article](https://objectcomputing.com/resources/publications/sett/january-2019-way-to-go-part-2)
+in this series for more detail.
 
 ### Standard Library Packages
 
 Go provides many packages in the "standard library".
 To see a list of them, browse <https://golang.org/pkg/>.
-Clicking on a library function displays its source code
+Clicking on the name of a library function
+in the documentation displays its source code
 which is useful for learning how they work
 and seeing examples of good Go code.
 
@@ -313,8 +319,9 @@ Highlights of the standard library include:
   This provides the `New` function that creates `error` values
   that have a string description and
   a method named `Error` to retrieve the description.
-  This package was described in the "Error Handling" section
-  of the second article in this series.
+  This package was described in the "Error Handling" section of the
+  [second article](https://objectcomputing.com/resources/publications/sett/january-2019-way-to-go-part-2)
+  in this series.
 - `flag`\
   This provides flag parsing for command-line applications.
   This package is described in the "Command-line Flags" section below.
@@ -325,7 +332,9 @@ Highlights of the standard library include:
 - `go`\
   The sub-packages of this package implement all the standard go tooling
   such as source file parsing to ASTs and code formatting.
-  This package was described in the first article in the series.
+  This package was described in the
+  [first article](https://objectcomputing.com/resources/publications/sett/november-2018-way-to-go-part-1)
+  in this series.
   Additional detail will be provided in a future article on Go tooling.
 - `html`\
   This provides functions to parse and create HTML.
@@ -413,8 +422,9 @@ Highlights of the standard library include:
 - `time`\
   This provides functions that measure and display time and dates.
   Use of this package was demonstrated in the
-  "Struct Field Encapsulation" section
-  of the second article in this series.
+  "Struct Field Encapsulation" section of the
+  [second article](https://objectcomputing.com/resources/publications/sett/january-2019-way-to-go-part-2)
+  in this series.
 - `unicode`\
   This provides functions that work with and test Unicode characters.
   This package is described in more detail
@@ -423,6 +433,7 @@ Highlights of the standard library include:
 In addition to the standard library,
 also see the "sub-repositories" that are part of the Go project,
 but maintained outside the main repository.
+A good starting place is <https://godoc.org/-/subrepo>.
 
 The following sections provide examples
 of using some of the standard libraries.
@@ -455,10 +466,13 @@ These are referred to as "verbs". Commonly used verbs include:
 - `%s` for strings
 - `%t` for boolean values to output "true" or "false"
 - `%p` for pointers (prints hex address of a variable)
-- `%v` for any value
+- `%v` for any value in its default format
+- `%+v` is similar to `%v`, but includes struct field names
 - `%T` to output the type of a value
 - `%*s` to output a string with a number of leading spaces\
-  This consumes two values, the number of leading spaces and the string to follow.
+   This consumes two values, the number of leading spaces and the string to follow.\
+   The `*` is a replacement for any format precision specifier, integer, float, string .. whatever.
+  When used in a string, it will pad if necessary on the left with spaces.
 
 It is common for format strings to end with `\n`
 to output a newline character.
@@ -741,7 +755,7 @@ func main() {
 #### JSON
 
 The `encoding/json` standard library package
-supports marshaling and unmarshaling of JSON data.
+supports marshaling and unmarshalling of JSON data.
 Go arrays and slices are represented by JSON arrays.
 Go structs and maps are represented by JSON objects.
 
@@ -838,7 +852,7 @@ fmt.Printf("%+v\n", p3) // {FirstName:Mark LastName:Volkmann Age:0}
 
 Properties present in the JSON, but absent in a target struct are ignored.
 This is determined by case-insensitive name matching.
-It allows unmarshaling a selected subset of the JSON data.
+It allows unmarshalling a selected subset of the JSON data.
 For example,
 
 ```go
@@ -855,8 +869,8 @@ A JSON object can be unmarshaled into a Go map.
 When the JSON property values have a variety of types,
 it is useful to use a map with string keys and values of type `interface{}`
 which can hold any kind of value.
-Unmarshaling from JSON types to Go types produce what would be expected
-and include mapping JSON numbers to Go float64 values.
+Unmarshalling from JSON types to Go types produces what would be expected
+and includes mapping JSON numbers to Go float64 values.
 
 This approach can also be used to unmarshal a JSON array
 of arbitrary JSON objects. For example,
@@ -1084,12 +1098,13 @@ and the type `Regexp` for working with regular expressions.
 The regular expression syntax supported by this package
 is mostly the same as that supported by Perl.
 For details on the syntax, see
-<https://golang.org/s/re2syntax>.
+<https://github.com/google/re2/wiki/Syntax>.
 
 The easiest way to determine if text matches a regular expression
 is to use the functions `MatchString` and `Match`.
 Both return a `bool` indicating whether there is a match.
-These differ in how they obtain the text to be tested.
+These differ in how the text to be tested is supplied.
+`MatchString` takes a `String` and `Match` takes a `byte` slice.
 For example:
 
 ```go
@@ -1148,10 +1163,14 @@ For example:
   // must be escaped with a second backslash.
   bingoRE := regexp.MustCompile("^[BINGO]\\d{1,2}$")
 
+  // Escaping backslashes is not needed in raw string literals
+  // (delimited by back ticks).  For example,
+  //bingoRE := regexp.MustCompile(`^[BINGO]\d{1,2}$`)
+
   // Determine whether a strings matches this regular expression.
   callout := "G57"
-  matched = bingoRE.MatchString(callout)
-  fmt.Println(matched, err) // true nil
+  matched := bingoRE.MatchString(callout)
+  fmt.Println(matched) // true
 ```
 
 To capture matches of specific portions of a regular expression,
@@ -1167,7 +1186,7 @@ of a Bingo call.
 ```go
   bingoRE := regexp.MustCompile("^([BINGO])(\\d{1,2})$")
   matches := bingoRE.FindStringSubmatch("G57")
-  fmt.Printf("matches = %v\n", matches) // [G57 G 57]
+  fmt.Printf("matches = %v\n", matches) // matches = [G57 G 57]
 ```
 
 To split a string on a regular expression delimiter,
@@ -1177,7 +1196,7 @@ using the `Regexp` `Split method`. For example:
   text := "ab1c23def456g"
   digitsRE := regexp.MustCompile("\\d+") // matches one or more digits
   parts := digitsRE.Split(text, -1) // -1 to return all parts
-  fmt.Printf("parts = %v\n", parts) // [ab c def g]
+  fmt.Printf("parts = %v\n", parts) // parts = [ab c def g]
 ```
 
 We have just scratched the surface of the `regexp` package.
@@ -1222,13 +1241,18 @@ func main() {
   // This function determines whether
   // the slice element at index1 should come before
   // the slice element at index2 in the sort order.
-  less := func(index1, index2 int) bool {
+  belongsBefore := func(index1, index2 int) bool {
     return people[index1].Name < people[index2].Name
   }
-  sort.Slice(people, less)
+  sort.Slice(people, belongsBefore)
   for _, person := range people {
-    fmt.Printf("%v\n", person) // Amanda, Jeremy, Mark, Tami
+    fmt.Printf("%v\n", person)
   }
+  // Output is:
+  // {Amanda nurse}
+  // {Jeremy IT manager}
+  // {Mark software engineer}
+  // {Tami vet receptionist}
 }
 ```
 
@@ -1341,7 +1365,12 @@ func main() {
   teams.InsertAfter(Team{"Chargers", 7, 3}, firstPlace)
 
   sort.Sort(ByName{teams})
-  ListPrint(teams) // Broncos, Chargers, Chiefs, Raiders
+  ListPrint(teams)
+  // Output is:
+  // {Broncos 4 6}
+  // {Chargers 7 3}
+  // {Chiefs 9 2}
+  // {Raiders 2 8}
 }
 ```
 
@@ -1367,19 +1396,19 @@ import (
 
 func main() {
   text := "abcdef"
-  fmt.Println("Contains =", strings.Contains(text, "bc")) // true
-  fmt.Println("HasPrefix =", strings.HasPrefix(text, "ab")) // true
-  fmt.Println("HasSuffix =", strings.HasSuffix(text, "ef")) // true
-  fmt.Println("Index =", strings.Index(text, "cd")) // 2
+  fmt.Println(strings.Contains(text, "bc")) // true
+  fmt.Println(strings.HasPrefix(text, "ab")) // true
+  fmt.Println(strings.HasSuffix(text, "ef")) // true
+  fmt.Println(strings.Index(text, "cd")) // 2
 
   names := []string{"Mark", "Tami", "Amanda", "Jeremy"}
   joined := strings.Join(names, ", ")
-  fmt.Printf("joined = %+v\n", joined) // Mark, Tami, Amanda, Jeremy
+  fmt.Printf("%+v\n", joined) // Mark, Tami, Amanda, Jeremy
 
-  fmt.Println("Repeat =", strings.Repeat(text, 2)) // abcdefabcdef
-  fmt.Println("Split =", strings.Split(text, "cd")) // [ab ef]
-  fmt.Println("ToUpper =", strings.ToUpper(text)) // ABCDEF
-  fmt.Println("Trim =", strings.Trim("  foo bar  ", " ")) // "foo bar"
+  fmt.Println(strings.Repeat(text, 2)) // abcdefabcdef
+  fmt.Println(strings.Split(text, "cd")) // [ab ef]
+  fmt.Println(strings.ToUpper(text)) // ABCDEF
+  fmt.Println(strings.Trim("  foo bar  ", " ")) // "foo bar"
   // Also see TrimLeft and TrimRight.
 
   // The Builder type supports efficiently building strings.
@@ -1394,7 +1423,7 @@ func main() {
   fmt.Println(b.String()) // FooBarBaz
 
   sentence := "Mark goes to the park."
-  fmt.Println("Replace =", strings.Replace(sentence, "ar", "il", -1)) // Milk goes to the pilk.
+  fmt.Println(strings.Replace(sentence, "ar", "il", -1)) // Milk goes to the pilk.
 
   // The Replacer type provides a more powerful alternative to strings.Replace.
   // This demonstrates HTML entity escaping.

@@ -24,3 +24,8 @@
 - select the Console tab
 - enter state = JSON.parse(sessionStorage.getItem('some-key'))
 - use disclosure triangles to expand and collapse parts of the object tree
+
+## Caveats
+
+- camera doesn't work in simulator
+- must drag to scroll rather than two-finger swipe on trackpad
