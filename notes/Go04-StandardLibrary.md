@@ -755,7 +755,7 @@ func main() {
 #### JSON
 
 The `encoding/json` standard library package
-supports marshaling and unmarshalling of JSON data.
+supports marshaling and unmarshaling of JSON data.
 Go arrays and slices are represented by JSON arrays.
 Go structs and maps are represented by JSON objects.
 
@@ -852,7 +852,7 @@ fmt.Printf("%+v\n", p3) // {FirstName:Mark LastName:Volkmann Age:0}
 
 Properties present in the JSON, but absent in a target struct are ignored.
 This is determined by case-insensitive name matching.
-It allows unmarshalling a selected subset of the JSON data.
+It allows unmarshaling a selected subset of the JSON data.
 For example,
 
 ```go
@@ -869,7 +869,7 @@ A JSON object can be unmarshaled into a Go map.
 When the JSON property values have a variety of types,
 it is useful to use a map with string keys and values of type `interface{}`
 which can hold any kind of value.
-Unmarshalling from JSON types to Go types produces what would be expected
+Unmarshaling from JSON types to Go types produces what would be expected
 and includes mapping JSON numbers to Go float64 values.
 
 This approach can also be used to unmarshal a JSON array
