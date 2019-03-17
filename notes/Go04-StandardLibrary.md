@@ -483,37 +483,29 @@ fmt.Printf("%*s%d\n", indent, "", number)
 // outputs "    19" without the quotes
 ```
 
-Asterisks can be added to some verbs to
-control the number of characters output.
-These include `%*s`, `%*d`, `%*f`, and `%*.*f`.
-These consume one value for each asterisk
-and the value to be formatted.
+Asterisks can be added to all of the verbs to
+control the minimum number of characters output.
+When these are used, one argument is consumed for each asterisk
+and one is consumed for the value to be formatted.
 
-For strings the minimum number of characters to output
-can be specified.
-Spaces are added to the beginning or end.
-For example, `fmt.Printf("%*s", 5, "abc")` outputs two spaces,
-followed by `abc` for a total of five characters.
-`fmt.Printf("%-*s", 5, "abc")` outputs `abc`
-followed two spaces for a total of five characters.
-Note that `fmt.Printf("%*s", 3, "abcdef")` outputs `abcdef`
-without truncating.
+Here are some examples:
 
-For decimal values a minimum number of characters to output
-can be specified.
-When fewer are needed, preceding spaces are added.
-For example, `fmt.Printf("%*d", 5, 123)` outputs two spaces,
-followed by `123` for a total of five characters.
-Note that `fmt.Printf("%*d", 3, 12345)` outputs `12345`
-without truncating.
+```go
+fmt.Printf("[%*s]\n", 5, "abc") // [  abc]
+fmt.Printf("[%-*s]\n", 5, "abc") // [abc  ]
+fmt.Printf("[%*s]\n", 3, "abcdef") // [abcdef], not truncated
 
-For floating point values the total number of characters to output
-and the number of characters after the decimal point can be specified.
-For example, `fmt.Printf("%*.2f", 5, 3.456)` outputs a space
-followed by `3.46` for a total of five characters.
-The number of characters after the decimal point
-can be specified with an argument.
-`fmt.Printf("%*.*f", 5, 2, 3.456)` outputs the same.
+fmt.Printf("[%*d]\n", 5, 123) // [  123]
+fmt.Printf("[%*d]\n", 3, 12345) // [12345], not truncated
+
+fmt.Printf("[%*.2f]\n", 5, 3.456) // [ 3.46]
+fmt.Printf("[%*.*f]\n", 5, 2, 3.456) // outputs same
+```
+
+There are also `fmt` flags to
+always sign numbers,
+pad numbers with zeros instead of spaces,
+output hex values, and more.
 
 #### Command-line Flags
 
