@@ -467,12 +467,8 @@ These are referred to as "verbs". Commonly used verbs include:
 - `%t` for boolean values to output "true" or "false"
 - `%p` for pointers (prints hex address of a variable)
 - `%v` for any value in its default format
-- `%+v` is similar to `%v`, but includes struct field names
+- `%+v` is similar to `%v` but includes struct field names
 - `%T` to output the type of a value
-- `%*s` to output a string with a number of leading spaces\
-   This consumes two values, the number of leading spaces and the string to follow.\
-   The `*` is a replacement for any format precision specifier, integer, float, string .. whatever.
-  When used in a string, it will pad if necessary on the left with spaces.
 
 It is common for format strings to end with `\n`
 to output a newline character.
@@ -486,6 +482,38 @@ number := 19
 fmt.Printf("%*s%d\n", indent, "", number)
 // outputs "    19" without the quotes
 ```
+
+Asterisks can be added to some verbs to
+control the number of characters output.
+These include `%*s`, `%*d`, `%*f`, and `%*.*f`.
+These consume one value for each asterisk
+and the value to be formatted.
+
+For strings the minimum number of characters to output
+can be specified.
+Spaces are added to the beginning or end.
+For example, `fmt.Printf("%*s", 5, "abc")` outputs two spaces,
+followed by `abc` for a total of five characters.
+`fmt.Printf("%-*s", 5, "abc")` outputs `abc`
+followed two spaces for a total of five characters.
+Note that `fmt.Printf("%*s", 3, "abcdef")` outputs `abcdef`
+without truncating.
+
+For decimal values a minimum number of characters to output
+can be specified.
+When fewer are needed, preceding spaces are added.
+For example, `fmt.Printf("%*d", 5, 123)` outputs two spaces,
+followed by `123` for a total of five characters.
+Note that `fmt.Printf("%*d", 3, 12345)` outputs `12345`
+without truncating.
+
+For floating point values the total number of characters to output
+and the number of characters after the decimal point can be specified.
+For example, `fmt.Printf("%*.2f", 5, 3.456)` outputs a space
+followed by `3.46` for a total of five characters.
+The number of characters after the decimal point
+can be specified with an argument.
+`fmt.Printf("%*.*f", 5, 2, 3.456)` outputs the same.
 
 #### Command-line Flags
 
