@@ -485,8 +485,8 @@ fmt.Printf("%*s%d\n", indent, "", number)
 
 Asterisks can be added to all of the verbs to
 control the minimum number of characters output.
-When these are used, one argument is consumed for each asterisk
-and one is consumed for the value to be formatted.
+When these are used, one argument must be supplied for each asterisk
+and one for the value to be formatted.
 
 Here are some examples:
 
