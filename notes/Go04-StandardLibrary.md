@@ -491,8 +491,8 @@ and one for the value to be formatted.
 Here are some examples:
 
 ```go
-fmt.Printf("[%*s]\n", 5, "abc") // [  abc]
-fmt.Printf("[%-*s]\n", 5, "abc") // [abc  ]
+fmt.Printf("[%*s]\n", 5, "abc") // [  abc], right-aligned by default
+fmt.Printf("[%-*s]\n", 5, "abc") // [abc  ], left-aligned by dash
 fmt.Printf("[%*s]\n", 3, "abcdef") // [abcdef], not truncated
 
 fmt.Printf("[%*d]\n", 5, 123) // [  123]
