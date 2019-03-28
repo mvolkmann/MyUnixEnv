@@ -1,4 +1,4 @@
-# Go For It! Part 3
+# Go Standard Library - Part 3
 
 This article is the third in a multi-part series on the Go programming language.
 It provides details on the Go Standard Library.
@@ -14,11 +14,9 @@ It provides details on all the syntax in the Go language.
 Future articles will cover concurrency, reflection,
 solutions to common tasks, modules, testing, and the future of Go.
 
-## Standard Library
+## Builtins
 
-### Builtins
-
-The builtin constants, variables, and functions provided by Go
+The builtin constants, variables, types, and functions provided by Go
 are listed as being in the standard library package "builtin"
 for documentation purposes but no such package actually exists.
 
@@ -276,7 +274,7 @@ See the "Type Assertions" section of the
 [second article](https://objectcomputing.com/resources/publications/sett/january-2019-way-to-go-part-2)
 in this series for more detail.
 
-### Standard Library Packages
+## Standard Library Packages
 
 Go provides many packages in the "standard library".
 To see a list of them, browse <https://golang.org/pkg/>.
@@ -438,7 +436,7 @@ A good starting place is <https://godoc.org/-/subrepo>.
 The following sections provide examples
 of using some of the standard libraries.
 
-#### Formatting
+### Formatting
 
 The standard library package `fmt` defines many functions
 that read and write formatted messages.
@@ -507,7 +505,7 @@ always sign numbers,
 pad numbers with zeros instead of spaces,
 output hex values, and more.
 
-#### Command-line Flags
+### Command-line Flags
 
 The standard library package `flags` supports
 documenting and parsing command-line flags for an application.
@@ -585,12 +583,12 @@ specified for the max flag, the following error message is output:
 invalid value "x" for flag -max: strconv.ParseInt: parsing "x": invalid syntax
 ```
 
-#### Input/Output
+### Input/Output
 
 The standard library package `io` defines
 the `Reader` and `Writer` interfaces.
 
-##### Readers
+#### Readers
 
 The `Reader` interface has a single method `Read`.
 This reads from an underlying data stream,
@@ -668,7 +666,7 @@ func main() {
 }
 ```
 
-##### Writers
+#### Writers
 
 The `Writer` interface has a single method `Write`.
 This writes a byte slice to an underlying data stream
@@ -772,7 +770,7 @@ func main() {
 }
 ```
 
-#### JSON
+### JSON
 
 The `encoding/json` standard library package
 supports marshaling and unmarshaling of JSON data.
@@ -910,7 +908,7 @@ This allows creation of JSON that is larger than will fit in memory.
 It also allows processing JSON data as it is decoded
 rather than waiting until the entire stream is decoded.
 
-#### Linked Lists
+### Linked Lists
 
 The standard library package `container/list` defines the types
 `List` and `Element` for creating and operating on doubly linked lists.
@@ -980,7 +978,7 @@ func main() {
 }
 ```
 
-#### Logging
+### Logging
 
 The standard library package `log` provides functions
 that help with writing error messages to stderr.
@@ -1040,7 +1038,7 @@ func logValue(name string, value interface{}) {
 }
 ```
 
-#### OS Commands
+### OS Commands
 
 The standard library package `os/exec` defines types with
 methods that support executing operating system commands.
@@ -1110,7 +1108,7 @@ For example, all of the following approaches produce the same output:
   fmt.Println("Start =", stdout2.String())
 ```
 
-#### Regular Expressions
+### Regular Expressions
 
 The standard library package `regexp` defines functions
 and the type `Regexp` for working with regular expressions.
@@ -1222,7 +1220,7 @@ using the `Regexp` `Split method`. For example:
 We have just scratched the surface of the `regexp` package.
 There are many more methods on the `Regexp` type.
 
-#### Sorting
+### Sorting
 
 The standard library package `sort` defines functions and types
 that help with sorting slices and custom collections.
@@ -1400,7 +1398,7 @@ provides functions for searching slices.
 search an already sorted slice of their type for
 an element with a given value and return its index.
 
-#### Strings
+### Strings
 
 The standard library package `strings`
 provides functions for operating on strings.
@@ -1455,7 +1453,7 @@ func main() {
 }
 ```
 
-#### Unicode
+### Unicode
 
 The standard library package `unicode` defines
 many constants, variables, functions, and types
@@ -1477,3 +1475,16 @@ formfeed, non-breaking space (NBSP), vertical tab, and next line (NEL).
 
 The functions `ToLower` and `ToUpper`
 take a `rune` and return another `rune`.
+
+## Conclusion
+
+The Go standard library provides a broad range of functionality out of the box.
+We've seen some of the highlights here,
+but dig though the docs to discover even more!
+
+Look for additional articles in this series in 2019
+at <https://objectcomputing.com/resources/publications/sett>.
+Next up will be a review of concurrency in Go.
+
+Thanks to Charles Sharp for his detailed review of this article!
+

@@ -555,7 +555,7 @@ followed by the macOS version in parentheses.
   - PrintCode
   - Settings Cycler
   - Sort Lines
-  - TODO Highlight
+  - Todo Tree
   - Version Lens: for npm package.json files
   - Vetur: for Vue files; uses too much CPU!
   - Vim
@@ -811,6 +811,11 @@ followed by the macOS version in parentheses.
     "editorIndentGuide.activeBackground": "#0000ff"
   }
   ```
+
+## IntelliCode extension
+
+- "provides AI-assisted productivity features for Python, TypeScript/JavaScript and Java ...
+   with insights based on understanding your code context combined with machine learning"
 
 ## Intellisense
 
@@ -1651,14 +1656,13 @@ followed by the macOS version in parentheses.
   - I used this to allow alt+g to be used in a terminal
     running a Windows Command Prompt
 
-## Todo Highlight extension
+## Todo Tree extension
 
 - highlights TODO: and FIXME: in comments
 - by default uses white text on a yellow background
-- highly configurable
-- to get a list of all these comments,
-  open the Command Palette and enter
-  "TODO-Highlight: List highlighted annotations"
+- adds a TODOS section to left nav that contains
+  a tree of files that contain these comments
+- click a comment to navigate to it
 
 ## TypeScript
 

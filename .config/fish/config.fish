@@ -260,8 +260,13 @@ set PATH $PATH $NODE_DIR/deps/v8/tools
 #alias python 'python3'
 
 # React Native settings
-set ANDROID_HOME /usr/local/opt/android-sdk
+#set ANDROID_HOME /usr/local/opt/android-sdk
 set GRADLE_OPTS '-Dorg.gradle.daemon=true'
+set ANDROID_HOME $HOME/Library/Android/sdk
+set PATH $PATH $ANDROID_HOME/emulator
+set PATH $PATH $ANDROID_HOME/tools
+set PATH $PATH $ANDROID_HOME/tools/bin
+set PATH $PATH $ANDROID_HOME/platform-tools
 
 # Subversion settings
 set SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
