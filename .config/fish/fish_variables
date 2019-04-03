@@ -26,6 +26,7 @@ SETUVAR _fish_abbr_log:git\x20log
 SETUVAR _fish_abbr_mv:mv\x20\x2di
 SETUVAR _fish_abbr_nr:npm\x20run
 SETUVAR _fish_abbr_rm:rm\x20\x2di
+SETUVAR _fish_abbr_rn:react\x2dnative
 SETUVAR _fish_abbr_status:git\x20status
 SETUVAR fish_color_autosuggestion:4e4e4e
 SETUVAR fish_color_cancel:\x2dr

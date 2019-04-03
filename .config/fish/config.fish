@@ -56,6 +56,9 @@ abbr --add klogs kubectl logs
 # For npm
 abbr --add nr npm run
 
+# For React Native
+abbr --add rn react-native
+
 # Ask for confirmation before overwriting or deleting files.
 abbr --add cp 'cp -i'
 abbr --add mv 'mv -i'
