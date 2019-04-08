@@ -61,3 +61,5 @@
 - click the "Review Your Order" button
 - click the "Place Your Order" button
 - will see a page that says "You're all set."
+- will receive an email with the subject
+  "Welcome to the Apple Developer Program"
