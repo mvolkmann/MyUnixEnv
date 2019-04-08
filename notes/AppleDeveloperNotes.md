@@ -27,4 +27,37 @@
   Once we verify your authority to sign legal agreements, we’ll
   email you with instructions on how to complete your enrollment.
   In the meantime, sign in to your account to track your enrollment status."
-  received at 9:21 AM
+- after a few days I received an email that said
+  "To proceed with this enrollment, we must speak with you by phone.
+  Please contact us by selecting the following options from our website:
+  Membership and Account
+  Program Enrollment"
+- click the "from our website" link in the email
+- click "Membership and Account"
+- click "Program Enrollment"
+- click "Phone"
+- verify your phone number
+- will receive a call within a minute
+- choose to speak to a representative
+- give them the enrollment ID from the email received
+- verify your organization name
+- verify that you have authority to sign legal documents for the organization
+- optionally add a backup contact person at your organization
+- will receive an email within an hour that says
+  "Your enrollment request has been accepted. You may now review the
+  Program License Agreement to continue your organization's enrollment
+  in the Apple Developer Program."
+- click the "Review now" link in the email
+- enter the Apple ID and password for the account
+- click the checkbox to accept the license agreement
+- click the "Continue" button
+- optionally click the checkbox for automatic renewal
+- click the "Purchase" button
+- enter the account password again
+- enter credit card info.
+- click the "Review Your Order" button
+- enter the CVV number for the credit card
+- verify the billing address, email address, and phone number
+- click the "Review Your Order" button
+- click the "Place Your Order" button
+- will see a page that says "You're all set."
