@@ -1,4 +1,4 @@
-# Angular Notes
+# Angular (2+) Notes
 
 ## Things I Don't Like
 
