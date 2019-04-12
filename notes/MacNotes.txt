@@ -26,6 +26,11 @@ MacNotes.txt
   - enter Apple ID in iTunes to get access to iTunes Match
   - in System Preferences ... Keyboard ... Keyboard,
     set "Key Repeat" to Fast and "Delay Until Repeat" to Short
+  - to make fish the default shell
+    - sudo vim /etc/shells
+    - add /usr/local/bin/fish to the end of this file
+    - save the change
+    - chsh -s /usr/local/bin/fish
 
 * Why I Like Macs
   - Address Book
