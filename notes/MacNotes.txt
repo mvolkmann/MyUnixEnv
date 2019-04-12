@@ -9,10 +9,12 @@ MacNotes.txt
   - iTerm 2
   - homebrew
   - brew install these
-    * reattach-to-user-namespace (for copy to/from clipboard in tmux)
-    * enscript
-    * tree
     * coreutils (to get tac command)
+    * enscript
+    * fish
+    * git
+    * reattach-to-user-namespace (for copy to/from clipboard in tmux)
+    * tree
   - tmux
   - install Inconsolata Powerline font for use in Vim airline
   - DropBox
@@ -22,6 +24,8 @@ MacNotes.txt
   - in System Preferences, Keyboard,
     set caps lock to be ctrl key
   - enter Apple ID in iTunes to get access to iTunes Match
+  - in System Preferences ... Keyboard ... Keyboard,
+    set "Key Repeat" to Fast and "Delay Until Repeat" to Short
 
 * Why I Like Macs
   - Address Book
