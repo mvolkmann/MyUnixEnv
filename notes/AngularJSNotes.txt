@@ -1,4 +1,4 @@
-AngularJS Notes
+AngularJS Notes (a.k.a. Angular 1)
 
 Download
 - from http://angularjs.org

@@ -3,6 +3,8 @@
 Keyboard shortcuts in these notes show the Windows version
 followed by the macOS version in parentheses.
 
+See "Dropbox Sync" section!
+
 ## Overview
 
 - code editor from Microsoft

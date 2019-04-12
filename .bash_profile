@@ -160,3 +160,4 @@ export HOST_IP="10.201.200.63"
 export DOCKER_IP="172.21.0.1"
 
 . ~/.bashrc
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
