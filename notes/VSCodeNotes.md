@@ -3,7 +3,7 @@
 Keyboard shortcuts in these notes show the Windows version
 followed by the macOS version in parentheses.
 
-See "Dropbox Sync" section!
+See "Dropbox Sync" section below!
 
 ## Overview
 
@@ -560,6 +560,7 @@ See "Dropbox Sync" section!
   - Todo Tree
   - Version Lens: for npm package.json files
   - Vetur: for Vue files; uses too much CPU!
+    - solution may be to disable "Auto Close Tag" extension
   - Vim
   - vscode-go-to-file
   - vscode-icons
