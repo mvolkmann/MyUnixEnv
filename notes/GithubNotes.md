@@ -1,5 +1,20 @@
 # Github Notes
 
+## Personal Access Tokens
+
+To push to your repositoris from a new machine,
+you need to create and use a personal access token.
+To create a new personal access token,
+
+- click avatar in upper-right and select "Settings"
+- in left nav. click "Developer settings"
+- in left nav. click "Personal access tokens"
+- press "Generate new token"
+- enter a "Token description"
+- copy the token
+- do a "git push" and use this token as the password
+- after this "git push" commands should not prompt for a username and password
+
 ## Pull requests
 
 To create a pull request for an open source repository
