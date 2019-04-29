@@ -9,10 +9,10 @@
 [core]
   editor = /usr/local/bin/vim
 [user]
-  name = R. Mark Volkmann
-  email = r.mark.volkmann@gmail.com
+	name = R. Mark Volkmann
+	email = r.mark.volkmann@gmail.com
 [color]
-  ui = auto
+	ui = auto
 [credential]
   helper = osxkeychain
 [push]
