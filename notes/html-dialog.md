@@ -1,7 +1,16 @@
 # HTML dialog Element
 
 The `<dialog>` element was added to HTML in version 5.2.
-It provides a way to define dialogs that can be styled with CSS.
+It provides a way to define dialogs that are initially closed.
+These can be styled with CSS.
+
+The DOM interface that implements this is `HTMLDialogElement`.
+It supports three methods.
+The `showModal` method opens the dialog as a modal which means
+the user cannot interact with elements outside it.
+The `show` method opens the dialog as a non-modal which means
+the user can interact with elements outside it.
+The `close` method closes the dialog.
 
 ## Past Alternatives
 
@@ -295,6 +304,128 @@ Create this file with the following content:
 <style>
   <!-- Add same CSS rules here as are found in `dialog-demo.css`.
 </style>
+```
+
+## Example React Dialog Component
+
+Here is an example of using the `<dialog>` element in a reusable
+React component that uses the relatively new "hooks" feature.
+
+### React `src/dialog/dialog.js`
+
+```js
+/*global dialogPolyfill: false */
+import {node, object, string} from 'prop-types';
+import React, {useEffect} from 'react';
+
+import './dialog.css';
+
+/**
+ * Creates a Dialog that can have a title and any content.
+ * A ref must be passed via the `dialogRef` prop.
+ * This is used by the caller to open and close the dialog.
+ * The dialog is initially closed.
+ *
+ * To open the dialog as a modal, `dialogRef.current.showModal()`.
+ * This does not allow interaction with elements outside the dialog.
+ *
+ * To open the dialog as a non-modal, `dialogRef.current.show()`.
+ * This allows interaction with elements outside the dialog.
+ *
+ * To close the dialog, `dialogRef.current.close()`.
+ *
+ * @param {node} children - JSX to render in the body of the dialog
+ * @param {object} dialogRef - a ref that will be set to refer to the dialog
+ * @param {string} title - to display in dialog header
+ */
+function Dialog({children, dialogRef, title}) {
+  useEffect(() => {
+    // Register the dialog with the polyfill which is
+    // required by browsers that lack native support.
+    dialogPolyfill.registerDialog(dialogRef.current);
+  }, []); // only runs once.
+
+  return (
+    <dialog ref={dialogRef}>
+      <heading>
+        <div className="title">{title}</div>
+        <button className="close-btn" onClick={() => dialogRef.current.close()}>
+          &#x2716;
+        </button>
+      </heading>
+      <section className="body">{children}</section>
+    </dialog>
+  );
+}
+
+Dialog.propTypes = {
+  children: node.isRequired,
+  dialogRef: object.isRequired,
+  title: string.isRequired
+};
+
+export default Dialog;
+```
+
+### React `src/dialog/dialog.css`
+
+```css
+dialog {
+  padding: 0;
+}
+
+dialog > heading {
+  background-color: white;
+  border-bottom: solid gray 1px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+dialog > heading > .close-btn {
+  border: none;
+  color: gray;
+  font-size: 24px;
+  outline: none;
+}
+
+dialog > heading > .title {
+  color: $green;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+dialog > .body {
+  padding: 10px;
+}
+
+::backdrop, /* for native <dialog> */
+dialog + .backdrop /* for dialog-polyfill */ {
+  /* a transparent shade of gray */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+```
+
+To use this React component in another functional component:
+
+```js
+import React, {useRef} from 'react';
+import Dialog from '../dialog/dialog';
+
+// Create a ref that will be set to a reference to the dialog.
+const dialogRef = useRef();
+
+// Render a dialog that will be initially closed.
+<Dialog dialogRef={dialogRef} title="some title">
+  some content
+</Dialog>;
+
+// To open the dialog,
+dialogRef.current.showModal(); // or show() for non-modal
+
+// To close the dialog,
+dialogRef.current.close();
 ```
 
 ## Summary
