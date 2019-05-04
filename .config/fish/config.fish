@@ -108,7 +108,8 @@ alias sr 'git log --author="Volkmann" --branches --no-merges --since="8 days ago
 alias eld "echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/:/\n   /g'"
 
 # Code printing (fancy two columns)
-alias ens 'enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp'
+# --margins=left:right:top:bottom values are Postscript points (72 per inch)
+alias ens 'enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --margins=30::: --mark-wrapped-lines=arrow --pretty-print=cpp'
 alias ens1 'enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63'
 
 alias findcss 'find3 css'
