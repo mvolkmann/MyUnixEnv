@@ -231,6 +231,11 @@ set JAVA_HOME '/usr/libexec/java_home'
 set JS_CMD node
 set JS_DIR $LANGUAGES_DIR/javascript
 
+# ls colors
+# First character is directory color; E is bold blue.
+# Defaults are directory=e(blue), symbolic link=f(magenta), executable=b(red).
+set -Ux LSCOLORS E
+
 # Maven settings
 #set MAVEN_HOME $JAVA_DIR/Maven/apache-maven-3.3.9
 #set M2_HOME $MAVEN_HOME
