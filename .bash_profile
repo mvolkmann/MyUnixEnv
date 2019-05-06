@@ -75,7 +75,7 @@ export JS_DIR=$LANGUAGES_DIR/javascript
 # ls colors
 # First character is directory color; E is bold blue.
 # Defaults are directory=e(blue), symbolic link=f(magenta), executable=b(red).
-export LSCOLORS=E
+export LSCOLORS=Exfxcxdxbxegedabagacad
 
 # Maven settings
 #export MAVEN_HOME=$JAVA_DIR/maven/apache-maven-3.1.0
