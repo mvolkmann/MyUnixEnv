@@ -1220,9 +1220,11 @@ See "Dropbox Sync" section below!
 
 ## Polacode
 
-- creates nice images from code snippets
-- doesn't seem to work when the Vim extension is installed
-- see <https://github.com/octref/polacode/issues/60>
+- creates nice PNG images from code snippets
+- select "Polacode" from Command Palette
+- select some code
+- click shutter button
+- select destination and enter file name
 
 ## Popups
 
