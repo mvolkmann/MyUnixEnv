@@ -40,5 +40,9 @@ tic MyUnixEnv/tmux-256color-italic.terminfo
 # Under Profiles...Terminal, change "Report Terminal Type"
 # to xterm-256color-italic.
 
+git config --global alias.br "branch"
+git config --global alias.ci "commit"
+git config --global alias.co "checkout"
+
 echo Success!
 echo See comments in the setup script for additional manual steps!
