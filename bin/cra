@@ -6,13 +6,17 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-#npx create-react-app $1
+npx create-react-app $1
 
-#cd $1
+cd $1
+
 cp $REACT_DIR/starter/.eslintrc.json .
 cp $REACT_DIR/starter/.prettierrc .
 cp $REACT_DIR/starter/src/App.scss src
 cp $REACT_DIR/starter/src/App.js src
+cp $REACT_DIR/starter/src/fetch-util.js src
+cp $REACT_DIR/starter/src/initial-state.js src
+cp $REACT_DIR/starter/src/shared.scss src
 
 npm install -D eslint-config-prettier
 npm install -D eslint-plugin-html
@@ -21,9 +25,11 @@ npm install -D eslint-plugin-jsx-a11y
 npm install -D eslint-plugin-prettier
 npm install -D eslint-plugin-react
 npm install -D node-sass
+npm install -D normalize.css
 npm install -D prettier
-
 npm install context-easy
+
+cp node_modules/normalize.css/normalize.css public
 
 rm -f yarn.lock
 rm -f src/index.css
@@ -33,9 +39,16 @@ rm -f src/App.test.js
 # Add these lines to package.json.
 #  "format": "prettier --write src/**/*.{js,scss}",
 #  "lint": "eslint --cache src/**/*.js",
+#  "reinstall": "rm -rf node_modules package-lock.json && npm install",
 #sed -ie '/"scripts"/a testing' package.json
 
 # Remove this line from package.json.
 #  "eject": "react-scripts eject"
 
-npm run format
+# Remove this line from src/index.js.
+#import './index.css';
+
+# Add this line in public/index.html:
+# <link rel="stylesheet" href="%PUBLIC_URL%/normalize.css" />
+
+#npm run format

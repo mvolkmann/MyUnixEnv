@@ -8,12 +8,12 @@ if status --is-login
 
   # If not already in PATH, add /usr/local/bin.
   if not contains /usr/local/bin $PATH
-    set PATH /usr/local/bin $PATH
+    set -x PATH /usr/local/bin $PATH
   end
 
   # If not already in PATH, add $HOME/bin.
   if not contains $HOME/bin $PATH
-    set PATH $HOME/bin $PATH
+    set -x PATH $HOME/bin $PATH
   end
 end
 
@@ -65,6 +65,134 @@ abbr --add mv 'mv -i'
 abbr --add rm 'rm -i'
 
 #---------------------------------------------------------------------------
+# Environment Variables
+#---------------------------------------------------------------------------
+
+# Is this needed?
+set -x SHELL /usr/local/bin/fish
+
+set -x EDITOR (which code)
+
+if test -e $HOME/secret.sh
+  . $HOME/secret.sh
+end
+if test -e $HOME/secrets/local.env
+  # TODO: Why doesn't "." work in place of "bash" here?
+  bash $HOME/secrets/local.env
+end
+
+# Commonly used directory prefixes.
+# When a variable is set in config.fish with no scope switch,
+# it defaults to global.
+set -x DOCUMENTS_DIR $HOME/Documents
+set -x DROPBOX_DIR $HOME/Dropbox
+set -x OCI_DIR $DOCUMENTS_DIR/oci
+set -x PROGRAMMING_DIR $DOCUMENTS_DIR/programming
+set -x DATABASES_DIR $PROGRAMMING_DIR/databases
+set -x LANGUAGES_DIR $PROGRAMMING_DIR/languages
+set -x CSS_DIR $LANGUAGES_DIR/CSS
+set -x HTML_DIR $LANGUAGES_DIR/html
+set -x JAVA_DIR $LANGUAGES_DIR/java
+set -x JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
+set -x MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
+#set -x MONGODB_DIR=$DATABASES_DIR/MongoDB
+set -x REACT_DIR $JAVASCRIPT_DIR/react
+set -x SETT_DIR $OCI_DIR/SETT
+set -x TRAINING_DIR $DOCUMENTS_DIR/training
+set -x TYPESCRIPT_DIR $LANGUAGES_DIR/typescript
+
+# AsciiDoc settings
+set -x XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
+
+# bat settings (better version of cat command)
+set -x BAT_PAGER myless
+
+# Clojure settings
+#set -x CLOJURE_HOME $LANGUAGES_DIR/clojure/clojure-1.2.1
+#set -x CLOJURE_HOME /opt/clojure-1.5.1 # for RPi
+#alias clj 'java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main'
+
+# Git settings
+set -x GITHUB_USER mvolkmann
+#set -x GITHUB_PASS ?
+
+# Go settings
+set -x GOPATH $HOME/go
+set -x GOBIN $GOPATH/bin
+set -x PATH $PATH $GOBIN
+
+# grep settings
+# This setting may interfere with fink scripts!
+#set -x GREP_OPTIONS '--color=ALWAYS'
+
+# Haskell (GHC) settings
+#set -x PATH $HOME/.local/bin $PATH
+
+# HTTP server to serve files in current directory
+alias serve 'python -m SimpleHTTPServer 8080'
+
+# Java settings
+set -x JAVA_HOME '/usr/libexec/java_home'
+
+# JavaScript settings
+set -x JS_CMD node
+set -x JS_DIR $LANGUAGES_DIR/javascript
+
+# ls colors
+# First character is directory color; E is bold blue.
+# Defaults are directory=e(blue), symbolic link=f(magenta), executable=b(red).
+set -Ux LSCOLORS Exfxcxdxbxegedabagacad
+
+# Maven settings
+#set -x MAVEN_HOME $JAVA_DIR/Maven/apache-maven-3.3.9
+#set -x M2_HOME $MAVEN_HOME
+#set -x PATH $PATH $MAVEN_HOME/bin
+#set -x MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
+
+# Micronaut settings
+#set -x PATH $PATH $MICRONAUT_DIR/bin
+
+# MongoDB settings
+#set -x PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
+
+# PostgreSQL settings
+alias pgstart 'pg_ctl -D /usr/local/var/postgres start'
+alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
+alias pgl 'psql -d demo'
+
+# Node.js settings
+set -x NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
+set -x PATH $PATH $NODE_DIR/deps/v8/tools
+#function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+
+# Python settings
+#alias python 'python3'
+
+# React Native settings
+#set ANDROID_HOME /usr/local/opt/android-sdk
+set -x GRADLE_OPTS '-Dorg.gradle.daemon=true'
+set -x ANDROID_HOME $HOME/Library/Android/sdk
+set -x PATH $PATH $ANDROID_HOME/emulator
+set -x PATH $PATH $ANDROID_HOME/tools
+set -x PATH $PATH $ANDROID_HOME/tools/bin
+set -x PATH $PATH $ANDROID_HOME/platform-tools
+
+# Subversion settings
+set -x SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
+
+# Tomcat settings
+#set -x TOMCAT_HOME $JAVA_DIR/Tomcat/apache-tomcat-7.0.41
+#set -x BASEDIR $TOMCAT_HOME
+#set -x CATALINA_HOME $TOMCAT_HOME
+
+# Vim settings
+set fish_key_bindings fish_vi_key_bindings
+set -x VISUAL vim
+
+# VS Code - allows launch from terminal with "code"
+set -x PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+
+#---------------------------------------------------------------------------
 # Aliases
 #---------------------------------------------------------------------------
 
@@ -87,12 +215,14 @@ alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
 alias cdnotes 'cd $HOME/MyUnixEnv/notes'
 alias cdoci 'cd $OCI_DIR'
+alias cdopes 'cd $OCI_DIR/clients/opes-one'
 alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
 alias cdreact 'cd $JAVASCRIPT_DIR/react'
 alias cdrio 'cd $OCI_DIR/clients/RioTinto'
 alias cdrn 'cd $JAVASCRIPT_DIR/react-native'
 alias cdsett 'cd $SETT_DIR'
+alias cdsvelte 'cd $JAVASCRIPT_DIR/svelte'
 alias cdtalks 'cd $PROGRAMMING_DIR/conferences/talks'
 alias cdtraining 'cd $TRAINING_DIR'
 alias cdts 'cd $TYPESCRIPT_DIR'
@@ -161,134 +291,6 @@ alias pew 'clear; esw -w *.html demo/*.html test/*.html'
 alias pl 'clear; polylint demo/index.html'
 alias plr 'clear; livereload "*.html, demo/*.html, test/*.html"'
 alias pso 'clear; polymer serve -o'
-
-#---------------------------------------------------------------------------
-# Environment Variables
-#---------------------------------------------------------------------------
-
-# Is this needed?
-set SHELL /usr/local/bin/fish
-
-set EDITOR (which code)
-
-if test -e $HOME/secret.sh
-  . $HOME/secret.sh
-end
-if test -e $HOME/secrets/local.env
-  # TODO: Why doesn't "." work in place of "bash" here?
-  bash $HOME/secrets/local.env
-end
-
-# Commonly used directory prefixes.
-# When a variable is set in config.fish with no scope switch,
-# it defaults to global.
-set DOCUMENTS_DIR $HOME/Documents
-set DROPBOX_DIR $HOME/Dropbox
-set OCI_DIR $DOCUMENTS_DIR/oci
-set PROGRAMMING_DIR $DOCUMENTS_DIR/programming
-set DATABASES_DIR $PROGRAMMING_DIR/databases
-set LANGUAGES_DIR $PROGRAMMING_DIR/languages
-set CSS_DIR $LANGUAGES_DIR/CSS
-set HTML_DIR $LANGUAGES_DIR/html
-set JAVA_DIR $LANGUAGES_DIR/java
-set JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
-set MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
-#set MONGODB_DIR=$DATABASES_DIR/MongoDB
-set REACT_DIR $JAVASCRIPT_DIR/react
-set SETT_DIR $OCI_DIR/SETT
-set TRAINING_DIR $DOCUMENTS_DIR/training
-set TYPESCRIPT_DIR $LANGUAGES_DIR/typescript
-
-# AsciiDoc settings
-set XML_CATALOG_FILES '/usr/local/etc/xml/catalog'
-
-# bat settings (better version of cat command)
-set BAT_PAGER myless
-
-# Clojure settings
-#set CLOJURE_HOME $LANGUAGES_DIR/clojure/clojure-1.2.1
-#set CLOJURE_HOME /opt/clojure-1.5.1 # for RPi
-#alias clj 'java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main'
-
-# Git settings
-set GITHUB_USER mvolkmann
-#set GITHUB_PASS ?
-
-# Go settings
-set GOPATH $HOME/go
-set GOBIN $GOPATH/bin
-set PATH $PATH $GOBIN
-
-# grep settings
-# This setting may interfere with fink scripts!
-#set GREP_OPTIONS '--color=ALWAYS'
-
-# Haskell (GHC) settings
-#set PATH $HOME/.local/bin $PATH
-
-# HTTP server to serve files in current directory
-alias serve 'python -m SimpleHTTPServer 8080'
-
-# Java settings
-set JAVA_HOME '/usr/libexec/java_home'
-
-# JavaScript settings
-set JS_CMD node
-set JS_DIR $LANGUAGES_DIR/javascript
-
-# ls colors
-# First character is directory color; E is bold blue.
-# Defaults are directory=e(blue), symbolic link=f(magenta), executable=b(red).
-set -Ux LSCOLORS Exfxcxdxbxegedabagacad
-
-# Maven settings
-#set MAVEN_HOME $JAVA_DIR/Maven/apache-maven-3.3.9
-#set M2_HOME $MAVEN_HOME
-#set PATH $PATH $MAVEN_HOME/bin
-#set MAVEN_OPTS '-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:MaxPermSize=2048m'
-
-# Micronaut settings
-#set PATH $PATH $MICRONAUT_DIR/bin
-
-# MongoDB settings
-#set PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
-
-# PostgreSQL settings
-alias pgstart 'pg_ctl -D /usr/local/var/postgres start'
-alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
-alias pgl 'psql -d demo'
-
-# Node.js settings
-set NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
-set PATH $PATH $NODE_DIR/deps/v8/tools
-#function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
-
-# Python settings
-#alias python 'python3'
-
-# React Native settings
-#set ANDROID_HOME /usr/local/opt/android-sdk
-set GRADLE_OPTS '-Dorg.gradle.daemon=true'
-set ANDROID_HOME $HOME/Library/Android/sdk
-set PATH $PATH $ANDROID_HOME/emulator
-set PATH $PATH $ANDROID_HOME/tools
-set PATH $PATH $ANDROID_HOME/tools/bin
-set PATH $PATH $ANDROID_HOME/platform-tools
-
-# Subversion settings
-set SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
-
-# Tomcat settings
-#set TOMCAT_HOME $JAVA_DIR/Tomcat/apache-tomcat-7.0.41
-#set BASEDIR $TOMCAT_HOME
-#set CATALINA_HOME $TOMCAT_HOME
-
-# Vim settings
-set fish_key_bindings fish_vi_key_bindings
-set VISUAL vim
-
-# VS Code - allows launch from terminal with "code"
-set PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
 # The next line updates PATH for the Google Cloud SDK.
 #if [ -f '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; end; end
