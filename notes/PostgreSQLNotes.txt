@@ -91,28 +91,6 @@ Column types
 - inet
 - macaddr
 
-To start interactive mode
-- psql -U{username} {database-name}
-  * username can be "postgres"
-
-To make the "postgres" user able to create tables
-- psql -d some-database
-- \password postgres
-- Enter new password like "postgres".
-- alter role postgres with superuser;
-- alter role postgres with createdb;
-- ctrl-d
-
-To create a user/role
-- createuser
-  * will prompt for name of role to add and
-    whether the role should be a superuser
-
-To change the password of a user
-- psql -Upostgres -dtemplate1
-- alter user {username} with password '{new-password}';
-- \q
-
 To start the database server
 - postgres -D /usr/local/pgsql/data >logfile 2>&1 &
 
@@ -127,6 +105,28 @@ To create a table
       username text,
       password text
     );
+
+To create a user/role
+- createuser
+  * will prompt for name of role to add and
+    whether the role should be a superuser
+
+To change the password of a user
+- psql -Upostgres -dtemplate1
+- alter user {username} with password '{new-password}';
+- \q
+
+To make the "postgres" user able to create tables
+- psql -d some-database
+- \password postgres
+- Enter new password like "postgres".
+- alter role postgres with superuser;
+- alter role postgres with createdb;
+- ctrl-d
+
+To start interactive mode
+- psql -U{username} {database-name}
+  * username can be "postgres"
 
 To delete a database
 - dropdb -U{username} {db-name}

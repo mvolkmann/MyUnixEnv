@@ -297,3 +297,13 @@ alias pso 'clear; polymer serve -o'
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/Mark/google-cloud-sdk/path.fish.inc' ]; . '/Users/Mark/google-cloud-sdk/path.fish.inc'; end
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/serverless.fish ]; and . /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/serverless.fish
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/sls.fish ]; and . /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/sls.fish
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[ -f /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/slss.fish ]; and . /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/slss.fish
