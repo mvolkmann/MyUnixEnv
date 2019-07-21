@@ -132,7 +132,7 @@ set -x PATH $PATH $GOBIN
 alias serve 'python -m SimpleHTTPServer 8080'
 
 # Java settings
-set -x JAVA_HOME '/usr/libexec/java_home'
+set -x JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home'
 
 # JavaScript settings
 set -x JS_CMD node

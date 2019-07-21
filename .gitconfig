@@ -1,26 +1,3 @@
-[url "https://"]
-  insteadOf = git://
-[alias]
-  br = branch
-  ci = commit
-  co = checkout
-  lastchange = log -p --follow -n 1
-  dsf = "!f() { [ -z \"$GIT_PREFIX\" ] || cd \"$GIT_PREFIX\" && git diff --color \"$@\" | diff-so-fancy  | less --tab=2 -RFX; }; f"
-[core]
-  editor = /usr/local/bin/vim
-[user]
-	name = R. Mark Volkmann
-	email = r.mark.volkmann@gmail.com
-[color]
-	ui = auto
 [credential]
-  helper = osxkeychain
-[push]
-  default = simple
-[http]
-	sslVerify = true
-[filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+	helper = osxkeychain
+	UseHttpPath = true
