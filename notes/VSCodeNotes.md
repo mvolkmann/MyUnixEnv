@@ -644,13 +644,13 @@ See "Dropbox Sync" section below!
 ## Fonts
 
 - family
-  - recommend installing "Fira Code" font
+  - recommend installing "Cascadia Code" or "Fira Code" font
     - "monospaced font with programming ligatures"
     - combines many two-character symbols into one
       - ex. =>, >=, !==
   - to use in VS Code editors, add these lines to settings.json
     ```json
-    "editor.fontFamily": "Fira Code",
+    "editor.fontFamily": "Cascadia Code",
     "editor.fontLigatures": true,
     ```
 - size

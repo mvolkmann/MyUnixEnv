@@ -243,25 +243,32 @@ export class MyComponent {
     - `ng generate library {library-name} --prefix={library-prefix}`
       - ex `ng generate library bio-common --prefix=bc`
   - implement the library
+
     - the simplest approach is to add methods to the `{library-name}.service.ts` file
       in the `{library-prefix}/projects/{library-name}/rc/lib` directory
     - ex.
+
       ```js
       joinList(arr, separator, transformFn) {
         return arr.map(transformFn).join(separator);
       }
       ```
+
     - can also copy existing source files into the `src/lib` directory
+
   - add dependencies
     - either `npm install` them or
       manually edit the `package.json` for the project and run `npm install`
   - add an export
     - edit `projects/{library-name}/src/public_api.ts` and add `export * from './lib/index';`
   - build the library
+
     - add an npm script to package.json for the workspace similar to this:
+
     ```json
     "build-{library-prefix}": "ng build --prod {library-name}",
     ```
+
   - use the library in the top-level app to test it
 
     - edit `src/app/app.module.ts`
@@ -288,11 +295,13 @@ export class MyComponent {
   - publish the library
 
     - add the following to `projects/bio-common/package.json`
+
       ```json
       "publishConfig": {
         "registry": "{url-of-private-npm-repository}"
       }
       ```
+
     - add the following npm scripts to the top-level `package.json` file
       - `"build-bc": "ng build --prod bio-common",`
       - `"pack-bc": "cd dist/bio-common && npm pack",`
@@ -305,18 +314,22 @@ export class MyComponent {
       - this fixed issues in bio-common when building bio-kendo-ui-jquery!
 
   - common errors
+
     - "Property 'finally' does not exist on type `Promise<any>`"
       - The Promise finally method is currently a stage 4 ECMAScript proposal.
       - Major browser except for IE already support it.
       - TypeScript does not recognize it and I haven't found a polyfill for it.
       - For now, add `// @ts-ignore` before lines that use it
     - "angular dependency {some-name} must be explicitly whitelisted"
+
       - fixed by added the following to `ng-package.json` and `ng-package.prod.json`
+
       ```json
       "whitelistedNonPeerDependencies": {
         "{some-name}"
       }
       ```
+
       - Is this stupid? Yes it is!
 
 - to publish the library to an npm repository
@@ -412,7 +425,7 @@ export class MyComponent {
 - (event)="handler" - template to class
   - ex. (click)="handleClick()"
   - can pass arguments
-  - to pass the event object, use $event
+  - to pass the event object, use \$event
 - `[(ngModel)]="property"` - two-way binding
 
   - typically used on form elements
@@ -455,10 +468,7 @@ export class MyComponent {
       `<div *ngIf="thing">{{thing; else prompt}}</div>`
   - iterating over an array
     ```html
-    <div
-      *ngFor="let person of people"
-      (click)="selectPerson(person)"
-    >
+    <div *ngFor="let person of people" (click)="selectPerson(person)">
       {{person.name}}
     </div>
     ```
@@ -473,10 +483,18 @@ export class MyComponent {
     ```
   - same using template instead of ngSwitch (not preferred)
     ```html
-    <template [ngSwitchCase]="'S'"><div>Small</div></template>
-    <template [ngSwitchCase]="'M'"><div>Medium</div></template>
-    <template [ngSwitchCase]="'L'"><div>Large</div></template>
-    <template ngSwitchDefault><div>invalid size</div></template>
+    <template [ngSwitchCase]="'S'"
+      ><div>Small</div></template
+    >
+    <template [ngSwitchCase]="'M'"
+      ><div>Medium</div></template
+    >
+    <template [ngSwitchCase]="'L'"
+      ><div>Large</div></template
+    >
+    <template ngSwitchDefault
+      ><div>invalid size</div></template
+    >
     ```
 - `<ng-template #name>...contents</ng-template>`
   - defines some content, but doesn't render it
@@ -687,7 +705,7 @@ export class ParentComponent {
   - extracts the value of an Observable inside HTML
   - ex. {{myObservable$ | async}}
   - ex. with ngFor
-    \*ngFor="let user of users$ | async"
+    \*ngFor="let user of users\$ | async"
   - automatically unsubscribes from the `Observable`
     if the component is removed from the DOM
     and resubscribes if it is inserted again later
