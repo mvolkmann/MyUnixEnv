@@ -96,6 +96,7 @@ set -x JAVA_DIR $LANGUAGES_DIR/java
 set -x JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
 set -x MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
 #set -x MONGODB_DIR=$DATABASES_DIR/MongoDB
+set -x PYTHON_DIR $LANGUAGES_DIR/Python
 set -x REACT_DIR $JAVASCRIPT_DIR/react
 set -x SETT_DIR $OCI_DIR/SETT
 set -x TRAINING_DIR $DOCUMENTS_DIR/training
@@ -166,7 +167,7 @@ set -x PATH $PATH $NODE_DIR/deps/v8/tools
 #function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
 # Python settings
-#alias python 'python3'
+alias python 'python3'
 
 # React Native settings
 #set ANDROID_HOME /usr/local/opt/android-sdk
@@ -218,6 +219,7 @@ alias cdoci 'cd $OCI_DIR'
 alias cdopes 'cd $OCI_DIR/clients/opes-one'
 alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
+alias cdpython 'cd $PYTHON_DIR'
 alias cdreact 'cd $JAVASCRIPT_DIR/react'
 alias cdrio 'cd $OCI_DIR/clients/RioTinto'
 alias cdrn 'cd $JAVASCRIPT_DIR/react-native'
