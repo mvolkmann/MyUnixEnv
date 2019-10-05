@@ -36,7 +36,7 @@
 
 ## To install MongoDB Community Edition
 
-- on Mac OS X
+- on macOS
   - `brew tap mongodb/brew`
   - `brew install mongodb-community`
 
@@ -104,8 +104,14 @@
   - a query is just a JavaScript object where
     the keys are document property names and
     the values are document property values
-- to **delete document from collection**,  
-  `db.{coll}.remove(query)`
+- to **delete a document from collection**,  
+  `db.{coll}.deleteOne(query)`
+- to **delete documents from collection**,  
+  `db.{coll}.deleteMany(query)`
+- to **update a document in a collection**,  
+  `db.{coll}.updateOne(query, { $set: {key: value, key: value, ...} })`
+- to **replace a document in a collection**,  
+  `db.{coll}.replaceOne(query, newDocument)`
 - to **add an index** to a collection,  
   `db.{coll}.createIndex({{prop-name}: 1});`
   - 1 means ascending order, -1 means descending
