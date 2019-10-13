@@ -56,6 +56,11 @@ Flexbox Notes
 - align-self: does the same for a specific item
   * set to one of the align-items values
 
+- align-content: aligns items vertically within wraps of a container
+  * only has an effect when items wrap
+  * within rows when `flex-direction` is `row`
+  * within columns when `flex-direction` is `column`
+
 - flex-direction: sets order of items within container
   * row: left to right starting from left edge (default)
   * row-reverse: right to left starting from right edge
