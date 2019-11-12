@@ -1,5 +1,12 @@
 HTML Notes
 
+Semantic Elements
+- header
+- main
+- footer
+- nav
+- section
+
 Anchors
 - basic link is <a href="url">link</a>
 - marking a spot on a page is done with <a name="marker"/>

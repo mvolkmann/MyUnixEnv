@@ -81,6 +81,9 @@ IMPORTANT!
       * ex. CMD ["/bin/echo", "Hello, World!"]
       * exec form is preferred for the CMD and ENTRYPOINT commands
   * save the file
+- to SSH into a Docker container
+  - run `docker ps` to get the container id
+  - run `docker exec -it {container-id} /bin/bash
 - to build an image
  * docker build [-t {name[:tag]}] {Dockerfile-path}
    - if -t option is omitted,
