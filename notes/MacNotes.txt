@@ -4,8 +4,6 @@ MacNotes.txt
   - git
   - git clone MyUnixEnv and run ./setup
   - Xcode from App Store
-  - command-line tools
-    * after installing Xcode, run "xcode-select --install"
   - iTerm 2
   - homebrew
   - brew install these
