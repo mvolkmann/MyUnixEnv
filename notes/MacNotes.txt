@@ -1,6 +1,8 @@
 MacNotes.txt
 
 * New Mac setup
+  - copy .ssh directory from previous Mac
+    - change permissions of files to match originals
   - git
   - git clone MyUnixEnv and run ./setup
   - Xcode from App Store
