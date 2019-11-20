@@ -1,3 +1,7 @@
 [credential]
 	helper = osxkeychain
 	UseHttpPath = true
+[alias]
+	br = branch
+	ci = commit
+	co = checkout

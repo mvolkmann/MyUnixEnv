@@ -551,20 +551,17 @@ See "Dropbox Sync" section below!
   - Code Spell Checker
   - ESLint
   - GitLens
-  - Go
+  - Go?
   - LintLens: for ESLint rules
   - markdownlint
   - Prettier - Code Formatter
   - PrintCode
   - Settings Cycler
-  - Sort Lines
   - Todo Tree
   - Version Lens: for npm package.json files
-  - Vetur: for Vue files; uses too much CPU!
-    - solution may be to disable "Auto Close Tag" extension
   - Vim
-  - vscode-go-to-file
-  - vscode-icons
+  - vscode-go-to-file?
+  - vscode-icons?
 
 ## ESLint and TSLint extensions
 

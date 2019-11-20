@@ -20,7 +20,7 @@ MacNotes.txt
   - DropBox
   - newest Chrome
   - newest Firefox
-  - IDEA Community Edition
+  - IDEA Community Edition?
   - in System Preferences ... Keyboard
     * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
     * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
@@ -30,6 +30,7 @@ MacNotes.txt
     - add /usr/local/bin/fish to the end of this file
     - save the change
     - chsh -s /usr/local/bin/fish
+  - install Node.js
   - install Moom
   - setup Time Machine
   - setup Backblaze
