@@ -15,7 +15,7 @@ MacNotes.txt
     * git
     * reattach-to-user-namespace (for copy to/from clipboard in tmux)
     * tree
-  - tmux
+    * tmux
   - install Inconsolata Powerline font for use in Vim airline
   - DropBox
   - newest Chrome
@@ -30,6 +30,9 @@ MacNotes.txt
     - add /usr/local/bin/fish to the end of this file
     - save the change
     - chsh -s /usr/local/bin/fish
+  - install Moom
+  - setup Time Machine
+  - setup Backblaze
 
 * Why I Like Macs
   - Address Book

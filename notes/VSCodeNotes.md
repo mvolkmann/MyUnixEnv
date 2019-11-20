@@ -324,6 +324,7 @@ See "Dropbox Sync" section below!
 
 - can move setting files to Dropbox and reference with a symbolic link
 - provides backup of settings
+- still need to manually install extensions
 - enables sharing between computers
 - steps to set up
   - learn about the OS-specific location where setting files are stored

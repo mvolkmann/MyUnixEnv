@@ -99,6 +99,7 @@ set -x MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
 set -x PYTHON_DIR $LANGUAGES_DIR/Python
 set -x REACT_DIR $JAVASCRIPT_DIR/react
 set -x SETT_DIR $OCI_DIR/SETT
+set -x SVELTE_DIR $JAVASCRIPT_DIR/svelte
 set -x TRAINING_DIR $DOCUMENTS_DIR/training
 set -x TYPESCRIPT_DIR $LANGUAGES_DIR/typescript
 
@@ -200,28 +201,24 @@ set -x PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/
 alias bigfiles "find . -type f -size +1000k -exec ls -lk {} \; | awk '{print \$5, \$9}' | sort -nr +1 | head"
 alias bigdirs 'du -sk * | sort -nr | head'
 
-alias cdagromall 'cd $REACT_DIR/agromall-pdd'
+alias cdbook 'cd $SVELTE_DIR/book'
 alias cdcangea 'cd $OCI_DIR/clients/Cangea'
 alias cddropbox 'cd $DROPBOX_DIR'
 alias cdgo 'cd $PROGRAMMING_DIR/languages/go'
 alias cdgop 'cd $GOPATH'
 alias cdgopv 'cd $GOPATH/src/github.com/mvolkmann'
-alias cdhaskell 'cd $PROGRAMMING_DIR/languages/Haskell'
 alias cdjava 'cd $JAVA_DIR'
 alias cdjavascript 'cd $JAVASCRIPT_DIR'
 alias cdjs 'cd $JAVASCRIPT_DIR'
-alias cdkws 'cd $OCI_DIR/clients/KWS'
 alias cdlanguages 'cd $LANGUAGES_DIR'
 alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
 alias cdnotes 'cd $HOME/MyUnixEnv/notes'
 alias cdoci 'cd $OCI_DIR'
-alias cdopes 'cd $OCI_DIR/clients/opes-one'
 alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
 alias cdpython 'cd $PYTHON_DIR'
 alias cdreact 'cd $JAVASCRIPT_DIR/react'
-alias cdrio 'cd $OCI_DIR/clients/RioTinto'
 alias cdrn 'cd $JAVASCRIPT_DIR/react-native'
 alias cdsett 'cd $SETT_DIR'
 alias cdsvelte 'cd $JAVASCRIPT_DIR/svelte'
