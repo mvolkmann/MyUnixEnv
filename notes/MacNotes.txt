@@ -1,14 +1,20 @@
 MacNotes.txt
 
 * New Mac setup
+  - copy files
+    - make full backup of old computer on an external drive using SuperDuper!
+    - copy files from external drive to new computer
+    - install SuperDuper! on new computer and register it
+  - Music app
+    - deauthorize on old computer
+    - authorize on new computer
   - copy .ssh directory from previous Mac
     - change permissions of files to match originals
   - git
   - git clone MyUnixEnv and run ./setup
-  - Xcode from App Store
   - iTerm 2
   - homebrew
-  - brew install these
+  - `brew install` these
     * coreutils (to get tac command)
     * enscript
     * fish
@@ -16,24 +22,43 @@ MacNotes.txt
     * reattach-to-user-namespace (for copy to/from clipboard in tmux)
     * tree
     * tmux
-  - install Inconsolata Powerline font for use in Vim airline
-  - DropBox
   - newest Chrome
   - newest Firefox
   - IDEA Community Edition?
   - in System Preferences ... Keyboard
-    * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
-    * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
+    * in "Keyboard" tab
+      * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
+      * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
+    * in "Text" tab
+      * uncheck "Add period with double-space"
   - enter Apple ID in iTunes to get access to iTunes Match
   - to make fish the default shell
     - sudo vim /etc/shells
     - add /usr/local/bin/fish to the end of this file
     - save the change
     - chsh -s /usr/local/bin/fish
-  - install Node.js
+  - install Inconsolata Powerline font for use in Vim airline
+  - install Cascadia Code font from Microsoft for use in VSCode
+  - install DropBox
+  - install OmniFocus from App Store and
+    configure to sync with Omni Sync Server
+  - copy OmniGraffle and register license in 1Password
+  - install Alfred
+  - install ImageOptim
   - install Moom
-  - setup Time Machine
-  - setup Backblaze
+  - install Node.js
+  - install n with `npm install -g n`
+    - see instructions to set permissions on certain directories
+    - `n latest`
+    - `n stable`
+  - install Postman
+  - copy ScreenFlow and register license in 1Password
+  - install Skype
+  - install Visual Studio Code
+  - install Xcode from App Store
+  - after copying all required files over and installing all needed software
+    - setup Time Machine
+    - transfer Backblaze license and backup new computer
 
 * Why I Like Macs
   - Address Book
@@ -42,25 +67,12 @@ MacNotes.txt
       about a person or place
     * integration with Mail
     * integration with Google Maps
-  - iCal
-    * reminds me of upcoming events
-    * flexible snoozing of alerts
   - Desktop
     * the Dock
     * Stacks
       - customizable collections of dock application launching icons
       - convenient collection of recent downloads
     * F10 to see all windows of the current application in Expose mode
-  - iChat
-    * very easy text and video chatting
-  - iMovie and iDVD
-    * for creating DVDs of home movies
-  - iPhoto
-    * great app. for organizing photos
-    * great for simple editing like cropping and red eye removal
-  - iTunes
-    * cover art screen saver
-    * library sharing
   - Finder
     * Cover Flow to quickly flip through images
     * Quick Look (select a file and press spacebar
@@ -71,11 +83,21 @@ MacNotes.txt
     * Sidebar shortcuts to commonly visited directories
       - these also appear in file dialog boxes
     * View as Columns
+  - iMovie and iDVD
+    * for creating DVDs of home movies
+  - iPhoto
+    * great app. for organizing photos
+    * great for simple editing like cropping and red eye removal
+  - Keynote
+    * produces much more polished presentations than PowerPoint
   - Mail
     * integration with Address Book
     * great integration and ease of use
-  - Keynote
-    * produces much more polished presentations than PowerPoint
+  - Messages
+    * very easy text and video chatting
+  - Music
+    * cover art screen saver
+    * library sharing
   - OmniGraffle
     * an excellent diagramming tool
   - Parallels

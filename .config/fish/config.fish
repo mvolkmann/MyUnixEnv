@@ -163,8 +163,8 @@ alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
 alias pgl 'psql -d demo'
 
 # Node.js settings
-set -x NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
-set -x PATH $PATH $NODE_DIR/deps/v8/tools
+#set -x NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
+#set -x PATH $PATH $NODE_DIR/deps/v8/tools
 #function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
 
 # Python settings
