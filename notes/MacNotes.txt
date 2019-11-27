@@ -22,9 +22,6 @@ MacNotes.txt
     * reattach-to-user-namespace (for copy to/from clipboard in tmux)
     * tree
     * tmux
-  - newest Chrome
-  - newest Firefox
-  - IDEA Community Edition?
   - in System Preferences ... Keyboard
     * in "Keyboard" tab
       * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
@@ -37,6 +34,10 @@ MacNotes.txt
     - add /usr/local/bin/fish to the end of this file
     - save the change
     - chsh -s /usr/local/bin/fish
+  - install Chrome
+    - open devtools, go into settings, and
+      check "Disable cache (while DevTools is open)
+  - install Firefox
   - install Inconsolata Powerline font for use in Vim airline
   - install Cascadia Code font from Microsoft for use in VSCode
   - install DropBox
@@ -55,6 +56,8 @@ MacNotes.txt
   - copy ScreenFlow and register license in 1Password
   - install Skype
   - install Visual Studio Code
+    - enter this command to enable key repeat in VSCode
+      defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
   - install Xcode from App Store
   - after copying all required files over and installing all needed software
     - setup Time Machine
