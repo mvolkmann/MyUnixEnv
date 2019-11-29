@@ -13,6 +13,8 @@ MacNotes.txt
   - git
   - git clone MyUnixEnv and run ./setup
   - iTerm 2
+    - in Preferences ... Advanced ... General,
+      set "Perform dictionary lookups on force press" to "No"
   - homebrew
   - `brew install` these
     * coreutils (to get tac command)
