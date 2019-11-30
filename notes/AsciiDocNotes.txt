@@ -30,7 +30,8 @@ To preview .adoc files in Chrome
 - find "Asciidoctor.js Live Preview" and click the "Details" button 
 - toggle "Allow access to file URLs" to on
 - open a `.adoc` file in Chrome
-- refresh to see results of changes in `.adoc` files
+- it should not be necessary to refresh
+  to see results of changes in `.adoc` files
 
 To install dblatex
 - download source from http://sourceforge.net/projects/dblatex/?source=dlp
