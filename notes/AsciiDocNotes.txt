@@ -22,6 +22,15 @@ To install
   * brew install ruby
   * gem install asciidoctor
 
+To preview .adoc files in Chrome
+- install "Asciidoctor.js Live Preview" at
+  <https://chrome.google.com/webstore/search/asciidoctor>
+- click the vertical ellipsis in the upper-right
+- select More Tools ... Extensions
+- find "Asciidoctor.js Live Preview" and click the "Details" button 
+- toggle "Allow access to file URLs" to on
+- open a `.adoc` file in Chrome
+
 To install dblatex
 - download source from http://sourceforge.net/projects/dblatex/?source=dlp
 - unzip and cd to directory
