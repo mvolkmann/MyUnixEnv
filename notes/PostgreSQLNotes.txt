@@ -37,7 +37,7 @@ Initialize database
 
 Version 9.2.1 notes
 - to start server
-  * pg_ctl -D /usr/local/pgsql/data start
+  * pg_ctl -D /usr/local/var/postgres start
     - will continue running
 - to stop server
   * pg_ctl -D /usr/local/var/postgres stop -m fast

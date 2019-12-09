@@ -24,6 +24,7 @@ MacNotes.txt
     * reattach-to-user-namespace (for copy to/from clipboard in tmux)
     * tree
     * tmux
+    * vim (to get latest version)
   - in System Preferences ... Keyboard
     * in "Keyboard" tab
       * set "Key Repeat" to Fast and "Delay Until Repeat" to Short

@@ -166,6 +166,7 @@ alias pgl 'psql -d demo'
 #set -x NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
 #set -x PATH $PATH $NODE_DIR/deps/v8/tools
 #function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+set -x NODE_OPTIONS --max-old-space-size=2048
 
 # Python settings
 alias python 'python3'
