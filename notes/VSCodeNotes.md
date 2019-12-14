@@ -1330,6 +1330,15 @@ See "Dropbox Sync" section below!
     - "Extract to constant in enclosing scope"
   - enter name for new function
 
+## Render Whitespace
+
+- to display a representation of all whitespace characters
+  except single spaces between works
+
+```json
+"editor.renderWhitespace": "boundary",
+```
+
 ## Reporting Issues
 
 - select Help ... Report Issues
