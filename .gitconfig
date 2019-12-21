@@ -5,3 +5,6 @@
 	br = branch
 	ci = commit
 	co = checkout
+[user]
+	name = R. Mark Volkmann
+	email = r.mark.volkmann@gmail.com

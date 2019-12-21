@@ -75,7 +75,7 @@ See "Dropbox Sync" section below!
 - can maximize/minimize the space allocated to this area
   - click "angle bracket" icon in bottom bar header
 
-## Bracket Pair Colorizer extension
+## Bracket Pair Colorizer 2 extension
 
 - "allows matching brackets to be identified with colors"
 - "user can define which characters to match, and which colors to use"

@@ -246,6 +246,7 @@ alias eld "echo LD_LIBRARY_PATH :; echo -n '   ';echo \$LD_LIBRARY_PATH |sed 's/
 alias ens 'enscript --borders --columns=2 --fancy-header --landscape --line-numbers=1 --margins=30::: --mark-wrapped-lines=arrow --pretty-print=cpp'
 alias ens1 'enscript --borders --fancy-header --line-numbers=1 --mark-wrapped-lines=arrow --pretty-print=cpp -L63'
 
+alias findadoc 'find3 adoc'
 alias findcss 'find3 css'
 alias findgo 'find3 go'
 alias findhtml 'find3 html'
@@ -256,6 +257,7 @@ alias findjs2 'find4 js'
 alias findjson 'find3 json'
 alias findless 'find3 less'
 alias findscss 'find3 scss'
+alias findsvelte 'find3 svelte'
 alias findts 'find3 ts'
 alias findvue 'find3 vue'
 
