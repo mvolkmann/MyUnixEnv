@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 3 ]; then
+  echo usage: append-after {regex} {text-to-append} {file-path}
+  exit 1
+fi
+
+echo regex is $1
+echo text is $2
+echo file path is $3
+
+sed '/${1}/ a\
+${2}
+' ${3}
+
+echo finished

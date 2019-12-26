@@ -1,0 +1,36 @@
+#!/usr/local/bin/perl -s
+
+# psduplex - insert PostScript code to set and unset duplexmode for this job
+#
+# usage: psduplex [-tumble], default "edge"
+#
+# Steve Kinzler, kinzler@cs.indiana.edu, October 1991
+
+$_ = <>;
+unless (/^%!/) {                # not PostScript, pass through as is
+  print;
+  while (<>) {
+    print;
+  }
+  exit;
+}
+
+print;
+while (<>) {
+  last unless /^\s*%/;
+  print;
+}
+
+print "statusdict begin\n\ttrue setduplexmode\n";
+print "\ttrue settumble\n" if $tumble;
+print "end\n";
+
+print;
+while (<>) {
+  print;
+}
+
+print "statusdict begin\n\tfalse setduplexmode\n";
+print "\tfalse settumble\n" if $tumble;
+print "end\n";
+
