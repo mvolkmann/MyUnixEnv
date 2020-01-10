@@ -28,6 +28,11 @@ This is used to create relationships between content objects.
 It allows specifying a field name each content type
 and the relationship between them which can be
 one-to-one, one-to-many, many-to-one, and many-to-many.
+When you retrieve a content object that contains a "Relation" field,
+it will contain all the objects in the relationship.
+For example, if there is a relationship between
+People and Addresses and an address object is retrieved,
+it will contain all the people objects that live there.
 
 To create a content object of a given content type,
 click the content type in the left nav,
@@ -58,8 +63,10 @@ For example, if a content type is "People":
   (if findone is enabled)
 
 When a content type has a field with the type "Media",
-you edit a content object of that type and drag a file onto the field
-or click the "browse" link to select a file to upload.
+you edit a content object of that type and
+add a media file (image, audio, or video) in two ways:
+- drag a file onto the field
+- click the "browse" link to select a file to upload.
 
 The files are given unique ids and placed in the
 public/uploads directory of the Strapi project.
@@ -71,5 +78,7 @@ Login.
 Browse localhost:1337 and click the "Open the administration" button
 or browse localhost:1337/admin.
 
-To install the AWS S3 provider, enter
-`npm install strapi-provider-upload-aws-s3`
+To store uploaded files in an Amazon S3 bucket
+instead of the local file system:
+- install the AWS S3 provider by entering
+  `npm install strapi-provider-upload-aws-s3`
