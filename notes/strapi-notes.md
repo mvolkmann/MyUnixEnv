@@ -3,11 +3,11 @@
 ## Creating a Strapi project
 
 - enter `npx create-strapi-app {project-name} --quickstart`  
-  This installs everything needed, starts a local Strapi server.
-  and opens http://localhost:1337/admin/auth/register.
-- Enter details for an admin user (probably you)
-  and press the "Ready to start" button.  
-  The admin console will open in the default browser.
+  This installs everything needed, starts a local Strapi server,
+  and opens <http://localhost:1337/admin/auth/register>.
+- enter details for an admin user (probably you)
+- press the "Ready to start" button
+- the Strapi admin console will open in the default browser
 
 ## Creating content types
 
@@ -58,7 +58,7 @@ click it, make changes, and press the "Save" button.
 To add more content types,
 click "Content Type Builder" in the left nav.
 
-## Access content via HTTP requests (REST API)
+## Accessing content via HTTP requests (REST API)
 
 To make content available through HTTP GET requests,
 click "Roles & Permissions" in the left nav,
@@ -70,11 +70,11 @@ These correspond to REST services that will become available.
 
 For example, if a content type is "People":
 
-- get the number of people objects with http://localhost:1337/people/count
+- get the number of people objects with <http://localhost:1337/people/count>
   (if count is enabled)
-- get all the people objects with http://localhost:1337/people
+- get all the people objects with <http://localhost:1337/people>
   (if find is enabled)
-- get the people object with id 2 with http://localhost:1337/people/2
+- get the people object with id 2 with <http://localhost:1337/people/2>
   (if findone is enabled)
 
 ## Media fields
@@ -84,7 +84,7 @@ you edit a content object of that type and
 add a media file (image, audio, or video) in two ways:
 
 - drag a file onto the field
-- click the "browse" link to select a file to upload.
+- click the "browse" link to select a file to upload
 
 The files are given unique ids and placed in the
 public/uploads directory of the Strapi project.
@@ -109,7 +109,7 @@ instead of the local file system:
 - create an AWS account
 - create an S3 bucket and remember the bucket name and region
 - get your access keys
-  - browse https://console.aws.amazon.com/
+  - browse <https://console.aws.amazon.com/>
   - in the dropdown for your account name,
     select "My Security Credentials"
   - press the "Continue to Security Credentials" button
@@ -125,7 +125,7 @@ instead of the local file system:
 - click the gear icon on the "FILES UPLOAD" row
 - in the "Providers" drop-down, select "Amazon Web Service S3"
 - enter values for "Access API Token" and "Secret Access Token"
-- select an AWS region
+- select the AWS region of the bucket
 - enter a "Bucket" name
 - press the "Save" button
 
