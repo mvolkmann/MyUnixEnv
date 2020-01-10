@@ -13,10 +13,13 @@
 
 - press the "CREATE YOUR FIRST CONTENT TYPE" button
 - click "Create new content-type"
-- enter a "Display name". For example, "address"
+- enter a "Display name", for example "address"
 - press the "Continue" button
-- select a field type. For example, "Text"
-- enter a name. For example, "street"
+- select a field type, for example "Text"
+- enter a name, for example "street"
+- optionally click "ADVANCED SETTINGS" and supply a default value
+  or click checkboxes to make the field private, required, unique,
+  or have a minimum or maximum length
 - for each additional field in the content type,
   press the "Add another field" button and repeat
 - when finished adding fields, click the "Finish" button
@@ -30,6 +33,8 @@ To edit a field in a content type:
 The Strapi server will restart and
 the new content type will appear in the left nav
 in its plural form and starting uppercase.
+
+The content type "Rich Text" is just Markdown.
 
 ## Relation fields
 
@@ -62,8 +67,8 @@ click "Content Type Builder" in the left nav.
 
 To make content available through HTTP GET requests,
 click "Roles & Permissions" in the left nav,
-click "Public", and
-select the operations to allow for each content type.
+click "Public" (or "Authenticated" for restricted access),
+and select the operations to allow for each content type.
 Operations include "count", "create", "delete",
 "find", "findone", and "update".
 These correspond to REST services that will become available.
@@ -76,6 +81,8 @@ For example, if a content type is "People":
   (if find is enabled)
 - get the people object with id 2 with <http://localhost:1337/people/2>
   (if findone is enabled)
+
+TODO: Can you find objects by querying on fields?
 
 ## Media fields
 
@@ -130,3 +137,32 @@ instead of the local file system:
 - press the "Save" button
 
 Now any uploaded media files are stored in the S3 bucket.
+
+It is also possible to store uploaded media files in
+Cloudflare, Cloudinary, and more.
+
+## Content storage
+
+All content except media files can be stored in a database.
+Supported databases include Postgres, MongoDB, MySQL, SQLite, and MariaDB.
+So queries can be efficient!
+
+## Querying content
+
+Strapi supports REST and GraphQL APIs.
+
+## Roles
+
+By default only two roles are defined, "Public" and "Authenticated".
+More roles can be added.
+
+Each role has:
+
+- name
+- description
+- list of users with the role
+- permissions for operations on each content type where
+  the operations are count, create, delete, find, findone, and update
+- permissions for operations supported by each installed plugin  
+  For example, users in a given role can be prevented from
+  creating new content types or objects of those types
