@@ -48,9 +48,8 @@
 
 ## To create directory where data will be stored
 
-- cd /
-- mkdir -p /data/db (default database directory)
-- sudo chown -R {you} /data
+- cd
+- mkdir -p data/db
 
 ## To get detailed documentation
 
@@ -58,7 +57,7 @@
 
 ## To start server
 
-- `brew services start mongodb-community`
+- `mongod --dbpath=$HOME/data/db`
 
 ## To stop server
 
