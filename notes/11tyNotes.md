@@ -94,8 +94,10 @@ To define layouts that are used for multiple pages:
 
 1. Create the file `layout.njk` in this directory.
    This uses the Nunjucks templating language, but others can be used.
+   The Nunjucks library does not need to be installed.
    For details on Nunjucks syntax, see
    [Nunjucks Templating](https://mozilla.github.io/nunjucks/templating.html)
+   It's a pretty extensive language!
 
    ```njk
    <html>
@@ -112,6 +114,8 @@ To define layouts that are used for multiple pages:
       </ul>
     </nav>
     <h2>{{title}}</h2>
+    <!-- content is where page content is injected -->
+    <!-- safe causes the HTML content to be sanitized -->
     {{content | safe}}
    </body>
    </html>
