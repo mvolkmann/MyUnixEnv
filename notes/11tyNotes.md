@@ -1,6 +1,6 @@
 # 11ty Notes
 
-11ty is "a simple static style generator".
+11ty is "a simple static style generator" (SSG).
 
 An 11ty project can be configured to work with
 existing content files and an existing directory structure.
@@ -9,6 +9,17 @@ See [11ty.dev](http://11ty.dev).
 
 A great tutorial video by Kyle Mitofsky can be found at
 https://www.youtube.com/watch?v=ozTesGh0l74
+
+See the video series from Brian Robinson at his
+[blog](https://bryanlrobinson.com/blog/create-11ty-theme-from-static-html-template/).
+
+There are many free and commercial themes
+that can be used as starting points and customized.
+Google for "free Bootstrap theme" or "free HTML template".
+Search sites like [ThemeForest](https://themeforest.net/),
+[ThemeHunt](https://themehunt.com/),
+and [ThemeHut](https://themehut.blogspot.com/).
+One example is [Flat Theme Lite](https://themehunt.com/item/1524965-flat-theme-lite-free-responsive-multipurpose-site-template).
 
 A lot of big names in the web community love 11ty, including
 Mathias Bynens, Chris Coyier, Brian Leroux, Addy Osmani, Sara Soueidan
@@ -24,7 +35,7 @@ See https://www.11ty.dev/docs/testimonials/.
 - Sapper (Svelte)
 - and more
 
-11ty supports many templating languages including:
+11ty supports many templating languages (11) including:
 
 - EJS in .ejs files
 - Haml in .haml files
@@ -37,6 +48,8 @@ See https://www.11ty.dev/docs/testimonials/.
 - Mustache in .mustache files
 - Nunjucks in .njk files
 - Pug in .pug files
+
+It does not currently support AsciiDoc.
 
 An 11ty site can be built from source files
 that use a combination of templating languages.
@@ -65,12 +78,13 @@ Steps to create an 11ty site that uses Markdown:
    Mark is a software engineer at Object Computing, Inc. in St. Louis, Missouri.
    ```
 
-1. Build the site by entering `npx eleventy`.
+1. Optionally build the site by entering `npx eleventy`.
    This creates a `_site` directory containing HTML files.
    `index.md` -> `index.html`
    `about.md` -> `about/index.html`
 
-1. Serve the site locally with hot reloading using BrowserSync by entering
+1. Build and serve the site locally
+   with hot reloading using BrowserSync by entering
    `npx eleventy --serve`.
 
 1. Browse localhost:8080 and localhost:8080/about.
@@ -100,10 +114,13 @@ To define layouts that are used for multiple pages:
    It's a pretty extensive language!
 
    ```njk
-   <html>
+   <!DOCTYPE html>
+   <html lang="en">
    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="/assets/styles.css" />
    </head>
    <body>
     <h1>Mark Volkmann's Blog</h1>
@@ -135,6 +152,9 @@ To define layouts that are used for multiple pages:
    and a site can use any number of layout files.
 
    `title` is like a variable that can be used in the layout.
+
+A layout can extend another layout.
+What does this mean?
 
 ## To add styling
 
