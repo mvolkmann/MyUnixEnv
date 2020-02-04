@@ -1,25 +1,11 @@
 # 11ty Notes
 
+## Overview
+
 11ty is "a simple static style generator" (SSG).
 
 An 11ty project can be configured to work with
 existing content files and an existing directory structure.
-
-See [11ty.dev](http://11ty.dev).
-
-A great tutorial video by Kyle Mitofsky can be found at
-https://www.youtube.com/watch?v=ozTesGh0l74
-
-See the video series from Brian Robinson at his
-[blog](https://bryanlrobinson.com/blog/create-11ty-theme-from-static-html-template/).
-
-There are many free and commercial themes
-that can be used as starting points and customized.
-Google for "free Bootstrap theme" or "free HTML template".
-Search sites like [ThemeForest](https://themeforest.net/),
-[ThemeHunt](https://themehunt.com/),
-and [ThemeHut](https://themehut.blogspot.com/).
-One example is [Flat Theme Lite](https://themehunt.com/item/1524965-flat-theme-lite-free-responsive-multipurpose-site-template).
 
 A lot of big names in the web community love 11ty, including
 Mathias Bynens, Chris Coyier, Brian Leroux, Addy Osmani, Sara Soueidan
@@ -59,7 +45,29 @@ do not require downloading any JavaScript code.
 Serving only prebuilt pages provides great site performance.
 JavaScript code can optionally be included for dynamic functionality.
 
-Steps to create an 11ty site that uses Markdown:
+## Resources
+
+See the project home page at [11ty.dev](http://11ty.dev).
+
+A great tutorial video by Kyle Mitofsky can be found at
+https://www.youtube.com/watch?v=ozTesGh0l74
+
+See the video series from Brian Robinson at his
+[blog](https://bryanlrobinson.com/blog/create-11ty-theme-from-static-html-template/).
+
+## Starter Themes
+
+There are many free and commercial themes
+that can be used as starting points and customized.
+Google for "free Bootstrap theme" or "free HTML template".
+Search sites like [ThemeForest](https://themeforest.net/),
+[ThemeHunt](https://themehunt.com/),
+and [ThemeHut](https://themehut.blogspot.com/).
+One example is [Flat Theme Lite](https://themehunt.com/item/1524965-flat-theme-lite-free-responsive-multipurpose-site-template).
+
+## Steps to create an 11ty site
+
+This example uses Markdown and Nunjucks.
 
 1. Create project directory.
 1. Enter `npm init`.
@@ -93,13 +101,17 @@ If the project is placed in a Git repository,
 add `_site/` to the `.gitignore` file
 since that only contains generated code.
 
-The site can be published to a server
+## Deploying 11ty sites
+
+An 11ty site can be published to a server
 by copying the contents of the `_site` directory
 to the server.
 
 A service like Netlify or Zeit NOW can be used
-to associated the repository so
+to associate a site repository so
 the site is rebuilt and deployed on every push.
+
+## Layouts
 
 To define layouts that are used for multiple pages:
 
@@ -156,7 +168,7 @@ To define layouts that are used for multiple pages:
 A layout can extend another layout.
 What does this mean?
 
-## To add styling
+## Styling
 
 1. Create an `assets` directory.
    The name isn't significant.
@@ -190,3 +202,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets');
 };
 ```
+
+## Collections
+
+See [Collections](https://www.11ty.dev/docs/collections/).
