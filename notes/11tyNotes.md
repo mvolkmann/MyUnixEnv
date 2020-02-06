@@ -361,6 +361,9 @@ to iterate in the new sorted order.
 ## Collections from a REST service
 
 A collection can be populated from a REST call in `.eleventy.js`.
+
+To use the Fetch API, `npm install -d node-fetch`.
+
 For example:
 
 ```js
