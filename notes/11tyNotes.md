@@ -1,6 +1,37 @@
 # 11ty Notes
 
-## Overview
+## Static site generators (SSGs)
+
+SSGs are an alternative to CMS tools (like WordPress and Drupal)
+and graphical site builders (like Squarespace and Wix).
+
+The primary benefits of SSGs are:
+
+- Static sites provide excellent runtime performance.
+- Static sites are more secure because all API interactions
+  occur during site generation, not when users interact with the site.
+  This means there is less of a chance that server hacking
+  can affect the content of a site.
+- The supported markup/templating options are typically
+  easier to write and understand than HTML.
+- Development of an SSG site can start from
+  a pre-built site to speed development.
+
+See [staticgen.com](https://www.staticgen.com/) for a list
+of SSGs that can be sorted on various criteria.
+
+Key differentiators between SSGs include:
+
+- supported template languages (Angular, EJS, Go, Haml,
+  Handlebars, HTML, JavaScript, Liquid, Markdown, Marko,
+  Mustache, Nunjucks, Pug, React, Swig, Twig, Vue, ...)
+- the implementation language (Go, JavaScript, PHP, Python, Ruby, ...)
+  which affects your ability to customize the software
+- ability to configure the SSG to use
+  existing content files and directory structures
+- license (Apache-2.0, Jinja2, MIT, ...)
+
+## 11ty overview
 
 11ty is "a simple static style generator" (SSG).
 It is targeted at building static "sites", not web "apps".
@@ -8,6 +39,8 @@ It is targeted at building static "sites", not web "apps".
 It is implemented in JavaScript.
 
 The 11ty mascot is a possum attached to a helium balloon.
+
+11ty is the most popular SSG that supports multiple template languages.
 
 A lot of big names in the web community love 11ty, including
 Mathias Bynens, Chris Coyier, Brian Leroux, Addy Osmani, Sara Soueidan
@@ -22,9 +55,6 @@ See https://www.11ty.dev/docs/testimonials/.
 - Nuxt (Vue)
 - Sapper (Svelte)
 - and more
-
-SSGs are an alternative to CMS tools (like WordPress and Drupal)
-and graphical site builders (like Squarespace and Wix).
 
 11ty supports many templating languages (11) including:
 
@@ -56,13 +86,6 @@ do not require downloading any JavaScript code.
 Serving only prebuilt pages provides great site performance.
 JavaScript code can optionally be included for dynamic functionality.
 
-## Why use a static site generator?
-
-- static sites provide excellent runtime performance
-- the supported markup/templating options are typically
-  easier to write and understand than HTML
-- can start from a pre-built site to speed development
-
 ## Resources
 
 See the project home page at [11ty.dev](http://11ty.dev).
@@ -72,6 +95,8 @@ https://www.youtube.com/watch?v=ozTesGh0l74
 
 See the video series from Brian Robinson at his
 [blog](https://bryanlrobinson.com/blog/create-11ty-theme-from-static-html-template/).
+
+See Khaled Garbaya's video series on [Egghead](https://egghead.io/lessons/11ty-bootstrap-an-eleventy-project?pl=getting-started-with-eleventy-53c2).
 
 ## Starter Themes
 
@@ -118,6 +143,14 @@ This example uses Markdown and Nunjucks.
 If the project is placed in a Git repository,
 add `_site/` to the `.gitignore` file
 since that only contains generated code.
+
+Optionally add these npm scripts in `package.json`
+that can be used to build and serve the site:
+
+```json
+"build": "eleventy",
+"start": "eleventy --serve"
+```
 
 ## Deploying 11ty sites
 
@@ -392,3 +425,57 @@ TODO: How can an 11ty site use assets from a CMS like Strapi?
 ## Obtaining data from REST services
 
 TODO: Add this.
+
+## Plugins
+
+The functionality of 11ty can be extended with plugins.
+These are documented [here](https://www.11ty.dev/docs/plugins/).
+
+### Syntax highlighting
+
+Install the plugin.
+
+```bash
+npm install -D @11ty/eleventy-plugin-syntaxhighlight
+```
+
+Modify .eleventy.js:
+
+```js
+const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+module.exports = eleventyConfig => {
+  ...
+  eleventyConfig.addPlugin(syntaxHighlight);
+};
+```
+
+Download a Prism theme `.css` file from
+[Prism themes](https://github.com/PrismJS/prism-themes)
+and place it in the `assets` directory.
+For example, `prism-vs.css`.
+
+Add a `link` tag for this in all layout files whose pages need it.
+For example, this can be added in `_includes/layout.njk`.
+
+```html
+<link rel="stylesheet" href="/assets/prism-vs.css" />
+```
+
+Surround code to have syntax highlighting with fences.
+For example:
+
+````text
+ ```js
+ code goes here
+ ```
+````
+
+For more details, see the documentation [here](https://www.11ty.dev/docs/plugins/syntaxhighlight/).
+
+### Internationalization
+
+TODO: See https://www.webstoemp.com/blog/multilingual-sites-eleventy/.
+
+```
+
+```
