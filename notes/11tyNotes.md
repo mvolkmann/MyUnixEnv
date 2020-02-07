@@ -58,24 +58,27 @@ See https://www.11ty.dev/docs/testimonials/.
 - Sapper (Svelte)
 - and more
 
-11ty supports many templating languages (11) including:
+11ty supports many markup languages including:
 
-- Embedded JavaScript (EJS) in .ejs files
-- Haml in .haml files
-- Handlebars in .hbs files
 - HTML in .html files
-- JavaScript in .11ty.js files
-- JavaScript Template Literals in .jstl files
-- Liquid in .liquid files
 - Markdown in .md files
-- Mustache in .mustache files
-- Nunjucks in .njk files (by Mozilla)
-- Pug in .pug files
 
-It does not currently support AsciiDoc.
+11ty supports many templating languages including:
 
-An 11ty site can be built from source files
-that use a combination of templating languages.
+- [Embedded JavaScript (EJS)](https://ejs.co/) in `.ejs` files
+- [Haml](http://haml.info/) in `.haml` files
+- [Handlebars](https://handlebarsjs.com/) in `.hbs` files
+- JavaScript in `.11ty.js` files
+- JavaScript Template Literals in `.jstl` files
+- [Liquid](https://shopify.github.io/liquid/) in `.liquid` files
+- [Mustache](https://mustache.github.io/) in `.mustache` files
+- [Nunjucks](https://mozilla.github.io/nunjucks/) in `.njk` files (by Mozilla)
+- [Pug](https://pugjs.org/) in `.pug` files
+
+11ty does not currently support AsciiDoc.
+
+An 11ty site can be built from source files that use
+a combination of markup and templating languages.
 
 An 11ty project can be configured to work with
 existing content files and an existing directory structure.
@@ -99,6 +102,33 @@ See the video series from Brian Robinson at his
 [blog](https://bryanlrobinson.com/blog/create-11ty-theme-from-static-html-template/).
 
 See Khaled Garbaya's video series on [Egghead](https://egghead.io/lessons/11ty-bootstrap-an-eleventy-project?pl=getting-started-with-eleventy-53c2).
+
+## Templating language choice
+
+The default templating language available for use in Markdown files is Liquid.
+Liquid was created by Shopify.
+It is implemented in Ruby.
+
+Another popular option is Nunjucks.
+It was created by Mozilla and is implemented in JavaScript.
+Nunjucks is very similar to Liquid.
+Much of the syntax is identical.
+But Nunjucks has many features that are not present in Liquid.
+For more details on Nunjucks, see your notes file `NunjucksNotes.md`.
+
+To enable the use of Nunjucks in a particular Markdown file,
+add the following front matter:
+
+```yaml
+templateEngineOverride: njk,md
+```
+
+To enable using Nunjucks in all Markdown files,
+add the following in `.eleventy.js`:
+
+```json
+markdownTemplateEngine: 'njk',
+```
 
 ## Starter Themes
 
@@ -358,27 +388,50 @@ eleventyConfig.addCollection('dogsByName', collection => {
 Use the collection `dogsByName` in a `for` loop
 to iterate in the new sorted order.
 
-## Collections from a REST service
+## Data Cascade
 
-A collection can be populated from a REST call in `.eleventy.js`.
+Data in an 11ty project can come from many places.
+It is held in variables.
+Variables can be defined in multiple places, and
+the "cascade" defines which definition takes precedence.
 
+The places where variables can be defined include:
+
+- front matter YAML
+- `.json` files
+- `.js` files
+- `.eleventy.js`
+
+## Using data from a REST service
+
+One way to make data from REST services available to templates
+is to add `.js` files under the `_data` directory
+whose names are the name of a global variable to set.
+
+For example, the global variable `employees` can be set
+by creating the file `_data/employees.js`
+that uses the Fetch API to call a REST service.
 To use the Fetch API, `npm install -d node-fetch`.
 
-For example:
+This file could contain the following:
 
 ```js
-eleventyConfig.addCollection('employees', async () => {
+const fetch = require('node-fetch');
+
+module.exports = async () => {
   const url = 'https://dummy.restapiexample.com/api/v1/employees';
   const res = await fetch(url);
-  return res.json();
-});
+  const response = await res.json();
+  // This REST service returns an object with the properties
+  // success and data where data is an array of employee objects.
+  return response.data;
+};
 ```
 
-This collection holds an array of employee objects in `employees.data`.
-They can be rendered on a page like this:
+The employees can be rendered on a page like this:
 
 ```njk
-{% for employee in collections.employees.data %}
+{% for employee in employees %}
   <p>{{ employee.employee_name}} is {{employee.employee_age}} years old.</p>
 {% endfor %}
 ```
@@ -440,300 +493,6 @@ To render this data in a template:
 ## 11ty configuration
 
 todo: cover details of the .eleventy.js file.
-
-## Nunjucks
-
-Nunjucks is a template language implemented in JavaScript.
-It supports features seen in most programming languages.
-
-The VS Code extension vscode-nunjucks
-applies syntax highlighting in `.njk` files.
-
-### Nunjucks configuration
-
-To enable using Nunjucks in a specific Markdown file,
-add the following in the front matter of a `.md` file:
-
-```yaml
-templateEngineOverride: njk,md
-```
-
-To enable using Nunjucks in all Markdown files,
-add the following in `.eleventy.js`:
-
-```json
-markdownTemplateEngine: 'njk',
-```
-
-TODO: Cover other nunjucks-specific configuration.
-
-### Nunjucks data types
-
-Nunjucks essential supports the same data types as JavaScript.
-These include:
-
-- Boolean: true, false
-- Numbers: 2, 3.4
-- Strings: "in double-quotes", 'in single-quotes'
-- Arrays: [true, 2, 'test']
-- Dicts: { key1: true, key2: 'text' }
-
-### Nunjucks operators
-
-Nunjucks supports these mathematical operators:
-
-- +, -, \*, /
-- // (integer division)
-- % (modulo)
-- \*\* (exponentiation)
-
-Nunjucks supports these comparison operators from JavaScript:
-
-- ==, ===
-- !=, !==
-- <, <=, >=, >
-
-Nunjucks supports these logical operators:
-
-- and, or, not
-- parentheses to group expressions
-
-### Nunjucks comments
-
-The syntax for comments is:
-
-```njk
-{# some comment #}
-```
-
-### Nunjucks variables
-
-To define or modify a variable:
-
-```njk
-{% set name = value %}
-```
-
-Variables defined at the top-level are global.
-Otherwise they are scoped to the construct in which they are defined.
-
-### Nunjucks rendering
-
-To render an expression, enclose it in double-curly braces.
-For example:
-
-```njk
-{{ dog.name }}
-```
-
-### Nunjucks filters
-
-Nunjucks can render the result of passing a value through a filter.
-There are many provided filters and custom filters can be implemented.
-The provided filters are listed
-[here](https://mozilla.github.io/nunjucks/templating.html#builtin-filters).
-They include `abs`, `batch`, `capitalize`, `center`, `default`,
-`dictsort`, `dump`, `escape`, `first`, `float`, `forceescape`,
-`groupby`, `indent`, `int`, `join`, `last`, `length`, `list`,
-`lower`, `nl2br`, `random`, `rejectattr`, `replace`, `reverse`,
-`round`, `safe`, `selectattr`, `slice`, `sort`, `string`, `striptags`,
-`sum`, `title`, `trim`, `truncate`, `upper`, `urlencode`, `urlize`,
-and `wordcount`.
-
-There are too many to describe, but here are some highlights:
-
-- `dump` calls `JSON.stringify` on a value and is useful for debugging.
-- `first` returns the first element of an array or the first character of a string.
-- `last` returns the last element of an array or the last character of a string.
-- `groupby` creates an array of arrays of objects from an array of objects
-  based on a common property value.
-- `join` concatenates an array of values, separated by a delimiter
-- `nl2br` replaces newline characters with HTML `<br />` elements
-- `random` returns a random element from an array
-- `rejectattr` filters an array of objects, rejecting those where a given property passes a test
-- `selectattr` filters an array of objects, keeping those where a given property passes a test
-- `sort` doesn't have an example in the docs.
-  I submitted an issue to learn how to use it.
-- `urlencode` encodes a URL using UTF-8.
-- `urlize` turns URLs in a string into links.
-  The string can contain any number of URLs.
-  The result must be passed to the `safe` filter.
-  Otherwise the resulting HTML is escaped and presented as plain text.
-  For example, {{ 'before http://foo.bar after' | urlize | safe }}
-  renders `before <a href="http://foo.bar">http://foo.bar</a> after`.
-
-Here is an example of applying the `upper` filter to a string:
-
-```njk
-{{ dog.name | upper }}
-```
-
-Another syntax is available for applying a filter
-to a large amount of content.
-For example:
-
-```njk
-{% filter upper %}
-  Mark is a software engineer at Object Computing, Inc.
-{% endfilter %}
-```
-
-This form can only contain literal content, not other Nunjucks constructs.
-
-### Nunjucks conditional logic
-
-Content can be conditionally included using an `if` statement.
-For example:
-
-TODO: Change this rather than just copying from the official docs.
-
-```njk
-{% if hungry %}
-  I am hungry.
-{% elif tired %}
-  I am tired.
-{% else %}
-  I am good!
-{% endif %}
-```
-
-Nunjucks supports using and `if` for an odd kind of ternary operator.
-For example, this outputs "yellow" if `happy` is true.
-
-```njk
-{{ "happy" if happy }}
-```
-
-This is similar, but outputs "gray" if `happy` is false.
-
-```njk
-{{ "yellow" if happy else "gray" }}
-```
-
-### Nunjucks iteration
-
-A `for` loop iterates over the elements of an array.
-This can be members of an 11ty collection.
-For example:
-
-```njk
-{% for dog in dogs %}
-  <li>{{ dog.name }} is a {{ dog.breed }}.</li>
-{% else %}
-  <li>There are no dogs.</li>
-{% endfor %}
-```
-
-There is also support for asynchronous versions of this
-(`asyncEach` and `asyncAll`) that most sites will not need.
-It is documented
-[here](https://mozilla.github.io/nunjucks/api.html#asynchronous-support).
-
-### Nunjucks function calls
-
-JavaScript functions can be called
-using the same syntax as JavaScript.
-For example, this calls a function and renders its result:
-
-```njk
-{{ someFunction(arg1, arg2) }}
-```
-
-### Nunjucks regular expressions
-
-Regular expressions are defined by beginning with `r/`.
-For example:
-
-```njk
-{% set re = r/^a.*z$/i %}
-{% if re.test(dog.name) %}
-  This dog goes from a to z!
-{% endif %}
-```
-
-The `i` option at the end of the regular expression
-signifies case-insensitive matching.
-
-### Nunjucks sanitizing
-
-When rendering HTML from a potentially untrusted source,
-use the `safe` filter to sanitize it.
-For example:
-
-```njk
-{{ someHtml | save }}
-```
-
-### Nunjucks macros
-
-Macros are like functions that have parameters
-and render something based on those.
-Parameters can have default values that are used when a value is not provided.
-For example:
-
-```njk
-{% macro dogP(name, breed, gender='unknown') %}
-<p>{{name}} is a {{gender}} {{breed}}.</p>
-{% endmacro %}
-```
-
-A macro call looks like a function call.
-For example:
-
-```njk
-{%- for dog in collections.dogsByName -%}
-  {{ dogP(dog.data.name, dog.data.breed, dog.data.gender) }}
-{%- endfor -%}
-```
-
-Arguments can be specified positionally or by name.
-For example:
-
-```njk
-{%- for dog in collections.dogsByName -%}
-  {{ dogP(gender=dog.data.gender, breed=dog.data.breed, name=dog.data.name) }}
-{%- endfor -%}
-```
-
-TODO: Maybe Nunjucks macros can be used as an alternative to 11ty shortcodes.
-TODO: Can they be defined globally?
-
-### Nunjucks blocks
-
-Blocks in Nunjucks are like named slots in Svelte.
-They allow a template to pass content into another template.
-This is described [here](https://mozilla.github.io/nunjucks/templating.html#template-inheritance).
-
-### Nunjucks includes
-
-One template can include another.
-This allows a template to be reused in many places.
-For example:
-
-```njk
-{% include "snippet.html" %}
-```
-
-### Nunjucks whitespace
-
-By default all whitespace is retained.
-To trim whitespace before a construct, begin with `{%-` instead of `{%`.
-To trim whitespace after a construct, end with `-%}` instead of `%}`.
-
-### Nunjucks global functions
-
-Nunjucks provides some predefined functions
-that address common needs.
-
-- `range` is used to iterate over a range of integer values.
-- `cycler` rotates through a set of values.
-- `joiner` returns a function that outputs a given string
-  each time it is called except for the first
-
-### Other Nunjucks topics
-
-I haven't described these topics yet:
-call, extends, import, raw, super, verbatim
 
 ## CMS integration
 
