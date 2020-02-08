@@ -688,9 +688,10 @@ The global variable `pagination` holds related data.
 
 - `pagination.data` holds the value of the
   pagination `data` property from the front matter.
-- `pagination.pages` holds an array of arrays.
-  There is an inner array for each page that holds
-  the objects to be rendered on that page.
+- `pagination.pages` holds an array of items for each page.
+  When the size is one the array holds each page item.
+  When the size is greater than one it holds arrays of the items on each page.
+  When `data` is an object rather than an array, it holds keys instead of items.
 - `pagination.items` is an array of the objects
   to be rendered on the current page.
 - `pagination.pages.length` is the number of pages.
@@ -712,27 +713,7 @@ The URL for each page is `/{pagination.data}/{zero-based-index}`.
 The URL for the first page page is simply `/{data-name}`.
 The URL `/{data-name}/0` is not valid.
 
-To render links to the first, previous, next, and last pages
-so each is only rendered when it makes sense:
-
-```njk
-<nav>
-  {% if pagination.pageNumber > 0 %}
-    <a href="{{pagination.href.first}}">First</a>
-  {% endif %}
-  {% if pagination.href.previous %}
-    <a href="{{pagination.href.previous}}">Prev</a>
-  {% endif %}
-  {% if pagination.href.next %}
-    <a href="{{pagination.href.next}}">Next</a>
-  {% endif %}
-  {% if pagination.pageNumber < pagination.pages.length - 1 %}
-    <a href="{{pagination.href.last}}">Last</a>
-  {% endif %}
-</nav>
-```
-
-To display "Page n of m":
+To display "Page m of n":
 
 ```njk
 <div>
@@ -740,30 +721,76 @@ To display "Page n of m":
 </div>
 ```
 
-To render links to all the pages by number:
+To render links to the first, previous, next, and last pages
+so each is only rendered when it makes sense:
 
 ```njk
-<nav>
-  {% for href in pagination.hrefs %}
-    <a href="{{href}}">Page {{ loop.index }}</a>
-  {% endfor %}
+<nav class="pagination">
+  <ol>
+    {% if pagination.pageNumber > 0 %}
+      <li><a href="{{pagination.href.first}}">First</a></li>
+    {% endif %}
+    {% if pagination.href.previous %}
+      <li><a href="{{pagination.href.previous}}">Prev</a></li>
+    {% endif %}
+    {% if pagination.href.next %}
+      <li><a href="{{pagination.href.next}}">Next</a></li>
+    {% endif %}
+    {% if pagination.pageNumber < pagination.pages.length - 1 %}
+      <li><a href="{{pagination.href.last}}">Last</a></li>
+    {% endif %}
+  </ol>
 </nav>
 ```
+
+To render links to all the pages except the current by number:
+
+```njk
+<nav class="pagination">
+  <ol>
+    {% for href in pagination.hrefs %}
+      {%if loop.index0 !== pagination.pageNumber %}
+        <li><a href="{{href}}">Page {{ loop.index }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+</nav>
+```
+
+Note that Nunjucks provides the variable `loop` that holds
+an object with the properties `index` (1-based) and `index0` (0-based).
+These hold the current loop index.
 
 To style the anchor tags as buttons:
 
 ```css
-nav {
-  margin-top: 1rem;
+.pagination {
+  background-color: transparent;
+}
+
+.pagination ol {
+  display: flex;
+  list-style: none;
   padding: 0.5rem 0; /* to match "a" padding below */
 }
 
-nav > a {
+.pagination a {
   border: solid gray 1px;
   border-radius: 0.5rem;
   padding: 0.5rem;
   text-decoration: none;
 }
+```
+
+To style the anchor for the current page differently that the others,
+define a CSS rule for `a.current` and
+set the `class` on the `a` elements as follows:
+
+```njk
+<a
+  class="{{'current' if loop.index0 === pagination.pageNumber else ''}}"
+  href="{{href}}"
+>
 ```
 
 ## Global data

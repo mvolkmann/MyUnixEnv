@@ -170,8 +170,8 @@ For example:
 {% endfor %}
 ```
 
-The current loop index is available in `loop.index`.
-They start from 1, not 0.
+The current loop index is available in
+`loop.index` (starts from 1) and `loop.index0` (starts from 0).
 
 There is also support for asynchronous versions of this
 (`asyncEach` and `asyncAll`) that most sites will not need.
