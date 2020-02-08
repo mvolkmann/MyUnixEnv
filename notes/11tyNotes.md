@@ -104,6 +104,81 @@ See the video series from Brian Robinson at his
 See Khaled Garbaya's video series on
 [Egghead](https://egghead.io/lessons/11ty-bootstrap-an-eleventy-project?pl=getting-started-with-eleventy-53c2).
 
+## Markdown
+
+Markdown is a syntax for specifying HTML in a simpler way.
+It was created by John Gruber and is
+defined [here](https://daringfireball.net/projects/markdown/).
+
+There are many Markdown parsers.
+The one that 11ty uses by default is
+[markdown-it](https://github.com/markdown-it/markdown-it).
+
+Let's review the most commonly used parts of Markdown syntax.
+
+- **headers**: `#` (h1) to `######` (h6)
+
+- **italic**: `*text*` or `_text_`
+- **bold**: `**text**` or `__text__`
+- **bold and italic**: `**_text_**` or `__*text*__`
+- **strikethrough**: `~~text~~`
+
+- **block quotes**: precede each line with `>`; text is automatically wrapped
+
+- **code in a line**: surround with single backticks
+- **code on multiple lines**: surround with lines containing three backticks; follow first line of backticks with a language identifier; ex. `---js`
+
+- **horizontal rule**: three or more hyphens, asterisks, or underscores;
+  each produces the same result
+
+- **HTML**: can include most HTML tags
+
+- **image**: `![alt-text](url)`
+- **image with tooltip**: `![alt-text](url "tooltip")`
+
+- **link displaying url**: `<url>`
+- **link displaying text**: `[text](url)`
+- **link displaying text with tooltip**: `[text](url "tooltip")`
+
+- **unordered list**: precede each list item with `*`, `-`, or `+`
+- **ordered list**: precede each list item with `1.`
+  or uses a specific number to begin there
+
+  - lists of any type can be nested by indenting two spaces
+
+- **tables**
+
+  ```md
+  | Heading 1 | Heading 2 | Heading 3 | Heading 4 |
+  | --------- | :-------- | --------: | :-------: |
+  | data 1-1  | data 1-2  |  data 1-3 | data 1-4  |
+  | data 2-1  | data 2-2  |  data 2-3 | data 2-4  |
+  ```
+
+  Colons in second line indicate horizontal alignment of a column.
+  Column 1 is left-aligned by default.
+  Column 2 is explicitly left-aligned.
+  Column 3 is right-aligned.
+  Column 4 is centered.
+
+  Even if the column values are not aligned in the Markdown,
+  a properly aligned table will be produced.
+  Each heading must have at least three dashes below it.
+  The outer pipes can be omitted.
+  The VS Code markdownlint extension automatically fixes all these issues.
+
+- **escaping**: precede characters with `\`
+
+### GitHub extensions
+
+- @ mention: `@github-username`
+- emoji: `:emoji-name:`;
+  examples include `:+1:` (thumbs up), `:tada:` (party hat), and `:rocket:`
+- issue reference: `#issue-number`
+- task list:
+  - `- [ ] some uncompleted task`
+  - `- [x] some completed task`
+
 ## Templating language choice
 
 The default templating language available for use in Markdown files is Liquid.
@@ -220,16 +295,45 @@ and ends with the same kind of line.
 Lines between these define variables.
 For example:
 
-```yaml
+````yaml
 ---
 layout: layout.njk
 title: Dogs
 ---
 
+Strings containing no spaces or special characters do not require quotes.
+When quotes are needed, they can be single or double quotes.
+
+Arrays are specified by listing each element preceded by a dash and a space.
+For example:
+
+```yaml
+colors:
+  - red
+  - green
+  - blue
+````
+
+Objects (a.k.a dicts) are lists of key/value pairs
+where keys are followed by a color.
+For example:
+
+```yaml
+address:
+  street: 123 Some Lane
+  city: Somewhere
+  state: CA
+  zip: 12345
 ```
+
+Arrays can hold objects and other arrays..
+Object property values can be arrays and other objects.
 
 Variables can be used other files and can represent many kinds of values
 including CSS property values, icons, URLs, ...
+
+YAML comments begin with `#` and extend to the end of the line.
+Multi-line comments are not supported.
 
 Some special variables recognized by 11ty include:
 
@@ -514,6 +618,8 @@ The employees can be rendered on a page like this:
 ## Shortcodes
 
 Shortcodes define snippets of reusable content.
+This is the closest thing 11ty provides to components
+in web frameworks like React, Vue, Angular, and Svelte.
 For example, here is a "dog" shortcode definition
 that is define in `.eleventy.js`.
 
@@ -538,9 +644,20 @@ To use it:
 {%- endfor -%}
 ```
 
-## Components
+## Pagination
 
-Are shortcodes the closest thing to components in 11ty?
+Pagination is the 11ty term for produced multiple files from one input file.
+It operates on an array of data.
+The `size` variable specifies the number of
+array elements to be rendered on each page.
+Often it is set to 1 to render each element on a separate page.
+The array data can come from anywhere in the data cascade.
+
+For example:
+
+```yaml
+
+```
 
 ## Global data
 
