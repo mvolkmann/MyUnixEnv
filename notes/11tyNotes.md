@@ -101,7 +101,8 @@ https://www.youtube.com/watch?v=ozTesGh0l74
 See the video series from Brian Robinson at his
 [blog](https://bryanlrobinson.com/blog/create-11ty-theme-from-static-html-template/).
 
-See Khaled Garbaya's video series on [Egghead](https://egghead.io/lessons/11ty-bootstrap-an-eleventy-project?pl=getting-started-with-eleventy-53c2).
+See Khaled Garbaya's video series on
+[Egghead](https://egghead.io/lessons/11ty-bootstrap-an-eleventy-project?pl=getting-started-with-eleventy-53c2).
 
 ## Templating language choice
 
@@ -124,10 +125,24 @@ templateEngineOverride: njk,md
 ```
 
 To enable using Nunjucks in all Markdown files,
-add the following in `.eleventy.js`:
+do one of the following in `.eleventy.js`:
 
-```json
-markdownTemplateEngine: 'njk',
+```js
+module.exports = {
+  markdownTemplateEngine: 'njk'
+};
+```
+
+or
+
+```js
+module.exports = eleventyConfig => {
+  // Call methods on eleventyConfig here.
+
+  return {
+    markdownTemplateEngine: 'njk'
+  };
+};
 ```
 
 ## Starter Themes
@@ -333,9 +348,11 @@ TODO: Is there a way to scope css to a page?
 
 ## Collections
 
-Collections of data are defined by specifying tags in front matter.
+Collections are defined by specifying tags in front matter.
+They are represented by an array of objects
+whose properties are the non-tag front matter values.
 For example, documents that each describe a specific dog
-can have the following `tags: dog` in their front matter.
+can have front matter similar to the following.
 
 ```yaml
 tags: dog,
@@ -345,11 +362,14 @@ breed: whippet
 
 Multiple tags can be specified by listing them
 in square brackets separated by commas.
+This allows the data from a template to be in more than one collection.
 For example, `tags: ['dog', 'pet']`.
 TODO: are the single quotes required here?
 
-Other nunjucks documents can access a collection using a `for` loop.
-for example:
+All templates can access `collections.dog` to
+iterate over all the data related to dogs.
+
+For example:
 
 ```js
 {%- for dog in collections.dog -%}
@@ -395,12 +415,67 @@ It is held in variables.
 Variables can be defined in multiple places, and
 the "cascade" defines which definition takes precedence.
 
-The places where variables can be defined include:
+The places where variables can be defined,
+from highest to lowest precedence, include:
 
-- front matter YAML
-- `.json` files
-- `.js` files
-- `.eleventy.js`
+- `{template-name}.{markup-extension}` front matter YAML
+- `{template-name}.11tydata.js` files in same directory
+- `{template-name}.11tydata.json` files in same directory
+- `{dir-name}.11tydata.js` files in same directory
+- `{dir-name}.11tydata.json` files in same directory
+- `{dir-name}.11tydata.js` files in ancestor directories
+- `{dir-name}.11tydata.json` files in ancestor directories
+- `{data-name}.js` files in the `_data` directory
+- `{data-name}.json` files in the `_data` directory
+- layout front matter YAML
+
+The closest directories files take precedence
+over those higher in the directory hierarchy.
+
+The set of variables is merged, but their values are not.
+For example, if a template defines `tags` to be
+and a layout defines it to be ... TODO: FINSHE
+
+For example, consider the following directory structure:
+
+- \_data
+  - dogs.js
+  - dogs.json
+- level1
+  - level1.11tydata.js
+  - level1.11tydata.json
+  - level2
+    - level2.11tydata.js
+    - level2.11tydata.json
+    - demo.md
+
+Every one of these files defines an array of dogs.
+
+For example, consider a template with the following front matter:
+
+```yaml
+layout: myLayout.njk
+title: 'Template Title'
+```
+
+Suppose `myLayout` contains the following front matter:
+
+```yaml
+score: 7
+title: 'Layout Title'
+```
+
+The data available in the template will be:
+
+```js
+{
+  layout: myLayout.njk,
+  score: 7,
+  title: 'Template Title'
+}
+```
+
+TODO: Give examples of directory and global files from project2!
 
 ## Using data from a REST service
 
