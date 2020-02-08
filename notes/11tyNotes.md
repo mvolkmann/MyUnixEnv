@@ -413,42 +413,62 @@ To define layouts that are used for multiple pages:
 A layout can extend another layout.
 What does this mean?
 
-## Styling
+## Copying files to output
 
-1. Create an `assets` directory.
-   The name isn't significant.
+Some kinds of files do not require processing by 11ty,
+but need to be copied to the `_site` directory
+when the site is built.
+These include CSS and image files.
 
-1. Create the file `styles.css` inside it
-   with content like the following:
+One way to achieve this is to place all of these files
+in subdirectories below a directory named `assets`.
+For example, this can have subdirectories named `css` and `images`.
 
-   ```css
-   nav {
-     background-color: cornflowerblue;
-     color: white;
-   }
-
-   li {
-     margin-right: 1rem;
-   }
-
-   ul {
-     display: flex;
-     list-style: none;
-     padding: 0.5rem;
-   }
-   ```
-
-1. Create a `.eleventy.js` file at the top of the project with the following content:
+Add the following in `.eleventy.js` to cause 11ty
+to copy the `assets` directory to `_site` when the site is built.
 
 ```js
 module.exports = function(eleventyConfig) {
-  // This causses the build process to
-  // copy the assets directory to _site.
   eleventyConfig.addPassthroughCopy('assets');
 };
 ```
 
-TODO: Is there a way to scope css to a page?
+## Styling
+
+To add CSS styling, configure the build process as shown above
+and create `.css` files in the `assets/css` directory.
+
+For example, to style nav links:
+
+```css
+nav {
+  background-color: cornflowerblue;
+  color: white;
+}
+
+li {
+  margin-right: 1rem;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  padding: 0.5rem;
+}
+```
+
+Use the `.css` files by adding link tags in layout files.
+For example:
+
+```html
+<link rel="stylesheet" href="/assets/css/layout.css" />
+<link rel="stylesheet" href="/assets/css/about.css" />
+```
+
+Each layout file can include different `.css` files.
+
+There is no need to "scope" the CSS for different pages since
+each page is built separately and loaded separately into the browser.
 
 ## Collections
 
@@ -646,17 +666,104 @@ To use it:
 
 ## Pagination
 
-Pagination is the 11ty term for produced multiple files from one input file.
+Pagination is the 11ty term for producing multiple files from one input file.
 It operates on an array of data.
 The `size` variable specifies the number of
 array elements to be rendered on each page.
 Often it is set to 1 to render each element on a separate page.
 The array data can come from anywhere in the data cascade.
 
+By default the URL for each page produced ends with a slash and a page number.
+
 For example:
 
 ```yaml
+pagination:
+  data: employees # data over which to paginate
+  size: 7 # number of employees per page
+  href: {next: '', previous: '', first: '', last: ''}
+```
 
+The global variable `pagination` holds related data.
+
+- `pagination.data` holds the value of the
+  pagination `data` property from the front matter.
+- `pagination.pages` holds an array of arrays.
+  There is an inner array for each page that holds
+  the objects to be rendered on that page.
+- `pagination.items` is an array of the objects
+  to be rendered on the current page.
+- `pagination.pages.length` is the number of pages.
+- `pagination.pageNumber` holds the zero-based index of the current page.
+- `pagination.firstPageLink` holds the URL of the first page (alias `first`).
+- `pagination.firstPageHref` is the same, but omits `index.html` at end.
+- `pagination.previousPageLink` holds the URL of the previous page (alias `previous`).
+- `pagination.previousPageHref` is the same, but omits `index.html` at end.
+- `pagination.nextPageLink` holds the URL of the next page; (alias `next`).
+- `pagination.nextPageHref` is the same, but omits `index.html` at end.
+- `pagination.lastPageLink` holds the URL of the last page (alias `last`).
+- `pagination.lastPageHref` is the same, but omits `index.html` at end.
+- `pagination.pageLinks` holds an array of all the page links (alias `links`).
+- `pagination.href` holds an object with keys
+  "previous", "next", "first", and "last" whose values are those hrefs.
+- `pagination.hrefs` holds an array of all the page hrefs.
+
+The URL for each page is `/{pagination.data}/{zero-based-index}`.
+The URL for the first page page is simply `/{data-name}`.
+The URL `/{data-name}/0` is not valid.
+
+To render links to the first, previous, next, and last pages
+so each is only rendered when it makes sense:
+
+```njk
+<nav>
+  {% if pagination.pageNumber > 0 %}
+    <a href="{{pagination.href.first}}">First</a>
+  {% endif %}
+  {% if pagination.href.previous %}
+    <a href="{{pagination.href.previous}}">Prev</a>
+  {% endif %}
+  {% if pagination.href.next %}
+    <a href="{{pagination.href.next}}">Next</a>
+  {% endif %}
+  {% if pagination.pageNumber < pagination.pages.length - 1 %}
+    <a href="{{pagination.href.last}}">Last</a>
+  {% endif %}
+</nav>
+```
+
+To display "Page n of m":
+
+```njk
+<div>
+  Page {{pagination.pageNumber + 1}} of {{pagination.pages.length}}
+</div>
+```
+
+To render links to all the pages by number:
+
+```njk
+<nav>
+  {% for href in pagination.hrefs %}
+    <a href="{{href}}">Page {{ loop.index }}</a>
+  {% endfor %}
+</nav>
+```
+
+To style the anchor tags as buttons:
+
+```css
+nav {
+  margin-top: 1rem;
+  padding: 0.5rem 0; /* to match "a" padding below */
+}
+
+nav > a {
+  border: solid gray 1px;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-decoration: none;
+}
 ```
 
 ## Global data
@@ -752,3 +859,9 @@ TODO: See https://www.webstoemp.com/blog/multilingual-sites-eleventy/.
 ```
 
 ```
+
+## Debugging tips
+
+To see the content of an array or object,
+use the Nunjucks `dump` filter which calls `JSON.stringify`.
+For example, `<div>myVariable = {{myVariable | dump}}`.
