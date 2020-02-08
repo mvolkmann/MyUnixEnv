@@ -348,7 +348,7 @@ Some special variables recognized by 11ty include:
 - permalink:
   changes the output target of the template
 - dynamicPermalink:
-  enables or disables template syntax in permalink
+  enables or disables template syntax in permalink values (default is true)
 - templateEngineOverride:
   overrides the template engine used for this file
 - eleventyExcludeFromCollections:
@@ -664,6 +664,49 @@ To use it:
 {%- endfor -%}
 ```
 
+## Permalinks
+
+11ty permalinks specified in front matter change
+the path of the output files produced within the `_site` directory.
+They are useful when the source directory structure
+does not match the desired output directory structure.
+
+When permalinks are specified,
+any links to those pages must be updated to match.
+Previously generated files under `_site` are not removed
+after permalinks are added or modified,
+so delete the `_site` directory and build again.
+
+For example, the file `dogs.njk` would normally
+generate `_site/dogs/index.html`.
+To change this to `_site/animals/canines/index.html`,
+add the following front matter in `dogs.njk`:
+
+```yaml
+permalink: 'animals/canines/'
+```
+
+The trailing slash is required.
+Including `index.html` is optional,
+but that is the file that is actually created.
+
+An error is reported if multiple files target the same permalink path.
+
+Permalink values can include variable references.
+For example:
+
+```yaml
+permalink: 'animals/{{species | slug}}'
+```
+
+Quotes must surround values that include variable references.
+Using the `slug` filter encodes the value to ensure a valid URL.
+This filter is provided by 11ty, not Nunjucks.
+
+Permalinks can be used in conjunction with pagination
+to change the paths to the files produced for each page.
+This is described in the next section.
+
 ## Pagination
 
 Pagination is the 11ty term for producing multiple files from one input file.
@@ -681,7 +724,6 @@ For example:
 pagination:
   data: employees # data over which to paginate
   size: 7 # number of employees per page
-  href: {next: '', previous: '', first: '', last: ''}
 ```
 
 The global variable `pagination` holds related data.
@@ -712,6 +754,21 @@ The global variable `pagination` holds related data.
 The URL for each page is `/{pagination.data}/{zero-based-index}`.
 The URL for the first page page is simply `/{data-name}`.
 The URL `/{data-name}/0` is not valid.
+
+`pagination.items` holds the current page item when the size is 1
+or an array of the current page items when size is greater than 1.
+To add an alias for this add an `alias` property
+to the `pagination` front matter.
+For example:
+
+```yaml
+pagination:
+  ...
+  alias: items
+```
+
+With this alias in place, we can iterate over `items`
+instead of `pagination.items` to render all the items on the current page.
 
 To display "Page m of n":
 
@@ -791,6 +848,58 @@ set the `class` on the `a` elements as follows:
   class="{{'current' if loop.index0 === pagination.pageNumber else ''}}"
   href="{{href}}"
 >
+```
+
+To paginate data in reverse order,
+add the `reverse` property to the `pagination` front matter.
+
+```yaml
+pagination:
+  ...
+  reverse: true
+```
+
+When `data` is an object rather than an array,
+the items will be keys instead of items.
+To change this so the items are the property values,
+add the `resolve` property to the `pagination` front matter.
+
+```yaml
+pagination:
+  ...
+  resolve: values
+```
+
+To produce different data to be paginated from existing data,
+using the `before` front matter property whose value is
+a JavaScript function that takes the data and returns new data.
+This can create new data to paginate by filtering, sort, and transforming.
+For example:
+
+```yaml
+pagination:
+  ...
+  before: function (employees) {
+    return employees.
+      filter(emp => emp.age >= 50).
+      map(emp => ({
+        ...emp,
+        employee_name: emp.employee_name.toUpperCase()
+      });
+  }
+```
+
+TODO: The example above does not work. The `before` function is a fairly new feature. Maybe it hasn't been released yet.
+
+To change the paths of the files produced for each page, specify a permalink.
+For example, if the file `employees.njk` uses pagination then
+it would normally generate files like `_site/employees/2/index.html`
+where 2 is a page number.
+To change this so it generates files like
+`_site/workers/group-2/index.html`, add the following front matter:
+
+```yaml
+permalink: 'workers/group-{{pagination.pageNumber}}/index.html'
 ```
 
 ## Global data
