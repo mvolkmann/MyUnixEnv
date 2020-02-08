@@ -234,8 +234,9 @@ One example is [Flat Theme Lite](https://themehunt.com/item/1524965-flat-theme-l
 
 This example uses Markdown and Nunjucks.
 
-1. Create project directory.
-1. Enter `npm init`.
+1. Install [Node.js](https://nodejs.org/en/).
+1. Create a project directory and `cd` to it.
+1. Enter `npm init` and answer questions.
 1. Enter `npm i @11ty/eleventy`.
 1. Create an `index.md` file.
 
@@ -289,17 +290,32 @@ TODO: Consider converting your website to do this.
 
 ## Front matter
 
-Files processed by 11ty can begin with YAML front matter.
+Files processed by 11ty can begin with front matter.
 This begins with a line containing only three dashes
 and ends with the same kind of line.
 Lines between these define variables.
+By default this expects YAML syntax.
 For example:
 
-````yaml
+```yaml
 ---
 layout: layout.njk
 title: Dogs
 ---
+
+```
+
+To use JavaScript syntax instead, add `js` after the opening dashes.
+For example:
+
+```js
+---js
+{
+  layout: 'layout.njk',
+  title: 'Dogs'
+}
+---
+```
 
 Strings containing no spaces or special characters do not require quotes.
 When quotes are needed, they can be single or double quotes.
@@ -312,7 +328,7 @@ colors:
   - red
   - green
   - blue
-````
+```
 
 Objects (a.k.a dicts) are lists of key/value pairs
 where keys are followed by a color.
@@ -871,25 +887,36 @@ pagination:
 ```
 
 To produce different data to be paginated from existing data,
-using the `before` front matter property whose value is
+use the `before` front matter property whose value is
 a JavaScript function that takes the data and returns new data.
 This can create new data to paginate by filtering, sort, and transforming.
-For example:
+Using this requires all the front matter
+to be converted from YAML to JavaScript.
+For example, the following filters the employees
+so only those age 50 and older are retained
+and it makes their names all uppercase:
 
 ```yaml
-pagination:
-  ...
-  before: function (employees) {
-    return employees.
-      filter(emp => emp.age >= 50).
-      map(emp => ({
-        ...emp,
-        employee_name: emp.employee_name.toUpperCase()
-      });
+---js
+{
+  layout: 'employees-layout.njk',
+  title: 'Employees',
+  pagination: {
+    data: 'employees',
+    size: 7,
+    alias: 'items',
+    before: function (employees) {
+      return employees.
+        filter(emp => emp.employee_age >= 50).
+        map(emp => ({
+          ...emp,
+          employee_name: emp.employee_name.toUpperCase()
+        }));
+    }
   }
+}
+---
 ```
-
-TODO: The example above does not work. The `before` function is a fairly new feature. Maybe it hasn't been released yet.
 
 To change the paths of the files produced for each page, specify a permalink.
 For example, if the file `employees.njk` uses pagination then
