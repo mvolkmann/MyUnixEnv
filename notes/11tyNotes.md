@@ -45,7 +45,9 @@ The 11ty mascot is a possum attached to a helium balloon.
 11ty is the most popular SSG that supports multiple template languages.
 
 A lot of big names in the web community love 11ty, including
-Mathias Bynens, Chris Coyier, Brian Leroux, Addy Osmani, Sara Soueidan
+Mathias Bynens, Chris Coyier, Rob Dodson, Brian Leroux,
+Addy Osmani, Dave Rupert, and Sara Soueidan.
+
 See https://www.11ty.dev/docs/testimonials/.
 
 11ty competes with:
@@ -179,12 +181,55 @@ Let's review the most commonly used parts of Markdown syntax.
   - `- [ ] some uncompleted task`
   - `- [x] some completed task`
 
+## YAML
+
+[YAML](https://yaml.org/) stands for "YAML Ain't Markup Language".
+In is an alternative to markup languages like JSON and XML.
+
+YAML supports the same basic data types as JavaScript,
+booleans, numbers, strings, arrays, and objects (a.k.a hash or dictionary).
+Boolean values are `true` and `false`.
+Number values are written as expected.
+Strings containing no spaces or special characters do not require quotes.
+When quotes are needed, they can be single or double quotes.
+
+Arrays are specified by listing each element preceded by a dash and a space.
+For example:
+
+```yaml
+colors:
+  - red
+  - green
+  - blue
+```
+
+Objects (a.k.a dicts) are written as key/value pairs
+on separate, indented lines where keys are followed by a colon.
+For example:
+
+```yaml
+address:
+  street: 123 Some Lane
+  city: Somewhere
+  state: CA
+  zip: 12345
+```
+
+Arrays can hold objects and other arrays..
+Object property values can be arrays and other objects.
+
+Comments begin with `#` and extend to the end of the line.
+Multi-line comments are not supported.
+
 ## Front matter
 
 Files processed by 11ty can begin with front matter.
 This starts with a line containing only three dashes
 and ends with the same kind of line.
 Lines between these define variables.
+Variables can be used other files and can represent many kinds of values
+including CSS property values, icons, URLs, ...
+
 By default this expects YAML syntax.
 For example:
 
@@ -207,40 +252,6 @@ For example:
 }
 ---
 ```
-
-Strings containing no spaces or special characters do not require quotes.
-When quotes are needed, they can be single or double quotes.
-
-Arrays are specified by listing each element preceded by a dash and a space.
-For example:
-
-```yaml
-colors:
-  - red
-  - green
-  - blue
-```
-
-Objects (a.k.a dicts) are lists of key/value pairs
-where keys are followed by a color.
-For example:
-
-```yaml
-address:
-  street: 123 Some Lane
-  city: Somewhere
-  state: CA
-  zip: 12345
-```
-
-Arrays can hold objects and other arrays..
-Object property values can be arrays and other objects.
-
-Variables can be used other files and can represent many kinds of values
-including CSS property values, icons, URLs, ...
-
-YAML comments begin with `#` and extend to the end of the line.
-Multi-line comments are not supported.
 
 Some special variables recognized by 11ty include:
 
@@ -558,7 +569,11 @@ is built separately and loaded separately into the browser.
 
 Collections are defined by specifying tags in front matter.
 They are represented by an array of objects
-whose properties are the non-tag front matter values.
+whose properties are the non-tag front matter values
+and some page-related properties added by 11ty.
+
+TODO: How is the order of the objects in a collection determined?
+
 For example, documents that each describe a specific dog
 can have front matter similar to the following.
 
@@ -571,8 +586,7 @@ breed: whippet
 Multiple tags can be specified by listing them
 in square brackets separated by commas.
 This allows the data from a template to be in more than one collection.
-For example, `tags: ['dog', 'pet']`.
-TODO: are the single quotes required here?
+For example, `tags: [dog, pet]`.
 
 All templates can access `collections.dog` to
 iterate over all the data related to dogs.
@@ -590,6 +604,50 @@ Note the use of `.data` to access the variables specified for a dog.
 A layout can specify tags that become the default tags
 for all pages that use the layout.
 These can be overridden by specifying a different value for `tags` in a page.
+
+Page-related properties that are added to collection objects by 11ty include:
+
+- data: an object that holds the front matter variables
+- date: the date and time at which the page was generated
+- fileSlug: the part of the page URL that uniquely identifies it
+- filePathStem: the file path in the page URL that uniquely identifies it
+- inputPath: relative file path to the source template file
+- outputPath: path to the output HTML file relative to the top of the project
+- template: an object holds lots of 11ty-specific data
+- templateContent: a string of HTML produced from the template
+- url: the page URL
+
+Storing the front matter variables in the `data` object
+avoids name collisions with other page-related properties.
+
+This information can be used to generate navigation links
+in the main layout.
+To do this, add a tag to each template that represents
+a page that should be reachable from a nav link.
+Also add a `title` variable to each of these templates.
+For example, we can add the following front matter in `about.md`:
+
+```yaml
+tags: nav
+title: About
+```
+
+Then generate navigation links in the main layout as follows:
+
+```njk
+<nav>
+  <ol>
+    {% for nav in collections.nav %}
+      <li>
+        <a href="{{nav.url}}">{{nav.data.title}}</a></li>
+      </li>
+    {% endfor %}
+  </ol>
+</nav>
+```
+
+TODO: How is the default order of items in a collection determined?
+TODO: See https://github.com/11ty/eleventy/issues/920.
 
 For more information on 11ty collections,
 see [collections](https://www.11ty.dev/docs/collections/).
@@ -616,6 +674,32 @@ eleventyConfig.addCollection('dogsByName', collection => {
 Use the collection `dogsByName` in a `for` loop
 to iterate in the new sorted order.
 
+This can be used allow each of the templates in the `nav` collection
+described above to specify its order in the list of nav links.
+To do this, add a `navOrder` variable to the front matter of each of these templates.
+For example:
+
+```yaml
+navOrder: 3
+```
+
+Add a collection in `.eleventy.js` that holds
+all the items in the `nav` collection,
+but sorted on the `navOrder` values.
+For example:
+
+```js
+eleventyConfig.addCollection('orderedNav', collection => {
+  // Get only the documents that have a tag of "dog".
+  const navs = collection.getFilteredByTag('nav');
+  navs.sort((nav1, nav2) => nav1.data.navOrder - nav2.data.navOrder);
+  return navs;
+});
+```
+
+Finally, change the layout that renders the nav links
+to iterate over `collections.orderedNav` instead of `collections.nav`.
+
 ## Data Cascade
 
 Data in an 11ty project is held in variables.
@@ -635,6 +719,13 @@ from highest to lowest precedence, include:
 - `{dir-name}.11tydata.json` files in ancestor directories
 - `{data-name}.js` file in the `_data` directory
 - `{data-name}.json` file in the `_data` directory
+
+Data from a file whose name starts with `{template-name}.11tydata.`
+is only available in template files in the same directory
+whose name starts with `{template-name}.`.
+
+Data from a file whose name starts with `{dir-name}.11tydata.`
+is available in all template files in the same directory and below.
 
 Directory files that are closer to a template file
 take precedence over those higher in the directory hierarchy.
@@ -826,13 +917,6 @@ module.exports = async () => {
   return {employees: response.data};
 };
 ```
-
-When a template uses pagination and gets data from a REST service
-as shown above, the REST service is invoked once,
-then again for each page.
-So if pagination results in three pages,
-there will be four calls to the REST service.
-TODO: Why is this?
 
 ## Shortcodes
 
@@ -1112,6 +1196,12 @@ To change this so it generates files like
 permalink: 'workers/group-{{pagination.pageNumber}}/index.html'
 ```
 
+When a template uses pagination and gets data from a REST service
+as shown above, the REST service is invoked once,
+then again for each page.
+So if pagination results in three pages,
+there will be four calls to the REST service.
+TODO: Why is this?
 TODO: See the issue you created about pagination and .11ty.js files
 TODO: at https://github.com/11ty/eleventy/issues/919.
 

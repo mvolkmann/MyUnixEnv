@@ -158,20 +158,31 @@ This is similar, but outputs "gray" if `happy` is false.
 
 ## Iteration
 
-A `for` loop iterates over the elements of an array.
-This can be members of an 11ty collection.
-For example:
+A `for` loop iterates over the elements of an array
+or the properties of an object.
+
+If the variable `dogs` holds an array of objects,
+we can iterate over the array as follows:
 
 ```njk
 {% for dog in dogs %}
-  <li>{{ dog.name }} is a {{ dog.breed }}.</li>
+  <p>{{ dog.name }} is a {{ dog.breed }}.</p>
 {% else %}
-  <li>There are no dogs.</li>
+  <p>Who let the dogs out?</p>
 {% endfor %}
 ```
 
 The current loop index is available in
 `loop.index` (starts from 1) and `loop.index0` (starts from 0).
+
+If the variable `dog` holds an object,
+we can iterate over its properties as follows:
+
+```njk
+{% for key, value in dog %}
+  <p>{{key}} = {{value}}</p>
+{% endfor %}
+```
 
 There is also support for asynchronous versions of this
 (`asyncEach` and `asyncAll`) that most sites will not need.
@@ -229,18 +240,18 @@ A macro call looks like a function call.
 For example:
 
 ```njk
-{%- for dog in collections.dogsByName -%}
+{% for dog in collections.dogsByName %}
   {{ dogP(dog.data.name, dog.data.breed, dog.data.gender) }}
-{%- endfor -%}
+{% endfor %}
 ```
 
 Arguments can be specified positionally or by name.
 For example:
 
 ```njk
-{%- for dog in collections.dogsByName -%}
+{% for dog in collections.dogsByName %}
   {{ dogP(gender=dog.data.gender, breed=dog.data.breed, name=dog.data.name) }}
-{%- endfor -%}
+{% endfor %}
 ```
 
 TODO: Maybe Nunjucks macros can be used as an alternative to 11ty shortcodes.
