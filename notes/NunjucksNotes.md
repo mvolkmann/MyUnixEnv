@@ -3,8 +3,14 @@
 Nunjucks is a template language implemented in JavaScript.
 It supports features seen in most programming languages.
 
-The VS Code extension vscode-nunjucks
+## VS Code extensions
+
+The VS Code extension "Nunjucks" (ronnidc.nunjucks)
 applies syntax highlighting in `.njk` files.
+
+The VS Code extension "Nunjucks Snippets"
+(luwenjiechn.nunjucks-vscode-snippets) defines Nunjucks snippets
+to simplifying writing Nunjucks constructs in `.njk` files.
 
 ## Configuration
 
