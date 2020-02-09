@@ -272,8 +272,24 @@ that can be used to build and serve the site:
 
 ```json
 "build": "eleventy",
+"clean": "rm -rf _site",
 "start": "eleventy --serve"
 ```
+
+The `eleventy` command outputs:
+
+- a list of each file it produces
+- the time it takes to execute JavaScript functions that retrieve data
+- the total time taken to build the site.
+
+If the `--serve` option is used,
+it also outputs local and external URLs for
+the 11ty server and the BrowserSync admin page.
+
+Including the `--quiet` option suppresses
+the list of files produced and the time to execute JavaScript functions.
+
+For help on other options, enter `npx eleventy --help`.
 
 ## Deploying 11ty sites
 
@@ -371,6 +387,8 @@ Some special variables recognized by 11ty include:
   true to exclude this content from collections
 
 TODO: Are there any Nunjucks-specific variables?
+TODO: See your front matter question at
+TODO: https://github.com/11ty/eleventy/issues/916#issuecomment-583764086.
 
 ## Layouts
 
@@ -473,7 +491,8 @@ ul {
 }
 ```
 
-Use the `.css` files by adding link tags in layout files.
+One way to use the `.css` files is to add `link` tags in layout files.
+Each layout file can include different `.css` files.
 For example:
 
 ```html
@@ -481,10 +500,28 @@ For example:
 <link rel="stylesheet" href="/assets/css/about.css" />
 ```
 
-Each layout file can include different `.css` files.
+Another approach is the set a variable in template files
+whose value is the path to a CSS file.
+The variable can be used in a layout to include a `link` tag to the CSS file.
+This allows each page template to include a different CSS file.
 
-There is no need to "scope" the CSS for different pages since
-each page is built separately and loaded separately into the browser.
+For example, a template can have this front matter:
+
+```yaml
+css: '/assets/css/about.css'
+layout: layout.njk
+```
+
+A layout can use the variable like this:
+
+```njk
+{% if css %}
+  <link rel="stylesheet" href="{{css}}" />
+{% endif %}
+```
+
+There is no need to "scope" CSS to specific pages since each page
+is built separately and loaded separately into the browser.
 
 ## Collections
 
@@ -550,55 +587,145 @@ to iterate in the new sorted order.
 
 ## Data Cascade
 
-Data in an 11ty project can come from many places.
-It is held in variables.
-Variables can be defined in multiple places, and
+Data in an 11ty project is held in variables.
+These variables can be defined in multiple places, and
 the "cascade" defines which definition takes precedence.
 
 The places where variables can be defined,
 from highest to lowest precedence, include:
 
-- `{template-name}.{markup-extension}` front matter YAML
-- `{template-name}.11tydata.js` files in same directory
-- `{template-name}.11tydata.json` files in same directory
-- `{dir-name}.11tydata.js` files in same directory
-- `{dir-name}.11tydata.json` files in same directory
+- `{template-name}.{markup-extension}` in front matter
+- front matter in layouts used by the template
+- `{template-name}.11tydata.js` file in same directory
+- `{template-name}.11tydata.json` file in same directory
+- `{dir-name}.11tydata.js` file in same directory
+- `{dir-name}.11tydata.json` file in same directory
 - `{dir-name}.11tydata.js` files in ancestor directories
 - `{dir-name}.11tydata.json` files in ancestor directories
-- `{data-name}.js` files in the `_data` directory
-- `{data-name}.json` files in the `_data` directory
-- layout front matter YAML
+- `{data-name}.js` file in the `_data` directory
+- `{data-name}.json` file in the `_data` directory
 
-The closest directories files take precedence
-over those higher in the directory hierarchy.
+Directory files that are closer to a template file
+take precedence over those higher in the directory hierarchy.
+TODO: It seems layout front matter is given the lowest precedences,
+TODO: but that does not match the docs.
+TODO: See this issue you created: https://github.com/11ty/eleventy/issues/915
 
-The set of variables is merged, but their values are not.
-For example, if a template defines `tags` to be
-and a layout defines it to be ... TODO: FINSHE
+Let's walk through a comprehensive example to demonstrate
+all the possible sources of data for a template.
+Consider the following directory structure.
+Each of these files define an array of dogs.
+Any one of them can be used as the source of this data.
+The files are numbered to indicate their precedence in
+providing data used in `dogs.md` with 1 being the highest.
 
-For example, consider the following directory structure:
-
+- \_includes
+  - layout.njk (10)
 - \_data
-  - dogs.js
-  - dogs.json
+  - dogs.js (8)
+  - dogs.json (9)
 - level1
-  - level1.11tydata.js
-  - level1.11tydata.json
+  - level1.11tydata.js (6)
+  - level1.11tydata.json (7)
   - level2
-    - level2.11tydata.js
-    - level2.11tydata.json
-    - demo.md
+    - dogs.11tydata.js (2)
+    - dogs.11tydata.json (3)
+    - level2.11tydata.js (4)
+    - level2.11tydata.json (5)
+    - dogs.md (1)
 
-Every one of these files defines an array of dogs.
+Here is example content from `_data/dogs.js`.
+It exports an array of dogs.
 
-For example, consider a template with the following front matter:
+```js
+module.exports = [
+  {name: 'Dasher', breed: 'Whippet'},
+  {name: 'Maisey', breed: 'Treeing Walker Coonhound'},
+  {name: 'Ramsey', breed: 'Native American Indian Dog'},
+  {name: 'Oscar', breed: 'German Shorthaired Pointer'}
+];
+```
+
+Here is example content from `_data/dogs.json`.
+It defines a value for the global variable `dogs`.
+
+```json
+[
+  {"name": "Dasher", "breed": "Whippet"},
+  {"name": "Maisey", "breed": "Treeing Walker Coonhound"},
+  {"name": "Ramsey", "breed": "Native American Indian Dog"},
+  {"name": "Oscar", "breed": "German Shorthaired Pointer"}
+]
+```
+
+Here is example content from `level1/level1.11tydata.js`,
+`level1/level2/level2.11tydata.js`, and `level1/level2/dogs.11tydata.js`.
+They all export an object with a `dogs` property
+whose value is an array of dogs.
+
+```js
+module.exports = {
+  dogs: [
+    {name: 'Dasher JS1', breed: 'Whippet'},
+    {name: 'Maisey JS1', breed: 'Treeing Walker Coonhound'},
+    {name: 'Ramsey JS1', breed: 'Native American Indian Dog'},
+    {name: 'Oscar JS1', breed: 'German Shorthaired Pointer'}
+  ]
+};
+```
+
+Here is example content from `level1/level1.11tydata.json`,
+`level1/level2/level2.11tydata.json`, and `level1/level2/dogs.11tydata.json`.
+They all define an object with a `dogs` property
+whose value is an array of dogs.
+
+```json
+[
+  {"name": "Dasher", "breed": "Whippet"},
+  {"name": "Maisey", "breed": "Treeing Walker Coonhound"},
+  {"name": "Ramsey", "breed": "Native American Indian Dog"},
+  {"name": "Oscar", "breed": "German Shorthaired Pointer"}
+]
+```
+
+Here is the content of `level1/level2.dogs.md`.
+It defines an array of dogs using YAML syntax.
+
+```md
+---
+dogs:
+  - name: Dasher
+    breed: Whippet
+  - name: Maisey
+    breed: Treeing Walker Coonhound
+  - name: Ramsey
+    breed: Native American Indian Dog
+  - name: Oscar
+    breed: German Shorthaired Pointer
+layout: layout.njk
+---
+
+# Dogs
+
+{% for dog in dogs %}
+{{dog.name}} is a {{dog.breed}}.
+{% endfor %}
+```
+
+The set of variables obtained from these sources is merged,
+but their values are not.
+For example, if a template defines `tags` to be `['dog', 'pet']`
+and its layout defines `tags` to be `['canine', 'creature', 'pet']`
+the result will be `['dog', 'pet']`.
+
+As another example, consider a template with the following front matter:
 
 ```yaml
 layout: myLayout.njk
 title: 'Template Title'
 ```
 
-Suppose `myLayout` contains the following front matter:
+Suppose `myLayout.njk` contains the following front matter:
 
 ```yaml
 score: 7
@@ -614,8 +741,6 @@ The data available in the template will be:
   title: 'Template Title'
 }
 ```
-
-TODO: Give examples of directory and global files from project2!
 
 ## Using data from a REST service
 
@@ -650,6 +775,33 @@ The employees can be rendered on a page like this:
   <p>{{ employee.employee_name}} is {{employee.employee_age}} years old.</p>
 {% endfor %}
 ```
+
+We can also make data from a REST service available to
+only a single template or only templates in and below a given directory.
+For example, suppose the file `company/employees.md`
+needs access to the employee data.
+We can create the file `company/employees.11tydata.js`
+or `company/company.11tydata.js` containing the following:
+
+```js
+const fetch = require('node-fetch');
+
+module.exports = async () => {
+  const url = 'https://dummy.restapiexample.com/api/v1/employees';
+  const res = await fetch(url);
+  const response = await res.json();
+  // Any number of front matter variables
+  // can be included in the returned object.
+  return {employees: response.data};
+};
+```
+
+When a template uses pagination and gets data from a REST service
+as shown above, the REST service is invoked once,
+then again for each page.
+So if pagination results in three pages,
+there will be four calls to the REST service.
+TODO: Why is this?
 
 ## Shortcodes
 
@@ -905,7 +1057,7 @@ and it makes their names all uppercase:
     data: 'employees',
     size: 7,
     alias: 'items',
-    before: function (employees) {
+    before(employees) {
       return employees.
         filter(emp => emp.employee_age >= 50).
         map(emp => ({
@@ -928,6 +1080,9 @@ To change this so it generates files like
 ```yaml
 permalink: 'workers/group-{{pagination.pageNumber}}/index.html'
 ```
+
+TODO: See the issue you created about pagination and .11ty.js files
+TODO: at https://github.com/11ty/eleventy/issues/919.
 
 ## Global data
 
@@ -1028,3 +1183,15 @@ TODO: See https://www.webstoemp.com/blog/multilingual-sites-eleventy/.
 To see the content of an array or object,
 use the Nunjucks `dump` filter which calls `JSON.stringify`.
 For example, `<div>myVariable = {{myVariable | dump}}`.
+
+## Publishing to GitHub Pages
+
+The steps to publish an 11ty site to GitHub Pages are:
+
+1. Create a GitHub account if you don't already have one.
+1. Create a new GitHub repository for the site.
+1. Clone the repository.
+1. Add the files from an 11ty project to the repository.
+1. Push the changes.
+1. In the web UI for the repository, click "Settings" near the upper-right.
+1. Enable the repository to be a GitHub Pages site. How?

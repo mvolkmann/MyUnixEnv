@@ -267,6 +267,7 @@ For example:
 By default all whitespace is retained.
 To trim whitespace before a construct, begin with `{%-` instead of `{%`.
 To trim whitespace after a construct, end with `-%}` instead of `%}`.
+Zach Leatherman recommends only using `{%-`.
 
 ## Global functions
 
