@@ -179,6 +179,92 @@ Let's review the most commonly used parts of Markdown syntax.
   - `- [ ] some uncompleted task`
   - `- [x] some completed task`
 
+## Front matter
+
+Files processed by 11ty can begin with front matter.
+This starts with a line containing only three dashes
+and ends with the same kind of line.
+Lines between these define variables.
+By default this expects YAML syntax.
+For example:
+
+```yaml
+---
+layout: layout.njk
+title: Dogs
+---
+
+```
+
+To use JavaScript syntax instead, add `js` after the opening dashes.
+For example:
+
+```js
+---js
+{
+  layout: 'layout.njk',
+  title: 'Dogs'
+}
+---
+```
+
+Strings containing no spaces or special characters do not require quotes.
+When quotes are needed, they can be single or double quotes.
+
+Arrays are specified by listing each element preceded by a dash and a space.
+For example:
+
+```yaml
+colors:
+  - red
+  - green
+  - blue
+```
+
+Objects (a.k.a dicts) are lists of key/value pairs
+where keys are followed by a color.
+For example:
+
+```yaml
+address:
+  street: 123 Some Lane
+  city: Somewhere
+  state: CA
+  zip: 12345
+```
+
+Arrays can hold objects and other arrays..
+Object property values can be arrays and other objects.
+
+Variables can be used other files and can represent many kinds of values
+including CSS property values, icons, URLs, ...
+
+YAML comments begin with `#` and extend to the end of the line.
+Multi-line comments are not supported.
+
+Some special variables recognized by 11ty include:
+
+- layout:
+  uses a layout template found in the `_includes` directory
+- tags:
+  single string or array of collection names to which this data belongs
+- date: overrides the default file creation date to change sort order
+- pagination:
+  enables iteration over data in front matter to
+  output multiple HTML files from this template
+- permalink:
+  changes the output target of the template
+- dynamicPermalink:
+  enables or disables template syntax in permalink values (default is true)
+- templateEngineOverride:
+  overrides the template engine used for this file
+- eleventyExcludeFromCollections:
+  true to exclude this content from collections
+
+TODO: Are there any Nunjucks-specific variables?
+TODO: See your front matter question at
+TODO: https://github.com/11ty/eleventy/issues/916#issuecomment-583764086.
+
 ## Templating language choice
 
 The default templating language available for use in Markdown files is Liquid.
@@ -190,17 +276,22 @@ It was created by Mozilla and is implemented in JavaScript.
 Nunjucks is very similar to Liquid.
 Much of the syntax is identical.
 But Nunjucks has many features that are not present in Liquid.
-For more details on Nunjucks, see your notes file `NunjucksNotes.md`.
 
-To enable the use of Nunjucks in a particular Markdown file,
+For details on Nunjucks syntax, see my notes file `NunjucksNotes.md` and
+[Nunjucks Templating](https://mozilla.github.io/nunjucks/templating.html)
+It's a pretty extensive language!
+
+It is not necessary to install Nunjucks in order to use it in 11ty.
+However, it must be enabled.
+To enable use of Nunjucks in a particular Markdown file,
 add the following front matter:
 
 ```yaml
 templateEngineOverride: njk,md
 ```
 
-To enable using Nunjucks in all Markdown files,
-do one of the following in `.eleventy.js`:
+To enable use of Nunjucks in all Markdown files,
+configure it in `.eleventy.js` using one of these approaches:
 
 ```js
 module.exports = {
@@ -304,105 +395,27 @@ the site is rebuilt and deployed on every push.
 TODO: Show the steps to deploy an 11ty site to GitHub Pages which is free.
 TODO: Consider converting your website to do this.
 
-## Front matter
-
-Files processed by 11ty can begin with front matter.
-This begins with a line containing only three dashes
-and ends with the same kind of line.
-Lines between these define variables.
-By default this expects YAML syntax.
-For example:
-
-```yaml
----
-layout: layout.njk
-title: Dogs
----
-
-```
-
-To use JavaScript syntax instead, add `js` after the opening dashes.
-For example:
-
-```js
----js
-{
-  layout: 'layout.njk',
-  title: 'Dogs'
-}
----
-```
-
-Strings containing no spaces or special characters do not require quotes.
-When quotes are needed, they can be single or double quotes.
-
-Arrays are specified by listing each element preceded by a dash and a space.
-For example:
-
-```yaml
-colors:
-  - red
-  - green
-  - blue
-```
-
-Objects (a.k.a dicts) are lists of key/value pairs
-where keys are followed by a color.
-For example:
-
-```yaml
-address:
-  street: 123 Some Lane
-  city: Somewhere
-  state: CA
-  zip: 12345
-```
-
-Arrays can hold objects and other arrays..
-Object property values can be arrays and other objects.
-
-Variables can be used other files and can represent many kinds of values
-including CSS property values, icons, URLs, ...
-
-YAML comments begin with `#` and extend to the end of the line.
-Multi-line comments are not supported.
-
-Some special variables recognized by 11ty include:
-
-- layout:
-  uses a layout template found in the `_includes` directory
-- tags:
-  single string or array of collection names to which this data belongs
-- date: overrides the default file creation date to change sort order
-- pagination:
-  enables iteration over data in front matter to
-  output multiple HTML files from this template
-- permalink:
-  changes the output target of the template
-- dynamicPermalink:
-  enables or disables template syntax in permalink values (default is true)
-- templateEngineOverride:
-  overrides the template engine used for this file
-- eleventyExcludeFromCollections:
-  true to exclude this content from collections
-
-TODO: Are there any Nunjucks-specific variables?
-TODO: See your front matter question at
-TODO: https://github.com/11ty/eleventy/issues/916#issuecomment-583764086.
-
 ## Layouts
 
-To define layouts that are used for multiple pages:
+A layout defines a shell of content
+into which the content of a page is injected.
+For example, it can define a common page header and footer.
+The page header could contain navigation links for visiting other pages.
+The content for a page that uses a layout is inserted
+at the location marked by `{{content | safe}}`.
+`safe` is a Nunjucks filter that sanitized HTML.
 
-1. Create a `_includes` directory to hold configuration files
-   for layouts and more.
+Each page in an 11ty site can specify the layout to use.
+There can be one layout that is used for all pages.
+There can also be multiple layouts, each used by a different set of pages.
 
-1. Create the file `layout.njk` in this directory.
-   This uses the Nunjucks templating language, but others can be used.
-   The Nunjucks library does not need to be installed.
-   For details on Nunjucks syntax, see
-   [Nunjucks Templating](https://mozilla.github.io/nunjucks/templating.html)
-   It's a pretty extensive language!
+To define a layout:
+
+1. Create a `_includes` directory to hold the layout files.
+
+1. Create a layout file in this directory.
+   It can use any templating language.
+   For example, when using Nunjucks the file might be named `layout.njk`.
 
    ```njk
    <!DOCTYPE html>
@@ -415,37 +428,55 @@ To define layouts that are used for multiple pages:
    </head>
    <body>
     <h1>Mark Volkmann's Blog</h1>
-    <nav> <!-- for page navigation -->
-      <ul>
+    <nav> <!-- for accessible page navigation -->
+      <ol>
         <li><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
-      </ul>
+      </ol>
     </nav>
-    <h2>{{title}}</h2>
-    <!-- content is where page content is injected -->
-    <!-- safe causes the HTML content to be sanitized -->
+    <h2>{{title}}</h2> <!-- uses a variable defined in front matter -->
+    <!-- Page content is inserted here. -->
     {{content | safe}}
    </body>
    </html>
    ```
 
-1. Add the following "front matter" to the beginning of each content file:
+1. Add the following front matter to the beginning of each content file:
 
    ```yaml
    ---
    layout: layout.njk
-   title: {the page title}
+   title: 'some page title'
    ---
 
    ```
 
-   Any number of pages can use the same layout file
-   and a site can use any number of layout files.
+   `title` is a variable that can be used in the layout.
 
-   `title` is like a variable that can be used in the layout.
+A layout can be chained.
+For example, suppose the page defined in `about.md`
+wishes to have its content wrapped by HTML that is not needed in all pages.
+We can define another layout in `_includes/about-layout.njk`.
+For example:
 
-A layout can extend another layout.
-What does this mean?
+```njk
+---
+layout: layout.njk
+---
+
+<header>About Header</header>
+{{content | safe}}
+<footer>About Footer</footer>
+```
+
+Note that this layout refers to another layout.
+
+Next we change the layout specified in the `about.md` front matter
+to be `about-layout.njk`.
+Now the content provided to `layout.md` will be the result
+of inserting the content of `about.md` into `about-layout.njk`.
+
+Layouts can be chained to any depth.
 
 ## Copying files to output
 
