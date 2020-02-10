@@ -101,9 +101,11 @@ Other popular SSGs require use of specific web frameworks,
 or programming languages that are not widely known.
 
 11ty only requires knowledge of basic JavaScript.
-It supports a wide variety of template languages listed earlier.
-All these are easy to learn,
-easier than learning a new web framework or programming language.
+It supports a wide variety of templating languages listed earlier
+and use of these can be mixed within the same site.
+All the supported templating languages are easy to learn,
+much easier than learning a new web framework or programming language.
+This increases the pool of potential contributors to a site.
 
 ## Resources
 
