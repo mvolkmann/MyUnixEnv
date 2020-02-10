@@ -322,6 +322,8 @@ module.exports = eleventyConfig => {
 };
 ```
 
+All the code examples that follow assume the use of Nunjucks.
+
 ## Starter Themes
 
 There are many free and commercial themes
@@ -608,7 +610,7 @@ These can be overridden by specifying a different value for `tags` in a page.
 Page-related properties that are added to collection objects by 11ty include:
 
 - data: an object that holds the front matter variables
-- date: the date and time at which the page was generated
+- date: the date and time at which the template file was created, not modified
 - fileSlug: the part of the page URL that uniquely identifies it
 - filePathStem: the file path in the page URL that uniquely identifies it
 - inputPath: relative file path to the source template file
@@ -646,8 +648,13 @@ Then generate navigation links in the main layout as follows:
 </nav>
 ```
 
-TODO: How is the default order of items in a collection determined?
-TODO: See https://github.com/11ty/eleventy/issues/920.
+The order of items in each collection is based on the creation timestamp
+of the associated template file, from oldest to newest.
+To iterate in reverse order use the `reverse` filter as follows:
+
+```njk
+{% for nav in collections.nav | reverse %}
+```
 
 For more information on 11ty collections,
 see [collections](https://www.11ty.dev/docs/collections/).
