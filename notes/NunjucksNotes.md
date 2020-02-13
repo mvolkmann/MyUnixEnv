@@ -132,6 +132,17 @@ For example:
 
 This form can only contain literal content, not other Nunjucks constructs.
 
+Nunjucks also supports defining custom filters.
+When using 11ty, they can be defined in the `.eleventy.js`.
+For example, this filter writes the value of an expression
+to the devtools console.
+
+```js
+eleventyConfig.addFilter('log', console.log);
+```
+
+TODO: Try this!
+
 ## Conditional logic
 
 Content can be conditionally included using an `if` statement.

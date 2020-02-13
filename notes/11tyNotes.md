@@ -31,6 +31,15 @@ Key differentiators between SSGs include:
   existing content files and directory structures
 - license (Apache-2.0, Jinja2, MIT, ...)
 
+For static sites that obtain data from API services,
+a common strategy is to automatically regenerate them
+on a scheduled basis such as every night.
+This is typically quite easy to implement.
+
+Another strategy is to store all the files for a site
+in a repository such as GitHub and automatically
+rebuild and redeploy the site any time changes are pushed.
+
 ## 11ty overview
 
 11ty is "a simple static style generator" (SSG).
@@ -38,7 +47,9 @@ It is targeted at building static "sites", not web "apps".
 11ty is mostly written and maintained by Zach Leatherman.
 It is implemented in JavaScript.
 
-TODO: What is the origin of its name?
+The rationale for the name "11ty" is explained
+[here](https://www.zachleat.com/web/eleventy-birthday/#project-naming).
+It is related to how Zach Leatherman learned to count as a child.
 
 The 11ty mascot is a possum attached to a helium balloon.
 
@@ -355,7 +366,7 @@ This example uses Markdown and Nunjucks.
 1. Install [Node.js](https://nodejs.org/en/).
 1. Create a project directory and `cd` to it.
 1. Enter `npm init` and answer questions.
-1. Enter `npm i @11ty/eleventy`.
+1. Enter `npm install -D @11ty/eleventy`.
 1. Create an `index.md` file.
 
    ```md
@@ -419,7 +430,52 @@ A service like Netlify or Zeit NOW can be used
 to associate a site repository so
 the site is rebuilt and deployed on every push.
 
-TODO: Show the steps to deploy an 11ty site to GitHub Pages which is free.
+### GitHub Pages
+
+GitHub Pages is a great option to consider because it is free.
+
+Here are the steps to deploy an 11ty site to GitHub Pages.
+
+1. Install Node.js if not already installed by browsing
+   [nodejs.org](http://nodejs.org).
+1. Install git if not already installed.
+1. Create a GitHub account if you don't already have one.
+1. Create a new GitHub repository.
+   Check the checkbox "Initialize this repository with a README".
+   Having a `README.md` file is required
+   to enable some options in gh-pages (which?).
+1. Clone the repository to create a local version of the repository.
+1. cd into the directory of the local repository.
+1. Enter `npm init -y` to create a `package.json` file.
+1. Enter `npm install -D gh-pages`.
+1. Edit `package.json` and replace the "test" script with the following:
+   `"deploy": "gh-pages -d _site"`
+1. Enter `npm install -D @11ty/eleventy`.
+1. Create an `index.md` file.
+1. Build the site by entering `npx eleventy`.
+1. Create a `.gitignore` file containing the line `/node_modules`.
+1. Enter `git add .`.
+1. Enter `git commit -m "initial commit"`.
+1. Enter `git push origin master`.
+1. Browse the web UI for the GitHub repository.
+1. Click "Settings" near the upper-right.
+1. Scroll to the "GitHub Pages" section.
+1. Under "Source", select the "gh-pages" branch.
+   (Was this selected automatically?)
+1. Click the link after "Your site is ready to be published at".
+
+To make changes to the site:
+
+1. Edit site source files.
+1. Enter `npx eleventy` to rebuild the site.
+1. Commit and push the changes.
+1. Enter `npm run deploy`.
+1. Browse the site to verify the changes.
+
+TODO: Automate steps 2, 3, and 4 above.
+
+TODO: Test out all these steps.
+
 TODO: Consider converting your website to do this.
 
 ## Layouts
@@ -968,6 +1024,22 @@ To use it:
 {%- endfor -%}
 ```
 
+If a snippet doesn't require any data to be supplied, a Nunjucks
+[include](https://mozilla.github.io/nunjucks/templating.html#include)
+can used as an alternative.
+
+Another alternative is to use Nunjucks
+[macros](https://mozilla.github.io/nunjucks/templating.html#macro).
+
+Unlike web framework components, 11ty "components"
+don’t have runtime behavior.
+This makes them far simpler to implement.
+All they do is render something based on data passed to them.
+
+Two options to consider for implementing 11ty "components" are
+JavaScript-focused shortcodes and markup focused Nunjucks macros.
+TODO: See your svg.njk example in "my-project" and include that here.
+
 ## Permalinks
 
 11ty permalinks specified in front matter change
@@ -1322,7 +1394,11 @@ TODO: See https://www.webstoemp.com/blog/multilingual-sites-eleventy/.
 
 ## Debugging tips
 
-To see the content of an array or object,
+To see the value of a variable in the devtools console,
+use the 11ty `log` filter.
+For example, `{{myVariable | log}}`.
+
+To see the content of an array or object within a page,
 use the Nunjucks `dump` filter which calls `JSON.stringify`.
 For example, `<div>myVariable = {{myVariable | dump}}`.
 
