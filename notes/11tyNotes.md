@@ -818,7 +818,8 @@ to iterate over `collections.orderedNav` instead of `collections.nav`.
 ## Data Cascade
 
 Data in an 11ty project is held in variables.
-These variables can be defined in multiple places, and
+Pages can access these variables.
+Variables can be defined in multiple places, and
 the "cascade" defines which definition takes precedence.
 
 The places where variables can be defined,
@@ -835,6 +836,8 @@ from highest to lowest precedence, include:
 - `{data-name}.js` file in the `_data` directory
 - `{data-name}.json` file in the `_data` directory
 
+JavaScript files can generate data and
+retrieve it from REST services.
 The use of the directory `_data` was inspired by Jekyll.
 
 Data from a file whose name starts with `{template-name}.11tydata.`
