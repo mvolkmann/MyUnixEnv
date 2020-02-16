@@ -303,6 +303,100 @@ TODO: Are there any Nunjucks-specific variables?
 TODO: See your front matter question at
 TODO: https://github.com/11ty/eleventy/issues/916#issuecomment-583764086.
 
+## 11ty configuration
+
+Configuration options for 11ty are documented
+[here](https://www.11ty.dev/docs/config/).
+
+By default the file `.eleventy.js` is used
+to specify configuration options for 11ty.
+This file makes its default export
+either an object or a function.
+When it is a function, it has the structure shown below.
+When it is an object, it is like the return value of this function.
+
+This example configuration explicitly
+sets each option to its the default value.
+
+```js
+module.exports = eleventyConfig => {
+  //TODO: Add examples of adding filters, shortcodes, custom tags,
+  //TODO: JavaScript functions, custom collections, and plugins.
+
+  eleventyConfig.addLinter('linter-name', (content, inputPath, outputPath => {
+    // Add code to lint template output
+    // in "content" that came from "inputPath".
+    // Error messages can include "inputPath".
+    // Presumably if anything is fixed,
+    // updated content should be written to "outputPath".
+  });
+
+  // Copies files in a given directory to output directory
+  // without performing any processing on them.
+  eleventyConfig.addPassthroughCopy('assets');
+
+  eleventyConfig.addTransform('transform-name', (content, outputPath => {
+    // Add code to transform template output in content
+    // and write the result to outputPath.
+    // For example, this can be used to format or minify output HTML.
+  });
+
+  // Rebuilds the site if any files in a watch target directory change.
+  //TODO: What directories are watched by default?
+  //TODO: Probably the data, includes, input, and layouts directories.
+  // This is an example, not the default value.
+  eleventyConfig.addWatchTarget("./scss/");
+
+  // Overrides BrowserSync default configuration options.
+  // None are overridden by default.
+  eleventyConfig.setBrowserSyncConfig({ options });
+
+  // Performs deep merge of data from sources in data cascade.
+  // This currently defaults to false, but may change to true soon.
+  eleventyConfig.setDataDeepMerge(false);
+
+  // Override default configuration options of the gray-matter package
+  // which is used to parse front matter.
+  // See https://github.com/jonschlinkert/gray-matter.
+  eleventyConfig.setFrontMatterParsingOptions({
+    options
+  });
+
+  // Suppresses output of the paths of all generated files.
+  eleventyConfig.setQuietMode(false);
+
+  // Watches all JavaScript templates and data files
+  // and rebuilds the site if they change.
+  eleventyConfig.setWatchJavaScriptDependencies(true);
+
+  return {
+    dataTemplateEngine: 'liquid', // used in global data files
+    dir: { // specifies the directory for various kinds of files
+      data: '_data', // for global data files
+      includes: '_includes', // for layouts and more
+      input: '.',
+      layouts: // defaults to the includes value
+      output: '_site'
+    },
+    htmlOutputSuffix: '-o', // rarely useful
+    htmlTemplateEngine: 'liquid', // used in HTML files
+    jsDataFileSuffix: '.11tydata', // for template and directory data files
+    // No processing is allowed in JSON files,
+    // so no template engine can be specified.
+    markdownTemplateEngine: 'liquid', // used in Markdown files
+    pathPrefix: '/', // prepended to all URL paths
+    templateFormats: [
+      '11ty.js', 'ejb', 'haml', 'hbs', 'html',
+      'liquid', 'md', 'mustache', 'njk', 'pug'
+    ]
+  };
+};
+```
+
+TODO: Why goes in the "includes" directory besides layout files?
+ANSWER: include files, extends files, partials, and macros
+TODO: But what are these?
+
 ## Templating language choice
 
 The default templating language available for use in Markdown files is Liquid.
@@ -367,7 +461,8 @@ This example uses Markdown and Nunjucks.
 
 1. Install [Node.js](https://nodejs.org/en/).
 1. Create a project directory and `cd` to it.
-1. Enter `npm init` and answer questions.
+1. Enter `npm init` and answer questions
+   or enter `npm init -y` to skip the questions.
 1. Enter `npm install -D @11ty/eleventy`.
 1. Create an `index.md` file.
 
@@ -568,7 +663,8 @@ Layouts can be chained to any depth.
 Some kinds of files do not require processing by 11ty,
 but need to be copied to the `_site` directory
 when the site is built.
-These include CSS and image files.
+They need to "pass through" 11ty processing.
+These files include CSS and media files (images, audio, video, ...).
 
 One way to achieve this is to place all of these files
 in subdirectories below a directory named `assets`.
@@ -651,27 +747,34 @@ We can make converting `.scss` files to `.css` files
 an automated part of the 11ty build process
 by following these steps:
 
+1. Create a `sass` directory at the top of the project
+   and place all `.scss` in it.
 1. Enter `npm install -D node-sass npm-run-all`.
 1. Modify `package.json` to contain the following npm scripts:
 
 ```json
 "build": "npm run sass && eleventy",
-"sass": "node-sass assets/scss --output assets/css",
+"sass": "node-sass sass --output assets/css",
 "start": "npm-run-all sass --parallel watch:*",
 "watch:eleventy": "eleventy --serve",
 "watch:sass": "npm run sass -- --watch"
 ```
 
-This assumes that all `.scss` files
-will be stored in the `assets/scss` directory and
-all `.css` files will be stored in the `assets/css` directory.
+This assumes that all `.css` files will be
+stored in the `assets/css` directory.
 Now when `npm run build` is used to build the site
 or when `npm start` is used to serve and watch the site,
-`.scss` files in `assets/scss` will be
-compiled to `.css` files in `assets/css`.
+`.scss` files in the `sass` directory will be
+compiled to `.css` files in the `assets/css` directory.
 Changes made to `.scss` files while `npm start` is running
 will automatically be compiled to `.css` files
 and the browser will reload to show the results.
+
+The reason `.scss` files are not placed under the `assets` directory
+is that `eleventyConfig.addPassthroughCopy` is being used to
+copy the contents of the `assets` directory to `_site`.
+We do not want to copy `.scss` files there
+because they are not needed by the running site.
 
 Optionally include the `--quiet` option on the `eleventy` commands.
 
@@ -1043,8 +1146,9 @@ module.exports = async () => {
 Shortcodes define snippets of reusable content.
 This is the closest thing 11ty provides to components
 in web frameworks like React, Vue, Angular, and Svelte.
-For example, here is a "dog" shortcode definition
-that is define in `.eleventy.js`.
+For example, here is a "dog" shortcode definition that is
+defined in `.eleventy.js` to make it globally available.
+When defined this way they are referred to as "universal shortcodes".
 
 ```js
 eleventyConfig.addShortcode(
@@ -1058,14 +1162,35 @@ eleventyConfig.addShortcode(
 );
 ```
 
-This definition becomes globally available.
-To use it:
+To use this shortcode:
 
 ```njk
 {%- for dog in collections.dogsByName -%}
   {% dog dog.data.breed, dog.data.name %}
 {%- endfor -%}
 ```
+
+Shortcodes can be defined in any `.js` file.
+For example, to define a shortcode that is only available
+in and below the `company` directory,
+define it in the file `company/company.11tydata.js`
+as follows:
+
+```js
+module.exports = function({firstName, lastName}) {
+  return `<h1>${this.user(firstName, lastName)}</h1>`;
+};
+```
+
+Shortcodes return a string of HTML that is often constructed
+using a JavaScript template literal.
+A downside of this approach is that it limits
+the ability of tooling to detect syntax errors in the HTML.
+
+TODO: Cover non-universal shortcodes?
+TODO: Are these just plain JS functions that return a string of HTML?
+
+TODO: Cover "paired shortcodes"?
 
 If a snippet doesn't require any data to be supplied, a Nunjucks
 [include](https://mozilla.github.io/nunjucks/templating.html#include)
@@ -1082,6 +1207,7 @@ All they do is render something based on data passed to them.
 Two options to consider for implementing 11ty "components" are
 JavaScript-focused shortcodes and markup focused Nunjucks macros.
 TODO: See your svg.njk example in "my-project" and include that here.
+TODO: Also see the "circle" shortcode defined in .eleventy.js.
 
 ## Permalinks
 

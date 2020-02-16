@@ -240,6 +240,23 @@ For example:
 {{ someHtml | save }}
 ```
 
+## Includes
+
+One template can include another.
+This allows a template to be reused in many places.
+The syntax is `{% include "`_`file-path`_`" %}`.
+
+For example:
+
+```njk
+{% include "snippet.html" %}
+```
+
+This is useful when the content to be included
+doesn't require any data to be supplied.
+When data is required, consider using Nunjucks macros
+which are described next.
+
 ## Macros
 
 Macros are like functions that have parameters
@@ -279,16 +296,6 @@ TODO: Can they be defined globally?
 Blocks in Nunjucks are like named slots in Svelte.
 They allow a template to pass content into another template.
 This is described [here](https://mozilla.github.io/nunjucks/templating.html#template-inheritance).
-
-## Includes
-
-One template can include another.
-This allows a template to be reused in many places.
-For example:
-
-```njk
-{% include "snippet.html" %}
-```
 
 ## Whitespace
 
