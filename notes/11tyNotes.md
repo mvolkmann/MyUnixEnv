@@ -108,13 +108,21 @@ JavaScript code can optionally be included for dynamic functionality.
 - Sapper (Svelte)
 - and more
 
-What distinguishes 11ty from other SSGs that are currently more popular
+What distinguishes 11ty from other popular SSGs
 is that it is more inclusive.
-Other popular SSGs require use of specific web frameworks,
-or programming languages that are not widely known.
+Content can be contributed from people with a variety of skill sets.
+Most SSGs support Markdown content.
+But there are typically features that can only be used
+by contributors that know
+a particular web framework (such as React or Vue)
+or programming language (such as Ruby or Go).
 
-11ty only requires knowledge of basic JavaScript.
-It supports a wide variety of templating languages listed earlier
+11ty also has features that can only be used by programmers,
+but they only need to know basic JavaScript.
+For contributors that are programmers, it's more likely they
+will know JavaScript than other programming languages.
+
+11ty supports a wide variety of templating languages listed earlier
 and use of these can be mixed within the same site.
 All the supported templating languages are easy to learn,
 much easier than learning a new web framework or programming language.
@@ -380,7 +388,7 @@ module.exports = eleventyConfig => {
     },
     htmlOutputSuffix: '-o', // rarely useful
     htmlTemplateEngine: 'liquid', // used in HTML files
-    jsDataFileSuffix: '.11tydata', // for template and directory data files
+    jsDataFileSuffix: '.11tydata', // for template & directory data files
     // No processing is allowed in JSON files,
     // so no template engine can be specified.
     markdownTemplateEngine: 'liquid', // used in Markdown files
@@ -1165,9 +1173,9 @@ eleventyConfig.addShortcode(
 To use this shortcode:
 
 ```njk
-{%- for dog in collections.dogsByName -%}
+{% for dog in collections.dogsByName %}
   {% dog dog.data.breed, dog.data.name %}
-{%- endfor -%}
+{% endfor %}
 ```
 
 Shortcodes can be defined in any `.js` file.
