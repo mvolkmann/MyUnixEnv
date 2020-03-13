@@ -28,8 +28,8 @@ Installation
 Initialize database
 - need? sudo sysctl -w kern.sysv.shmmax=12582912
 - need? sudo sysctl -w kern.sysv.shmall=12582912
-- sudo mkdir /usr/local/pgsql
-- sudo mkdir /usr/local/pgsql/data
+- sudo mkdir -p /usr/local/pgsql/data
+  * macOS prevents creating files under /usr, so use ~/data/db instead
 - sudo chown Mark /usr/local/pgsql
 - sudo chown Mark /usr/local/pgsql/data
 - all the commands are in /usr/local/pqsel/bin
