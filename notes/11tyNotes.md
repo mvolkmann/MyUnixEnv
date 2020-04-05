@@ -141,6 +141,10 @@ See the video series from Brian Robinson at his
 See Khaled Garbaya's video series on
 [Egghead](https://egghead.io/lessons/11ty-bootstrap-an-eleventy-project?pl=getting-started-with-eleventy-53c2).
 
+## Error handling
+
+See https://github.com/stevenpetryk/eleventy-plugin-error-overlay.
+
 ## Markdown
 
 Markdown is a syntax for specifying HTML in a simpler way.
@@ -435,18 +439,18 @@ configure it in `.eleventy.js` using one of these approaches:
 
 ```js
 module.exports = {
-  markdownTemplateEngine: 'njk'
+  markdownTemplateEngine: 'njk',
 };
 ```
 
 or
 
 ```js
-module.exports = eleventyConfig => {
+module.exports = (eleventyConfig) => {
   // Call methods on eleventyConfig here.
 
   return {
-    markdownTemplateEngine: 'njk'
+    markdownTemplateEngine: 'njk',
   };
 };
 ```
@@ -682,7 +686,7 @@ Add the following in `.eleventy.js` to cause 11ty
 to copy the `assets` directory to `_site` when the site is built.
 
 ```js
-module.exports = function(eleventyConfig) {
+module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('assets');
 };
 ```
@@ -888,7 +892,7 @@ a new collection that is sorted in the desired way.
 For example:
 
 ```js
-eleventyConfig.addCollection('dogsByName', collection => {
+eleventyConfig.addCollection('dogsByName', (collection) => {
   // Get only the documents that have a tag of "dog".
   const dogs = collection.getFilteredByTag('dog');
   // Sort the dogs on their name.
@@ -915,7 +919,7 @@ but sorted on the `navOrder` values.
 For example:
 
 ```js
-eleventyConfig.addCollection('orderedNav', collection => {
+eleventyConfig.addCollection('orderedNav', (collection) => {
   // Get only the documents that have a tag of "dog".
   const navs = collection.getFilteredByTag('nav');
   navs.sort((nav1, nav2) => nav1.data.navOrder - nav2.data.navOrder);
@@ -995,7 +999,7 @@ module.exports = [
   {name: 'Dasher', breed: 'Whippet'},
   {name: 'Maisey', breed: 'Treeing Walker Coonhound'},
   {name: 'Ramsey', breed: 'Native American Indian Dog'},
-  {name: 'Oscar', breed: 'German Shorthaired Pointer'}
+  {name: 'Oscar', breed: 'German Shorthaired Pointer'},
 ];
 ```
 
@@ -1022,8 +1026,8 @@ module.exports = {
     {name: 'Dasher JS1', breed: 'Whippet'},
     {name: 'Maisey JS1', breed: 'Treeing Walker Coonhound'},
     {name: 'Ramsey JS1', breed: 'Native American Indian Dog'},
-    {name: 'Oscar JS1', breed: 'German Shorthaired Pointer'}
-  ]
+    {name: 'Oscar JS1', breed: 'German Shorthaired Pointer'},
+  ],
 };
 ```
 
@@ -1185,7 +1189,7 @@ define it in the file `company/company.11tydata.js`
 as follows:
 
 ```js
-module.exports = function({firstName, lastName}) {
+module.exports = function ({firstName, lastName}) {
   return `<h1>${this.user(firstName, lastName)}</h1>`;
 };
 ```
@@ -1484,7 +1488,7 @@ For example, the file `_data/hockey.js` could contain:
 ```js
 module.exports = () => [
   {city: 'Chicago', name: 'Blackhawks'},
-  {city: 'St. Louis', name: 'Blues'}
+  {city: 'St. Louis', name: 'Blues'},
 ];
 ```
 
