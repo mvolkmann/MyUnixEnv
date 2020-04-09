@@ -561,23 +561,24 @@ Here are the steps to deploy an 11ty site to GitHub Pages.
 1. cd into the directory of the local repository.
 1. Enter `npm init -y` to create a `package.json` file.
 1. Enter `npm install -D gh-pages @11ty/eleventy npm-run-all`.
+   The gh-pages command creates a Git branch named gh-pages
+   that contains only a given directory, in this case the
+   "\_site" directory created by the eleventy command.
 1. Create a `.gitignore` file containing the line `/node_modules`.
 1. Edit `package.json` and replace the "test" script with the following:
 
    ```json
    "build": "eleventy",
+   "add": "git add .",
    "commit": "git commit -av",
    "push": "git push origin master",
    "deploy": "gh-pages -d _site",
-   "start": "npm-run-all build commit push deploy"
+   "start": "npm-run-all build add commit push deploy"
    ```
 
 1. Create an `index.md` file with some basic content.
-1. Build the site by entering `npx eleventy`.
-1. Enter `npm run deploy`. This creates a remote branch named "gh-pages".
-1. Enter `git add .`.
-1. Enter `git commit -m "initial commit"`.
-1. Enter `git push origin master`.
+1. Build and deploy the site by entering `npm start`.
+   This will prompt for a commit message that must be entered using Vim.
 1. Browse the web UI for the GitHub repository.
 1. Click "Settings" near the upper-right.
 1. Scroll to the "GitHub Pages" section.
