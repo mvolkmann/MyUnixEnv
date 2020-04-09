@@ -1,5 +1,9 @@
 # 11ty Notes
 
+See https://github.com/jeromecoupe/iad_eleventy_introduction/blob/master/eleventy_introduction_en.md
+
+See https://www.11ty.dev/docs/plugins/navigation/
+
 ## Static site generators (SSGs)
 
 SSGs are an alternative to CMS tools (like WordPress and Drupal)
@@ -556,34 +560,39 @@ Here are the steps to deploy an 11ty site to GitHub Pages.
 1. Clone the repository to create a local version of the repository.
 1. cd into the directory of the local repository.
 1. Enter `npm init -y` to create a `package.json` file.
-1. Enter `npm install -D gh-pages`.
-1. Edit `package.json` and replace the "test" script with the following:
-   `"deploy": "gh-pages -d _site"`
-1. Enter `npm install -D @11ty/eleventy`.
-1. Create an `index.md` file.
-1. Build the site by entering `npx eleventy`.
+1. Enter `npm install -D gh-pages @11ty/eleventy npm-run-all`.
 1. Create a `.gitignore` file containing the line `/node_modules`.
+1. Edit `package.json` and replace the "test" script with the following:
+
+   ```json
+   "build": "eleventy",
+   "commit": "git commit -av",
+   "push": "git push origin master",
+   "deploy": "gh-pages -d _site",
+   "start": "npm-run-all build commit push deploy"
+   ```
+
+1. Create an `index.md` file with some basic content.
+1. Build the site by entering `npx eleventy`.
+1. Enter `npm run deploy`. This creates a remote branch named "gh-pages".
 1. Enter `git add .`.
 1. Enter `git commit -m "initial commit"`.
 1. Enter `git push origin master`.
 1. Browse the web UI for the GitHub repository.
 1. Click "Settings" near the upper-right.
 1. Scroll to the "GitHub Pages" section.
-1. Under "Source", select the "gh-pages" branch.
-   (Was this selected automatically?)
+1. Under "Source", "gh-pages branch" should already be selected.
 1. Click the link after "Your site is ready to be published at".
 
 To make changes to the site:
 
 1. Edit site source files.
-1. Enter `npx eleventy` to rebuild the site.
-1. Commit and push the changes.
-1. Enter `npm run deploy`.
+1. Enter `npm start` to rebuild the site.
+   This will prompt for a commit message that must be entered using Vim.
 1. Browse the site to verify the changes.
-
-TODO: Automate steps 2, 3, and 4 above.
-
-TODO: Test out all these steps.
+   In can take 30 seconds or more for changes to appear on the site.
+   Running deployments can be viewed at
+   https://github.com/{username}/{repo-name}/deployments.
 
 TODO: Consider converting your website to do this.
 
