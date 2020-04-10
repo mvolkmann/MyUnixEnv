@@ -502,6 +502,8 @@ This example uses Markdown and Nunjucks.
 1. Build and serve the site locally
    with hot reloading using BrowserSync by entering
    `npx eleventy --serve`.
+   NOTE: BrowserSync does not currently work with 11ty!
+   See https://github.com/11ty/eleventy/issues/701.
 
 1. Browse localhost:8080 and localhost:8080/about.
 
@@ -568,16 +570,19 @@ Here are the steps to deploy an 11ty site to GitHub Pages.
 1. Edit `package.json` and replace the "test" script with the following:
 
    ```json
-   "build": "eleventy",
    "add": "git add .",
+   "all": "npm-run-all build add commit push deploy"
+   "build": "eleventy",
+   "clean": "rm -rf _site",
    "commit": "git commit -av",
-   "push": "git push origin master",
    "deploy": "gh-pages -d _site",
-   "start": "npm-run-all build add commit push deploy"
+   "push": "git push origin master",
+   "start": "eleventy --serve",
    ```
 
 1. Create an `index.md` file with some basic content.
-1. Build and deploy the site by entering `npm start`.
+1. To build and test the site locally, enter `npm start`.
+1. To build and deploy the site, enter `npm run all`.
    This will prompt for a commit message that must be entered using Vim.
 1. Browse the web UI for the GitHub repository.
 1. Click "Settings" near the upper-right.
@@ -588,7 +593,7 @@ Here are the steps to deploy an 11ty site to GitHub Pages.
 To make changes to the site:
 
 1. Edit site source files.
-1. Enter `npm start` to rebuild the site.
+1. Enter `npm run all` to rebuild and redeploy the site.
    This will prompt for a commit message that must be entered using Vim.
 1. Browse the site to verify the changes.
    In can take 30 seconds or more for changes to appear on the site.
@@ -1520,10 +1525,6 @@ todo: cover details of the .eleventy.js file.
 
 TODO: How can an 11ty site use assets from a CMS like Strapi?
 
-## Obtaining data from REST services
-
-TODO: Add this.
-
 ## Plugins
 
 The functionality of 11ty can be extended with plugins.
@@ -1578,10 +1579,6 @@ when using this approach.
 ### Internationalization
 
 TODO: See https://www.webstoemp.com/blog/multilingual-sites-eleventy/.
-
-```
-
-```
 
 ## Debugging tips
 
