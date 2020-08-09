@@ -3,10 +3,24 @@ TI-84 Graphing Calculator Notes
 Press on to turn it on and 2nd on to turn it off.
 It will turn off automatically after 3 to 4 minutes of inactivity.
 
+To get information about your calculator OS
+- press 2nd mem
+- select About
+- I have version CE OS 5.4.0.0034
+
+To change the display brightness,
+press 2nd up arrow and 2nd down arrow.
+
 To return to the home screen from any other screen, press 2nd quit.
 
 To set the date and time, press mode and select SET CLOCK.
 The date and time are only displayed here on the mode screen.
+
+To enter an exponent
+- enter an expression (can be just a number or letter)
+- press ^ key
+- enter exponent expression (can be just a number)
+- press right arrow to return to previous level
 
 To edit an expression:
 - use the left and right arrows to position the cursor
@@ -17,6 +31,13 @@ To edit an expression:
   to replace the character under the cursor
 - press 2nd ins to switch to insert mode instead of replace mode
   and press any arrow key to return to replace mode
+
+To convert a decimal number to a fraction:
+
+- enter the decimal number
+- press math
+- select Frac
+- press enter
 
 To recall a previous line from history
 so it can be optionally edited and re-executed:
@@ -47,7 +68,7 @@ Entering characters
 
 Entering fractions
 
-- Press alpha X,T,theta,n to display a fraction
+- Press alpha link to display a fraction
   with placeholders for numerator and denominator.
   Alternately, press alpha f1 and select n/d or U n/d.
 - Enter a numerator expression.
@@ -76,17 +97,20 @@ To graph equations:
 To graph all equations simultaneously instead of in sequence,
 press mode and select SIMUL.
 
-To find y intercepts
+To determine the value of y for a given value of x in a graph,
+press 2nd calc, select value, enter a value for x, and press enter.
+No y value will be displayed if there is a discontinuity at the x value.
+
+To find minimum values, maximum values, or y intercepts
 
 - press 2nd calc
-- select zero
-- press left or right to move the cursor to the left of an intercept
+- select minimum, maximum, or zero (for y intercepts)
+- press left or right to move the cursor just to the left of the expected value
 - press enter
-- press left or right to move the cursor to the right of the intercept
+- press left or right to move the cursor just to the right of the expected value
 - press enter
-- press enter again to guess the intercept
-  using a numerical analysis technique
-- repeat for other y intercepts
+- press enter again to guess the value using a numerical analysis technique
+- repeat for other values
 
 To zoom in or out on a graph
 
@@ -134,3 +158,24 @@ To multiply matrices:
 - press enter to select it
 - repeat the steps above to select another matrix
 - press enter to multiply them
+
+To upload apps to calculator:
+
+- install the "TI Connect CE" app on a computer
+- launch the app
+- download calculator apps to your computer
+  - one source for games is https://www.ti84calcwiz.com/ti84plusce-games/
+- unzip them to get .8xp files
+- connect the calculator to the computer using the USB cable
+- click the Explorer icon in the left nav of the "TI Connect CE" app
+- drag .8xp files from the computer to the
+  right side of the "TI Connect CE" window
+
+To run an app on the calculator:
+
+- press 2nd catalog
+- select Asm( and press enter
+- press prgm
+- select the app and press enter
+- press enter again to start the app
+- press clear to exit the app
