@@ -632,6 +632,11 @@ Tar
 - See your pkg and unpkg scripts that make it easier to
   tar/zip and unzip/untar directories.
 
+TERM
+- If delete/backspace key doesn't work, you may need to enter
+  export TERM=xterm-256color
+  - can add this in .bashrc
+
 Threads
 - Some versions of UNIX/Linux don't support thread priorities.
 - NPTL stands for New POSIX Thread Library

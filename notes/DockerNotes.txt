@@ -163,7 +163,7 @@ Containers
     - Monsanto container-name is "capacity-api"
 
 Docker Compose
-- a toole for defining multi-container applications
+- a tool for defining multi-container applications
 - Does Monsanto use this?
 - to start an image
   * How is this different than loading into a container?

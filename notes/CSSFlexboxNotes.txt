@@ -53,6 +53,11 @@ Flexbox Notes
   * stretch: stretches items to height of container
     - only works for items with no specified height
 
+- place-items: sets both align-items and justify-content
+  * if given two values, the first is for align-items
+    and the second for justify-content
+  * if given one value, it is used for both
+
 - align-self: does the same for a specific item
   * set to one of the align-items values
 

@@ -165,5 +165,27 @@ export SOURCED_PROFILE=1
 export HOST_IP="10.201.200.63"
 export DOCKER_IP="172.21.0.1"
 
-. ~/.bashrc
+# For WWT
+export MASTER_API_URI=https://localhost:5001/masterapi
+export MASTER_DB_SERVER=localhost
+export PROJECT_DB_SERVER=localhost
+export SECURITY_TOKEN_ENCRYPTION_KEY=change_me-1234567890-change_me-1234567890
+export SECURITY_TOKEN_ISSUER=pwc
+export SECURITY_TOKEN_AUDIENCE=pwc
+export WHITE_LISTED_URLS='https://localhost:3000'
+export LD_LIBRARY_PATH=/usr/local/Cellar/mono-libgdiplus/6.0.5/lib
+export MASTER_DB_USER=sa
+export MASTER_DB_PASSWORD=Password!
+export MASTER_DB_SERVER=localhost
+export MASTER_DB_NAME=MasterDB
+export GRAPH_API_CLIENT_SECRET='dShP-:h]gm[QxBjA9aUs57ONuXE8T=Jk'
+export MASTER_DB_PASSWORD='Password!'
+export PROJECT_TOKEN_ENCRYPTION_KEY='kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z'
+export SECURITY_TOKEN_ENCRYPTION_KEY='kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z'
+
+ .~/.bashrc
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/mark/.sdkman"
+[[ -s "/Users/mark/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/mark/.sdkman/bin/sdkman-init.sh"
