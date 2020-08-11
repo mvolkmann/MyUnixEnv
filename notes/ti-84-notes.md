@@ -317,3 +317,32 @@ PineappleCAS
 - Derivative finds the derivative of an equation;
   example: derivative of 3x^2 - 2x + 4 is 6x - 2
 
+To create a program:
+
+- press pgrm
+- select NEW
+- press enter
+- enter a name, up to 8 characters
+- enter commands
+- to enter ", press alpha +
+- to toggle between insert and overstrike modes, press 2nd ins
+
+To enable typing lowercase letters:
+
+- backup the calculator first in case this goes wrong
+- press prgm
+- select NEW
+- enter LOWRCASE for the name
+- press 2nd catalog to access list of commands
+- select AsmPrgm or Asm84CEPrgm
+  (This is disabled by default in the os 5.3.1 to prevent cheating
+  so students can't write Assemmbly programs on their calculators.
+  To enable it, connect to a computer.)
+- enter the assembly program FDCB24DEC9 with no space after AsmPrgm
+- press 2nd quit
+- press 2nd catalog
+- select Asm(
+- select LOWRCASE
+- press enter
+- press alpha once for uppercase letters and twice for lowercase
+
