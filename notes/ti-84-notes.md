@@ -16,6 +16,22 @@ To return to the home screen from any other screen, press 2nd quit.
 To set the date and time, press mode and select SET CLOCK.
 The date and time are only displayed here on the mode screen.
 
+Menus
+- many button presses display a menu of options
+- select a menu item by pressing the number in front of it or
+  move to a menu item with the up and down arrows and press enter
+- There are five shortcut menus labeled f1 through f5 on the top row,
+  all accessed with the alpha key.
+- f1 provides items to enter a fraction (n/d),
+  enter a mixed fraction (Un/d),
+  convert between these (>n/d<>Un/d), and
+  convert between fraction and decimal (>F<>D)
+  (apparently nobody knows what the U stands for)
+- f2 provides abs, summation, nDeriv, fnInt, logBASE, x root, nPr, nCr, and !
+- f3 provides a way to enter a matrix up to 6x6
+- f4 provides a way to use a y= equation
+- f5 doesn't seem to work
+
 To enter an exponent
 - enter an expression (can be just a number or letter)
 - press ^ key
@@ -31,6 +47,10 @@ To edit an expression:
   to replace the character under the cursor
 - press 2nd ins to switch to insert mode instead of replace mode
   and press any arrow key to return to replace mode
+
+To store a number in a variable,
+enter the number, press sto->,
+enter a variable letter, and press enter.
 
 To convert a decimal number to a fraction:
 
@@ -94,6 +114,22 @@ To graph equations:
     for a point on the graph left or righ
   - press up or down to move the cursor to a different equation
 
+To disable an equation from being graphed without deleting it
+
+- press y=
+- use the up and down arrows to move to the equation
+- use the left and right arrows to move to the =
+- press enter to toggle the equation
+  off (white background) or on (black background)
+
+To evaluate an equation entered using the y= key
+for a specific x value:
+
+- store a value in x,
+- open the f4 shortcut menu,
+- select the equation name (ex. Y1),
+- press enter
+
 To graph all equations simultaneously instead of in sequence,
 press mode and select SIMUL.
 
@@ -119,6 +155,73 @@ To zoom in or out on a graph
   - ZStandard resets to standard zoom
     which is Xmin=Ymin=-10 and Xmax=Ymax=10
 - press enter
+
+To create a scatter plot:
+
+- press stat and select Edit...
+- enter all the x values in the L1 list
+- press the right arrow
+- enter all the y values in the L2 list
+- press 2nd "stat plot"
+- if there are previous plots,
+  select PlotsOff and press enter to clear them 
+- press 2nd "stat plot"
+- select the plot to use: Plot1, Plot2, or Plot3
+- if it is currently Off, select On
+- select the plot Type: scatter, line, bar, ?, ?, or step
+- select the lists containing the data to plot in Xlist and Ylist
+  by pressing 2nd and L1 to L6 (often want L1 and L2)
+- select the Mark to use for each point
+- select the Color
+- press graph
+- press zoom and select ZoomStat to
+  zoom so all the points are visible
+- press trace and use the left and right arrows
+  to see the coordinates of each point
+
+To add a line of best fit to a scatter plot:
+
+- press stat
+- press right arrow to select CALC
+- select LinReg
+- Xlist should be L1
+- Ylist should be L2
+- move to "Store RegEQ"
+- press vars
+- press right arrow to move to Y-VARS
+- select Function
+- select an available function variable to hold the
+  linear regression equation that will be calculated
+- select Calculate
+- the equation will now be saved in the y= list
+- it will also display values for a and b
+  in the line equation y=ax+b
+- press graph
+
+To create a histogram (a.k.a. bar chart):
+- draws a bar for each unique value whose height indicates
+  the number of times that value appears in the list
+- enter values in a single list just like for a scatter plot
+- press 2nd "stat plot"
+- select Plot1
+- turn it On
+- select Type histogram icon
+- set Xlist to the list to be plotted
+  by pressing 2nd and one of L1 to L6
+- press zoom
+- select ZoomStat
+- press graph
+- press window to adjust the x and y scales;
+  Xmin is the lowest value;
+  Xmax is the highest value;
+  Xscl controls the width of each bar
+  Ymin is the lowest count of a value (typically zero);
+  Ymax is the highest count of a value
+- to see the value of each bar,
+  press trace and the left and right arrows to move between the bars;
+  the value is between min= and max<;
+  the frequency is the n= value;
+  set Xscl to 1 to make min= be the value
 
 To enter a named matrix:
 - press 2nd matrix
