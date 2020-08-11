@@ -262,7 +262,7 @@ To multiply matrices:
 - repeat the steps above to select another matrix
 - press enter to multiply them
 
-To upload apps to calculator:
+To upload a program to the calculator:
 
 - install the "TI Connect CE" app on a computer
 - launch the app
@@ -274,7 +274,7 @@ To upload apps to calculator:
 - drag .8xp files from the computer to the
   right side of the "TI Connect CE" window
 
-To run an app on the calculator:
+To run a program on the calculator:
 
 - press 2nd catalog
 - select Asm( and press enter
@@ -282,3 +282,34 @@ To run an app on the calculator:
 - select the app and press enter
 - press enter again to start the app
 - press clear to exit the app
+
+To archive a program:
+
+- press 2nd mem
+- select Archive,
+- press prgm
+- select a program
+- press enter
+- archived programs have a * in front of their name
+
+PineappleCAS
+
+- This is a "computer algebra system" (CAS) for TI-84 Plus CE calculators.
+- See {% aTargetBlank 'https://github.com/nathanfarlow/PineappleCAS', 'here' %}
+- To install it, follow the instructions at the link above.
+  Note that both the file PCAS.8xp and the file clibs.8xg must be installed.
+- If you get "ERROR: MEMORY" when running PCAS,
+  try archiving every program you have installed and running again.
+- each operation runs on a given y= equation
+  and writes the result to another y= equation
+  specified at the top of the UI
+- select a function in the left column
+- select options in the right column
+- select the button at the bottom of the right column
+- wait for the calculation to complete
+- select Close
+- exit the program by pressing clear
+- press y= to view the result
+- example: simplify (x + 2)(x -3)
+- example: find the derivative of 3x^2 - 2x + 4
+
