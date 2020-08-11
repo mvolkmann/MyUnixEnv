@@ -310,6 +310,10 @@ PineappleCAS
 - select Close
 - exit the program by pressing clear
 - press y= to view the result
-- example: simplify (x + 2)(x -3)
-- example: find the derivative of 3x^2 - 2x + 4
+- Simplify combines like terms.
+- Evaluate evaluates constant expressions to simplify an equation.
+- Expand expands multiplication.
+  For example, (x - 2)(x + 3) expands to x^2 + x - 6
+- Derivative finds the derivative of an equation;
+  example: derivative of 3x^2 - 2x + 4 is 6x - 2
 
