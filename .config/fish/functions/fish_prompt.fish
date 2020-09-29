@@ -3,7 +3,7 @@
 function fish_prompt
   # No fancy prompt if window is too narrow.
   #if test $COLUMNS -lt 20 #TODO: How to test this?
-  #   echo '🐠  '
+  #   echo '🐠 '
   #   return
   # end
 
@@ -51,5 +51,5 @@ function fish_prompt
   # Always display "fish" prompt on new line.
   set_color normal
   # This uses printf instead of echo to output a leading newline.
-  printf '\\n🐠  ' # uses unicode for fish emoji
+  printf '\\n🐠 ' # uses unicode for fish emoji
 end

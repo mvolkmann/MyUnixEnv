@@ -170,6 +170,10 @@ set -x NODE_OPTIONS --max-old-space-size=2048
 
 # Python settings
 alias python 'python3'
+set -x PATH /Library/Frameworks/Python.framework/Versions/3.8/bin $PATH
+set -x PATH $HOME/Library/Python/3.8/bin $PATH
+set -x PATH $HOME/opt/anaconda3/bin $PATH
+set -x PYTHONSTARTUP $HOME/startup.py
 
 # React Native settings
 #set ANDROID_HOME /usr/local/opt/android-sdk
@@ -263,6 +267,7 @@ alias findjs2 'find4 js'
 alias findjson 'find3 json'
 alias findless 'find3 less'
 alias findmd 'find3 md'
+alias findpy 'find3 py'
 alias findscss 'find3 scss'
 alias findsvelte 'find3 svelte'
 alias findts 'find3 ts'
@@ -316,3 +321,9 @@ if [ -f '/Users/Mark/google-cloud-sdk/path.fish.inc' ]; . '/Users/Mark/google-cl
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [ -f /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/slss.fish ]; and . /Users/Mark/Documents/OCI/clients/RioTinto/ode-app-metadata-api/node_modules/tabtab/.completions/slss.fish
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+#eval /Users/mark/opt/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+# <<< conda initialize <<<
+

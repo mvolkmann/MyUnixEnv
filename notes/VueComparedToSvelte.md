@@ -361,5 +361,5 @@ Routify, svelte-routing, navaid, and svelte-spa-router.
 
 Both can use Jest, Cypress, and Storybook.
 
-Both can use ESLint and Prettier
+Both can use ESLint and Prettier.
 
