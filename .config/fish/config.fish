@@ -170,9 +170,13 @@ set -x NODE_OPTIONS --max-old-space-size=2048
 
 # Python settings
 alias python 'python3'
-set -x PATH /Library/Frameworks/Python.framework/Versions/3.8/bin $PATH
-set -x PATH $HOME/Library/Python/3.8/bin $PATH
+alias pipi 'python -m pip install'
+set PYTHON_VERSION 3.9
+set -x PATH /Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/bin $PATH
 set -x PATH $HOME/opt/anaconda3/bin $PATH
+set -x PYTHON_DS_STUBS $PYTHON_DIR/data-science-types-0.2.18
+set -x PIP_PATH /Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/lib/python$PYTHON_VERSION/site-packages
+set -x PYTHONPATH $PIP_PATH:$PYTHON_DS_STUBS
 set -x PYTHONSTARTUP $HOME/startup.py
 
 # React Native settings
@@ -324,6 +328,6 @@ if [ -f '/Users/Mark/google-cloud-sdk/path.fish.inc' ]; . '/Users/Mark/google-cl
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-#eval /Users/mark/opt/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+eval /Users/mark/opt/anaconda3/bin/conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
 
