@@ -1,0 +1,4 @@
+[MESSAGES CONTROL]
+disable=
+  redefined-outer-name,
+  too-few-public-methods
