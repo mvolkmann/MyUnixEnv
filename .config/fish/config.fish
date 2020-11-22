@@ -134,7 +134,8 @@ set -x PATH $PATH $GOBIN
 alias serve 'python -m SimpleHTTPServer 8080'
 
 # Java settings
-set -x JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk-13.0.1.jdk/Contents/Home'
+#set -x JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk-13.0.1.jdk/Contents/Home'
+set -x JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk-11.0.9.jdk/Contents/Home'
 
 # JavaScript settings
 set -x JS_CMD node
@@ -169,11 +170,14 @@ alias pgl 'psql -d demo'
 set -x NODE_OPTIONS --max-old-space-size=2048
 
 # Python settings
+alias pip 'pip3'
+alias py 'python3'
 alias python 'python3'
-alias pipi 'python -m pip install'
-set PYTHON_VERSION 3.9
+alias pipi 'python3 -m pip install'
+set PYTHON_VERSION 3.8
 set -x PATH /Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/bin $PATH
 set -x PATH $HOME/opt/anaconda3/bin $PATH
+set -x PATH $HOME/Library/Python/$PYTHON_VERSION/bin $PATH
 set -x PYTHON_DS_STUBS $PYTHON_DIR/data-science-types-0.2.18
 set -x PIP_PATH /Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/lib/python$PYTHON_VERSION/site-packages
 set -x PYTHONPATH $PIP_PATH:$PYTHON_DS_STUBS

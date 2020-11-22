@@ -14,6 +14,7 @@ Mac OS X
 - to use interactive commands, mysql -uroot [database-name]
 - to execute an SQL script
     mysql -uroot < {script-name}.sql
+- see PHP blog page for information on setting the password
 
 Linux
 - in many distributions, MySQL is installed by default

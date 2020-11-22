@@ -1,4 +1,11 @@
 [MESSAGES CONTROL]
 disable=
-  redefined-outer-name,
-  too-few-public-methods
+    invalid-name,
+    missing-class-docstring,
+    missing-function-docstring,
+    missing-module-docstring,
+    redefined-outer-name,
+    too-few-public-methods
+extension-pkg-whitelist=pydantic
+generated-members=numpy.*, torch.*
+
