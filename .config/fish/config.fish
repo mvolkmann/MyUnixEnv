@@ -114,6 +114,12 @@ set -x BAT_PAGER myless
 #set -x CLOJURE_HOME /opt/clojure-1.5.1 # for RPi
 #alias clj 'java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main'
 
+# Deno settings
+set -x PATH $PATH $HOME/.deno/bin
+alias dfmt 'deno fmt'
+alias dlint 'deno lint --unstable'
+alias drun 'deno run'
+
 # Git settings
 set -x GITHUB_USER mvolkmann
 #set -x GITHUB_PASS ?
@@ -218,6 +224,7 @@ alias cdblog 'cd $DOCUMENTS_DIR/blog'
 alias cdbook 'cd $SVELTE_DIR/book'
 alias cdcangea 'cd $OCI_DIR/clients/Cangea'
 alias cdd3 'cd $JAVASCRIPT_DIR/d3'
+alias cddeno 'cd $JAVASCRIPT_DIR/deno'
 alias cddropbox 'cd $DROPBOX_DIR'
 alias cdevergreen 'cd $OCI_DIR/clients/Evergreen'
 alias cdgo 'cd $PROGRAMMING_DIR/languages/go'
@@ -232,6 +239,7 @@ alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
 alias cdnotes 'cd $HOME/MyUnixEnv/notes'
 alias cdoci 'cd $OCI_DIR'
+alias cdphp 'cd /Library/WebServer/Documents'
 alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
 alias cdpython 'cd $PYTHON_DIR'

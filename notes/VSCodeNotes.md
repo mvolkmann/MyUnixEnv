@@ -816,7 +816,7 @@ See "Dropbox Sync" section below!
 ## IntelliCode extension
 
 - "provides AI-assisted productivity features for Python, TypeScript/JavaScript and Java ...
-   with insights based on understanding your code context combined with machine learning"
+  with insights based on understanding your code context combined with machine learning"
 
 ## Intellisense
 
@@ -1058,6 +1058,19 @@ See "Dropbox Sync" section below!
 - "Adds details and a documentation link beside each ESLint rule
   in your configuration file (including plugins) located anywhere
   in your workspace folders (supports multiple config files)."
+
+## Live Server Extension
+
+This extension provides a basic HTTP server for serving local files.
+To use it:
+
+1. Open a directory containing HTML files in a new VS Code window.
+1. Click "Go Live" in the status bar at the bottom.
+   This starts the server and opens a browser window
+   that renders a directory listing.
+   "Go Live" will change to "Port: 5500".
+1. Click an HTML file to open it in the browser.
+1. To stop the server, click "Port: 5500" in the status bar.
 
 ## Markdown
 
@@ -1412,10 +1425,11 @@ See "Dropbox Sync" section below!
 - can use /\* \*/ and // comments in this file
   - useful to temporarily disable settings
 - stored in several files
+
   - in OS-specific locations
     - Windows: %APPDATA%\Code\User\ or %APPDATA%\Roaming\Code\User\
-    - macOS: $HOME/Library/Application Support/Code/User/
-    - Linux: $HOME/.config/Code/User/
+    - macOS: \$HOME/Library/Application Support/Code/User/
+    - Linux: \$HOME/.config/Code/User/
   - see these files and folders
     - keybindings.json
     - settings.json
@@ -1425,6 +1439,11 @@ See "Dropbox Sync" section below!
   - to use same settings in Insiders build,
     copy these files and folders to the same location
     under the "Code - Insiders" directory
+
+- recommended changes
+
+  - turn off "Editor: Accept Suggestion on Commit Character"
+
 - project-specific customizations
 
   - stored in project directory in .vscode directory
@@ -1520,14 +1539,14 @@ See "Dropbox Sync" section below!
     or "New Global Snippets file..."
   - copy the commented-out template or an existing snippet
   - modify the prefix and body
-  - body can include placeholders in the form ${n:initial-value}
+  - body can include placeholders in the form \${n:initial-value}
     where n is an integer starting at 1
     - use duplicate numbers for placeholders
       that should be replaced by the same value
   - optionally add a description
 - multiple choice placeholder
-  - ex. ${1|foo, bar, baz| }
-- placeholder variables inside ${ }
+  - ex. \${1|foo, bar, baz| }
+- placeholder variables inside \${ }
   - CLIPBOARD - clipboard contents
   - TM_CURRENT_LINE - contents of current line
   - TM_CURRENT_WORD - word under cursor or empty string
