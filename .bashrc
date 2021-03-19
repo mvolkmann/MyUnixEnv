@@ -31,7 +31,7 @@ stty -ixon
 # 0 resets to default
 # Single quotes delay evaluation until each time prompt is output.
 # Do this in /.bashrc too?
-export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[0m\]\n🏃  '
+#export PS1='\[\033[1;34m\]\w\[\033[1;33m\]$(__git_ps1)\[\033[0m\]\n🏃  '
 
 #---------------------------------------------------------------------------
 # Aliases
@@ -178,3 +178,6 @@ fi
 if [[ -z $SOURCED_PROFILE ]]; then
   source $HOME/.bash_profile
 fi
+source "$HOME/.cargo/env"
+
+eval "$(starship init bash)"

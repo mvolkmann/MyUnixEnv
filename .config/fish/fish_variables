@@ -7,10 +7,13 @@ SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_add:git\x20add
 SETUVAR _fish_abbr_br:git\x20branch
+SETUVAR _fish_abbr_cc:cargo\x20clippy
 SETUVAR _fish_abbr_ci:git\x20commit\x20\x2dav
 SETUVAR _fish_abbr_co:git\x20checkout
 SETUVAR _fish_abbr_cob:git\x20checkout\x20\x2db
 SETUVAR _fish_abbr_cp:cp\x20\x2di
+SETUVAR _fish_abbr_cr:cargo\x20run
+SETUVAR _fish_abbr_ct:cargo\x20test
 SETUVAR _fish_abbr_graph:git\x20log\x20\x2d\x2dgraph\x20\x2d\x2doneline
 SETUVAR _fish_abbr_grm:go\x20run\x20main\x2ego
 SETUVAR _fish_abbr_hr:stack\x20ghci

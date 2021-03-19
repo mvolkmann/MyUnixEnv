@@ -48,6 +48,9 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 #export CLOJURE_HOME=/opt/clojure-1.5.1 # for RPi
 #alias clj="java -cp $CLOJURE_HOME/clojure-1.5.1.jar clojure.main"
 
+# Deno settings
+source /usr/local/etc/bash_completion.d/deno.bash
+
 # Git settings
 . ~/bin/git-completion.bash
 #export PATH=$PATH:/usr/local/git/bin
@@ -118,6 +121,11 @@ export RUBYOPT=-rubygems
 # Tell less not to complain about ANSI escape codes, and run ri.
 alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
 
+# Rust settings
+source "$HOME/.cargo/env"
+
+export SHELL_ICON=🚀
+
 # Subversion settings
 export SVN_PREFIX=svn+ssh://oci-svn/education/training/tracks
 
@@ -128,8 +136,6 @@ export SVN_PREFIX=svn+ssh://oci-svn/education/training/tracks
 
 # TypeScript settings
 export PATH=$PATH:~/programming/typescript/TypeScript/bin
-
-# TypeScript settings
 export PATH=$PATH:$LANGUAGES_DIR/TypeScript/ts1.5/bin
 
 # Vim settings
@@ -183,7 +189,7 @@ export MASTER_DB_PASSWORD='Password!'
 export PROJECT_TOKEN_ENCRYPTION_KEY='kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z'
 export SECURITY_TOKEN_ENCRYPTION_KEY='kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z'
 
- .~/.bashrc
+. ~/.bashrc
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
@@ -204,4 +210,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-

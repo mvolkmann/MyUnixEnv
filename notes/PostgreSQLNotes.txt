@@ -29,18 +29,17 @@ Initialize database
 - need? sudo sysctl -w kern.sysv.shmmax=12582912
 - need? sudo sysctl -w kern.sysv.shmall=12582912
 - sudo mkdir -p /usr/local/pgsql/data
-  * macOS prevents creating files under /usr, so use ~/data/db instead
 - sudo chown Mark /usr/local/pgsql
 - sudo chown Mark /usr/local/pgsql/data
-- all the commands are in /usr/local/pqsel/bin
+- all the commands are in /usr/local/bin
 - initdb -D /usr/local/pgsql/data
 
 Version 9.2.1 notes
 - to start server
-  * pg_ctl -D /usr/local/var/postgres start
+  * pg_ctl -D /usr/local/pgsql/data -l logfile start
     - will continue running
 - to stop server
-  * pg_ctl -D /usr/local/var/postgres stop -m fast
+  * pg_ctl -D /usr/local/pgsql/data stop -m fast
 - to create a database
   * createdb {db-name}
 - to delete a database

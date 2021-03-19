@@ -59,6 +59,11 @@ abbr --add nr npm run
 # For React Native
 abbr --add rn react-native
 
+# For Rust
+abbr --add cc cargo clippy
+abbr --add cr cargo run
+abbr --add ct cargo test
+
 # Ask for confirmation before overwriting or deleting files.
 abbr --add cp 'cp -i'
 abbr --add mv 'mv -i'
@@ -70,6 +75,8 @@ abbr --add rm 'rm -i'
 
 # Is this needed?
 set -x SHELL /usr/local/bin/fish
+
+set -x SHELL_ICON 🐠
 
 set -x EDITOR (which code)
 
@@ -91,13 +98,16 @@ set -x PROGRAMMING_DIR $DOCUMENTS_DIR/programming
 set -x DATABASES_DIR $PROGRAMMING_DIR/databases
 set -x LANGUAGES_DIR $PROGRAMMING_DIR/languages
 set -x CSS_DIR $LANGUAGES_DIR/CSS
+set -x DENO_DIR $JAVASCRIPT_DIR/deno
 set -x HTML_DIR $LANGUAGES_DIR/html
 set -x JAVA_DIR $LANGUAGES_DIR/java
 set -x JAVASCRIPT_DIR $LANGUAGES_DIR/javascript
 set -x MICRONAUT_DIR $JAVA_DIR/Micronaut/micronaut-1.0.0.M2
 #set -x MONGODB_DIR=$DATABASES_DIR/MongoDB
+set -x NU_DIR $PROGRAMMING_DIR/nushell
 set -x PYTHON_DIR $LANGUAGES_DIR/Python
 set -x REACT_DIR $JAVASCRIPT_DIR/react
+set -x RUST_DIR $LANGUAGES_DIR/rust
 set -x SETT_DIR $OCI_DIR/SETT
 set -x SVELTE_DIR $JAVASCRIPT_DIR/svelte
 set -x TRAINING_DIR $DOCUMENTS_DIR/training
@@ -164,16 +174,13 @@ set -Ux LSCOLORS Exfxcxdxbxegedabagacad
 # MongoDB settings
 #set -x PATH $PATH $MONGODB_DIR/mongodb-osx-x86_64-2.4.3/bin
 
+# Node.js settings
+set -x NODE_OPTIONS --max-old-space-size=2048
+
 # PostgreSQL settings
 alias pgstart 'pg_ctl -D /usr/local/var/postgres start'
 alias pgstop 'pg_ctl -D /usr/local/var/postgres stop -m fast'
 alias pgl 'psql -d demo'
-
-# Node.js settings
-#set -x NODE_PATH . /usr/local/lib/node_modules # Mocha needs this
-#set -x PATH $PATH $NODE_DIR/deps/v8/tools
-#function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
-set -x NODE_OPTIONS --max-old-space-size=2048
 
 # Python settings
 alias pip 'pip3'
@@ -197,6 +204,9 @@ set -x PATH $PATH $ANDROID_HOME/emulator
 set -x PATH $PATH $ANDROID_HOME/tools
 set -x PATH $PATH $ANDROID_HOME/tools/bin
 set -x PATH $PATH $ANDROID_HOME/platform-tools
+
+# Rust settings
+set -x PATH $PATH $HOME/.cargo/bin
 
 # Subversion settings
 set -x SVN_PREFIX svn+ssh://oci-svn/education/training/tracks
@@ -227,6 +237,7 @@ alias cdd3 'cd $JAVASCRIPT_DIR/d3'
 alias cddeno 'cd $JAVASCRIPT_DIR/deno'
 alias cddropbox 'cd $DROPBOX_DIR'
 alias cdevergreen 'cd $OCI_DIR/clients/Evergreen'
+alias cdeverroot 'cd $OCI_DIR/clients/Purina/EverRoot'
 alias cdgo 'cd $PROGRAMMING_DIR/languages/go'
 alias cdgop 'cd $GOPATH'
 alias cdgopv 'cd $GOPATH/src/github.com/mvolkmann'
@@ -238,13 +249,16 @@ alias cdmeteor 'cd $JAVASCRIPT_DIR/meteor'
 alias cdmyoci 'cd $MYOCI_DIR'
 alias cdnode 'cd $JAVASCRIPT_DIR/Node.js'
 alias cdnotes 'cd $HOME/MyUnixEnv/notes'
+alias cdnu 'cd $PROGRAMMING_DIR/nushell'
 alias cdoci 'cd $OCI_DIR'
 alias cdphp 'cd /Library/WebServer/Documents'
 alias cdprism 'cd $OCI_DIR/lennox-prism'
 alias cdprogramming 'cd $PROGRAMMING_DIR'
+alias cdpurina 'cd $OCI_DIR/clients/Purina'
 alias cdpython 'cd $PYTHON_DIR'
 alias cdreact 'cd $JAVASCRIPT_DIR/react'
 alias cdrn 'cd $JAVASCRIPT_DIR/react-native'
+alias cdrust 'cd $PROGRAMMING_DIR/languages/rust'
 alias cdsett 'cd $SETT_DIR'
 alias cdsvelte 'cd $JAVASCRIPT_DIR/svelte'
 alias cdtalks 'cd $PROGRAMMING_DIR/conferences/talks'
@@ -252,7 +266,9 @@ alias cdtraining 'cd $TRAINING_DIR'
 alias cdts 'cd $TYPESCRIPT_DIR'
 alias cdva 'cd $OCI_DIR/clients/VA'
 alias cdvue 'cd $JAVASCRIPT_DIR/vue'
+alias cdwasm 'cd $PROGRAMMING_DIR/wasm'
 alias cdwwt 'cd $OCI_DIR/clients/WWT'
+alias cdxtrack 'cd $OCI_DIR/xtrack'
 alias cls 'clear'
 
 # Git aliases
@@ -284,10 +300,13 @@ alias findjson 'find3 json'
 alias findless 'find3 less'
 alias findmd 'find3 md'
 alias findpy 'find3 py'
+alias findrs 'find3 rs'
+alias findrust 'find3 rs'
 alias findscss 'find3 scss'
 alias findsvelte 'find3 svelte'
 alias findts 'find3 ts'
 alias findvue 'find3 vue'
+alias findwat 'find3 wat'
 
 # ESLint aliases
 alias esl 'clear; eslint -f codeframe **/*.js'
@@ -315,13 +334,6 @@ alias klp 'kill-listening-process'
 alias rna='react-native run-android'
 alias rni='react-native run-ios'
 
-# For Web Components and Polymer
-alias pe 'clear; eslint -f codeframe *.html demo/*.html test/*.html'
-alias pew 'clear; esw -w *.html demo/*.html test/*.html'
-alias pl 'clear; polylint demo/index.html'
-alias plr 'clear; livereload "*.html, demo/*.html, test/*.html"'
-alias pso 'clear; polymer serve -o'
-
 # The next line updates PATH for the Google Cloud SDK.
 #if [ -f '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc' ]; if type source > /dev/null; source '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; else; . '/Users/Mark/Documents/programming/google-cloud-sdk/path.fish.inc'; end; end
 
@@ -343,3 +355,12 @@ if [ -f '/Users/Mark/google-cloud-sdk/path.fish.inc' ]; . '/Users/Mark/google-cl
 eval /Users/mark/opt/anaconda3/bin/conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
 
+
+set -gx WASMTIME_HOME "$HOME/.wasmtime"
+
+string match -r ".wasmtime" "$PATH" > /dev/null; or set -gx PATH "$WASMTIME_HOME/bin" $PATH
+# Wasmer
+export WASMER_DIR="/Users/mark/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+starship init fish | source

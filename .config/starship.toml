@@ -1,0 +1,34 @@
+# A color specifier can be one of the following:
+# - red, green, blue, yellow, purple, cyan, black, or white
+# - optionally prefix these with bright (ex. bright-white)
+# - # followed by a six-digit hexadecimal number
+# - number between 0-255 to specify an 8-bit ANSI color code
+
+#format = "$all" # default setting
+format = "$env_var$git_branch$git_status$directory$character"
+# Nushell controls the color of commands typed after the prompt.
+
+[character]
+success_symbol = "[▶](bold green)"
+error_symbol = "[✗](bold red)"
+
+[directory]
+format = "[$path]($style)"
+style = "yellow"
+truncate_to_repo = false
+truncation_length = 3 # parent directories to show; default is 3
+truncation_symbol = "…/"
+
+[env_var]
+format = "$env_value"
+variable = "SHELL_ICON"
+default = "?"
+
+[git_branch]
+format = "[$symbol](green)[$branch]($style)"
+style = "italic green"
+symbol = "  "
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "bold red"

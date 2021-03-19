@@ -1,6 +1,7 @@
 .*.swp
 .DS_Store
 .config/configstore/
+.config/exercism/
 .config/fish/fishd.*
 .config/gcloud/
 .config/gcloud/.*.*
@@ -10,6 +11,7 @@
 .config/gcloud/credentials.db
 .config/gcloud/legacy_credentials/volkmannm@objectcomputing.com/adc.json
 .config/htop/htoprc
+.config/iterm2
 .tmux/.tmux
 .vim/.netrwhist
 .vim/.vim
