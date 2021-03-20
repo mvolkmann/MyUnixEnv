@@ -1,15 +1,12 @@
 #format = "$all" # default setting
-#format = "$custom$git_branch$git_status$directory$character"
-format = '''
-$directory $git_branch$git_status
-$custom$character'''
+format = "$custom$git_branch$git_status$directory$character"
 
 # Nushell controls the color of commands typed after the prompt.
 
 # Displays text, typically a single character,
 # based on the status of the previous command.
 [character]
-success_symbol = "[▶](fg:#6495ed bg:yellow)" # normal prompt
+success_symbol = "[▶](green)" # normal prompt
 error_symbol = "[✗](bold red)" # used if previous command failed
 # error_symbol does not work in Nushell
 
@@ -27,6 +24,7 @@ when = 'test "$STARSHIP_SHELL" = "fish"'
 [custom.nu]
 command = "echo 🦀"
 when = 'test "$STARSHIP_SHELL" = ""' # not set in Nushell
+#when '= "$nu.env.STARSHIP_SHELL" == ""' # not set in Nushell
 
 # Displays current directory.
 [directory]
