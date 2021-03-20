@@ -76,8 +76,6 @@ abbr --add rm 'rm -i'
 # Is this needed?
 set -x SHELL /usr/local/bin/fish
 
-set -x SHELL_ICON 🐠
-
 set -x EDITOR (which code)
 
 if test -e $HOME/secret.sh

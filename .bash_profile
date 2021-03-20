@@ -124,8 +124,6 @@ alias ri='RI="${RI} -f ansi" LESS="${LESS}-f-R" ri'
 # Rust settings
 source "$HOME/.cargo/env"
 
-export SHELL_ICON=🚀
-
 # Subversion settings
 export SVN_PREFIX=svn+ssh://oci-svn/education/training/tracks
 
