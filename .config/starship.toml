@@ -23,8 +23,9 @@ when = 'test "$STARSHIP_SHELL" = "fish"'
 # Indicates when in Nushell.
 [custom.nu]
 command = "echo 🦀"
-when = 'test "$STARSHIP_SHELL" = ""' # not set in Nushell
-#when '= "$nu.env.STARSHIP_SHELL" == ""' # not set in Nushell
+#when = 'if $(nu.env.SHELL) =~ nu { echo 0 } { echo 1 }'
+shell = 'bash'
+when = '[ "$STARSHIP_SHELL" == "" ]' # not set in Nushell
 
 # Displays current directory.
 [directory]
