@@ -208,3 +208,5 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+source /Users/mark/.config/broot/launcher/bash/br

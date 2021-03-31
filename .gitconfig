@@ -8,3 +8,5 @@
 [user]
 	name = R. Mark Volkmann
 	email = r.mark.volkmann@gmail.com
+[pull]
+	rebase = false

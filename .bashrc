@@ -181,3 +181,5 @@ fi
 source "$HOME/.cargo/env"
 
 eval "$(starship init bash)"
+
+source /Users/mark/.config/broot/launcher/bash/br
