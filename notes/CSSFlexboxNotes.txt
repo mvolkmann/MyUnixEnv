@@ -15,7 +15,7 @@ Flexbox Notes
     - Flexibility: https://github.com/10up/flexibility
     - don't use Flexie, an outdated polyfill
 - resources for learning
-  * http://flexboxfroggy.com/
+  * Flexbox Froggy - http://flexboxfroggy.com/
 - key idea
   * nest containers in containers and use flexbox
     at multiple levels to specify any kind of layout
