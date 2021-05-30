@@ -214,7 +214,7 @@ Timeline
   click the eyeball icon to the left of the row
   * icon is not present at smallest row height
   * media will dim
-- to temporarily disable the audo clips in a row,
+- to temporarily disable the audio clips in a row,
   click the speaker icon to the left of the row
   * icon is not present at smallest row height
   * media will dim
