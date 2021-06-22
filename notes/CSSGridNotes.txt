@@ -109,9 +109,9 @@ repeat function
 
 Spanning
 - to make an item span multiple columns, add to CSS of item
-  grid-column: span {n}
+  grid-column: {start} / span {n}
 - to make an item span multiple rows, add to CSS of item
-  grid-row: span {n}
+  grid-row: {start} / span {n}
 
 Placing Items
 - add to CSS of item
