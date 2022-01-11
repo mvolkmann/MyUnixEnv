@@ -1360,6 +1360,13 @@ To use it:
 - verify contents
 - press "Submit new issue"
 
+## Rulers
+
+- to draw a vertical line at given column positions (ex. just 80),
+  add the following in settings.json:
+
+ "editor.rulers": [80],
+
 ## Save
 
 - I configure both ctrl-s and cmd-s to save the current file.
@@ -1544,6 +1551,25 @@ To use it:
     - use duplicate numbers for placeholders
       that should be replaced by the same value
   - optionally add a description
+  - examples for JavaScript:
+
+  ```json
+    "Log Entry": {
+      "prefix": "loge",
+      "body": [
+        "console.log('$TM_FILENAME $1: entered');",
+      ],
+      "description": "Log function entry"
+    },
+    "Log Variable": {
+      "prefix": "logv",
+      "body": [
+        "console.log('$TM_FILENAME $1: $2 =', $2);",
+      ],
+      "description": "Log variable to console"
+    }
+  ```
+
 - multiple choice placeholder
   - ex. \${1|foo, bar, baz| }
 - placeholder variables inside \${ }

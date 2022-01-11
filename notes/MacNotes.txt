@@ -25,12 +25,15 @@ MacNotes.txt
     * tree
     * tmux
     * vim (to get latest version)
-  - in System Preferences ... Keyboard
-    * in "Keyboard" tab
-      * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
-      * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
-    * in "Text" tab
-      * uncheck "Add period with double-space"
+  - System Preferences
+    * in "View" menu select "Organize Alphabetically"
+    * select "Dock & Menu Bar" select "Automatically hide and show the Dock"
+    * select "Keyboard"
+      - in "Keyboard" tab
+        * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
+        * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
+      - in "Text" tab
+        * uncheck "Add period with double-space"
   - enter Apple ID in iTunes to get access to iTunes Match
   - to make fish the default shell
     - sudo vim /etc/shells
