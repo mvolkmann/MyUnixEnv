@@ -351,7 +351,6 @@ See "Dropbox Sync" section below!
 
 ## Editor Grid Layout
 
-- added to Insiders build in May 2018
 - allows editor panes to be split horizontally and vertically
   using these new commands
   - View: Split Editor Left
@@ -374,6 +373,12 @@ See "Dropbox Sync" section below!
     - I mapped alt-up to this
   - View: Focus Below Editor Group
     - I mapped alt-down to this
+  - View: Move Editor Into Next Group (cmd-ctrl-right arrow)
+    - moves current tab into group to the right,
+      creating a new group if one doesn't exist
+  - View: Move Editor Into Previous Group (cmd-ctrl-left arrow)
+    - moves current tab into group to the left,
+      deleting the group if it becomes empty
 - can drag editor tabs to a different grid position
 - try this in combination with zen mode!
 
@@ -1365,7 +1370,7 @@ To use it:
 - to draw a vertical line at given column positions (ex. just 80),
   add the following in settings.json:
 
- "editor.rulers": [80],
+"editor.rulers": [80],
 
 ## Save
 
@@ -1539,6 +1544,7 @@ To use it:
 ## Snippets
 
 - to define custom snippets
+
   - click gear in lower-left
   - select "User Snippets"
   - select an existing snippets .json file,
