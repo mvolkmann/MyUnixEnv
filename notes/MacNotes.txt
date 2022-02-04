@@ -45,7 +45,7 @@ MacNotes.txt
       check "Disable cache (while DevTools is open)
   - install Firefox
   - install Inconsolata Powerline font for use in Vim airline
-  - install Cascadia Code font from Microsoft for use in VSCode
+  - install Cascadia Code font from Microsoft for use in VS Code
   - install DropBox
   - install OmniFocus from App Store and
     configure to sync with Omni Sync Server
@@ -61,9 +61,20 @@ MacNotes.txt
   - install Postman
   - copy ScreenFlow and register license in 1Password
   - install Skype
-  - install Visual Studio Code
-    - enter this command to enable key repeat in VSCode
+  - install Visual Studio Code (VS Code)
+    - enter this command to enable key repeat in VS Code
       defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+    - install these extensions
+      - Awesome Flutter Snippets
+      - Dart
+      - Flutter
+      - GitLens - Git supercharged
+      - Pretter - Code formatter
+      - Svelte for VS Code
+      - Todo Tree
+      - Vim
+    - change these settings
+
   - install Xcode from App Store
   - after copying all required files over and installing all needed software
     - setup Time Machine
