@@ -74,6 +74,61 @@ MacNotes.txt
       - Todo Tree
       - Vim
     - change these settings
+      - "editor.autoClosingBrackets": false,
+      - "editor.fontFamily": "Cascadia Code",
+      - "editor.fontLigatures": true,
+      - "editor.formatOnSave": true,
+      - "editor.formatOnType": true,
+      - "editor.minimap.enabled": false,
+      - "editor.rulers": [80],
+      - "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      - "[svelte]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+      - "svelte.enable-ts-plugin": true,
+      - "vim.ignorecase": false,
+      - "vim.useSystemClipboard": true,
+      - "workbench.editor.enablePreview": false,
+  - Add the following "dart" snippets:
+    "Log function entry": {
+      "prefix": "loge",
+      "body": [
+        "print('$TM_FILENAME $1: entered');",
+      ],
+      "description": "Log function entry"
+    },
+    "Print variable to console": {
+      "prefix": "logv",
+      "body": [
+        "print('$TM_FILENAME $1: $2 = $$2');",
+      ],
+      "description": "Print variable to console"
+    }
+  - Add the following "javascript" snippets:
+    "Log Entry": {
+      "prefix": "loge",
+      "body": [
+        "console.log('$TM_FILENAME $1: entered');",
+      ],
+      "description": "Log function entry"
+    },
+    "Log Variable": {
+      "prefix": "logv",
+      "body": [
+        
+      ],
+      "description": "Log variable to console"
+    }
+  - Add the following "markdown" snippets:
+  	"Anchor Target Blank": {
+      "prefix": "atb",
+      "body": [
+        "{% aTargetBlank \"$1\", \"$2\" %}",
+      ],
+      "description": "Use Eleventy aTargetBlank shortcode"
+    }
 
   - install Xcode from App Store
   - after copying all required files over and installing all needed software
