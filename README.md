@@ -7,3 +7,5 @@ Clone this repository, cd to it, and enter
 To download git submodules in MyUnixEnv/.vim/bundle
 git submodule init
 git submodule update
+
+These lines where in the setup script, but I commented them out.
