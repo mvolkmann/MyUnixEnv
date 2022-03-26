@@ -1,29 +1,28 @@
 #!/bin/bash
 
-git submodule init
-git submodule update
+#git submodule init
+#git submodule update
 
 cd
 
-ln -s MyUnixEnv/.bash_gitprompt .bash_gitprompt
-ln -s MyUnixEnv/.bash_profile .bash_profile
-ln -s MyUnixEnv/.bashrc .bashrc
+#ln -s MyUnixEnv/.bash_gitprompt .bash_gitprompt
+#ln -s MyUnixEnv/.bash_profile .bash_profile
+#ln -s MyUnixEnv/.bashrc .bashrc
 ln -s MyUnixEnv/.config .config
-ln -s MyUnixEnv/.eslintrc.json .eslintrc.json
-ln -s MyUnixEnv/.ghci .ghci
+#ln -s MyUnixEnv/.eslintrc.json .eslintrc.json
+#ln -s MyUnixEnv/.ghci .ghci
 ln -s MyUnixEnv/.gitconfig .gitconfig
-ln -s MyUnixEnv/.gvimrc .gvimrc
-ln -s MyUnixEnv/.haskeline .haskeline
-ln -s MyUnixEnv/.jshintrc .jshintrc
-ln -s MyUnixEnv/.prettieropts .prettieropts
-ln -s MyUnixEnv/.tern-project .tern-project
+#ln -s MyUnixEnv/.gvimrc .gvimrc
+#ln -s MyUnixEnv/.haskeline .haskeline
+#ln -s MyUnixEnv/.prettieropts .prettieropts
+#ln -s MyUnixEnv/.tern-project .tern-project
 ln -s MyUnixEnv/.tmux .tmux
 ln -s MyUnixEnv/.tmux.conf .tmux.conf
 ln -s MyUnixEnv/.vim .vim
 ln -s MyUnixEnv/.vimrc .vimrc
-ln -s MyUnixEnv/.vintrc.yaml .vintrc.yaml
+#ln -s MyUnixEnv/.vintrc.yaml .vintrc.yaml
 ln -s MyUnixEnv/mytmux mytmux
-ln -s MyUnixEnv/tslint.json tslint.json
+#ln -s MyUnixEnv/tslint.json tslint.json
 
 mkdir -p bin
 cp MyUnixEnv/bin/* bin

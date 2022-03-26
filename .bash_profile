@@ -22,7 +22,6 @@ export LD_LIBRARY_PATH=.:$HOME/lib:/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH
 export DOCUMENTS_DIR=$HOME/Documents
 
 export DROPBOX_DIR=$HOME/Dropbox
-export EP_DIR=$HOME/gm-earnpower-client
 export OCI_DIR=$DOCUMENTS_DIR/oci
 export PROGRAMMING_DIR=$DOCUMENTS_DIR/programming
 export DATABASES_DIR=$PROGRAMMING_DIR/databases
@@ -31,19 +30,8 @@ export CSS_DIR=$LANGUAGES_DIR/CSS
 export HTML_DIR=$LANGUAGES_DIR/html
 export JAVA_DIR=$LANGUAGES_DIR/java
 export JAVASCRIPT_DIR=$LANGUAGES_DIR/javascript
-export MARITZ_DIR=$OCI_DIR/clients/Maritz
 #export MONGODB_DIR=$DATABASES_DIR/MongoDB
-export REACT_DIR=$JAVASCRIPT_DIR/react
-export RGA_DIR=$OCI_DIR/clients/RGA
-export SETT_DIR=$OCI_DIR/SETT
 export TRAINING_DIR=$DOCUMENTS_DIR/training
-
-# Ant settings
-export ANT_HOME=$JAVA_DIR/Ant/apache-ant-1.8.2
-export PATH=$ANT_HOME/bin:$PATH
-
-# AsciiDoc settings
-export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # coreutils settings
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"

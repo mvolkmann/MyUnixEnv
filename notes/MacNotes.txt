@@ -21,7 +21,6 @@ MacNotes.txt
     * enscript
     * fish
     * git
-    * reattach-to-user-namespace (for copy to/from clipboard in tmux)
     * tree
     * tmux
     * vim (to get latest version)
