@@ -33,6 +33,9 @@ MacNotes.txt
         * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
       - in "Text" tab
         * uncheck "Add period with double-space"
+    * select "Sharing"
+      - uncheck "AirPlay Receiver" because it uses port 5000
+        which can interfere with local web app development
   - enter Apple ID in iTunes to get access to iTunes Match
   - to make fish the default shell
     - sudo vim /etc/shells
