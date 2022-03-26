@@ -26,6 +26,7 @@ MacNotes.txt
     * vim (to get latest version)
   - System Preferences
     * in "View" menu select "Organize Alphabetically"
+    * select "Battery" and verify that "Optimized Battery Charging" is checked
     * select "Dock & Menu Bar" select "Automatically hide and show the Dock"
     * select "Keyboard"
       - in "Keyboard" tab
