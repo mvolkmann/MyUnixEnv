@@ -75,7 +75,7 @@ MacNotes.txt
       - Pretter - Code formatter
       - Svelte for VS Code
       - Todo Tree
-      - TOML Language Support (for Nushell config)
+      - TOML Language Support (was used for Nushell config)
       - Version Lens
       - Vim
     - change these settings
