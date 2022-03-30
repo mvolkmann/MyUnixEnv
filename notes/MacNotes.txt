@@ -54,6 +54,10 @@ MacNotes.txt
     configure to sync with Omni Sync Server
   - copy OmniGraffle and register license in 1Password
   - install Alfred
+  - install Better Touch tool
+    - create keyboard shortcuts for resizing windows (see your Better Touch Tool blog page)
+    - disable Window Snapping
+      -  select Preferences ... Window Snapping & Moving and uncheck "Enable window snapping"
   - install ImageOptim
   - install Moom
   - install Node.js
@@ -79,7 +83,7 @@ MacNotes.txt
       - Version Lens
       - Vim
     - change these settings
-      - "editor.autoClosingBrackets": false,
+      - "editor.autoClosingBrackets": "never",
       - "editor.fontFamily": "Cascadia Code",
       - "editor.fontLigatures": true,
       - "editor.formatOnSave": true,
@@ -88,9 +92,9 @@ MacNotes.txt
       - "editor.rulers": [80],
       - "[javascript]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
-        }
+        },
       - "[svelte]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
+          "editor.defaultFormatter": "svelte.svelte-vscode"
         },
       - "svelte.enable-ts-plugin": true,
       - "vim.ignorecase": false,

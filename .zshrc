@@ -28,6 +28,7 @@ export DENO_DIR=$JS_DIR/deno
 export NODE_DIR=$JS_DIR/node
 export PYTHON_DIR=$LANG_DIR/python
 export RUST_DIR=$LANG_DIR/rust
+export SVELTE_DIR=$DEV_DIR/svelte
 export SWIFT_DIR=$LANG_DIR/swift
 export TS_DIR=$LANG_DIR/ts
 
@@ -46,7 +47,7 @@ alias cddb="cd $DB_DIR"
 alias cddeno="cd $DENO_DIR"
 alias cddev="cd $DEV_DIR"
 alias cdempowerme="cd $PROJECTS_DIR/EmpowerMe-Apple-Health"
-alias cdevergreen="cd $PROJECTS_DIR/evergreen-ui"
+alias cdevergreen="cd $PROJECTS_DIR/evergreen/evergreen-ui"
 alias cdflutter="cd $FLUTTER_DIR"
 # Goes to root directory of current git repo.
 #alias cdgitroot="cd `git rev-parse --git-dir`; cd .."
@@ -64,6 +65,7 @@ alias cdprojects="cd $PROJECTS_DIR"
 alias cdpython="cd $PYTHON_DIR"
 alias cdrust="cd $RUST_DIR"
 alias cdsqlite="cd $SQLITE_DIR"
+alias cdsvelte="cd $SVELTE_DIR"
 alias cdswift="cd $SWIFT_DIR"
 alias cdtraining="cd $TRAINING_DIR"
 alias cdts="cd $TS_DIR"
@@ -92,6 +94,7 @@ alias co="git checkout"
 alias cob="git checkout -b"
 alias graph="git log --graph --oneline"
 alias log="git log"
+alias rmb="$HOME/bin/rmb"
 alias sha="git rev-parse HEAD"
 alias status="git status"
 
