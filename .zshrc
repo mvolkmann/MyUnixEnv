@@ -1,3 +1,7 @@
+# Fig pre block. Keep at the top of this file.
+export PATH="${PATH}:${HOME}/.local/bin"
+eval "$(fig init zsh pre)"
+
 # Directory environment variables
 
 export DOCUMENTS_DIR=$HOME/Documents
@@ -37,7 +41,9 @@ export GITHUB_USER=mvolkmann
 
 # PATH modifications
 path=("/opt/homebrew/bin" $path)
+path=("${HOME}/bin" $path)
 path+=("${HOME}/.cargo/bin")
+path+=("${DEV_DIR}/google-cloud-sdk/bin")
 
 # cd aliases
 alias cdblog="cd $BLOG_DIR"
@@ -143,3 +149,6 @@ function pushn() {
 
 # Starship prompt
 eval "$(starship init zsh)"
+
+# Fig post block. Keep at the bottom of this file.
+eval "$(fig init zsh post)"
