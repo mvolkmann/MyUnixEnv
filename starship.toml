@@ -1,0 +1,47 @@
+#format = "$all" # default setting
+format = "$shell$custom$git_branch$git_status$directory$character "
+
+# Nushell controls the color of commands typed after the prompt.
+
+# Displays text, typically a single character,
+# based on the status of the previous command.
+[character]
+success_symbol = "[▶](green)" # normal prompt
+error_symbol = "[✗](bold red)" # used if previous command failed
+# error_symbol does not work in Nushell
+
+# Displays current directory.
+[directory]
+format = "[$path]($style)"
+style = "yellow"
+truncate_to_repo = false
+truncation_length = 3 # parent directories to show; default is 3
+truncation_symbol = "…/"
+
+# Displays current Git branch when in a directory of a Git repository.
+[git_branch]
+format = "[$symbol ](green)[$branch ]($style)"
+style = "italic green"
+symbol = ""
+
+# Displays status of Git repository when in a directory of a Git repository.
+[git_status]
+format = "[$all_status$ahead_behind]($style)"
+ahead = "⇡ $count "
+behind = "⇣ $count "
+deleted = "🗑 $count "
+diverged = " $count "
+stashed = "📦 $count "
+modified = "פֿ $count "
+staged = '[ $count ](green)'
+renamed = " $count "
+untracked = "🤷 ‍$count "
+style = "bold red"
+
+[shell]
+disabled = false
+bash_indicator = "🚀"
+fish_indicator = "🐠"
+nu_indicator = "🦀"
+zsh_indicator = "🧙"
+
