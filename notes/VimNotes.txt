@@ -455,7 +455,7 @@ EasyMotion
 Echo
 - :ec[ho] expr ...
   * starts a new line and outputs each expression with a space
-    between each in the message area below the status line
+    between each in the message area below the status line
   * expressions must evaluate to strings
   * strings can contain \n for newlines to output multiple lines
 - :echon expr ...
@@ -762,9 +762,9 @@ Modes
   * visual block mode example
     - move to block upper-left
     - press ctrl-v
-    - move to block lower-right
+    - move to block lower-right
     - press c
-    - enter replacement text
+    - enter replacement text
     - press esc
   * to select the content of a tag or the start, end, and content
     place the cursor on either tag or in the content
@@ -921,7 +921,7 @@ Options
   * nu[mber] - boolean; adds line numbers
     - defaults to off
     - relativenumber or rnu shows line numbers relative to line with cursor
-      to help determine count for vertical motion commands
+      to help determine count for vertical motion commands
   * numberwidth or nuw - value is width of line number column
     - defaults to 4; minimum is 1; maximum is 10
   * wrap - boolean; wraps display of lines longer than window width
