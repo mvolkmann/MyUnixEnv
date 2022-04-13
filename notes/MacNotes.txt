@@ -5,6 +5,9 @@ MacNotes.txt
     - make full backup of old computer on an external drive using SuperDuper!
     - copy files from external drive to new computer
     - install SuperDuper! on new computer and register it
+  - Finder
+    - select View ... Show Status Bar
+      to see number of files and total size of files in selected directory
   - Music app
     - deauthorize on old computer
     - authorize on new computer
@@ -32,11 +35,17 @@ MacNotes.txt
       - in "Keyboard" tab
         * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
         * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
+      - in "Sharing" tab
+        * modify "Computer Name"
+      - in "Shortcuts" tab
+        * check "Use keyboard Navigation to move focus between controls"
       - in "Text" tab
         * uncheck "Add period with double-space"
     * select "Sharing"
       - uncheck "AirPlay Receiver" because it uses port 5000
         which can interfere with local web app development
+    * select "Trackpad"
+      - make "Tracking speed" faster
   - enter Apple ID in iTunes to get access to iTunes Match
   - to make fish the default shell
     - sudo vim /etc/shells
@@ -78,6 +87,7 @@ MacNotes.txt
       - GitLens - Git supercharged
       - Pretter - Code formatter
       - Svelte for VS Code
+      - Thunder Client
       - Todo Tree
       - TOML Language Support (was used for Nushell config)
       - Version Lens
