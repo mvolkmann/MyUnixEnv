@@ -156,6 +156,10 @@ Find
   find -name '*.{type}' | xargs grep "{string}"
   You can also use
   find -name '*.{type}' -exec grep "{string}" {} \;
+  Better yet, use ripgrep like this:
+  rg "{string}" **/*.{type}
+  The quotes around the string are only needed if
+  the string contains spaces or other special characters.
 - If only files in the current directory are needed,
   grep "{string}" *.{type}
 - When -name is omitted, it defaults to -name '*'.
