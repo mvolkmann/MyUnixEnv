@@ -79,7 +79,11 @@ MacNotes.txt
       - uncheck "AirPlay Receiver" because it uses port 5000
         which can interfere with local web app development
     * select "Trackpad"
-      - make "Tracking speed" faster
+      - Point & Click tab
+        - make "Tracking speed" faster
+      - More Gestures
+        - uncheck "Swipe between pages" because
+          you often accidentally trigger this
   - enter Apple ID in iTunes to get access to iTunes Match
   - to make fish the default shell
     - sudo vim /etc/shells
@@ -117,6 +121,8 @@ MacNotes.txt
     - install these extensions
       - Awesome Flutter Snippets
       - Dart
+      - Deno
+        - and in Settings check "Deno: enable"
       - Flutter
       - GitLens - Git supercharged
       - Pretter - Code formatter
