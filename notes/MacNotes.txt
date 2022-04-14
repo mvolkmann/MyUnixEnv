@@ -5,7 +5,21 @@ MacNotes.txt
     - make full backup of old computer on an external drive using SuperDuper!
     - copy files from external drive to new computer
     - install SuperDuper! on new computer and register it
+  - Desktop
+    - toggle display of Desktop by pressing cmd-f3
+    - declutter by right-clicking the Desktop and selecting "Use Stacks"
+      which groups like files (such as screenshots) under a fake folder (stack)
+    - click a stack to show its contents and click again to collapse it 
   - Finder
+    - select Finder ... Preferences...
+      - General
+        - in "Show these items on the desktop",
+          check all but "Connected Servers"
+      - Sidebar
+        - customize what is shown in the sidebar
+      - Advanced
+        - check "Show all filename extensions"
+        - change "When performing a search" to "Search the Current Folder" 
     - select View ... Show Status Bar
       to see number of files and total size of files in selected directory
   - Music app
@@ -27,21 +41,41 @@ MacNotes.txt
     * tree
     * tmux
     * vim (to get latest version)
+  - Safari
+    - select Safari ... Prefererences ... Advanced
+      - to enable the Develop menu for debugging JavaScript,
+        check "Show Develop menu in menu bar"
+    - select View ... Show Status Bar to display the URL at the bottom
+      when hovering over a link
+    - customize what is initially shown in a new tab
+      - open a new tab
+      - click the options button in the lower-right
+      - uncheck all the checkboxes except "Favorites", "Reading List",
+        and "iCloud Tabs" (to see what is open on iPad) 
+      - Favorites provides a different way to navigate to a bookmark
+        after opening a new browser tab 
+        - click on favorite groups to open them and select a bookmark
+      - select a background like "Big Sur Graphic.heic" in "Desktop Pictures"
+  - screenshots
+    - turn off "Show Floating Thumbnail"
+      so the file is available immediately in Desktop
+      by pressing cmd-shift-5, click Options, and unchecking it
   - System Preferences
     * in "View" menu select "Organize Alphabetically"
-    * select "Battery" and verify that "Optimized Battery Charging" is checked
-    * select "Dock & Menu Bar" select "Automatically hide and show the Dock"
+    * select "Battery"
+      - verify that "Optimized Battery Charging" is checked
+    * select "Dock & Menu Bar"
+      - select "Automatically hide and show the Dock"
     * select "Keyboard"
       - in "Keyboard" tab
         * set "Key Repeat" to Fast and "Delay Until Repeat" to Short
         * click "Modifier Keys..." and change "Caps Lock Key" to "^ Control"
-      - in "Sharing" tab
-        * modify "Computer Name"
-      - in "Shortcuts" tab
-        * check "Use keyboard Navigation to move focus between controls"
       - in "Text" tab
         * uncheck "Add period with double-space"
+      - in "Shortcuts" tab
+        * check "Use keyboard Navigation to move focus between controls"
     * select "Sharing"
+      - modify "Computer Name"
       - uncheck "AirPlay Receiver" because it uses port 5000
         which can interfere with local web app development
     * select "Trackpad"
@@ -456,11 +490,6 @@ File Sharing
   * select Sharing
   * check "File Sharing"
   * add files and folders to Public directory in home directory
-
-Safari
-- to enable the Develop menu for debugging JavaScript
-  * open a Terminal window
-  * enter "defaults write com.apple.Safari IncludeDebugMenu 1"
 
 Internet Sharing
 - can set up a wireless hotspot from a Mac with an ethernet connection
