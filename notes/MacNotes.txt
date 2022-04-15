@@ -120,6 +120,7 @@ MacNotes.txt
       defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
     - install these extensions
       - Awesome Flutter Snippets
+      - Code Spell Checker
       - Dart
       - Deno
         - and in Settings check "Deno: enable"
