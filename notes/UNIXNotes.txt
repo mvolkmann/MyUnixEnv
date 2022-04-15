@@ -157,7 +157,7 @@ Find
   You can also use
   find -name '*.{type}' -exec grep "{string}" {} \;
   Better yet, use ripgrep like this:
-  rg "{string}" **/*.{type}
+  rg "{string}" --type={type} OR rg "{string}" **/*.{type}
   The quotes around the string are only needed if
   the string contains spaces or other special characters.
 - If only files in the current directory are needed,
