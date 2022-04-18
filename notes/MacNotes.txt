@@ -7,7 +7,7 @@ MacNotes.txt
     - install SuperDuper! on new computer and register it
   - Desktop
     - toggle display of Desktop by pressing cmd-f3
-    - declutter by right-clicking the Desktop and selecting "Use Stacks"
+    - de-clutter by right-clicking the Desktop and selecting "Use Stacks"
       which groups like files (such as screenshots) under a fake folder (stack)
     - click a stack to show its contents and click again to collapse it 
   - Finder
@@ -42,7 +42,7 @@ MacNotes.txt
     * tmux
     * vim (to get latest version)
   - Safari
-    - select Safari ... Prefererences ... Advanced
+    - select Safari ... Preferences ... Advanced
       - to enable the Develop menu for debugging JavaScript,
         check "Show Develop menu in menu bar"
     - select View ... Show Status Bar to display the URL at the bottom
@@ -126,7 +126,8 @@ MacNotes.txt
         - and in Settings check "Deno: enable"
       - Flutter
       - GitLens - Git supercharged
-      - Pretter - Code formatter
+      - Prettier - Code formatter
+      - Svelte 3 Snippets
       - Svelte for VS Code
       - Thunder Client
       - Todo Tree
@@ -210,7 +211,7 @@ MacNotes.txt
     * F10 to see all windows of the current application in Expose mode
   - Finder
     * Cover Flow to quickly flip through images
-    * Quick Look (select a file and press spacebar
+    * Quick Look (select a file and press space bar
       to quickly view file contents)
       * for plugins to support special file types, see
         https://github.com/sindresorhus/quick-look-plugins
@@ -358,7 +359,7 @@ MacNotes.txt
       - select all these and use "Batch Change" from the context menu
         to set their description to an empty string
 * iTunes
-  - to play or pause, press spacebar
+  - to play or pause, press space bar
   - when trying to burn a playlist to a CD, if Parallels is running
     you will get the message "The disc burner is busy."
   - to move music from iTunes under Windows
@@ -405,7 +406,7 @@ MacNotes.txt
     * download driver from http://www.samsung.com/support/
       - enter "CLP-510" for model number,
         select "Computers & Related Products" for product category,
-        and click the "GO" buttton
+        and click the "GO" button
       - click the "Driver" tab
       - click the zip icon in the "MAC OS" row
       - double-click the downloaded installer
@@ -428,7 +429,7 @@ MacNotes.txt
   - full screen: cmd-shift-3
   - selected area: cmd-shift-4
   - selected area to clipboard: cmd-ctrl-shift-4
-  - selected window: cmd-shift-4 spacebar
+  - selected window: cmd-shift-4 space bar
   - to capture popup windows that disappear when the cmd key is pressed,
     use Applications/Utilities/Grab.app and
     select the Capture...Timed Screen menu option
