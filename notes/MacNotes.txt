@@ -60,6 +60,12 @@ MacNotes.txt
     - turn off "Show Floating Thumbnail"
       so the file is available immediately in Desktop
       by pressing cmd-shift-5, click Options, and unchecking it
+  - shortcuts
+    - install the Cheatsheet app from https://www.mediaatelier.com/CheatSheet/
+    - while in any app, hold down the command key for a couple of seconds
+      to see a popup describing every shortcut key supported by the app
+    - a shortcut can be invoked from there by typing the rest
+      of the key sequence or by clicking its description 
   - System Preferences
     * in "View" menu select "Organize Alphabetically"
     * select "Battery"
@@ -106,6 +112,8 @@ MacNotes.txt
     - disable Window Snapping
       -  select Preferences ... Window Snapping & Moving and uncheck "Enable window snapping"
   - install ImageOptim
+    - drag this app to the dock
+    - compress images by dragging them onto the dock icon
   - install Moom
   - install Node.js
   - install n with `npm install -g n`
