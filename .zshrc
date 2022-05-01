@@ -71,6 +71,7 @@ alias cdrust="cd $RUST_DIR"
 alias cdsqlite="cd $SQLITE_DIR"
 alias cdsvelte="cd $SVELTE_DIR"
 alias cdswift="cd $SWIFT_DIR"
+alias cdtalks="cd $TRAINING_DIR/talks"
 alias cdtraining="cd $TRAINING_DIR"
 alias cdts="cd $TS_DIR"
 
@@ -150,3 +151,7 @@ eval "$(starship init zsh)"
 
 # Fig post block. Keep at the bottom of this file.
 . "$HOME/.fig/shell/zshrc.post.zsh"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/volkmannm/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

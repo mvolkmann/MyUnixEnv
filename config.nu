@@ -69,6 +69,7 @@ alias cdrust = cd $env.RUST_DIR
 alias cdsqlite = cd $env.SQLITE_DIR
 alias cdsvelte = cd $env.SVELTE_DIR
 alias cdswift = cd $env.SWIFT_DIR
+alias cdtalks = cd $'($env.TRAINING_DIR)/talks'
 alias cdtraining = cd $env.TRAINING_DIR
 alias cdts = cd $env.TS_DIR
 
