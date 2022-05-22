@@ -89,6 +89,8 @@ alias findjs='find3 js*'
 alias findjs2='find4 js*'
 alias findjson='find3 json'
 alias findscss='find3 scss'
+alias findsvelte='find3 svelte'
+alias findswift='find3 swift'
 alias findts='find3 ts*'
 
 # Git aliases
@@ -149,9 +151,9 @@ function pushn() {
 # Starship prompt
 eval "$(starship init zsh)"
 
-# Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/zshrc.post.zsh"
-
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/volkmannm/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/zshrc.post.zsh"

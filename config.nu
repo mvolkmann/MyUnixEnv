@@ -87,6 +87,8 @@ alias findjs = find3 js*
 alias findjs2 = find4 js*
 alias findjson = find3 json
 alias findscss = find3 scss
+alias findsvelte = find3 svelte
+alias findswift = find3 swift
 alias findts = find3 ts*
 
 # Git aliases
