@@ -14,6 +14,7 @@ Models I Have
   * Versalog 1460
 - Sterling
   * Precision (Ron Beckmann used in high school chemsitry)
+  * NO. 587 6 inch plastic in Southwestern Bell sleeve with instructions
 - Think Geek Nanoline 1337
   * patterned after a Pickett model
   * threw this away because it would not slide - horrible product!
@@ -164,22 +165,24 @@ Operations
   * ex. find cube root of 5268
     - move cursor to 5.27 on K
     - read result from D (1.74 -> 17.4)
-- multiplication
-  * move left or right 1 on C to x on D
-    - using the right 1 on C is like determining where you'd be to the right
-      if another slide rule were placed there
-      * ex. 9 + 8 = 17; 9 - (10 - 8) = 7 where the next slide rule length = 10
-  * move cursor to y on C
-  * read x*y from cursor on D
-  * alternative #1 - turning multiplication into equivalent division
+- multiplication (x * y)
+  * using A and B scales (less precise than using C and D scales)
+    - move left or right 1 on B to x on A (not 0.x!)
+    - move cursor to y on B
+    - read result from A
+  * using C and D scales
+    * move left or right 1 on C to x on D
+      - using the right 1 on C is like determining where you'd be to the right
+        if another slide rule were placed there
+        * ex. 9 + 8 = 17; 9 - (10 - 8) = 7 where the next slide rule length = 10
+    * move cursor to y on C  
+    * read result from cursor on D
+  * turning multiplication into equivalent division
     - move cursor to x on D
     - move y on CI to cursor
     - move cursor to whichever end of CI is on the rule
     - read x*y from cursor on D
     - works because a/b = a x 1/b
-  * alternative #2
-    - use A & B instead of C & D to avoid running off end,
-       but result has less accuracy
   * special case: multiplication by pi
     - move cursor to x on C or D
     - read result from cursor on DF
