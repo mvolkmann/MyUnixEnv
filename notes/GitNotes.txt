@@ -258,6 +258,8 @@ Branches
   * shared, remote
     - used by multiple developers
     - exit in many local repos and the remote repo
+    - recommended configuration
+      * git config --global --add --bool push.autoSetupRemote true
     - to create on remote repo
       * git push origin {branch-name}
 - example
