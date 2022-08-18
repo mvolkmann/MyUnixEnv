@@ -342,6 +342,8 @@ Stash
   (can differ from the branch where the stash was created)
   git stash apply
   * this doesn't delete the stash from the queue
+- git stash pop
+  * like "git stash apply", but does delete the stash from the queue
 - to delete the most recent stash
   git stash drop
 - to delete all stashes
