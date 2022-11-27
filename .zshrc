@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Directory environment variables
 
 export DOCUMENTS_DIR=$HOME/Documents
@@ -126,6 +126,7 @@ alias pgstop="pg_ctl -D /usr/local/var/postgres stop -m fast"
 alias cls="clear"
 
 # Kill the process listening on a given port.
+alias fixsf="fix-swift-format"
 alias klp="kill-listening-process"
 alias nr="npm run"
 alias py="python3"
@@ -156,4 +157,4 @@ export PATH="/Users/volkmannm/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

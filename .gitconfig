@@ -20,3 +20,5 @@
 	defaultBranch = main
 [push]
 	autoSetupRemote = true
+[pager]
+	branch = false

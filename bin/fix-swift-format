@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This fixes the use of SwiftFormat in Xcode.
+# See WARNING at
+# https://mvolkmann.github.io/blog/topics/#/blog/swift/SwiftFormat/?v=1.0.20
+
+PATH=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support:"$PATH"
+lsregister -f /Applications/Xcode.app
