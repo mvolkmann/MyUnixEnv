@@ -32,12 +32,17 @@ export SVELTE_DIR=$DEV_DIR/svelte
 export SWIFT_DIR=$LANG_DIR/swift
 export TS_DIR=$LANG_DIR/ts
 
+# For Fastlane
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # Other environment variables
 export GITHUB_USER=mvolkmann
 
 # PATH modifications
-path=("/opt/homebrew/bin" $path)
 path=("${HOME}/bin" $path)
+path=("/opt/homebrew/bin" $path)
+path=("/opt/homebrew/opt/ruby/bin" $path)
 path+=("${HOME}/.cargo/bin")
 path+=("${DEV_DIR}/google-cloud-sdk/bin")
 
@@ -52,7 +57,7 @@ alias cdempowerme="cd $PROJECTS_DIR/EmpowerMe-Apple-Health"
 alias cdevergreen="cd $PROJECTS_DIR/evergreen/evergreen-ui"
 alias cdflutter="cd $FLUTTER_DIR"
 # Goes to root directory of current git repo.
-#alias cdgitroot="cd `git rev-parse --git-dir`; cd .."
+alias cdgitroot="cd \`git rev-parse --git-dir\`; cd .."
 alias cdgo="cd $GO_DIR"
 alias cdhtml="cd $HTML_DIR"
 alias cdjava="cd $JAVA_DIR"
@@ -64,7 +69,7 @@ alias cdnotes="cd ~/MyUnixEnv/notes"
 alias cdoci="cd $OCI_DIR"
 alias cdpostgres="cd $POSTGRES_DIR"
 alias cdprojects="cd $PROJECTS_DIR"
-alias cdpython="cd $PYTHON_DIR"
+alias cdpython="cd $PYTHON_DIR":w
 alias cdrust="cd $RUST_DIR"
 alias cdsqlite="cd $SQLITE_DIR"
 alias cdsvelte="cd $SVELTE_DIR"
@@ -149,8 +154,4 @@ function pushn() {
 
 # Starship prompt
 eval "$(starship init zsh)"
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/volkmannm/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
