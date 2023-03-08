@@ -1,13 +1,5 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
 #!/bin/bash
 #echo running .bashrc
-
-# This doesn't work on Mac, but does on Raspberry Pi.
-#xmodmap ~/.xmodmap
 
 # Source global definitions.
 if [ -f /etc/bashrc ]; then
@@ -164,9 +156,3 @@ source "$HOME/.cargo/env"
 
 eval "$(starship init bash)"
 
-source /Users/mark/.config/broot/launcher/bash/br
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####

@@ -56,8 +56,9 @@ alias cddev="cd $DEV_DIR"
 alias cdempowerme="cd $PROJECTS_DIR/EmpowerMe-Apple-Health"
 alias cdevergreen="cd $PROJECTS_DIR/evergreen/evergreen-ui"
 alias cdflutter="cd $FLUTTER_DIR"
-# Goes to root directory of current git repo.
-alias cdgitroot="cd \`git rev-parse --git-dir\`; cd .."
+# Goes to root directory of current git repository
+# (replaced by cdgitroot function below).
+# alias cdgitroot="cd \`git rev-parse --git-dir\`; cd .."
 alias cdgo="cd $GO_DIR"
 alias cdhtml="cd $HTML_DIR"
 alias cdjava="cd $JAVA_DIR"
@@ -124,6 +125,9 @@ alias mysqladmin=/usr/local/mysql/bin/mysqladmin
 # PostgreSQL aliases
 alias pgstart="pg_ctl -D /usr/local/var/postgres start"
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -m fast"
+
+# Warp aliases
+alias cb="clear blocks"
 
 # Other aliases
 alias cls="clear"
