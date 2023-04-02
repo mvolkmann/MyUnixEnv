@@ -187,10 +187,6 @@ let mapleader = ','
 " Press ctrl-n and ctrl-p to traverse list of matching words.
 inoremap <leader>d <c-x><c-k>
 
-" Avoid using the esc key in preparation for new MacBooks.
-inoremap jk <esc>
-inoremap kj <esc>
-
 " edit .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 

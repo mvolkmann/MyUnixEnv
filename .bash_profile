@@ -183,28 +183,3 @@ export SECURITY_TOKEN_ENCRYPTION_KEY='kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z'
 . ~/.bashrc
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/mark/.sdkman"
-[[ -s "/Users/mark/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/mark/.sdkman/bin/sdkman-init.sh"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/mark/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/mark/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/mark/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/mark/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-source /Users/mark/.config/broot/launcher/bash/br
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####

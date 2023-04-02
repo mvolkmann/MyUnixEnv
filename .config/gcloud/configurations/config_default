@@ -1,7 +1,3 @@
 [core]
-account = volkmannm@objectcomputing.com
-project = ocismartdevice
-
-[compute]
-zone = us-central1-b
+project = oci-health-data
 

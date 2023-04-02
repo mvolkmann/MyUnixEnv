@@ -131,6 +131,7 @@ alias cb="clear blocks"
 
 # Other aliases
 alias cls="clear"
+alias vim="nvim"
 
 # Kill the process listening on a given port.
 alias fixsf="fix-swift-format"
