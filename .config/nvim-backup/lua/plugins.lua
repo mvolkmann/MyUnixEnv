@@ -30,13 +30,8 @@ return require("packer").startup(function(use)
   }
 
   -- Lua Snip
-  use({
-    "L3MON4D3/LuaSnip",
-    -- use latest release.
-    tag = "v<CurrentMajor>.*",
-    -- install optional jsregexp package
-    run = "make install_jsregexp"
-  })
+  use "L3MON4D3/LuaSnip"
+  use "saadparwaiz1/cmp_luasnip"
 
   -- nightfly Theme
   use { "bluz71/vim-nightfly-colors", as = "nightfly" }

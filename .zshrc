@@ -41,6 +41,7 @@ export GITHUB_USER=mvolkmann
 
 # PATH modifications
 path=("${HOME}/bin" $path)
+path=("${HOME}/.local/bin" $path)
 path=("/opt/homebrew/bin" $path)
 path=("/opt/homebrew/opt/ruby/bin" $path)
 path+=("${HOME}/.cargo/bin")

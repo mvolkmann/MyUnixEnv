@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/volkmannm/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/Users/volkmannm/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
   ["lsp-zero.nvim"] = {
     loaded = true,
     path = "/Users/volkmannm/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
