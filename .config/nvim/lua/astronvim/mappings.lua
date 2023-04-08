@@ -15,11 +15,23 @@ local sections = {
   S = { desc = "󱂬 Session" },
   t = { desc = " Terminal" },
 }
-if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.name = opts.name:gsub("^.* ", "") end, sections) end
+
+if not vim.g.icons_enabled then
+  vim.tbl_map(
+    function(opts)
+      opts.name = opts.name:gsub("^.* ", "")
+    end,
+    sections
+  )
+end
 
 -- Normal --
 -- Standard Operations
-maps.n["j"] = { "v:count ? 'j' : 'gj'", expr = true, desc = "Move cursor down" }
+maps.n["j"] = {
+  "v:count ? 'j' : 'gj'",
+  expr = true,
+  desc = "Move cursor down"
+}
 maps.n["k"] = { "v:count ? 'k' : 'gk'", expr = true, desc = "Move cursor up" }
 maps.v["j"] = maps.n.j
 maps.v["k"] = maps.n.k

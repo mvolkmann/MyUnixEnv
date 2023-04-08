@@ -19,11 +19,12 @@ return {
   },
   build = ":TSUpdate",
   opts = {
+    autotag = { enable = true },
+    context_commentstring = { enable = true, enable_autocmd = false },
+    ensure_installed = { "javascript", "lua", "typescript" },
     highlight = { enable = true },
     incremental_selection = { enable = true },
     indent = { enable = true },
-    autotag = { enable = true },
-    context_commentstring = { enable = true, enable_autocmd = false },
   },
   config = require "plugins.configs.nvim-treesitter",
 }
