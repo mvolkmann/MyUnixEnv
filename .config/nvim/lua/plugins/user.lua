@@ -1,7 +1,6 @@
 -- This does get executed, but configuring plugins here doesn't work for me.
 -- I can configure them in their own files though.
 -- For example, see `hop.lua` and todo-comments.lua` in this same directory.
-print("user.lua entered")
 return {
   --[[
   {
