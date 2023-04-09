@@ -48,6 +48,7 @@ path+=("${HOME}/.cargo/bin")
 path+=("${DEV_DIR}/google-cloud-sdk/bin")
 
 # cd aliases
+alias cdarch="cd $PROJECTS_DIR/ArchDesign/ArchDesign"
 alias cdblog="cd $BLOG_DIR"
 alias cdcss="cd $CSS_DIR"
 alias cddart="cd $DART_DIR"
@@ -140,6 +141,9 @@ alias klp="kill-listening-process"
 alias nr="npm run"
 alias py="python3"
 alias python="python3"
+
+# JavaScript
+export NODE_ENV=development
 
 function cdgitroot() {
   cd `git rev-parse --git-dir`
