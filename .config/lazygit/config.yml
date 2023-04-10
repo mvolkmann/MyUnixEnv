@@ -1,0 +1,3 @@
+git:
+  paging:
+    pager: ydiff -p cat -s --wrap --width={{columnWidth}}

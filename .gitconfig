@@ -1,16 +1,26 @@
-[credential]
-	helper = osxkeychain
-	UseHttpPath = true
 [alias]
 	br = branch
 	ci = commit
 	co = checkout
 	logg = log --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
-[user]
-	name = R. Mark Volkmann
-	email = r.mark.volkmann@gmail.com
-[pull]
-	rebase = false
+[core]
+	pager = delta
+[credential]
+	helper = osxkeychain
+	UseHttpPath = true
+[delta]
+  features = decorations
+	side-by-side = true
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+[delta "interactive"]
+    keep-plus-minus-markers = false
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -18,7 +28,14 @@
 	required = true
 [init]
 	defaultBranch = main
-[push]
-	autoSetupRemote = true
+[interactive]
+    diffFilter = delta --color-only --features=interactive
 [pager]
 	branch = false
+[pull]
+	rebase = false
+[push]
+	autoSetupRemote = true
+[user]
+	name = R. Mark Volkmann
+	email = r.mark.volkmann@gmail.com
