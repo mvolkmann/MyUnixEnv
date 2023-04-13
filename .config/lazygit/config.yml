@@ -1,4 +1,6 @@
 git:
   paging:
-    colorArg: always
-    pager: delta --dark --paging=never --syntax-theme base16-256 --diff-so-fancy
+    useConfig: true
+gui:
+  showIcons: true
+
