@@ -8,3 +8,7 @@ gui:
   showIcons:
     true
     # sidePanelWidth: 0.2 # gives more space to show side-by-side
+keybinding:
+  universal:
+    quit-alt1: "<esc>" # This does not work.
+    # quit-alt1: "<c-c>" # This works!
