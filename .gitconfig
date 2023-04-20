@@ -9,6 +9,7 @@
 	helper = osxkeychain
 	UseHttpPath = true
 [delta]
+	line-numbers = true
 	side-by-side = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
