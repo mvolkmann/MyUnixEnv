@@ -12,7 +12,7 @@ local sections = {
   b = { desc = "󰓩 Buffers" },
   bs = { desc = "󰒺 Sort Buffers" },
   d = { desc = " Debugger" },
-  g = { desc = " Git" },
+  g = { desc = "󰊢 Git" },
   S = { desc = "󱂬 Session" },
   t = { desc = " Terminal" },
 }
@@ -20,8 +20,8 @@ if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.desc = opts.desc
 
 -- Normal --
 -- Standard Operations
-maps.n["j"] = { "v:count == 0 || mode(1)[0:1] == 'no' ? 'j' : 'gj'", expr = true, desc = "Move cursor down" }
-maps.n["k"] = { "v:count == 0 || mode(1)[0:1] == 'no' ? 'k' : 'gk'", expr = true, desc = "Move cursor up" }
+maps.n["j"] = { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
+maps.n["k"] = { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
@@ -183,6 +183,18 @@ if is_available "neovim-session-manager" then
   maps.n["<leader>Sf"] = { "<cmd>SessionManager! load_session<cr>", desc = "Search sessions" }
   maps.n["<leader>S."] =
     { "<cmd>SessionManager! load_current_dir_session<cr>", desc = "Load current directory session" }
+end
+if is_available "resession.nvim" then
+  maps.n["<leader>S"] = sections.S
+  maps.n["<leader>Sl"] = { function() require("resession").load "Last Session" end, desc = "Load last session" }
+  maps.n["<leader>Ss"] = { function() require("resession").save() end, desc = "Save this session" }
+  maps.n["<leader>St"] = { function() require("resession").save_tab() end, desc = "Save this tab's session" }
+  maps.n["<leader>Sd"] = { function() require("resession").delete() end, desc = "Delete a session" }
+  maps.n["<leader>Sf"] = { function() require("resession").load() end, desc = "Load a session" }
+  maps.n["<leader>S."] = {
+    function() require("resession").load(vim.fn.getcwd(), { dir = "dirsession" }) end,
+    desc = "Load current directory session",
+  }
 end
 
 -- Package Manager
@@ -380,7 +392,7 @@ maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
 maps.n["<leader>ui"] = { ui.set_indent, desc = "Change indent setting" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
-maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens refresh" }
+maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
 maps.n["<leader>uN"] = { ui.toggle_ui_notifications, desc = "Toggle UI notifications" }
 maps.n["<leader>up"] = { ui.toggle_paste, desc = "Toggle paste mode" }
