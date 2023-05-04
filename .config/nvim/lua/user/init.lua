@@ -13,7 +13,6 @@ return {
     vim.api.nvim_set_hl(
       0, -- global highlight group
       'SpellBad',
-      -- { bg = "gray", fg = "red", underline = true }
       { fg = "red", underline = true }
     )
   end

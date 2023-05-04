@@ -3,6 +3,7 @@ return {
   n = {
     ["<leader>-"] = { "<cmd>split<cr>", desc = "Horizontal Split" },
     ["<C-s>"] = { "<cmd>write<cr>", desc = "Write" },
+    ["gb"] = { "<cmd>GitBlameToggle<cr>", desc = "Git Blame Toggle" },
     ["sj"] = { "<cmd>TSJToggle<cr>", desc = "Toggle Split/Join" }
   },
   i = {

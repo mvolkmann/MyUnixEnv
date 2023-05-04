@@ -1,0 +1,11 @@
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --side-by-side
+    useConfig: true
+gui:
+  showIcons: true
+keybinding:
+  universal:
+    quit-alt1: "<esc>" # This does not work.
+    # quit-alt1: "<c-c>" # This works!
