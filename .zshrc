@@ -133,6 +133,7 @@ alias cb="clear blocks"
 
 # Other aliases
 alias cls="clear"
+alias v="nvim"
 alias vim="nvim"
 
 # Kill the process listening on a given port.
@@ -161,6 +162,10 @@ function push() {
 function pushn() {
   git push --no-verify origin $(git rev-parse --abbrev-ref HEAD)
 }
+
+# Lua setup
+
+LUA_PATH="${HOME}/lua/?.lua;;"
 
 # Starship prompt
 eval "$(starship init zsh)"
