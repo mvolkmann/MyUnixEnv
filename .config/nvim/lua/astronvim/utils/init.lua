@@ -117,7 +117,12 @@ end
 --- Trigger an AstroNvim user event
 ---@param event string The event name to be appended to Astro
 function M.event(event)
-  vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "Astro" .. event }) end)
+  vim.schedule(function()
+    -- I commented this out because I was getting the following error:
+    -- Error detected while processing User Autocommands for "AstroMasonLspSetup"..FileType Autocommands for "*":
+    -- Error executing lua callback: vim/keymap.lua:0: E31: No such mapping
+    -- vim.api.nvim_exec_autocmds("User", { pattern = "Astro" .. event })
+  end)
 end
 
 --- Open a URL under the cursor with the current operating system
@@ -253,7 +258,7 @@ end
 
 --- regex used for matching a valid URL/URI string
 local url_matcher =
-  "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 --- Delete the syntax matching rules for URLs/URIs if set
 function M.delete_url_match()

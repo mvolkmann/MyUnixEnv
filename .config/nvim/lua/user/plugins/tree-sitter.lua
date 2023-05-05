@@ -25,7 +25,6 @@ local treesitter = {
   end
 }
 
---[=[
 treesitter.config = function()
   require('orgmode').setup_ts_grammar()
 
@@ -157,5 +156,5 @@ treesitter.config = function()
   })
   return treesitter
 end
-]=]
+
 return treesitter
