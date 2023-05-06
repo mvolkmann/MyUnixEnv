@@ -165,7 +165,7 @@ function pushn() {
 
 # Lua setup
 
-LUA_PATH="${HOME}/lua/?.lua;;"
+export LUA_PATH="${HOME}/lua/?.lua;;"
 
 # Starship prompt
 eval "$(starship init zsh)"

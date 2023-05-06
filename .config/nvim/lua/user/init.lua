@@ -2,9 +2,9 @@
 -- and calling vim.api.nvim_create_user_command here,
 -- but I can't get LUA_PATH to find it!
 -- See https://www.reddit.com/r/lua/comments/1390uvm/lua_path/
--- require "autorun" -- in ~/lua which is LUA_PATH
+require "autorun" -- in ~/lua which is LUA_PATH
 
-local function attach_to_buffer(bufnr, pattern, command)
+--[[ local function attach_to_buffer(bufnr, pattern, command)
   -- read ":help autocmd"
   vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("RMV", { clear = true }),
@@ -40,12 +40,37 @@ vim.api.nvim_create_user_command(
     local pattern = vim.fn.input "File Pattern: "
     local command = vim.fn.input "Command: "
     local words = vim.split(command, " ")
-    local filePath = nvim_buf_get_name(0)
+    local filePath = vim.api.vim_buf_get_name(0)
     local pathParts = vim.split(filePath, "/")
     local fileName = pathParts[#pathParts]
     print("fileName =", fileName)
     print("words =", words)
     attach_to_buffer(tonumber(bufnum), pattern, words)
+  end,
+  {} -- options
+)
+]]
+local function buf_name()
+  local filePath = vim.fn.expand("%: p")
+  local pathParts = vim.split(filePath, "/")
+  local fileName = pathParts[#pathParts]
+  return fileName
+end
+
+vim.api.nvim_create_user_command(
+  "TermRun",
+  function()
+    for _, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_loaded(buf_hndl) then
+        print("buffer =", buf_hndl)
+        -- TODO: Get the name of each buffer.
+        -- TODO: Can you determine if it is a terminal?
+      end
+    end
+
+    local command = "lua " .. buf_name() .. "\\n"
+    vim.cmd("vsplit | terminal")
+    vim.cmd(':call jobsend(b:terminal_job_id, "' .. command .. '")')
   end,
   {} -- options
 )
