@@ -1,5 +1,3 @@
-require "autorun" -- in ~/lua which is LUA_PATH
-
 local function buf_name()
   local filePath = vim.fn.expand("%: p")
   local pathParts = vim.split(filePath, "/")
@@ -7,6 +5,7 @@ local function buf_name()
   return fileName
 end
 
+-- This runs a Lua program in a new terminal.
 vim.api.nvim_create_user_command(
   "TermRun",
   function()
@@ -24,6 +23,18 @@ vim.api.nvim_create_user_command(
   end,
   {} -- options
 )
+
+-- Supposedly multiple plugins can be loaded this way rather than
+-- creating a separate .lua file for each one in the
+-- lua/user/plugins directory, but I could not get this to work.
+--[[ require("lazy").setup({
+  {
+    "mvolkmann/greet.nvim",
+    config = function()
+      require "greet"
+    end
+  }
+}) ]]
 
 return {
   -- colorscheme = "astrodark"
