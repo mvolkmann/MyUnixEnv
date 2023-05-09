@@ -24,7 +24,7 @@ vim.api.nvim_create_user_command(
   {} -- options
 )
 
-print("requiring lazy")
+--[[ Not sure why this doesn't work.
 require("lazy").setup({
   {
     "mvolkmann/greet.nvim",
@@ -33,7 +33,7 @@ require("lazy").setup({
     end
   }
 })
-print("required lazy")
+]]
 
 return {
   -- colorscheme = "astrodark"
