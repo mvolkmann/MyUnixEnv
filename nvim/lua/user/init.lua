@@ -24,7 +24,10 @@ vim.api.nvim_create_user_command(
   {} -- options
 )
 
---[[ Not sure why this doesn't work.
+-- Supposedly multiple plugins can be loaded this way rather than
+-- creating a separate .lua file for each one in the
+-- lua/user/plugins directory, but I could not get this to work.
+--[[
 require("lazy").setup({
   {
     "mvolkmann/greet.nvim",
