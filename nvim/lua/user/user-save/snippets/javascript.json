@@ -1,0 +1,16 @@
+{
+  "Log Entry": {
+    "prefix": "loge",
+    "body": [
+      "console.log('$TM_FILENAME $1: entered');"
+    ],
+    "description": "Log function entry"
+  },
+  "Log Variable": {
+    "prefix": "logv",
+    "body": [
+      "console.log('$TM_FILENAME $1: $2 =', $2);"
+    ],
+    "description": "Log variable to console"
+  }
+}

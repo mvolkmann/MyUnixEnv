@@ -32,10 +32,6 @@ export SVELTE_DIR=$DEV_DIR/svelte
 export SWIFT_DIR=$LANG_DIR/swift
 export TS_DIR=$LANG_DIR/ts
 
-# For AstroNvim
-# XDG stands for Cross-Desktop Group.
-export XDG_CONFIG_HOME=~/MyUnixEnv/xdg
-
 # For Fastlane
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

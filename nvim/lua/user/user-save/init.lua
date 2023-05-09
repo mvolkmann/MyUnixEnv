@@ -1,3 +1,5 @@
+print("HELLO!")
+
 local function buf_name()
   local filePath = vim.fn.expand("%: p")
   local pathParts = vim.split(filePath, "/")

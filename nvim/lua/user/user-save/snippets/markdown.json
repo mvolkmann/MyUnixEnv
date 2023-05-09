@@ -1,0 +1,14 @@
+{
+  "Anchor Target Blank": {
+    "prefix": "atb",
+    "body": ["{% aTargetBlank \"$1\", \"$2\" %}"],
+    "description": "Markdown 11ty aTargetBlank shortcode"
+  },
+  "Image": {
+    "prefix": "img",
+    "body": [
+      "<img alt=\"$1\" style=\"width: 50%\"\n  src=\"/blog/assets/$2.png?v={{pkg.version}}\"\n  title=\"$1\">"
+    ],
+    "description": "Markdown <img>"
+  }
+}
