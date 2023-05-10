@@ -172,3 +172,5 @@ export LUA_PATH="${HOME}/lua/?.lua;;"
 # Starship prompt
 eval "$(starship init zsh)"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

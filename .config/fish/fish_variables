@@ -63,6 +63,6 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_user_abbreviations:br\x20git\x20branch\x1eci\x20git\x20commit\x20\x2dav\x1eco\x20git\x20checkout\x1estatus\x20git\x20status\x1enr\x20npm\x20run\x1eadd\x20git\x20add\x1ecob\x20git\x20checkout\x20\x2db\x1ecp\x20cp\x20\x2di\x1emv\x20mv\x20\x2di\x1erm\x20rm\x20\x2di\x1elog\x20git\x20log\x1egraph\x20git\x20log\x20\x2d\x2dgraph\x20\x2d\x2doneline\x1ehr\x20stack\x20ghci\x1ehrepl\x20stack\x20ghci\x1ehrun\x20stack\x20runghc\x1eka\x20kubectl\x20apply\x1ekg\x20kubectl\x20get\x1ekapply\x20kubectl\x20apply\x1ekdel\x20kubectl\x20delete\x1ekdesc\x20kubectl\x20describe\x1ekget\x20kubectl\x20get\x1eklogs\x20kubectl\x20logs\x1ekapp\x20kubectl\x20apply\x20\x2df\x1egrm\x20go\x20run\x20main\x2ego
-SETUVAR fish_user_paths:/Users/mark/\x2efig/bin
+SETUVAR fish_user_paths:/Users/mark/\x2efig/bin\x1e/Users/volkmannm/\x2efig/bin\x1e/opt/homebrew/opt/fzf/bin
 SETUVAR fisher_dependency_count:getopts\x1espin
 SETUVAR myuniversal:3
