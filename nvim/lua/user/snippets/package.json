@@ -10,6 +10,14 @@
         "path": "./javascript.json"
       },
       {
+        "language": "typescript",
+        "path": "./javascript.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./javascript.json"
+      },
+      {
         "language": "markdown",
         "path": "./markdown.json"
       }
