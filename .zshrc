@@ -168,6 +168,7 @@ function pushn() {
 # Lua setup
 
 export LUA_PATH="${HOME}/lua/?.lua;;"
+alias love="/Applications/love.app/Contents/MacOS/love"
 
 # Starship prompt
 eval "$(starship init zsh)"
