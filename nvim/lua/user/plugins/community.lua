@@ -8,11 +8,11 @@ return {
     enabled = true
   },
   {
-    import = "astrocommunity.colorscheme.gruvbox",
+    import = "astrocommunity.colorscheme.gruvbox-nvim",
     enabled = true
   },
   {
-    import = "astrocommunity.colorscheme.nightfox",
+    import = "astrocommunity.colorscheme.nightfox-nvim",
     enabled = true
   },
   {
@@ -20,7 +20,7 @@ return {
     enabled = true
   },
   {
-    import = "astrocommunity.colorscheme.tokyonight",
+    import = "astrocommunity.colorscheme.tokyonight-nvim",
     enabled = true
   }
 }

@@ -9,7 +9,7 @@ local options = astronvim.user_opts("options", {
     breakindent = true, -- Wrap indent to match  line start
     clipboard = "unnamedplus", -- Connection to the system clipboard
     cmdheight = 0, -- hide command line unless needed
-    completeopt = { "menuone", "noselect" }, -- Options for insert mode completion
+    completeopt = { "menu", "menuone", "noselect" }, -- Options for insert mode completion
     copyindent = true, -- Copy the previous indentation on autoindenting
     cursorline = true, -- Highlight the text line of the cursor
     expandtab = true, -- Enable the use of space in tab
@@ -49,16 +49,21 @@ local options = astronvim.user_opts("options", {
     writebackup = false, -- Disable making a backup before overwriting a file
   },
   g = {
-    highlighturl_enabled = true, -- highlight URLs by default
     mapleader = " ", -- set leader key
+    maplocalleader = ",", -- set default local leader key
+    -- AstroNvim specific global options
     autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-    codelens_enabled = true, -- enable or disable automatic codelens refreshing for lsp that support it
-    lsp_handlers_enabled = true, -- enable or disable default vim.lsp.handlers (hover and signatureHelp)
-    cmp_enabled = true, -- enable completion at start
     autopairs_enabled = true, -- enable autopairs at start
+    cmp_enabled = true, -- enable completion at start
+    codelens_enabled = true, -- enable or disable automatic codelens refreshing for lsp that support it
     diagnostics_mode = 3, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
+    highlighturl_enabled = true, -- highlight URLs by default
     icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available)
-    ui_notifications_enabled = true, -- disable notifications when toggling UI elements
+    inlay_hints_enabled = false, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
+    lsp_handlers_enabled = true, -- enable or disable default vim.lsp.handlers (hover and signatureHelp)
+    semantic_tokens_enabled = true, -- enable or disable LSP semantic tokens on startup
+    ui_notifications_enabled = true, -- disable notifications (TODO: rename to  notifications_enabled in AstroNvim v4)
+    git_worktrees = nil, -- enable git integration for detached worktrees (specify a table where each entry is of the form { toplevel = vim.env.HOME, gitdir=vim.env.HOME .. "/.dotfiles" })
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab
 })

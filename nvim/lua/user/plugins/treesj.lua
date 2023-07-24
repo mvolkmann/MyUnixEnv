@@ -1,6 +1,6 @@
 return {
   {
     "AstroNvim/astrocommunity",
-    { import = "astrocommunity.editing-support.treej" }
+    { import = "astrocommunity.editing-support.treesj" }
   }
 }

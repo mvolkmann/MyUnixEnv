@@ -23,6 +23,8 @@ end
 ---@param quiet? boolean Whether or not to notify on completion of reloading
 ---@return boolean # True if the reload was successful, False otherwise
 function M.reload(quiet)
+  local was_modifiable = vim.opt.modifiable:get()
+  if not was_modifiable then vim.opt.modifiable = true end
   local core_modules = { "astronvim.bootstrap", "astronvim.options", "astronvim.mappings" }
   local modules = vim.tbl_filter(function(module) return module:find "^user%." end, vim.tbl_keys(package.loaded))
 
@@ -36,6 +38,7 @@ function M.reload(quiet)
       success = false
     end
   end
+  if not was_modifiable then vim.opt.modifiable = false end
   if not quiet then -- if not quiet, then notify of result
     if success then
       M.notify("AstroNvim successfully reloaded", vim.log.levels.INFO)
@@ -75,16 +78,32 @@ function M.conditional_func(func, condition, ...)
   if condition and type(func) == "function" then return func(...) end
 end
 
---- Get an icon from `lspkind` if it is available and return it
----@param kind string The kind of icon in `lspkind` to retrieve
+--- Get an icon from the AstroNvim internal icons if it is available and return it
+---@param kind string The kind of icon in astronvim.icons to retrieve
+---@param padding? integer Padding to add to the end of the icon
+---@param no_fallback? boolean Whether or not to disable fallback to text icon
 ---@return string icon
-function M.get_icon(kind)
+function M.get_icon(kind, padding, no_fallback)
+  if not vim.g.icons_enabled and no_fallback then return "" end
   local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
   if not M[icon_pack] then
     M.icons = astronvim.user_opts("icons", require "astronvim.icons.nerd_font")
     M.text_icons = astronvim.user_opts("text_icons", require "astronvim.icons.text")
   end
-  return M[icon_pack] and M[icon_pack][kind] or ""
+  local icon = M[icon_pack] and M[icon_pack][kind]
+  return icon and icon .. string.rep(" ", padding or 0) or ""
+end
+
+--- Get a icon spinner table if it is available in the AstroNvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
+---@param kind string The kind of icon to check for sequential entries of
+---@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist
+function M.get_spinner(kind, ...)
+  local spinner = {}
+  repeat
+    local icon = M.get_icon(("%s%d"):format(kind, #spinner + 1), ...)
+    if icon ~= "" then table.insert(spinner, icon) end
+  until not icon or icon == ""
+  if #spinner > 0 then return spinner end
 end
 
 --- Get highlight properties for a given highlight name
@@ -122,12 +141,14 @@ end
 --- Trigger an AstroNvim user event
 ---@param event string The event name to be appended to Astro
 function M.event(event)
-  vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "Astro" .. event }) end)
+  vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "Astro" .. event, modeline = false }) end)
 end
 
 --- Open a URL under the cursor with the current operating system
 ---@param path string The path of the file to open with the system opener
 function M.system_open(path)
+  -- TODO: REMOVE WHEN DROPPING NEOVIM <0.10
+  if vim.ui.open then return vim.ui.open(path) end
   local cmd
   if vim.fn.has "win32" == 1 and vim.fn.executable "explorer" == 1 then
     cmd = { "cmd.exe", "/K", "explorer" }
@@ -179,7 +200,7 @@ function M.alpha_button(sc, txt)
       position = "center",
       text = txt,
       shortcut = sc,
-      cursor = 5,
+      cursor = -2,
       width = 36,
       align_shortcut = "right",
       hl = "DashboardCenter",
@@ -193,7 +214,21 @@ end
 ---@return boolean available # Whether the plugin is available
 function M.is_available(plugin)
   local lazy_config_avail, lazy_config = pcall(require, "lazy.core.config")
-  return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
+  return lazy_config_avail and lazy_config.spec.plugins[plugin] ~= nil
+end
+
+--- Resolve the options table for a given plugin with lazy
+---@param plugin string The plugin to search for
+---@return table opts # The plugin options
+function M.plugin_opts(plugin)
+  local lazy_config_avail, lazy_config = pcall(require, "lazy.core.config")
+  local lazy_plugin_avail, lazy_plugin = pcall(require, "lazy.core.plugin")
+  local opts = {}
+  if lazy_config_avail and lazy_plugin_avail then
+    local spec = lazy_config.spec.plugins[plugin]
+    if spec then opts = lazy_plugin.values(spec, "opts") end
+  end
+  return opts
 end
 
 --- A helper function to wrap a module function to require a plugin before running
@@ -225,6 +260,21 @@ function M.which_key_register()
   end
 end
 
+--- Get an empty table of mappings with a key for each map mode
+---@return table<string,table> # a table with entries for each map mode
+function M.empty_map_table()
+  local maps = {}
+  for _, mode in ipairs { "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t" } do
+    maps[mode] = {}
+  end
+  if vim.fn.has "nvim-0.10.0" == 1 then
+    for _, abbr_mode in ipairs { "ia", "ca", "!a" } do
+      maps[abbr_mode] = {}
+    end
+  end
+  return maps
+end
+
 --- Table based API for setting keybindings
 ---@param map_table table A nested table where the first key is the vim mode, the second key is the key to map, and the value is the function to set the mapping to
 ---@param base? table A base set of options to set on every keybinding
@@ -244,6 +294,7 @@ function M.set_mappings(map_table, base)
           keymap_opts[1] = nil
         end
         if not cmd or keymap_opts.name then -- if which-key mapping, queue it
+          if not keymap_opts.name then keymap_opts.name = keymap_opts.desc end
           if not M.which_key_queue then M.which_key_queue = {} end
           if not M.which_key_queue[mode] then M.which_key_queue[mode] = {} end
           M.which_key_queue[mode][keymap] = keymap_opts
@@ -257,7 +308,7 @@ function M.set_mappings(map_table, base)
 end
 
 --- regex used for matching a valid URL/URI string
-local url_matcher =
+M.url_matcher =
   "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 --- Delete the syntax matching rules for URLs/URIs if set
@@ -270,20 +321,20 @@ end
 --- Add syntax matching rules for highlighting URLs/URIs
 function M.set_url_match()
   M.delete_url_match()
-  if vim.g.highlighturl_enabled then vim.fn.matchadd("HighlightURL", url_matcher, 15) end
+  if vim.g.highlighturl_enabled then vim.fn.matchadd("HighlightURL", M.url_matcher, 15) end
 end
 
 --- Run a shell command and capture the output and if the command succeeded or failed
----@param cmd string The terminal command to execute
+---@param cmd string|string[] The terminal command to execute
 ---@param show_error? boolean Whether or not to show an unsuccessful command as an error to the user
 ---@return string|nil # The result of a successfully executed command or nil
 function M.cmd(cmd, show_error)
-  local wind32_cmd
-  if vim.fn.has "win32" == 1 then wind32_cmd = { "cmd.exe", "/C", cmd } end
-  local result = vim.fn.system(wind32_cmd or cmd)
+  if type(cmd) == "string" then cmd = { cmd } end
+  if vim.fn.has "win32" == 1 then cmd = vim.list_extend({ "cmd.exe", "/C" }, cmd) end
+  local result = vim.fn.system(cmd)
   local success = vim.api.nvim_get_vvar "shell_error" == 0
   if not success and (show_error == nil or show_error) then
-    vim.api.nvim_err_writeln("Error running command: " .. cmd .. "\nError message:\n" .. result)
+    vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
   return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
 end
