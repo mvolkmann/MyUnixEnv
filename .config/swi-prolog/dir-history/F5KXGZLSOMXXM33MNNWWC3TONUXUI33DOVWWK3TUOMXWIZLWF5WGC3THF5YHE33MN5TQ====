@@ -1,5 +1,4 @@
 _HiStOrY_V2_
-likes(mark,\040X).
 retractall(likes(_,\040_)).
 likes(mark,\040X).
 [lists].
@@ -99,3 +98,4 @@ consult('./prolog-examples/family.pl').
 father(X,Y).
 consult("./prolog-examples/family.pl").
 father(X,Y).
+["./prolog-examples/family.pl"].

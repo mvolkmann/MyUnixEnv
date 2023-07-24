@@ -18,6 +18,7 @@ ln -s MyUnixEnv/.gitconfig .gitconfig
 #ln -s MyUnixEnv/.gvimrc .gvimrc
 #ln -s MyUnixEnv/.haskeline .haskeline
 #ln -s MyUnixEnv/.prettieropts .prettieropts
+ln -s MyUnixEnv/.scryerrc .scryerrc
 ln -s MyUnixEnv/starship.toml starship.toml
 ln -s MyUnixEnv/.tmux .tmux
 ln -s MyUnixEnv/.tmux.conf .tmux.conf

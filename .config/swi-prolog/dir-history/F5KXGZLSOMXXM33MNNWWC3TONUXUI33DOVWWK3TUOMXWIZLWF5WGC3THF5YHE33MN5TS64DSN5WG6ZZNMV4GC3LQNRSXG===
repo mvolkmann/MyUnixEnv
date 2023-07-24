@@ -1,11 +1,4 @@
 _HiStOrY_V2_
-X\040is\040rationalize(3/4),\040write_type(X).
-write_type(a).
-write_type([a]).
-write_type(a(b)).
-write_type(3.1).
-write_type(3).
-write_type("a").
 write_type(A).
 current_prolog_flag(double_quotes).
 current_prolog_flag(double_quotes,\040F).
@@ -99,3 +92,10 @@ father(X,\040Y).
 consult(./family.pl).
 consult(family.pl).
 consult('./family.pl').
+phrase(player(Name,\040Number),\040"Player\040Gretzky\040wears\040number\04099.").
+phrase(player(Name,\040Number),\040`Player\040Gretzky\040wears\040number\04099.`).
+phrase(player(Name,\040Number),\040"Player\040Gretzky\040wears\040number\04099.").
+set_prolog_flag(double_quotes,\040chars).
+phrase(player(Name,\040Number),\040"Player\040Gretzky\040wears\040number\04099.").
+phrase(hello(Name),\040"Hello,\040World!").
+phrase(player(Name,\040Number),\040"Player\040Gretzky\040wears\040number\04099.").
