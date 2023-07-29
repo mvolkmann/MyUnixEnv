@@ -24,3 +24,8 @@ T\040=\040foo{bar:\0407},\040V\040=\040T.get(baz).
 T\040=\040foo{bar:\0407},\040(V\040=\040T.get(baz)\040->\040writeln(V);\040writing("missing")).
 T\040=\040foo{bar:\0407},\040(V\040=\040T.get(baz)\040->\040writeln(V);\040writeln("missing")).
 T\040=\040foo{bar:\0407},\040(V\040=\040T.get(bar)\040->\040writeln(V);\040writeln("missing")).
+use_module(library(time)).
+time(append("abc",\040"def",\040L)).
+[family].
+phrase(split(|,\040P,\040E),\040"foo|bar").
+phrase(split(',',\040P,\040E),\040"foo,bar").
