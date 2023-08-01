@@ -84,7 +84,7 @@ alias pgstop="pg_ctl -D /usr/local/var/postgres stop -m fast"
 
 # Prolog aliases
 alias ciao="$HOME/.ciaoroot/v1.22.0-m5/build/bin/ciao"
-alias scryerp="$PROLOG_DIR/scryer-prolog/target/release/scryer-prolog"
+alias scry="$PROLOG_DIR/scryer-prolog/target/release/scryer-prolog"
 
 # Warp aliases
 alias cb="clear blocks"
