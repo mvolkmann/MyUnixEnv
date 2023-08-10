@@ -1,9 +1,4 @@
 _HiStOrY_V2_
-phrase(player(Name,\040Number),\040`Player\040Gretzky\040wears\040number\04099.`).
-set_prolog_flag(double_quotes,\040string).
-phrase(xs,\040X).
-phrase(ys,\040X).
-phrase(ys,\040`yyy`).
 phrase(xs,\040`xxx`).
 phrase((...,\040[Last]),\040`xyz`).
 phrase((...,\040"y",\040...),\040`xyz`).
@@ -99,3 +94,8 @@ predicate(true).
 is_predicate(true).
 atom(true).
 help(catch).
+help(var).
+term_string(T,\040"X"),\040var(T).
+term_string(T,\040"x"),\040var(T).
+[user].
+dog(X,\040Y).

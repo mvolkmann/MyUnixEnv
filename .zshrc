@@ -34,6 +34,7 @@ alias cdtalks="cd $TRAINING_DIR/talks"
 alias cdtraining="cd $TRAINING_DIR"
 alias cdts="cd $TS_DIR"
 alias cdxtrack="cd $XTRACK_DIR"
+alias cdyuga="cd $PROJECTS_DIR/YugaLabs"
 
 # Deno aliases
 alias dfmt="deno fmt"
