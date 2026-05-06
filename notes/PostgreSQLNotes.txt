@@ -70,7 +70,8 @@ Column types
 - text    
 - smallint
 - int
-- serial (for autoincrement)
+- serial (integer with autoincrement)
+- bigserial (longer integer with autoincrement)
 - float(n)
 - real or float8
 - numeric or numeric(p, s) where

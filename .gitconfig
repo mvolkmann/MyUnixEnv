@@ -23,9 +23,11 @@
 [pager]
 	branch = false
 [pull]
-	rebase = false
+	rebase = true
 [push]
 	autoSetupRemote = true
 [user]
-	name = R. Mark Volkmann
+	name = Mark Volkmann
 	email = r.mark.volkmann@gmail.com
+[http]
+	postBuffer = 524288000

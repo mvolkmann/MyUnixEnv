@@ -183,3 +183,8 @@ export SECURITY_TOKEN_ENCRYPTION_KEY='kXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z'
 . ~/.bashrc
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+. "/Users/volkmannm/.deno/env"

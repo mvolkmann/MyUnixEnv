@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tools/get-locations.ts"],
+  "sourcesContent": ["import { LocalStorage } from \"@raycast/api\";\n\nexport default async function () {\n  const locations = await LocalStorage.getItem(\"saved-locations\");\n  return locations;\n}\n"],
+  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,aAAAE,IAAA,eAAAC,EAAAH,GAAA,IAAAI,EAA6B,wBAE7B,eAAOF,GAA0B,CAE/B,OADkB,MAAM,eAAa,QAAQ,iBAAiB,CAEhE",
+  "names": ["get_locations_exports", "__export", "get_locations_default", "__toCommonJS", "import_api"]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/tools/make-http-request.ts"],
+  "sourcesContent": ["import { exec } from \"child_process\";\nimport { promisify } from \"util\";\n\ntype Input = {\n  /**\n   * CURL shell command to execute. Always use `--verbose` flag\n   */\n  command: string;\n};\n\nconst execAsync = promisify(exec);\n\nexport default async function (input: Input) {\n  return execAsync(input.command);\n}\n"],
+  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,aAAAE,IAAA,eAAAC,EAAAH,GAAA,IAAAI,EAAqB,yBACrBC,EAA0B,gBASpBC,KAAY,aAAU,MAAI,EAEhC,eAAOJ,EAAwBK,EAAc,CAC3C,OAAOD,EAAUC,EAAM,OAAO,CAChC",
+  "names": ["make_http_request_exports", "__export", "make_http_request_default", "__toCommonJS", "import_child_process", "import_util", "execAsync", "input"]
+}

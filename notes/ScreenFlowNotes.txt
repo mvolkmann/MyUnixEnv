@@ -60,7 +60,7 @@ To create a new recording from selected video and/or audio sources
 - pause recording by selecting "Pause" from the ScreenFlow menu bar icon
 - stop recording
   * press cmd-@ (cmd-shift-2) or
-    select "Stop Recording" from Screenflow menu bar icon
+    select "Stop Recording" from ScreenFlow menu bar icon
   * select "Create New Document" or
     "Add to Document" to add clips to an existing screencast
     - need to drag it into timeline?
@@ -87,7 +87,7 @@ Inspector
     - drop shadows are highly configurable
     - click + button after "Video Filters" to add one
 - Audio - to customize properties of a selected audio asset
-  * volume, ducking (fade in/out for corcurrent or neighboring audio?),
+  * volume, ducking (fade in/out for concurrent or neighboring audio?),
     smooth volume levels (none too high or too low)
     stereo mix, effects (like chamber echo), and
     filters (ex. removing background noise (try 65%)
@@ -101,7 +101,7 @@ Inspector
     to return to original scale, position, and rotation
     - also available for Audio
   * can save an animation as a "template action"
-    so it can be reusd for other video clips
+    so it can be reused for other video clips
     - right-click a clip that has the desired animation
     - select "Create Template Action..."
     - enter a name

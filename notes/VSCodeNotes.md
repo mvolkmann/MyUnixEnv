@@ -552,6 +552,7 @@ See "Dropbox Sync" section below!
        - "Code Helper.app" was a culprit for me
 - my extensions (as of 2/15/2019)
   - Auto Close Tag: for HTML/XML tags
+  - Auto Rename Tag
   - Bracket Pair Colorizer
   - Code Spell Checker
   - ESLint

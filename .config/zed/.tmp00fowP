@@ -1,0 +1,30 @@
+{"signed_in":false,"type":"Setting","setting":"theme","value":"One Dark","milliseconds_since_first_event":0}
+{"signed_in":false,"type":"Setting","setting":"keymap","value":"VSCode","milliseconds_since_first_event":0}
+{"signed_in":false,"type":"App","operation":"first open","milliseconds_since_first_event":0}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle vim","milliseconds_since_first_event":0}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle vim","milliseconds_since_first_event":6098}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle diagnostic telemetry","milliseconds_since_first_event":15242}
+{"signed_in":false,"type":"Setting","setting":"diagnostic telemetry","value":"false","milliseconds_since_first_event":15243}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle diagnostic telemetry","milliseconds_since_first_event":17762}
+{"signed_in":false,"type":"Setting","setting":"diagnostic telemetry","value":"false","milliseconds_since_first_event":17763}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle metric telemetry","milliseconds_since_first_event":18993}
+{"signed_in":false,"type":"Setting","setting":"metric telemetry","value":"false","milliseconds_since_first_event":18993}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle vim","milliseconds_since_first_event":20676}
+{"signed_in":false,"type":"Editor","operation":"open","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":30545}
+{"signed_in":false,"type":"App","operation":"extensions page: open","milliseconds_since_first_event":92747}
+{"signed_in":false,"type":"Memory","memory_in_bytes":172687360,"virtual_memory_in_bytes":431336898560,"milliseconds_since_first_event":114804}
+{"signed_in":false,"type":"Cpu","usage_as_percentage":6.783141,"core_count":10,"milliseconds_since_first_event":114804}
+{"signed_in":false,"type":"App","operation":"welcome page: toggle vim","milliseconds_since_first_event":129595}
+{"signed_in":false,"type":"Action","source":"command palette","action":":write","milliseconds_since_first_event":160221}
+{"signed_in":false,"type":"Editor","operation":"save","file_extension":"json","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":160225}
+{"signed_in":false,"type":"App","operation":"open project","milliseconds_since_first_event":187298}
+{"signed_in":false,"type":"Editor","operation":"open","file_extension":"js","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":201559}
+{"signed_in":false,"type":"Edit","duration":31797,"environment":"editor","milliseconds_since_first_event":208630}
+{"signed_in":false,"type":"Action","source":"command palette","action":":write","milliseconds_since_first_event":212566}
+{"signed_in":false,"type":"Editor","operation":"save","file_extension":"js","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":212567}
+{"signed_in":false,"type":"Action","source":"command palette","action":":write","milliseconds_since_first_event":215056}
+{"signed_in":false,"type":"Editor","operation":"save","file_extension":"js","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":215065}
+{"signed_in":false,"type":"Editor","operation":"save","file_extension":"js","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":216438}
+{"signed_in":false,"type":"Editor","operation":"save","file_extension":"js","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":229561}
+{"signed_in":false,"type":"Edit","duration":11375,"environment":"editor","milliseconds_since_first_event":250288}
+{"signed_in":false,"type":"Editor","operation":"save","file_extension":"js","vim_mode":true,"copilot_enabled":true,"copilot_enabled_for_language":true,"milliseconds_since_first_event":250716}

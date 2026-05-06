@@ -1,13 +1,11 @@
 # cd aliases
-alias cdarch="cd $PROJECTS_DIR/ArchDesign/ArchDesign"
 alias cdblog="cd $BLOG_DIR"
+#alias cdbook="cd $TRAINING_DIR/htmx/PragmaticBookshelf/mvhtmx/Book"
+alias cdbook="cd $BOOK_DIR"
 alias cdcss="cd $CSS_DIR"
-alias cddart="cd $DART_DIR"
 alias cddb="cd $DB_DIR"
-alias cddeno="cd $DENO_DIR"
 alias cddev="cd $DEV_DIR"
-alias cdempowerme="cd $PROJECTS_DIR/EmpowerMe-Apple-Health"
-alias cdevergreen="cd $PROJECTS_DIR/evergreen/evergreen-ui"
+alias cdepic="cd $PROJECTS_DIR/EpicGames"
 alias cdflutter="cd $FLUTTER_DIR"
 # Goes to root directory of current git repository
 # (replaced by cdgitroot function below).
@@ -23,23 +21,21 @@ alias cdnode="cd $NODE_DIR"
 alias cdnotes="cd ~/MyUnixEnv/notes"
 alias cdoci="cd $OCI_DIR"
 alias cdpostgres="cd $POSTGRES_DIR"
+alias cdprag="cd $TRAINING_DIR/htmx/PragmaticBookshelf"
 alias cdprojects="cd $PROJECTS_DIR"
 alias cdprolog="cd $PROLOG_DIR"
 alias cdpython="cd $PYTHON_DIR":w
 alias cdrust="cd $RUST_DIR"
+alias cdsmalltalk="cd $SMALLTALK_DIR"
 alias cdsqlite="cd $SQLITE_DIR"
 alias cdsvelte="cd $SVELTE_DIR"
 alias cdswift="cd $SWIFT_DIR"
 alias cdtalks="cd $TRAINING_DIR/talks"
 alias cdtraining="cd $TRAINING_DIR"
 alias cdts="cd $TS_DIR"
-alias cdxtrack="cd $XTRACK_DIR"
-alias cdyuga="cd $PROJECTS_DIR/YugaLabs"
-
-# Deno aliases
-alias dfmt="deno fmt"
-alias dlint="deno lint --unstable"
-alias drun="deno run"
+alias cdwc="cd $WEB_COMPONENTS_DIR"
+alias cdwrec="cd $WREC_DIR"
+alias cdzig="cd $ZIG_DIR"
 
 # Find files aliases
 alias findcss='find3 css'
@@ -79,10 +75,6 @@ alias rm="rm -i"
 alias mysql=/usr/local/mysql/bin/mysql
 alias mysqladmin=/usr/local/mysql/bin/mysqladmin
 
-# PostgreSQL aliases
-alias pgstart="pg_ctl -D /usr/local/var/postgres start"
-alias pgstop="pg_ctl -D /usr/local/var/postgres stop -m fast"
-
 # Prolog aliases
 alias ciao="$HOME/.ciaoroot/v1.22.0-m5/build/bin/ciao"
 alias scry="$PROLOG_DIR/scryer-prolog/target/release/scryer-prolog"
@@ -91,20 +83,33 @@ alias scry="$PROLOG_DIR/scryer-prolog/target/release/scryer-prolog"
 alias cb="clear blocks"
 
 # Other aliases
+alias bd="bun dev"
+alias codexcli="/Applications/Codex.app/Contents/Resources/codex"
+codexapp() {
+  open -na "Codex" --args --cwd "$PWD"
+}
 alias cls="clear"
+alias fixsf="fix-swift-format"
+# Generate Book PDF
+alias gb="./rake clean screen"
+# Kill the process listening on a given port.
+alias klp="kill-listening-process"
+alias nr="pnpm run"
+#alias nri="rm -rf node_modules package-lock.json && npm install"
+alias nri="rm -rf node_modules package-lock.json pnpm-lock.json && pnpm install"
+alias python="python3"
+alias py="python3"
 alias v="nvim"
 alias vim="nvim"
-
-# Kill the process listening on a given port.
-alias fixsf="fix-swift-format"
-alias klp="kill-listening-process"
-alias nr="npm run"
-alias py="python3"
-alias python="python3"
 
 function cdgitroot() {
   cd `git rev-parse --git-dir`
   cd ..
+}
+
+# Pretty path where each directory is on its own line.
+function ppath() {
+  echo $PATH | tr : '\n'
 }
 
 function pull() {
@@ -122,8 +127,24 @@ function pushn() {
 # For Lua
 alias love="/Applications/love.app/Contents/MacOS/love"
 
+# For ODBC
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib"
+
+# For pnpm
+alias npm="pnpm"
+export PATH=$PATH:$HOME/Library/pnpm
+export PNPM_HOME="/Users/volkmannm/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+
 # Starship prompt
-eval "$(starship init zsh)"
+#eval "$(starship init zsh)"
+
+# Ruby
+export PATH="$RUBY_PATH:$PATH"
+export PATH="$(ruby -r rubygems -e 'puts Gem.bindir'):$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -137,9 +158,23 @@ fd() {
   cd "$dir"
 }
 
+# bun completions
+[ -s "/Users/volkmannm/.bun/_bun" ] && source "/Users/volkmannm/.bun/_bun"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/volkmannm/Documents/dev/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/volkmannm/Documents/dev/google-cloud-sdk/path.zsh.inc'; fi
+# This runs the nri alias in each subdirectory of the current directory
+# that contains a package.json file.
+nris() {
+  local dir
+  for dir in ./*(/); do
+    [[ -f "$dir/package.json" ]] || continue
+    echo
+    echo "running nri in ${dir:t} ..."
+    (
+      cd "$dir" || exit 1
+      nri
+    )
+  done
+}
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/volkmannm/Documents/dev/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/volkmannm/Documents/dev/google-cloud-sdk/completion.zsh.inc'; fi
+PROMPT='$ '
+RPROMPT=''
