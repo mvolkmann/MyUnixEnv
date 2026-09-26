@@ -1,45 +1,45 @@
 # Nushell Config File
 
-let-env DOCUMENTS_DIR = $'($nu.home-path)/Documents'
-let-env BLOG_DIR = $'($env.DOCUMENTS_DIR)/blog'
-let-env DEV_DIR = $'($env.DOCUMENTS_DIR)/dev'
-let-env OCI_DIR = $'($env.DOCUMENTS_DIR)/oci'
-let-env PROJECTS_DIR = $'($env.DOCUMENTS_DIR)/projects'
-let-env TRAINING_DIR = $'($env.DOCUMENTS_DIR)/training'
+$env.DOCUMENTS_DIR = $'($nu.home-dir)/Documents'
+$env.BLOG_DIR = $'($env.DOCUMENTS_DIR)/blog'
+$env.DEV_DIR = $'($env.DOCUMENTS_DIR)/dev'
+$env.OCI_DIR = $'($env.DOCUMENTS_DIR)/oci'
+$env.PROJECTS_DIR = $'($env.DOCUMENTS_DIR)/projects'
+$env.TRAINING_DIR = $'($env.DOCUMENTS_DIR)/training'
 
-let-env DB_DIR = $'($env.DEV_DIR)/db'
-let-env MONGO_DIR = $'($env.DB_DIR)/mongo'
-let-env POSTGRES_DIR = $'($env.DB_DIR)/postgres'
-let-env SQLITE_DIR = $'($env.DB_DIR)/sqlite'
+$env.DB_DIR = $'($env.DEV_DIR)/db'
+$env.MONGO_DIR = $'($env.DB_DIR)/mongo'
+$env.POSTGRES_DIR = $'($env.DB_DIR)/postgres'
+$env.SQLITE_DIR = $'($env.DB_DIR)/sqlite'
 
-let-env FLUTTER_DIR = $'($env.DEV_DIR)/flutter-projects'
-let-env REACT_DIR = $'($env.DEV_DIR)/react'
-let-env SVELTE_DIR = $'($env.DEV_DIR)/svelte'
+$env.FLUTTER_DIR = $'($env.DEV_DIR)/flutter-projects'
+$env.REACT_DIR = $'($env.DEV_DIR)/react'
+$env.SVELTE_DIR = $'($env.DEV_DIR)/svelte'
 
-let-env LANG_DIR = $'($env.DEV_DIR)/lang'
-let-env CSS_DIR = $'($env.LANG_DIR)/css'
-let-env DART_DIR = $'($env.LANG_DIR)/dart'
-let-env GO_DIR = $'($env.LANG_DIR)/go'
-let-env HTML_DIR = $'($env.LANG_DIR)/html'
-let-env JAVA_DIR = $'($env.LANG_DIR)/java'
-let-env MICRONAUT_DIR = $'($env.JAVA_DIR)/micronaut'
-let-env JS_DIR = $'($env.LANG_DIR)/js'
-let-env DENO_DIR = $'($env.JS_DIR)/deno'
-let-env NODE_DIR = $'($env.JS_DIR)/node'
-let-env PYTHON_DIR = $'($env.LANG_DIR)/python'
-let-env RUST_DIR = $'($env.LANG_DIR)/rust'
-let-env SVELTE_DIR = $'($env.DEV_DIR)/svelte'
-let-env SWIFT_DIR = $'($env.LANG_DIR)/swift'
-let-env TS_DIR = $'($env.LANG_DIR)/ts'
+$env.LANG_DIR = $'($env.DEV_DIR)/lang'
+$env.CSS_DIR = $'($env.LANG_DIR)/css'
+$env.DART_DIR = $'($env.LANG_DIR)/dart'
+$env.GO_DIR = $'($env.LANG_DIR)/go'
+$env.HTML_DIR = $'($env.LANG_DIR)/html'
+$env.JAVA_DIR = $'($env.LANG_DIR)/java'
+$env.MICRONAUT_DIR = $'($env.JAVA_DIR)/micronaut'
+$env.JS_DIR = $'($env.LANG_DIR)/js'
+$env.DENO_DIR = $'($env.JS_DIR)/deno'
+$env.NODE_DIR = $'($env.JS_DIR)/node'
+$env.PYTHON_DIR = $'($env.LANG_DIR)/python'
+$env.RUST_DIR = $'($env.LANG_DIR)/rust'
+$env.SVELTE_DIR = $'($env.DEV_DIR)/svelte'
+$env.SWIFT_DIR = $'($env.LANG_DIR)/swift'
+$env.TS_DIR = $'($env.LANG_DIR)/ts'
 
 # PATH modifications
-#let-env PATH = ($env.PATH | prepend '/opt/homebrew/bin')
-#let-env PATH = ($env.PATH | prepend $'($nu.home-path)/bin')
-#let-env PATH = ($env.PATH | append $'($nu.home-path)/.cargo/bin')
-#let-env PATH = ($env.PATH | append $'($env.DEV_DIR)/google-cloud-sdk/bin')
+#$env.PATH = ($env.PATH | prepend '/opt/homebrew/bin')
+#$env.PATH = ($env.PATH | prepend $'($nu.home-dir)/bin')
+#$env.PATH = ($env.PATH | append $'($nu.home-dir)/.cargo/bin')
+#$env.PATH = ($env.PATH | append $'($env.DEV_DIR)/google-cloud-sdk/bin')
 
 # Other environment variables
-let-env GITHUB_USER = 'mvolkmann'
+$env.GITHUB_USER = 'mvolkmann'
 
 # cd aliases
 alias cdblog = cd $env.BLOG_DIR
@@ -102,7 +102,7 @@ alias log = git log
 alias pull = git pull origin (git rev-parse --abbrev-ref HEAD)
 alias push = git push origin (git rev-parse --abbrev-ref HEAD)
 alias pushn = git push --no-verify origin (git rev-parse --abbrev-ref HEAD)
-alias rmb = $HOME/bin/rmb
+alias rmb = ~/bin/rmb
 alias sha = git rev-parse HEAD
 alias status = git status
 # status report from git commits
@@ -130,11 +130,11 @@ alias nr = npm run
 alias py = python3
 alias python = python3
 
-def-env cdgitroot [] {
+def --env cdgitroot [] {
   cd (git rev-parse --git-dir | str trim)
   cd ..
 }
 
-starship init nu | save ~/.cache/starship/init.nu
+# Starship initialization is generated with: starship init nu | save --force ~/.cache/starship/init.nu
 source ~/.cache/starship/init.nu
 
