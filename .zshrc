@@ -1,3 +1,6 @@
+# Enable vi key bindings in the shell.
+bindkey -v
+
 # cd aliases
 alias cdblog="cd $BLOG_DIR"
 #alias cdbook="cd $TRAINING_DIR/htmx/PragmaticBookshelf/mvhtmx/Book"

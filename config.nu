@@ -1,5 +1,7 @@
 # Nushell Config File
 
+$env.config.edit_mode = "vi"
+
 $env.DOCUMENTS_DIR = $'($nu.home-dir)/Documents'
 $env.BLOG_DIR = $'($env.DOCUMENTS_DIR)/blog'
 $env.DEV_DIR = $'($env.DOCUMENTS_DIR)/dev'
