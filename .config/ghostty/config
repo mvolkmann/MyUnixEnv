@@ -1,0 +1,6 @@
+font-size = 18
+
+keybind = opt+shift+arrow_up=new_split:up
+keybind = opt+shift+arrow_right=new_split:right
+keybind = opt+shift+arrow_down=new_split:down
+keybind = opt+shift+arrow_left=new_split:left
